@@ -2,6 +2,10 @@
 # Global Settings #
 #-----------------#
 
+### bindkeys ###
+
+bindkey "^[[Z" reverse-menu-complete
+
 ### functions ###
 
 function z_sync_origin() {
