@@ -14,6 +14,10 @@ function zshrc_merge() {
   cat ~/zshrc_local >> ~/.zshrc
 }
 
+function z_sync_origin() {
+  cp -p ~/triwst/.zshrc ~/.zshrc
+}
+
 #----------------#
 # Local Settings #
 #----------------#
