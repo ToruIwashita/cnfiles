@@ -10,15 +10,18 @@ setopt auto_pushd
 setopt correct
 setopt cdable_vars
 
-function z_join_local() {
-  cat ~/zshrc_local >> ~/.zshrc
-  source ~/.zshrc
-}
+### functions ###
 
 function z_sync_origin() {
   cp -p ~/triwst/.zshrc ~/.zshrc
   source ~/.zshrc
 }
+
+function z_join_local() {
+  cat ~/zshrc_local >> ~/.zshrc
+  source ~/.zshrc
+}
+
 
 #----------------#
 # Local Settings #
