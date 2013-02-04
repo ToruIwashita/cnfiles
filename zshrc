@@ -13,7 +13,7 @@ setopt cdable_vars
 ### functions ###
 
 function z_sync_origin() {
-  cp -p ~/triwst/.zshrc ~/.zshrc
+  cp -p ~/triwst/zshrc ~/.zshrc
   source ~/.zshrc
 }
 
