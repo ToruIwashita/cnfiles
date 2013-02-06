@@ -19,7 +19,9 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 
 ### キーバインド
+bindkey "^A" beginning-of-line                    # Ctr+Aで行頭へ
 bindkey "^B" backward-char                        # Ctr+Bで１文字左へ
+bindkey "^E" end-of-line                          # Ctr+Eで行末へ
 bindkey "^F" forward-char                         # Ctr+Fで１文字右へ
 bindkey "^N" down-line-or-history                 # Ctr+Nで１行下へ
 bindkey "^P" up-line-or-history                   # Ctr+Pで１行上へ
