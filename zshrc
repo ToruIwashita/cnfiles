@@ -25,6 +25,9 @@ bindkey "^N" down-line-or-history                 # Ctr+Nで１行下へ
 bindkey "^P" up-line-or-history                   # Ctr+Pで１行上へ
 bindkey "^R" history-incremental-search-backward  # Ctr+Rでインクリメンタルサーチ
 
+### エイリアス
+alias sz="source ~/.zshrc"
+
 ### 色の定義
 autoload -Uz colors && colors
 
@@ -47,7 +50,7 @@ SAVEHIST=100000          # 保存する履歴数
 setopt hist_ignore_dups  # 重複コマンド記録しない
 setopt share_history     # コマンド履歴共有
 setopt incappendhistory  # シェル横断実行時間順ヒストリ保存
-setopt extend_gustory    # コマンド実行時間保存
+setopt extended_history  # コマンド実行時間保存
 
 ### Shift+tabで逆タブ補完
 bindkey "^[[Z" reverse-menu-complete
