@@ -9,12 +9,14 @@ PROMPT="%{$fg_bold[magenta]%}$%{$reset_color%} "
 bindkey -v                                        # vimモード
 bindkey "^A" beginning-of-line                    # Ctr+Aで行頭へ
 bindkey "^B" backward-char                        # Ctr+Bで１文字左へ
+bindkey "^D" delete-char-or-list                  # Ctr+Dで１文字削除
 bindkey "^E" end-of-line                          # Ctr+Eで行末へ
 bindkey "^F" forward-char                         # Ctr+Fで１文字右へ
 bindkey "^N" down-line-or-history                 # Ctr+Nで１行下へ
 bindkey "^P" up-line-or-history                   # Ctr+Pで１行上へ
 bindkey "^R" history-incremental-search-backward  # Ctr+Rでインクリメンタルサーチ
 bindkey "^[[Z" reverse-menu-complete              # Shift+tabで逆タブ補完
+bindkey -r "^Z"                                   # Ctr+z無効化
 
 ### オートロード
 autoload -Uz colors && colors      # 色の定義
