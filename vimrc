@@ -11,3 +11,4 @@ inoremap <C-b> <Left>   " Ctr+bで左へ移動
 inoremap <C-f> <Right>  " Ctr+fで右へ移動
 inoremap <C-n> <Down>   " Ctr+nで下へ移動
 inoremap <C-p> <Up>     " Ctr+pで上へ移動
+noremap <C-z> <Nop>     " Ctr+z無効化
