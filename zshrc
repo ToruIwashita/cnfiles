@@ -51,6 +51,18 @@ setopt share_history
 setopt incappendhistory
 # コマンド履歴・コマンド実行時間保存
 setopt extended_history
+# historyコマンドを記録しない
+setopt histnostore
+# 余分なスペースは保存しない
+setopt hist_reduce_blanks
+# 行頭がスペースで始まるコマンドを記録しない
+setopt hist_ignore_space
+# 拡張ファイルグロブを有効にする
+setopt extendedglob
+# ファイル名を数値としてソート
+setopt numeric_glob_sort
+# 複数リダイレクト記述有効
+setopt multios
 
 ### コマンド履歴
 # ヒストリファイル
