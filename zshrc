@@ -2,8 +2,31 @@
 # Global Settings #
 #-----------------#
 
+### オートロード
+# 色の定義
+autoload -Uz colors && colors
+# 自動補完
+autoload -Uz compinit && compinit
+
+### fpathに.zfunc追加
+fpath=($fpath ~/.zfunc)
+
 ### プロンプトの定義
-PROMPT="%{$fg_bold[magenta]%}$%{$reset_color%} "
+PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
+# vimモード識別
+function zle-line-init zle-keymap-select {
+  case $KEYMAP in
+    vicmd)
+      PROMPT="[%n]:%./%{$bg_bold[blue]%}%#%{$reset_color%} "
+    ;;
+    main|viins)
+      PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
+    ;;
+  esac
+  zle reset-prompt
+}
+zle -N zle-line-init
+zle -N zle-keymap-select
 
 ### キーバインド
 # vimモード
@@ -28,12 +51,6 @@ bindkey "^R" history-incremental-search-backward
 bindkey "^[[Z" reverse-menu-complete
 # Ctr+z無効化
 bindkey -r "^Z"
-
-### オートロード
-# 色の定義
-autoload -Uz colors && colors
-# 自動補完
-autoload -Uz compinit && compinit
 
 ### エイリアス
 alias sz="source ~/.zshrc"
@@ -71,24 +88,6 @@ HISTFILE=~/.zsh_history
 HISTSIZE=100000
 # 保存する履歴数
 SAVEHIST=100000
-
-### vimモード識別
-function zle-line-init zle-keymap-select {
-  case $KEYMAP in
-    vicmd)
-      PROMPT="%{$bg_bold[magenta]%}$%{$reset_color%} "
-    ;;
-    main|viins)
-      PROMPT="%{$fg_bold[magenta]%}$%{$reset_color%} "
-    ;;
-  esac
-  zle reset-prompt
-}
-zle -N zle-line-init
-zle -N zle-keymap-select
-
-### fpathに.zfunc追加
-fpath=($fpath ~/.zfunc)
 
 #----------------#
 # Local Settings #
