@@ -87,29 +87,8 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-### triwst/下のzsh,tmux,vimをコピー
-function z_sync_origin() {
-  cp -p ~/triwst/zshrc ~/.zshrc
-  cp -p ~/triwst/tmux.conf ~/.tmux.conf
-  cp -p ~/triwst/vimrc ~/.vimrc
-  cp -rp ~/triwst/vim ~/.vim
-  source ~/.zshrc
-  cat ~/.zshrc
-}
-
-### triwst/下のzshrcをコピー
-function z_sync_zshrc() {
-  cp -p ~/triwst/zshrc ~/.zshrc
-  source ~/.zshrc
-  cat ~/.zshrc
-}
-
-### 各環境下の独自設定を連結する
-function z_join_local() {
-  cat ~/.zshrc_local >> ~/.zshrc
-  source ~/.zshrc
-  cat ~/.zshrc
-}
+### fpathに.zfunc追加
+fpath=($fpath ~/.zfunc)
 
 #----------------#
 # Local Settings #
