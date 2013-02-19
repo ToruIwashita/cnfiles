@@ -2,14 +2,18 @@
 # Global Settings #
 #-----------------#
 
+### fpathに.zfunc,.zfunc_local追加
+fpath=($fpath ~/.zfunc)
+fpath=($fpath ~/.zfunc_local)
+
 ### オートロード
 # 色の定義
 autoload -Uz colors && colors
 # 自動補完
 autoload -Uz compinit && compinit
-
-### fpathに.zfunc追加
-fpath=($fpath ~/.zfunc)
+# 自作関数
+autoload -Uz ~/.zfunc/*(:t) && ~/.zfunc/*(:t)
+autoload -Uz ~/.zfunc_local/*(:t) && ~/.zfunc_local/*(:t)
 
 ### プロンプトの定義
 PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} "

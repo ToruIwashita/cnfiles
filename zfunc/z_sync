@@ -4,21 +4,16 @@ function z_sync_origin() {
   cp -p ~/triwst/tmux.conf ~/.tmux.conf
   cp -p ~/triwst/vimrc ~/.vimrc
   cp -rp ~/triwst/vim ~/.vim
+  cp -rp ~/triwst/zfunc ~/.zfunc
   source ~/.zshrc
-  cat ~/.zshrc
+  echo "sync complete."
 }
 
 ### triwst/下のzshrcをコピー
-function z_sync_zshrc() {
+function z_sync_zsh() {
   cp -p ~/triwst/zshrc ~/.zshrc
+  cp -rp ~/triwst/zshrc ~/.zfunc
   source ~/.zshrc
-  cat ~/.zshrc
-}
-
-### 各環境下の独自設定を連結する
-function z_join_local() {
-  cat ~/.zshrc_local >> ~/.zshrc
-  source ~/.zshrc
-  cat ~/.zshrc
+  echo "complete."
 }
 
