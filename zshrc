@@ -1,6 +1,6 @@
-#-----------------#
-# Global Settings #
-#-----------------#
+#--------------#
+# zsh settings #
+#--------------#
 
 ### fpathに.zfunc,.zfunc_local追加
 fpath=($fpath ~/.zfunc)
@@ -93,7 +93,25 @@ HISTSIZE=100000
 # 保存する履歴数
 SAVEHIST=100000
 
-#----------------#
-# Local Settings #
-#----------------#
+### triwst/下のzsh,tmux,vimをコピー
+function z_sync_origin() {
+  [ -d ~/.vim ] || mkdir ~/.vim
+  [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
+  [ -d ~/.zfunc ] || mkdir ~/.zfunc
+
+  cp -p ~/triwst/zshrc ~/.zshrc
+  cp -p ~/triwst/tmux.conf ~/.tmux.conf
+  cp -p ~/triwst/vimrc ~/.vimrc
+  cp -rpf ~/triwst/vim/plugin/* ~/.vim/plugin/
+  cp -rpf ~/triwst/zfunc/* ~/.zfunc/
+  source ~/.zshrc
+  echo "sync complete."
+}
+
+### triwst/下のzshrcをコピー
+function z_sync_zshrc() {
+  cp -p ~/triwst/zshrc ~/.zshrc
+  source ~/.zshrc
+  echo "complete."
+}
 
