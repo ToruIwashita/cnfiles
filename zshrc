@@ -3,7 +3,7 @@
 #--------------#
 
 ### fpathに.zfunc,.zfunc_local追加
-fpath=($fpath ~/.zfunc)
+#fpath=($fpath ~/.zfunc)
 fpath=($fpath ~/.zfunc_local)
 
 ### オートロード
@@ -12,7 +12,7 @@ autoload -Uz colors && colors
 # 自動補完
 autoload -Uz compinit && compinit
 # 自作関数
-autoload -Uz ~/.zfunc/*(:t) && ~/.zfunc/*(:t)
+#autoload -Uz ~/.zfunc/*(:t) && ~/.zfunc/*(:t)
 autoload -Uz ~/.zfunc_local/*(:t) && ~/.zfunc_local/*(:t)
 
 ### プロンプトの定義
@@ -98,6 +98,7 @@ function z_sync_origin() {
   [ -d ~/.vim ] || mkdir ~/.vim
   [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
   [ -d ~/.zfunc ] || mkdir ~/.zfunc
+  [ -d ~/.zfunc_local ] || mkdir ~/.zfunc_local
 
   cp -p ~/triwst/zshrc ~/.zshrc
   cp -p ~/triwst/tmux.conf ~/.tmux.conf
@@ -115,3 +116,10 @@ function z_sync_zshrc() {
   echo "complete."
 }
 
+### 必要なdirの作成
+function z_mkdir() {
+  [ -d ~/.vim ] || mkdir ~/.vim
+  [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
+  [ -d ~/.zfunc ] || mkdir ~/.zfunc
+  [ -d ~/.zfunc_local ] || mkdir ~/.zfunc_local
+}
