@@ -1,0 +1,9 @@
+### 必要なdirの作成
+function z_mkdir() {
+  [ -d ~/.vim ] || mkdir ~/.vim
+  [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
+  [ -d ~/.zfunc ] || mkdir ~/.zfunc
+  [ -d ~/.zfunc_local ] || mkdir ~/.zfunc_local
+
+  echo "mkdir complete."
+}
