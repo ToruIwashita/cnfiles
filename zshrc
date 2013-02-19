@@ -103,9 +103,11 @@ function z_sync_origin() {
   cp -p ~/triwst/zshrc ~/.zshrc
   cp -p ~/triwst/tmux.conf ~/.tmux.conf
   cp -p ~/triwst/vimrc ~/.vimrc
-  cp -rpf ~/triwst/vim/plugin/* ~/.vim/plugin/
+
   cp -rpf ~/triwst/zfunc/* ~/.zfunc/
+  cp -rpf ~/triwst/vim/plugin/* ~/.vim/plugin/
   source ~/.zshrc
+
   echo "sync complete."
 }
 
@@ -113,7 +115,8 @@ function z_sync_origin() {
 function z_sync_zshrc() {
   cp -p ~/triwst/zshrc ~/.zshrc
   source ~/.zshrc
-  echo "complete."
+
+  echo "sync complete."
 }
 
 ### 必要なdirの作成
@@ -122,4 +125,6 @@ function z_mkdir() {
   [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
   [ -d ~/.zfunc ] || mkdir ~/.zfunc
   [ -d ~/.zfunc_local ] || mkdir ~/.zfunc_local
+
+  echo "mkdir complete."
 }
