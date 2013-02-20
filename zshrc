@@ -92,7 +92,6 @@ SAVEHIST=100000
 ### triwst/下のzsh,tmux,vimをコピー
 function z_sync_origin() {
   [ -d ~/.zfunc ] || mkdir ~/.zfunc
-  [ -d ~/.zfunc_local ] || mkdir ~/.zfunc_local
   [ -d ~/.vim ] || mkdir ~/.vim
   [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
 
@@ -100,7 +99,6 @@ function z_sync_origin() {
   cp -p ~/.triwst/tmux.conf ~/.tmux.conf
   cp -p ~/.triwst/vimrc ~/.vimrc
   cp -p ~/.triwst/zfunc/* ~/.zfunc/
-  cp -p ~/.triwst/zfunc_local/* ~/.zfunc_local/
   cp -p ~/.triwst/vim/plugin/* ~/.vim/plugin/
   source ~/.zshrc
 
