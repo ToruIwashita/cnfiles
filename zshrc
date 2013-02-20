@@ -7,7 +7,7 @@ fpath=($fpath ~/.zfunc)
 autoload -Uz colors && colors
 # 自動補完
 autoload -Uz compinit && compinit
-# 自作関数
+# 自作関数 [TODO]: ファイルが存在しないときはオートロードしないように分岐させる
 autoload -Uz ~/.zfunc/*(:t) && ~/.zfunc/*(:t)
 #autoload -Uz ~/.zfunc_local/*(:t) && ~/.zfunc_local/*(:t)
 
