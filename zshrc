@@ -96,20 +96,20 @@ function z_sync_origin() {
   [ -d ~/.vim ] || mkdir ~/.vim
   [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
 
-  cp -p ~/triwst/zshrc ~/.zshrc
-  cp -p ~/triwst/tmux.conf ~/.tmux.conf
-  cp -p ~/triwst/vimrc ~/.vimrc
-  cp -p ~/triwst/zfunc/* ~/.zfunc/
-  cp -p ~/triwst/zfunc_local/* ~/.zfunc_local/
-  cp -p ~/triwst/vim/plugin/* ~/.vim/plugin/
+  cp -p ~/.triwst/zshrc ~/.zshrc
+  cp -p ~/.triwst/tmux.conf ~/.tmux.conf
+  cp -p ~/.triwst/vimrc ~/.vimrc
+  cp -p ~/.triwst/zfunc/* ~/.zfunc/
+  cp -p ~/.triwst/zfunc_local/* ~/.zfunc_local/
+  cp -p ~/.triwst/vim/plugin/* ~/.vim/plugin/
   source ~/.zshrc
 
   echo "sync complete."
 }
 
-### triwst/下のzshrcをコピー
+### .triwst/下のzshrcをコピー
 function z_sync_zshrc() {
-  cp -p ~/triwst/zshrc ~/.zshrc
+  cp -p ~/.triwst/zshrc ~/.zshrc
   source ~/.zshrc
 
   echo "sync complete."
