@@ -1,10 +1,6 @@
-#--------------#
-# zsh settings #
-#--------------#
-
 ### fpathに.zfunc,.zfunc_local追加
 fpath=($fpath ~/.zfunc)
-fpath=($fpath ~/.zfunc_local)
+#fpath=($fpath ~/.zfunc_local)
 
 ### オートロード
 # 色の定義
@@ -13,7 +9,7 @@ autoload -Uz colors && colors
 autoload -Uz compinit && compinit
 # 自作関数
 autoload -Uz ~/.zfunc/*(:t) && ~/.zfunc/*(:t)
-autoload -Uz ~/.zfunc_local/*(:t) && ~/.zfunc_local/*(:t)
+#autoload -Uz ~/.zfunc_local/*(:t) && ~/.zfunc_local/*(:t)
 
 ### プロンプトの定義
 PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
@@ -104,6 +100,7 @@ function z_sync_origin() {
   cp -p ~/triwst/tmux.conf ~/.tmux.conf
   cp -p ~/triwst/vimrc ~/.vimrc
   cp -p ~/triwst/zfunc/* ~/.zfunc/
+  cp -p ~/triwst/zfunc_local/* ~/.zfunc_local/
   cp -p ~/triwst/vim/plugin/* ~/.vim/plugin/
   source ~/.zshrc
 
