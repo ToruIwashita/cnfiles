@@ -56,8 +56,12 @@ bindkey -r "^Z"
 alias sz="source ~/.zshrc"
 
 ### オプション設定
+# 自動CD
+setopt auto_cd
+# 自動的にディレクトリスタックにカレントディレクトリスタック追加
+setopt auto_pushd
 # ビープ音なし
-setopt NO_beep
+setopt no_beep
 # 補完のときプロンプトの位置を変えない
 setopt always_last_prompt
 # 重複コマンド記録しない
@@ -65,17 +69,17 @@ setopt hist_ignore_dups
 # コマンド履歴・共有
 setopt share_history
 # コマンド履歴・シェル横断実行時間順ヒストリ保存
-setopt incappendhistory
+setopt incappend_history
 # コマンド履歴・コマンド実行時間保存
 setopt extended_history
 # historyコマンドを記録しない
-setopt histnostore
+setopt hist_no_store
 # 余分なスペースは保存しない
 setopt hist_reduce_blanks
 # 行頭がスペースで始まるコマンドを記録しない
 setopt hist_ignore_space
 # 拡張ファイルグロブを有効にする
-setopt extendedglob
+setopt extended_glob
 # ファイル名を数値としてソート
 setopt numeric_glob_sort
 # 複数リダイレクト記述有効
