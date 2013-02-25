@@ -31,6 +31,12 @@ noremap <C-w><C-n> <C-w>w
 " 前のウィンドウへ移動
 noremap <C-w>p <C-w>W
 noremap <C-w><C-p> <C-w>W
+" 画面上下分割
+noremap <C-w><C-s> <nop>
+noremap <C-w><C-s> <C-w><C-s>
+" 画面左右分割
+noremap <C-w><C-v> <nop>
+noremap <C-w><C-v> <C-w><C-v>
 
 " unbind-keys
 noremap <C-z> <nop>
