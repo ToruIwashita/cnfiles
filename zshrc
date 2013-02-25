@@ -1,8 +1,8 @@
-### fpathに.zfunc,.zfunc_local追加
+## fpathに.zfunc,.zfunc_local追加
 fpath=($fpath ~/.zfunc)
 #fpath=($fpath ~/.zfunc_local)
 
-### オートロード
+## オートロード
 # 色の定義
 autoload -Uz colors && colors
 # 自動補完
@@ -11,7 +11,7 @@ autoload -Uz compinit && compinit
 autoload -Uz ~/.zfunc/*(:t) && ~/.zfunc/*(:t)
 #autoload -Uz ~/.zfunc_local/*(:t) && ~/.zfunc_local/*(:t)
 
-### プロンプトの定義
+## プロンプトの定義
 PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
 # vimモード識別
 function zle-line-init zle-keymap-select {
@@ -28,7 +28,7 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-### キーバインド
+## キーバインド
 # vimモード
 bindkey -v
 # Ctr+Aで行頭へ
@@ -52,20 +52,22 @@ bindkey "^[[Z" reverse-menu-complete
 # Ctr+z無効化
 bindkey -r "^Z"
 
-### エイリアス
+## エイリアス
 alias sz="source ~/.zshrc"
 
-### オプション設定
+## オプション設定
 # 自動CD
 setopt auto_cd
 # 自動的にディレクトリスタックにカレントディレクトリスタック追加
 setopt auto_pushd
+# ファイル補完種類表示
+setopt list_types
 # ビープ音なし
 setopt no_beep
 # 補完のときプロンプトの位置を変えない
 setopt always_last_prompt
-# 重複コマンド記録しない
-setopt hist_ignore_dups
+# 重複コマンド記録しない(古い行を消して新しい行を追加)
+setopt hist_ignore_all_dups
 # コマンド履歴・共有
 setopt share_history
 # コマンド履歴・シェル横断実行時間順ヒストリ保存
@@ -84,8 +86,15 @@ setopt extended_glob
 setopt numeric_glob_sort
 # 複数リダイレクト記述有効
 setopt multios
+# リダイレクト時既に存在するファイル上書きエラー
+setopt no_clobber
+# 入力スペル訂正
+setopt correct
+# フローコントロール無効
+setopt no_flow_control
 
-### コマンド履歴
+
+## コマンド履歴
 # ヒストリファイル
 HISTFILE=~/.zsh_history
 # メモリに展開する履歴数
@@ -93,7 +102,7 @@ HISTSIZE=100000
 # 保存する履歴数
 SAVEHIST=100000
 
-### triwst/下のzsh,tmux,vimをコピー
+## triwst/下のzsh,tmux,vimをコピー
 function z_sync_origin() {
   [ -d ~/.zfunc ] || mkdir ~/.zfunc
   [ -d ~/.vim ] || mkdir ~/.vim
@@ -109,7 +118,7 @@ function z_sync_origin() {
   echo "sync complete."
 }
 
-### .triwst/下のzshrcをコピー
+## .triwst/下のzshrcをコピー
 function z_sync_zshrc() {
   cp -p ~/.triwst/zshrc ~/.zshrc
   source ~/.zshrc
