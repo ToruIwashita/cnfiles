@@ -8,8 +8,18 @@ autoload -Uz colors && colors
 # 自動補完
 autoload -Uz compinit && compinit
 # 自作関数 [TODO]: ファイルが存在しないときはオートロードしないように分岐させる
+#zfunc_files=$(ls ~/.zfunc/)
+#for file in ${zfunc_files}; do
+#  autoload -Uz ~/.zfunc/${file} && ~/.zfunc/${file}
+#done
+
+#local_zfunc_files=$(ls ~/.zfunc_local/)
+#for file in ${local_zfunc_files}; do
+#  autoload -Uz ~/.zfunc_local/${file} && ~/.zfunc_local/${file}
+#done
 autoload -Uz ~/.zfunc/*(:t) && ~/.zfunc/*(:t)
 #autoload -Uz ~/.zfunc_local/*(:t) && ~/.zfunc_local/*(:t)
+
 
 ## プロンプトの定義
 PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
@@ -88,8 +98,6 @@ setopt numeric_glob_sort
 setopt multios
 # リダイレクト時既に存在するファイル上書きエラー
 setopt no_clobber
-# 入力スペル訂正
-setopt correct
 # フローコントロール無効
 setopt no_flow_control
 
