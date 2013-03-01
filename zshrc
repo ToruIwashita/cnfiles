@@ -1,25 +1,18 @@
-## fpathに.zfunc,.zfunc_local追加
-fpath=($fpath ~/.zfunc)
-#fpath=($fpath ~/.zfunc_local)
-
 ## オートロード
+# 自作関数
+function_directories=(.zfunc .zfunc_local)
+for dir in ${function_directories[@]}; do
+  fpath=($fpath ~/${dir})
+
+  for file in `ls ~/${dir}`; do
+    autoload -Uz ~/${dir}/${file}(:t) && ~/${dir}/${file}(:t)
+  done
+done
+
 # 色の定義
 autoload -Uz colors && colors
 # 自動補完
 autoload -Uz compinit && compinit
-# 自作関数 [TODO]: ファイルが存在しないときはオートロードしないように分岐させる
-#zfunc_files=$(ls ~/.zfunc/)
-#for file in ${zfunc_files}; do
-#  autoload -Uz ~/.zfunc/${file} && ~/.zfunc/${file}
-#done
-
-#local_zfunc_files=$(ls ~/.zfunc_local/)
-#for file in ${local_zfunc_files}; do
-#  autoload -Uz ~/.zfunc_local/${file} && ~/.zfunc_local/${file}
-#done
-autoload -Uz ~/.zfunc/*(:t) && ~/.zfunc/*(:t)
-#autoload -Uz ~/.zfunc_local/*(:t) && ~/.zfunc_local/*(:t)
-
 
 ## プロンプトの定義
 PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
@@ -63,6 +56,7 @@ bindkey "^[[Z" reverse-menu-complete
 bindkey -r "^Z"
 
 ## エイリアス
+alias ls="ls -G"
 alias sz="source ~/.zshrc"
 
 ## オプション設定
