@@ -56,7 +56,6 @@ bindkey "^[[Z" reverse-menu-complete
 bindkey -r "^Z"
 
 ## エイリアス
-alias ls="ls -G"
 alias sz="source ~/.zshrc"
 
 ## オプション設定

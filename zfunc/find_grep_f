@@ -1,0 +1,10 @@
+## find&grep関数
+
+function gfind() {
+  if [ $# -lt 2 ]; then
+    echo "lack of arguments."
+    return 1
+  fi  
+
+  find $1 -print0 | xargs -0 grep $2
+}
