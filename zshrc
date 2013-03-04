@@ -1,3 +1,7 @@
+## 環境変数
+# lsの色設定
+export LS_COLORS=gxfxcxdxbxegedabagacad
+
 ## オートロード
 # 自作関数
 function_directories=(.zfunc .zfunc_local)
@@ -56,6 +60,8 @@ bindkey "^[[Z" reverse-menu-complete
 bindkey -r "^Z"
 
 ## エイリアス
+alias ls="ls --color"
+alias grep="grep --color"
 alias sz="source ~/.zshrc"
 
 ## オプション設定
@@ -93,7 +99,6 @@ setopt multios
 setopt no_clobber
 # フローコントロール無効
 setopt no_flow_control
-
 
 ## コマンド履歴
 # ヒストリファイル
