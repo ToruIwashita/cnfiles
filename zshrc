@@ -1,7 +1,3 @@
-## 環境変数
-# lsの色設定
-export LS_COLORS=gxfxcxdxbxegedabagacad
-
 ## オートロード
 # 自作関数
 function_directories=(.zfunc .zfunc_local)
