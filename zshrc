@@ -31,6 +31,9 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 
+## stty画面出力停止無効
+stty stop undef
+
 ## キーバインド
 # vimモード
 bindkey -v
