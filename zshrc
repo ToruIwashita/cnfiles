@@ -6,7 +6,6 @@ source ~/.zsh.d/zconf_local
 # 自作関数
 function_directories=(.zsh.d/zfunc .zsh.d/zfunc_local)
 for dir in ${function_directories[@]}; do
-echo ${dir}
   fpath=($fpath ~/${dir})
 
   for file in `ls ~/${dir}`; do
