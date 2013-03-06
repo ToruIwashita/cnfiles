@@ -1,5 +1,7 @@
 ## triwst/下のzsh,tmux,vimをコピー
 function z_sync_origin() {
+  [ -d ~/.zsh.d/zfunc_local ] || touch ~/.zsh.d/zfunc_local
+  [ -f ~/.zsh.d/zconf_local ] || touch ~/.zsh.d/zconf_local
   [ -d ~/.vim ] || mkdir ~/.vim
   [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
 
@@ -7,9 +9,8 @@ function z_sync_origin() {
   cp -p ~/.triwst/tmux.conf ~/.tmux.conf
   cp -p ~/.triwst/vimrc ~/.vimrc
   cp -p ~/.triwst/zsh.d/zconf ~/.zsh.d/zconf
-  cp -p ~/.triwst/zsh.d/zconf_local ~/.zsh.d/zconf_local
 
-  source_directories=(zsh.d/zfunc zsh.d/zfunc_local vim/plugin)
+  source_directories=(zsh.d/zfunc vim/plugin)
   for dir in ${source_directories[@]}; do
     for file in `ls ~/.triwst/${dir}`; do
       cp -p ~/.triwst/${dir}/${file} ~/.${dir}/${file}

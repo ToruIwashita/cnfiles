@@ -87,7 +87,7 @@ bindkey "^[[Z" reverse-menu-complete
 bindkey -r "^Z"
 
 ## エイリアス
-alias ls="ls -G"
+alias ls="ls --color"
 alias grep="grep --color"
 alias sz="source ~/.zshrc"
 
