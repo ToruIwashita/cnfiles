@@ -1,5 +1,4 @@
 ## find&grep関数
-
 function gfind() {
   if [ $# -lt 2 ]; then
     echo "lack of arguments."
