@@ -6,10 +6,16 @@ function z_sync_origin() {
   cp -p ~/.triwst/zshrc ~/.zshrc
   cp -p ~/.triwst/tmux.conf ~/.tmux.conf
   cp -p ~/.triwst/vimrc ~/.vimrc
-  cp -p ~/.triwst/zsh.d/* ~/.zsh.d/
-  cp -p ~/.triwst/zsh.d/zfunc/* ~/.zsh.d/zfunc/
-  cp -p ~/.triwst/zsh.d/zfunc_local/* ~/.zsh.d/zfunc_local/
-  cp -p ~/.triwst/vim/plugin/* ~/.vim/plugin/
+  cp -p ~/.triwst/zsh.d/zconf ~/.zsh.d/zconf
+  cp -p ~/.triwst/zsh.d/zconf_local ~/.zsh.d/zconf_local
+
+  source_directories=(zsh.d/zfunc zsh.d/zfunc_local vim/plugin)
+  for dir in ${source_directories[@]}; do
+    for file in `ls ~/.triwst/${dir}`; do
+      cp -p ~/.triwst/${dir}/${file} ~/.${dir}/${file}
+    done
+  done
+
   source ~/.zshrc
 
   echo "sync complete."
