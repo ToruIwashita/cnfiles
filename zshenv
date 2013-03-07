@@ -1,3 +1,4 @@
+## ログインと同時にtmuxアタッチ
 if [ -z "$TMUX" -a -z "$STY" ]; then
   if type tmuxx >/dev/null 2>&1; then
     tmuxx
