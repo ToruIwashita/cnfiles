@@ -81,8 +81,6 @@ bindkey "^P" up-line-or-history
 bindkey "^R" history-incremental-search-backward
 # Shift+tabで逆タブ補完
 bindkey "^[[Z" reverse-menu-complete
-# Ctr+z無効化
-bindkey -r "^Z"
 
 ## エイリアス
 alias ls="ls --color"
