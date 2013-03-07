@@ -1,7 +1,9 @@
 ## triwst/下のzsh,tmux,vimをコピー
 function z_sync_origin() {
-  [ -d ~/.zsh.d/zfunc_local ] || mkdir ~/.zsh.d/zfunc_local
+  [ -f ~/.zsh.d/zconf ] || touch ~/.zsh.d/zconf
   [ -f ~/.zsh.d/zconf_local ] || touch ~/.zsh.d/zconf_local
+  [ -d ~/.zsh.d/zfunc ] || mkdir ~/.zsh.d/zfunc
+  [ -d ~/.zsh.d/zfunc_local ] || mkdir ~/.zsh.d/zfunc_local
   [ -d ~/.vim ] || mkdir ~/.vim
   [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
 
