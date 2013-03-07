@@ -4,11 +4,9 @@ PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
 function zle-line-init zle-keymap-select {
   case $KEYMAP in
     vicmd)
-      PROMPT="[%n]:%./%{$bg_bold[blue]%}%#%{$reset_color%} "
-    ;;
+      PROMPT="[%n]:%./%{$bg_bold[blue]%}%#%{$reset_color%} " ;;
     main|viins)
-      PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
-    ;;
+      PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} " ;;
   esac
   zle reset-prompt
 }
