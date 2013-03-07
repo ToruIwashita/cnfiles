@@ -21,7 +21,7 @@ function z_sync_origin() {
 
   source ~/.zshrc
 
-  echo "sync complete."
+  print "sync complete."
 }
 
 ## .triwst/下のzshrcをコピー
@@ -29,6 +29,6 @@ function z_sync_zshrc() {
   cp -p ~/.triwst/zshrc ~/.zshrc
   source ~/.zshrc
 
-  echo "sync complete."
+  print "sync complete."
 }
 
