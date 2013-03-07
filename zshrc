@@ -2,6 +2,9 @@
 [ -f ~/.zsh.d/zconf ] || touch ~/.zsh.d/zconf && source ~/.zsh.d/zconf
 [ -f ~/.zsh.d/zconf_local ] || touch ~/.zsh.d/zconf_local && source ~/.zsh.d/zconf_local
 
+## プラグイン読込
+source ~/.zsh.d/plugin/auto-fu.zsh
+
 ## オートロード
 # 自作関数
 function_directories=(.zsh.d/zfunc .zsh.d/zfunc_local)
@@ -19,3 +22,20 @@ autoload -Uz colors && colors
 # 自動補完
 autoload -Uz compinit && compinit
 
+## プロンプトの定義
+PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
+# vimモード識別
+function zle-line-init zle-keymap-select {
+  case $KEYMAP in
+    vicmd)
+      PROMPT="[%n]:%./%{$bg_bold[blue]%}%#%{$reset_color%} " ;;
+    main|viins)
+      PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} " ;;
+  esac
+
+  zle reset-prompt
+  auto-fu-init;
+}
+zle -N zle-line-init
+zle -N zle-keymap-select auto-fu-zle-keymap-select
+zstyle ':completion:*:default' menu select=1
