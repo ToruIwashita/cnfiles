@@ -4,7 +4,6 @@ function z_sync_origin() {
   [ -f ~/.zsh.d/zconf_local ] || touch ~/.zsh.d/zconf_local
   [ -d ~/.zsh.d/zfunc ] || mkdir ~/.zsh.d/zfunc
   [ -d ~/.zsh.d/zfunc_local ] || mkdir ~/.zsh.d/zfunc_local
-  [ -d ~/.zsh.d/plugin ] || mkdir ~/.zsh.d/plugin
   [ -d ~/.vim ] || mkdir ~/.vim
   [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
 
@@ -13,7 +12,7 @@ function z_sync_origin() {
   cp -p ~/.triwst/vimrc ~/.vimrc
   cp -p ~/.triwst/zsh.d/zconf ~/.zsh.d/zconf
 
-  source_directories=(zsh.d/zfunc zsh.d/plugin vim/plugin)
+  source_directories=(zsh.d/zfunc vim/plugin)
   for dir in ${source_directories[@]}; do
     for file in `ls ~/.triwst/${dir}`; do
       cp -p ~/.triwst/${dir}/${file} ~/.${dir}/${file}

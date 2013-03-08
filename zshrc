@@ -2,9 +2,6 @@
 [ -f ~/.zsh.d/zconf ] || touch ~/.zsh.d/zconf && source ~/.zsh.d/zconf
 [ -f ~/.zsh.d/zconf_local ] || touch ~/.zsh.d/zconf_local && source ~/.zsh.d/zconf_local
 
-## プラグイン読込
-source ~/.zsh.d/plugin/auto-fu.zsh
-
 ## オートロード
 # 自作関数
 function_directories=(.zsh.d/zfunc .zsh.d/zfunc_local)
@@ -16,7 +13,6 @@ for dir in ${function_directories[@]}; do
     autoload -Uz ~/${dir}/${file}(:t) && ~/${dir}/${file}(:t)
   done
 done
-
 # 色の定義
 autoload -Uz colors && colors
 # 自動補完
@@ -34,8 +30,7 @@ function zle-line-init zle-keymap-select {
   esac
 
   zle reset-prompt
-  auto-fu-init;
 }
 zle -N zle-line-init
-zle -N zle-keymap-select auto-fu-zle-keymap-select
-zstyle ':completion:*:default' menu select=1
+zle -N zle-keymap-select
+
