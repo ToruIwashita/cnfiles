@@ -84,17 +84,25 @@ bindkey "^D" delete-char-or-list
 bindkey "^E" end-of-line
 # Ctr+Fで１文字右へ
 bindkey "^F" forward-char
+# Ctr+Gで入力キャンセル
+bindkey "^G" send-break
 # Ctr+Nで１行下へ
 bindkey "^N" down-line-or-history
 # Ctr+Pで１行上へ
 bindkey "^P" up-line-or-history
 # Ctr+Rでインクリメンタルサーチ
 bindkey "^R" history-incremental-search-backward
+# Ctr+Yでコマンドラインスタック
+bindkey -v '^Y' push-input
 # Shift+tabで逆タブ補完
 bindkey "^[[Z" reverse-menu-complete
 
 ## エイリアス
+alias ez="exec zsh"
+alias sz="source ~/.zshrc"
+alias cp="cp -ip"
+alias mv="mv -i"
+alias rm="rm -i"
 alias ls="ls --color"
 alias grep="grep --color"
-alias sz="source ~/.zshrc"
 
