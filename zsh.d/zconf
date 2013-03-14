@@ -105,4 +105,8 @@ alias mv="mv -i"
 alias rm="rm -i"
 alias ls="ls --color"
 alias grep="grep --color"
+alias ga="git add"
+alias gs="git status"
+alias gd="git diff"
+alias gc="git commit"
 
