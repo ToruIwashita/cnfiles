@@ -1,13 +1,12 @@
 ## LS,ZLE色設定
 export LSCOLORS=gxfxcxdxbxegedabagacad
-export ZLS_COLORS=$LSCOLORS
 
 ## stty画面出力停止無効
 stty stop undef
 
 ## 補完候補のカーソル選択有効・色付け
 zstyle ':completion:*:default' menu select = 1
-zstyle ':completion:*:default' list-colors ${(s.:.)ZLS_COLORS}
+zstyle ':completion:*:default' list-colors 'di=;36;1' 'ln=;35;1' 'so=;32;1' 'ex=31;1' 'bd=46;34' 'cd=43;34'
 
 ## オプション設定
 # ビープ音なし
