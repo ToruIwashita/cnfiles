@@ -18,15 +18,18 @@ autoload -Uz colors && colors
 # 自動補完
 autoload -Uz compinit && compinit
 
+## pathの重複登録無効
+typeset -U fpath
+
 ## プロンプトの定義
-PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
+PROMPT="[%n]{%?}:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
 # vimモード識別
 function zle-line-init zle-keymap-select {
   case $KEYMAP in
     vicmd)
-      PROMPT="[%n]:%./%{$bg_bold[blue]%}%#%{$reset_color%} " ;;
+      PROMPT="[%n]{%?}:%./%{$bg_bold[blue]%}%#%{$reset_color%} " ;;
     main|viins)
-      PROMPT="[%n]:%./%{$fg_bold[blue]%}%#%{$reset_color%} " ;;
+      PROMPT="[%n]{%?}:%./%{$fg_bold[blue]%}%#%{$reset_color%} " ;;
   esac
 
   zle reset-prompt
@@ -34,5 +37,3 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-# pathの重複登録無効
-typeset -U fpath
