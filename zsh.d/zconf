@@ -75,27 +75,27 @@ SAVEHIST=100000
 # vimモード
 bindkey -v
 # Ctr+Aで行頭へ
-bindkey "^A" beginning-of-line
+bindkey -v "^A" beginning-of-line
 # Ctr+Bで１文字左へ
-bindkey "^B" backward-char
+bindkey -v "^B" backward-char
 # Ctr+Dで１文字削除
-bindkey "^D" delete-char-or-list
+bindkey -v "^D" delete-char-or-list
 # Ctr+Eで行末へ
-bindkey "^E" end-of-line
+bindkey -v "^E" end-of-line
 # Ctr+Fで１文字右へ
-bindkey "^F" forward-char
+bindkey -v "^F" forward-char
 # Ctr+Gで入力キャンセル
-bindkey "^G" send-break
+bindkey -v "^G" send-break
 # Ctr+Nで１行下へ
-bindkey "^N" down-line-or-history
+bindkey -v "^N" down-line-or-history
 # Ctr+Pで１行上へ
-bindkey "^P" up-line-or-history
+bindkey -v "^P" up-line-or-history
 # Ctr+Rでインクリメンタルサーチ
-bindkey "^R" history-incremental-search-backward
+bindkey -v "^R" history-incremental-search-backward
 # Ctr+Yでコマンドラインスタック
 bindkey -v '^Y' push-input
 # Shift+tabで逆タブ補完
-bindkey "^[[Z" reverse-menu-complete
+bindkey -v "^[[Z" reverse-menu-complete
 
 ## エイリアス
 alias ez="exec zsh"
