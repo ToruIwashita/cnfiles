@@ -1,5 +1,5 @@
 ## find&grep関数
-function find_g() {
+function gfind() {
   if [ $# -lt 2 ]; then
     print "lack of arguments."
     return 1
