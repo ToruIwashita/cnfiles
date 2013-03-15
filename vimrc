@@ -11,6 +11,13 @@ noremap <C-w><C-s> <C-w><C-s>
 " ウィンドウ左右分割
 noremap <C-w><C-v> <nop>
 noremap <C-w><C-v> <C-w><C-v>
+" サスペンド無効化
+noremap <C-z> <nop>
+" デフォルトウィンドウ移動無効化
+noremap <C-w>w <nop>
+noremap <C-w><C-w> <nop>
+noremap <C-w>W <nop>
+noremap <C-w><C-W> <nop>
 
 "" インサートモードキーバインド
 " 一文字delete
@@ -23,15 +30,6 @@ inoremap <C-f> <right>
 inoremap <C-n> <down>
 " Ctr+pで上へ移動
 inoremap <C-p> <up>
-
-"" unbind-keys
-" サスペンド無効化
-noremap <C-z> <nop>
-" デフォルトウィンドウ移動無効化
-noremap <C-w>w <nop>
-noremap <C-w><C-w> <nop>
-noremap <C-w>W <nop>
-noremap <C-w><C-W> <nop>
 
 "" オプション
 " エンコーディングUTF-8
