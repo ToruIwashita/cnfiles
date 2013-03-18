@@ -104,11 +104,13 @@ alias mv="mv -i"
 alias rm="rm -i"
 alias ls="ls --color"
 alias grep="grep --color"
+# CD系
+alias cdt="cd ~/.triwst"
+alias cdz="cd ~/.zsh.d"
+# GIT系
 alias ga="git add"
 alias gs="git status"
 alias gd="git diff"
 alias gc="git commit"
-# CD系
-alias cdt="cd ~/.triwst"
-alias cdz="cd ~/.zsh.d"
-
+alias gl="git log"
+alias gla="git log --graph --all --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"
