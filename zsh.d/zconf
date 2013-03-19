@@ -93,6 +93,8 @@ bindkey -v "^P" up-line-or-history
 bindkey -v "^R" history-incremental-search-backward
 # Ctr+Yでコマンドラインスタック
 bindkey -v '^Y' push-input
+# Ctr+Uでundo
+bindkey -v '^U' undo
 # Shift+tabで逆タブ補完
 bindkey -v "^[[Z" reverse-menu-complete
 
