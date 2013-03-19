@@ -27,6 +27,8 @@ setopt magic_equal_subst
 setopt auto_param_keys
 # ディレクトリ名の補完で末尾の"/"を自動的に付加
 setopt auto_param_slash
+# スペースで /を削除
+setopt auto_remove_slash
 # 補完のときプロンプトの位置を変えない
 setopt always_last_prompt
 # 補完候補を詰めて表示
