@@ -67,9 +67,7 @@ HISTSIZE=100000
 # 保存する履歴数
 SAVEHIST=100000
 
-## キーバインド
-# vimモード
-bindkey -v
+## vimモードキーマップ
 # Ctr+Aで行頭へ
 bindkey -v "^A" beginning-of-line
 # Ctr+Bで１文字左へ
@@ -94,6 +92,12 @@ bindkey -v '^Y' push-input
 bindkey -v '^U' undo
 # Shift+tabで逆タブ補完
 bindkey -v "^[[Z" reverse-menu-complete
+## 補完メニュー選択モードキーマップ
+bindkey -M menuselect '^B' backword-char
+bindkey -M menuselect '^F' forward-char
+bindkey -M menuselect '^N' down-line-or-history
+bindkey -M menuselect '^P' up-line-or-history
+bindkey -M menuselect '^J' acceop-and-infer-next-history
 
 ## エイリアス
 alias ez="exec zsh"

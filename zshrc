@@ -18,6 +18,8 @@ done
 autoload -Uz colors && colors
 # 自動補完
 autoload -Uz compinit && compinit
+# 補完メニュー選択モードのキーマップ
+zmodload -i zsh/complist
 
 ## pathの重複登録無効
 typeset -U fpath
