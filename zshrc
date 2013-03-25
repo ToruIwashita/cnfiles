@@ -41,6 +41,7 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 
-## 補完候補のカーソル選択有効・色付け
+# 補完候補のカーソル選択有効
 zstyle ':completion:*:default' menu true select
+# 補完候補色付け
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}

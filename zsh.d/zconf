@@ -93,10 +93,15 @@ bindkey -v '^U' undo
 # Shift+tabで逆タブ補完
 bindkey -v "^[[Z" reverse-menu-complete
 ## 補完メニュー選択モードキーマップ
+# Ctr+Bで左へ
 bindkey -M menuselect '^B' backword-char
+# Ctr+Fで右へ
 bindkey -M menuselect '^F' forward-char
+# Ctr+Nで下へ
 bindkey -M menuselect '^N' down-line-or-history
+# Ctr+Pで上へ
 bindkey -M menuselect '^P' up-line-or-history
+# Ctr+Jで次の補完メニュー
 bindkey -M menuselect '^J' accept-and-infer-next-history
 
 ## エイリアス
