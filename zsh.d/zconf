@@ -12,8 +12,8 @@ setopt auto_pushd
 setopt list_types
 # 補完候補を一覧表示
 setopt auto_list
-# TAB で順に補完候補を切り替える
-setopt auto_menu
+# 候補が複数ある時直ちにメニュー補完に移行
+setopt menu_complete
 # オプション指定時"="以降も補完
 setopt magic_equal_subst
 # カッコの対応などを自動的に補完
