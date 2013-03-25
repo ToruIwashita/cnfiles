@@ -1,6 +1,7 @@
 ## 設定読込
 [ -f ~/.zsh.d/zconf ] || touch ~/.zsh.d/zconf && source ~/.zsh.d/zconf
 [ -f ~/.zsh.d/zconf_local ] || touch ~/.zsh.d/zconf_local && source ~/.zsh.d/zconf_local
+[ -f ~/.zsh.d/ls_colors ] || touch ~/.zsh.d/ls_colors && source ~/.zsh.d/ls_colors
 
 ## オートロード
 # 自作関数
@@ -37,3 +38,6 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 
+## 補完候補のカーソル選択有効・色付け
+zstyle ':completion:*:default' menu select = 1
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
