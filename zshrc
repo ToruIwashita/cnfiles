@@ -39,5 +39,5 @@ zle -N zle-line-init
 zle -N zle-keymap-select
 
 ## 補完候補のカーソル選択有効・色付け
-zstyle ':completion:*:default' menu select = 1
+zstyle ':completion:*:default' menu true select
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
