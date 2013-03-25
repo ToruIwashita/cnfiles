@@ -1,4 +1,11 @@
-## 設定読込
+# 色の定義
+autoload -Uz colors && colors
+# 自動補完
+autoload -Uz compinit && compinit
+# 補完メニュー選択モードのキーマップ
+zmodload -i zsh/complist
+
+# 各種設定読込
 [ -f ~/.zsh.d/zconf ] || touch ~/.zsh.d/zconf && source ~/.zsh.d/zconf
 [ -f ~/.zsh.d/zconf_local ] || touch ~/.zsh.d/zconf_local && source ~/.zsh.d/zconf_local
 [ -f ~/.zsh.d/ls_colors ] || touch ~/.zsh.d/ls_colors && source ~/.zsh.d/ls_colors
@@ -14,12 +21,6 @@ for dir in ${function_directories[@]}; do
     autoload -Uz ~/${dir}/${file}(:t) && ~/${dir}/${file}(:t)
   done
 done
-# 色の定義
-autoload -Uz colors && colors
-# 自動補完
-autoload -Uz compinit && compinit
-# 補完メニュー選択モードのキーマップ
-zmodload -i zsh/complist
 
 ## pathの重複登録無効
 typeset -U fpath
