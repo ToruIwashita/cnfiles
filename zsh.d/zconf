@@ -97,7 +97,7 @@ bindkey -M menuselect '^B' backword-char
 bindkey -M menuselect '^F' forward-char
 bindkey -M menuselect '^N' down-line-or-history
 bindkey -M menuselect '^P' up-line-or-history
-bindkey -M menuselect '^J' acceop-and-infer-next-history
+bindkey -M menuselect '^J' accept-and-infer-next-history
 
 ## エイリアス
 alias ez="exec zsh"
