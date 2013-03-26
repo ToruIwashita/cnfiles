@@ -44,4 +44,6 @@ zle -N zle-keymap-select
 # 補完候補のカーソル選択有効
 zstyle ':completion:*:default' menu true select
 # 補完候補色付け
-zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+if [ -n "$LS_COLORS" ]; then
+  zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+fi
