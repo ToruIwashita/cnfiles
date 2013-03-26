@@ -41,9 +41,11 @@ function zle-line-init zle-keymap-select {
 zle -N zle-line-init
 zle -N zle-keymap-select
 
+# コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
+zstyle ':completion:*' completer _complete _match _ignored _prefix
 # 補完候補のカーソル選択有効
-zstyle ':completion:*:default' menu true select
+zstyle ':completion:*' menu true select
 # 補完候補色付け
 if [ -n "$LS_COLORS" ]; then
-  zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+  zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 fi

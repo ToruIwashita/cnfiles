@@ -18,6 +18,8 @@ setopt menu_complete
 setopt magic_equal_subst
 # カッコの対応などを自動的に補完
 setopt auto_param_keys
+# 単語途中の補完
+setopt complete_in_word
 # ディレクトリ名の補完で末尾の"/"を自動的に付加
 setopt auto_param_slash
 # スペースで /を削除
