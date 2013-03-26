@@ -8,16 +8,16 @@ function z_sync_origin() {
   [ -d ~/.vim ] || mkdir ~/.vim
   [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
 
-  cp -p ~/.triwst/zshrc ~/.zshrc
-  cp -p ~/.triwst/tmux.conf ~/.tmux.conf
-  cp -p ~/.triwst/vimrc ~/.vimrc
-  cp -p ~/.triwst/zsh.d/zconf ~/.zsh.d/zconf
-  cp -p ~/.triwst/zsh.d/ls_colors ~/.zsh.d/ls_colors
+  \cp -p ~/.triwst/zshrc ~/.zshrc
+  \cp -p ~/.triwst/tmux.conf ~/.tmux.conf
+  \cp -p ~/.triwst/vimrc ~/.vimrc
+  \cp -p ~/.triwst/zsh.d/zconf ~/.zsh.d/zconf
+  \cp -p ~/.triwst/zsh.d/ls_colors ~/.zsh.d/ls_colors
 
   source_directories=(zsh.d/zfunc vim/plugin)
   for dir in ${source_directories[@]}; do
     for file in `ls ~/.triwst/${dir}`; do
-      cp -p ~/.triwst/${dir}/${file} ~/.${dir}/${file}
+      \cp -p ~/.triwst/${dir}/${file} ~/.${dir}/${file}
     done
   done
 
@@ -28,7 +28,7 @@ function z_sync_origin() {
 
 ## .triwst/下のzshrcをコピー
 function z_sync_zshrc() {
-  cp -p ~/.triwst/zshrc ~/.zshrc
+  \cp -p ~/.triwst/zshrc ~/.zshrc
   source ~/.zshrc
 
   print "sync complete."
