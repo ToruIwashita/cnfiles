@@ -94,7 +94,7 @@ bindkey -v '^U' undo
 bindkey -v "^[[Z" reverse-menu-complete
 ## 補完メニュー選択モードキーマップ
 # Ctr+Bで左へ
-bindkey -M menuselect '^B' backword-char
+bindkey -M menuselect '^B' backward-char
 # Ctr+Fで右へ
 bindkey -M menuselect '^F' forward-char
 # Ctr+Nで下へ
