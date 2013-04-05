@@ -113,7 +113,6 @@ alias rm="rm -i"
 alias ls="ls --color"
 alias grep="grep --color"
 # CD系
-alias cdt="cd ~/.triwst"
 alias cdz="cd ~/.zsh.d"
 # GIT系
 alias ga="git add"
