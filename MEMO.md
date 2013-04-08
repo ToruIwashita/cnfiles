@@ -1,4 +1,8 @@
 ### メモ
+####・``iTerm2``
+
+    http://www.iterm2.com/#/section/home
+
 ####・``ls``について  
 
 GNU系コマンド集``coreutils``をMacにインストール
