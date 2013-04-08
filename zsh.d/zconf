@@ -112,6 +112,7 @@ alias mv="mv -i"
 alias rm="rm -i"
 alias ls="ls --color"
 alias grep="grep --color"
+alias his="history -50n"
 # CD系
 alias cdz="cd ~/.zsh.d"
 # GIT系
