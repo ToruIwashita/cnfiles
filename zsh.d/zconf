@@ -113,6 +113,7 @@ alias rm="rm -i"
 alias ls="ls --color"
 alias grep="grep --color"
 alias his="history -50n"
+alias tmux="tmux -2"
 # CD系
 alias cdz="cd ~/.zsh.d"
 # GIT系
