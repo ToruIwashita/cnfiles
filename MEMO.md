@@ -3,10 +3,8 @@
 
     http://www.iterm2.com/#/section/home
 
-Font: 13pt Menlo regular
-Character Spacing:
-  Horizontal: 0.8
-  Vertical: 0.9
+Font: 13pt Menlo regular  
+Character Spacing Horizontal: 0.8 Vertical: 0.9  
 
 ####・``ls``について  
 
