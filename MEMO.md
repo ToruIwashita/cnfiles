@@ -5,6 +5,13 @@
 
 Font: 13pt Menlo regular  
 Character Spacing Horizontal: 0.8 Vertical: 0.9  
+Preferences > General > Save copy/paste でペースト履歴をディスクに保存 
+  
+##### iTerm2機能
+ペースト履歴
+``cmd+shift+h``  
+インスタントリプレイ
+``cmd+opt+b``
 
 ####・``ls``について  
 
