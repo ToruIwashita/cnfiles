@@ -34,6 +34,8 @@ inoremap <C-p> <up>
 "" オプション
 " エンコーディングUTF-8
 set encoding=utf8
+" 256色モード
+set t_Co=256
 " カレントバッファ内のファイルの文字UTF-8
 set fileencoding=utf-8
 " タブ文字の代わりに半角スペース
