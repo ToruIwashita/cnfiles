@@ -1,0 +1,105 @@
+## MYSQL用functions
+function mq() {
+  if [ $# -lt 1 ]; then
+    echo "lack of arguments."
+    return 1
+  fi
+
+  if [ $1:e != "sql" ]; then
+    echo "invalid extension."
+    return 1
+  fi
+
+  cmd="cat $1"
+  for ((i=1; i<$#; i++)); do
+    arg_num=`expr $i + 1`
+    cmd=$cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
+  done
+
+  echo "<<Q"
+  eval $cmd
+  echo "Q\n"
+
+  cmd=$cmd" | xargs -0 -i mysql -u -p -e '{}'"
+  echo "command: ${cmd}\n"
+  eval $cmd
+}
+
+function mql() {
+  if [ $# -lt 1 ]; then
+    echo "lack of arguments."
+    return 1
+  fi
+
+  if [ $1:e != "sql" ]; then
+    echo "invalid extension."
+    return 1
+  fi
+
+  cmd="cat $1"
+  for ((i=1; i<$#; i++)); do
+    arg_num=`expr $i + 1`
+    cmd=$cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
+  done
+
+  echo "<<Q"
+  eval $cmd
+  echo "Q\n"
+
+  cmd=$cmd" | xargs -0 -i mysql -u -p -e '{}' >> ~/works/log/mq.log"
+  echo "command: ${cmd}\n"
+  eval $cmd
+}
+
+function mqout() {
+  if [ $# -lt 1 ]; then
+    echo "lack of arguments."
+    return 1
+  fi
+
+  if [ $1:e != "sql" ]; then
+    echo "invalid extension."
+    return 1
+  fi
+
+  cmd="cat $1"
+  for ((i=1; i<$#; i++)); do
+    arg_num=`expr $i + 1`
+    cmd=$cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
+  done
+
+  echo "<<Q"
+  eval $cmd
+  echo "Q\n"
+
+  cmd=$cmd" | xargs -0 -i mysql -u -p -e '{}' >! ~/works/tmp.txt"
+  echo "command: ${cmd}\n"
+  eval $cmd
+}
+
+function mytfind() {
+  if [ $# -lt 1 ]; then
+    echo "lack of arguments."
+    return 1
+  fi
+
+  mysql -u -p -e "show tables" | grep --color $1
+}
+
+function myshow() {
+  if [ $# -lt 1 ]; then
+    echo "lack of arguments."
+    return 1
+  fi
+
+  mysql -u -p -e "DESC ${1}"
+}
+
+function myflist() {
+  if [ $# -lt 1 ]; then
+    echo "lack of arguments."
+    return 1
+  fi
+
+  mysql -u -p -N -e "DESC ${1}" | sed -e "s/\t.*//g" | xargs echo | sed -e "s/ /,/g"
+}
