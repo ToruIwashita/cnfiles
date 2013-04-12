@@ -1,5 +1,11 @@
-## MYSQL用functions
+## MYSQL用functions [TODO]: 重複をまとめる&getopts対応
 function mq() {
+  my_basic_cmd $argv
+  echo "command: ${my_cmd}\n"
+  eval $my_cmd
+}
+
+function my_basic_cmd() {
   if [ $# -lt 1 ]; then
     echo "lack of arguments."
     return 1
@@ -10,96 +16,27 @@ function mq() {
     return 1
   fi
 
-  cmd="cat $1"
+  my_cmd="cat $1"
   for ((i=1; i<$#; i++)); do
     arg_num=`expr $i + 1`
-    cmd=$cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
+    my_cmd=$my_cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
   done
 
   echo "<<Q"
-  eval $cmd
+  eval $my_cmd
   echo "Q\n"
 
-  cmd=$cmd" | xargs -0 -i mysql -u -p -e '{}'"
-  echo "command: ${cmd}\n"
-  eval $cmd
+  my_cmd=$my_cmd" | xargs -0 mysql -u -p -e '{}'"
 }
 
-function mql() {
-  if [ $# -lt 1 ]; then
-    echo "lack of arguments."
-    return 1
-  fi
-
-  if [ $1:e != "sql" ]; then
-    echo "invalid extension."
-    return 1
-  fi
-
-  cmd="cat $1"
-  for ((i=1; i<$#; i++)); do
-    arg_num=`expr $i + 1`
-    cmd=$cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
+function myfind() {
+  while getopts t: OPT; do
+    case ${OPT} in
+      t) ENABLE_t="true"; VALUE_t=${OPTARG} ;;
+      :|\?) return 1 ;;
+    esac
   done
 
-  echo "<<Q"
-  eval $cmd
-  echo "Q\n"
-
-  cmd=$cmd" | xargs -0 -i mysql -u -p -e '{}' >> ~/works/log/mq.log"
-  echo "command: ${cmd}\n"
-  eval $cmd
+#  mysql -u -p -e "show tables" | grep --color $table_name
 }
 
-function mqout() {
-  if [ $# -lt 1 ]; then
-    echo "lack of arguments."
-    return 1
-  fi
-
-  if [ $1:e != "sql" ]; then
-    echo "invalid extension."
-    return 1
-  fi
-
-  cmd="cat $1"
-  for ((i=1; i<$#; i++)); do
-    arg_num=`expr $i + 1`
-    cmd=$cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
-  done
-
-  echo "<<Q"
-  eval $cmd
-  echo "Q\n"
-
-  cmd=$cmd" | xargs -0 -i mysql -u -p -e '{}' >! ~/works/tmp.txt"
-  echo "command: ${cmd}\n"
-  eval $cmd
-}
-
-function mytfind() {
-  if [ $# -lt 1 ]; then
-    echo "lack of arguments."
-    return 1
-  fi
-
-  mysql -u -p -e "show tables" | grep --color $1
-}
-
-function myshow() {
-  if [ $# -lt 1 ]; then
-    echo "lack of arguments."
-    return 1
-  fi
-
-  mysql -u -p -e "DESC ${1}"
-}
-
-function myflist() {
-  if [ $# -lt 1 ]; then
-    echo "lack of arguments."
-    return 1
-  fi
-
-  mysql -u -p -N -e "DESC ${1}" | sed -e "s/\t.*//g" | xargs echo | sed -e "s/ /,/g"
-}
