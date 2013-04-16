@@ -1,20 +1,33 @@
 ## MYSQL用functions [TODO]: 重複をまとめる&getopts対応
 function mq() {
-  my_basic_cmd $argv
+  my_check_argv $argv
+  if [ $? -eq 1 ]; then
+    return 1
+  fi
+
+  typeset my_cmd
+
+  my_cmd=`my_echo_basic_cmd $argv`
   echo "command: ${my_cmd}\n"
   eval $my_cmd
 }
 
-function my_basic_cmd() {
-  if [ $# -lt 1 ]; then
-    echo "lack of arguments."
+function mqout() {
+  my_check_argv $argv
+  if [ $? -eq 1 ]; then
     return 1
   fi
 
-  if [ $1:e != "sql" ]; then
-    echo "invalid extension."
-    return 1
-  fi
+  typeset my_cmd
+
+  my_cmd=`my_echo_basic_cmd $argv`
+  my_cmd=$my_cmd" >! ~/works/tmp.txt"
+  echo "command: ${my_cmd}\n"
+  eval $my_cmd
+}
+
+function my_echo_basic_cmd() {
+  typeset my_cmd
 
   my_cmd="cat $1"
   for ((i=1; i<$#; i++)); do
@@ -26,17 +39,48 @@ function my_basic_cmd() {
   eval $my_cmd
   echo "Q\n"
 
-  my_cmd=$my_cmd" | xargs -0 mysql -u -p -e '{}'"
+  my_cmd=$my_cmd" | xargs -0 -i mysql test -e '{}'"
+  echo $my_cmd
+}
+
+function my_check_argv() {
+  if [ $# -lt 1 ]; then
+    echo "lack of arguments."
+    return 1
+  fi
+
+  if [ $1:e != "sql" ]; then
+    echo "invalid extension."
+    return 1
+  fi
+
+  return 0
 }
 
 function myfind() {
-  while getopts t: OPT; do
+  typeset my_cmd
+
+  while getopts :t:f: OPT; do
     case ${OPT} in
-      t) ENABLE_t="true"; VALUE_t=${OPTARG} ;;
-      :|\?) return 1 ;;
+      t) typeset table_name; table_name=${OPTARG} ;;
+      f) typeset field_name; field_name=${OPTARG} ;;
+      :|\?) echo "lack of arguments."; return 1 ;;
     esac
   done
 
-#  mysql -u -p -e "show tables" | grep --color $table_name
+  my_cmd="mysql test -e"
+  if [ ${+table_name}${+field_name} -eq 11 ]; then
+    my_cmd=$my_cmd" 'DESC ${table_name}' | grep --color ${field_name}"
+  elif [ ${+table_name} -eq 1 ]; then
+    my_cmd=$my_cmd" 'SHOW TABLES' | grep --color ${table_name}"
+  elif [ ${+field_name} -eq 1 ]; then
+    typeset tables
+    typeset my_cmd_for_tables
+
+    tables=`mysql test -N -e "SHOW TABLES"`
+  fi
 }
 
+function myshow() {
+  my=`mysql test -e 'show tables'`
+}
