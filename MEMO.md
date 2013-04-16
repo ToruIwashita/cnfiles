@@ -13,13 +13,20 @@ Preferences > General > Save copy/paste でペースト履歴をディスクに�
 インスタントリプレイ
 ``cmd+opt+b``
 
-####・``ls``について  
-
-GNU系コマンド集``coreutils``をMacにインストール
+####・GNU系コマンド
+``ls``については``coreutils``をMacにインストール  
 
     $ brew install coreutils  
 
 GNU版``ls``の``gls``と``gdircolors``が使用可能  
+
+``find``,``xargs``については``findutils``をMacにインストール  
+
+    $ brew install findutils
+
+GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能  
+
+※それぞれaliasを設定するのがオススメ
 
 ####・``git log-all``  
 
