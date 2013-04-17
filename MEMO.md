@@ -1,5 +1,5 @@
 ### メモ
-####・``iTerm2``
+####・iTerm2
 
     http://www.iterm2.com/#/section/home
 
@@ -28,7 +28,7 @@ GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能
 
 ※それぞれaliasを設定するのがオススメ
 
-####・``git log-all``  
+####・git log-all  
 
 ``.gitconfig``に以下の``alias``追加
 
