@@ -76,14 +76,14 @@ function myfindg() {
   my_cmd="mysql test -e"
   if [ ${#my_table_name} -gt 0 ] && [ ${#my_field_name} -gt 0 ]; then
     print "Field\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
-    eval $my_cmd" 'DESC ${my_table_name}' | grep --color ${my_field_name}"
+    eval $my_cmd" 'DESC ${my_table_name}' | grep --color '${my_field_name}'"
   elif [ ${#my_table_name} -gt 0 ]; then
     print "Tables\n${my_tmp_line}"
-    eval $my_cmd" 'SHOW TABLES' | grep --color ${my_table_name}"
+    eval $my_cmd" 'SHOW TABLES' | grep --color '${my_table_name}'"
   elif [ ${#my_field_name} -gt 0 ]; then
     print "Table:\tField\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
     for my_table_name in `eval $my_cmd" 'SHOW TABLES' -N"`; do
-      eval_my_cmd=`eval $my_cmd" 'DESC ${my_table_name}' | grep --color ${my_field_name}"`
+      eval_my_cmd=`eval $my_cmd" 'DESC ${my_table_name}' | grep --color '${my_field_name}'"`
       if [ ${#eval_my_cmd} -gt 0 ]; then
         print "${my_table_name}: ${eval_my_cmd}"
       fi
