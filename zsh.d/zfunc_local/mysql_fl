@@ -57,7 +57,7 @@ function my_check_argv() {
   return 0
 }
 
-function myfind() {
+function myfindg() {
   typeset my_cmd
   typeset eval_my_cmd
   typeset table_name
@@ -75,15 +75,15 @@ function myfind() {
   my_cmd="mysql test -e"
   if [ ${#table_name} -gt 0 ] && [ ${#field_name} -gt 0 ]; then
     tmp_line="-------------------------------------------------------"
-    print "Field\tType\tNull\tKey\tDefault\tExtra\n${tmp}"
+    print "Field\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
     eval $my_cmd" 'DESC ${table_name}' | grep --color ${field_name}"
   elif [ ${#table_name} -gt 0 ]; then
     tmp_line="-------------------------------------------------------"
-    print "Tables\n${tmp}"
+    print "Tables\n${tmp_line}"
     eval $my_cmd" 'SHOW TABLES' | grep --color ${table_name}"
   elif [ ${#field_name} -gt 0 ]; then
     tmp_line="-------------------------------------------------------"
-    print "Table:\tField\tType\tNull\tKey\tDefault\tExtra\n${tmp}"
+    print "Table:\tField\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
     for table_name in `eval $my_cmd" 'SHOW TABLES' -N"`; do
       eval_my_cmd=`eval $my_cmd" 'DESC ${table_name}' | grep --color ${field_name}"`
       if [ ${#eval_my_cmd} -gt 0 ]; then
