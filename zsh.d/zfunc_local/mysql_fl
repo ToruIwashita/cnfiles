@@ -1,28 +1,28 @@
-## MYSQL用functions [TODO]: 重複をまとめる&getopts対応
+## MYSQL用functions
 function mq() {
+  typeset my_cmd
+
   my_check_argv $argv
   if [ $? -eq 1 ]; then
     return 1
   fi
 
-  typeset my_cmd
-
   my_cmd=`my_echo_basic_cmd $argv`
-  echo "command: ${my_cmd}\n"
+  print "command: ${my_cmd}\n"
   eval $my_cmd
 }
 
 function mqout() {
+  typeset my_cmd
+
   my_check_argv $argv
   if [ $? -eq 1 ]; then
     return 1
   fi
 
-  typeset my_cmd
-
   my_cmd=`my_echo_basic_cmd $argv`
   my_cmd=$my_cmd" >! ~/works/tmp.txt"
-  echo "command: ${my_cmd}\n"
+  print "command: ${my_cmd}\n"
   eval $my_cmd
 }
 
@@ -35,9 +35,9 @@ function my_echo_basic_cmd() {
     my_cmd=$my_cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
   done
 
-  echo "<<Q"
+  print "<<Q"
   eval $my_cmd
-  echo "Q\n"
+  print "Q\n"
 
   my_cmd=$my_cmd" | xargs -0 -i mysql test -e '{}'"
   echo $my_cmd
@@ -45,12 +45,12 @@ function my_echo_basic_cmd() {
 
 function my_check_argv() {
   if [ $# -lt 1 ]; then
-    echo "lack of arguments."
+    print "lack of arguments."
     return 1
   fi
 
   if [ $1:e != "sql" ]; then
-    echo "invalid extension."
+    print "invalid extension."
     return 1
   fi
 
@@ -59,28 +59,54 @@ function my_check_argv() {
 
 function myfind() {
   typeset my_cmd
+  typeset eval_my_cmd
+  typeset table_name
+  typeset field_name
+  typeset tmp_line
 
   while getopts :t:f: OPT; do
     case ${OPT} in
-      t) typeset table_name; table_name=${OPTARG} ;;
-      f) typeset field_name; field_name=${OPTARG} ;;
-      :|\?) echo "lack of arguments."; return 1 ;;
+      t) table_name=${OPTARG} ;;
+      f) field_name=${OPTARG} ;;
+      :|\?) print "lack of arguments."; return 1 ;;
     esac
   done
 
   my_cmd="mysql test -e"
-  if [ ${+table_name}${+field_name} -eq 11 ]; then
-    my_cmd=$my_cmd" 'DESC ${table_name}' | grep --color ${field_name}"
-  elif [ ${+table_name} -eq 1 ]; then
-    my_cmd=$my_cmd" 'SHOW TABLES' | grep --color ${table_name}"
-  elif [ ${+field_name} -eq 1 ]; then
-    typeset tables
-    typeset my_cmd_for_tables
-
-    tables=`mysql test -N -e "SHOW TABLES"`
+  if [ ${#table_name} -gt 0 ] && [ ${#field_name} -gt 0 ]; then
+    tmp_line="-------------------------------------------------------"
+    print "Field\tType\tNull\tKey\tDefault\tExtra\n${tmp}"
+    eval $my_cmd" 'DESC ${table_name}' | grep --color ${field_name}"
+  elif [ ${#table_name} -gt 0 ]; then
+    tmp_line="-------------------------------------------------------"
+    print "Tables\n${tmp}"
+    eval $my_cmd" 'SHOW TABLES' | grep --color ${table_name}"
+  elif [ ${#field_name} -gt 0 ]; then
+    tmp_line="-------------------------------------------------------"
+    print "Table:\tField\tType\tNull\tKey\tDefault\tExtra\n${tmp}"
+    for table_name in `eval $my_cmd" 'SHOW TABLES' -N"`; do
+      eval_my_cmd=`eval $my_cmd" 'DESC ${table_name}' | grep --color ${field_name}"`
+      if [ ${#eval_my_cmd} -gt 0 ]; then
+        print "${table_name}: ${eval_my_cmd}"
+      fi
+    done
   fi
 }
 
-function myshow() {
-  my=`mysql test -e 'show tables'`
+function mydesc() {
+  if [ $# -lt 1 ]; then
+    print "lack of arguments."
+    return 1
+  fi
+
+  mysql test -e "DESC ${1}"
+}
+
+function myfcsv() {
+  if [ $# -lt 1 ]; then
+    print "lack of arguments."
+    return 1
+  fi
+
+  mysql test -N -e "DESC ${1}" | sed -e "s/\t.*//g" | xargs echo | sed -e "s/ /,/g"
 }
