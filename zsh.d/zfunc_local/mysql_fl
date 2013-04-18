@@ -60,34 +60,34 @@ function my_check_argv() {
 function myfindg() {
   typeset my_cmd
   typeset eval_my_cmd
-  typeset table_name
-  typeset field_name
-  typeset tmp_line
+  typeset my_table_name
+  typeset my_field_name
+  typeset my_tmp_line
 
   while getopts :t:f: OPT; do
     case ${OPT} in
-      t) table_name=${OPTARG} ;;
-      f) field_name=${OPTARG} ;;
+      t) my_table_name=${OPTARG} ;;
+      f) my_field_name=${OPTARG} ;;
       :|\?) print "lack of arguments."; return 1 ;;
     esac
   done
 
   my_cmd="mysql test -e"
-  if [ ${#table_name} -gt 0 ] && [ ${#field_name} -gt 0 ]; then
-    tmp_line="-------------------------------------------------------"
-    print "Field\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
-    eval $my_cmd" 'DESC ${table_name}' | grep --color ${field_name}"
-  elif [ ${#table_name} -gt 0 ]; then
-    tmp_line="-------------------------------------------------------"
-    print "Tables\n${tmp_line}"
-    eval $my_cmd" 'SHOW TABLES' | grep --color ${table_name}"
-  elif [ ${#field_name} -gt 0 ]; then
-    tmp_line="-------------------------------------------------------"
-    print "Table:\tField\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
-    for table_name in `eval $my_cmd" 'SHOW TABLES' -N"`; do
-      eval_my_cmd=`eval $my_cmd" 'DESC ${table_name}' | grep --color ${field_name}"`
+  if [ ${#my_table_name} -gt 0 ] && [ ${#my_field_name} -gt 0 ]; then
+    my_tmp_line="-------------------------------------------------------"
+    print "Field\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
+    eval $my_cmd" 'DESC ${my_table_name}' | grep --color ${my_field_name}"
+  elif [ ${#my_table_name} -gt 0 ]; then
+    my_tmp_line="-------------------------------------------------------"
+    print "Tables\n${my_tmp_line}"
+    eval $my_cmd" 'SHOW TABLES' | grep --color ${my_table_name}"
+  elif [ ${#my_field_name} -gt 0 ]; then
+    my_tmp_line="-------------------------------------------------------"
+    print "Table:\tField\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
+    for my_table_name in `eval $my_cmd" 'SHOW TABLES' -N"`; do
+      eval_my_cmd=`eval $my_cmd" 'DESC ${my_table_name}' | grep --color ${my_field_name}"`
       if [ ${#eval_my_cmd} -gt 0 ]; then
-        print "${table_name}: ${eval_my_cmd}"
+        print "${my_table_name}: ${eval_my_cmd}"
       fi
     done
   fi
