@@ -78,13 +78,13 @@ function myfindg() {
   my_tmp_line="-------------------------------------------------------"
   my_cmd="mysql test -e"
   if [ ${#my_table_name} -gt 0 ] && [ ${#my_field_name} -gt 0 ]; then
-    print "\nField\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
+    print "Field\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
     eval $my_cmd" 'DESC ${my_table_name}' | grep --color '${my_field_name}'"
   elif [ ${#my_table_name} -gt 0 ]; then
-    print "\nTables\n${my_tmp_line}"
+    print "Tables\n${my_tmp_line}"
     eval $my_cmd" 'SHOW TABLES' | grep --color '${my_table_name}'"
   elif [ ${#my_field_name} -gt 0 ]; then
-    print "\nTable: 'name'\nField\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
+    print "Table: 'name'\nField\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
     for my_table_name in `eval $my_cmd" 'SHOW TABLES' -N"`; do
       my_cmd_res_field_list=`eval $my_cmd" 'DESC ${my_table_name}' | grep --color '${my_field_name}'"`
       if [ ${#my_cmd_res_field_list} -gt 0 ]; then
@@ -92,7 +92,6 @@ function myfindg() {
         for my_cmd_res_field_name in ${(f)my_cmd_res_field_list}; do
           print $my_cmd_res_field_name | grep --color "${my_field_name}"
         done
-        print
       fi
     done
   fi
