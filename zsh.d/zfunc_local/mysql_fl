@@ -54,7 +54,7 @@ function mqout() {
   eval $my_cmd
   print "Q\n"
 
-  my_cmd=$my_cmd" | xargs -0 -i mysql test -e '{}' >! ~/works/tmp.txt"
+  my_cmd=$my_cmd" | xargs -0 -i mysql test -e '{}' -N | sed -e 's/\t/,/g' >! ~/works/tmp.txt"
   print "command: ${my_cmd}\n"
   eval $my_cmd
 }
@@ -112,5 +112,5 @@ function myfcsv() {
     return 1
   fi
 
-  mysql test -N -e "DESC ${1}" | sed -e "s/\t.*//g" | xargs echo | sed -e "s/ /,/g"
+  mysql test -e "DESC ${1}" -N | sed -e "s/\t.*//g" | xargs echo | sed -e "s/ /,/g"
 }
