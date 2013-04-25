@@ -1,6 +1,6 @@
 ## MYSQL用functions
 function mq() {
-  typeset my_cmd
+  local my_cmd
 
   my_check_argv $argv
   if [ $? -eq 1 ]; then
@@ -13,7 +13,7 @@ function mq() {
 }
 
 function mqout() {
-  typeset my_cmd
+  local my_cmd
 
   my_check_argv $argv
   if [ $? -eq 1 ]; then
@@ -27,7 +27,7 @@ function mqout() {
 }
 
 function my_echo_basic_cmd() {
-  typeset my_cmd
+  local my_cmd
 
   my_cmd="cat $1"
   for ((i=1; i<$#; i++)); do
@@ -58,12 +58,12 @@ function my_check_argv() {
 }
 
 function myfindg() {
-  typeset my_cmd
-  typeset my_cmd_res_field_list
-  typeset my_cmd_res_field_name
-  typeset my_table_name
-  typeset my_field_name
-  typeset my_tmp_line
+  local my_cmd
+  local my_cmd_res_field_list
+  local my_cmd_res_field_name
+  local my_table_name
+  local my_field_name
+  local my_tmp_line
 
   while getopts :t:f: OPT; do
     case ${OPT} in
