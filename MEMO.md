@@ -38,11 +38,11 @@ GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能
 
 Macにインストール
 
-    brew install tig
+    $ brew install tig
 
 ``yum``があるLinux環境にインストール
 
-    yum install tig
+    $ yum install tig
   
   
 ※注意：``tig``デフォルトキーバインドの'G'で``git gc``が走るため、以下の設定を``.gitconfig``に追加する方が良い
@@ -50,3 +50,6 @@ Macにインストール
     [tig "bind"]
         generic = g move-first-line
         generic = G move-last-line
+
+#####・依存関係メモ  
+``zsh````tmux````vim````git````mysql``
