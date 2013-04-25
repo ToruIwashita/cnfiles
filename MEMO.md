@@ -51,5 +51,15 @@ Macにインストール
         generic = g move-first-line
         generic = G move-last-line
 
+####・文字コード変換``nkf``
+
+Macにインストール  
+
+    $ brew install nkf  
+
+``yum``があるLinux環境にインストール
+
+    $ yum install nkf
+
 #####・依存関係メモ  
 ``zsh````tmux````vim````git````mysql``
