@@ -1,0 +1,9 @@
+## markdown関連関数
+function prevmd() {
+  if [ $# -lt 1 ]; then
+    print "lack of arguments."
+    return 1
+  fi
+
+  w3m -t text/html =(markdown $1)
+}
