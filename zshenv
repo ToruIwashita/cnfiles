@@ -8,7 +8,5 @@ if [ -z "$TMUX" -a -z "$STY" ]; then
     else
       tmux -u new-session -s IwashitaDev && echo "tmux created new session"
     fi
-  elif type screen >/dev/null 2>&1; then
-    screen -rx || screen -D -RR
   fi
 fi
