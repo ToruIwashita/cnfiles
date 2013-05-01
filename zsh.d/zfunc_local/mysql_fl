@@ -97,6 +97,29 @@ function myfindg() {
   fi
 }
 
+function myexp() {
+  local my_cmd
+
+  my_check_argv $argv
+  if [ $? -eq 1 ]; then
+    return 1
+  fi
+
+  my_cmd="cat $1"
+  for ((i=1; i<$#; i++)); do
+    arg_num=`expr $i + 1`
+    my_cmd=$my_cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
+  done
+
+  print "<<Q"
+  eval $my_cmd
+  print "Q\n"
+
+  my_cmd=$my_cmd" | xargs -0 -i mysql test -e 'EXPLAIN {}'"
+  print "command: ${my_cmd}\n"
+  eval $my_cmd
+}
+
 function mydesc() {
   if [ $# -lt 1 ]; then
     print "lack of arguments."

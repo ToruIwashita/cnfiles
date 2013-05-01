@@ -29,13 +29,11 @@ GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能
 ※それぞれaliasを設定するのがオススメ
 
 ####・git log-all  
-
 ``.gitconfig``に以下の``alias``追加
 
     log-all = log --graph --all --color --pretty='%x09%h %cn%x09%s %Cred%d%Creset'  
 
 ####・CUI Gitブラウザ``tig``
-
 Macにインストール
 
     $ brew install tig
@@ -51,5 +49,24 @@ Macにインストール
         generic = g move-first-line
         generic = G move-last-line
 
+####・文字コード変換``nkf``
+Macにインストール  
+
+    $ brew install nkf  
+
+``yum``があるLinux環境にインストール
+
+    $ yum install nkf
+
+####・Markdown文章編集  
+``w3m``をインストール  
+
+    $ yum install w3m  
+
+
+後は``markdown``コマンドが使える状態のzshコマンドラインで
+
+    $ w3m -T text/html =(markdown hoge.md)
+
 #####・依存関係メモ  
-``zsh````tmux````vim````git````mysql``
+``zsh`` ``tmux`` ``vim`` ``git`` ``mysql``
