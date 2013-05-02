@@ -97,7 +97,7 @@ function myfindg() {
   fi
 }
 
-function myexp() {
+function mqexp() {
   local my_cmd
 
   my_check_argv $argv
