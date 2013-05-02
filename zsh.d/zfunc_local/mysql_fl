@@ -129,11 +129,11 @@ function mydesc() {
   mysql test -e "DESC ${1}"
 }
 
-function myfcsv() {
+function myflist() {
   if [ $# -lt 1 ]; then
     print "lack of arguments."
     return 1
   fi
 
-  mysql test -e "DESC ${1}" -N | sed -e "s/\t.*//g" | xargs echo | sed -e "s/ /,/g"
+  echo ${(FR)${(f)"$(mysql test -e "DESC ${1}" -N)"}%%[[:blank:]]*}
 }
