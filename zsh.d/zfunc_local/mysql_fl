@@ -67,26 +67,26 @@ function myfindg() {
   local my_field_name
   local my_tmp_line
 
-  while getopts :t:f: OPT; do
-    case ${OPT} in
-      t) my_table_name=${OPTARG} ;;
+  while getopts :t:f: arg; do
+    case ${arg} in
       f) my_field_name=${OPTARG} ;;
-      :|\?) print "lack of arguments."; return 1 ;;
+      t) my_table_name=${OPTARG} ;;
+      :|\?) print "Usage: $0 [-f field] [-t table]"; return 2 ;;
     esac
   done
 
   my_tmp_line="-------------------------------------------------------"
-  my_cmd="mysql test -N -e"
+  my_cmd="mysql test -e"
   if [ ${#my_table_name} -gt 0 ] && [ ${#my_field_name} -gt 0 ]; then
     print "Field\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
-    eval $my_cmd" 'DESC ${my_table_name}' | grep --color '${my_field_name}'"
+    eval $my_cmd" 'DESC ${my_table_name}' -N | grep --color '${my_field_name}'"
   elif [ ${#my_table_name} -gt 0 ]; then
     print "Tables\n${my_tmp_line}"
-    eval $my_cmd" 'SHOW TABLES' | grep --color '${my_table_name}'"
+    eval $my_cmd" 'SHOW TABLES' -N | grep --color '${my_table_name}'"
   elif [ ${#my_field_name} -gt 0 ]; then
     print "Table: 'name'\nField\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
     for my_table_name in `eval $my_cmd" 'SHOW TABLES' -N"`; do
-      my_cmd_res_field_list=`eval $my_cmd" 'DESC ${my_table_name}' | grep --color '${my_field_name}'"`
+      my_cmd_res_field_list=`eval $my_cmd" 'DESC ${my_table_name}' -N | grep --color '${my_field_name}'"`
       if [ ${#my_cmd_res_field_list} -gt 0 ]; then
         print "Table: ${my_table_name}"
         for my_cmd_res_field_name in ${(f)my_cmd_res_field_list}; do
@@ -94,6 +94,8 @@ function myfindg() {
         done
       fi
     done
+  else
+    eval $my_cmd" 'SHOW TABLES'"
   fi
 }
 
