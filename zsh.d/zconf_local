@@ -1,0 +1,2 @@
+## エイリアス
+alias -g T=">! ~/works/tmp.txt"
