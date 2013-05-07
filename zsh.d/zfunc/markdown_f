@@ -1,5 +1,5 @@
 ## markdown関連関数
-function prevmd() {
+function pm() {
   if [ $# -lt 1 ]; then
     print "lack of arguments."
     return 1
