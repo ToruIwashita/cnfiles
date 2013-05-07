@@ -76,7 +76,7 @@ function myfindg() {
   done
 
   my_tmp_line="-------------------------------------------------------"
-  my_cmd="mysql test -e"
+  my_cmd="mysql test -N -e"
   if [ ${#my_table_name} -gt 0 ] && [ ${#my_field_name} -gt 0 ]; then
     print "Field\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
     eval $my_cmd" 'DESC ${my_table_name}' | grep --color '${my_field_name}'"
