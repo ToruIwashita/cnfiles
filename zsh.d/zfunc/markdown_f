@@ -5,5 +5,5 @@ function pm() {
     return 1
   fi
 
-  w3m -t text/html =(markdown $1)
+  w3m -T text/html =(markdown $1)
 }
