@@ -68,7 +68,7 @@ function myfindg() {
   local my_tmp_line
   local myfindg_usage
 
-  myfindg_usage="Usage: $0 {-f field} {-t table}"
+  myfindg_usage="Usage: $0 {-f 'part of FIELD'|-t 'part of TABLE'|-t TABLE -f 'part of FIELD'}"
   while getopts :f:t: arg; do
     case ${arg} in
       f) my_field_name=${OPTARG} ;;
