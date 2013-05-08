@@ -1,2 +1,8 @@
+## エイリアス
+# MYSQL系
+alias my="mysql test"
+alias myq='mysql test -e"
+alias myshow='mysql test -e 'SHOW TABLES'"
+
 ## グローバルエイリアス
 alias -g T=">! ~/works/tmp.txt"
