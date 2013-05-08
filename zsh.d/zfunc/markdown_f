@@ -1,9 +1,31 @@
 ## markdown関連関数
-function pm() {
+function pmd() {
   if [ $# -lt 1 ]; then
     print "lack of arguments."
     return 1
   fi
 
-  w3m -T text/html =(markdown $1)
+  w3m -T text/html =(markdown $1) -dump
 }
+
+function wmd() {
+  wait=2
+  clear="\033[H\033[J"
+
+  while getopts n: o; do
+    case $o in
+      n)   wait=$OPTARG;;
+      [?]) print >&2 "Usage: $0 [-n wait] file" ; return 2;;
+    esac
+  done
+  shift $OPTIND-1
+
+  while true; do
+    let prompt_x=$COLUMNS-19
+    date="\033[0;${prompt_x}H\033[1;32m "`date +'%Y/%m/%d %H:%M:%S'`"\033[0m"
+    w3m -T text/html =(markdown $1) -dump |& awk "BEGIN{print \"$clear\" substr(\"$*\",0,$prompt_x) \"$date\"} {print}" | cat
+    sleep $wait
+  done
+}
+
+#while :; do clear; pmd test.txt; sleep 2; done
