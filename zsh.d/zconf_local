@@ -5,4 +5,4 @@ alias myq="mysql test -e"
 alias myshow="mysql test -e 'SHOW TABLES'"
 
 ## グローバルエイリアス
-alias -g T=">! ~/works/tmp.txt"
+alias -g TT=">! ~/works/tmp.txt"
