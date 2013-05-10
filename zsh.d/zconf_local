@@ -1,4 +1,6 @@
 ## エイリアス
+# CD系
+alias cdm="~/MEMOs"
 # MYSQL系
 alias my="mysql test"
 alias myq="mysql test -e"
