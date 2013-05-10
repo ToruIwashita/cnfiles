@@ -1,35 +1,9 @@
 ## markdown関連関数
-function pmd() {
+function pm() {
   if [ $# -lt 1 ]; then
     print "lack of arguments."
     return 1
   fi
 
   w3m -T text/html =(markdown $1)
-}
-
-function tailmd() {
-  local wait
-  local clear
-
-  wait=2
-  clear="\033[H\033[J"
-
-  while getopts :n: org; do
-    case $arg in
-      n)   wait=$OPTARG;;
-      :|?) print "Usage: $0 [-n wait] file" ; return 2;;
-    esac
-  done
-  shift $OPTIND-1
-
-  if [ $# -lt 1 ]; then
-    print "lack of arguments."
-    return 1
-  fi
-
-  while true; do
-    w3m -T text/html =(markdown $1) -dump |& awk "BEGIN{print \"${clear}\"} {print}" | cat
-    sleep $wait
-  done
 }
