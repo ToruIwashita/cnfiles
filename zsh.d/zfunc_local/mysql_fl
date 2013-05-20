@@ -141,3 +141,11 @@ function myflist() {
 
   echo ${(FR)${(f)"$(mysql test -e "DESC ${1}" -N)"}%%[[:blank:]]*}
 }
+
+## 補完
+function _my_show_tables() {
+  compadd `mysql test -N -e "SHOW TABLES"`
+}
+
+compdef _my_show_tables mydesc
+compdef _my_show_tables myflist
