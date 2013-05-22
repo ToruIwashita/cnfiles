@@ -31,7 +31,7 @@ function mq() {
   eval $my_cmd
   print "Q\n"
 
-  my_cmd=$my_cmd" | xargs -0 -i mysql test -e '{}'"
+  my_cmd=$my_cmd" | xargs -0 -i ${MYSQL_CMD} '{}'"
   print "command: ${my_cmd}\n"
   eval $my_cmd
 }
@@ -54,7 +54,7 @@ function mqout() {
   eval $my_cmd
   print "Q\n"
 
-  my_cmd=$my_cmd" | xargs -0 -i mysql test -e '{}' -N | sed -e 's/\t/,/g' >! ~/works/tmp.txt"
+  my_cmd=$my_cmd" | xargs -0 -i ${MYSQL_CMD} '{}' -N | sed -e 's/\t/,/g' >! ~/works/tmp.txt"
   print "command: ${my_cmd}\n"
   eval $my_cmd
 }
@@ -78,17 +78,17 @@ function myfindg() {
   done
 
   my_tmp_line="-------------------------------------------------------"
-  my_cmd="mysql test -N -e"
+  my_cmd=$MYSQL_CMD
   if [ ${#my_table_name} -gt 0 ] && [ ${#my_field_name} -gt 0 ]; then
     print "Field\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
-    eval $my_cmd" 'DESC ${my_table_name}' | grep --color '${my_field_name}'"
+    eval $my_cmd" 'DESC ${my_table_name}' -N | grep --color '${my_field_name}'"
   elif [ ${#my_table_name} -gt 0 ]; then
     print "Tables\n${my_tmp_line}"
-    eval $my_cmd" 'SHOW TABLES' | grep --color '${my_table_name}'"
+    eval $my_cmd" 'SHOW TABLES' -N | grep --color '${my_table_name}'"
   elif [ ${#my_field_name} -gt 0 ]; then
     print "Table: 'name'\nField\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
-    for my_table_name in `eval $my_cmd" 'SHOW TABLES'"`; do
-      my_cmd_res_field_list=`eval $my_cmd" 'DESC ${my_table_name}' | grep --color '${my_field_name}'"`
+    for my_table_name in `eval $my_cmd" 'SHOW TABLES' -N"`; do
+      my_cmd_res_field_list=`eval $my_cmd" 'DESC ${my_table_name}' -N | grep --color '${my_field_name}'"`
       if [ ${#my_cmd_res_field_list} -gt 0 ]; then
         print "Table: ${my_table_name}"
         for my_cmd_res_field_name in ${(f)my_cmd_res_field_list}; do
@@ -119,7 +119,7 @@ function mqexp() {
   eval $my_cmd
   print "Q\n"
 
-  my_cmd=$my_cmd" | xargs -0 -i mysql test -e 'EXPLAIN {}'"
+  my_cmd=$my_cmd" | xargs -0 -i ${MYSQL_CMD} 'EXPLAIN {}\G'"
   print "command: ${my_cmd}\n"
   eval $my_cmd
 }
@@ -130,21 +130,21 @@ function mydesc() {
     return 1
   fi
 
-  mysql test -e "DESC ${1}"
+  eval "${MYSQL_CMD} 'DESC ${1}'"
 }
 
-function myflist() {
+function myfcsv() {
   if [ $# -lt 1 ]; then
     print "lack of arguments."
     return 1
   fi
 
-  echo ${(FR)${(f)"$(mysql test -e "DESC ${1}" -N)"}%%[[:blank:]]*}
+  eval "${MYSQL_CMD} 'DESC ${1}' -N | sed -e 's/\t.*//g' | xargs echo | sed -e 's/ /,/g'"
 }
 
 ## 補完
 function _my_show_tables() {
-  compadd `mysql test -N -e "SHOW TABLES"`
+  compadd `eval "${MYSQL_CMD} 'SHOW TABLES' -N"`
 }
 
 compdef _my_show_tables mydesc

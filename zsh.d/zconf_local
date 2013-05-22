@@ -1,10 +1,16 @@
+## 環境変数設定
+readonly MYSQL_CNCT="mysql test"
+readonly MYSQL_CMD="$MYSQL_CNCT -e"
+
+export MYSQL_CNCT MYSQL_CMD
+
 ## エイリアス
 # CD系
 alias cdm="~/MEMOs"
 # MYSQL系
-alias my="mysql test"
-alias myq="mysql test -e"
-alias myshow="mysql test -e 'SHOW TABLES'"
+alias my=$MYSQL_CNCT
+alias myq=$MYSQL_CMD
+alias myshow="$MYSQL_CMD 'SHOW TABLES'"
 
 ## グローバルエイリアス
 alias -g TT=">! ~/works/tmp.txt"
