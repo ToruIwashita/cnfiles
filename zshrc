@@ -10,9 +10,12 @@ zmodload -i zsh/complist
 [ -f ~/.zsh.d/zconf_local ] || touch ~/.zsh.d/zconf_local && source ~/.zsh.d/zconf_local
 [ -f ~/.zsh.d/ls_colors ] || touch ~/.zsh.d/ls_colors && source ~/.zsh.d/ls_colors
 
-## オートロード
+## pathの重複登録無効
+typeset -U fpath
+
+## エセオートロード
 # 自作関数
-function_directories=(.zsh.d/zfunc .zsh.d/zfunc_local)
+function_directories=(.zsh.d/zfunc .zsh.d/_zfunc .zsh.d/zfunc_local .zsh.d/_zfunc_local)
 for dir in ${function_directories[@]}; do
   [ -d ~/${dir} ] || mkdir ~/${dir}
   fpath=($fpath ~/${dir})
@@ -21,9 +24,6 @@ for dir in ${function_directories[@]}; do
     autoload -Uz ~/${dir}/${file}(:t) && ~/${dir}/${file}(:t)
   done
 done
-
-## pathの重複登録無効
-typeset -U fpath
 
 ## プロンプトの定義
 PROMPT="[%n]{%?}:%./%{$fg_bold[blue]%}%#%{$reset_color%} "

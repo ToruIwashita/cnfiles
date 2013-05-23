@@ -1,0 +1,7 @@
+## MYSQL用補完
+function _my_show_tables() {
+  compadd `eval "${MYSQL_CMD} 'SHOW TABLES' -N"`
+}
+
+compdef _my_show_tables mydesc
+compdef _my_show_tables myflist
