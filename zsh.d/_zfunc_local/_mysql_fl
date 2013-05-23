@@ -4,4 +4,4 @@ function _my_show_tables() {
 }
 
 compdef _my_show_tables mydesc
-compdef _my_show_tables myflist
+compdef _my_show_tables myfcsv
