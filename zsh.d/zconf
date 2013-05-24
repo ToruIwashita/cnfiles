@@ -106,7 +106,6 @@ bindkey -M menuselect '^J' accept-and-infer-next-history
 
 ## エイリアス
 alias ez="exec zsh"
-alias sz="source ~/.zshrc"
 alias cp="cp -ip"
 alias mv="mv -i"
 alias rm="rm -i"
