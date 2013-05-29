@@ -46,3 +46,5 @@ set number
 set noautoindent
 " コマンドライン補完
 set wildmode=longest:full,full
+" インクリメンタルサーチ
+set incsearch
