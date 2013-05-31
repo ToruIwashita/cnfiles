@@ -1,4 +1,4 @@
-## MYSQL用補完
+## MYSQL関数用補完
 function _my_show_tables() {
   compadd `eval "${MYSQL_CMD} 'SHOW TABLES' -N"`
 }
