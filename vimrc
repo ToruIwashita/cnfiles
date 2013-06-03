@@ -40,10 +40,14 @@ set t_Co=256
 set fileencoding=utf-8
 " タブ文字の代わりに半角スペース
 set expandtab
+" オートインデント
+set autoindent
+" オートインデント時の空白文字数
+set shiftwidth=2
+" tabが対応する空白の文字数
+set tabstop=2
 " 行数表示
 set number
-" オートインデント無効
-set noautoindent
 " コマンドライン補完
 set wildmode=longest:full,full
 " インクリメンタルサーチ
