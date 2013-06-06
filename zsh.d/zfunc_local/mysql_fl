@@ -14,7 +14,7 @@ function my_check_argv() {
 }
 
 function mq() {
-  local my_cmd
+  local my_cmd arg_num
 
   my_check_argv $argv
   if [ $? -eq 1 ]; then
@@ -37,7 +37,7 @@ function mq() {
 }
 
 function mqout() {
-  local my_cmd
+  local my_cmd arg_num
 
   my_check_argv $argv
   if [ $? -eq 1 ]; then
@@ -60,13 +60,7 @@ function mqout() {
 }
 
 function myfindg() {
-  local my_cmd
-  local my_cmd_res_field_list
-  local my_cmd_res_field_name
-  local my_table_name
-  local my_field_name
-  local my_tmp_line
-  local myfindg_usage
+  local my_cmd my_cmd_res_field_list my_cmd_res_field_name my_table_name my_field_name my_tmp_line myfindg_usage getopts arg
 
   myfindg_usage="Usage: $0 {-f 'part of FIELD'|-t 'part of TABLE'|-t TABLE -f 'part of FIELD'}"
   while getopts :f:t: arg; do
@@ -102,7 +96,7 @@ function myfindg() {
 }
 
 function mqexp() {
-  local my_cmd
+  local my_cmd arg_num
 
   my_check_argv $argv
   if [ $? -eq 1 ]; then

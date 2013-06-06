@@ -3,5 +3,22 @@ function _my_show_tables() {
   compadd `eval "${MYSQL_CMD} 'SHOW TABLES' -N"`
 }
 
-compdef _my_show_tables mydesc
-compdef _my_show_tables myfcsv
+function _myfindg() {
+  _arguments : \
+    '(:)-t[Table Name]:Input a part of table name or table name (RegExp is effective):_my_show_tables' \
+    '(:)-f[Field Name]:A part of field name (RegExp is effective)'
+}
+
+function _mydesc() {
+  _arguments : \
+    '(:)*:Input table name:_my_show_tables'
+}
+
+function _myfcsv() {
+  _arguments : \
+    '(:)*:Input table name:_my_show_tables'
+}
+
+compdef _myfindg myfindg
+compdef _mydesc mydesc
+compdef _myfcsv myfcsv
