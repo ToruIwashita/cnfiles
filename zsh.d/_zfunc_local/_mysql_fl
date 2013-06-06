@@ -5,8 +5,8 @@ function _my_show_tables() {
 
 function _myfindg() {
   _arguments : \
-    '(:)-t[Table Name]:Input a part of table name or table name (RegExp is effective):_my_show_tables' \
-    '(:)-f[Field Name]:A part of field name (RegExp is effective)'
+    '(:)-t[Table Name]:Input a part of table name or table name:_my_show_tables' \
+    '(:)-f[Field Name]:A part of field name'
 }
 
 function _mydesc() {
