@@ -1,9 +1,16 @@
 ## git関連関数
-function ga_sample() {
-  if [ $# -lt 1 ]; then
-    print "lack of arguments."
-    return 1
-  fi
+function ga() {
+  local ga_usage arg
+  local -a modified_files
 
-  git add $argv
+  ga_usage="Usage: $0 {File|-m 'File'}"
+  while getopts :m: arg; do
+    case ${arg} in
+      m) modified_files=($modified_files $OPTARG) ;;
+      :|\?) print $ga_usage; return 2 ;;
+    esac
+  done
+
+  shift $((OPTIND-1))
+  git add $modified_files $*
 }

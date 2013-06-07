@@ -1,6 +1,12 @@
 ## git関数用補完
-function _ga() {
-  compadd `${(R)${(M)${(f@)"$(git status)"}:#*modified:*}##*: #}`
+function _git_modified_files() {
+  compadd ${(R)${(M)${(f@)"$(git status)"}:#*modified:*}##*: #}
 }
 
-compdef _ga ga_samlpe
+function _ga() {
+  _arguments : \
+    '-m[file]:Input file:_git_modified_files' \
+    '*:argument:*'
+}
+
+compdef _ga ga
