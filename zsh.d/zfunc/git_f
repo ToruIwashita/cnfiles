@@ -1,0 +1,9 @@
+## git関連関数
+function ga_sample() {
+  if [ $# -lt 1 ]; then
+    print "lack of arguments."
+    return 1
+  fi
+
+  git add $argv
+}
