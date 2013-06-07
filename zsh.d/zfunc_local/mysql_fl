@@ -62,7 +62,7 @@ function mqout() {
 function myfindg() {
   local my_cmd my_cmd_res_field_list my_cmd_res_field_name my_table_name my_field_name my_tmp_line myfindg_usage getopts arg
 
-  myfindg_usage="Usage: $0 {-f 'Part of field name'|-t 'Part of table name'}"
+  myfindg_usage="Usage: $0 {-f 'Part of field info'|-t 'Part of table name'}"
   while getopts :f:t: arg; do
     case ${arg} in
       f) my_field_name=${OPTARG} ;;
