@@ -3,7 +3,8 @@ function ga() {
   local ga_usage arg
   local -a add_files
 
-  ga_usage="Usage: $0 {File|-m 'File'|-u 'File'}"
+
+  ga_usage="Usage: $0 {File|-m 'File'}"
   while getopts :m:u: arg; do
     case ${arg} in
       m) add_files=($add_files $OPTARG) ;;
