@@ -1,22 +1,22 @@
 ## MYSQL関数用補完
-function _my_show_tables() {
+function __my_show_tables() {
   compadd `eval "${MYSQL_CMD} 'SHOW TABLES' -N"`
 }
 
 function _myfindg() {
   _arguments : \
-    '(:)-t[Table name]:Input a part of table name or table name:_my_show_tables' \
+    '(:)-t[Table name]:Input a part of table name or table name:__my_show_tables' \
     '(:)-f[Field info]:A part of field info'
 }
 
 function _mydesc() {
   _arguments : \
-    '(:)*:Input table name:_my_show_tables'
+    '(:)*:Input table name:__my_show_tables'
 }
 
 function _myfcsv() {
   _arguments : \
-    '(:)*:Input table name:_my_show_tables'
+    '(:)*:Input table name:__my_show_tables'
 }
 
 compdef _myfindg myfindg

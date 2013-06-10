@@ -1,16 +1,18 @@
 ## git関連関数
 function ga() {
   local ga_usage arg
-  local -a modified_files
+  local -a add_files
+
 
   ga_usage="Usage: $0 {File|-m 'File'}"
-  while getopts :m: arg; do
+  while getopts :m:u: arg; do
     case ${arg} in
-      m) modified_files=($modified_files $OPTARG) ;;
+      m) add_files=($add_files $OPTARG) ;;
+      u) add_files=($add_files $OPTARG) ;;
       :|\?) print $ga_usage; return 2 ;;
     esac
   done
 
   shift $((OPTIND-1))
-  git add $modified_files $*
+  git add $add_files $*
 }
