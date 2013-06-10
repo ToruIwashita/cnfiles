@@ -7,3 +7,13 @@ function pm() {
 
   w3m -T text/html =(markdown $1)
 }
+
+function pmout() {
+  if [ $# -lt 1 ]; then
+    print "lack of arguments."
+    return 1
+  fi
+
+  echo '<meta charset="utf-8">\n' >! ~/works/tmp.txt
+  markdown $1 >> ~/works/tmp.txt
+}
