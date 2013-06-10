@@ -1,15 +1,20 @@
 ## git関数用補完
 function __git_modified_files() {
-  compadd ${(R)${(M)${(f@)"$(git status)"}:#*modified:*}##*: #}
+  local git_status_res changes_not_staged_str_index
+
+  git_status_res="$(git status)"
+  changes_not_staged_str_index=$((${${(f@)git_status_res}[(i)*Changes not staged*]} + 4))
+
+  compadd ${(R)${(M)${${(f@)git_status_res}[$changes_not_staged_str_index,-1]}:#*modified:*}##*: #}
 }
 
 function __git_untracked_files() {
-  local git_status_res untracked_list_index
+  local git_status_res untracked_str_index
 
   git_status_res="$(git status)"
-  untracked_list_index=$((${${(f@)git_status_res}[(i)*Untracked*]} + 3))
+  untracked_str_index=$((${${(f@)git_status_res}[(i)*Untracked*]} + 3))
 
-  compadd ${(R)${${(f@)git_status_res}[$untracked_list_index,-2]}#\#[[:blank:]]}
+  compadd ${(R)${${(f@)git_status_res}[$untracked_str_index,-1]}#\#[[:blank:]]}
 }
 
 function _ga() {
