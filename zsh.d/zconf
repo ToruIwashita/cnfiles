@@ -117,7 +117,6 @@ alias tmux="tmux -2"
 alias cdz="cd ~/.zsh.d"
 # GIT系
 alias gs="git status"
-alias gd="git diff"
 alias gc="git commit"
 alias gl="git log"
 alias gla="git log --graph --all --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"

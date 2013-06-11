@@ -14,14 +14,25 @@ function __git_untracked_files() {
   git_status_res="$(git status)"
   untracked_str_index=$((${${(f@)git_status_res}[(i)*Untracked*]} + 3))
 
-  compadd ${(R)${${(f@)git_status_res}[$untracked_str_index,-1]}#\#[[:blank:]]}
+  compadd ${(R)${(M)${${(f@)git_status_res}[$untracked_str_index,-1]}##\#*}#\#[[:blank:]]}
 }
 
 function _ga() {
-  _arguments : \
-    '(:)-m[file]:Input file:__git_modified_files' \
-    '(:)-u[file]:Input file:__git_untracked_files' \
-    '(-)*:argument:_files'
+  if [ -d ./.git ]; then
+    _arguments : \
+      '(:)-m[file]:Input file:__git_modified_files' \
+      '(:)-u[file]:Input file:__git_untracked_files' \
+      '(-)*:argument:_files'
+  fi
+}
+
+function _gd() {
+  if [ -d ./.git ]; then
+    _arguments : \
+      '(:)-m[file]:Input file:__git_modified_files' \
+      '(-)*:argument:_files'
+  fi
 }
 
 compdef _ga ga
+compdef _gd gd

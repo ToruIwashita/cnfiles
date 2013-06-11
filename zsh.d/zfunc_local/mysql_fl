@@ -67,7 +67,7 @@ function myfindg() {
     case ${arg} in
       f) my_field_name=${OPTARG} ;;
       t) my_table_name=${OPTARG} ;;
-      :|\?) print $myfindg_usage; return 2 ;;
+      :|\?) print $myfindg_usage; return 1 ;;
     esac
   done
 

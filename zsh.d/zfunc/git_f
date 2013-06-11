@@ -8,10 +8,25 @@ function ga() {
     case ${arg} in
       m) add_files=($add_files $OPTARG) ;;
       u) add_files=($add_files $OPTARG) ;;
-      :|\?) print $ga_usage; return 2 ;;
+      :|\?) print $ga_usage; return 1 ;;
     esac
   done
 
   shift $((OPTIND-1))
   git add $add_files $*
+}
+
+function gd() {
+  local gd_usage arg diff_file
+
+  gd_usage="Usage: $0 {File|-m 'File'}"
+  while getopts :m: arg; do
+    case ${arg} in
+      m) diff_file=$OPTARG ;;
+      :|\?) print $gd_usage; return 1 ;;
+    esac
+  done
+
+  shift $((OPTIND-1))
+  git diff $diff_file $*
 }
