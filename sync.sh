@@ -27,6 +27,5 @@ for dir in ${source_directories[@]}; do
   done
 done
 
-source ~/.zshrc
-
 print "sync complete."
+exec zsh
