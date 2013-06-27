@@ -115,6 +115,7 @@ alias his="history -50n"
 alias tmux="tmux -2"
 # CD系
 alias cdz="cd ~/.zsh.d"
+alias cdv="cd ~/.vim"
 # GIT系
 alias gb="git branch"
 alias gc="git commit"
