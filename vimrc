@@ -48,6 +48,10 @@ set shiftwidth=2
 set tabstop=2
 " 行数表示
 set number
+" カーソル行可視化
+set cursorline
+" 改行・タブ可視化
+set list
 " コマンドライン補完
 set wildmode=longest:full,full
 " インクリメンタルサーチ
