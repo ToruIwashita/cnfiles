@@ -40,8 +40,8 @@ set t_Co=256
 set fileencoding=utf-8
 " タブ文字の代わりに半角スペース
 set expandtab
-" オートインデント
-set autoindent
+" C言語スタイルインデント
+set cindent
 " オートインデント時の空白文字数
 set shiftwidth=2
 " tabが対応する空白の文字数
@@ -52,3 +52,5 @@ set number
 set wildmode=longest:full,full
 " インクリメンタルサーチ
 set incsearch
+" サーチ結果ハイライト
+set hlsearch
