@@ -41,7 +41,7 @@ set fileencoding=utf-8
 " タブ文字の代わりに半角スペース
 set expandtab
 " C言語スタイルインデント
-set cindent
+set autoindent
 " オートインデント時の空白文字数
 set shiftwidth=2
 " tabが対応する空白の文字数
