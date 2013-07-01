@@ -55,3 +55,4 @@ set wildmode=longest:full,full
 " インクリメンタルサーチ
 set incsearch
 " サーチ結果ハイライト
+set hlsearch
