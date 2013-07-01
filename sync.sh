@@ -10,6 +10,7 @@
 [ -d ~/.vim ] || mkdir ~/.vim
 [ -f ~/.vim/vconf ] || touch ~/.vim/vconf
 [ -f ~/.vim/abbreviate_conf ] || touch ~/.vim/abbreviate_conf
+[ -f ~/.vim/macro_conf ] || touch ~/.vim/macro_conf
 [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
 
 \cp -p ./zshrc ~/.zshrc
@@ -17,6 +18,7 @@
 \cp -p ./vimrc ~/.vimrc
 \cp -p ./vim/vconf ~/.vim/vconf
 \cp -p ./vim/abbreviate_conf ~/.vim/abbreviate_conf
+\cp -p ./vim/macro_conf ~/.vim/macro_conf
 \cp -p ./zsh.d/zconf ~/.zsh.d/zconf
 \cp -p ./zsh.d/ls_colors ~/.zsh.d/ls_colors
 
