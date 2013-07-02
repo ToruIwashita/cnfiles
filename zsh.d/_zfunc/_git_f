@@ -17,6 +17,10 @@ function __git_untracked_files() {
   compadd ${(R)${(M)${${(f@)git_status_res}[$untracked_str_index,-1]}##\#*}#\#[[:blank:]]}
 }
 
+function __git_branches() {
+  compadd ${(R)$(git branch)#\*}
+}
+
 function _ga() {
   if [ -d ./.git ]; then
     _arguments : \
@@ -33,6 +37,8 @@ function _gd() {
       '(-)*:argument:_files'
   fi
 }
+
+function _gcout() {}
 
 compdef _ga ga
 compdef _gd gd

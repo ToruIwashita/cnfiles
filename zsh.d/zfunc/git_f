@@ -30,3 +30,18 @@ function gd() {
   shift $((OPTIND-1))
   git diff $diff_file $*
 }
+
+function gcout() {
+  local gcout_usage arg checkout_target
+
+  gcout_usage="Usage: $0 {File|Branch|-m 'File'|-b 'Branch'}"
+  while getopts :m:b: arg; do
+    case ${arg} in
+      m) checkout_target=$OPTARG ;;
+      b) checkout_target=$OPTARG ;;
+      :|\?) print $gcout_usage; return 1 ;;
+    esac
+  done
+
+  shift $((OPTIND-1))
+}
