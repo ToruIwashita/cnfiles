@@ -27,6 +27,8 @@ function _ga() {
       '(:)-m[file]:Input file:__git_modified_files' \
       '(:)-u[file]:Input file:__git_untracked_files' \
       '(-)*:argument:_files'
+  else
+    _arguments : '(-)*:argument:_files'
   fi
 }
 
@@ -35,10 +37,22 @@ function _gd() {
     _arguments : \
       '(:)-m[file]:Input file:__git_modified_files' \
       '(-)*:argument:_files'
+  else
+    _arguments : '(-)*:argument:_files'
   fi
 }
 
-function _gcout() {}
+function _gcout() {
+  if [ -d ./.git ]; then
+    _arguments : \
+      '(:)-m[file]:Input file:__git_modified_files' \
+      '(:)-b[branch]:Input branch:__git_branches' \
+      '(-)*:argument:_files'
+  else
+    _arguments : '(-)*:argument:_files'
+  fi
+}
 
 compdef _ga ga
 compdef _gd gd
+compdef _gcout gcout

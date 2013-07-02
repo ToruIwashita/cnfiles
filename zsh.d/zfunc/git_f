@@ -13,6 +13,11 @@ function ga() {
   done
 
   shift $((OPTIND-1))
+  if [ -z "$add_files" -a $# -lt 1 ]; then
+    print $ga_usage
+    return 1
+  fi
+
   git add $add_files $*
 }
 
@@ -28,6 +33,11 @@ function gd() {
   done
 
   shift $((OPTIND-1))
+  if [ -z "$diff_file" -a $# -lt 1 ]; then
+    print $gd_usage
+    return 1
+  fi
+
   git diff $diff_file $*
 }
 
@@ -44,4 +54,10 @@ function gcout() {
   done
 
   shift $((OPTIND-1))
+  if [ -z "$checkout_target" -a $# -lt 1 ]; then
+    print $gcout_usage;
+    return 1
+  fi
+
+  git checkout $checkout_target $*
 }
