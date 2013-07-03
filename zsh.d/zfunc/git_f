@@ -61,3 +61,27 @@ function gcheck() {
 
   git checkout $checkout_target $*
 }
+
+function gsw() {
+  local gsw_usage
+
+  gsw_usage="Usage: $0 {Branch}"
+  if [ $# -ne 1 ]; then
+    print $gsw_usage;
+    return 1
+  fi
+
+  git checkout $1
+}
+
+function gud() {
+  local gud_usage
+
+  gud_usage="Usage: $0 {File}"
+  if [ $# -lt 1 ]; then
+    print $gud_usage;
+    return 1
+  fi
+
+  git checkout $*
+}

@@ -53,6 +53,20 @@ function _gcheck() {
   fi
 }
 
+function _gsw() {
+  if [ -d ./.git ]; then
+    _arguments : '(:)*:argument:__git_branches'
+  fi
+}
+
+function _gud() {
+  if [ -d ./.git ]; then
+    _arguments : '(-)*:argument:__git_modified_files'
+  fi
+}
+
 compdef _ga ga
 compdef _gd gd
 compdef _gcheck gcheck
+compdef _gsw gsw
+compdef _gud gud
