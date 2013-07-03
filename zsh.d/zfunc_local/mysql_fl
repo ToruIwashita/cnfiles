@@ -135,3 +135,15 @@ function myfcsv() {
 
   eval "${MYSQL_CMD} 'DESC ${1}' -N | sed -e 's/\t.*//g' | xargs echo | sed -e 's/ /,/g'"
 }
+
+function myfirst() {
+  local myfirst_usage
+
+  myfirst_usage="Usage: $0 {Table name}"
+  if [ $# -ne 1 ]; then
+    print $myfirst_usage
+    return 1
+  fi
+
+  print "${MYSQL_CMD} 'SELECT * FROM ${1} ORDER BY '"
+}
