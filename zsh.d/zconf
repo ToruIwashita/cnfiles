@@ -117,6 +117,7 @@ alias tmux="tmux -2"
 alias cdz="cd ~/.zsh.d"
 alias cdv="cd ~/.vim"
 # GIT系
+alias ga="git add"
 alias gb="git branch"
 alias gc="git commit"
 alias gs="git status"
