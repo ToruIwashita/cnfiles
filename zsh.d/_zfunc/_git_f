@@ -34,9 +34,7 @@ function _ga() {
 
 function _gd() {
   if [ -d ./.git ]; then
-    _arguments : \
-      '(:)-m[file]:Input file:__git_modified_files' \
-      '(-)*:argument:_files'
+    _arguments : '(-)*:argument:__git_modified_files'
   else
     _arguments : '(-)*:argument:_files'
   fi
