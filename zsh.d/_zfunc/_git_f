@@ -42,7 +42,7 @@ function _gd() {
   fi
 }
 
-function _gcout() {
+function _gcheck() {
   if [ -d ./.git ]; then
     _arguments : \
       '(:)-m[file]:Input file:__git_modified_files' \
@@ -55,4 +55,4 @@ function _gcout() {
 
 compdef _ga ga
 compdef _gd gd
-compdef _gcout gcout
+compdef _gcheck gcheck

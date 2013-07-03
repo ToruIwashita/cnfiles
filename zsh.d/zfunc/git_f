@@ -41,21 +41,21 @@ function gd() {
   git diff $diff_file $*
 }
 
-function gcout() {
-  local gcout_usage arg checkout_target
+function gcheck() {
+  local gcheck_usage arg checkout_target
 
-  gcout_usage="Usage: $0 {File|Branch|-m 'File'|-b 'Branch'}"
+  gcheck_usage="Usage: $0 {File|Branch|-m 'File'|-b 'Branch'}"
   while getopts :m:b: arg; do
     case ${arg} in
       m) checkout_target=$OPTARG ;;
       b) checkout_target=$OPTARG ;;
-      :|\?) print $gcout_usage; return 1 ;;
+      :|\?) print $gcheck_usage; return 1 ;;
     esac
   done
 
   shift $((OPTIND-1))
   if [ -z "$checkout_target" -a $# -lt 1 ]; then
-    print $gcout_usage;
+    print $gcheck_usage;
     return 1
   fi
 
