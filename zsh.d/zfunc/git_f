@@ -33,27 +33,6 @@ function gd() {
   git diff $*
 }
 
-function gcheck() {
-  local gcheck_usage arg checkout_target
-
-  gcheck_usage="Usage: $0 {File|Branch|-m 'File'|-b 'Branch'}"
-  while getopts :m:b: arg; do
-    case ${arg} in
-      m) checkout_target=$OPTARG ;;
-      b) checkout_target=$OPTARG ;;
-      :|\?) print $gcheck_usage; return 1 ;;
-    esac
-  done
-
-  shift $((OPTIND-1))
-  if [ -z "$checkout_target" -a $# -lt 1 ]; then
-    print $gcheck_usage;
-    return 1
-  fi
-
-  git checkout $checkout_target $*
-}
-
 function gsw() {
   local gsw_usage
 

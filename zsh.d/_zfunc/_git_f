@@ -40,17 +40,6 @@ function _gd() {
   fi
 }
 
-function _gcheck() {
-  if [ -d ./.git ]; then
-    _arguments : \
-      '(:)-m[file]:Input file:__git_modified_files' \
-      '(:)-b[branch]:Input branch:__git_branches' \
-      '(-)*:argument:_files'
-  else
-    _arguments : '(-)*:argument:_files'
-  fi
-}
-
 function _gsw() {
   if [ -d ./.git ]; then
     _arguments : '(:)*:argument:__git_branches'
