@@ -21,12 +21,17 @@ function __git_branches() {
   compadd ${(R)$(git branch)#\*}
 }
 
-function _ga() {
+function _gam() {
   if [ -d ./.git ]; then
-    _arguments : \
-      '(:)-m[file]:Input file:__git_modified_files' \
-      '(:)-u[file]:Input file:__git_untracked_files' \
-      '(-)*:argument:_files'
+    _arguments : '(-)*:argument:__git_modified_files'
+  else
+    _arguments : '(-)*:argument:_files'
+  fi
+}
+
+function _gau() {
+  if [ -d ./.git ]; then
+    _arguments : '(-)*:argument:__git_untracked_files'
   else
     _arguments : '(-)*:argument:_files'
   fi
@@ -52,7 +57,8 @@ function _gud() {
   fi
 }
 
-compdef _ga ga
+compdef _gam gam
+compdef _gau gau
 compdef _gd gd
 compdef _gcheck gcheck
 compdef _gsw gsw

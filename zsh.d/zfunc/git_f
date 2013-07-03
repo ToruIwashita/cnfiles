@@ -1,28 +1,30 @@
 ## git関連関数
-function ga() {
-  local ga_usage arg
-  local -a add_files
+function gam() {
+  local gam_usage
 
-  ga_usage="Usage: $0 {File|-m 'File'|-u 'File'}"
-  while getopts :m:u: arg; do
-    case ${arg} in
-      m) add_files=($add_files $OPTARG) ;;
-      u) add_files=($add_files $OPTARG) ;;
-      :|\?) print $ga_usage; return 1 ;;
-    esac
-  done
-
-  shift $((OPTIND-1))
-  if [ -z "$add_files" -a $# -lt 1 ]; then
-    print $ga_usage
+  gam_usage="Usage: $0 {Files}"
+  if [ $# -lt 1 ]; then
+    print $gam_usage
     return 1
   fi
 
-  git add $add_files $*
+  git add $*
+}
+
+function gau() {
+  local gau_usage
+
+  gau_usage="Usage: $0 {Files}"
+  if [ $# -lt 1 ]; then
+    print $gau_usage
+    return 1
+  fi
+
+  git add $*
 }
 
 function gd() {
-  local gd_usage arg diff_file
+  local gd_usage
 
   gd_usage="Usage: $0 {File}"
   if [ $# -gt 1 ]; then
@@ -48,7 +50,7 @@ function gsw() {
 function gud() {
   local gud_usage
 
-  gud_usage="Usage: $0 {File}"
+  gud_usage="Usage: $0 {Files}"
   if [ $# -lt 1 ]; then
     print $gud_usage;
     return 1
