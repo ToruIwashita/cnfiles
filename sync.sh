@@ -10,7 +10,9 @@
 [ -d ~/.vim ] || mkdir ~/.vim
 [ -f ~/.vim/vconf ] || touch ~/.vim/vconf
 [ -f ~/.vim/abbreviate_conf ] || touch ~/.vim/abbreviate_conf
+[ -f ~/.vim/abbreviate_conf_local ] || touch ~/.vim/abbreviate_conf_local
 [ -f ~/.vim/macro_conf ] || touch ~/.vim/macro_conf
+[ -f ~/.vim/macro_conf_local ] || touch ~/.vim/macro_conf_local
 [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
 
 \cp -p ./zshrc ~/.zshrc

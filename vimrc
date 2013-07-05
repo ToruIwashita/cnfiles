@@ -3,5 +3,7 @@
 source ~/.vim/vconf
 " 略語設定
 source ~/.vim/abbreviate_conf
+source ~/.vim/abbreviate_conf_local
 " マクロ設定
 source ~/.vim/macro_conf
+source ~/.vim/macro_conf_local

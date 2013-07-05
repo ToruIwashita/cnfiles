@@ -1,3 +1,0 @@
-"" SQL関連マクロ
-"基本の形を挿入
-map! =sql SELECT<ENTER>FROM<ENTER>WHERE (<ENTER><ENTER>)<ESC>4ko  *<ESC>jA<SPACE>
