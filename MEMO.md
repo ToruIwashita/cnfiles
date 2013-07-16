@@ -28,6 +28,11 @@ GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能
 
 ※それぞれaliasを設定するのがオススメ
 
+####・gitのデフォルトエディタをvimに  
+``.gitconfig``に以下の記述を追加  
+
+    editor = vim    
+
 ####・git log-all  
 ``.gitconfig``に以下の``alias``追加
 
