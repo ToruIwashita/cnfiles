@@ -31,12 +31,14 @@ GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能
 ####・gitのデフォルトエディタをvimに  
 ``.gitconfig``に以下の記述を追加  
 
-    editor = vim    
+    [core]    
+      editor = vim    
 
 ####・git log-all  
 ``.gitconfig``に以下の``alias``追加
 
-    log-all = log --graph --all --color --pretty='%x09%h %cn%x09%s %Cred%d%Creset'  
+    [alias]    
+      log-all = log --graph --all --color --pretty='%x09%h %cn%x09%s %Cred%d%Creset'  
 
 ####・CUI Gitブラウザ``tig``
 Macにインストール
