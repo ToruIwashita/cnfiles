@@ -53,8 +53,8 @@ Macにインストール
 ※注意：``tig``デフォルトキーバインドの'G'で``git gc``が走るため、以下の設定を``.gitconfig``に追加する方が良い
 
     [tig "bind"]
-        generic = g move-first-line
-        generic = G move-last-line
+      generic = g move-first-line
+      generic = G move-last-line
 
 ####・文字コード変換``nkf``
 Macにインストール  
