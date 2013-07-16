@@ -9,22 +9,20 @@
 [ -d ~/.zsh.d/_zfunc_local ] || mkdir ~/.zsh.d/_zfunc_local
 [ -d ~/.vim ] || mkdir ~/.vim
 [ -f ~/.vim/vconf ] || touch ~/.vim/vconf
-[ -f ~/.vim/abbreviate_conf ] || touch ~/.vim/abbreviate_conf
-[ -f ~/.vim/abbreviate_conf_local ] || touch ~/.vim/abbreviate_conf_local
-[ -f ~/.vim/macro_conf ] || touch ~/.vim/macro_conf
-[ -f ~/.vim/macro_conf_local ] || touch ~/.vim/macro_conf_local
+[ -d ~/.vim/abbreviate ] || mkdir ~/.vim/abbreviate
+[ -d ~/.vim/abbreviate_local ] || mkdir ~/.vim/abbreviate_local
+[ -d ~/.vim/macro ] || mkdir ~/.vim/macro
+[ -d ~/.vim/macro_local ] || mkdir ~/.vim/macro_local
 [ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
 
 \cp -p ./zshrc ~/.zshrc
 \cp -p ./tmux.conf ~/.tmux.conf
 \cp -p ./vimrc ~/.vimrc
 \cp -p ./vim/vconf ~/.vim/vconf
-\cp -p ./vim/abbreviate_conf ~/.vim/abbreviate_conf
-\cp -p ./vim/macro_conf ~/.vim/macro_conf
 \cp -p ./zsh.d/zconf ~/.zsh.d/zconf
 \cp -p ./zsh.d/ls_colors ~/.zsh.d/ls_colors
 
-source_directories=(zsh.d/zfunc zsh.d/_zfunc vim/plugin)
+source_directories=(zsh.d/zfunc zsh.d/_zfunc vim/plugin vim/abbreviate vim/macro)
 for dir in ${source_directories[@]}; do
   for file in `ls ./${dir}`; do
     \cp -p ./${dir}/${file} ~/.${dir}/${file}
