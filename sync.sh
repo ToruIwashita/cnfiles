@@ -13,7 +13,7 @@
 [ -d ~/.vim/abbreviate_local ] || mkdir ~/.vim/abbreviate_local
 [ -d ~/.vim/macro ] || mkdir ~/.vim/macro
 [ -d ~/.vim/macro_local ] || mkdir ~/.vim/macro_local
-[ -d ~/.vim/plugin ] || mkdir ~/.vim/plugin
+[ -d ~/.vim/bundle ] || mkdir ~/.vim/bundle
 
 \cp -p ./zshrc ~/.zshrc
 \cp -p ./tmux.conf ~/.tmux.conf
