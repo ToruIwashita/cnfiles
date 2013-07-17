@@ -28,6 +28,21 @@ GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能
 
 ※それぞれaliasを設定するのがオススメ
 
+####・RSense
+Rubyのための開発支援ツール(VimやEmacsに特化)  
+１.特徴  
+- コード補完  
+- 型検査  
+- 定義元ジャンプ  
+
+２.インストール  
+    % brew install rsense    
+※ `yum install`要確認  
+インストールが完了すると　　
+    ruby /usr/local/Cellar/rsense/0.3/libexec/etc/config.rb > ~/.rsense   
+のような指示が出るので実行    
+...要追記
+
 ####・gitのデフォルトエディタをvimに  
 ``.gitconfig``に以下の記述を追加  
 

@@ -20,6 +20,7 @@ endfor
 
 " 初期設定
 set nocompatible
+filetype off
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
@@ -37,6 +38,8 @@ NeoBundle 'rails.vim'
 NeoBundle 'neocomplcache'
 " スニペット展開
 NeoBundle 'neosnippet'
+" rsenseをvimで利用するためのプラグイン
+NeoBundle 'taichouchou2/vim-rsense'
 
 "" end
 
