@@ -28,7 +28,6 @@ endif
 call neobundle#rc(expand('~/.vim/bundle/'))
 
 "" group 各種vimプラグイン do
-
 " NeoBundle自身をNeoBundleで管理
 NeoBundleFetch 'Shougo/neobundle.vim'
 " 非同期処理を可能にするプラグイン(インストール推奨)
@@ -48,7 +47,6 @@ NeoBundle 'neocomplcache'
 NeoBundle 'neosnippet'
 " rsenseをvimで利用するためのプラグイン
 NeoBundle 'taichouchou2/vim-rsense'
-
 "" end
 
 " ファイルタイププラグインおよびインデントを有効化(NeoBundleによる処理が終了した後に実施)
