@@ -9,6 +9,7 @@
 [ -d ~/.zsh.d/_zfunc_local ] || mkdir ~/.zsh.d/_zfunc_local
 [ -d ~/.vim ] || mkdir ~/.vim
 [ -f ~/.vim/vconf ] || touch ~/.vim/vconf
+[ -f ~/.vim/vconf_local ] || touch ~/.vim/vconf_local
 [ -d ~/.vim/abbreviate ] || mkdir ~/.vim/abbreviate
 [ -d ~/.vim/abbreviate_local ] || mkdir ~/.vim/abbreviate_local
 [ -d ~/.vim/macro ] || mkdir ~/.vim/macro
