@@ -1,6 +1,7 @@
 """ 各種設定読込
 "" 基本設定
 source ~/.vim/vconf
+source ~/.vim/vconf_local
 
 "" その他設定読み込み
 let directories = ["abbreviate/","abbreviate_local/","macro/","macro_local/"]

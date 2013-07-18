@@ -1,0 +1,2 @@
+"" RSense設定
+let g:rsenseHome = "$RSENSE_HOME"
