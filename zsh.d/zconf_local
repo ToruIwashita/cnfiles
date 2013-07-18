@@ -1,8 +1,10 @@
 ## 環境変数設定
 readonly MYSQL_CNCT="mysql test"
 readonly MYSQL_CMD="$MYSQL_CNCT -e"
+readonly RSENSE_HOME=~/rsense-0.3  # サンプル
 
 export MYSQL_CNCT MYSQL_CMD
+export PATH=${PATH}:~/nkf207:$RSENSE_HOME/bin  # nkfとrsense有りの時のサンプル
 
 ## エイリアス
 # CD系
