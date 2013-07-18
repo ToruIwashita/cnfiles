@@ -22,14 +22,6 @@ noremap <C-w><C-W> <nop>
 "" インサートモードキーバインド
 " 一文字delete
 inoremap <C-d> <delete>
-" Ctr+bで左へ移動
-inoremap <C-b> <left>
-" Ctr+fで右へ移動
-inoremap <C-f> <right>
-" Ctr+nで下へ移動
-inoremap <C-n> <down>
-" Ctr+pで上へ移動
-inoremap <C-p> <up>
 
 "" オプション
 " エンコーディングUTF-8

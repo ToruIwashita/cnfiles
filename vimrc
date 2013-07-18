@@ -1,18 +1,3 @@
-""" 各種設定読込
-"" 基本設定
-source ~/.vim/vconf
-source ~/.vim/plugin_conf
-
-"" その他設定読み込み
-let directories = ["abbreviate/","macro/"]
-for $dir in directories
-  let $dir_path = "~/.vim/".$dir
-  for $file in split(system("ls ".$dir_path),"\n")
-    let $file_path = $dir_path.$file
-    source $file_path
-  endfor
-endfor
-
 """ NeoBundle設定
 "" Brief help
 " :NeoBundleList          - list configured bundles
@@ -45,7 +30,24 @@ NeoBundle 'neocomplcache'
 NeoBundle 'neosnippet'
 " rsenseをvimで利用するためのプラグイン
 NeoBundle 'taichouchou2/vim-rsense'
+" タブで補完
+NeoBundle 'SuperTab'
 "" end
 
 " ファイルタイププラグインおよびインデントを有効化(NeoBundleによる処理が終了した後に実施)
 filetype plugin indent on
+
+""" 各種設定読込
+"" 基本設定
+source ~/.vim/vconf
+source ~/.vim/plugin_conf
+
+"" その他設定読み込み
+let directories = ["abbreviate/","macro/"]
+for $dir in directories
+  let $dir_path = "~/.vim/".$dir
+  for $file in split(system("ls ".$dir_path),"\n")
+    let $file_path = $dir_path.$file
+    source $file_path
+  endfor
+endfor
