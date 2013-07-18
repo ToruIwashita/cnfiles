@@ -14,6 +14,7 @@
 [ -d ~/.vim/macro ] || mkdir ~/.vim/macro
 [ -d ~/.vim/macro_local ] || mkdir ~/.vim/macro_local
 [ -d ~/.vim/bundle ] || mkdir ~/.vim/bundle
+[ -d ~/.vim/bundle/neobundle.vim ] || git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
 \cp -p ./zshrc ~/.zshrc
 \cp -p ./tmux.conf ~/.tmux.conf
