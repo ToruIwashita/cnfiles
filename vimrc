@@ -1,10 +1,10 @@
 """ 各種設定読込
 "" 基本設定
 source ~/.vim/vconf
-source ~/.vim/vconf_local
+source ~/.vim/plugin_conf
 
 "" その他設定読み込み
-let directories = ["abbreviate/","abbreviate_local/","macro/","macro_local/"]
+let directories = ["abbreviate/","macro/"]
 for $dir in directories
   let $dir_path = "~/.vim/".$dir
   for $file in split(system("ls ".$dir_path),"\n")
