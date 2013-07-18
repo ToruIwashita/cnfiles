@@ -45,13 +45,28 @@ GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能
     call neobundle#rc(expand('~/.vim/bundle/'))    
     
     NeoBundleFetch 'Shougo/neobundle.vim' # NeoBundle自身をNeoBundleで管理    
-    NeoBundle 'Shougo/vimproc'            # 非同期処理を可能にするプラグイン(インストール推奨)    
+    NeoBundle 'Shougo/vimproc'            
+    NeoBundle 'Shougo/vimproc', {         # 非同期処理を可能にするプラグイン(インストール推奨)    
+    \  'build' : {    
+    \    'windows' : 'make -f make_mingw32.mak',    
+    \    'cygwin' : 'make -f make_cygwin.mak',    
+    \    'mac' : 'make -f make_mac.mak',    
+    \    'unix' : 'make -f make_unix.mak',    
+    \  },    
+    \}    
     NeoBundle '#任意のプラグイン'    
     ...
     
     filetype plugin indent on    
 
 任意のプラグインを記述したら`vim`を開いて`:NeoBundleInstall`を実行するとプラグインが`~/.vim/bundle/`以下にインストールされる
+
+※ 注意:`vimproc`は`NeoBundleInstall`後にビルドが必要  
+
+    $ cd ~/.vim/bundle/vimproc    
+    $ make -f make_unix.mak    
+
+　Macなら`make_mac.mak`を使用する  
 
 ####・RSense
 Rubyのための開発支援ツール(VimやEmacsに特化)  
