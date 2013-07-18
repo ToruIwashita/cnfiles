@@ -30,7 +30,7 @@ call neobundle#rc(expand('~/.vim/bundle/'))
 
 " NeoBundle自身をNeoBundleで管理
 NeoBundleFetch 'Shougo/neobundle.vim'
-" 非同期通信を可能にする(インストール推奨)
+" 非同期処理を可能にするプラグイン(インストール推奨)
 NeoBundle 'Shougo/vimproc'
 " rails用vimプラグイン
 NeoBundle 'rails.vim'
