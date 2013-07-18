@@ -13,6 +13,13 @@ Preferences > General > Save copy/paste でペースト履歴をディスクに�
 インスタントリプレイ
 ``cmd+opt+b``
 
+####・`ruby`オプションが有効な`vim`か調べる  
+
+     $ vim --version | grep ruby    
+     -python3 +quickfix +reltime -rightleft -ruby +scrollbind +signs +smartindent    
+
+　=> `+ruby`ならばオプション有効  
+
 ####・GNU系コマンド
 ``ls``については``coreutils``をMacにインストール  
 
