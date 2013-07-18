@@ -9,20 +9,21 @@
 [ -d ~/.zsh.d/_zfunc_local ] || mkdir ~/.zsh.d/_zfunc_local
 [ -d ~/.vim ] || mkdir ~/.vim
 [ -f ~/.vim/vconf ] || touch ~/.vim/vconf
+[ -f ~/.vim/plugin_conf ] || touch ~/.vim/plugin_conf
 [ -d ~/.vim/abbreviate ] || mkdir ~/.vim/abbreviate
 [ -d ~/.vim/macro ] || mkdir ~/.vim/macro
 [ -d ~/.vim/bundle ] || mkdir ~/.vim/bundle
-[ -d ~/.vim/plugin_confs ] || mkdir ~/.vim/plugin_confs
 [ -d ~/.vim/bundle/neobundle.vim ] || git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
 \cp -p ./zshrc ~/.zshrc
 \cp -p ./tmux.conf ~/.tmux.conf
 \cp -p ./vimrc ~/.vimrc
 \cp -p ./vim/vconf ~/.vim/vconf
+\cp -p ./vim/plugin_conf ~/.vim/plugin_conf
 \cp -p ./zsh.d/zconf ~/.zsh.d/zconf
 \cp -p ./zsh.d/ls_colors ~/.zsh.d/ls_colors
 
-source_directories=(zsh.d/zfunc zsh.d/_zfunc vim/abbreviate vim/macro vim/plugin_confs)
+source_directories=(zsh.d/zfunc zsh.d/_zfunc vim/abbreviate vim/macro)
 for dir in ${source_directories[@]}; do
   for file in `ls ./${dir}`; do
     \cp -p ./${dir}/${file} ~/.${dir}/${file}
