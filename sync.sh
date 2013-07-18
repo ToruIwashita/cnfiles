@@ -22,7 +22,7 @@
 \cp -p ./zsh.d/zconf ~/.zsh.d/zconf
 \cp -p ./zsh.d/ls_colors ~/.zsh.d/ls_colors
 
-source_directories=(zsh.d/zfunc zsh.d/_zfunc vim/plugin vim/abbreviate vim/macro)
+source_directories=(zsh.d/zfunc zsh.d/_zfunc vim/abbreviate vim/macro)
 for dir in ${source_directories[@]}; do
   for file in `ls ./${dir}`; do
     \cp -p ./${dir}/${file} ~/.${dir}/${file}
