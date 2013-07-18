@@ -25,9 +25,11 @@ NeoBundle 'Shougo/vimproc', {
 " rails用vimプラグイン
 NeoBundle 'rails.vim'
 " 入力補完機能プラグイン
-NeoBundle 'neocomplcache'
+NeoBundle 'Shougo/neocomplcache'
+" neocomplcacheでrsenseを使用するためのプラグイン
+NeoBundle 'Shougo/neocomplcache-rsense'
 " スニペット展開
-NeoBundle 'neosnippet'
+NeoBundle 'Shougo/neosnippet'
 " rsenseをvimで利用するためのプラグイン
 NeoBundle 'taichouchou2/vim-rsense'
 " タブで補完
