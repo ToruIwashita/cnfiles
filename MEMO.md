@@ -48,8 +48,6 @@ GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能
     NeoBundle 'Shougo/vimproc'            
     NeoBundle 'Shougo/vimproc', {         # 非同期処理を可能にするプラグイン(インストール推奨)    
     \  'build' : {    
-    \    'windows' : 'make -f make_mingw32.mak',    
-    \    'cygwin' : 'make -f make_cygwin.mak',    
     \    'mac' : 'make -f make_mac.mak',    
     \    'unix' : 'make -f make_unix.mak',    
     \  },    
@@ -61,7 +59,7 @@ GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能
 
 任意のプラグインを記述したら`vim`を開いて`:NeoBundleInstall`を実行するとプラグインが`~/.vim/bundle/`以下にインストールされる
 
-※ 注意:`vimproc`は`NeoBundleInstall`後にビルドが必要  
+※ 注意:`vimproc`は`NeoBundleInstall`後にビルドが必要な場合がある  
 
     $ cd ~/.vim/bundle/vimproc    
     $ make -f make_unix.mak    
@@ -91,21 +89,20 @@ Rubyのための開発支援ツール(VimやEmacsに特化)
     $ wget http://cx4a.org/pub/rsense/rsense-0.3.zip    
     $ unzip rsense-0.3.zip    
 
-　環境変数RSENSE_HOMEを設定とPATH設定(zshに書く)  
+　PATH設定(zshに書く)  
 
-    export RSENSE_HOME=~/lib/rsense-0.3    
-    export PATH=${PATH}:$RSENSE_HOME/bin    
+    export PATH=${PATH}:~/rsense-0.3/bin    
 
 　`rsense`に実行権限を与える  
 
-    $ cd $RSENSE_HOME    
+    $ cd ~/rsense-0.3/
     $ chmod +x bin/rsense    
     $ rsense version    
     Rsense 0.3    
 
 　`.rsense`の作成  
 
-    ruby $RSENSE_HOME/etc/config.rb > ~/.rsense    
+    ruby ~/rsense-0.3/etc/config.rb > ~/.rsense    
 
 　以降は`vim`で`rsense`を使用する共通  
 
@@ -115,11 +112,27 @@ Rubyのための開発支援ツール(VimやEmacsに特化)
 
 　`vim`の設定に以下を追加  
 
-    let g:rsenseHome = "$RSENSE_HOME"    
+    let $RSENSE_HOME="/usr/local/Cellar/rsense/0.3/libexec"    
+    let g:rsenseHome=$RSENSE_HOME    
 
 　`vim`を起動して以下のコマンドで確認  
 
     :RSenseVersion    
+
+`neocomplecache`で`rsense`を使用する  
+以下設定例  
+
+    let g:neocomplcache#sources#rsense#home_directory=$RSENSE_HOME    
+    let g:rsenseUseOmniFunc=1    
+    let g:neocomplcache_enable_at_startup = 1    
+    let g:neocomplcache_max_list = 20    
+    let g:neocomplcache_manual_completion_start_length = 3    
+    let g:neocomplcache_enable_ignore_case = 1    
+    let g:neocomplcache_enable_smart_case = 1    
+    " neocomplcacheのためのdemiliter設定    
+    if !exists('g:neocomplcache_delimiter_patterns')    
+      let g:neocomplcache_delimiter_patterns = {}    
+    endif    
 
 ####・gitのデフォルトエディタをvimに  
 ``.gitconfig``に以下の記述を追加  
