@@ -28,6 +28,31 @@ GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能
 
 ※それぞれaliasを設定するのがオススメ
 
+####・NeoBundle
+`vim`のプラグイン管理ツール  
+以下を実施して導入  
+
+    $ mkdir -p ~/.vim/bundle    
+    $ git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim    
+
+`.vimrc`に以下を追記  
+
+    set nocompatible    
+    filetype off    
+    if has('vim_starting')    
+      set runtimepath+=~/.vim/bundle/neobundle.vim/    
+    endif    
+    call neobundle#rc(expand('~/.vim/bundle/'))    
+    
+    NeoBundleFetch 'Shougo/neobundle.vim' # NeoBundle自身をNeoBundleで管理    
+    NeoBundle 'Shougo/vimproc'            # 非同期処理を可能にするプラグイン(インストール推奨)    
+    NeoBundle '#任意のプラグイン'    
+    ...
+    
+    filetype plugin indent on    
+
+任意のプラグインを記述したら`vim`を開いて`:NeoBundleInstall`を実行するとプラグインが`~/.vim/bundle/`以下にインストールされる
+
 ####・RSense
 Rubyのための開発支援ツール(VimやEmacsに特化)  
 １.特徴  
@@ -36,12 +61,50 @@ Rubyのための開発支援ツール(VimやEmacsに特化)
 - 定義元ジャンプ  
 
 ２.インストール  
-    % brew install rsense    
-※ `yum install`要確認  
-インストールが完了すると　　
+`brew`ある場合  
+
+    $ brew install rsense    
+
+　インストールが完了すると  
+
     ruby /usr/local/Cellar/rsense/0.3/libexec/etc/config.rb > ~/.rsense   
-のような指示が出るので実行    
-...要追記
+
+　のような指示が出るので実行し,以降は`vim`で`rsense`を使用する共通  
+
+`brew`がない場合(手動)  
+
+    $ wget http://cx4a.org/pub/rsense/rsense-0.3.zip    
+    $ unzip rsense-0.3.zip    
+
+　環境変数RSENSE_HOMEを設定とPATH設定(zshに書く)  
+
+    export RSENSE_HOME=~/lib/rsense-0.3    
+    export PATH=${PATH}:$RSENSE_HOME/bin    
+
+　`rsense`に実行権限を与える  
+
+    $ cd $RSENSE_HOME    
+    $ chmod +x bin/rsense    
+    $ rsense version    
+    Rsense 0.3    
+
+　`.rsense`の作成  
+
+    ruby $RSENSE_HOME/etc/config.rb > ~/.rsense    
+
+　以降は`vim`で`rsense`を使用する共通  
+
+`vim`で`rsense`を使用する  
+
+  `vim-rsense`プラグインを入れる(NeoBundleなど利用推奨)  
+
+　`vim`の設定に以下を追加  
+
+    let g:rsenseHome = "$RSENSE_HOME"    
+
+　`vim`を起動して以下のコマンドで確認  
+
+    :RSenseVersion    
 
 ####・gitのデフォルトエディタをvimに  
 ``.gitconfig``に以下の記述を追加  
