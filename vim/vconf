@@ -24,6 +24,8 @@ noremap <C-w><C-W> <nop>
 inoremap <C-d> <delete>
 
 "" オプション
+" シンタックスハイライト
+syntax on
 " エンコーディングUTF-8
 set encoding=utf8
 " 256色モード
