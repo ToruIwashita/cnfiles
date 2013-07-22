@@ -114,8 +114,8 @@ alias grep="grep --color"
 alias his="history -50n"
 alias tmux="tmux -2"
 # CD系
-alias cdz="cd ~/.zsh.d"
-alias cdv="cd ~/.vim"
+alias cdz="cd ~/.zsh.d && ls"
+alias cdv="cd ~/.vim && ls"
 # GIT系
 alias ga="git add"
 alias gb="git branch"

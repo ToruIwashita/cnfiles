@@ -7,7 +7,7 @@ export PATH=${PATH}:~/nkf207:/usr/local/Cellar/rsense/0.3/libexec/bin  # nkfとr
 
 ## エイリアス
 # CD系
-alias cdm="~/MEMOs"
+alias cdm="~/MEMOs && ls"
 # MYSQL系
 alias my=$MYSQL_CNCT
 alias myq=$MYSQL_CMD
