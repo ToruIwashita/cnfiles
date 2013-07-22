@@ -18,20 +18,18 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " 非同期処理を可能にするプラグイン(インストール推奨)
 NeoBundle 'Shougo/vimproc', {
 \  'build' : {
-\    'mac' : 'make -f make_mac.mak',
+\    'mac'  : 'make -f make_mac.mak',
 \    'unix' : 'make -f make_unix.mak',
 \  },
 \}
-" rails用vimプラグイン
-NeoBundle 'rails.vim'
 " 入力補完機能プラグイン
 NeoBundle 'Shougo/neocomplcache'
-" neocomplcacheでrsenseを使用するためのプラグイン
-NeoBundle 'Shougo/neocomplcache-rsense'
 " スニペット展開
 NeoBundle 'Shougo/neosnippet'
-" rsenseをvimで利用するためのプラグイン
-NeoBundle 'taichouchou2/vim-rsense'
+" rsenseをneocomplcacheで利用するためのプラグイン
+NeoBundle 'Shougo/neocomplcache-rsense'
+" rubyのブロックを%で移動
+NeoBundle 'ruby-matchit'
 " タブで補完
 NeoBundle 'SuperTab'
 "" end
