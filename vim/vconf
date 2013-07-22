@@ -50,3 +50,5 @@ set wildmode=longest:full,full
 set incsearch
 " サーチ結果ハイライト
 set hlsearch
+" インサートモード時backspece有効
+set backspace=indent,eol,start
