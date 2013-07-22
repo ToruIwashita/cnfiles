@@ -101,8 +101,8 @@ bindkey -M menuselect '^F' forward-char
 bindkey -M menuselect '^N' down-line-or-history
 # Ctr+Pで上へ
 bindkey -M menuselect '^P' up-line-or-history
-# Ctr+Jで次の補完メニュー
-bindkey -M menuselect '^J' accept-and-infer-next-history
+# Ctr+Kで次の補完メニュー
+bindkey -M menuselect '^K' accept-and-infer-next-history
 
 ## エイリアス
 alias ez="exec zsh"
