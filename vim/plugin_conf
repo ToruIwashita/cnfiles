@@ -1,10 +1,4 @@
-"" rsense
-let $RSENSE_HOME="/usr/local/Cellar/rsense/0.3/libexec"
-let g:rsenseHome=$RSENSE_HOME
-
 "" neocomplcache
-let g:neocomplcache#sources#rsense#home_directory=$RSENSE_HOME
-let g:rsenseUseOmniFunc=1
 " neocomplcacheを起動時に有効化
 let g:neocomplcache_enable_at_startup = 1
 " シンタックスをキャッシュするときの最小文字長
