@@ -5,10 +5,17 @@ let g:rsenseHome=$RSENSE_HOME
 "" neocomplcache
 let g:neocomplcache#sources#rsense#home_directory=$RSENSE_HOME
 let g:rsenseUseOmniFunc=1
+" neocomplcacheを起動時に有効化
 let g:neocomplcache_enable_at_startup = 1
-let g:neocomplcache_max_list = 20
-let g:neocomplcache_manual_completion_start_length = 3
+" シンタックスをキャッシュするときの最小文字長
+let g:neocomplcache_min_syntax_length = 3
+" ポップアップメニューで表示される候補の数
+let g:neocomplcache_max_list = 30
+" 手動補完時に補完を行う入力数
+let g:neocomplcache_manual_completion_start_length = 2
+" 補完候補検索時に大文字・小文字を無視する
 let g:neocomplcache_enable_ignore_case = 1
+" 大文字が入力されるまで大文字小文字の区別を無視
 let g:neocomplcache_enable_smart_case = 1
 " neocomplcacheのためのdemiliter設定
 if !exists('g:neocomplcache_delimiter_patterns')
@@ -16,6 +23,6 @@ if !exists('g:neocomplcache_delimiter_patterns')
 endif
 
 "" neosnippet
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
