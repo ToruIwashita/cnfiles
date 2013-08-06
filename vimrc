@@ -26,8 +26,6 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'Shougo/neocomplcache'
 " スニペット展開
 NeoBundle 'Shougo/neosnippet'
-" rsenseをneocomplcacheで利用するためのプラグイン
-NeoBundle 'Shougo/neocomplcache-rsense'
 " rubyのブロックを%で移動
 NeoBundle 'ruby-matchit'
 " タブで補完
