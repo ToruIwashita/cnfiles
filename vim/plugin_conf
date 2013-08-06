@@ -11,7 +11,7 @@ let g:neocomplcache_manual_completion_start_length = 2
 let g:neocomplcache_enable_ignore_case = 1
 " 大文字が入力されるまで大文字小文字の区別を無視
 let g:neocomplcache_enable_smart_case = 1
-" neocomplcacheのためのdemiliter設定
+" 関数を補完するための区切り文字パターン
 if !exists('g:neocomplcache_delimiter_patterns')
   let g:neocomplcache_delimiter_patterns = {}
 endif
