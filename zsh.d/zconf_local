@@ -12,6 +12,8 @@ alias cdm="~/MEMOs && ls"
 alias my=$MYSQL_CNCT
 alias myq=$MYSQL_CMD
 alias myshow="$MYSQL_CMD 'SHOW TABLES'"
+# VIM
+alias vi="vim"
 
 ## グローバルエイリアス
 alias -g TT=">! ~/works/tmp.txt"
