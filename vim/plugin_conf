@@ -11,12 +11,22 @@ let g:neocomplcache_manual_completion_start_length = 2
 let g:neocomplcache_enable_ignore_case = 1
 " 大文字が入力されるまで大文字小文字の区別を無視
 let g:neocomplcache_enable_smart_case = 1
-" 関数を補完するための区切り文字パターン
-if !exists('g:neocomplcache_delimiter_patterns')
-  let g:neocomplcache_delimiter_patterns = {}
+" オムニ補完の関数を呼び出しキーワードパターン設定(初期化)
+if !exists('g:neocomplcache_omni_patterns')
+  let g:neocomplcache_omni_patterns = {}
 endif
+" オムニ補完の関数を呼び出しキーワードパターン設定(ruby用)
+let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
-"" neosnippet
+"" neocomplcache key-mappings
+" Ctr+Jで補完候補確定
+inoremap <expr><C-j> neocomplcache#close_popup()
+" Ctr+Gで補完キャンセル&ポップアップを閉じる
+inoremap <expr><C-g> neocomplcache#cancel_popup()
+
+"" neosnippet key-mappings
+" Ctr+Kでスニペット展開&ターゲット移動
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
