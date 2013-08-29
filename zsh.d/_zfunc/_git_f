@@ -63,5 +63,3 @@ compdef _gd gd
 compdef _gcheck gcheck
 compdef _gsw gsw
 compdef _gud gud
-
-#echo ${(M)${(@f)"$(git branch)"}##\**}
