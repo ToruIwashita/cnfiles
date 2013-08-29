@@ -113,6 +113,7 @@ alias ls="ls --color"
 alias grep="grep --color"
 alias his="history -50n"
 alias tmux="tmux -2"
+alias tigb="tig blame"
 # CD系
 alias cdz="cd ~/.zsh.d && ls"
 alias cdv="cd ~/.vim && ls"
