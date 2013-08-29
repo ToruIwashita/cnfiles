@@ -20,7 +20,7 @@ function gau() {
     return 1
   fi
 
-  git diff $* && git add $*
+  git diff $*
 }
 
 function gd() {
