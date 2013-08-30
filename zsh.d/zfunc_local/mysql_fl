@@ -127,6 +127,15 @@ function mydesc() {
   eval "${MYSQL_CMD} 'DESC ${1}'"
 }
 
+function myindex() {
+  if [ $# -lt 1 ]; then
+    print "lack of arguments."
+    return 1
+  fi
+
+  eval "${MYSQL_CMD} 'SHOW INDEX FROM ${1}'"
+}
+
 function myfcsv() {
   if [ $# -lt 1 ]; then
     print "lack of arguments."
