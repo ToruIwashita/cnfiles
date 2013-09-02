@@ -10,6 +10,7 @@
 [ -d ~/.vim ] || mkdir ~/.vim
 [ -f ~/.vim/vconf ] || touch ~/.vim/vconf
 [ -f ~/.vim/plugin_conf ] || touch ~/.vim/plugin_conf
+[ -d ~/.vim/vfunc ] || mkdir ~/.vim/vfunc
 [ -d ~/.vim/abbreviate ] || mkdir ~/.vim/abbreviate
 [ -d ~/.vim/macro ] || mkdir ~/.vim/macro
 [ -d ~/.vim/bundle ] || mkdir ~/.vim/bundle
@@ -23,7 +24,7 @@
 \cp -p ./zsh.d/zconf ~/.zsh.d/zconf
 \cp -p ./zsh.d/ls_colors ~/.zsh.d/ls_colors
 
-source_directories=(zsh.d/zfunc zsh.d/_zfunc vim/abbreviate vim/macro)
+source_directories=(zsh.d/zfunc zsh.d/_zfunc vim/vfunc vim/abbreviate vim/macro)
 for dir in ${source_directories[@]}; do
   for file in `ls ./${dir}`; do
     \cp -p ./${dir}/${file} ~/.${dir}/${file}
