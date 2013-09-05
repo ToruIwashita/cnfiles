@@ -11,6 +11,7 @@
 [ -f ~/.vim/vconf ] || touch ~/.vim/vconf
 [ -f ~/.vim/plugin_conf ] || touch ~/.vim/plugin_conf
 [ -d ~/.vim/vfunc ] || mkdir ~/.vim/vfunc
+[ -d ~/.vim/vfunc_local ] || mkdir ~/.vim/vfunc_local
 [ -d ~/.vim/abbreviate ] || mkdir ~/.vim/abbreviate
 [ -d ~/.vim/macro ] || mkdir ~/.vim/macro
 [ -d ~/.vim/bundle ] || mkdir ~/.vim/bundle
