@@ -1,5 +1,6 @@
 #! /bin/zsh
 
+[ -d ~/.zsh.d ] || mkdir ~/.zsh.d
 [ -f ~/.zsh.d/zconf ] || touch ~/.zsh.d/zconf
 [ -f ~/.zsh.d/zconf_local ] || touch ~/.zsh.d/zconf_local
 [ -f ~/.zsh.d/ls_colors ] || touch ~/.zsh.d/ls_colors
