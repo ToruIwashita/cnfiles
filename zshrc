@@ -6,14 +6,14 @@ autoload -Uz compinit && compinit
 zmodload -i zsh/complist
 
 # 各種設定読込
-[ -f ~/.zsh.d/zconf ] || touch ~/.zsh.d/zconf && source ~/.zsh.d/zconf
-[ -f ~/.zsh.d/zconf_local ] || touch ~/.zsh.d/zconf_local && source ~/.zsh.d/zconf_local
-[ -f ~/.zsh.d/ls_colors ] || touch ~/.zsh.d/ls_colors && source ~/.zsh.d/ls_colors
+source ~/.zsh.d/zconf
+source ~/.zsh.d/zconf_local
+source ~/.zsh.d/ls_colors
 
 ## pathの重複登録無効
 typeset -U fpath
 
-## エセオートロード
+## オートロードを使用したエセロード
 # 自作関数
 function_directories=(.zsh.d/zfunc .zsh.d/_zfunc .zsh.d/zfunc_local .zsh.d/_zfunc_local)
 for dir in ${function_directories[@]}; do
