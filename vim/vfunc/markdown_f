@@ -4,7 +4,7 @@ command! AddMdSpace call g:add_md_space()
 function! g:add_md_space()
   try
     :%s/\(^[^$].*[^ \{2}]$\)/\1  /
-    :%s/\(^ \{4}.* \{2}$\)/\1  /
+    :%s/\(^ \{4}.*[^ ] \{2}$\)/\1  /
   catch
   endtry
 endfunction
