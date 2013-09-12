@@ -1,4 +1,4 @@
-"" neocomplcache
+""" neocomplcache
 " neocomplcacheを起動時に有効化
 let g:neocomplcache_enable_at_startup = 1
 " シンタックスをキャッシュするときの最小文字長
@@ -19,13 +19,13 @@ endif
 let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 
-"" neocomplcache key-mappings
+""" neocomplcache key-mappings
 " Ctr+Jで補完候補確定
 inoremap <expr><C-j> neocomplcache#close_popup()
 " Ctr+Gで補完キャンセル&ポップアップを閉じる
 inoremap <expr><C-g> neocomplcache#cancel_popup()
 
-"" neosnippet key-mappings
+""" neosnippet key-mappings
 " Ctr+Kでスニペット展開&ターゲット移動
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
