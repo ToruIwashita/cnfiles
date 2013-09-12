@@ -22,7 +22,7 @@ NeoBundle 'Shougo/vimproc', {
 \    'unix' : 'make -f make_unix.mak',
 \  },
 \}
-" 入力補完機能プラグイン
+" 入力補完機能
 NeoBundle 'Shougo/neocomplcache'
 " スニペット展開
 NeoBundle 'Shougo/neosnippet'
@@ -30,6 +30,10 @@ NeoBundle 'Shougo/neosnippet'
 NeoBundle 'ruby-matchit'
 " タブで補完
 NeoBundle 'SuperTab'
+" ステータスライン
+NeoBundle 'itchyny/lightline.vim'
+" Git
+NeoBundle 'fugitive.vim'
 "" end
 
 " ファイルタイププラグインおよびインデントを有効化(NeoBundleによる処理が終了した後に実施)
