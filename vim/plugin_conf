@@ -33,7 +33,7 @@ xmap <C-k> <Plug>(neosnippet_expand_target)
 
 """ lightline
 let g:lightline = {
-  \ 'colorscheme': 'Tomorrow_Night',
+  \ 'colorscheme': 'landscape',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
   \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
