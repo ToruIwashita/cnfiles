@@ -88,3 +88,15 @@ function gpush() {
   print "push $current_branch branch"
   git push origin $current_branch
 }
+
+function git-symbolic-ref-head() {
+  local branch_name
+  if [[ "$PWD" =~ '/¥.git(/.*)?$' ]]; then
+    return
+  fi
+  branch_name=$(basename "$(git symbolic-ref HEAD 2> /dev/null)")
+  if [[ -z $branch_name ]]; then
+    return
+  fi
+  echo $branch_name
+}

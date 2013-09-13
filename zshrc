@@ -2,6 +2,8 @@
 autoload -Uz colors && colors
 # 自動補完
 autoload -Uz compinit && compinit
+# フック関数登録
+autoload -Uz add-zsh-hook
 # 補完メニュー選択モードのキーマップ
 zmodload -i zsh/complist
 
@@ -49,5 +51,4 @@ zstyle ':completion:*' menu true select
 if [ -n "$LS_COLORS" ]; then
   zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 fi
-
 
