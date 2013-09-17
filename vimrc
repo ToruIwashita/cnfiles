@@ -4,16 +4,19 @@
 " :NeoBundleInstall(!)    - install(update) bundles
 " :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
 
-" 初期設定
+"" 初期設定
+" vi互換モードoff(純正のvim設定適用)
 set nocompatible
 filetype off
+" 起動時のみruntimepathにneobundle.vimを追加
 if has('vim_starting')
   set runtimepath+=~/.vim/bundle/neobundle.vim/
 endif
+" neobundle.vimの初期化
 call neobundle#rc(expand('~/.vim/bundle/'))
 
 "" group 各種vimプラグイン do
-" NeoBundle自身をNeoBundleで管理
+" NeoBundle自身をNeoBundleで管理する(更新する)
 NeoBundleFetch 'Shougo/neobundle.vim'
 " 非同期処理を可能にするプラグイン(インストール推奨)
 NeoBundle 'Shougo/vimproc', {
