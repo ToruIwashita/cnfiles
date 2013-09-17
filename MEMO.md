@@ -90,6 +90,14 @@ GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能
     [alias]    
       log-all = log --graph --all --color --pretty='%x09%h %cn%x09%s %Cred%d%Creset'    
 
+####・OSXでGitをバージョンアップする  
+
+１. 公式サイトでMac用のダウンロードを行い,道なりにインストール  
+２. `path`で`/usr/local/git/bin`を優先して読むように変更(`shell`で設定)  
+
+    PATH=/usr/local/git/bin:$PATH    
+    export PATH    
+
 ***  
 ####・CUI Gitブラウザ``tig``  
 Macにインストール  
