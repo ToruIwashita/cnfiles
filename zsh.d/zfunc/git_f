@@ -59,12 +59,12 @@ function gud() {
   git checkout $*
 }
 
-function gpull() {
-  local gpull_usage current_branch
+function gll() {
+  local gll_usage current_branch
 
-  gpull_usage="Usage:{pwd=../.git} $0"
+  gll_usage="Usage:{pwd=../.git} $0"
   if [ ! -d ./.git ]; then
-    print $gpull_usage;
+    print $gll_usage;
     return 1
   fi
 
@@ -74,12 +74,12 @@ function gpull() {
   git pull origin $current_branch
 }
 
-function gpush() {
-  local gpush_usage current_branch
+function gsh() {
+  local gsh_usage current_branch
 
-  gpush_usage="Usage:{pwd=../.git} $0"
+  gsh_usage="Usage:{pwd=../.git} $0"
   if [ ! -d ./.git ]; then
-    print $gpush_usage;
+    print $gsh_usage;
     return 1
   fi
 
