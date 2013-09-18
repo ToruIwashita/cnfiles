@@ -68,7 +68,7 @@ function gll() {
     return 1
   fi
 
-  current_branch=$(basename "$(git symbolic-ref HEAD 2> /dev/null)")
+  current_branch=$(basename "$(git symbolic-ref HEAD --short)")
 
   print "pull $current_branch branch"
   git pull origin $current_branch
@@ -83,7 +83,7 @@ function gsh() {
     return 1
   fi
 
-  current_branch=$(basename "$(git symbolic-ref HEAD 2> /dev/null)")
+  current_branch=$(basename "$(git symbolic-ref HEAD --short)")
 
   print "push $current_branch branch"
   git push origin $current_branch
@@ -94,7 +94,7 @@ function git-symbolic-ref-head() {
   if [[ "$PWD" =~ '/¥.git(/.*)?$' ]]; then
     return
   fi
-  branch_name=$(basename "$(git symbolic-ref HEAD 2> /dev/null)")
+  branch_name=$(basename "$(git symbolic-ref HEAD --short)")
   if [[ -z $branch_name ]]; then
     return
   fi
