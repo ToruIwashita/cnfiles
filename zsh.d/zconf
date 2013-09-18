@@ -8,6 +8,8 @@ setopt no_beep
 setopt auto_cd
 # 自動的にディレクトリスタックにカレントディレクトリスタック追加
 setopt auto_pushd
+# PROMPT変数に対して変数等展開
+setopt prompt_subst
 # ファイル補完種類表示
 setopt list_types
 # 補完候補を一覧表示

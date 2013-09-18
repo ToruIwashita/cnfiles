@@ -2,6 +2,8 @@
 autoload -Uz colors && colors
 # 自動補完
 autoload -Uz compinit && compinit
+# VersionControlSystem
+autoload -Uz vcs_info
 # フック関数登録
 autoload -Uz add-zsh-hook
 # 補完メニュー選択モードのキーマップ
@@ -28,20 +30,14 @@ for dir in ${function_directories[@]}; do
 done
 
 ## プロンプトの定義
-PROMPT="[%n]{%?}:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
-# vimモード識別
-function zle-line-init zle-keymap-select {
-  case $KEYMAP in
-    vicmd)
-      PROMPT="[%n]{%?}:%./%{$bg_bold[blue]%}%#%{$reset_color%} " ;;
-    main|viins)
-      PROMPT="[%n]{%?}:%./%{$fg_bold[blue]%}%#%{$reset_color%} " ;;
-  esac
-
-  zle reset-prompt
+zstyle ':vcs_info:*' formats '%s@%b'
+zstyle ':vcs_info:*' actionformats '%s@%b(%a)'
+precmd () {
+  psvar=()
+  LANG=en_US.UTF-8 vcs_info
+  [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
 }
-zle -N zle-line-init
-zle -N zle-keymap-select
+PROMPT="[%n]{%1v/%?}:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
 
 # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
 zstyle ':completion:*' completer _complete _match _ignored _prefix
