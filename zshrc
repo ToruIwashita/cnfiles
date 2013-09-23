@@ -30,14 +30,12 @@ for dir in ${function_directories[@]}; do
 done
 
 ## プロンプトの定義
-zstyle ':vcs_info:*' formats '%s@%b'
-zstyle ':vcs_info:*' actionformats '%s@%b(%a)'
+zstyle ':vcs_info:*' formats '%s*%F{green}%b%f'
+zstyle ':vcs_info:*' actionformats '%s*%F{green}%b%f(%a)'
 precmd () {
-  psvar=()
   LANG=en_US.UTF-8 vcs_info
-  [[ -n "$vcs_info_msg_0_" ]] && psvar[1]="$vcs_info_msg_0_"
 }
-PROMPT="[%n]{%1v|%?}:%./%{$fg_bold[blue]%}%#%{$reset_color%} "
+PROMPT='[%n]{${vcs_info_msg_0_}|%?}:%./%F{blue}%#%f '
 
 # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
 zstyle ':completion:*' completer _complete _match _ignored _prefix
