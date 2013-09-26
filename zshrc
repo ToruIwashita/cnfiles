@@ -43,8 +43,8 @@ function zle-keymap-select {
   zle reset-prompt
 }
 zle -N zle-keymap-select
-zstyle ':vcs_info:*' formats '%s*%F{green}%b%f'
-zstyle ':vcs_info:*' actionformats '%s*%F{green}%b%f(%F{red}%a%f)'
+zstyle ':vcs_info:*' formats '* %F{green}%b%f'
+zstyle ':vcs_info:*' actionformats '* %F{green}%b%f(%F{red}%a%f)'
 precmd () {
   LANG=en_US.UTF-8 vcs_info
 }
