@@ -36,7 +36,7 @@ NeoBundle 'SuperTab'
 " ステータスライン
 NeoBundle 'itchyny/lightline.vim'
 " Git
-NeoBundle 'fugitive.vim'
+NeoBundle 'tpope/vim-fugitive'
 "" end
 
 " ファイルタイププラグインおよびインデントを有効化(NeoBundleによる処理が終了した後に実施)
