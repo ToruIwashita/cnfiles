@@ -1,0 +1,11 @@
+"" markdown設定
+augroup AuAddMdSpace
+  autocmd!
+  autocmd BufWrite *.md call g:add_md_space()
+augroup END
+
+"" ruby設定
+augroup AuRbSyntaxCheck
+  autocmd!
+  autocmd BufWrite *.rb call g:rb_syntax_check()
+augroup END
