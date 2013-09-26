@@ -46,9 +46,10 @@ filetype plugin indent on
 "" 基本設定
 source ~/.vim/vconf
 source ~/.vim/plugin_conf
+source ~/.vim/autocommand
 
 "" その他設定読み込み
-let directories = ["vfunc/","vfunc_local/","abbreviate/","macro/"]
+let directories = ["vfunc/","abbreviate/","macro/"]
 for $dir in directories
   let $dir_path = "~/.vim/".$dir
   for $file in split(system("ls ".$dir_path),"\n")

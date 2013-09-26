@@ -11,8 +11,8 @@
 [ -d ~/.vim ] || mkdir ~/.vim
 [ -f ~/.vim/vconf ] || touch ~/.vim/vconf
 [ -f ~/.vim/plugin_conf ] || touch ~/.vim/plugin_conf
+[ -f ~/.vim/autocommand ] || touch ~/.vim/autocommand
 [ -d ~/.vim/vfunc ] || mkdir ~/.vim/vfunc
-[ -d ~/.vim/vfunc_local ] || mkdir ~/.vim/vfunc_local
 [ -d ~/.vim/abbreviate ] || mkdir ~/.vim/abbreviate
 [ -d ~/.vim/macro ] || mkdir ~/.vim/macro
 [ -d ~/.vim/bundle ] || mkdir ~/.vim/bundle
@@ -23,6 +23,7 @@
 \cp -p ./vimrc ~/.vimrc
 \cp -p ./vim/vconf ~/.vim/vconf
 \cp -p ./vim/plugin_conf ~/.vim/plugin_conf
+\cp -p ./vim/autocommand ~/.vim/autocommand
 \cp -p ./zsh.d/zconf ~/.zsh.d/zconf
 \cp -p ./zsh.d/ls_colors ~/.zsh.d/ls_colors
 
