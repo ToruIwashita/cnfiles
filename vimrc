@@ -35,6 +35,8 @@ NeoBundle 'ruby-matchit'
 NeoBundle 'SuperTab'
 " ステータスライン
 NeoBundle 'itchyny/lightline.vim'
+" BlockDiff
+NeoBundle 'adie/BlockDiff'
 " Git
 NeoBundle 'tpope/vim-fugitive'
 "" end
