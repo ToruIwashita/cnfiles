@@ -32,6 +32,7 @@ smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 
 """ lightline
+" Gitブランチ表示などはデフォルト空文字
 let g:lightline = {
   \ 'colorscheme': 'solarized',
   \ 'active': {
@@ -49,3 +50,8 @@ let g:lightline = {
   \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
   \ }
 \ }
+
+""" visualstar
+" visualstarで検索した後に移動しない
+map * <Plug>(visualstar-*)<Plug>N
+map # <Plug>(visualstar-#)<Plug>N

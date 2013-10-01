@@ -35,8 +35,10 @@ NeoBundle 'ruby-matchit'
 NeoBundle 'SuperTab'
 " ステータスライン
 NeoBundle 'itchyny/lightline.vim'
-" BlockDiff
+" BlockDiff(選択範囲の比較)
 NeoBundle 'adie/BlockDiff'
+" visualstar(選択範囲のテキストで検索)
+NeoBundle 'thinca/vim-visualstar'
 " Git
 NeoBundle 'tpope/vim-fugitive'
 "" end

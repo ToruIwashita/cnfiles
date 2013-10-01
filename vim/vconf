@@ -18,6 +18,9 @@ noremap <C-w>w <nop>
 noremap <C-w><C-w> <nop>
 noremap <C-w>W <nop>
 noremap <C-w><C-W> <nop>
+" *,#で検索した後に移動しない
+nnoremap * *N
+nnoremap # #N
 
 "" インサートモードキーバインド
 " 一文字delete
