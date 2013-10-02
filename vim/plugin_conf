@@ -53,5 +53,5 @@ let g:lightline = {
 
 """ visualstar
 " visualstarで検索した後に移動しない
-map * <Plug>(visualstar-*)<Plug>N
-map # <Plug>(visualstar-#)<Plug>N
+map * <Plug>(visualstar-*)N
+map # <Plug>(visualstar-#)N
