@@ -1,4 +1,4 @@
-"" コマンドモードキーバインド
+"" noremap
 " 次のウィンドウへ移動
 noremap <C-w>n <C-w>w
 noremap <C-w><C-n> <C-w>w
@@ -18,11 +18,15 @@ noremap <C-w>w <nop>
 noremap <C-w><C-w> <nop>
 noremap <C-w>W <nop>
 noremap <C-w><C-W> <nop>
+
+"" nnoremap
 " *,#で検索した後に移動しない
 nnoremap * *N
 nnoremap # #N
+" <ESC>2回で検索ハイライト消し
+nnoremap <ESC><ESC> :nohlsearch<CR>
 
-"" インサートモードキーバインド
+"" inoremap
 " 一文字delete
 inoremap <C-d> <delete>
 
