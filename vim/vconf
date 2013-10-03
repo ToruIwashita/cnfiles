@@ -61,6 +61,8 @@ set incsearch
 set hlsearch
 " インサートモード時backspece有効
 set backspace=indent,eol,start
+" 矩形ビジュアルで文字無し部分カーソル移動
+set virtualedit=block
 
 "" 補完ポップアップメニュー色設定
 hi Pmenu ctermbg=8 guibg=#606060
