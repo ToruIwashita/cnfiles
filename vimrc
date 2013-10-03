@@ -39,6 +39,7 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'adie/BlockDiff'
 " visualstar(選択範囲のテキストで検索)
 NeoBundle 'thinca/vim-visualstar'
+" テキスト整形
 NeoBundle 'vim-scripts/Align'
 " Git
 NeoBundle 'tpope/vim-fugitive'
