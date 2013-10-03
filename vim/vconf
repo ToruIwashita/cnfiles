@@ -30,6 +30,11 @@ nnoremap <ESC><ESC> :nohlsearch<CR>
 " 一文字delete
 inoremap <C-d> <delete>
 
+"" vnoremap
+" ビジュアルモードのインデント後選択継続
+vnoremap < <gv
+vnoremap > >gv
+
 "" オプション
 " シンタックスハイライト
 syntax on
@@ -61,7 +66,7 @@ set incsearch
 set hlsearch
 " インサートモード時backspece有効
 set backspace=indent,eol,start
-" 矩形ビジュアルで文字無し部分カーソル移動
+" 矩形ビジュアル無文字部分カーソル移動
 set virtualedit=block
 
 "" 補完ポップアップメニュー色設定

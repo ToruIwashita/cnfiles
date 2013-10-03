@@ -55,3 +55,7 @@ let g:lightline = {
 " visualstarで検索した後に移動しない
 map * <Plug>(visualstar-*)N
 map # <Plug>(visualstar-#)N
+
+""" Align
+let g:Align_xstrlen = 3
+let g:DrChipTopLvlMenu = ''
