@@ -29,6 +29,8 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'Shougo/neocomplcache'
 " スニペット展開
 NeoBundle 'Shougo/neosnippet'
+" text-object操作
+NeoBundle 'tpope/vim-surround'
 " rubyのブロックを%で移動
 NeoBundle 'ruby-matchit'
 " タブで補完
