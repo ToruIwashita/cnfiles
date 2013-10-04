@@ -29,6 +29,8 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'Shougo/neocomplcache'
 " スニペット展開
 NeoBundle 'Shougo/neosnippet'
+" text-object操作
+NeoBundle 'tpope/vim-surround'
 " rubyのブロックを%で移動
 NeoBundle 'ruby-matchit'
 " タブで補完
@@ -39,6 +41,8 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'adie/BlockDiff'
 " visualstar(選択範囲のテキストで検索)
 NeoBundle 'thinca/vim-visualstar'
+" テキスト整形
+NeoBundle 'vim-scripts/Align'
 " Git
 NeoBundle 'tpope/vim-fugitive'
 "" end
