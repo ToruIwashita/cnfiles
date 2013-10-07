@@ -18,7 +18,7 @@ call neobundle#rc(expand('~/.vim/bundle/'))
 "" group 各種vimプラグイン do
 " NeoBundle自身をNeoBundleで管理する(更新する)
 NeoBundleFetch 'Shougo/neobundle.vim'
-" 非同期処理を可能にするプラグイン(インストール推奨)
+" 非同期処理を可能にするプラグイン('build'は自動インストール設定)
 NeoBundle 'Shougo/vimproc', {
 \  'build' : {
 \    'mac'  : 'make -f make_mac.mak',
@@ -31,6 +31,10 @@ NeoBundle 'Shougo/neocomplcache'
 NeoBundle 'Shougo/neosnippet'
 " text-object操作
 NeoBundle 'tpope/vim-surround'
+" vim-surroundの機能を.反復
+NeoBundle 'tpope/vim-repeat'
+" コメントアウト
+NeoBundle 'tomtom/tcomment_vim'
 " rubyのブロックを%で移動
 NeoBundle 'ruby-matchit'
 " タブで補完
