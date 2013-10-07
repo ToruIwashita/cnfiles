@@ -25,6 +25,15 @@ nnoremap * *N
 nnoremap # #N
 " <ESC>2回で検索ハイライト消し
 nnoremap <ESC><ESC> :nohlsearch<CR>
+" qqq:キーコマンド履歴表示
+nnoremap qqq: <Esc>q:
+" qqq/,qqq?検索履歴表示
+nnoremap qqq/ <Esc>q/
+nnoremap qqq? <Esc>q?
+" q:,q/,q?無効化
+nnoremap q: <Nop>
+nnoremap q/ <Nop>
+nnoremap q? <Nop>
 
 "" inoremap
 " 一文字delete
