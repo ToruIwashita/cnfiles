@@ -47,6 +47,8 @@ NeoBundle 'adie/BlockDiff'
 NeoBundle 'thinca/vim-visualstar'
 " テキスト整形
 NeoBundle 'vim-scripts/Align'
+" バッファ操作
+NeoBundle 'QuickBuf'
 " Git
 NeoBundle 'tpope/vim-fugitive'
 "" end
