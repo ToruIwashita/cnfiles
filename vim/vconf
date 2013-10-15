@@ -18,6 +18,22 @@ noremap <C-w>w <nop>
 noremap <C-w><C-w> <nop>
 noremap <C-w>W <nop>
 noremap <C-w><C-W> <nop>
+" [,],<C-[>,<C-]>,<C-w><C-[>,<C-w><C-]>無効化
+noremap ] <Nop>
+noremap [ <Nop>
+noremap <C-]> <Nop>
+noremap <C-[> <Nop>
+noremap <C-w><C-]> <Nop>
+noremap <C-w><C-[> <Nop>
+" 次のバッファへ移動
+noremap <C-w>] :bnext<CR>
+noremap <C-w><C-]> :bnext<CR>
+" 前のバッファへ移動
+noremap <C-w>[ :bprevious<CR>
+noremap <C-w><C-[> :bprevious<CR>
+" 現在のバッファ削除
+noremap <C-w>d :bdelete<CR>
+noremap <C-w><C-d> :bdelete<CR>
 
 "" nnoremap
 " *,#で検索した後に移動しない
