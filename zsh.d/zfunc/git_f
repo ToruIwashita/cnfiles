@@ -62,7 +62,7 @@ function gud() {
 function gll() {
   local gll_usage current_branch
 
-  gll_usage="Usage:{pwd=../.git} $0"
+  gll_usage="Usage:{pwd=./.git} $0"
   if [ ! -d ./.git ]; then
     print $gll_usage;
     return 1
@@ -77,7 +77,7 @@ function gll() {
 function gsh() {
   local gsh_usage current_branch
 
-  gsh_usage="Usage:{pwd=../.git} $0"
+  gsh_usage="Usage:{pwd=./.git} $0"
   if [ ! -d ./.git ]; then
     print $gsh_usage;
     return 1
