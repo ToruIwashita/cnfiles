@@ -59,6 +59,8 @@ inoremap <C-d> <delete>
 " ビジュアルモードのインデント後選択継続
 vnoremap < <gv
 vnoremap > >gv
+" <ESC>でビジュアルモード終了
+vnoremap <ESC> v_<ESC>
 
 "" オプション
 " シンタックスハイライト
