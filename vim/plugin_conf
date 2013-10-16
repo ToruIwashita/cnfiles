@@ -32,7 +32,7 @@ smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 
 """ QuickBuf
-let g:qb_hotkey = ";;"
+let g:qb_hotkey = "__"
 
 """ lightline
 " Gitブランチ表示などはデフォルト空文字
