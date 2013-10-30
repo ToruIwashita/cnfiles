@@ -116,10 +116,10 @@ alias grep="grep --color"
 alias his="history -50n"
 alias tmux="tmux -2"
 alias tigb="tig blame"
-# CD系
+# CD
 alias cdz="cd ~/.zsh.d"
 alias cdv="cd ~/.vim"
-# GIT系
+# GIT
 alias ga="git add"
 alias gb="git branch"
 alias gc="git commit"
@@ -127,3 +127,6 @@ alias gf="git fetch"
 alias gs="git status"
 alias gl="git log"
 alias gla="git log --graph --all --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"
+# TIG
+alias tigb="tig blame"
+alias tigs="tig status"
