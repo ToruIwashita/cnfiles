@@ -31,13 +31,13 @@ done
 
 ## プロンプトの定義
 # VIMモード色
-VIMODE="blue"
+VIMODE="white"
 function zle-keymap-select {
   case $KEYMAP in
     vicmd)
-      VIMODE="cyan" ;;
-    main|viins)
       VIMODE="blue" ;;
+    main|viins)
+      VIMODE="white" ;;
   esac
 
   zle reset-prompt
@@ -48,7 +48,8 @@ zstyle ':vcs_info:*' actionformats '* %F{green}%b%f(%F{red}%a%f)'
 precmd () {
   LANG=en_US.UTF-8 vcs_info
 }
-PROMPT='[%n]{${vcs_info_msg_0_}|%?}:%./%F{$VIMODE}%#%f '
+PROMPT='┌[%D{%Y-%m-%d %T}]-[${vcs_info_msg_0_}]-:%d/
+└-(%?)%F{$VIMODE}>%f '
 
 # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
 zstyle ':completion:*' completer _complete _match _ignored _prefix
