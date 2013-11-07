@@ -99,26 +99,6 @@ GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能
     export PATH    
 
 ***  
-####・CUI Gitブラウザ``tig``  
-Macにインストール  
-
-    $ brew install tig    
-
-``yum``があるLinux環境にインストール  
-
-    $ yum install tig    
-  
-  
-※注意：``tig``デフォルトキーバインドの'G'で``git gc``が走るため、以下の設定を``.gitconfig``に追加する方が良い  
-
-    [tig "bind"]    
-      generic = g move-first-line    
-      generic = G move-last-line    
-
-オススメ`alias`  
-    alias tigb="tig blame"    
-
-***  
 ####・文字コード変換``nkf``  
 Macにインストール  
 
@@ -137,7 +117,7 @@ Macにインストール
 
 後は``markdown``コマンドが使える状態のzshコマンドラインで  
 
-    $ w3m -T text/html =(markdown hoge.md)
+    $ w3m -T text/html =(markdown hoge.md)    
 
 ***  
 #####・依存関係メモ  
