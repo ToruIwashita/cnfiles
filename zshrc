@@ -43,14 +43,15 @@ function zle-keymap-select {
   zle reset-prompt
 }
 zle -N zle-keymap-select
-zstyle ':vcs_info:*' formats '* %F{green}%b%f'
-zstyle ':vcs_info:*' actionformats '* %F{green}%b%f(%F{red}%a%f)'
+zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
+zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
 precmd () {
   LANG=en_US.UTF-8 vcs_info
 }
 PROMPT='_
-┌[%D{%Y-%m-%d %T}]-[${vcs_info_msg_0_}]-:%d/
-└-(%?)%F{$VIMODE}>%f '
+|[${vcs_info_msg_0_}]:%~/
+└-(%?)%F{$VIMODE}%#%f '
+RPROMPT='[%n|%D{%T}]'
 
 # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
 zstyle ':completion:*' completer _complete _match _ignored _prefix
