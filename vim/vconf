@@ -85,8 +85,6 @@ set tabstop=2
 set number
 " カーソル行可視化
 set cursorline
-" コマンドライン補完
-set wildmode=longest:full,full
 " インクリメンタルサーチ
 set incsearch
 " サーチ結果ハイライト

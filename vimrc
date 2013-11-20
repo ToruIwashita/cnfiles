@@ -71,3 +71,15 @@ for $dir in directories
     source $file_path
   endfor
 endfor
+
+"" 補完
+" 補完メニューサブディレクトリ移動
+function! EnterSubdir()
+  call feedkeys("\<Down>", 't')
+  return ''
+endfunction
+" 補完設定
+set wildmenu
+set wildmode=full
+" 補完メニューキーバインド
+cnoremap <expr> <C-k> EnterSubdir()
