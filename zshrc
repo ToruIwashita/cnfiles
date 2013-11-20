@@ -53,6 +53,7 @@ PROMPT='_
 └-(%?)%F{$VIMODE}%#%f '
 RPROMPT='[%n|%D{%T}]'
 
+## 補完
 # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
 zstyle ':completion:*' completer _complete _match _ignored _prefix
 # 補完候補のカーソル選択有効
