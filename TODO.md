@@ -1,6 +1,5 @@
 ### TODOメモ  
 
-0.`vim`の`wildmenu`を調査  
 1.`zsh`のPROMPT(RPROMPT,PROMPT2)を調整する  
 2.`tig`用ブランチ名の補完を作成(もしくは`git log`に)  
 3.`git reset HEAD`でUnstagedする関数  
