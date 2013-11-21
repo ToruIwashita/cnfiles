@@ -1,7 +1,6 @@
 ### TODOメモ  
 
-0.`zsh`と`vim`のバージョンを最新に  
-1.`vim``wildmenu`のリスト表示1行を改善する  
+1.`zsh`と`vim`のバージョンを最新に  
 2.`zsh`のPROMPT(RPROMPT,PROMPT2)を調整する(`vim`モードの色とか)  
 3.`tig`用ブランチ名の補完を作成(もしくは`git log`に)  
 4.`git reset HEAD`でUnstagedする関数  
