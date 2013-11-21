@@ -73,13 +73,17 @@ for $dir in directories
 endfor
 
 "" 補完
-" 補完メニューサブディレクトリ移動
-function! EnterSubdir()
-  call feedkeys("\<Down>", 't')
-  return ''
-endfunction
 " 補完設定
 set wildmenu
 set wildmode=full
-" 補完メニューキーバインド
-cnoremap <expr> <C-k> EnterSubdir()
+" 補完メニューサブディレクトリ移動
+" function! EnterSubdir()
+"   call feedkeys("\<Down>", 't')
+"   return ''
+" endfunction
+" " 補完メニューキーバインド
+" cnoremap <expr> <C-k> EnterSubdir()
+
+" [FIXME]こちらで動く事もある..要検討
+let &wildcharm = &wildchar
+cnoremap <C-k> <DOWN>
