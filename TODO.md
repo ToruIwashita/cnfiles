@@ -1,6 +1,7 @@
 ### TODOメモ  
 
-1.`zsh`のPROMPT(RPROMPT,PROMPT2)を調整する  
+0.`zsh`と`vim`のバージョンを最新に  
+1.`zsh`のPROMPT(RPROMPT,PROMPT2)を調整する(`vim`モードの色とか)  
 2.`tig`用ブランチ名の補完を作成(もしくは`git log`に)  
 3.`git reset HEAD`でUnstagedする関数  
 4.`tig`で作業する用の`pane`作成  
