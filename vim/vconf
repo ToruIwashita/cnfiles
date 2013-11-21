@@ -1,3 +1,16 @@
+"" 補完設定
+set wildmenu
+set wildmode=full
+
+" `wildchar`:ワイルドカード展開に使用する文字(補完開始)
+" `wildcharm`:マクロでも使えるワイルドカード展開に使用する文字
+" 以下の設定によりコマンドラインモード(cnoremap)で元のマッピングが機能するようになる
+let &wildcharm = &wildchar
+
+"" cnoremap
+" 補完メニューサブディレクトリ移動
+cnoremap <C-k> <DOWN>
+
 "" noremap
 " 次のウィンドウへ移動
 noremap <C-w>n <C-w>w
