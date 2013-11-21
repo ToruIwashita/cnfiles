@@ -51,6 +51,8 @@ NeoBundle 'vim-scripts/Align'
 NeoBundle 'QuickBuf'
 " Git
 NeoBundle 'tpope/vim-fugitive'
+" NERDTree
+NeoBundle 'scrooloose/nerdtree'
 "" end
 
 " ファイルタイププラグインおよびインデントを有効化(NeoBundleによる処理が終了した後に実施)
