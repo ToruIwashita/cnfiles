@@ -1,5 +1,5 @@
-""" NERDTree起動
-noremap <C-w>_ :NERDTree<CR>
+""" NERDTree open,close
+noremap <C-w>_ :NERDTreeToggle<CR>
 
 """ neocomplcache
 " neocomplcacheを起動時に有効化
