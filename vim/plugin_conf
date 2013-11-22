@@ -1,5 +1,9 @@
 """ NERDTree open,close
 noremap <C-w>_ :NERDTreeToggle<CR>
+" 引数なしVim実行時にNERDTree
+if has('vim_starting') && expand("%:p") == ""
+  autocmd VimEnter * NERDTree
+endif
 
 """ neocomplcache
 " neocomplcacheを起動時に有効化
