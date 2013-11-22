@@ -31,13 +31,13 @@ done
 
 ## プロンプトの定義
 # VIMモード色
-VIMODE="white"
+VIMODE="blue"
 function zle-keymap-select {
   case $KEYMAP in
     vicmd)
-      VIMODE="blue" ;;
+      VIMODE="cyan" ;;
     main|viins)
-      VIMODE="white" ;;
+      VIMODE="blue" ;;
   esac
 
   zle reset-prompt
