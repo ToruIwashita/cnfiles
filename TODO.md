@@ -1,12 +1,11 @@
 ### TODOメモ  
 
-1.`zsh`と`vim`のバージョンを最新に  
-2.`tig`用ブランチ名の補完を作成(もしくは`git log`に)  
-3.`git reset HEAD`でUnstagedする関数  
-4.`tig`で作業する用の`pane`作成  
-5.`vim`の`ruby`用スニペットを自作  
-6.`vim`の`skeleton`を追加して雛形を読み込む  
-7.`zsh`の`usage`を`git`に合わせる(オプション引数,必須引数など)  
+1.`git reset HEAD`でUnstagedする関数  
+2.`tig`で作業する用の`pane`作成  
+3.`tig`用ブランチ名の補完を作成(もしくは`git log`に)  
+4.`vim`の`ruby`用スニペットを自作  
+5.`vim`の`skeleton`を追加して雛形を読み込む  
+6.`zsh`の`usage`を`git`に合わせる(オプション引数,必須引数など)  
 
 #### メモ  
 
