@@ -39,45 +39,6 @@ GNU版``find``,``xargs``の``gfing``と``gxargs``が使用可能
 ※それぞれaliasを設定するのがオススメ  
 
 ***  
-####・NeoBundle  
-`vim`のプラグイン管理ツール  
-以下を実施して導入  
-
-    $ mkdir -p ~/.vim/bundle    
-    $ git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim    
-
-`.vimrc`に以下を追記  
-
-    set nocompatible    
-    filetype off    
-    if has('vim_starting')    
-      set runtimepath+=~/.vim/bundle/neobundle.vim/    
-    endif    
-    call neobundle#rc(expand('~/.vim/bundle/'))    
-    
-    NeoBundleFetch 'Shougo/neobundle.vim' # NeoBundle自身をNeoBundleで管理    
-    NeoBundle 'Shougo/vimproc'            
-    NeoBundle 'Shougo/vimproc', {         # 非同期処理を可能にするプラグイン(インストール推奨)    
-    \  'build' : {    
-    \    'mac' : 'make -f make_mac.mak',    
-    \    'unix' : 'make -f make_unix.mak',    
-    \  },    
-    \}    
-    NeoBundle '#任意のプラグイン'    
-    ...    
-    
-    filetype plugin indent on    
-
-任意のプラグインを記述したら`vim`を開いて`:NeoBundleInstall`を実行するとプラグインが`~/.vim/bundle/`以下にインストールされる  
-
-※ 注意:`vimproc`は`NeoBundleInstall`後にビルドが必要な場合がある  
-
-    $ cd ~/.vim/bundle/vimproc    
-    $ make -f make_unix.mak    
-
-　Macなら`make_mac.mak`を使用する  
-
-***  
 ####・gitのデフォルトエディタをvimに  
 ``.gitconfig``に以下の記述を追加  
 
