@@ -9,6 +9,7 @@
 
 #### メモ  
 
+0.`The Vim Mercurial repository`調査  
 1.`vim`の`mark`機能関連のプラグイン作成  
 2.`mysql`の`Deadlock`の情報収集  
 3.`REST`指向,`CURD`についてまとめる  
