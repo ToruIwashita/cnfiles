@@ -104,6 +104,8 @@ set incsearch
 set hlsearch
 " インサートモード時backspece有効
 set backspace=indent,eol,start
+" <C-a>,<C-x>で使う基数を10進数に
+set nrformats=octal
 " 矩形ビジュアル無文字部分カーソル移動
 set virtualedit=block
 
