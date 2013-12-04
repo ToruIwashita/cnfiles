@@ -69,3 +69,13 @@ map # <Plug>(visualstar-#)N
 """ Align
 let g:Align_xstrlen = 3
 let g:DrChipTopLvlMenu = ''
+
+""" yankring
+" yankring_historyの保存先を指定
+let g:yankring_history_dir = '~/.vim/'
+" 記録する最大数
+let g:yankring_max_history = 30
+" YRShowの最大表示数
+let g:yankring_max_display = 30
+" yankring_historyの重複テキストを保存しない
+let g:yankring_ignore_duplicate = 0
