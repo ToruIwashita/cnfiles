@@ -65,6 +65,9 @@ nnoremap q/ <Nop>
 nnoremap q? <Nop>
 
 "" inoremap
+" ノーマルモードに切り替え
+inoremap <C-[> <ESC>
+inoremap <C-]> <ESC>
 " 一文字delete
 inoremap <C-d> <delete>
 
