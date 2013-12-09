@@ -72,6 +72,8 @@ inoremap <C-]> <ESC>
 inoremap <C-@> <Nop>
 " 一文字delete
 inoremap <C-d> <delete>
+" ノーマルモード切り替え保存
+inoremap <ESC> <ESC>:w<CR>
 
 "" vnoremap
 " ビジュアルモードのインデント後選択継続
