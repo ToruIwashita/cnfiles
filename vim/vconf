@@ -19,18 +19,18 @@ noremap <C-w><C-n> <C-w>w
 noremap <C-w>p <C-w>W
 noremap <C-w><C-p> <C-w>W
 " ウィンドウ上下分割
-noremap <C-w><C-s> <nop>
+noremap <C-w><C-s> <Nop>
 noremap <C-w><C-s> <C-w><C-s>
 " ウィンドウ左右分割
-noremap <C-w><C-v> <nop>
+noremap <C-w><C-v> <Nop>
 noremap <C-w><C-v> <C-w><C-v>
 " サスペンド無効化
-noremap <C-z> <nop>
+noremap <C-z> <Nop>
 " デフォルトウィンドウ移動無効化
-noremap <C-w>w <nop>
-noremap <C-w><C-w> <nop>
-noremap <C-w>W <nop>
-noremap <C-w><C-W> <nop>
+noremap <C-w>w <Nop>
+noremap <C-w><C-w> <Nop>
+noremap <C-w>W <Nop>
+noremap <C-w><C-W> <Nop>
 " [,],<C-[>,<C-]>,<C-w><C-[>,<C-w><C-]>無効化
 noremap ] <Nop>
 noremap [ <Nop>
@@ -68,6 +68,8 @@ nnoremap q? <Nop>
 " ノーマルモードに切り替え
 inoremap <C-[> <ESC>
 inoremap <C-]> <ESC>
+" CTRL-@無効化
+inoremap <C-@> <Nop>
 " 一文字delete
 inoremap <C-d> <delete>
 
