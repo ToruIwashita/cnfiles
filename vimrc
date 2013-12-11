@@ -55,6 +55,10 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'scrooloose/nerdtree'
 " ヤンク履歴管理
 NeoBundle 'YankRing.vim'
+" vim-ruby
+NeoBundle 'vim-ruby/vim-ruby'
+" QuickFixエラーにマーカー
+NeoBundle 'errormarker.vim'
 "" end
 
 " ファイルタイププラグインおよびインデントを有効化(NeoBundleによる処理が終了した後に実施)
