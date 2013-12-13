@@ -38,10 +38,6 @@ imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
 
-""" vim-ruby
-" makeで"ruby -w"起動
-compiler ruby
-
 """ QuickBuf
 let g:qb_hotkey = "__"
 
