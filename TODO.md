@@ -1,5 +1,6 @@
 ### TODOメモ  
 
+0.`vim`最新版をインストールする手順確立  
 1.`git reset HEAD`でUnstagedする関数  
 2.`tig`で作業する用の`pane`作成  
 3.`tig`用ブランチ名の補完を作成(もしくは`git log`に)  
