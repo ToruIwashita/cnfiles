@@ -48,7 +48,7 @@ let g:qb_hotkey = "__"
 """ lightline
 " Gitブランチ表示などはデフォルト空文字
 let g:lightline = {
-  \ 'colorscheme': 'solarized',
+  \ 'colorscheme': 'Tomorrow',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ],
   \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
