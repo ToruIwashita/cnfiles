@@ -4,6 +4,9 @@ readonly MYSQL_CMD="$MYSQL_CNCT -e"
 
 export MYSQL_CNCT MYSQL_CMD
 export PATH=${PATH}:~/nkf207:/usr/local/Cellar/rsense/0.3/libexec/bin  # nkfとrsense有りの時のサンプル
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:~/local/lib  # ~/local/lib有りのサンプル(ライブラリ読み込み)
+
+typeset -U PATH LD_LIBRARY_PATH
 
 ## エイリアス
 # CD系
