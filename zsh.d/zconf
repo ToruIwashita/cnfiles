@@ -119,6 +119,10 @@ alias tigb="tig blame"
 # CD
 alias cdz="cd ~/.zsh.d"
 alias cdv="cd ~/.vim"
+alias cdl="cd ~/local"
+alias cds="cd ~/src"
+alias cdsz="cd ~/src/zsh"
+alias cdsv="cd ~/src/vim"
 # GIT
 alias ga="git add"
 alias gb="git branch"
