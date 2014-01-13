@@ -67,7 +67,9 @@ map * <Plug>(visualstar-*)N
 map # <Plug>(visualstar-#)N
 
 """ Align
+" 全角文字のハンドリング
 let g:Align_xstrlen = 3
+" GUIのメニュー表示(不要な場合は空文字を入れる)
 let g:DrChipTopLvlMenu = ''
 
 """ yankring
