@@ -1,5 +1,12 @@
 #! /bin/sh
 
+## init
+# source or local
+[ -d ~/src ]                       || mkdir ~/src
+[ -d ~/local ]                     || mkdir ~/local
+[ -d ~/src/zsh ]                   || git clone git://github.com/zsh-users/zsh ~/src/zsh
+[ -d ~/src/vim ]                   || git clone git://github.com/zsh-users/zsh ~/src/zsh
+# zsh
 [ -d ~/.zsh.d ]                    || mkdir ~/.zsh.d
 [ -f ~/.zsh.d/zconf ]              || touch ~/.zsh.d/zconf
 [ -f ~/.zsh.d/zconf_local ]        || touch ~/.zsh.d/zconf_local
@@ -8,6 +15,7 @@
 [ -d ~/.zsh.d/_zfunc ]             || mkdir ~/.zsh.d/_zfunc
 [ -d ~/.zsh.d/zfunc_local ]        || mkdir ~/.zsh.d/zfunc_local
 [ -d ~/.zsh.d/_zfunc_local ]       || mkdir ~/.zsh.d/_zfunc_local
+# vim
 [ -d ~/.vim ]                      || mkdir ~/.vim
 [ -f ~/.vim/vconf ]                || touch ~/.vim/vconf
 [ -f ~/.vim/plugin_conf ]          || touch ~/.vim/plugin_conf
@@ -18,15 +26,20 @@
 [ -d ~/.vim/bundle ]               || mkdir ~/.vim/bundle
 [ -d ~/.vim/bundle/neobundle.vim ] || git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
 
+## copy files
+# zsh
 \cp -p ./zshrc           ~/.zshrc
-\cp -p ./tmux.conf       ~/.tmux.conf
+\cp -p ./zsh.d/zconf     ~/.zsh.d/zconf
+\cp -p ./zsh.d/ls_colors ~/.zsh.d/ls_colors
+# vim
 \cp -p ./vimrc           ~/.vimrc
 \cp -p ./vim/vconf       ~/.vim/vconf
 \cp -p ./vim/plugin_conf ~/.vim/plugin_conf
 \cp -p ./vim/autocommand ~/.vim/autocommand
-\cp -p ./zsh.d/zconf     ~/.zsh.d/zconf
-\cp -p ./zsh.d/ls_colors ~/.zsh.d/ls_colors
+# tmux
+\cp -p ./tmux.conf       ~/.tmux.conf
 
+# zsh or vim
 source_directories=(zsh.d/zfunc zsh.d/_zfunc vim/vfunc vim/abbreviate vim/macro)
 for dir in ${source_directories[@]}; do
   for file in `ls ./${dir}`; do
@@ -35,4 +48,6 @@ for dir in ${source_directories[@]}; do
 done
 
 echo "sync complete."
+
+# restart
 exec zsh
