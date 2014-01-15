@@ -1,5 +1,10 @@
 #! /bin/sh
 
+ZSH_DIR=zsh.d
+VIM_DIR=vim
+ZSH_DIR_PATH=~/.$ZSH_DIR
+VIM_DIR_PATH=~/.$VIM_DIR
+
 ## init
 # source or local
 [ -d ~/src ]                       || mkdir ~/src
@@ -7,40 +12,46 @@
 [ -d ~/src/zsh ]                   || git clone git://github.com/zsh-users/zsh ~/src/zsh
 [ -d ~/src/vim ]                   || git clone git://github.com/vim-jp/vim ~/src/vim
 # zsh
-[ -d ~/.zsh.d ]                    || mkdir ~/.zsh.d
-[ -f ~/.zsh.d/zconf ]              || touch ~/.zsh.d/zconf
-[ -f ~/.zsh.d/zconf_local ]        || touch ~/.zsh.d/zconf_local
-[ -f ~/.zsh.d/ls_colors ]          || touch ~/.zsh.d/ls_colors
-[ -d ~/.zsh.d/zfunc ]              || mkdir ~/.zsh.d/zfunc
-[ -d ~/.zsh.d/_zfunc ]             || mkdir ~/.zsh.d/_zfunc
-[ -d ~/.zsh.d/zfunc_local ]        || mkdir ~/.zsh.d/zfunc_local
-[ -d ~/.zsh.d/_zfunc_local ]       || mkdir ~/.zsh.d/_zfunc_local
+[ -d $ZSH_DIR_PATH ]                    || mkdir $ZSH_DIR_PATH
+[ -f $ZSH_DIR_PATH/zconf ]              || touch $ZSH_DIR_PATH/zconf
+[ -f $ZSH_DIR_PATH/zconf_local ]        || touch $ZSH_DIR_PATH/zconf_local
+[ -f $ZSH_DIR_PATH/ls_colors ]          || touch $ZSH_DIR_PATH/ls_colors
+[ -d $ZSH_DIR_PATH/zfunc ]              || mkdir $ZSH_DIR_PATH/zfunc
+[ -d $ZSH_DIR_PATH/_zfunc ]             || mkdir $ZSH_DIR_PATH/_zfunc
+[ -d $ZSH_DIR_PATH/zfunc_local ]        || mkdir $ZSH_DIR_PATH/zfunc_local
+[ -d $ZSH_DIR_PATH/_zfunc_local ]       || mkdir $ZSH_DIR_PATH/_zfunc_local
 # vim
-[ -d ~/.vim ]                      || mkdir ~/.vim
-[ -f ~/.vim/vconf ]                || touch ~/.vim/vconf
-[ -f ~/.vim/plugin_conf ]          || touch ~/.vim/plugin_conf
-[ -f ~/.vim/autocommand ]          || touch ~/.vim/autocommand
-[ -d ~/.vim/vfunc ]                || mkdir ~/.vim/vfunc
-[ -d ~/.vim/abbreviate ]           || mkdir ~/.vim/abbreviate
-[ -d ~/.vim/macro ]                || mkdir ~/.vim/macro
-[ -d ~/.vim/bundle ]               || mkdir ~/.vim/bundle
-[ -d ~/.vim/bundle/neobundle.vim ] || git clone git://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim
+[ -d $VIM_DIR_PATH ]                      || mkdir $VIM_DIR_PATH
+[ -f $VIM_DIR_PATH/vconf ]                || touch $VIM_DIR_PATH/vconf
+[ -f $VIM_DIR_PATH/plugin_conf ]          || touch $VIM_DIR_PATH/plugin_conf
+[ -f $VIM_DIR_PATH/autocommand ]          || touch $VIM_DIR_PATH/autocommand
+[ -d $VIM_DIR_PATH/vfunc ]                || mkdir $VIM_DIR_PATH/vfunc
+[ -d $VIM_DIR_PATH/abbreviate ]           || mkdir $VIM_DIR_PATH/abbreviate
+[ -d $VIM_DIR_PATH/macro ]                || mkdir $VIM_DIR_PATH/macro
+[ -d $VIM_DIR_PATH/bundle ]               || mkdir $VIM_DIR_PATH/bundle
+[ -d $VIM_DIR_PATH/bundle/neobundle.vim ] || git clone git://github.com/Shougo/neobundle.vim $VIM_DIR_PATH/bundle/neobundle.vim
+
+## update zsh or vim source
 
 ## copy files
 # zsh
+echo "copy zsh main configs"
 \cp -p ./zshrc           ~/.zshrc
-\cp -p ./zsh.d/zconf     ~/.zsh.d/zconf
-\cp -p ./zsh.d/ls_colors ~/.zsh.d/ls_colors
+\cp -p ./$ZSH_DIR/zconf     $ZSH_DIR_PATH/zconf
+\cp -p ./$ZSH_DIR/ls_colors $ZSH_DIR_PATH/ls_colors
 # vim
+echo "copy vim main configs"
 \cp -p ./vimrc           ~/.vimrc
-\cp -p ./vim/vconf       ~/.vim/vconf
-\cp -p ./vim/plugin_conf ~/.vim/plugin_conf
-\cp -p ./vim/autocommand ~/.vim/autocommand
+\cp -p ./$VIM_DIR/vconf       $VIM_DIR_PATH/vconf
+\cp -p ./$VIM_DIR/plugin_conf $VIM_DIR_PATH/plugin_conf
+\cp -p ./$VIM_DIR/autocommand $VIM_DIR_PATH/autocommand
 # tmux
+echo "copy tmux config"
 \cp -p ./tmux.conf       ~/.tmux.conf
 
 # zsh or vim
-source_directories=(zsh.d/zfunc zsh.d/_zfunc vim/vfunc vim/abbreviate vim/macro)
+echo "copy zsh or vim functions, and other files" 
+source_directories=($ZSH_DIR/zfunc $ZSH_DIR/_zfunc $VIM_DIR/vfunc $VIM_DIR/abbreviate $VIM_DIR/macro)
 for dir in ${source_directories[@]}; do
   for file in `ls ./${dir}`; do
     \cp -p ./${dir}/${file} ~/.${dir}/${file}
