@@ -13,6 +13,7 @@ LOCAL_DIR_PATH=~/local
 ZSH_SRC_DIR_PATH=$SRC_DIR_PATH/zsh
 VIM_SRC_DIR_PATH=$SRC_DIR_PATH/vim
 LUA_SRC_DIR_PATH=$SRC_DIR_PATH/lua
+LUAJIT_SRC_DIR_PATH=$SRC_DIR_PATH/luajit
 
 ## init
 # source or local
@@ -21,6 +22,7 @@ LUA_SRC_DIR_PATH=$SRC_DIR_PATH/lua
 [ -d $ZSH_SRC_DIR_PATH ]                  || git clone git://github.com/zsh-users/zsh $ZSH_SRC_DIR_PATH
 [ -d $VIM_SRC_DIR_PATH ]                  || git clone git://github.com/vim-jp/vim $VIM_SRC_DIR_PATH
 [ -d $LUA_SRC_DIR_PATH ]                  || git clone git://github.com/LuaDist/lua $LUA_SRC_DIR_PATH
+[ -d $LUAJIT_SRC_DIR_PATH ]               || git clone git://github.com/LuaDist/luajit $LUAJIT_SRC_DIR_PATH
 # zsh
 [ -d $ZSH_DIR_PATH ]                      || mkdir $ZSH_DIR_PATH
 [ -f $ZSH_DIR_PATH/zconf ]                || touch $ZSH_DIR_PATH/zconf
@@ -48,6 +50,8 @@ echo "git pull vim src."
 cd $VIM_SRC_DIR_PATH && git pull
 echo "git pull lua src."
 cd $LUA_SRC_DIR_PATH && git pull
+echo "git pull luajit src."
+cd $LUAJIT_SRC_DIR_PATH && git pull
 
 ## copy files
 cd $BASE_DIR_PATH
