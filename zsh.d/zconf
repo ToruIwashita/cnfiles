@@ -135,5 +135,5 @@ alias gla="git log --graph --all --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"
 alias tigb="tig blame"
 alias tigs="tig status"
 # APACHE
-alias ap_err="tailf /var/log/httpd/error.log"
-alias ap_acc="tailf /var/log/httpd/access.log"
+alias ap_err="tailf /var/log/httpd/error_log"
+alias ap_acc="tailf /var/log/httpd/access_log"
