@@ -5,8 +5,15 @@ augroup AuAddMdSpace
 augroup END
 
 "" ruby設定
+" Buffer保存後にvim-ruby経由のmakeを-W[level=1](medium)で走らせ,再描画
 augroup AuRbSyntaxCheck
   autocmd!
-  autocmd BufWritePost *.rb call g:rb_syntax_check()
+  autocmd BufWritePost *.rb silent make -c -W1 % | redraw!
 augroup END
 
+"" quickfix設定
+" makeしたらquickfixリストを表示:
+augroup AuQuickFixOpen
+  autocmd!
+  autocmd QuickfixCmdPost make cw
+augroup END

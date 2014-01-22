@@ -5,38 +5,47 @@ if has('vim_starting') && expand("%:p") == ""
   autocmd VimEnter * NERDTree
 endif
 
-""" neocomplcache
-" neocomplcacheを起動時に有効化
-let g:neocomplcache_enable_at_startup = 1
-" シンタックスをキャッシュするときの最小文字長
-let g:neocomplcache_min_syntax_length = 3
+""" neocomplete
+" neocompleteを起動時に有効化
+let g:neocomplete#enable_at_startup = 1
 " ポップアップメニューで表示される候補の数
-let g:neocomplcache_max_list = 30
+let g:neocomplete#max_list = 30
+" シンタックスをキャッシュするときの最小文字長
+let g:neocomplete#sources#syntax#min_keyword_length = 3
 " 手動補完時に補完を行う入力数
-let g:neocomplcache_manual_completion_start_length = 2
-" 補完候補検索時に大文字・小文字を無視する
-let g:neocomplcache_enable_ignore_case = 1
+let g:neocomplete#manual_completion_start_length = 2
+" 補完候補検索時に大文字・小文字を区別する
+let g:neocomplete#enable_ignore_case = 0
 " 大文字が入力されるまで大文字小文字の区別を無視
-let g:neocomplcache_enable_smart_case = 1
-" オムニ補完の関数を呼び出しキーワードパターン設定(初期化)
-if !exists('g:neocomplcache_omni_patterns')
-  let g:neocomplcache_omni_patterns = {}
+let g:neocomplete#enable_smart_case = 1
+"" オムニ補完の関数を呼び出しキーワードパターン設定(ruby用)
+autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+" オムニ補完の関数を呼び出しキーワードパターン設定初期化
+if !exists('g:neocomplete#sources#omni#input_patterns')
+  let g:neocomplete#sources#omni#input_patterns = {}
 endif
 " オムニ補完の関数を呼び出しキーワードパターン設定(ruby用)
-let g:neocomplcache_omni_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 
-""" neocomplcache key-mappings
+""" neocomplete key-mappings
 " Ctr+Jで補完候補確定
-inoremap <expr><C-j> neocomplcache#close_popup()
+inoremap <expr><C-j> neocomplete#close_popup()
 " Ctr+Gで補完キャンセル&ポップアップを閉じる
-inoremap <expr><C-g> neocomplcache#cancel_popup()
+inoremap <expr><C-g> neocomplete#cancel_popup()
+" <TAB>で補完候補移動(下)
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+" <TAB>で補完候補移動(上)
+inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 """ neosnippet key-mappings
 " Ctr+Kでスニペット展開&ターゲット移動
 imap <C-k> <Plug>(neosnippet_expand_or_jump)
 smap <C-k> <Plug>(neosnippet_expand_or_jump)
 xmap <C-k> <Plug>(neosnippet_expand_target)
+
+""" vim-ruby
+" makeで"ruby -w"起動
+compiler ruby
 
 """ QuickBuf
 let g:qb_hotkey = "__"
