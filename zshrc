@@ -48,9 +48,7 @@ function zle-keymap-select {
 zle -N zle-keymap-select
 zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
 zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
-precmd () {
-  LANG=en_US.UTF-8 vcs_info
-}
+precmd() { vcs_info }
 PROMPT='_
 |[${vcs_info_msg_0_}]:%~/
 └-(%?)%F{$VIMODE}%#%f '
