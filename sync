@@ -1,7 +1,9 @@
 #! /bin/sh
 
 ## dir,path
-BASE_DIR_PATH=$(pwd)
+__FILE__=$_
+BASE_DIR_PATH=${__FILE__%/*}
+WORKING_DIR_PATH=$(pwd)
 
 ZSH_DIR=zsh.d
 VIM_DIR=vim
@@ -14,17 +16,18 @@ ZSH_SRC_DIR_PATH=$SRC_DIR_PATH/zsh
 VIM_SRC_DIR_PATH=$SRC_DIR_PATH/vim
 LUAJIT_SRC_DIR_PATH=$SRC_DIR_PATH/luajit
 
-ZSH_GIT_REPOSITORY="git://github.com/zsh-users/zsh"
-VIM_GIT_REPOSITORY="git://github.com/vim-jp/vim"
-LUAJIT_GIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
+ZSH_REPOSITORY="git://github.com/zsh-users/zsh"
+VIM_REPOSITORY="git://github.com/vim-jp/vim"
+NEOBUNDLE_REPOSITORY="git://github.com/Shougo/neobundle.vim"
+LUAJIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
 
 ## init
 # source or local
 [ -d $SRC_DIR_PATH ]                      || mkdir $SRC_DIR_PATH
 [ -d $LOCAL_DIR_PATH ]                    || mkdir $LOCAL_DIR_PATH
-[ -d $ZSH_SRC_DIR_PATH ]                  || git clone $ZSH_GIT_REPOSITORY $ZSH_SRC_DIR_PATH
-[ -d $VIM_SRC_DIR_PATH ]                  || git clone $VIM_GIT_REPOSITORY $VIM_SRC_DIR_PATH
-[ -d $LUAJIT_SRC_DIR_PATH ]               || git clone $LUAJIT_GIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
+[ -d $ZSH_SRC_DIR_PATH ]                  || git clone $ZSH_REPOSITORY $ZSH_SRC_DIR_PATH
+[ -d $VIM_SRC_DIR_PATH ]                  || git clone $VIM_REPOSITORY $VIM_SRC_DIR_PATH
+[ -d $LUAJIT_SRC_DIR_PATH ]               || git clone $LUAJIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
 # zsh
 [ -d $ZSH_DIR_PATH ]                      || mkdir $ZSH_DIR_PATH
 [ -f $ZSH_DIR_PATH/zconf ]                || touch $ZSH_DIR_PATH/zconf
@@ -43,7 +46,7 @@ LUAJIT_GIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
 [ -d $VIM_DIR_PATH/abbreviate ]           || mkdir $VIM_DIR_PATH/abbreviate
 [ -d $VIM_DIR_PATH/macro ]                || mkdir $VIM_DIR_PATH/macro
 [ -d $VIM_DIR_PATH/bundle ]               || mkdir $VIM_DIR_PATH/bundle
-[ -d $VIM_DIR_PATH/bundle/neobundle.vim ] || git clone git://github.com/Shougo/neobundle.vim $VIM_DIR_PATH/bundle/neobundle.vim
+[ -d $VIM_DIR_PATH/bundle/neobundle.vim ] || git clone $NEOBUNDLE_REPOSITORY $VIM_DIR_PATH/bundle/neobundle.vim
 
 ## update zsh,vim,lua source
 echo "git pull zsh src."
@@ -57,28 +60,29 @@ cd $LUAJIT_SRC_DIR_PATH && git pull
 cd $BASE_DIR_PATH
 # zsh
 echo "copy zsh main configs."
-\cp -p ./zshrc              ~/.zshrc
-\cp -p ./$ZSH_DIR/zconf     $ZSH_DIR_PATH/zconf
-\cp -p ./$ZSH_DIR/ls_colors $ZSH_DIR_PATH/ls_colors
+\cp -p $BASE_DIR_PATH/zshrc              ~/.zshrc
+\cp -p $BASE_DIR_PATH/$ZSH_DIR/zconf     $ZSH_DIR_PATH/zconf
+\cp -p $BASE_DIR_PATH/$ZSH_DIR/ls_colors $ZSH_DIR_PATH/ls_colors
 # vim
-echo "copy vim main configs."
-\cp -p ./vimrc                ~/.vimrc
-\cp -p ./$VIM_DIR/vconf       $VIM_DIR_PATH/vconf
-\cp -p ./$VIM_DIR/plugin_conf $VIM_DIR_PATH/plugin_conf
-\cp -p ./$VIM_DIR/autocommand $VIM_DIR_PATH/autocommand
+echo "copy vim main configs$BASE_DIR_PATH"
+\cp -p $BASE_DIR_PATH/vimrc                ~/.vimrc
+\cp -p $BASE_DIR_PATH/$VIM_DIR/vconf       $VIM_DIR_PATH/vconf
+\cp -p $BASE_DIR_PATH/$VIM_DIR/plugin_conf $VIM_DIR_PATH/plugin_conf
+\cp -p $BASE_DIR_PATH/$VIM_DIR/autocommand $VIM_DIR_PATH/autocommand
 # tmux
 echo "copy tmux config."
-\cp -p ./tmux.conf ~/.tmux.conf
+\cp -p $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
 
 # zsh,vim
 echo "copy zsh or vim functions, and other files." 
 source_directories=($ZSH_DIR/zfunc $ZSH_DIR/_zfunc $VIM_DIR/vfunc $VIM_DIR/abbreviate $VIM_DIR/macro)
 for dir in ${source_directories[@]}; do
-  for file in `ls ./${dir}`; do
-    \cp -p ./${dir}/${file} ~/.${dir}/${file}
+  for file in `ls $BASE_DIR_PATH/${dir}`; do
+    \cp -p $BASE_DIR_PATH/${dir}/${file} ~/.${dir}/${file}
   done
 done
 
+cd $WORKING_DIR_PATH
 echo "sync complete."
 
 # restart
