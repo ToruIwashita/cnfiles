@@ -64,7 +64,7 @@ echo "copy zsh main configs."
 \cp -p $BASE_DIR_PATH/$ZSH_DIR/zconf     $ZSH_DIR_PATH/zconf
 \cp -p $BASE_DIR_PATH/$ZSH_DIR/ls_colors $ZSH_DIR_PATH/ls_colors
 # vim
-echo "copy vim main configs$BASE_DIR_PATH"
+echo "copy vim main configs."
 \cp -p $BASE_DIR_PATH/vimrc                ~/.vimrc
 \cp -p $BASE_DIR_PATH/$VIM_DIR/vconf       $VIM_DIR_PATH/vconf
 \cp -p $BASE_DIR_PATH/$VIM_DIR/plugin_conf $VIM_DIR_PATH/plugin_conf
