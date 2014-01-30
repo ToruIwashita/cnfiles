@@ -88,6 +88,7 @@ function myfindg() {
         for my_cmd_res_field_name in ${(f)my_cmd_res_field_list}; do
           print $my_cmd_res_field_name | grep --color "${my_field_name}"
         done
+        print
       fi
     done
   else
