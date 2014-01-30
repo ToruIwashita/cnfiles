@@ -146,6 +146,15 @@ function myfcsv() {
   eval "${MYSQL_CMD} 'DESC ${1}' -N | sed -e 's/\t.*//g' | xargs echo | sed -e 's/ /,/g'"
 }
 
+function mycnt() {
+  if [ $# -lt 1 ]; then
+    print "lack of arguments."
+    return 1
+  fi
+
+  eval "${MYSQL_CMD} 'SELECT COUNT(1) FROM ${1}'"
+}
+
 function myfirst() {
   local myfirst_usage
 
