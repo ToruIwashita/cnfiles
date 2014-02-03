@@ -82,6 +82,8 @@ bindkey -v "^E" end-of-line
 bindkey -v "^F" forward-char
 # Ctr+Gで入力キャンセル
 bindkey -v "^G" send-break
+# Ctr+Kで行末まで削除
+bindkey -v "^K" kill-line
 # Ctr+Nで１行下へ
 bindkey -v "^N" down-line-or-history
 # Ctr+Pで１行上へ
