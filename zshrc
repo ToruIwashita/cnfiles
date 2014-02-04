@@ -13,8 +13,8 @@ autoload -Uz add-zsh-hook
 zmodload -i zsh/complist
 
 # 各種設定読込
-source ~/.zsh.d/zconf
-source ~/.zsh.d/zconf_local
+source ~/.zsh.d/config
+source ~/.zsh.d/config.local
 source ~/.zsh.d/ls_colors
 
 ## pathの重複登録無効
@@ -22,7 +22,7 @@ typeset -U fpath
 
 ## オートロードを使用したエセロード
 # 自作関数
-function_directories=(.zsh.d/zfunc .zsh.d/_zfunc .zsh.d/zfunc_local .zsh.d/_zfunc_local)
+function_directories=(.zsh.d/lib .zsh.d/completion .zsh.d/local/lib .zsh.d/local/completion)
 for dir in ${function_directories[@]}; do
   [ -d ~/${dir} ] || mkdir ~/${dir}
   fpath=($fpath ~/${dir})
