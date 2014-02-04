@@ -71,7 +71,7 @@ source ~/.vim/config.plugin
 source ~/.vim/autocommand
 
 "" その他設定読み込み
-let directories = ["vfunc/","abbreviate/","macro/"]
+let directories = ["plugin/","abbreviate/","macro/"]
 for $dir in directories
   let $dir_path = "~/.vim/".$dir
   for $file in split(system("ls ".$dir_path),"\n")
