@@ -41,10 +41,8 @@ LUAJIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
 [ -d $VIM_DIR_PATH ]                      || mkdir $VIM_DIR_PATH
 [ -f $VIM_DIR_PATH/config ]               || touch $VIM_DIR_PATH/config
 [ -f $VIM_DIR_PATH/config.plugin ]        || touch $VIM_DIR_PATH/config.plugin
-[ -f $VIM_DIR_PATH/autocommand ]          || touch $VIM_DIR_PATH/autocommand
 [ -d $VIM_DIR_PATH/plugin ]               || mkdir $VIM_DIR_PATH/plugin
-[ -d $VIM_DIR_PATH/abbreviate ]           || mkdir $VIM_DIR_PATH/abbreviate
-[ -d $VIM_DIR_PATH/macro ]                || mkdir $VIM_DIR_PATH/macro
+[ -d $VIM_DIR_PATH/etc ]                  || mkdir $VIM_DIR_PATH/etc
 [ -d $VIM_DIR_PATH/bundle ]               || mkdir $VIM_DIR_PATH/bundle
 [ -d $VIM_DIR_PATH/bundle/neobundle.vim ] || git clone $NEOBUNDLE_REPOSITORY $VIM_DIR_PATH/bundle/neobundle.vim
 
@@ -67,14 +65,13 @@ echo "copy vim main configs."
 \cp -p $BASE_DIR_PATH/vimrc                  ~/.vimrc
 \cp -p $BASE_DIR_PATH/$VIM_DIR/config        $VIM_DIR_PATH/config
 \cp -p $BASE_DIR_PATH/$VIM_DIR/config.plugin $VIM_DIR_PATH/config.plugin
-\cp -p $BASE_DIR_PATH/$VIM_DIR/autocommand   $VIM_DIR_PATH/autocommand
 # tmux
 echo "copy tmux config."
 \cp -p $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
 
 # zsh,vim
 echo "copy zsh or vim functions, and other files." 
-source_directories=($ZSH_DIR/lib $ZSH_DIR/completion $VIM_DIR/plugin $VIM_DIR/abbreviate $VIM_DIR/macro)
+source_directories=($ZSH_DIR/lib $ZSH_DIR/completion $VIM_DIR/plugin $VIM_DIR/etc)
 for dir in ${source_directories[@]}; do
   for file in `ls $BASE_DIR_PATH/${dir}`; do
     \cp -p $BASE_DIR_PATH/${dir}/${file} ~/.${dir}/${file}
