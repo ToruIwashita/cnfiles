@@ -66,8 +66,8 @@ filetype plugin indent on
 
 """ 各種設定読込
 "" 基本設定
-source ~/.vim/vconf
-source ~/.vim/plugin_conf
+source ~/.vim/config
+source ~/.vim/config.plugin
 source ~/.vim/autocommand
 
 "" その他設定読み込み
