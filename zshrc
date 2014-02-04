@@ -15,7 +15,6 @@ zmodload -i zsh/complist
 # 各種設定読込
 source ~/.zsh.d/config
 source ~/.zsh.d/config.local
-source ~/.zsh.d/ls_colors
 
 ## pathの重複登録無効
 typeset -U fpath

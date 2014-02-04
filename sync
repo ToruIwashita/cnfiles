@@ -30,14 +30,13 @@ LUAJIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
 [ -d $LUAJIT_SRC_DIR_PATH ]               || git clone $LUAJIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
 # zsh
 [ -d $ZSH_DIR_PATH ]                      || mkdir $ZSH_DIR_PATH
-[ -f $ZSH_DIR_PATH/config ]                || touch $ZSH_DIR_PATH/config
-[ -f $ZSH_DIR_PATH/config.local ]          || touch $ZSH_DIR_PATH/config.local
-[ -f $ZSH_DIR_PATH/ls_colors ]            || touch $ZSH_DIR_PATH/ls_colors
-[ -d $ZSH_DIR_PATH/lib ]                || mkdir $ZSH_DIR_PATH/lib
-[ -d $ZSH_DIR_PATH/completion ]               || mkdir $ZSH_DIR_PATH/completion
-[ -d $ZSH_DIR_PATH/local ]          || mkdir $ZSH_DIR_PATH/local
-[ -d $ZSH_DIR_PATH/local/lib ]         || mkdir $ZSH_DIR_PATH/local/lib
-[ -d $ZSH_DIR_PATH/local/completion ]         || mkdir $ZSH_DIR_PATH/local/completion
+[ -f $ZSH_DIR_PATH/config ]               || touch $ZSH_DIR_PATH/config
+[ -f $ZSH_DIR_PATH/config.local ]         || touch $ZSH_DIR_PATH/config.local
+[ -d $ZSH_DIR_PATH/lib ]                  || mkdir $ZSH_DIR_PATH/lib
+[ -d $ZSH_DIR_PATH/completion ]           || mkdir $ZSH_DIR_PATH/completion
+[ -d $ZSH_DIR_PATH/local ]                || mkdir $ZSH_DIR_PATH/local
+[ -d $ZSH_DIR_PATH/local/lib ]            || mkdir $ZSH_DIR_PATH/local/lib
+[ -d $ZSH_DIR_PATH/local/completion ]     || mkdir $ZSH_DIR_PATH/local/completion
 # vim
 [ -d $VIM_DIR_PATH ]                      || mkdir $VIM_DIR_PATH
 [ -f $VIM_DIR_PATH/vconf ]                || touch $VIM_DIR_PATH/vconf
@@ -61,9 +60,8 @@ cd $LUAJIT_SRC_DIR_PATH && git pull
 cd $BASE_DIR_PATH
 # zsh
 echo "copy zsh main configs."
-\cp -p $BASE_DIR_PATH/zshrc              ~/.zshrc
-\cp -p $BASE_DIR_PATH/$ZSH_DIR/config     $ZSH_DIR_PATH/config
-\cp -p $BASE_DIR_PATH/$ZSH_DIR/ls_colors $ZSH_DIR_PATH/ls_colors
+\cp -p $BASE_DIR_PATH/zshrc           ~/.zshrc
+\cp -p $BASE_DIR_PATH/$ZSH_DIR/config $ZSH_DIR_PATH/config
 # vim
 echo "copy vim main configs."
 \cp -p $BASE_DIR_PATH/vimrc                ~/.vimrc
