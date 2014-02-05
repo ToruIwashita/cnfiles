@@ -46,6 +46,7 @@ LUAJIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
 [ -d $VIM_DIR_PATH/local/etc ]            || mkdir $VIM_DIR_PATH/local/etc
 [ -d $VIM_DIR_PATH/bundle ]               || mkdir $VIM_DIR_PATH/bundle
 [ -d $VIM_DIR_PATH/bundle/neobundle.vim ] || git clone $NEOBUNDLE_REPOSITORY $VIM_DIR_PATH/bundle/neobundle.vim
+[ -d $VIM_DIR_PATH/.tmp ]                 || mkdir $VIM_DIR_PATH/.tmp
 
 ## update zsh,vim,lua source
 echo "git pull zsh src."
