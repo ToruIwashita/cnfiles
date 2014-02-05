@@ -67,10 +67,10 @@ filetype plugin indent on
 """ 各種設定読込
 "" 基本設定
 source ~/.vim/config
-source ~/.vim/config.plugin
+source ~/.vim/config.bundle
 
 "" その他設定読み込み
-let directories = ["plugin/","etc/"]
+let directories = ["local/plugin/","local/etc/"]
 for $dir in directories
   let $dir_path = "~/.vim/".$dir
   for $file in split(system("ls ".$dir_path),"\n")

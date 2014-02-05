@@ -40,9 +40,10 @@ LUAJIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
 # vim
 [ -d $VIM_DIR_PATH ]                      || mkdir $VIM_DIR_PATH
 [ -f $VIM_DIR_PATH/config ]               || touch $VIM_DIR_PATH/config
-[ -f $VIM_DIR_PATH/config.plugin ]        || touch $VIM_DIR_PATH/config.plugin
-[ -d $VIM_DIR_PATH/plugin ]               || mkdir $VIM_DIR_PATH/plugin
-[ -d $VIM_DIR_PATH/etc ]                  || mkdir $VIM_DIR_PATH/etc
+[ -f $VIM_DIR_PATH/config.bundle ]        || touch $VIM_DIR_PATH/config.bundle
+[ -d $VIM_DIR_PATH/local ]                || mkdir $VIM_DIR_PATH/local
+[ -d $VIM_DIR_PATH/local/plugin ]         || mkdir $VIM_DIR_PATH/local/plugin
+[ -d $VIM_DIR_PATH/local/etc ]            || mkdir $VIM_DIR_PATH/local/etc
 [ -d $VIM_DIR_PATH/bundle ]               || mkdir $VIM_DIR_PATH/bundle
 [ -d $VIM_DIR_PATH/bundle/neobundle.vim ] || git clone $NEOBUNDLE_REPOSITORY $VIM_DIR_PATH/bundle/neobundle.vim
 
@@ -64,14 +65,14 @@ echo "copy zsh main configs."
 echo "copy vim main configs."
 \cp -p $BASE_DIR_PATH/vimrc                  ~/.vimrc
 \cp -p $BASE_DIR_PATH/$VIM_DIR/config        $VIM_DIR_PATH/config
-\cp -p $BASE_DIR_PATH/$VIM_DIR/config.plugin $VIM_DIR_PATH/config.plugin
+\cp -p $BASE_DIR_PATH/$VIM_DIR/config.bundle $VIM_DIR_PATH/config.bundle
 # tmux
 echo "copy tmux config."
 \cp -p $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
 
 # zsh,vim
 echo "copy zsh or vim functions, and other files." 
-source_directories=($ZSH_DIR/lib $ZSH_DIR/completion $VIM_DIR/plugin $VIM_DIR/etc)
+source_directories=($ZSH_DIR/lib $ZSH_DIR/completion $VIM_DIR/local/plugin $VIM_DIR/local/etc)
 for dir in ${source_directories[@]}; do
   for file in `ls $BASE_DIR_PATH/${dir}`; do
     \cp -p $BASE_DIR_PATH/${dir}/${file} ~/.${dir}/${file}
