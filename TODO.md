@@ -11,6 +11,6 @@
 
 0.`Cocoa`  
 1.`vim`の`mark`機能関連のプラグイン作成  
-2.`mysql`の`Deadlock`の情報収集  
-3.`REST`指向,`CURD`についてまとめる  
+2.`REST`指向,`CURD`についてまとめる  
+3.`ruby`の`quickfix`と`NerdTree`が併用できない  
 
