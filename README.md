@@ -1,2 +1,3 @@
-##### 依存関係メモ  
-``zsh`` ``tmux`` ``vim`` ``git`` ``mysql``  
+#### cnfiles  
+
+`zsh`,`tmux`,`vim`の設定ファイル  
