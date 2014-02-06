@@ -45,9 +45,11 @@ function zle-keymap-select {
   zle reset-prompt
 }
 zle -N zle-keymap-select
+# vcsの情報表示
 zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
 zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
 precmd() { vcs_info }
+# プロンプト表示
 PROMPT='_
 |[${vcs_info_msg_0_}]:%~/
 └-(%?)%F{$VIMODE}%#%f '
