@@ -119,7 +119,7 @@ alias rm="rm -i"
 alias ls="ls -F --color"
 alias grep="grep --color"
 alias his="history -50n"
-alias tmux="tmux -2"
+alias tm="tmux -2"
 alias tigb="tig blame"
 # CD
 alias cdz="cd ~/.zsh.d"
