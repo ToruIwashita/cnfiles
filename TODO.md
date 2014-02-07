@@ -14,3 +14,19 @@
 2.`REST`指向,`CURD`についてまとめる  
 3.`ruby`の`quickfix`と`NerdTree`が併用できない  
 4.`ftplugin`使用  
+
+***  
+
+`vim`のディレクトリ案  
+
+    .vim    
+     |    
+     + ftplugin    
+     |    
+     + bundle    
+     |    
+     + config    
+     |    
+     + config.bundle    
+
+※ `local/etc/`以下は`config`や`ftplugin`以下に移す  
