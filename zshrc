@@ -21,7 +21,7 @@ typeset -U fpath
 
 ## オートロードを使用したエセロード
 # 自作関数
-function_directories=(.zsh.d/lib .zsh.d/completion .zsh.d/local/lib .zsh.d/local/completion)
+function_directories=(.zsh.d/lib .zsh.d/comp .zsh.d/local/lib .zsh.d/local/comp)
 for dir in ${function_directories[@]}; do
   [ -d ~/${dir} ] || mkdir ~/${dir}
   fpath=($fpath ~/${dir})
