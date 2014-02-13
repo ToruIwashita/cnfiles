@@ -26,8 +26,7 @@ for dir in ${function_directories[@]}; do
   fpath=(~/${dir} $fpath)
 
   for file in `ls ~/${dir}`; do
-    autoload -Uz ${file}
-    [[ $dir =~ "comp" ]] && ${file}
+    autoload -Uz ${file} && ${file}
   done
 done
 
