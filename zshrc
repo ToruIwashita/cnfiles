@@ -1,4 +1,6 @@
 # utf-8
+ZSH_DIR=.zsh.d
+
 export LANG=ja_JP.UTF-8
 
 # 色の定義
@@ -13,21 +15,19 @@ autoload -Uz add-zsh-hook
 zmodload -i zsh/complist
 
 # 各種設定読込
-source ~/.zsh.d/config
-source ~/.zsh.d/config.local
+source ~/$ZSH_DIR/config
+source ~/$ZSH_DIR/config.local
 
 ## pathの重複登録無効
 typeset -U fpath
-
-## オートロードを使用したエセロード
-# 自作関数
-function_directories=(.zsh.d/lib .zsh.d/comp .zsh.d/local/lib .zsh.d/local/comp)
+# 自作関数をautoload
+function_directories=($ZSH_DIR/lib $ZSH_DIR/comp $ZSH_DIR/local/lib $ZSH_DIR/local/comp)
 for dir in ${function_directories[@]}; do
-  [ -d ~/${dir} ] || mkdir ~/${dir}
-  fpath=($fpath ~/${dir})
+  fpath=(~/${dir} $fpath)
 
   for file in `ls ~/${dir}`; do
-    autoload -Uz ~/${dir}/${file}(:t) && ~/${dir}/${file}(:t)
+    autoload -Uz ${file}
+    [[ $dir =~ "comp" ]] && ${file}
   done
 done
 
