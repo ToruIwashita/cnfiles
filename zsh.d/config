@@ -121,7 +121,10 @@ alias grep="grep --color"
 alias his="history -50n"
 alias tm="tmux -2"
 alias tigb="tig blame"
+# VIM
+alias v="vim"
 # CD
+alias d="cd"
 alias cdz="cd ~/.zsh.d"
 alias cdv="cd ~/.vim"
 alias cdl="cd ~/local"
