@@ -97,6 +97,8 @@ bindkey -v "^R" history-incremental-search-backward
 bindkey -v '^Y' push-input
 # Ctr+Uでundo
 bindkey -v '^U' undo
+# Ctr+_でcdup
+bindkey -v "^_" cdup
 # Shift+tabで逆タブ補完
 bindkey -v "^[[Z" reverse-menu-complete
 ## 補完メニュー選択モードキーマップ
