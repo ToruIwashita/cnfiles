@@ -155,6 +155,21 @@ function mycnt() {
   eval "${MYSQL_CMD} 'SELECT COUNT(1) FROM ${1}'"
 }
 
+function watch_myps() {
+  local arg full_opt g_opt
+
+  watch_myps_usage='Usage: $0 [-f(FULL PROCESSLIST)] [-g(\\G)]'
+  while getopts :fgh arg; do
+    case ${arg} in
+      f) full_opt="FULL" ;;
+      g) g_opt="\G" ;;
+      h|:|\?) print $watch_myps_usage; return 2 ;;
+    esac
+  done
+
+  watch -n 3 "${MYSQL_CMD} 'SHOW ${full_opt} PROCESSLIST${g_opt}'"
+}
+
 function myfirst() {
   local myfirst_usage
 
