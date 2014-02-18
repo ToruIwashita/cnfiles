@@ -126,7 +126,7 @@ alias tigb="tig blame"
 # VIM
 alias v="vim"
 # CD
-alias d="cd"
+alias c="cd"
 alias cdz="cd ~/.zsh.d"
 alias cdv="cd ~/.vim"
 alias cdl="cd ~/local"
