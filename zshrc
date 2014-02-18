@@ -45,6 +45,7 @@ function zle-keymap-select {
 }
 zle -N zle-keymap-select
 # vcsの情報表示
+zstyle ':vcs_info:*' enable git hg
 zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
 zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
 precmd() { vcs_info }
