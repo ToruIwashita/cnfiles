@@ -61,7 +61,7 @@ NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'errormarker.vim'
 "" end
 
-" ファイルタイププラグインおよびインデントを有効化(NeoBundleによる処理が終了した後に実施)
+" ファイルタイプの検出,ファイルタイプ用プラグインプラグイン,インデントを有効化(NeoBundleによる処理が終了した後に実施)
 filetype plugin indent on
 
 """ 各種設定読込
