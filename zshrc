@@ -1,5 +1,12 @@
 # utf-8
+
+# 定数の設定
 ZSH_DIR=.zsh.d
+[ -z "$ld_library_path" ] && typeset -xT LD_LIBRARY_PATH ld_library_path
+[ -z "$include" ] && typeset -xT INCLUDE include
+
+# 重複登録無効
+typeset -U path fpath ld_library_path include
 
 export LANG=ja_JP.UTF-8
 
@@ -18,8 +25,6 @@ zmodload -i zsh/complist
 source ~/$ZSH_DIR/config
 source ~/$ZSH_DIR/config.local
 
-## pathの重複登録無効
-typeset -U fpath
 # 自作関数をautoload
 function_directories=($ZSH_DIR/lib $ZSH_DIR/comp $ZSH_DIR/local/lib $ZSH_DIR/local/comp)
 for dir in ${function_directories[@]}; do
