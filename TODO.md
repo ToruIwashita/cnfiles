@@ -30,3 +30,7 @@
      + config.bundle    
 
 ※ `local/etc/`以下は`config`や`ftplugin`以下に移す  
+
+***  
+
+`LD_LIBRARY_PATH`が重複して入る問題を解決する  
