@@ -74,7 +74,7 @@ echo "copy tmux config."
 
 # zsh,vim
 echo "copy zsh or vim functions, and other files." 
-source_directories=($ZSH_DIR/lib $ZSH_DIR/comp $VIM/ftdetect $VIM_DIR/ftplugin $VIM_DIR/local/etc)
+source_directories=($ZSH_DIR/lib $ZSH_DIR/comp $VIM_DIR/ftdetect $VIM_DIR/ftplugin $VIM_DIR/local/etc)
 for dir in ${source_directories[@]}; do
   for file in `ls $BASE_DIR_PATH/${dir}`; do
     \cp -p $BASE_DIR_PATH/${dir}/${file} ~/.${dir}/${file}
