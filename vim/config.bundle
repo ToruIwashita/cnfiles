@@ -98,7 +98,7 @@ endfunction
 function! MyFilename()
   let fname = expand('%:t')
   return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
-       \ ('' != fname ? fname =~ 'NERD_tree' ? '' : fname : '[No Name]') .
+       \ ('' != fname ? fname =~ 'NERD_tree' ? 'NERDTree' : fname : '[No Name]') .
        \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
 " component: MyFileformat
