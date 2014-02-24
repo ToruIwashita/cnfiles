@@ -55,20 +55,69 @@ let g:qb_hotkey = "__"
 let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ],
-  \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+  \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
   \ },
-  \ 'component': {
-  \   'readonly': '%{&filetype=="help"?"":&readonly?"RO":""}',
-  \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
-  \   'fugitive': '%{exists("*fugitive#head")?fugitive#head()!=""?"* ".fugitive#head():"":""}'
-  \ },
-  \ 'component_visible_condition': {
-  \   'readonly': '(&filetype!="help"&& &readonly)',
-  \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-  \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+  \ 'component_function': {
+  \   'modified':     'MyModified',
+  \   'readonly':     'MyReadonly',
+  \   'fugitive':     'MyFugitive',
+  \   'filename':     'MyFilename',
+  \   'fileformat':   'MyFileformat',
+  \   'filetype':     'MyFiletype',
+  \   'fileencoding': 'MyFileencoding',
+  \   'mode':         'MyMode'
   \ }
 \ }
+" component: MyModified
+function! MyModified()
+  if &filetype == "help"
+    return ""
+  elseif &modified
+    return "+"
+  elseif &modifiable
+    return ""
+  else
+    return ""
+  endif
+endfunction
+" component: MyReadonly
+function! MyReadonly()
+  if &filetype == "help"
+    return ""
+  elseif &readonly
+    return "RO"
+  else
+    return ""
+  endif
+endfunction
+" component: MyFugitive
+function! MyFugitive()
+  return exists("*fugitive#head") ? fugitive#head() != "" ? "* " . fugitive#head() : "" : ""
+endfunction
+" component: MyFilename
+function! MyFilename()
+  let fname = expand('%:t')
+  return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+       \ ('' != fname ? fname =~ 'NERD_tree' ? '' : fname : '[No Name]') .
+       \ ('' != MyModified() ? ' ' . MyModified() : '')
+endfunction
+" component: MyFileformat
+function! MyFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+" component: MyFiletype
+function! MyFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+" component: MyFileencoding
+function! MyFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+" component: MyMode
+function! MyMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
 
 """ visualstar
 " visualstarで検索した後に移動しない
