@@ -1,7 +1,8 @@
 """ NeoBundle設定
 "" Brief help
 " :NeoBundleList          - list configured bundles
-" :NeoBundleInstall(!)    - install(update) bundles
+" :NeoBundleInstall(!)    - install bundles
+" :NeoBundleUpdate(!)     - update bundles
 " :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
 
 "" 初期設定
