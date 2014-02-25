@@ -67,8 +67,8 @@ filetype plugin indent on
 
 """ 各種設定読込
 "" 基本設定
-source ~/.vim/config
-source ~/.vim/config.bundle
+source ~/.vim/config.vim
+source ~/.vim/config.bundle.vim
 
 "" その他設定読み込み
 let directories = ["local/plugin/","local/etc/"]

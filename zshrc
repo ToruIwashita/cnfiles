@@ -22,8 +22,8 @@ autoload -Uz add-zsh-hook
 zmodload -i zsh/complist
 
 # 各種設定読込
-source ~/$ZSH_DIR/config
-source ~/$ZSH_DIR/config.local
+source ~/$ZSH_DIR/config.zsh
+source ~/$ZSH_DIR/config.local.zsh
 
 # 自作関数をautoload
 function_directories=($ZSH_DIR/lib $ZSH_DIR/comp $ZSH_DIR/local/lib $ZSH_DIR/local/comp)
