@@ -30,8 +30,8 @@ LUAJIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
 [ -d $LUAJIT_SRC_DIR_PATH ]               || git clone $LUAJIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
 # zsh
 [ -d $ZSH_DIR_PATH ]                      || mkdir $ZSH_DIR_PATH
-[ -f $ZSH_DIR_PATH/config ]               || touch $ZSH_DIR_PATH/config
-[ -f $ZSH_DIR_PATH/config.local ]         || touch $ZSH_DIR_PATH/config.local
+[ -f $ZSH_DIR_PATH/config.zsh ]           || touch $ZSH_DIR_PATH/config.zsh
+[ -f $ZSH_DIR_PATH/config.local.zsh ]     || touch $ZSH_DIR_PATH/config.local.zsh
 [ -d $ZSH_DIR_PATH/lib ]                  || mkdir $ZSH_DIR_PATH/lib
 [ -d $ZSH_DIR_PATH/comp ]                 || mkdir $ZSH_DIR_PATH/comp
 [ -d $ZSH_DIR_PATH/local ]                || mkdir $ZSH_DIR_PATH/local
@@ -39,8 +39,8 @@ LUAJIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
 [ -d $ZSH_DIR_PATH/local/comp ]           || mkdir $ZSH_DIR_PATH/local/comp
 # vim
 [ -d $VIM_DIR_PATH ]                      || mkdir $VIM_DIR_PATH
-[ -f $VIM_DIR_PATH/config ]               || touch $VIM_DIR_PATH/config
-[ -f $VIM_DIR_PATH/config.bundle ]        || touch $VIM_DIR_PATH/config.bundle
+[ -f $VIM_DIR_PATH/config.vim ]           || touch $VIM_DIR_PATH/config.vim
+[ -f $VIM_DIR_PATH/config.bundle.vim ]    || touch $VIM_DIR_PATH/config.bundle.vim
 [ -d $VIM_DIR_PATH/ftdetect ]             || mkdir $VIM_DIR_PATH/ftdetect
 [ -d $VIM_DIR_PATH/ftplugin ]             || mkdir $VIM_DIR_PATH/ftplugin
 [ -d $VIM_DIR_PATH/local ]                || mkdir $VIM_DIR_PATH/local
@@ -61,13 +61,13 @@ cd $LUAJIT_SRC_DIR_PATH && git pull
 cd $BASE_DIR_PATH
 # zsh
 echo "copy zsh main configs."
-\cp -p $BASE_DIR_PATH/zshrc           ~/.zshrc
-\cp -p $BASE_DIR_PATH/$ZSH_DIR/config $ZSH_DIR_PATH/config
+\cp -p $BASE_DIR_PATH/zshrc               ~/.zshrc
+\cp -p $BASE_DIR_PATH/$ZSH_DIR/config.zsh $ZSH_DIR_PATH/config.zsh
 # vim
 echo "copy vim main configs."
-\cp -p $BASE_DIR_PATH/vimrc                  ~/.vimrc
-\cp -p $BASE_DIR_PATH/$VIM_DIR/config        $VIM_DIR_PATH/config
-\cp -p $BASE_DIR_PATH/$VIM_DIR/config.bundle $VIM_DIR_PATH/config.bundle
+\cp -p $BASE_DIR_PATH/vimrc                      ~/.vimrc
+\cp -p $BASE_DIR_PATH/$VIM_DIR/config.vim        $VIM_DIR_PATH/config.vim
+\cp -p $BASE_DIR_PATH/$VIM_DIR/config.bundle.vim $VIM_DIR_PATH/config.bundle.vim
 # tmux
 echo "copy tmux config."
 \cp -p $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
