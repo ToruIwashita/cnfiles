@@ -70,33 +70,34 @@ let g:lightline = {
 \ }
 " component: MyModified
 function! MyModified()
-  if &filetype == "help"
-    return ""
+  if &filetype == 'help'
+    return ''
   elseif &modified
-    return "+"
+    return '+'
   elseif &modifiable
-    return ""
+    return ''
   else
-    return ""
+    return ''
   endif
 endfunction
 " component: MyReadonly
 function! MyReadonly()
-  if &filetype == "help"
-    return ""
+  if &filetype == 'help'
+    return ''
   elseif &readonly
-    return "RO"
+    return 'RO'
   else
-    return ""
+    return ''
   endif
 endfunction
 " component: MyFugitive
 function! MyFugitive()
-  return exists("*fugitive#head") ? fugitive#head() != "" ? "* " . fugitive#head() : "" : ""
+  let fname = expand("%:t")
+  return (fname =~ 'NERD_tree' ? '' : exists("*fugitive#head") ? fugitive#head() != '' ? '* ' . fugitive#head() : '' : '')
 endfunction
 " component: MyFilename
 function! MyFilename()
-  let fname = expand('%:t')
+  let fname = expand("%:t")
   return ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
        \ ('' != fname ? fname =~ 'NERD_tree' ? 'NERDTree' : fname : '[No Name]') .
        \ ('' != MyModified() ? ' ' . MyModified() : '')
