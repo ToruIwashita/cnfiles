@@ -30,6 +30,7 @@ NeoBundle 'Shougo/vimproc', {
 NeoBundle 'Shougo/neocomplete'
 " スニペット展開
 NeoBundle 'Shougo/neosnippet'
+NeoBundle 'Shougo/neosnippet-snippets'
 " text-object操作
 NeoBundle 'tpope/vim-surround'
 " vim-surroundの機能を.反復
