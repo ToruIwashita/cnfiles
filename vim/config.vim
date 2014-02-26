@@ -47,6 +47,9 @@ noremap <C-w><C-[> :bprevious<CR>
 " 現在のバッファ削除
 noremap <C-w>d :bdelete<CR>
 noremap <C-w><C-d> :bdelete<CR>
+" Exコマンド起動キー
+noremap ; :
+noremap : ;
 
 "" nnoremap
 " *,#で検索した後に移動しない
