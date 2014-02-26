@@ -86,6 +86,8 @@ vnoremap <ESC> v_<ESC>
 "" オプション
 " シンタックスハイライト
 syntax on
+" シンタックスハイライトの開始/終了タグ検索の閾値
+syntax sync minlines=500 maxlines=1000
 " エンコーディングUTF-8
 set encoding=utf8
 " 256色モード
@@ -116,6 +118,10 @@ set backspace=indent,eol,start
 set nrformats=octal
 " 矩形ビジュアル無文字部分カーソル移動
 set virtualedit=block
+" 横分割かつ,ターミナルが部分スクロールをサポートしていないとき,再描画が滑らかになる
+set ttyfast
+" スクリプト実行中に画面を描画しない
+set lazyredraw
 
 "" 補完ポップアップメニュー色設定
 hi Pmenu ctermbg=8 guibg=#606060
