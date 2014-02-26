@@ -50,8 +50,10 @@ NeoBundle 'thinca/vim-visualstar'
 NeoBundle 'vim-scripts/Align'
 " バッファ操作
 NeoBundle 'QuickBuf'
-" Git
+" fugitive(ステータスラインのブランチ名と,Gblame用)
 NeoBundle 'tpope/vim-fugitive'
+" gitv(コミットログ閲覧用)
+NeoBundle 'gregsexton/gitv'
 " ファイラー
 NeoBundle 'scrooloose/nerdtree'
 " ヤンク履歴管理

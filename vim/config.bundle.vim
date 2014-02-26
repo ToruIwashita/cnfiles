@@ -26,8 +26,7 @@ if !exists('g:neocomplete#sources#omni#input_patterns')
 endif
 " オムニ補完の関数を呼び出しキーワードパターン設定(ruby用)
 let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
-
-""" neocomplete key-mappings
+"" neocomplete key-mappings
 " Ctr+Jで補完候補確定
 inoremap <expr><C-j> neocomplete#close_popup()
 " Ctr+Gで補完キャンセル&ポップアップを閉じる
@@ -141,3 +140,11 @@ let g:yankring_max_display = 30
 " yankring_historyの重複テキストを保存しない
 let g:yankring_ignore_duplicate = 0
 
+""" fugitive
+" vimでgit blame
+nnoremap <C-w>gb :Gblame<Cr>
+
+""" gitv
+" vimでバッファのコミットログ閲覧
+nnoremap <C-w>gv :Gitv --all<Cr>
+nnoremap <C-w>gV :Gitv! --all<Cr>
