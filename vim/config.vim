@@ -106,8 +106,6 @@ set shiftwidth=2
 set tabstop=2
 " 行数表示
 set number
-" カーソル行可視化
-set cursorline
 " インクリメンタルサーチ
 set incsearch
 " サーチ結果ハイライト
