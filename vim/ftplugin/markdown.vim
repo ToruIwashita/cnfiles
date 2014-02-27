@@ -15,7 +15,7 @@ function! g:add_md_space()
   endtry
 endfunction
 
-command! AddMdSpace call g:add_md_space()
+command! AddMdSpace <buffer> call g:add_md_space()
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
