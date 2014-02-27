@@ -29,7 +29,7 @@ LUAJIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
 [ -d $LOCAL_DIR_PATH ]                    || mkdir $LOCAL_DIR_PATH
 [ -d $ZSH_SRC_DIR_PATH ]                  || git clone $ZSH_REPOSITORY $ZSH_SRC_DIR_PATH
 [ -d $VIM_SRC_DIR_PATH ]                  || git clone $VIM_REPOSITORY $VIM_SRC_DIR_PATH
-[ -d $NEOVIM_SRC_DIR_PATH ]               || git clone $NEOBUNDLE_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
+[ -d $NEOVIM_SRC_DIR_PATH ]               || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
 [ -d $LUAJIT_SRC_DIR_PATH ]               || git clone $LUAJIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
 # zsh
 [ -d $ZSH_DIR_PATH ]                      || mkdir $ZSH_DIR_PATH
