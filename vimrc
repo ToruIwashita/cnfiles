@@ -72,14 +72,3 @@ filetype plugin indent on
 "" 基本設定
 source ~/.vim/config.vim
 source ~/.vim/config.bundle.vim
-
-"" その他設定読み込み
-let directories = ["local/plugin/","local/etc/"]
-for $dir in directories
-  let $dir_path = "~/.vim/".$dir
-  for $file in split(system("ls ".$dir_path),"\n")
-    let $file_path = $dir_path.$file
-    source $file_path
-  endfor
-endfor
-
