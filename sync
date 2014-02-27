@@ -14,10 +14,12 @@ SRC_DIR_PATH=~/src
 LOCAL_DIR_PATH=~/local
 ZSH_SRC_DIR_PATH=$SRC_DIR_PATH/zsh
 VIM_SRC_DIR_PATH=$SRC_DIR_PATH/vim
+NEOVIM_SRC_DIR_PATH=$SRC_DIR_PATH/neovim  # 使用していない
 LUAJIT_SRC_DIR_PATH=$SRC_DIR_PATH/luajit
 
 ZSH_REPOSITORY="git://github.com/zsh-users/zsh"
 VIM_REPOSITORY="git://github.com/vim-jp/vim"
+NEOVIM_REPOSITORY="git://github.com/neovim/neovim"  # 使用していない
 NEOBUNDLE_REPOSITORY="git://github.com/Shougo/neobundle.vim"
 LUAJIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
 
@@ -27,6 +29,7 @@ LUAJIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
 [ -d $LOCAL_DIR_PATH ]                    || mkdir $LOCAL_DIR_PATH
 [ -d $ZSH_SRC_DIR_PATH ]                  || git clone $ZSH_REPOSITORY $ZSH_SRC_DIR_PATH
 [ -d $VIM_SRC_DIR_PATH ]                  || git clone $VIM_REPOSITORY $VIM_SRC_DIR_PATH
+[ -d $NEOVIM_SRC_DIR_PATH ]               || git clone $NEOBUNDLE_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
 [ -d $LUAJIT_SRC_DIR_PATH ]               || git clone $LUAJIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
 # zsh
 [ -d $ZSH_DIR_PATH ]                      || mkdir $ZSH_DIR_PATH
@@ -54,6 +57,8 @@ echo "git pull zsh src."
 cd $ZSH_SRC_DIR_PATH && git pull
 echo "git pull vim src."
 cd $VIM_SRC_DIR_PATH && git pull
+echo "git pull neovim src."
+cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
 echo "git pull luajit src."
 cd $LUAJIT_SRC_DIR_PATH && git pull
 
