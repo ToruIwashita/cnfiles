@@ -1,3 +1,6 @@
+""" Vim-Tomorrow-Theme
+colorscheme Tomorrow-Night-Bright
+
 """ NERDTree open,close
 noremap <C-w>_ :NERDTreeToggle<CR>
 " 引数なしVim実行時にNERDTree

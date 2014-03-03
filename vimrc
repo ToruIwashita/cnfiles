@@ -63,6 +63,8 @@ NeoBundle 'YankRing.vim'
 NeoBundle 'vim-ruby/vim-ruby'
 " QuickFixエラーにマーカー
 NeoBundle 'errormarker.vim'
+" カラースキーマ
+NeoBundle 'chriskempson/Vim-Tomorrow-Theme'
 "" end
 
 " ファイルタイプの検出,ファイルタイプ用プラグインプラグイン,インデントを有効化(NeoBundleによる処理が終了した後に実施)
