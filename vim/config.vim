@@ -125,12 +125,6 @@ hi PmenuSbar ctermbg=0 guibg=#404040
 hi PmenuThumb ctermbg=0 guibg=Red
 
 "" autocommand
-" markdown設定
-augroup AuAddMdSpace
-  autocmd!
-  autocmd BufWrite *.md call g:add_md_space()
-augroup END
-
 " ruby,Buffer保存後にvim-ruby経由のmakeを-W[level=1](medium)で走らせ,再描画
 augroup AuRbSyntaxCheck
   autocmd!

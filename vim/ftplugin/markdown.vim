@@ -15,7 +15,10 @@ function! g:add_md_space()
   endtry
 endfunction
 
-command! AddMdSpace <buffer> call g:add_md_space()
+augroup AuAddMdSpace
+  autocmd!
+  autocmd BufWrite <buffer> call g:add_md_space()
+augroup END
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
