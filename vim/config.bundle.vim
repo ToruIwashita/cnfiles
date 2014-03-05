@@ -121,7 +121,6 @@ function! MyMode()
   return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-
 """ visualstar
 " visualstarで検索した後に移動しない
 map * <Plug>(visualstar-*)N
