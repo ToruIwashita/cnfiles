@@ -1,4 +1,7 @@
 "" FILE: ruby.vim
+let s:cpo_save = &cpo
+set cpo&vim
+
 ab <buffer> =p binding.pry
 ab <buffer> =8 # coding: utf-8
 
@@ -12,3 +15,6 @@ augroup AuRbSyntaxCheck
   " `make`したら`quickfix`リストを表示
   autocmd QuickfixCmdPost make cw
 augroup END
+
+let &cpo = s:cpo_save
+unlet s:cpo_save
