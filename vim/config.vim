@@ -123,16 +123,3 @@ hi Pmenu ctermbg=8 guibg=#606060
 hi PmenuSel ctermbg=12 guibg=SlateBlue
 hi PmenuSbar ctermbg=0 guibg=#404040
 hi PmenuThumb ctermbg=0 guibg=Red
-
-"" autocommand
-" ruby,Buffer保存後にvim-ruby経由のmakeを-W[level=1](medium)で走らせ,再描画
-augroup AuRbSyntaxCheck
-  autocmd!
-  autocmd BufWritePost *.rb silent make -c -W1 % | redraw!
-augroup END
-
-" quickfix,makeしたらquickfixリストを表示:
-augroup AuQuickFixOpen
-  autocmd!
-  autocmd QuickfixCmdPost make cw
-augroup END
