@@ -47,6 +47,7 @@ LUAJIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
 [ -d $VIM_DIR_PATH/ftdetect ]             || mkdir $VIM_DIR_PATH/ftdetect
 [ -d $VIM_DIR_PATH/ftplugin ]             || mkdir $VIM_DIR_PATH/ftplugin
 [ -d $VIM_DIR_PATH/after ]                || mkdir $VIM_DIR_PATH/after
+[ -d $VIM_DIR_PATH/after/plugin ]         || mkdir $VIM_DIR_PATH/after/plugin
 [ -d $VIM_DIR_PATH/after/ftplugin ]       || mkdir $VIM_DIR_PATH/after/ftplugin
 [ -d $VIM_DIR_PATH/bundle ]               || mkdir $VIM_DIR_PATH/bundle
 [ -d $VIM_DIR_PATH/bundle/neobundle.vim ] || git clone $NEOBUNDLE_REPOSITORY $VIM_DIR_PATH/bundle/neobundle.vim
@@ -79,7 +80,7 @@ echo "copy tmux config."
 
 # zsh,vim
 echo "copy zsh or vim functions, and other files." 
-source_directories=($ZSH_DIR/lib $ZSH_DIR/comp $VIM_DIR/ftdetect $VIM_DIR/ftplugin $VIM_DIR/after/ftplugin)
+source_directories=($ZSH_DIR/lib $ZSH_DIR/comp $VIM_DIR/ftdetect $VIM_DIR/ftplugin $VIM_DIR/after/plugin $VIM_DIR/after/ftplugin)
 for dir in ${source_directories[@]}; do
   for file in `ls $BASE_DIR_PATH/${dir}`; do
     \cp -p $BASE_DIR_PATH/${dir}/${file} ~/.${dir}/${file}
