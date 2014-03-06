@@ -1,3 +1,6 @@
+"" FILE: config.vim
+" Vimの基本的な設定を記述
+
 "" 補完設定
 set wildmenu
 set wildmode=full

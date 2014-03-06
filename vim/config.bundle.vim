@@ -1,4 +1,6 @@
-""" neocomplete
+"" FILE: config.bundle.vim
+" neobundleで管理しているプラグインでfunction,autocmd,mapなどを含まずに設定できる(もしくはafter/以下では動作しない設定)を記述する
+
 " desert
 colorscheme desert
 set background=light
