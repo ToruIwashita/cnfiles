@@ -55,6 +55,8 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
 " ファイラー
 NeoBundle 'scrooloose/nerdtree'
+" text-object選択
+NeoBundle 'gcmt/wildfire.vim'
 " ヤンク履歴管理
 NeoBundle 'YankRing.vim'
 " vim-ruby
@@ -63,7 +65,6 @@ NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'errormarker.vim'
 " カラースキーマ
 NeoBundle 'fugalh/desert.vim'
-NeoBundle 'gcmt/wildfire.vim'
 "" end
 
 " ファイルタイプの検出,ファイルタイプ用プラグインプラグイン,インデントを有効化(NeoBundleによる処理が終了した後に実施)
