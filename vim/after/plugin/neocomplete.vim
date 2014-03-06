@@ -1,4 +1,4 @@
-""" neocomplete
+"" FILE: neocomplete.vim
 let s:cpo_save = &cpo
 set cpo&vim
 

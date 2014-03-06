@@ -1,4 +1,4 @@
-""" lightline
+"" FILE: lightline.vim
 let s:cpo_save = &cpo
 set cpo&vim
 
