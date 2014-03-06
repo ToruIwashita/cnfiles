@@ -39,8 +39,6 @@ NeoBundle 'tpope/vim-repeat'
 NeoBundle 'tomtom/tcomment_vim'
 " rubyのブロックを%で移動
 NeoBundle 'ruby-matchit'
-" タブで補完
-NeoBundle 'SuperTab'
 " ステータスライン
 NeoBundle 'itchyny/lightline.vim'
 " BlockDiff(選択範囲の比較)
@@ -65,6 +63,7 @@ NeoBundle 'vim-ruby/vim-ruby'
 NeoBundle 'errormarker.vim'
 " カラースキーマ
 NeoBundle 'fugalh/desert.vim'
+NeoBundle 'gcmt/wildfire.vim'
 "" end
 
 " ファイルタイプの検出,ファイルタイプ用プラグインプラグイン,インデントを有効化(NeoBundleによる処理が終了した後に実施)

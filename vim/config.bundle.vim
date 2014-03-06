@@ -27,3 +27,11 @@ let g:yankring_max_history = 30
 let g:yankring_max_display = 30
 " yankring_historyの重複テキストを保存しない
 let g:yankring_ignore_duplicate = 0
+
+""" wildfire.vim
+" text-object拡大
+let g:wildfire_fuel_map = "<C-l>"
+" text-object縮小
+let g:wildfire_water_map = "<C-h>"
+" text-object対象
+let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "i>", "ip", "it"]
