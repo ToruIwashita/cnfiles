@@ -1,8 +1,7 @@
-""" Vim-Tomorrow-Theme
-" カラーテーマ
-colorscheme Tomorrow-Night-Bright
-
 """ neocomplete
+" desert
+colorscheme desert
+
 " neocompleteを起動時に有効化
 let g:neocomplete#enable_at_startup = 1
 
