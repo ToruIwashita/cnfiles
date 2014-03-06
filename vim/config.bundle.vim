@@ -1,6 +1,7 @@
 """ neocomplete
 " desert
 colorscheme desert
+set background=light
 
 " neocompleteを起動時に有効化
 let g:neocomplete#enable_at_startup = 1

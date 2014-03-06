@@ -85,8 +85,6 @@ vnoremap <ESC> v_<ESC>
 syntax on
 " シンタックスハイライトの開始/終了タグ検索の閾値
 syntax sync minlines=500 maxlines=1000
-" バックグランド
-set background=light
 " エンコーディングUTF-8
 set encoding=utf8
 " 256色モード
