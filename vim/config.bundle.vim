@@ -34,4 +34,13 @@ let g:wildfire_fuel_map = "<C-l>"
 " text-object縮小
 let g:wildfire_water_map = "<C-h>"
 " text-object対象
-let g:wildfire_objects = ["i'", 'i"', "i)", "i]", "i}", "i>", "ip", "it"]
+let g:wildfire_objects = [
+  \ "i'", "a'",
+  \ 'i"', 'a"',
+  \ 'i)', 'a)',
+  \ 'i]', 'a]',
+  \ 'i}', 'a}',
+  \ 'i>', 'i>',
+  \ 'it', 'at',
+  \ 'ip' 
+\ ]
