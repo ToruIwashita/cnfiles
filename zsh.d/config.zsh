@@ -97,6 +97,8 @@ bindkey -v "^R" history-incremental-search-backward
 bindkey -v '^Y' push-input
 # Ctr+Uでundo
 bindkey -v '^U' undo
+# Ctr+Wでkill-word
+bindkey -v '^W' kill-word
 # Ctr+_でcdup
 bindkey -v "^_" cdup
 # Shift+tabで逆タブ補完
