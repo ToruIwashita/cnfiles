@@ -40,7 +40,7 @@ let g:wildfire_objects = [
   \ 'i)', 'a)',
   \ 'i]', 'a]',
   \ 'i}', 'a}',
-  \ 'i>', 'i>',
+  \ 'i>', 'a>',
   \ 'it', 'at',
   \ 'ip' 
 \ ]
