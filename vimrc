@@ -27,7 +27,7 @@ NeoBundle 'Shougo/vimproc', {
 \  },
 \}
 " 入力補完機能
-NeoBundle 'Shougo/neocomplete'
+NeoBundle has('lua') ? 'Shougo/neocomplete' : ''
 " スニペット展開
 NeoBundle 'Shougo/neosnippet'
 NeoBundle 'Shougo/neosnippet-snippets'
