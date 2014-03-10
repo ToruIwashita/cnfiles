@@ -18,6 +18,7 @@ let g:lightline = {
   \   'mode':         'MyMode'
   \ }
 \ }
+
 " component: MyModified
 function! MyModified()
   if &filetype == 'help'
@@ -30,6 +31,7 @@ function! MyModified()
     return ''
   endif
 endfunction
+
 " component: MyReadonly
 function! MyReadonly()
   if &filetype == 'help'
@@ -40,11 +42,13 @@ function! MyReadonly()
     return ''
   endif
 endfunction
+
 " component: MyFugitive
 function! MyFugitive()
   let fname = expand("%:t")
   return (fname =~ 'NERD_tree' ? '' : exists("*fugitive#head") ? fugitive#head() != '' ? '* ' . fugitive#head() : '' : '')
 endfunction
+
 " component: MyFilename
 function! MyFilename()
   let fname = expand("%:t")
@@ -52,18 +56,22 @@ function! MyFilename()
        \ ('' != fname ? fname =~ 'NERD_tree' ? 'NERDTree' : fname : '[No Name]') .
        \ ('' != MyModified() ? ' ' . MyModified() : '')
 endfunction
+
 " component: MyFileformat
 function! MyFileformat()
   return winwidth(0) > 70 ? &fileformat : ''
 endfunction
+
 " component: MyFiletype
 function! MyFiletype()
   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
+
 " component: MyFileencoding
 function! MyFileencoding()
   return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
+
 " component: MyMode
 function! MyMode()
   return winwidth(0) > 60 ? lightline#mode() : ''

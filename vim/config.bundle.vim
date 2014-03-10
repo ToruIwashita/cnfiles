@@ -1,10 +1,12 @@
 "" FILE: config.bundle.vim
 " neobundleで管理しているプラグインでfunction,autocmd,mapなどを含まずに設定できる(もしくはafter/以下では動作しない設定)を記述する
 
+"" colorscheme
 " desert
 colorscheme desert
 set background=light
 
+"" neocomplete
 " neocompleteを起動時に有効化
 let g:neocomplete#enable_at_startup = 1
 
