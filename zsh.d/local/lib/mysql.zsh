@@ -170,14 +170,40 @@ function watch_myps() {
   watch -n 3 "${MYSQL_CMD} 'SHOW ${full_opt} PROCESSLIST${g_opt}'"
 }
 
-function myfirst() {
-  local myfirst_usage
+function mf() {
+  local mf_usage my_priority_condition my_g my_limit my_select_field my_order my_table_name my_condition arg
 
-  myfirst_usage="Usage: $0 {Table name}"
-  if [ $# -ne 1 ]; then
-    print $myfirst_usage
+  mf_usage="Usage: $0 <-t 'Table name'>
+         [-c 'Top priority condition']
+         [-g '\G']
+         [-l 'Limit value']
+         [-o 'Order condition']
+         [-s 'Select field']
+         [-w 'Select condition']"
+  while getopts :gl:s:t:w: arg; do
+    case ${arg} in
+      c) my_priority_condition=${OPTARG} ;;
+      g) my_g='\G' ;;
+      l) my_limit='LIMIT '${OPTARG} ;;
+      s) my_select_field=${OPTARG} ;;
+      o) my_order=${OPTARG} ;;
+      t) my_table_name=${OPTARG} ;;
+      w) my_condition=${OPTARG} ;;
+      :|\?) print $mf_usage; return 1 ;;
+    esac
+  done
+
+  if [ ${#my_table_name} -eq 0 ]; then
+    print $mf_usage
     return 1
   fi
 
-  print "${MYSQL_CMD} 'SELECT * FROM ${1} ORDER BY '"
+  [ ${#my_condition} -eq 0 ]    && my_condition='TRUE'
+  [ ${#my_select_field} -eq 0 ] && my_select_field='*'
+
+  if [ ${#my_priority_condition} -eq 0 ]; then
+    "${MYSQL_CMD} 'SELECT ${my_select_field} FROM ${my_table_name} WHERE ${my_condition} ${my_order} ${my_limit} ${my_g}'"
+  else
+    "${MYSQL_CMD} 'SELECT ${my_select_field} FROM ${my_table_name} ${my_priority_condition}'"
+  fi
 }

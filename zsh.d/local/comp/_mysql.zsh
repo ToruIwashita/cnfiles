@@ -9,12 +9,18 @@ function _myfindg() {
     '(:)-f[Field info]:A part of field info'
 }
 
+function _mf() {
+  _arguments : \
+    '(:)-t[Table name]:Input a part of table name or table name:__my_show_tables'
+}
+
 function _myst() {
   _arguments : \
     '(:)*:Input table name:__my_show_tables'
 }
 
 compdef _myfindg myfindg
+compdef _mf mf
 compdef _myst mydesc
 compdef _myst myindex
 compdef _myst myfcsv
