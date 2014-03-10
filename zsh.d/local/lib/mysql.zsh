@@ -62,7 +62,7 @@ function mqout() {
 function myfindg() {
   local my_cmd my_cmd_res_field_list my_cmd_res_field_name my_table_name my_field_name my_tmp_line myfindg_usage arg
 
-  myfindg_usage="Usage: $0 {-f 'Part of field info'|-t 'Part of table name'}"
+  myfindg_usage="Usage: $0 [-f 'Part of field info'] [-t 'Part of table name']"
   while getopts :f:t: arg; do
     case ${arg} in
       f) my_field_name=${OPTARG} ;;
@@ -158,11 +158,11 @@ function mycnt() {
 function watch_myps() {
   local arg full_opt g_opt
 
-  watch_myps_usage='Usage: $0 [-f(FULL PROCESSLIST)] [-g(\\G)]'
+  watch_myps_usage="Usage: $0 [-f(FULL PROCESSLIST)] [-g(\\G)]"
   while getopts :fgh arg; do
     case ${arg} in
-      f) full_opt="FULL" ;;
-      g) g_opt="\G" ;;
+      f) full_opt='FULL' ;;
+      g) g_opt='\G' ;;
       h|:|\?) print $watch_myps_usage; return 2 ;;
     esac
   done
