@@ -2,7 +2,7 @@
 function gam() {
   local gam_usage
 
-  gam_usage="Usage: $0 {Files}"
+  gam_usage="Usage: $0 <Files>"
   if [ $# -lt 1 ]; then
     print $gam_usage
     return 1
@@ -14,7 +14,7 @@ function gam() {
 function gau() {
   local gau_usage
 
-  gau_usage="Usage: $0 {Files}"
+  gau_usage="Usage: $0 <Files>"
   if [ $# -lt 1 ]; then
     print $gau_usage
     return 1
@@ -26,7 +26,7 @@ function gau() {
 function gd() {
   local gd_usage
 
-  gd_usage="Usage: $0 {File}"
+  gd_usage="Usage: $0 <File>"
   if [ $# -gt 1 ]; then
     print $gd_usage
     return 1
@@ -38,7 +38,7 @@ function gd() {
 function gsw() {
   local gsw_usage
 
-  gsw_usage="Usage: $0 {Branch}"
+  gsw_usage="Usage: $0 <Branch>"
   if [ $# -ne 1 ]; then
     print $gsw_usage;
     return 1
@@ -50,7 +50,7 @@ function gsw() {
 function gud() {
   local gud_usage
 
-  gud_usage="Usage: $0 {Files}"
+  gud_usage="Usage: $0 <Files>"
   if [ $# -lt 1 ]; then
     print $gud_usage;
     return 1
@@ -62,7 +62,7 @@ function gud() {
 function gll() {
   local gll_usage current_branch
 
-  gll_usage="Usage:{pwd=./.git} $0"
+  gll_usage="Usage:<pwd=./.git> $0"
   if [ ! -d ./.git ]; then
     print $gll_usage;
     return 1
@@ -77,7 +77,7 @@ function gll() {
 function gsh() {
   local gsh_usage current_branch
 
-  gsh_usage="Usage:{pwd=./.git} $0"
+  gsh_usage="Usage:<pwd=./.git> $0"
   if [ ! -d ./.git ]; then
     print $gsh_usage;
     return 1
@@ -92,7 +92,7 @@ function gsh() {
 function gcloneb() {
   local gcloneb_usage
 
-  gcloneb_usage="Usage: $0 {Branch}"
+  gcloneb_usage="Usage: $0 <Branch>"
   if [ $# -lt 1 ]; then
     print $gcloneb_usage;
     return 1
