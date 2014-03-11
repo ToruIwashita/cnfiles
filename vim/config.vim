@@ -11,8 +11,18 @@ set wildmode=full
 let &wildcharm = &wildchar
 
 "" cnoremap
-" 補完メニューサブディレクトリ移動
+" コマンドラインモード先頭へ移動
+cnoremap <C-a> <HOME>
+" コマンドラインモード末尾へ移動
+cnoremap <C-a> <HOME>
+" コマンドラインモード一文字戻る,補完メニューディレクトリ右移動
+cnoremap <C-b> <LEFT>
+" コマンドラインモード一文字進む,補完メニューディレクトリ左移動
+cnoremap <C-f> <RIGHT>
+" コマンドラインモード履歴を進む,補完メニューサブディレクトリ移動
 cnoremap <C-k> <DOWN>
+" 補完メニュー文字削除
+cnoremap <C-d> <DEL>
 
 "" noremap
 " 次のウィンドウへ移動
