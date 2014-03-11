@@ -4,6 +4,7 @@ set cpo&vim
 
 ab <buffer> =p binding.pry
 ab <buffer> =8 # coding: utf-8
+ab <buffer> =c , current: true
 
 " makeで`ruby -w`起動
 compiler ruby
