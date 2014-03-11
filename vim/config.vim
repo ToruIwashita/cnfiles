@@ -21,6 +21,8 @@ cnoremap <C-b> <LEFT>
 cnoremap <C-f> <RIGHT>
 " コマンドラインモード履歴を進む,補完メニューサブディレクトリ移動
 cnoremap <C-k> <DOWN>
+" コマンドラインモード履歴を戻る,補完メニューディレクトリ戻る
+cnoremap <C-_> <UP>
 " 補完メニュー文字削除
 cnoremap <C-d> <DEL>
 
