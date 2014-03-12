@@ -95,10 +95,10 @@ bindkey -v "^P" up-line-or-history
 bindkey -v "^R" history-incremental-search-backward
 # Ctr+Yでコマンドラインスタック
 bindkey -v '^Y' push-input
-# Ctr+Uでbackward-kill-word
-bindkey -v '^U' backward-kill-word
-# Ctr+Wでkill-word
-bindkey -v '^W' kill-word
+# Ctr+Uでkill-word
+bindkey -v '^U' kill-word
+# Ctr+Wでbackward-kill-word
+bindkey -v '^W' backward-kill-word
 # Ctr+_でcdup
 bindkey -v "^_" cdup
 # Shift+tabで逆タブ補完
