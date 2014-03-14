@@ -3,10 +3,10 @@
 # 定数の設定
 ZSH_DIR=.zsh.d
 [ -z "$ld_library_path" ] && typeset -xT LD_LIBRARY_PATH ld_library_path
-[ -z "$include" ] && typeset -xT INCLUDE include
+[ -z "$include_path" ] && typeset -xT INCLUDE include_path
 
 # 重複登録無効
-typeset -U path fpath ld_library_path include
+typeset -U path fpath ld_library_path include_path
 
 export LANG=ja_JP.UTF-8
 
