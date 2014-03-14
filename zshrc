@@ -76,4 +76,6 @@ fi
 
 ## CD関連自動実行関数
 # cd後にls実行
-function chpwd() { ls }
+function chpwd() {
+  [ $dirstack[1]:h != $PWD ] && ls
+}
