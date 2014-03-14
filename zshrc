@@ -1,14 +1,21 @@
 # utf-8
 
-# 定数の設定
-ZSH_DIR=.zsh.d
+# 環境変数設定
+export LANG=ja_JP.UTF-8
 [ -z "$ld_library_path" ] && typeset -xT LD_LIBRARY_PATH ld_library_path
 [ -z "$include" ] && typeset -xT INCLUDE include
 
 # 重複登録無効
 typeset -U path fpath ld_library_path include
 
-export LANG=ja_JP.UTF-8
+# 定数の設定
+ZSH_DIR=.zsh.d
+FUNCTION_DIRS=(
+  ~/$ZSH_DIR/lib
+  ~/$ZSH_DIR/comp
+  ~/$ZSH_DIR/local/lib
+  ~/$ZSH_DIR/local/comp
+)
 
 # 色の定義
 autoload -Uz colors && colors
@@ -21,17 +28,14 @@ autoload -Uz add-zsh-hook
 # 補完メニュー選択モードのキーマップ
 zmodload -i zsh/complist
 
-# 各種設定読込
+# 各種設定・関数読込
 source ~/$ZSH_DIR/config.zsh
 source ~/$ZSH_DIR/config.local.zsh
 
-# 自作関数をautoload
-function_directories=($ZSH_DIR/lib $ZSH_DIR/comp $ZSH_DIR/local/lib $ZSH_DIR/local/comp)
-for dir in ${function_directories[@]}; do
-  fpath=(~/${dir} $fpath)
-
-  for file in `ls ~/${dir}`; do
-    autoload -Uz ${file} && ${file}
+fpath=(${FUNCTION_DIRS} $fpath)
+for dir in ${FUNCTION_DIRS[@]}; do
+  for file in ${dir}/*.zsh(.); do
+    autoload -Uz $file:t && $file:t
   done
 done
 
