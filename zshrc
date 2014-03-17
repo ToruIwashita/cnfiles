@@ -62,7 +62,7 @@ precmd() { vcs_info }
 PROMPT='_
 |[${vcs_info_msg_0_}]:%~/
 └-(%?)%F{$VIMODE}%#%f '
-RPROMPT='[%n|%D{%T}]'
+RPROMPT='[%D{%T}|%n]'
 
 ## 補完
 # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
