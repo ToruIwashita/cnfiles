@@ -13,6 +13,8 @@ setopt auto_cd
 setopt auto_pushd
 # 引数の無いpushdは$HOMEをスタックする
 setopt pushd_to_home
+# 重複ディレクトリはスタックしない
+setopt pushd_ignore_dups
 # PROMPT変数に対して変数等展開
 setopt prompt_subst
 # ファイル補完種類表示
