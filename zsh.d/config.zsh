@@ -97,7 +97,7 @@ bindkey -v "^N" down-line-or-history
 bindkey -v "^P" up-line-or-history
 # Ctr+Rでインクリメンタルサーチ
 bindkey -v "^R" history-incremental-search-backward
-# Ctr+Yでコマンドラインスタック
+# Ctr+Yでコマンドラインスタック(push-lineでも良いが複数行を考慮するとpush-inputの方が良い)
 bindkey -v '^Y' push-input
 # Ctr+Uでkill-word
 bindkey -v '^U' kill-word
