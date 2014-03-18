@@ -14,14 +14,18 @@ SRC_DIR_PATH=~/src
 LOCAL_DIR_PATH=~/local
 ZSH_SRC_DIR_PATH=$SRC_DIR_PATH/zsh
 VIM_SRC_DIR_PATH=$SRC_DIR_PATH/vim
-NEOVIM_SRC_DIR_PATH=$SRC_DIR_PATH/neovim  # 使用していない
+TMUX_SRC_DIR_PATH=$SRC_DIR_PATH/tmux
 LUAJIT_SRC_DIR_PATH=$SRC_DIR_PATH/luajit
+HUB_DIR_PATH=$SRC_DIR_PATH/hub
+NEOVIM_SRC_DIR_PATH=$SRC_DIR_PATH/neovim  # 使用していない
 
-ZSH_REPOSITORY="git://github.com/zsh-users/zsh"
-VIM_REPOSITORY="git://github.com/vim-jp/vim"
-NEOVIM_REPOSITORY="git://github.com/neovim/neovim"  # 使用していない
-NEOBUNDLE_REPOSITORY="git://github.com/Shougo/neobundle.vim"
-LUAJIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
+ZSH_REPOSITORY='git://github.com/zsh-users/zsh'
+VIM_REPOSITORY='git://github.com/vim-jp/vim'
+TMUX_REPOSITORY='git://git.code.sf.net/p/tmux/tmux-code'
+NEOBUNDLE_REPOSITORY='git://github.com/Shougo/neobundle.vim'
+LUAJIT_REPOSITORY='http://luajit.org/git/luajit-2.0.git'
+HUB_REPOSITORY='https://github.com/github/hub.git'
+NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 
 ## init
 # source or local
@@ -29,8 +33,10 @@ LUAJIT_REPOSITORY="http://luajit.org/git/luajit-2.0.git"
 [ -d $LOCAL_DIR_PATH ]                    || mkdir $LOCAL_DIR_PATH
 [ -d $ZSH_SRC_DIR_PATH ]                  || git clone $ZSH_REPOSITORY $ZSH_SRC_DIR_PATH
 [ -d $VIM_SRC_DIR_PATH ]                  || git clone $VIM_REPOSITORY $VIM_SRC_DIR_PATH
-[ -d $NEOVIM_SRC_DIR_PATH ]               || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
+[ -d $TMUX_SRC_DIR_PATH ]                 || git clone $TMUX_REPOSITORY $TMUX_SRC_DIR_PATH
 [ -d $LUAJIT_SRC_DIR_PATH ]               || git clone $LUAJIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
+[ -d $HUB_DIR_PATH ]                      || git clone $HUB_REPOSITORY $HUB_DIR_PATH
+[ -d $NEOVIM_SRC_DIR_PATH ]               || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
 # zsh
 [ -d $ZSH_DIR_PATH ]                      || mkdir $ZSH_DIR_PATH
 [ -f $ZSH_DIR_PATH/config.zsh ]           || touch $ZSH_DIR_PATH/config.zsh
@@ -58,10 +64,14 @@ echo "git pull zsh src."
 cd $ZSH_SRC_DIR_PATH && git pull
 echo "git pull vim src."
 cd $VIM_SRC_DIR_PATH && git pull
-echo "git pull neovim src."
-cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
+echo "git pull tmux src."
+cd $TMUX_SRC_DIR_PATH && git pull
 echo "git pull luajit src."
 cd $LUAJIT_SRC_DIR_PATH && git pull
+echo "git pull hub src."
+cd $HUB_DIR_PATH && git pull
+echo "git pull neovim src."
+cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
 
 ## copy files
 cd $BASE_DIR_PATH
