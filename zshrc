@@ -2,8 +2,8 @@
 
 # 環境変数設定
 export LANG=ja_JP.UTF-8
-[ -z "$ld_library_path" ] && typeset -xT LD_LIBRARY_PATH ld_library_path
-[ -z "$include" ] && typeset -xT INCLUDE include
+[[ -z $ld_library_path ]] && typeset -xT LD_LIBRARY_PATH ld_library_path
+[[ -z $include ]] && typeset -xT INCLUDE include
 
 # 重複登録無効
 typeset -U path fpath ld_library_path include
@@ -77,5 +77,5 @@ fi
 ## CD関連自動実行関数
 # cd後にls実行
 function chpwd() {
-  [ $dirstack[1]:h != $PWD ] && ls
+  [[ $dirstack[1]:h != $PWD ]] && ls
 }
