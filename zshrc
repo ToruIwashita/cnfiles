@@ -5,9 +5,6 @@ export LANG=ja_JP.UTF-8
 [[ -z $ld_library_path ]] && typeset -xT LD_LIBRARY_PATH ld_library_path
 [[ -z $include ]] && typeset -xT INCLUDE include
 
-# 重複登録無効
-typeset -U path fpath ld_library_path include
-
 # 定数の設定
 ZSH_DIR=.zsh.d
 FUNCTION_DIRS=(
@@ -38,6 +35,9 @@ for dir in ${FUNCTION_DIRS[@]}; do
     autoload -Uz $file:t && $file:t
   done
 done
+
+# 重複パスを除去(パス設定が全て済んだ後に実施)
+typeset -U path fpath ld_library_path include
 
 ## プロンプトの定義
 # VIMモード色
