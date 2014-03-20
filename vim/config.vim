@@ -65,8 +65,11 @@ noremap <C-w><C-d> :bdelete<CR>
 
 "" nnoremap
 " *,#で検索した後に移動しない
-nnoremap * *N
-nnoremap # #N
+nnoremap * *Nzz
+nnoremap # #Nzz
+" 検索後にカーソルを中央に移動
+nnoremap n nzz
+nnoremap N Nzz
 " <ESC>2回で検索ハイライト消し
 nnoremap <ESC><ESC> :nohlsearch<CR>
 " qqq:キーコマンド履歴表示
