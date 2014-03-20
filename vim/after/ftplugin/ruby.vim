@@ -12,7 +12,7 @@ compiler ruby
 augroup AuRbSyntaxCheck
   autocmd!
   " `BufWritePost`で`make -c`
-  autocmd BufWritePost <buffer> silent make -c -W1 % | redraw!
+  autocmd BufWritePost *.rb silent make -c -W1 % | redraw!
   " `make`したら`quickfix`リストを表示
   autocmd QuickfixCmdPost make cw
 augroup END
