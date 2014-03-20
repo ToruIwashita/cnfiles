@@ -2,8 +2,7 @@
 let s:cpo_save = &cpo
 set cpo&vim
 
-noremap <C-w>_ :NERDTreeToggle<CR>
-noremap <C-w><C-_> :NERDTreeToggle<CR>
+noremap <C-w><C-w> :NERDTreeToggle<CR>
 " 引数なしVim実行時にNERDTree
 if has('vim_starting') && expand("%:p") == ""
   autocmd VimEnter * NERDTree
