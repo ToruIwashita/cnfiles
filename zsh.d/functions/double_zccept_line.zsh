@@ -1,7 +1,7 @@
 ## double-accept-line
-functions double_accept_line() {
+functions double-accept-line() {
   zle accept-line
   zle accept-line
 }
 
-zle -N double_accept_line
+zle -N double-accept-line
