@@ -8,10 +8,10 @@ export LANG=ja_JP.UTF-8
 # 定数の設定
 ZSH_DIR=.zsh.d
 FUNCTION_DIRS=(
-  ~/$ZSH_DIR/lib
-  ~/$ZSH_DIR/comp
-  ~/$ZSH_DIR/local/lib
-  ~/$ZSH_DIR/local/comp
+  ~/$ZSH_DIR/functions
+  ~/$ZSH_DIR/completions
+  ~/$ZSH_DIR/local/functions
+  ~/$ZSH_DIR/local/completions
 )
 
 # 色の定義
@@ -31,8 +31,8 @@ source ~/$ZSH_DIR/config.local.zsh
 
 fpath=(${FUNCTION_DIRS} $fpath)
 for dir in ${FUNCTION_DIRS[@]}; do
-  for file in ${dir}/*.zsh(.); do
-    autoload -Uz $file:t && $file:t
+  for function in ${dir}/*.zsh(.); do
+    autoload -Uz $function:t && $function:t
   done
 done
 
