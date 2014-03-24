@@ -78,25 +78,25 @@ SAVEHIST=100000
 
 ## vimモードキーマップ
 # Ctr+Aで行頭へ
-bindkey -v "^A" beginning-of-line
+bindkey -v '^A' beginning-of-line
 # Ctr+Bで１文字左へ
-bindkey -v "^B" backward-char
+bindkey -v '^B' backward-char
 # Ctr+Dで１文字削除
-bindkey -v "^D" delete-char-or-list
+bindkey -v '^D' delete-char-or-list
 # Ctr+Eで行末へ
-bindkey -v "^E" end-of-line
+bindkey -v '^E' end-of-line
 # Ctr+Fで１文字右へ
-bindkey -v "^F" forward-char
+bindkey -v '^F' forward-char
 # Ctr+Gで入力キャンセル
-bindkey -v "^G" send-break
+bindkey -v '^G' send-break
 # Ctr+Kで行末まで削除
-bindkey -v "^K" kill-line
+bindkey -v '^K' kill-line
 # Ctr+Nで１行下へ
-bindkey -v "^N" down-line-or-history
+bindkey -v '^N' down-line-or-history
 # Ctr+Pで１行上へ
-bindkey -v "^P" up-line-or-history
+bindkey -v '^P' up-line-or-history
 # Ctr+Rでインクリメンタルサーチ
-bindkey -v "^R" history-incremental-search-backward
+bindkey -v '^R' history-incremental-search-backward
 # Ctr+Yでコマンドラインスタック(push-lineでも良いが複数行を考慮するとpush-inputの方が良い)
 bindkey -v '^Y' push-input
 # Ctr+Uでkill-word
@@ -118,6 +118,8 @@ bindkey -M menuselect '^N' down-line-or-history
 bindkey -M menuselect '^P' up-line-or-history
 # Ctr+Kで次の補完メニュー
 bindkey -M menuselect '^K' accept-and-infer-next-history
+# Ctr+Jで実行を２回
+bindkey -M menuselect '^J' double-accept-line
 
 ## エイリアス
 alias ez="exec zsh"
