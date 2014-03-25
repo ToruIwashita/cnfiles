@@ -1,11 +1,4 @@
-# utf-8
-
-# 環境変数設定
-export LANG=ja_JP.UTF-8
-[[ -z $ld_library_path ]] && typeset -xT LD_LIBRARY_PATH ld_library_path
-[[ -z $include ]] && typeset -xT INCLUDE include
-
-# 定数の設定
+## 定数の設定
 ZSH_DIR=.zsh.d
 FUNCTION_DIRS=(
   ~/$ZSH_DIR/functions
@@ -14,6 +7,12 @@ FUNCTION_DIRS=(
   ~/$ZSH_DIR/local/completions
 )
 
+## 環境変数設定
+export LANG=ja_JP.UTF-8
+[[ -z $ld_library_path ]] && typeset -xT LD_LIBRARY_PATH ld_library_path
+[[ -z $include ]] && typeset -xT INCLUDE include
+
+## 関数ロード
 # 色の定義
 autoload -Uz colors && colors
 # 自動補完
@@ -25,10 +24,11 @@ autoload -Uz add-zsh-hook
 # 補完メニュー選択モードのキーマップ
 zmodload -i zsh/complist
 
-# 各種設定・関数読込
+## 各種設定・オリジナル関数読込
+# 設定読込
 source ~/$ZSH_DIR/config.zsh
 source ~/$ZSH_DIR/config.local.zsh
-
+# 関数読込
 fpath=(${FUNCTION_DIRS} $fpath)
 for dir in ${FUNCTION_DIRS[@]}; do
   for function in ${dir}/*.zsh(.); do
@@ -74,8 +74,7 @@ if [ -n "$LS_COLORS" ]; then
   zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
 fi
 
-## CD関連自動実行関数
-# cd後にls実行
+## cd後にls実行
 function chpwd() {
   [[ $dirstack[1]:h != $PWD ]] && ls
 }
