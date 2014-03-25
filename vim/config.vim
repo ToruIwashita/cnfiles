@@ -65,8 +65,8 @@ noremap <C-w><C-d> :bdelete<CR>
 
 "" nnoremap
 " *,#で検索した後に移動しない
-nnoremap * *Nzz
-nnoremap # #Nzz
+nnoremap * *N
+nnoremap # #N
 " 検索後にカーソルを中央に移動
 nnoremap n nzz
 nnoremap N Nzz
