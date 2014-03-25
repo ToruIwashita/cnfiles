@@ -43,6 +43,16 @@ done
 # 重複パスを除去(パス設定が全て済んだ後に実施)
 typeset -U path fpath ld_library_path include
 
+## 補完
+# コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
+zstyle ':completion:*' completer _complete _match _ignored _prefix
+# 補完候補のカーソル選択有効
+zstyle ':completion:*' menu true select
+# 補完候補色付け
+if [[ -n $LS_COLORS ]]; then
+  zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+fi
+
 ## プロンプトの定義
 # VIMモード色
 VIMODE="blue"
@@ -67,16 +77,6 @@ PROMPT='_
 |[${vcs_info_msg_0_}]:%~/
 └-(%?)%F{$VIMODE}%#%f '
 RPROMPT='[%D{%T}|%n]'
-
-## 補完
-# コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
-zstyle ':completion:*' completer _complete _match _ignored _prefix
-# 補完候補のカーソル選択有効
-zstyle ':completion:*' menu true select
-# 補完候補色付け
-if [[ -n $LS_COLORS ]]; then
-  zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-fi
 
 ## cd後にls実行
 function chpwd() {
