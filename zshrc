@@ -42,7 +42,7 @@ typeset -U path fpath ld_library_path include
 ## プロンプトの定義
 # VIMモード色
 VIMODE="blue"
-function zle-keymap-select {
+function _zle-keymap-select {
   case $KEYMAP in
     vicmd)
       VIMODE="cyan" ;;
@@ -52,7 +52,7 @@ function zle-keymap-select {
 
   zle reset-prompt
 }
-zle -N zle-keymap-select
+zle -N zle-keymap-select _zle-keymap-select
 # vcsの情報表示
 zstyle ':vcs_info:*' enable git hg
 zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'

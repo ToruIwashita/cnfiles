@@ -1,11 +1,11 @@
 ## MYSQL用functions
-function my_check_argv() {
-  if [ $# -lt 1 ]; then
+function _my-check-argv() {
+  if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
   fi
 
-  if [ $1:e != "sql" ]; then
+  if [[ $1:e != "sql" ]]; then
     print "invalid extension."
     return 1
   fi
@@ -16,8 +16,8 @@ function my_check_argv() {
 function mq() {
   local my_cmd arg_num
 
-  my_check_argv $argv
-  if [ $? -eq 1 ]; then
+  _my-check-argv $argv
+  if [[ $? -eq 1 ]]; then
     return 1
   fi
 
@@ -39,8 +39,8 @@ function mq() {
 function mqout() {
   local my_cmd arg_num
 
-  my_check_argv $argv
-  if [ $? -eq 1 ]; then
+  _my-check-argv $argv
+  if [[ $? -eq 1 ]]; then
     return 1
   fi
 
@@ -73,17 +73,17 @@ function myfindg() {
 
   my_tmp_line="-------------------------------------------------------"
   my_cmd=$MYSQL_CMD
-  if [ ${#my_table_name} -gt 0 ] && [ ${#my_field_name} -gt 0 ]; then
+  if [[ ${#my_table_name} -gt 0 && ${#my_field_name} -gt 0 ]]; then
     print "Field\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
     eval $my_cmd" 'DESC ${my_table_name}' -N | grep --color '${my_field_name}'"
-  elif [ ${#my_table_name} -gt 0 ]; then
+  elif [[ ${#my_table_name} -gt 0 ]]; then
     print "Tables\n${my_tmp_line}"
     eval $my_cmd" 'SHOW TABLES' -N | grep --color '${my_table_name}'"
-  elif [ ${#my_field_name} -gt 0 ]; then
+  elif [[ ${#my_field_name} -gt 0 ]]; then
     print "Table: 'name'\nField\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
     for my_table_name in `eval $my_cmd" 'SHOW TABLES' -N"`; do
       my_cmd_res_field_list=`eval $my_cmd" 'DESC ${my_table_name}' -N | grep --color '${my_field_name}'"`
-      if [ ${#my_cmd_res_field_list} -gt 0 ]; then
+      if [[ ${#my_cmd_res_field_list} -gt 0 ]]; then
         print "Table: ${my_table_name}"
         for my_cmd_res_field_name in ${(f)my_cmd_res_field_list}; do
           print $my_cmd_res_field_name | grep --color "${my_field_name}"
@@ -99,8 +99,8 @@ function myfindg() {
 function mqexp() {
   local my_cmd arg_num
 
-  my_check_argv $argv
-  if [ $? -eq 1 ]; then
+  _my-check-argv $argv
+  if [[ $? -eq 1 ]]; then
     return 1
   fi
 
@@ -120,7 +120,7 @@ function mqexp() {
 }
 
 function mydesc() {
-  if [ $# -lt 1 ]; then
+  if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
   fi
@@ -129,7 +129,7 @@ function mydesc() {
 }
 
 function myindex() {
-  if [ $# -lt 1 ]; then
+  if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
   fi
@@ -138,7 +138,7 @@ function myindex() {
 }
 
 function myfcsv() {
-  if [ $# -lt 1 ]; then
+  if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
   fi
@@ -147,7 +147,7 @@ function myfcsv() {
 }
 
 function mycnt() {
-  if [ $# -lt 1 ]; then
+  if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
   fi
@@ -155,7 +155,7 @@ function mycnt() {
   eval "${MYSQL_CMD} 'SELECT COUNT(1) FROM ${1}'"
 }
 
-function watch_myps() {
+function watch-myps() {
   local arg full_opt g_opt
 
   watch_myps_usage="Usage: $0 [-f(FULL PROCESSLIST)] [-g(\\G)]"
@@ -193,15 +193,15 @@ function mf() {
     esac
   done
 
-  if [ ${#my_table_name} -eq 0 ]; then
+  if [[ ${#my_table_name} -eq 0 ]]; then
     print $mf_usage
     return 1
   fi
 
-  [ ${#my_condition} -eq 0 ]    && my_condition='TRUE'
-  [ ${#my_select_field} -eq 0 ] && my_select_field='*'
+  [[ ${#my_condition} -eq 0 ]]    && my_condition='TRUE'
+  [[ ${#my_select_field} -eq 0 ]] && my_select_field='*'
 
-  if [ ${#my_priority_condition} -eq 0 ]; then
+  if [[ ${#my_priority_condition} -eq 0 ]]; then
     "${MYSQL_CMD} 'SELECT ${my_select_field} FROM ${my_table_name} WHERE ${my_condition} ${my_order} ${my_limit} ${my_g}'"
   else
     "${MYSQL_CMD} 'SELECT ${my_select_field} FROM ${my_table_name} ${my_priority_condition}'"

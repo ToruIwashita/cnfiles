@@ -1,5 +1,5 @@
 ## cd関連関数
-functions cdup() {
+functions _cdup() {
   local precmd_func
 
   cd ..
@@ -10,4 +10,4 @@ functions cdup() {
   zle reset-prompt
 }
 
-zle -N cdup
+zle -N cdup _cdup

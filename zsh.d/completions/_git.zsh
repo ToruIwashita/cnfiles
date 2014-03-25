@@ -1,5 +1,5 @@
 ## git関数用補完
-function __git_modified_files() {
+function __git-modified-files() {
   local git_status_res changes_not_staged_str_index
 
   git_status_res="$(git status)"
@@ -8,7 +8,7 @@ function __git_modified_files() {
   compadd ${(R)${(M)${${(f@)git_status_res}[$changes_not_staged_str_index,-1]}:#*modified:*}##*: #}
 }
 
-function __git_untracked_files() {
+function __git-untracked-files() {
   local git_status_res untracked_str_index
 
   git_status_res="$(git status)"
@@ -17,43 +17,43 @@ function __git_untracked_files() {
   compadd ${(R)${(M)${${(f@)git_status_res}[$untracked_str_index,-1]}##\#*}#\#[[:blank:]]}
 }
 
-function __git_branches() {
+function __git-branches() {
   compadd ${(R)$(git branch)#\*}
 }
 
 function _gam() {
-  if [ -d ./.git ]; then
-    _arguments : '(-)*:argument:__git_modified_files'
+  if [[ -d ./.git ]]; then
+    _arguments : '(-)*:argument:__git-modified-files'
   else
     _arguments : '(-)*:argument:_files'
   fi
 }
 
 function _gau() {
-  if [ -d ./.git ]; then
-    _arguments : '(-)*:argument:__git_untracked_files'
+  if [[ -d ./.git ]]; then
+    _arguments : '(-)*:argument:__git-untracked-files'
   else
     _arguments : '(-)*:argument:_files'
   fi
 }
 
 function _gd() {
-  if [ -d ./.git ]; then
-    _arguments : '(-)*:argument:__git_modified_files'
+  if [[ -d ./.git ]]; then
+    _arguments : '(-)*:argument:__git-modified-files'
   else
     _arguments : '(-)*:argument:_files'
   fi
 }
 
 function _gsw() {
-  if [ -d ./.git ]; then
-    _arguments : '(:)*:argument:__git_branches'
+  if [[ -d ./.git ]]; then
+    _arguments : '(:)*:argument:__git-branches'
   fi
 }
 
 function _gud() {
-  if [ -d ./.git ]; then
-    _arguments : '(-)*:argument:__git_modified_files'
+  if [[ -d ./.git ]]; then
+    _arguments : '(-)*:argument:__git-modified-files'
   fi
 }
 

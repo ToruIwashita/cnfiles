@@ -1,6 +1,6 @@
 ## find&grep関数
 function findg() {
-  if [ $# -lt 2 ]; then
+  if [[ $# -lt 2 ]]; then
     print "lack of arguments."
     return 1
   fi  

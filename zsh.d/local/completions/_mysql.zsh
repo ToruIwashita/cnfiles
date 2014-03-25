@@ -1,5 +1,5 @@
 ## MYSQL関数用補完
-function __my_show_tables() {
+function __my-show-tables() {
   compadd `eval "${MYSQL_CMD} 'SHOW TABLES' -N"`
 }
 
@@ -11,12 +11,12 @@ function _myfindg() {
 
 function _mf() {
   _arguments : \
-    '(:)-t[Table name]:Input a part of table name or table name:__my_show_tables'
+    '(:)-t[Table name]:Input a part of table name or table name:__my-show-tables'
 }
 
 function _myst() {
   _arguments : \
-    '(:)*:Input table name:__my_show_tables'
+    '(:)*:Input table name:__my-show-tables'
 }
 
 compdef _myfindg myfindg

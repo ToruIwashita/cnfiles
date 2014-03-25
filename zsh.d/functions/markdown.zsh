@@ -1,6 +1,6 @@
 ## markdown関連関数
 function pm() {
-  if [ $# -lt 1 ]; then
+  if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
   fi
@@ -9,7 +9,7 @@ function pm() {
 }
 
 function pmout() {
-  if [ $# -lt 1 ]; then
+  if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
   fi
