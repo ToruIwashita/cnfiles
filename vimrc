@@ -63,6 +63,8 @@ NeoBundle 'gcmt/wildfire.vim'
 NeoBundle 'YankRing.vim'
 " vim-ruby
 NeoBundle 'vim-ruby/vim-ruby'
+" vim-markdown
+NeoBundle 'hallison/vim-markdown'
 " QuickFixエラーにマーカー
 NeoBundle 'errormarker.vim'
 " カラースキーマ
