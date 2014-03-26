@@ -19,6 +19,11 @@ let g:lightline = {
   \ }
 \ }
 
+let g:lightline.tabline = {
+  \ 'left': [ [ 'tabs' ] ],
+  \ 'right': [ [ '' ] ]
+\ }
+
 " component: MyModified
 function! MyModified()
   if &filetype == 'help'
