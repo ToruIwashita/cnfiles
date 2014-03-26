@@ -27,25 +27,26 @@ cnoremap <C-_> <UP>
 cnoremap <C-d> <DEL>
 
 "" noremap
+" サスペンド無効化
+noremap <C-z> <Nop>
+" 現在のバッファ削除
+noremap <C-w>x <Nop>
+noremap <C-w><C-x> <Nop>
+noremap <C-w>x :bdelete<CR>
+noremap <C-w><C-x> :bdelete<CR>
+"" ウィンドウ関連
+" デフォルトウィンドウ移動無効化
+noremap <C-w>w <Nop>
+noremap <C-w><C-w> <Nop>
+noremap <C-w>W <Nop>
+noremap <C-w><C-W> <Nop>
 " 次のウィンドウへ移動
 noremap <C-w>n <C-w>w
 noremap <C-w><C-n> <C-w>w
 " 前のウィンドウへ移動
 noremap <C-w>p <C-w>W
 noremap <C-w><C-p> <C-w>W
-" ウィンドウ上下分割
-noremap <C-w><C-s> <Nop>
-noremap <C-w><C-s> <C-w><C-s>
-" ウィンドウ左右分割
-noremap <C-w><C-v> <Nop>
-noremap <C-w><C-v> <C-w><C-v>
-" サスペンド無効化
-noremap <C-z> <Nop>
-" デフォルトウィンドウ移動無効化
-noremap <C-w>w <Nop>
-noremap <C-w><C-w> <Nop>
-noremap <C-w>W <Nop>
-noremap <C-w><C-W> <Nop>
+"" タブ関連
 " [,],<C-[>,<C-]>,<C-w><C-[>,<C-w><C-]>無効化
 noremap ] <Nop>
 noremap [ <Nop>
@@ -53,15 +54,12 @@ noremap <C-]> <Nop>
 noremap <C-[> <Nop>
 noremap <C-w><C-]> <Nop>
 noremap <C-w><C-[> <Nop>
-" 次のバッファへ移動
-noremap <C-w>] :bnext<CR>
-noremap <C-w><C-]> :bnext<CR>
+" 次のタブへ移動
+noremap <C-w>] :tabnext<CR>
+noremap <C-w><C-]> :tabnext<CR>
 " 前のバッファへ移動
-noremap <C-w>[ :bprevious<CR>
-noremap <C-w><C-[> :bprevious<CR>
-" 現在のバッファ削除
-noremap <C-w>d :bdelete<CR>
-noremap <C-w><C-d> :bdelete<CR>
+noremap <C-w>[ :tabprevious<CR>
+noremap <C-w><C-[> :tabprevious<CR>
 
 "" nnoremap
 " *,#で検索した後に移動しない
@@ -107,8 +105,10 @@ syntax sync minlines=500 maxlines=1000
 set encoding=utf8
 " 256色モード
 set t_Co=256
-" ステータスライン2行
+" ステータスライン常に表示
 set laststatus=2
+" タブライン常に表示
+set showtabline=2
 " カレントバッファ内のファイルの文字UTF-8
 set fileencoding=utf-8
 " タブ文字の代わりに半角スペース
