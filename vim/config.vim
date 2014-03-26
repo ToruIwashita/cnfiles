@@ -131,6 +131,8 @@ set backspace=indent,eol,start
 set nrformats=octal
 " 矩形ビジュアル無文字部分カーソル移動
 set virtualedit=block
+" 上下3行の表示を固定
+set scrolloff=2
 " 横分割かつ,ターミナルが部分スクロールをサポートしていないとき,再描画が滑らかになる
 set ttyfast
 " スクリプト実行中に画面を描画しない
