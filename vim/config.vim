@@ -48,6 +48,8 @@ noremap <C-w><C-p> <C-w>W
 " タブのmapに関わるデフォルトのmapを無効化
 noremap ] <Nop>
 noremap [ <Nop>
+noremap gt <Nop>
+noremap gT <Nop>
 noremap <C-]> <Nop>
 noremap <C-[> <Nop>
 noremap <C-w>X <Nop>
@@ -61,11 +63,11 @@ noremap <C-w><C-c> <Nop>
 noremap <C-w>c :<C-u>tabnew<CR>
 noremap <C-w><C-c> :<C-u>tabnew<CR>
 " 次のタブへ移動
-noremap <C-w>] :<C-u>tabnext<CR>
-noremap <C-w><C-]> :<C-u>tabnext<CR>
+noremap <C-w>] gt
+noremap <C-w><C-]> gt
 " 前のバッファへ移動
-noremap <C-w>[ :<C-u>tabprevious<CR>
-noremap <C-w><C-[> :<C-u>tabprevious<CR>
+noremap <C-w>[ gT
+noremap <C-w><C-[> gT
 " <C-w>1..9で任意の番号のタブへ移動
 for i in range(1, 9)
   execute 'nnoremap <C-w>'.i.' <Nop>'
