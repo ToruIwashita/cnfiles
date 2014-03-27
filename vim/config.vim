@@ -113,8 +113,7 @@ vnoremap <ESC> v_<ESC>
 
 "" cnoreabbrev
 cnorea t tabnew
-cnorea A Align
-cnorea '<,'>A '<,'>Align
+cnorea ev :<C-u>source ~/.vimrc
 
 "" オプション
 " シンタックスハイライト

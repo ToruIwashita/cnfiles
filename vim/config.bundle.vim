@@ -19,6 +19,9 @@ let g:qb_hotkey = "__"
 let g:Align_xstrlen = 3
 " GUIのメニュー表示(不要な場合は空文字を入れる)
 let g:DrChipTopLvlMenu = ''
+" コマンドラインモードabbreviate
+cnorea A Align
+cnorea '<,'>A '<,'>Align
 
 """ yankring
 " yankring_historyの保存先を指定
