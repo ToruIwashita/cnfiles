@@ -106,6 +106,9 @@ vnoremap > >gv
 " <ESC>でビジュアルモード終了
 vnoremap <ESC> v_<ESC>
 
+"" cnoreabbrev
+cnorea t tabnew
+
 "" オプション
 " シンタックスハイライト
 syntax on
