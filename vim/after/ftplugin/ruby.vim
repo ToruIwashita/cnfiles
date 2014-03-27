@@ -3,8 +3,8 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " RubyCursorIdentifier()とタブ移動のmap競合を解消
-noremap <buffer> <C-w>] <Nop>
-noremap <buffer> <C-w><C-]> <Nop>
+nunmap <buffer> <C-w>]
+nunmap <buffer> <C-w><C-]>
 
 ab <buffer> =p binding.pry
 ab <buffer> =8 # coding: utf-8
