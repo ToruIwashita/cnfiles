@@ -31,7 +31,7 @@ cnoremap <C-d> <DEL>
 noremap <C-z> <Nop>
 " 現在のバッファ削除
 noremap <C-w>x <Nop>
-noremap <C-w>x :bdelete<CR>
+noremap <C-w>x :<C-u>bdelete<CR>
 " ウィンドウ関連
 " ウィンドウのmapに関わるデフォルトのmapを無効化
 noremap <C-w>w <Nop>
@@ -55,21 +55,21 @@ noremap <C-w><C-[> <Nop>
 noremap <C-w>c <Nop>
 noremap <C-w><C-c> <Nop>
 " 新しいタブを作成
-noremap <C-w>c :tabnew<CR>
-noremap <C-w><C-c> :tabnew<CR>
+noremap <C-w>c :<C-u>tabnew<CR>
+noremap <C-w><C-c> :<C-u>tabnew<CR>
 " 次のタブへ移動
-noremap <C-w>] :tabnext<CR>
-noremap <C-w><C-]> :tabnext<CR>
+noremap <C-w>] :<C-u>tabnext<CR>
+noremap <C-w><C-]> :<C-u>tabnext<CR>
 " 前のバッファへ移動
-noremap <C-w>[ :tabprevious<CR>
-noremap <C-w><C-[> :tabprevious<CR>
+noremap <C-w>[ :<C-u>tabprevious<CR>
+noremap <C-w><C-[> :<C-u>tabprevious<CR>
 for i in range(1, 9)
   execute 'nnoremap <C-w>'.i.' <Nop>'
-  execute 'nnoremap <C-w>'.i.' :tabnext '.i.'<CR>'
+  execute 'nnoremap <C-w>'.i.' :<C-u>tabnext '.i.'<CR>'
 endfor
 " タブを閉じる
 noremap <C-w>X <Nop>
-noremap <C-w>X :tabclose<CR>
+noremap <C-w>X :<C-u>tabclose<CR>
 
 "" nnoremap
 " *,#で検索した後に移動しない
@@ -79,7 +79,7 @@ nnoremap # #N
 nnoremap n nzz
 nnoremap N Nzz
 " <ESC>2回で検索ハイライト消し
-nnoremap <ESC><ESC> :nohlsearch<CR>
+nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 " qqq:キーコマンド履歴表示
 nnoremap qqq: <Esc>q:
 " qqq/,qqq?検索履歴表示
