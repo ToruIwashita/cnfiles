@@ -61,6 +61,8 @@ NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'gcmt/wildfire.vim'
 " ヤンク履歴管理
 NeoBundle 'YankRing.vim'
+" 括弧など対になる記号を自動入力
+NeoBundle 'jiangmiao/auto-pairs'
 " vim-ruby
 NeoBundle 'vim-ruby/vim-ruby'
 " vim-markdown
