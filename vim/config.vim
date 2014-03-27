@@ -66,6 +66,7 @@ noremap <C-w><C-]> :<C-u>tabnext<CR>
 " 前のバッファへ移動
 noremap <C-w>[ :<C-u>tabprevious<CR>
 noremap <C-w><C-[> :<C-u>tabprevious<CR>
+" <C-w>1..9で任意の番号のタブへ移動
 for i in range(1, 9)
   execute 'nnoremap <C-w>'.i.' <Nop>'
   execute 'nnoremap <C-w>'.i.' :<C-u>tabnext '.i.'<CR>'
@@ -110,6 +111,8 @@ vnoremap <ESC> v_<ESC>
 
 "" cnoreabbrev
 cnorea t tabnew
+cnorea A Align
+cnorea '<,'>A '<,'>Align
 
 "" オプション
 " シンタックスハイライト
