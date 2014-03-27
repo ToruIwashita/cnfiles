@@ -50,6 +50,9 @@ noremap ] <Nop>
 noremap [ <Nop>
 noremap <C-]> <Nop>
 noremap <C-[> <Nop>
+noremap <C-w>X <Nop>
+noremap <C-w>] <Nop>
+noremap <C-w>[ <Nop>
 noremap <C-w><C-]> <Nop>
 noremap <C-w><C-[> <Nop>
 noremap <C-w>c <Nop>
@@ -68,7 +71,6 @@ for i in range(1, 9)
   execute 'nnoremap <C-w>'.i.' :tabnext '.i.'<CR>'
 endfor
 " タブを閉じる
-noremap <C-w>X <Nop>
 noremap <C-w>X :tabclose<CR>
 
 "" nnoremap
