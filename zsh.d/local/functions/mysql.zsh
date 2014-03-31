@@ -60,33 +60,33 @@ function mqout() {
 }
 
 function myfindg() {
-  local my_cmd my_cmd_res_field_list my_cmd_res_field_name my_table_name my_field_name my_tmp_line myfindg_usage arg
+  local my_cmd cmd_res_field_list cmd_res_field_name table_name field_name tmp_line myfindg_usage arg
 
   myfindg_usage="Usage: $0 [-f 'Part of field info'] [-t 'Part of table name']"
   while getopts :f:t: arg; do
     case ${arg} in
-      f) my_field_name=${OPTARG} ;;
-      t) my_table_name=${OPTARG} ;;
+      f) field_name=${OPTARG} ;;
+      t) table_name=${OPTARG} ;;
       :|\?) print $myfindg_usage; return 1 ;;
     esac
   done
 
-  my_tmp_line="-------------------------------------------------------"
+  tmp_line="-------------------------------------------------------"
   my_cmd=$MYSQL_CMD
-  if [[ ${#my_table_name} -gt 0 && ${#my_field_name} -gt 0 ]]; then
-    print "Field\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
-    eval $my_cmd" 'DESC ${my_table_name}' -N | grep --color '${my_field_name}'"
-  elif [[ ${#my_table_name} -gt 0 ]]; then
-    print "Tables\n${my_tmp_line}"
-    eval $my_cmd" 'SHOW TABLES' -N | grep --color '${my_table_name}'"
-  elif [[ ${#my_field_name} -gt 0 ]]; then
-    print "Table: 'name'\nField\tType\tNull\tKey\tDefault\tExtra\n${my_tmp_line}"
-    for my_table_name in `eval $my_cmd" 'SHOW TABLES' -N"`; do
-      my_cmd_res_field_list=`eval $my_cmd" 'DESC ${my_table_name}' -N | grep --color '${my_field_name}'"`
-      if [[ ${#my_cmd_res_field_list} -gt 0 ]]; then
-        print "Table: ${my_table_name}"
-        for my_cmd_res_field_name in ${(f)my_cmd_res_field_list}; do
-          print $my_cmd_res_field_name | grep --color "${my_field_name}"
+  if [[ ${#table_name} -gt 0 && ${#field_name} -gt 0 ]]; then
+    print "Field\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
+    eval $my_cmd" 'DESC ${table_name}' -N | grep --color '${field_name}'"
+  elif [[ ${#table_name} -gt 0 ]]; then
+    print "Tables\n${tmp_line}"
+    eval $my_cmd" 'SHOW TABLES' -N | grep --color '${table_name}'"
+  elif [[ ${#field_name} -gt 0 ]]; then
+    print "Table: 'name'\nField\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
+    for table_name in `eval $my_cmd" 'SHOW TABLES' -N"`; do
+      cmd_res_field_list=`eval $my_cmd" 'DESC ${table_name}' -N | grep --color '${field_name}'"`
+      if [[ ${#cmd_res_field_list} -gt 0 ]]; then
+        print "Table: ${table_name}"
+        for cmd_res_field_name in ${(f)cmd_res_field_list}; do
+          print $cmd_res_field_name | grep --color "${field_name}"
         done
         print
       fi
@@ -171,7 +171,7 @@ function watch-myps() {
 }
 
 function mf() {
-  local mf_usage my_priority_condition my_g my_limit my_select_field my_order my_table_name my_condition arg
+  local mf_usage my_priority_condition my_g my_limit my_select_field my_order my_table_name my_condition arg cmd
 
   mf_usage="Usage: $0 <-t 'Table name'>
          [-c 'Top priority condition']
@@ -180,15 +180,16 @@ function mf() {
          [-o 'Order condition']
          [-s 'Select field']
          [-w 'Select condition']"
-  while getopts :gl:s:t:w: arg; do
+
+  while getopts :c:gl:o:s:t:w: arg; do
     case ${arg} in
       c) my_priority_condition=${OPTARG} ;;
-      g) my_g='\G' ;;
-      l) my_limit='LIMIT '${OPTARG} ;;
-      s) my_select_field=${OPTARG} ;;
-      o) my_order=${OPTARG} ;;
-      t) my_table_name=${OPTARG} ;;
-      w) my_condition=${OPTARG} ;;
+      g) my_g=' \G' ;;
+      l) my_limit=' LIMIT '${OPTARG} ;;
+      o) my_order=' '${OPTARG} ;;
+      s) my_select_field=' '${OPTARG} ;;
+      t) my_table_name=' '${OPTARG} ;;
+      w) my_condition=' '${OPTARG} ;;
       :|\?) print $mf_usage; return 1 ;;
     esac
   done
@@ -198,12 +199,15 @@ function mf() {
     return 1
   fi
 
-  [[ ${#my_condition} -eq 0 ]]    && my_condition='TRUE'
-  [[ ${#my_select_field} -eq 0 ]] && my_select_field='*'
+  [[ ${#my_condition} -eq 0 ]]    && my_condition=' TRUE'
+  [[ ${#my_select_field} -eq 0 ]] && my_select_field=' *'
 
   if [[ ${#my_priority_condition} -eq 0 ]]; then
-    "${MYSQL_CMD} 'SELECT ${my_select_field} FROM ${my_table_name} WHERE ${my_condition} ${my_order} ${my_limit} ${my_g}'"
+    cmd="${MYSQL_CMD} 'SELECT${my_select_field} FROM ${my_table_name} WHERE${my_condition}${my_order}${my_limit}${my_g}'"
   else
-    "${MYSQL_CMD} 'SELECT ${my_select_field} FROM ${my_table_name} ${my_priority_condition}'"
+    cmd="${MYSQL_CMD} 'SELECT${my_select_field} FROM ${my_table_name} ${my_priority_condition}'"
   fi
+
+  print $cmd
+  eval $cmd
 }
