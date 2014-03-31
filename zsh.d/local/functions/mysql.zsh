@@ -174,19 +174,19 @@ function mf() {
   local my_cmd priority_condition g_option limit_condition select_fields order_condition table_name where_condition mf_usage arg
 
   mf_usage="Usage: $0 <-t 'Table name'>
-         [-c 'Top priority condition']
+         [-c 'Highest priority condition']
          [-g '\G']
          [-l 'Limit value']
          [-o 'Order condition']
-         [-s 'Select field']
-         [-w 'Select condition']"
+         [-s 'Select fields']
+         [-w 'Where condition']"
 
   while getopts :c:gl:o:s:t:w: arg; do
     case ${arg} in
       c) priority_condition=${OPTARG} ;;
       g) g_option=' \G' ;;
       l) limit_condition=' LIMIT '${OPTARG} ;;
-      o) order_condition=' '${OPTARG} ;;
+      o) order_condition=' ORDER BY '${OPTARG} ;;
       s) select_fields=' '${OPTARG} ;;
       t) table_name=' '${OPTARG} ;;
       w) where_condition=' '${OPTARG} ;;
@@ -199,15 +199,15 @@ function mf() {
     return 1
   fi
 
-  [[ ${#where_condition} -eq 0 ]]    && where_condition=' TRUE'
-  [[ ${#select_fields} -eq 0 ]] && select_field=' *'
+  [[ ${#where_condition} -eq 0 ]] && where_condition=' TRUE'
+  [[ ${#select_fields} -eq 0 ]]   && select_fields=' *'
 
   if [[ ${#priority_condition} -eq 0 ]]; then
-    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM ${table_name} WHERE${where_condition}${order_condition}${limit_condition}${g_option}'"
+    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM${table_name} WHERE${where_condition}${order_condition}${limit_condition}${g_option}'"
   else
-    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM ${table_name} ${priority_condition}'"
+    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM${table_name} ${priority_condition}'"
   fi
 
-  print $cmd
-  eval $cmd
+  print $my_cmd
+  eval $my_cmd
 }
