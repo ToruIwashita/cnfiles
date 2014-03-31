@@ -171,7 +171,7 @@ function watch-myps() {
 }
 
 function mf() {
-  local mf_usage my_priority_condition my_g my_limit my_select_field my_order my_table_name my_condition arg cmd
+  local my_cmd priority_condition g_option limit_condition select_fields order_condition table_name where_condition mf_usage arg
 
   mf_usage="Usage: $0 <-t 'Table name'>
          [-c 'Top priority condition']
@@ -183,29 +183,29 @@ function mf() {
 
   while getopts :c:gl:o:s:t:w: arg; do
     case ${arg} in
-      c) my_priority_condition=${OPTARG} ;;
-      g) my_g=' \G' ;;
-      l) my_limit=' LIMIT '${OPTARG} ;;
-      o) my_order=' '${OPTARG} ;;
-      s) my_select_field=' '${OPTARG} ;;
-      t) my_table_name=' '${OPTARG} ;;
-      w) my_condition=' '${OPTARG} ;;
+      c) priority_condition=${OPTARG} ;;
+      g) g_option=' \G' ;;
+      l) limit_condition=' LIMIT '${OPTARG} ;;
+      o) order_condition=' '${OPTARG} ;;
+      s) select_fields=' '${OPTARG} ;;
+      t) table_name=' '${OPTARG} ;;
+      w) where_condition=' '${OPTARG} ;;
       :|\?) print $mf_usage; return 1 ;;
     esac
   done
 
-  if [[ ${#my_table_name} -eq 0 ]]; then
+  if [[ ${#table_name} -eq 0 ]]; then
     print $mf_usage
     return 1
   fi
 
-  [[ ${#my_condition} -eq 0 ]]    && my_condition=' TRUE'
-  [[ ${#my_select_field} -eq 0 ]] && my_select_field=' *'
+  [[ ${#where_condition} -eq 0 ]]    && where_condition=' TRUE'
+  [[ ${#select_fields} -eq 0 ]] && select_field=' *'
 
-  if [[ ${#my_priority_condition} -eq 0 ]]; then
-    cmd="${MYSQL_CMD} 'SELECT${my_select_field} FROM ${my_table_name} WHERE${my_condition}${my_order}${my_limit}${my_g}'"
+  if [[ ${#priority_condition} -eq 0 ]]; then
+    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM ${table_name} WHERE${where_condition}${order_condition}${limit_condition}${g_option}'"
   else
-    cmd="${MYSQL_CMD} 'SELECT${my_select_field} FROM ${my_table_name} ${my_priority_condition}'"
+    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM ${table_name} ${priority_condition}'"
   fi
 
   print $cmd
