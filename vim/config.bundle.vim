@@ -42,6 +42,7 @@ let g:wildfire_water_map = "<C-h>"
 let g:wildfire_objects = [
   \ "i'", "a'",
   \ 'i"', 'a"',
+  \ 'i`', 'a`',
   \ 'i)', 'a)',
   \ 'i]', 'a]',
   \ 'i}', 'a}',
