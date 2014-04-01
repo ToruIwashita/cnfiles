@@ -183,13 +183,13 @@ function mf() {
 
   while getopts :c:gl:o:s:t:w: arg; do
     case ${arg} in
-      c) priority_condition=${OPTARG} ;;
+      c) priority_condition=' '${OPTARG} ;;
       g) g_option=' \G' ;;
       l) limit_condition=' LIMIT '${OPTARG} ;;
       o) order_condition=' ORDER BY '${OPTARG} ;;
       s) select_fields=' '${OPTARG} ;;
       t) table_name=' '${OPTARG} ;;
-      w) where_condition=' '${OPTARG} ;;
+      w) where_condition=' WHERE '${OPTARG} ;;
       :|\?) print $mf_usage; return 1 ;;
     esac
   done
@@ -199,13 +199,12 @@ function mf() {
     return 1
   fi
 
-  [[ ${#where_condition} -eq 0 ]] && where_condition=' TRUE'
   [[ ${#select_fields} -eq 0 ]]   && select_fields=' *'
 
   if [[ ${#priority_condition} -eq 0 ]]; then
-    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM${table_name} WHERE${where_condition}${order_condition}${limit_condition}${g_option}'"
+    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM${table_name}${where_condition}${order_condition}${limit_condition}${g_option}'"
   else
-    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM${table_name} ${priority_condition}'"
+    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM${table_name}${priority_condition}'"
   fi
 
   print $my_cmd
