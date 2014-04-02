@@ -17,11 +17,3 @@ alias myshow="$MYSQL_CMD 'SHOW TABLES'"
 ## グローバルエイリアス
 alias -g TT=">! ~/works/tmp.txt"
 
-if which pbcopy >/dev/null 2>&1 ; then
-  # Mac
-  alias -g C='| pbcopy'
-elif which xsel >/dev/null 2>&1 ; then
-  # Linux
-  alias -g C='| xsel --input --clipboard'
-fi
-
