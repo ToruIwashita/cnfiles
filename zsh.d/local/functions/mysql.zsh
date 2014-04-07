@@ -175,20 +175,22 @@ function mf() {
 
   mf_usage="Usage: $0 <-t 'Table name'>
          [-c 'Highest priority condition']
-         [-g '\G']
+         [-g 'Group condition']
          [-l 'Limit value']
          [-o 'Order condition']
          [-s 'Select fields']
+         [-v 'Vertical display']
          [-w 'Where condition']"
 
-  while getopts :c:gl:o:s:t:w: arg; do
+  while getopts :c:g:l:o:s:t:vw: arg; do
     case ${arg} in
       c) priority_condition=' '${OPTARG} ;;
-      g) g_option=' \G' ;;
+      g) group_condition=' GROUP BY '${OPTARG} ;;
       l) limit_condition=' LIMIT '${OPTARG} ;;
       o) order_condition=' ORDER BY '${OPTARG} ;;
       s) select_fields=' '${OPTARG} ;;
       t) table_name=' '${OPTARG} ;;
+      v) vertical_option='\G' ;;
       w) where_condition=' WHERE '${OPTARG} ;;
       :|\?) print $mf_usage; return 1 ;;
     esac
@@ -202,7 +204,7 @@ function mf() {
   [[ ${#select_fields} -eq 0 ]]   && select_fields=' *'
 
   if [[ ${#priority_condition} -eq 0 ]]; then
-    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM${table_name}${where_condition}${order_condition}${limit_condition}${g_option}'"
+    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM${table_name}${where_condition}${order_condition}${limit_condition}${group_condition}'"
   else
     my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM${table_name}${priority_condition}'"
   fi
