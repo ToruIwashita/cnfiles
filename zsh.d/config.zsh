@@ -98,6 +98,8 @@ bindkey -v '^R' history-incremental-search-backward
 bindkey -v '^Y' push-input
 # Ctr+Uでkill-word
 bindkey -v '^U' kill-word
+# Ctr+vでstart-vim
+bindkey -v '^V' start-vim
 # Ctr+Wでbackward-kill-word
 bindkey -v '^W' backward-kill-word
 # Ctr+_でcdup
