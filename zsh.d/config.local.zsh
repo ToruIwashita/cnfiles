@@ -2,6 +2,7 @@
 readonly MYSQL_CNCT="mysql test"
 readonly MYSQL_CMD="$MYSQL_CNCT -e"
 
+export EDITOR=~/local/bin/vim
 export MYSQL_CNCT MYSQL_CMD
 export PATH=~/local/bin:${PATH}                       # ~/local/bin有りの時のサンプル
 export LD_LIBRARY_PATH=~/local/lib:${LD_LIBRARY_PATH} # ~/local/lib有りのサンプル

@@ -8,7 +8,7 @@ functions _start-vim() {
   else
     file_path=$args[1]
   fi
-  vim $file_path
+  $EDITOR $file_path
 }
 
 zle -N start-vim _start-vim
