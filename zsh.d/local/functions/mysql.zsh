@@ -204,7 +204,7 @@ function mf() {
   [[ ${#select_fields} -eq 0 ]]   && select_fields=' *'
 
   if [[ ${#priority_condition} -eq 0 ]]; then
-    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM${table_name}${where_condition}${order_condition}${limit_condition}${group_condition}'"
+    my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM${table_name}${where_condition}${order_condition}${limit_condition}${group_condition}${vertical_option}'"
   else
     my_cmd="${MYSQL_CMD} 'SELECT${select_fields} FROM${table_name}${priority_condition}'"
   fi
