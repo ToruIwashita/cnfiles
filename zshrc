@@ -24,7 +24,7 @@ autoload -Uz colors && colors
 # 自動補完
 autoload -Uz compinit && compinit
 # 複数のファイルを扱うようなmv
-autoload -Uz zmv && zmv
+autoload -Uz zmv
 # VersionControlSystem
 autoload -Uz vcs_info
 # フック関数登録
