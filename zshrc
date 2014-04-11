@@ -23,6 +23,8 @@ export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 autoload -Uz colors && colors
 # 自動補完
 autoload -Uz compinit && compinit
+# 複数のファイルを扱うようなmv
+autoload -Uz zmv && zmv
 # VersionControlSystem
 autoload -Uz vcs_info
 # フック関数登録

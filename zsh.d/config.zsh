@@ -121,6 +121,11 @@ bindkey -M menuselect '^K' accept-and-infer-next-history
 bindkey -M menuselect '^J' double-accept-line
 
 ## エイリアス
+# ZMV
+alias zmv='noglob zmv -W'
+# VIM
+alias v="vim"
+# OTHER
 alias ez="exec zsh"
 alias cp="cp -ip"
 alias mv="mv -i"
@@ -132,8 +137,6 @@ alias grep="grep --color"
 alias his="history -50n"
 alias tm="tmux -2"
 alias tigb="tig blame"
-# VIM
-alias v="vim"
 # CD
 alias d="cd"
 alias cdz="cd ~/.zsh.d"
