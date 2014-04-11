@@ -171,7 +171,7 @@ function watch-myps() {
 }
 
 function mf() {
-  local my_cmd priority_condition g_option limit_condition select_fields order_condition table_name where_condition mf_usage arg
+  local my_cmd priority_condition group_condition limit_condition order_condition select_fields table_name vertical_option where_condition mf_usage arg
 
   mf_usage="Usage: $0 <-t 'Table name'>
          [-c 'Highest priority condition']
