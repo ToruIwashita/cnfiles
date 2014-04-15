@@ -10,8 +10,8 @@ let g:neocomplete#sources#syntax#min_keyword_length = 3
 let g:neocomplete#manual_completion_start_length = 2
 " 補完候補検索時に大文字・小文字を区別する
 let g:neocomplete#enable_ignore_case = 0
-" 大文字が入力されるまで大文字小文字の区別を無視
-let g:neocomplete#enable_smart_case = 1
+" 大文字が入力されるまで大文字小文字の区別を無視設定無効
+let g:neocomplete#enable_smart_case = 0
 "" オムニ補完の関数を呼び出しキーワードパターン設定(ruby用)
 autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 " オムニ補完の関数を呼び出しキーワードパターン設定初期化
