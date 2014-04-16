@@ -37,6 +37,8 @@ NeoBundle 'Shougo/neosnippet-snippets'
 NeoBundle 'tpope/vim-surround'
 " vim-surroundの機能を.反復
 NeoBundle 'tpope/vim-repeat'
+" 強化版置換コマンド
+NeoBundle 'tpope/vim-abolish'
 " コメントアウト
 NeoBundle 'tomtom/tcomment_vim'
 " rubyのブロックを%で移動
