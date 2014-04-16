@@ -102,6 +102,21 @@ function gcloneb() {
   git branch $1 origin/$1
 }
 
+function gdeleteb() {
+  local gdeleteb_usage
+
+  gdeleteb_usage="Usage: $0 <Branch>"
+  if [[ $# -lt 1 ]]; then
+    print $gdeleteb_usage;
+    return 1
+  fi
+
+  print "delete $1"
+  git branch -d $1
+  print "delete origin $1"
+  git push --delete origin $1
+}
+
 function _git-ref-head() {
   local ref
   ref=$(git symbolic-ref HEAD --short 2> /dev/null) || return

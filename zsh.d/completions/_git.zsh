@@ -57,9 +57,15 @@ function _gud() {
   fi
 }
 
+function _gdeleteb() {
+  if [[ -d ./.git ]]; then
+    _arguments : '(:)*:argument:__git-branches'
+  fi
+}
+
 compdef _gam gam
 compdef _gau gau
 compdef _gd gd
-compdef _gcheck gcheck
 compdef _gsw gsw
 compdef _gud gud
+compdef _gdeleteb gdeleteb
