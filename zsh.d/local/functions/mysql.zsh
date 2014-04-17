@@ -209,6 +209,6 @@ function mf() {
     my_cmd="SELECT${select_fields} FROM${table_name}${priority_condition}"
   fi
 
-  print "$MYSQL_CMD $my_cmd"
+  print "> $my_cmd;"
   eval $MYSQL_CMD "'$my_cmd'"
 }
