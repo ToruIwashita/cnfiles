@@ -111,10 +111,8 @@ function gdeleteb() {
     return 1
   fi
 
-  print "delete $1"
-  git branch -d $1
-  print "delete origin $1"
-  git push --delete origin $1
+  print "delete local and origin branch $1"
+  git branch -d $1 && git push --delete origin $1
 }
 
 function _git-ref-head() {
