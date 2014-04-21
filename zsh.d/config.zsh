@@ -66,6 +66,8 @@ setopt no_clobber
 setopt no_flow_control
 
 ## コマンド履歴
+# ヒストリファイル
+HISTFILE=~/.zsh_history
 # メモリに展開する履歴数
 HISTSIZE=100000
 # 保存する履歴数
