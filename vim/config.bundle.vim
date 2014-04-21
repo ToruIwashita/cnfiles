@@ -25,7 +25,7 @@ cnorea '<,'>A '<,'>Align
 
 """ yankring
 " yankring_historyの保存先を指定
-let g:yankring_history_dir = '~/.vim/.tmp/'
+let g:yankring_history_dir = '~/.cache/yankring/'
 " 記録する最大数
 let g:yankring_max_history = 30
 " YRShowの最大表示数
