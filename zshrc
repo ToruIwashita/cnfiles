@@ -58,14 +58,18 @@ if [[ -n $LS_COLORS ]]; then
 fi
 
 ## プロンプトの定義
+# 色定義
+local default_style color_style
+default_style='[0m'
+color_style='[38;5;27m'
 # VIMモード色
-VIMODE="blue"
+VIMODE_COLOR="blue"
 function _zle-keymap-select {
   case $KEYMAP in
     vicmd)
-      VIMODE="cyan" ;;
+      VIMODE_COLOR="cyan" ;;
     main|viins)
-      VIMODE="blue" ;;
+      VIMODE_COLOR="blue" ;;
   esac
 
   zle reset-prompt
@@ -77,9 +81,9 @@ zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
 zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
 precmd() { vcs_info }
 # プロンプト表示
-PROMPT='_
+PROMPT='${color_style}_${default_style}
 |[${vcs_info_msg_0_}]:%~/
-└-(%?)%F{$VIMODE}%#%f '
+└-(%?)%F{$VIMODE_COLOR}%#%f '
 RPROMPT='[%D{%T}|%n]'
 
 ## cd後にls実行
