@@ -5,7 +5,7 @@ function __my-show-tables() {
 
 function _myfindg() {
   _arguments : \
-    '(:)-t[Table name]:Input a part of table name or table name:__my_show_tables' \
+    '(:)-t[Table name]:Input a part of table name or table name:__my-show-tables' \
     '(:)-f[Field info]:A part of field info'
 }
 
