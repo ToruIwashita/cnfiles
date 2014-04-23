@@ -63,7 +63,7 @@ fi
 # 色定義
 local default_style color_style
 default_style='[0m'
-color_style='[38;5;27m'
+color_style='[38;5;33m'
 # VIMモード色
 VIMODE_COLOR="blue"
 function _zle-keymap-select {
