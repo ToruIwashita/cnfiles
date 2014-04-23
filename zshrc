@@ -10,6 +10,8 @@ FUNCTION_DIRS=(
 ## 環境変数設定
 # utf-8
 export LANG=ja_JP.UTF-8
+# xterm-256color
+export TERM=xterm-256color
 # 区切り文字
 export WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'
 # LS色設定
