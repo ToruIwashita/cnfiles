@@ -39,6 +39,8 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'tpope/vim-repeat'
 " 強化版置換コマンド
 NeoBundle 'tpope/vim-abolish'
+" ag(silver_searcher)用プラグイン
+NeoBundle 'rking/ag.vim'
 " コメントアウト
 NeoBundle 'tomtom/tcomment_vim'
 " rubyのブロックを%で移動
