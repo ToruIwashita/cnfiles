@@ -32,6 +32,8 @@ let g:yankring_max_history = 30
 let g:yankring_max_display = 30
 " yankring_historyの重複テキストを保存しない
 let g:yankring_ignore_duplicate = 0
+" ヤンク履歴表示
+noremap <C-w>P :<C-u>YRShow<CR>
 
 """ wildfire.vim
 " text-object拡大

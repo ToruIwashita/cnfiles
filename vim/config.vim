@@ -34,6 +34,7 @@ noremap <C-w>x <Nop>
 noremap <C-w>x :<C-u>bdelete<CR>
 " ウィンドウ関連
 " ウィンドウのmapに関わるデフォルトのmapを無効化
+noremap <C-w>P <Nop>
 noremap <C-w>w <Nop>
 noremap <C-w><C-w> <Nop>
 noremap <C-w>W <Nop>
