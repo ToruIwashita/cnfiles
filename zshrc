@@ -83,9 +83,9 @@ zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
 zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
 precmd() { vcs_info }
 # プロンプト表示
-PROMPT='${color_style}_${default_style}
-|[${vcs_info_msg_0_}]:%~/
-└-(%?)%F{$VIMODE_COLOR}%#%f '
+PROMPT='%{$color_style%}_%{$default_style%}
+%{$color_style%}|%{$default_style%}[${vcs_info_msg_0_}]:%~/
+%{$color_style%}└-%{$default_style%}(%?)%F{$VIMODE_COLOR}%#%f '
 RPROMPT='[%D{%T}|%n]'
 
 ## cd後にls実行
