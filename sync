@@ -90,6 +90,9 @@ echo "copy vim main configs."
 # tmux
 echo "copy tmux config."
 \cp -p $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
+# pry
+echo "copy pry config."
+\cp -p $BASE_DIR_PATH/pryrc ~/.pryrc
 
 # zsh,vim
 echo "copy zsh or vim functions, and other files." 
