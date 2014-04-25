@@ -6,7 +6,7 @@ if [[ -z $TMUX && -z $STY ]]; then
     if tmux has-session; then
       tmux -u attach && echo "tmux attached session "
     else
-      tmux -u new-session -s IwashitaDev && echo "tmux created new session"
+      tmux -u new-session && echo "tmux created new session"
     fi
   fi
 fi
