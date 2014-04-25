@@ -1,11 +1,14 @@
 ## 定数の設定
 ZSH_DIR=.zsh.d
+PLUGIN_DIR=~/$ZSH_DIR/plugin
 FUNCTION_DIRS=(
   ~/$ZSH_DIR/functions
   ~/$ZSH_DIR/completions
   ~/$ZSH_DIR/local/functions
   ~/$ZSH_DIR/local/completions
 )
+# plugin path
+ZSH_COMPLETIONS_SRC=$PLUGIN_DIR/zsh-completions/src
 
 ## 環境変数設定
 # utf-8
@@ -19,6 +22,9 @@ export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 # LD_LIBRARY_PATH,INCLUDE関連付け
 [[ -z $ld_library_path ]] && typeset -xT LD_LIBRARY_PATH ld_library_path
 [[ -z $include ]] && typeset -xT INCLUDE include
+
+# fpath設定
+fpath=($FUNCTION_DIRS $ZSH_COMPLETIONS_SRC $fpath)
 
 ## 関数ロード
 # 色の定義
@@ -39,7 +45,6 @@ zmodload -i zsh/complist
 source ~/$ZSH_DIR/config.zsh
 source ~/$ZSH_DIR/config.local.zsh
 # 関数読込
-fpath=(${FUNCTION_DIRS} $fpath)
 for dir in ${FUNCTION_DIRS[@]}; do
   for function in ${dir}/*.zsh(.); do
     autoload -Uz $function:t && $function:t
