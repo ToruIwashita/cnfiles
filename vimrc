@@ -1,3 +1,6 @@
+"" SHELL
+set shell=$SHELL
+
 """ NeoBundle設定
 "" Brief help
 " :NeoBundleList          - list configured bundles
