@@ -31,8 +31,8 @@ if File.exist?(rails)
   require 'rails'
 
   # rl to reload Rails console
-  alias r! reload!
-  alias q! exit!
+  def r!; reload! end
+  def q!; exit! end
 
   # SQL commands through the AR
   def sql(query)
