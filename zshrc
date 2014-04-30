@@ -30,7 +30,7 @@ fpath=($FUNCTION_DIRS $ZSH_COMPLETIONS_SRC $fpath)
 # 色の定義
 autoload -Uz colors && colors
 # 自動補完
-autoload -Uz compinit && compinit
+autoload -Uz compinit && compinit -u
 # 複数のファイルを扱うようなmv
 autoload -Uz zmv
 # VersionControlSystem
