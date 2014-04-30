@@ -99,9 +99,11 @@ bindkey -v '^Y' push-input
 # Ctr+Uでkill-word
 bindkey -v '^U' kill-word
 # Ctr+vでstart-vim
-bindkey -v '^V' start-vim
+bindkey -v '^L' start-vim
 # Ctr+Wでbackward-kill-word
 bindkey -v '^W' backward-kill-word
+# Ctr+@でclear-screen
+bindkey -v '^@' clear-screen
 # Ctr+_でcdup
 bindkey -v "^_" cdup
 # Shift+tabで逆タブ補完
