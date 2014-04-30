@@ -30,8 +30,9 @@ rails = File.join(Dir.getwd,'config','environment.rb')
 if File.exist?(rails)
   require 'rails'
 
-  # rl to reload Rails console
+  # r! to reload Rails console
   def r!; reload! end
+  # q! to exit Rails console
   def q!; exit! end
 
   # SQL commands through the AR
