@@ -5,5 +5,5 @@ function csconv() {
     return 1
   fi  
 
-  echo ${(j:,:)$(cat $1)}
+  print ${(j:,:)$(cat $1)}
 }

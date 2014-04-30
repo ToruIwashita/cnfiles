@@ -118,5 +118,5 @@ function gdeleteb() {
 function _git-ref-head() {
   local ref
   ref=$(git symbolic-ref HEAD --short 2> /dev/null) || return
-  echo $ref
+  print $ref
 }

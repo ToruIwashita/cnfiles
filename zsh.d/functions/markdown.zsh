@@ -14,6 +14,6 @@ function pmout() {
     return 1
   fi
 
-  echo '<meta charset="utf-8">\n' >! ~/works/tmp.txt
+  print '<meta charset="utf-8">\n' >! ~/works/tmp.txt
   markdown $1 >> ~/works/tmp.txt
 }
