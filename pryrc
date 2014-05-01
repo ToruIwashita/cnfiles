@@ -32,6 +32,7 @@ if File.exist?(rails)
 
   # r! to reload Rails console
   def r!; reload! end
+
   # q! to exit Rails console
   def q!; exit! end
 
