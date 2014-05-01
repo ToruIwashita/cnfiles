@@ -58,6 +58,7 @@ NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 [[ -f $VIM_DIR_PATH/config.vim ]]             || touch $VIM_DIR_PATH/config.vim
 [[ -f $VIM_DIR_PATH/config.bundle.vim ]]      || touch $VIM_DIR_PATH/config.bundle.vim
 [[ -d $VIM_DIR_PATH/ftplugin ]]               || mkdir $VIM_DIR_PATH/ftplugin
+[[ -d $VIM_DIR_PATH/ftdetect ]]               || mkdir $VIM_DIR_PATH/ftdetect
 [[ -d $VIM_DIR_PATH/after ]]                  || mkdir $VIM_DIR_PATH/after
 [[ -d $VIM_DIR_PATH/after/plugin ]]           || mkdir $VIM_DIR_PATH/after/plugin
 [[ -d $VIM_DIR_PATH/after/ftplugin ]]         || mkdir $VIM_DIR_PATH/after/ftplugin
@@ -99,7 +100,7 @@ echo "copy pry config."
 
 # zsh,vim
 echo "copy zsh or vim functions, and other files." 
-source_directories=($ZSH_DIR/functions $ZSH_DIR/completions $VIM_DIR/ftplugin $VIM_DIR/after/plugin $VIM_DIR/after/ftplugin)
+source_directories=($ZSH_DIR/functions $ZSH_DIR/completions $VIM_DIR/ftplugin $VIM_DIR/ftdetect $VIM_DIR/after/plugin $VIM_DIR/after/ftplugin)
 for dir in ${source_directories[@]}; do
   for file in `ls $BASE_DIR_PATH/${dir}`; do
     \cp -p $BASE_DIR_PATH/${dir}/${file} ~/.${dir}/${file}
