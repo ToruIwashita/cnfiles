@@ -143,7 +143,7 @@ function myfcsv() {
     return 1
   fi
 
-  eval "${MYSQL_CMD} 'DESC ${1}' -N | sed -e 's/\t.*//g' | xargs print | sed -e 's/ /,/g'"
+  eval "${MYSQL_CMD} 'DESC ${1}' -N | sed -e 's/\t.*//g' | xargs echo | sed -e 's/ /,/g'"
 }
 
 function mycnt() {
