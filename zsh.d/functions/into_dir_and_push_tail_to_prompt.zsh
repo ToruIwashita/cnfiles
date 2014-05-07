@@ -1,5 +1,5 @@
-## into-dir-and-push-prompt-to-file
-functions _into-dir-and-push-prompt-to-file() {
+## into-dir-and-push-tail-to-prompt
+functions _into-dir-and-push-tail-to-prompt() {
   local args chpwd_func file_path
   args=($(print $BUFFER))
   chpwd_func=$(which chpwd)
@@ -17,4 +17,4 @@ functions _into-dir-and-push-prompt-to-file() {
   eval $chpwd_func
 }
 
-zle -N into-dir-and-push-prompt-to-file _into-dir-and-push-prompt-to-file
+zle -N into-dir-and-push-tail-to-prompt _into-dir-and-push-tail-to-prompt
