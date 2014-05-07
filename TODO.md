@@ -11,4 +11,7 @@
 #### メモ  
 
 1.`REST`指向,`CURD`についてまとめる  
+2.`rc.d`についてまとめる  
+3.ファイル補完のみを行うキーバインド設定  
+4.into_dir_and_push_file_to_prompt実装  
 
