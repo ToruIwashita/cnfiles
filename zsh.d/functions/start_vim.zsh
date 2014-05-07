@@ -1,4 +1,4 @@
-## double-accept-line
+## start-vim
 functions _start-vim() {
   local args file_path
   args=($(print $BUFFER))
