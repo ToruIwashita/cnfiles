@@ -1,14 +1,60 @@
 "" FILE: config.vim
 " Vimの基本的な設定を記述
 
-"" 補完設定
+"" オプション
+" 補完設定
 set wildmenu
 set wildmode=full
-
 " `wildchar`:ワイルドカード展開に使用する文字(補完開始)
 " `wildcharm`:マクロでも使えるワイルドカード展開に使用する文字
 " 以下の設定によりコマンドラインモード(cnoremap)で元のマッピングが機能するようになる
 let &wildcharm = &wildchar
+" シンタックスハイライト
+syntax on
+" シンタックスハイライトの開始/終了タグ検索の閾値
+syntax sync minlines=500 maxlines=1000
+" エンコーディングUTF-8
+set encoding=utf8
+" 256色モード
+set t_Co=256
+" ステータスライン常に表示
+set laststatus=2
+" タブライン常に表示
+set showtabline=2
+" カレントバッファ内のファイルの文字UTF-8
+set fileencoding=utf-8
+" タブ文字の代わりに半角スペース
+set expandtab
+" C言語スタイルインデント
+set autoindent
+" オートインデント時の空白文字数
+set shiftwidth=2
+" tabが対応する空白の文字数
+set tabstop=2
+" 行数表示
+set number
+" インクリメンタルサーチ
+set incsearch
+" サーチ結果ハイライト
+set hlsearch
+" インサートモード時backspece有効
+set backspace=indent,eol,start
+" <C-a>,<C-x>で使う基数を10進数に
+set nrformats=octal
+" 矩形ビジュアル無文字部分カーソル移動
+set virtualedit=block
+" 上下3行の表示を固定
+set scrolloff=2
+" 横分割かつ,ターミナルが部分スクロールをサポートしていないとき,再描画が滑らかになる
+set ttyfast
+" スクリプト実行中に画面を描画しない
+set lazyredraw
+
+"" 補完ポップアップメニュー色設定
+hi Pmenu ctermbg=8 guibg=#606060
+hi PmenuSel ctermbg=12 guibg=SlateBlue
+hi PmenuSbar ctermbg=0 guibg=#404040
+hi PmenuThumb ctermbg=0 guibg=Red
 
 "" cnoremap
 " コマンドラインモード先頭へ移動
@@ -114,50 +160,9 @@ vnoremap <ESC> v_<ESC>
 cnorea t tabnew
 cnorea ev :<C-u>source ~/.vimrc
 
-"" オプション
-" シンタックスハイライト
-syntax on
-" シンタックスハイライトの開始/終了タグ検索の閾値
-syntax sync minlines=500 maxlines=1000
-" エンコーディングUTF-8
-set encoding=utf8
-" 256色モード
-set t_Co=256
-" ステータスライン常に表示
-set laststatus=2
-" タブライン常に表示
-set showtabline=2
-" カレントバッファ内のファイルの文字UTF-8
-set fileencoding=utf-8
-" タブ文字の代わりに半角スペース
-set expandtab
-" C言語スタイルインデント
-set autoindent
-" オートインデント時の空白文字数
-set shiftwidth=2
-" tabが対応する空白の文字数
-set tabstop=2
-" 行数表示
-set number
-" インクリメンタルサーチ
-set incsearch
-" サーチ結果ハイライト
-set hlsearch
-" インサートモード時backspece有効
-set backspace=indent,eol,start
-" <C-a>,<C-x>で使う基数を10進数に
-set nrformats=octal
-" 矩形ビジュアル無文字部分カーソル移動
-set virtualedit=block
-" 上下3行の表示を固定
-set scrolloff=2
-" 横分割かつ,ターミナルが部分スクロールをサポートしていないとき,再描画が滑らかになる
-set ttyfast
-" スクリプト実行中に画面を描画しない
-set lazyredraw
+"" autocmd
+augroup previousCursorLine
+  autocmd!
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+augroup END
 
-"" 補完ポップアップメニュー色設定
-hi Pmenu ctermbg=8 guibg=#606060
-hi PmenuSel ctermbg=12 guibg=SlateBlue
-hi PmenuSbar ctermbg=0 guibg=#404040
-hi PmenuThumb ctermbg=0 guibg=Red
