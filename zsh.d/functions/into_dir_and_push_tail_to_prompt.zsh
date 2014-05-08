@@ -2,7 +2,7 @@
 functions _into-dir-and-push-tail-to-prompt() {
   local args chpwd_func file_path
   args=($(print $BUFFER))
-  chpwd_func=$(which chpwd)
+  chpwd_func=$(typeset -f chpwd)
 
   exec < /dev/tty
   if [[ $#args -ge 2 ]]; then
