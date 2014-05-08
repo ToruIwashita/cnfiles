@@ -1,5 +1,5 @@
-## start-vim
-functions _start-vim() {
+## start-editor
+functions _start-editor() {
   local args file_path
   args=($(print $BUFFER))
   exec < /dev/tty
@@ -11,4 +11,4 @@ functions _start-vim() {
   $EDITOR $file_path
 }
 
-zle -N start-vim _start-vim
+zle -N start-editor _start-editor
