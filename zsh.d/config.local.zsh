@@ -1,6 +1,7 @@
 ## 環境変数設定
 readonly MYSQL_CNCT="mysql test"
 readonly MYSQL_CMD="$MYSQL_CNCT -e"
+readonly AG_BIN=~/local/bin/ag
 
 export EDITOR=~/local/bin/vim                         # ~/local/bin/vimをEDITOR設定
 export MYSQL_CNCT MYSQL_CMD
