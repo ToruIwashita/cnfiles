@@ -14,10 +14,11 @@ functions _into-dir-and-push-tail-to-prompt() {
   fi
   file_path=$args[$arg_index]
 
-  if [[ $file_path:h = '.' ]]; then
+  dir_path=$PWD
+  if [[ $file_path =~ '/$' ]]; then
     args[$arg_index]='./'
-    dir_path=$file_path:t
-  else
+    dir_path=$file_path
+  elif [[ $file_path:h != '.' ]]; then
     args[$arg_index]=$file_path:t
     dir_path=$file_path:h
   fi
