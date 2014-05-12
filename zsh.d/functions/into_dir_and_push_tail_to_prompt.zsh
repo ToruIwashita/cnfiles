@@ -5,8 +5,6 @@ functions _into-dir-and-push-tail-to-prompt() {
   args=($(print $BUFFER))
   chpwd_func=$(typeset -f chpwd)
 
-  exec < /dev/tty
-
   if [[ $#args -ge 2 ]]; then
     arg_index=2
   else
