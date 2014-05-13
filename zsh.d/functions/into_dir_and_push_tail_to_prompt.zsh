@@ -1,4 +1,4 @@
-## into-dir-and-push-tail-to-prompt
+## into-dir-and-push-tail-to-prompt wedget
 functions _into-dir-and-push-tail-to-prompt() {
   local chpwd_func arg_index file_path dir_path
   local -a args
