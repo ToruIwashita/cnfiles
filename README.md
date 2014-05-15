@@ -1,3 +1,3 @@
 ### cnfiles  
 
-`zsh`,`tmux`,`vim`の設定ファイル  
+`zsh`,`vim`,`tmux`,`pry`の設定ファイル  
