@@ -4,6 +4,7 @@ PLUGIN_DIR=~/$ZSH_DIR/plugin
 FUNCTION_DIRS=(
   ~/$ZSH_DIR/functions
   ~/$ZSH_DIR/completions
+  ~/$ZSH_DIR/widgets
   ~/$ZSH_DIR/local/functions
   ~/$ZSH_DIR/local/completions
 )
