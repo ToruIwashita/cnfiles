@@ -1,10 +1,16 @@
 ## cdup widgets
 _cdup() {
-  local precmd_func
+  local precmd_func after_buffer
   local -a args
   args=($(print $BUFFER))
 
-  args[$#args]='./'
+  if [[ $#args -ge 2 ]]; then
+    args[$#args]='./'
+    typeset -a after_buffer
+    after_buffer=$args
+  else
+    after_buffer=$BUFFER
+  fi
 
   cd ..
   type precmd > /dev/null 2>&1 && precmd 
@@ -13,7 +19,7 @@ _cdup() {
   done
   zle reset-prompt
   zle kill-whole-line
-  BUFFER=$args
+  BUFFER=$after_buffer
   zle end-of-line
 }
 
