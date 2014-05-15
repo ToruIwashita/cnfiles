@@ -1,5 +1,5 @@
 ## markdown関連関数
-function pm() {
+pm() {
   if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
@@ -8,7 +8,7 @@ function pm() {
   w3m -T text/html =(markdown $1)
 }
 
-function pmout() {
+pmout() {
   if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1

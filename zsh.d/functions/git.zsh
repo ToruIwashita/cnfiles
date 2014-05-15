@@ -1,5 +1,5 @@
 ## git関連関数
-function gam() {
+gam() {
   local gam_usage
 
   gam_usage="Usage: $0 <Files>"
@@ -11,7 +11,7 @@ function gam() {
   git diff $* && git add $*
 }
 
-function gau() {
+gau() {
   local gau_usage
 
   gau_usage="Usage: $0 <Files>"
@@ -23,7 +23,7 @@ function gau() {
   git add $*
 }
 
-function gd() {
+gd() {
   local gd_usage
 
   gd_usage="Usage: $0 <File>"
@@ -35,7 +35,7 @@ function gd() {
   git diff $*
 }
 
-function gsw() {
+gsw() {
   local gsw_usage
 
   gsw_usage="Usage: $0 <Branch>"
@@ -47,7 +47,7 @@ function gsw() {
   git checkout $1 && git branch
 }
 
-function gud() {
+gud() {
   local gud_usage
 
   gud_usage="Usage: $0 <Files>"
@@ -59,7 +59,7 @@ function gud() {
   git checkout $*
 }
 
-function gll() {
+gll() {
   local gll_usage current_branch
 
   gll_usage="Usage:<pwd=./.git> $0"
@@ -74,7 +74,7 @@ function gll() {
   git pull origin $current_branch
 }
 
-function gsh() {
+gsh() {
   local gsh_usage current_branch
 
   gsh_usage="Usage:<pwd=./.git> $0"
@@ -89,7 +89,7 @@ function gsh() {
   git push origin $current_branch
 }
 
-function gcloneb() {
+gcloneb() {
   local gcloneb_usage
 
   gcloneb_usage="Usage: $0 <Branch>"
@@ -102,7 +102,7 @@ function gcloneb() {
   git branch $1 origin/$1
 }
 
-function gdeleteb() {
+gdeleteb() {
   local gdeleteb_usage
 
   gdeleteb_usage="Usage: $0 <Branch>"
@@ -115,7 +115,7 @@ function gdeleteb() {
   git branch -d $1 && git push --delete origin $1
 }
 
-function _git-ref-head() {
+_git-ref-head() {
   local ref
   ref=$(git symbolic-ref HEAD --short 2> /dev/null) || return
   print $ref

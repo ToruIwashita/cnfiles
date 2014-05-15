@@ -1,5 +1,5 @@
 ## cd関連関数
-functions _cdup() {
+_cdup() {
   local file_path dir_path precmd_func
   local -a args
   args=($(print $BUFFER))

@@ -1,5 +1,5 @@
 ## 標準出力関連関数
-function csconv() {
+csconv() {
   if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1

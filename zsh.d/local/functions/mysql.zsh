@@ -1,5 +1,5 @@
 ## MYSQL用functions
-function _my-check-argv() {
+_my-check-argv() {
   if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
@@ -13,7 +13,7 @@ function _my-check-argv() {
   return 0
 }
 
-function mq() {
+mq() {
   local my_cmd arg_num
 
   _my-check-argv $argv
@@ -36,7 +36,7 @@ function mq() {
   eval $my_cmd
 }
 
-function mqout() {
+mqout() {
   local my_cmd arg_num
 
   _my-check-argv $argv
@@ -59,7 +59,7 @@ function mqout() {
   eval $my_cmd
 }
 
-function myfindg() {
+myfindg() {
   local my_cmd cmd_res_field_list cmd_res_field_name table_name field_name tmp_line myfindg_usage arg
 
   myfindg_usage="Usage: $0 [-f 'Part of field info'] [-t 'Part of table name']"
@@ -96,7 +96,7 @@ function myfindg() {
   fi
 }
 
-function mqexp() {
+mqexp() {
   local my_cmd arg_num
 
   _my-check-argv $argv
@@ -119,7 +119,7 @@ function mqexp() {
   eval $my_cmd
 }
 
-function mydesc() {
+mydesc() {
   if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
@@ -128,7 +128,7 @@ function mydesc() {
   eval "${MYSQL_CMD} 'DESC ${1}'"
 }
 
-function myindex() {
+myindex() {
   if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
@@ -137,7 +137,7 @@ function myindex() {
   eval "${MYSQL_CMD} 'SHOW INDEX FROM ${1}'"
 }
 
-function myfcsv() {
+myfcsv() {
   if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
@@ -146,7 +146,7 @@ function myfcsv() {
   eval "${MYSQL_CMD} 'DESC ${1}' -N | sed -e 's/\t.*//g' | xargs echo | sed -e 's/ /,/g'"
 }
 
-function mycnt() {
+mycnt() {
   if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
@@ -155,7 +155,7 @@ function mycnt() {
   eval "${MYSQL_CMD} 'SELECT COUNT(1) FROM ${1}'"
 }
 
-function watch-myps() {
+watch-myps() {
   local arg full_opt g_opt
 
   watch_myps_usage="Usage: $0 [-f(FULL PROCESSLIST)] [-g(\\G)]"
@@ -170,7 +170,7 @@ function watch-myps() {
   watch -n 3 "${MYSQL_CMD} 'SHOW ${full_opt} PROCESSLIST${g_opt}'"
 }
 
-function mf() {
+mf() {
   local my_cmd priority_condition group_condition limit_condition order_condition select_fields table_name vertical_option where_condition mf_usage arg
 
   mf_usage="Usage: $0 <-t 'Table name'>
