@@ -5,5 +5,5 @@ findg() {
     return 1
   fi  
 
-  find $1 -print0 | xargs -0 grep --color $2 -n$3
+  find $2 -print0 | xargs -0 grep --color $1 -n$3
 }
