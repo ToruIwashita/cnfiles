@@ -1,4 +1,4 @@
-## cd関連関数
+## cdup widgets
 _cdup() {
   local file_path dir_path precmd_func
   local -a args
