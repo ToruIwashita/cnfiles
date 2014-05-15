@@ -1,4 +1,4 @@
-## MYSQL用functions
+## MYSQL
 _my-check-argv() {
   if [[ $# -lt 1 ]]; then
     print "lack of arguments."

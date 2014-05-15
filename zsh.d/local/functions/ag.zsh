@@ -1,5 +1,5 @@
 ## ag関数(引数順序替え)
-function ag() {
+ag() {
   if [[ $# -lt 1 ]]; then
     print "lack of arguments."
     return 1
