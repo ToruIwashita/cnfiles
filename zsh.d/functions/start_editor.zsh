@@ -1,5 +1,5 @@
 ## start-editor
-functions _start-editor() {
+_start-editor() {
   local args file_path
   args=($(print $BUFFER))
   exec < /dev/tty

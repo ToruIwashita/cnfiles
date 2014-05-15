@@ -1,5 +1,5 @@
 ## double-accept-line wedget
-functions _double-accept-line() {
+_double-accept-line() {
   zle accept-line
   zle accept-line
 }
