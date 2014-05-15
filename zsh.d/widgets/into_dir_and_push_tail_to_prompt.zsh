@@ -1,28 +1,24 @@
 ## into-dir-and-push-tail-to-prompt wedget
 _into-dir-and-push-tail-to-prompt() {
-  local chpwd_func arg_index file_path dir_path
+  local chpwd_func resource_index resource_path dest
   local -a args
   args=($(print $BUFFER))
   chpwd_func=$(typeset -f chpwd)
 
-  if [[ $#args -ge 2 ]]; then
-    arg_index=2
-  else
-    arg_index=1
-  fi
-  file_path=$args[$arg_index]
+  resource_index=$#args
+  resource_path=$args[$resource_index]
 
-  dir_path=$PWD
-  if [[ $file_path =~ '/$' ]]; then
-    args[$arg_index]='./'
-    dir_path=$file_path
-  elif [[ $file_path:h != '.' ]]; then
-    args[$arg_index]=$file_path:t
-    dir_path=$file_path:h
+  dest=$PWD
+  if [[ $resource_path =~ '/$' ]]; then
+    args[$resource_index]='./'
+    dest=$resource_path
+  elif [[ $resource_path:h != '.' ]]; then
+    args[$resource_index]=$resource_path:t
+    dest=$resource_path:h
   fi
 
   chpwd() { }
-  cd $dir_path
+  cd $dest
   eval $chpwd_func
 
   zle reset-prompt
