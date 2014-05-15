@@ -1,14 +1,10 @@
 ## cdup widgets
 _cdup() {
-  local file_path dir_path precmd_func
+  local precmd_func
   local -a args
   args=($(print $BUFFER))
 
-  if [[ $#args -ge 2 ]]; then
-    args[2]='./'
-  elif [[ $args[1] =~ '/$' ]]; then
-    args[1]='./'
-  fi
+  args[$#args]='./'
 
   cd ..
   type precmd > /dev/null 2>&1 && precmd 
