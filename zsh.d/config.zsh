@@ -104,6 +104,8 @@ bindkey -v '^Y' push-input
 bindkey -v '^U' kill-word
 # Ctr+vでstart-editor
 bindkey -v '^L' start-editor
+# Ctr+qでself-insert
+bindkey -v '^Q' self-insert
 # Ctr+Wでbackward-kill-word
 bindkey -v '^W' backward-kill-word
 # Ctr+@でclear-screen
