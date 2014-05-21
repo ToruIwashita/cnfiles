@@ -54,7 +54,7 @@ NeoBundle 'thinca/vim-visualstar'
 " テキスト整形
 NeoBundle 'vim-scripts/Align'
 " バッファ操作
-NeoBundle 'QuickBuf'
+NeoBundle 'vim-scripts/QuickBuf'
 " fugitive(ステータスラインのブランチ名と,Gblame用)
 NeoBundle 'tpope/vim-fugitive'
 " gitv(コミットログ閲覧用)
@@ -64,13 +64,13 @@ NeoBundle 'scrooloose/nerdtree'
 " text-object選択
 NeoBundle 'gcmt/wildfire.vim'
 " ヤンク履歴管理
-NeoBundle 'YankRing.vim'
+NeoBundle 'vim-scripts/YankRing.vim'
 " vim-ruby
 NeoBundle 'vim-ruby/vim-ruby'
 " vim-markdown
 NeoBundle 'hallison/vim-markdown'
 " QuickFixエラーにマーカー
-NeoBundle 'errormarker.vim'
+NeoBundle 'vim-scripts/errormarker.vim'
 " カラースキーマ
 NeoBundle 'fugalh/desert.vim'
 "" end
