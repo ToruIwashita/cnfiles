@@ -61,6 +61,8 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'gregsexton/gitv'
 " ファイラー
 NeoBundle 'scrooloose/nerdtree'
+" 多機能finder
+NeoBundle 'kien/ctrlp.vim'
 " text-object選択
 NeoBundle 'gcmt/wildfire.vim'
 " ヤンク履歴管理

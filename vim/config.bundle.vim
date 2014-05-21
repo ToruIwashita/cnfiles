@@ -35,6 +35,10 @@ let g:yankring_ignore_duplicate = 0
 " ヤンク履歴表示
 noremap <C-w>P :<C-u>YRShow<CR>
 
+""" ctrlp
+" Start CtrlP
+let g:ctrlp_map = '<C-s>'
+
 """ wildfire.vim
 " text-object拡大
 let g:wildfire_fuel_map = "<C-l>"
