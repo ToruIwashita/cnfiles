@@ -86,6 +86,8 @@ bindkey -v '^E' end-of-line
 bindkey -v '^F' forward-char
 # Ctr+Gで入力キャンセル
 bindkey -v '^G' send-break
+# Ctr+Gで入力実行
+bindkey -v '^J' accept-line
 # Ctr+Kで行末まで削除
 bindkey -v '^K' kill-line
 # Ctr+Nで１行下へ
@@ -115,13 +117,15 @@ bindkey -v "^[[Z" reverse-menu-complete
 bindkey -M menuselect '^B' backward-char
 # Ctr+Fで右へ
 bindkey -M menuselect '^F' forward-char
+# Ctr+Gでsend-break2回
+bindkey -M menuselect '^G' double-send-break
 # Ctr+Nで下へ
 bindkey -M menuselect '^N' down-line-or-history
 # Ctr+Pで上へ
 bindkey -M menuselect '^P' up-line-or-history
 # Ctr+Kで次の補完メニュー
 bindkey -M menuselect '^K' accept-and-infer-next-history
-# Ctr+Jで実行を２回
+# Ctr+Jでaccept-line２回
 bindkey -M menuselect '^J' double-accept-line
 
 ## エイリアス
