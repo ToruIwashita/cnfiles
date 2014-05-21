@@ -1,5 +1,5 @@
 ## into-dir-and-push-tail-to-prompt wedget
-_into-dir-and-push-tail-to-prompt() {
+_into-dir-and-push-remains-to-prompt() {
   local chpwd_func resource_index resource_path dest
   local -a args
   args=($(print $BUFFER))
@@ -27,4 +27,4 @@ _into-dir-and-push-tail-to-prompt() {
   zle end-of-line
 }
 
-zle -N into-dir-and-push-tail-to-prompt _into-dir-and-push-tail-to-prompt
+zle -N into-dir-and-push-remains-to-prompt _into-dir-and-push-remains-to-prompt

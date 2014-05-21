@@ -93,7 +93,7 @@ bindkey -v '^K' kill-line
 # Ctr+Nで１行下へ
 bindkey -v '^N' down-line-or-history
 # Ctr+Oでバッファ残しディレクトリ移動
-bindkey -v '^O' into-dir-and-push-tail-to-prompt
+bindkey -v '^O' into-dir-and-push-remains-to-prompt
 # Ctr+Pで１行上へ
 bindkey -v '^P' up-line-or-history
 # Ctr+Rでインクリメンタルサーチ
