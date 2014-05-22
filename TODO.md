@@ -15,4 +15,5 @@
 3.`completion`についてまとめる  
 4.`function`記述いらないか確認  
 5.`compdef`の位置確認  
+6.`CtrlP`の`PrtSelectMove`の動き確認  
 
