@@ -60,7 +60,7 @@ hi PmenuThumb ctermbg=0 guibg=Red
 " コマンドラインモード先頭へ移動
 cnoremap <C-a> <HOME>
 " コマンドラインモード末尾へ移動
-cnoremap <C-a> <HOME>
+cnoremap <C-e> <END>
 " コマンドラインモード一文字戻る,補完メニューディレクトリ右移動
 cnoremap <C-b> <LEFT>
 " コマンドラインモード一文字進む,補完メニューディレクトリ左移動
