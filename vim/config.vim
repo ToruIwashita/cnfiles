@@ -161,6 +161,7 @@ cnorea t tabnew
 cnorea ev :<C-u>source ~/.vimrc
 
 "" autocmd
+" ファイルを開いたときに最後の変更点へ移動
 augroup previousCursorLine
   autocmd!
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
