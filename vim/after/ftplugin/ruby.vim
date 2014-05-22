@@ -9,15 +9,7 @@ silent! nunmap <buffer> <C-w><C-]>
 ab <buffer> =p binding.pry
 ab <buffer> =8 # coding: utf-8
 ab <buffer> =c , current: true
-ab <buffer> =d Rails.logger.debug(<<EOS)
-  \-
-  \-
-  \------------------ debug info ------------------
-  \
-  \------------------------------------------------
-  \-
-  \-
-  \EOS
+ab <buffer> =d Rails.logger.debug(<<EOS) EOS
 
 " makeで`ruby -w`起動
 compiler ruby
