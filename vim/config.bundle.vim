@@ -38,6 +38,16 @@ noremap <C-w>P :<C-u>YRShow<CR>
 """ ctrlp
 " Start CtrlP
 let g:ctrlp_map = '<C-s>'
+" 表示行数を最大行数の1/3
+let g:ctrlp_max_height = &lines/3
+" 開いたファイル履歴保持数
+let g:ctrlp_mruf_max = 500
+" 終了時にキャッシュをクリアしない
+let g:ctrlp_clear_cache_on_exit = 0
+" ディレクトリ再帰検索深度
+let g:ctrlp_max_depth = 40
+" 新しいファイルをカレントウィンドウに開く
+let g:ctrlp_open_new_file = 'r'
 
 """ wildfire.vim
 " text-object拡大
