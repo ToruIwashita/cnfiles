@@ -48,6 +48,41 @@ let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_max_depth = 40
 " 新しいファイルをカレントウィンドウに開く
 let g:ctrlp_open_new_file = 'r'
+" CtrlPキーマッピング
+let g:ctrlp_prompt_mappings = {
+  \ 'PrtBS()':              ['<c-h>'],
+  \ 'PrtDeleteWord()':      ['<c-w>'],
+  \ 'PrtCurEnd()':          ['<c-e>'],
+  \ 'PrtCurLeft()':         ['<c-b>'],
+  \ 'PrtCurRight()':        ['<c-f>'],
+  \ 'PrtSelectMove("j")':   ['<c-j>'],
+  \ 'PrtSelectMove("k")':   ['<c-k>'],
+  \ 'PrtHistory(-1)':       ['<c-n>'],
+  \ 'PrtHistory(1)':        ['<c-p>'],
+  \ 'AcceptSelection("e")': ['<cr>'],
+  \ 'ToggleRegex()':        ['<c-r>'],
+  \ 'ToggleByFname()':      ['<c-d>'],
+  \ 'PrtExit()':            ['<c-l>', '<esc>', '<c-c>'],
+  \ 'ToggleFocus()':        ['<nop>'],
+  \ 'PrtExpandDir()':       ['<nop>'],
+  \ 'AcceptSelection("h")': ['<nop>'],
+  \ 'AcceptSelection("t")': ['<nop>'],
+  \ 'AcceptSelection("v")': ['<nop>'],
+  \ 'ToggleType(1)':        ['<nop>'],
+  \ 'ToggleType(-1)':       ['<nop>'],
+  \ 'PrtInsert()':          ['<nop>'],
+  \ 'PrtCurStart()':        ['<nop>'],
+  \ 'PrtClearCache()':      ['<nop>'],
+  \ 'PrtDeleteEnt()':       ['<nop>'],
+  \ 'CreateNewFile()':      ['<nop>'],
+  \ 'MarkToOpen()':         ['<nop>'],
+  \ 'OpenMulti()':          ['<nop>'],
+  \ 'PrtDelete()':          ['<nop>'],
+  \ 'PrtSelectMove("t")':   ['<nop>'],
+  \ 'PrtSelectMove("b")':   ['<nop>'],
+  \ 'PrtSelectMove("u")':   ['<nop>'],
+  \ 'PrtSelectMove("d")':   ['<nop>'],
+  \ }
 
 """ wildfire.vim
 " text-object拡大
