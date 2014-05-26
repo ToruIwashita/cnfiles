@@ -74,17 +74,17 @@ cnoremap <C-d> <DEL>
 
 "" noremap
 " サスペンド無効化
-noremap <C-z> <Nop>
+noremap <C-z> <NOP>
 " 現在のバッファ削除
-noremap <C-w>x <Nop>
+noremap <C-w>x <NOP>
 noremap <C-w>x :<C-u>bdelete<CR>
 " ウィンドウ関連
 " ウィンドウのmapに関わるデフォルトのmapを無効化
-noremap <C-w>P <Nop>
-noremap <C-w>w <Nop>
-noremap <C-w><C-w> <Nop>
-noremap <C-w>W <Nop>
-noremap <C-w><C-W> <Nop>
+noremap <C-w>P <NOP>
+noremap <C-w>w <NOP>
+noremap <C-w><C-w> <NOP>
+noremap <C-w>W <NOP>
+noremap <C-w><C-W> <NOP>
 " 次のウィンドウへ移動
 noremap <C-w>n <C-w>w
 noremap <C-w><C-n> <C-w>w
@@ -93,17 +93,17 @@ noremap <C-w>p <C-w>W
 noremap <C-w><C-p> <C-w>W
 " タブ関連
 " タブのmapに関わるデフォルトのmapを無効化
-noremap ] <Nop>
-noremap [ <Nop>
-noremap gt <Nop>
-noremap gT <Nop>
-noremap <C-]> <Nop>
-noremap <C-[> <Nop>
-noremap <C-w>X <Nop>
-noremap <C-w>] <Nop>
-noremap <C-w>[ <Nop>
-noremap <C-w><C-]> <Nop>
-noremap <C-w><C-[> <Nop>
+noremap ] <NOP>
+noremap [ <NOP>
+noremap gt <NOP>
+noremap gT <NOP>
+noremap <C-]> <NOP>
+noremap <C-[> <NOP>
+noremap <C-w>X <NOP>
+noremap <C-w>] <NOP>
+noremap <C-w>[ <NOP>
+noremap <C-w><C-]> <NOP>
+noremap <C-w><C-[> <NOP>
 " 新しいタブを作成
 noremap <C-w>t :<C-u>tabnew<CR>
 noremap <C-w><C-t> :<C-u>tabnew<CR>
@@ -115,7 +115,7 @@ noremap <C-w>[ gT
 noremap <C-w><C-[> gT
 " <C-w>1..9で任意の番号のタブへ移動
 for i in range(1, 9)
-  execute 'nnoremap <C-w>'.i.' <Nop>'
+  execute 'nnoremap <C-w>'.i.' <NOP>'
   execute 'nnoremap <C-w>'.i.' :<C-u>tabnext '.i.'<CR>'
 endfor
 " タブを閉じる
@@ -136,16 +136,16 @@ nnoremap qqq: <Esc>q:
 nnoremap qqq/ <Esc>q/
 nnoremap qqq? <Esc>q?
 " q:,q/,q?無効化
-nnoremap q: <Nop>
-nnoremap q/ <Nop>
-nnoremap q? <Nop>
+nnoremap q: <NOP>
+nnoremap q/ <NOP>
+nnoremap q? <NOP>
 
 "" inoremap
 " ノーマルモードに切り替え
 inoremap <C-[> <ESC>
 inoremap <C-]> <ESC>
 " CTRL-@無効化
-inoremap <C-@> <Nop>
+inoremap <C-@> <NOP>
 " 一文字delete
 inoremap <C-d> <delete>
 
