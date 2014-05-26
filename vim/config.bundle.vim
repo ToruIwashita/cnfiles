@@ -35,6 +35,9 @@ let g:yankring_ignore_duplicate = 0
 " ヤンク履歴表示
 noremap <C-w>P :<C-u>YRShow<CR>
 
+""" vim-choosewin
+nmap - <Plug>(choosewin)
+
 """ ctrlp
 " Start CtrlP
 let g:ctrlp_map = '<C-s>'

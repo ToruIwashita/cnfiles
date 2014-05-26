@@ -53,6 +53,8 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'adie/BlockDiff'
 " visualstar(選択範囲のテキストで検索)
 NeoBundle 'thinca/vim-visualstar'
+" ウィンドウ対話的選択
+NeoBundle 't9md/vim-choosewin'
 " gitv(コミットログ閲覧用)
 NeoBundle 'gregsexton/gitv'
 " ファイラー
