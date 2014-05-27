@@ -53,11 +53,12 @@ let g:ctrlp_max_depth = 40
 let g:ctrlp_open_new_file = 'r'
 " CtrlPキーマッピング
 let g:ctrlp_prompt_mappings = {
-  \ 'ToggleRegex()':        ['<C-r>'],
+  \ 'ToggleRegex()':        ['<C-l>'],
   \ 'ToggleByFname()':      ['<C-_>'],
   \ 'PrtBS()':              ['<C-h>','<BS>'],
   \ 'PrtDelete()':          ['<C-d>'],
   \ 'PrtDeleteWord()':      ['<C-w>'],
+  \ 'PrtClear()':           ['<c-u>'],
   \ 'PrtCurStart()':        ['<C-a>'],
   \ 'PrtCurEnd()':          ['<C-e>'],
   \ 'PrtCurLeft()':         ['<C-b>'],
@@ -68,14 +69,13 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtHistory(1)':        ['<C-p>'],
   \ 'ToggleFocus()':        ['<S-TAB>'],
   \ 'PrtExpandDir()':       ['<TAB>','<C-i>'],
-  \ 'AcceptSelection("e")': ['<C-o>''<CR>'],
+  \ 'AcceptSelection("e")': ['<C-o>','<CR>'],
   \ 'AcceptSelection("h")': ['<C-s>'],
   \ 'AcceptSelection("t")': ['<C-t>'],
   \ 'AcceptSelection("v")': ['<C-v>'],
   \ 'ToggleType(1)':        ['<NOP>'],
   \ 'ToggleType(-1)':       ['<NOP>'],
   \ 'PrtInsert()':          ['<NOP>'],
-  \ 'PrtClearCache()':      ['<NOP>'],
   \ 'PrtDeleteEnt()':       ['<NOP>'],
   \ 'CreateNewFile()':      ['<NOP>'],
   \ 'MarkToOpen()':         ['<NOP>'],
@@ -84,6 +84,7 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtSelectMove("b")':   ['<NOP>'],
   \ 'PrtSelectMove("u")':   ['<NOP>'],
   \ 'PrtSelectMove("d")':   ['<NOP>'],
+  \ 'PrtClearCache()':      ['<C-r>'],
   \ 'PrtExit()':            ['<ESC>','<C-[>'],
   \ }
 
