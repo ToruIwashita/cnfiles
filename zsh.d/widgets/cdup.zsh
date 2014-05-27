@@ -2,7 +2,7 @@
 _cdup() {
   local precmd_func after_buffer
   local -a args
-  args=("${(z)$BUFFER}")
+  args=("${(z)BUFFER}")
 
   if [[ $#args -ge 2 ]]; then
     args[$#args]='./'
