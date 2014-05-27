@@ -1,10 +1,9 @@
 ## start-editor
 _start-editor() {
-  local args resource_path
-  args=($(print $BUFFER))
-  exec < /dev/tty
-  resource_path=$args[$#args]
-  $EDITOR $resource_path
+  local -a args
+  args=("${(z)BUFFER}")
+  zle -I
+  $EDITOR ${args[$#args]} < $TTY
 }
 
 zle -N start-editor _start-editor
