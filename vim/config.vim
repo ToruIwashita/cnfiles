@@ -146,6 +146,7 @@ nnoremap q? <NOP>
 " ノーマルモードに切り替え
 inoremap <C-[> <ESC>
 inoremap <C-]> <ESC>
+inoremap <C-j> <ESC>
 " CTRL-@無効化
 inoremap <C-@> <NOP>
 " 一文字delete
