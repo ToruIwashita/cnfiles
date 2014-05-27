@@ -2,7 +2,7 @@
 _into-dir-and-push-remains-to-prompt() {
   local chpwd_func resource_index resource_path dest
   local -a args
-  args=($(print $BUFFER))
+  args=("${(z)BUFFER}")
   chpwd_func=$(typeset -f chpwd)
 
   resource_index=$#args
