@@ -37,6 +37,8 @@ set number
 set incsearch
 " サーチ結果ハイライト
 set hlsearch
+" 外部で変更のあったファイルを自動的に読み直す
+set autoread
 " インサートモード時backspece有効
 set backspace=indent,eol,start
 " <C-a>,<C-x>で使う基数を10進数に
@@ -169,3 +171,8 @@ augroup previousCursorLine
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
+" ウィンドウ移動でファイル変更チェック
+augroup vimrc-checktime
+  autocmd!
+  autocmd WinEnter * checktime
+augroup END
