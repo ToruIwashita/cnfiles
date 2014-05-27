@@ -201,7 +201,7 @@ mf() {
     return 1
   fi
 
-  [[ ${#select_fields} -eq 0 ]]   && select_fields=' *'
+  [[ ${#select_fields} -eq 0 ]] && select_fields=' *'
 
   if [[ ${#priority_condition} -eq 0 ]]; then
     my_cmd="SELECT${select_fields} FROM${table_name}${where_condition}${group_condition}${order_condition}${limit_condition}${vertical_option}"
