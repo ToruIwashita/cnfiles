@@ -36,7 +36,7 @@ let g:yankring_ignore_duplicate = 0
 noremap <C-w>P :<C-u>YRShow<CR>
 
 """ vim-choosewin
-nmap - <Plug>(choosewin)
+nmap <C-w>- <Plug>(choosewin)
 
 """ ctrlp
 " Start CtrlP
