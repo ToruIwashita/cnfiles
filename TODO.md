@@ -13,7 +13,4 @@
 1.`REST`指向,`CURD`についてまとめる  
 2.ファイル補完のみを行うキーバインド設定  
 3.`completion`についてまとめる  
-4.`function`記述いらないか確認  
-5.`compdef`の位置確認  
-6.`CtrlP`の`PrtSelectMove`の動き確認  
 
