@@ -10,6 +10,9 @@ set background=light
 " neocompleteを起動時に有効化
 let g:neocomplete#enable_at_startup = 1
 
+"" NERD_tree
+noremap <C-w><C-w> :<C-u>NERDTreeToggle<CR>
+
 """ QuickBuf
 " `__`で起動
 let g:qb_hotkey = "__"
@@ -88,7 +91,7 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtExit()':            ['<ESC>','<C-[>'],
   \ }
 
-""" wildfire.vim
+""" wildfire
 " text-object拡大
 let g:wildfire_fuel_map = "<C-l>"
 " text-object縮小
