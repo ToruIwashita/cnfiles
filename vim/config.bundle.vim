@@ -48,8 +48,8 @@ let g:ctrlp_map = '<C-s>'
 let g:ctrlp_max_height = &lines/3
 " 開いたファイル履歴保持数
 let g:ctrlp_mruf_max = 500
-" 終了時にキャッシュをクリアする
-let g:ctrlp_clear_cache_on_exit = 1
+" 終了時にキャッシュをクリアしない
+let g:ctrlp_clear_cache_on_exit = 0
 " ディレクトリ再帰検索深度
 let g:ctrlp_max_depth = 40
 " 新しいファイルをカレントウィンドウに開く
