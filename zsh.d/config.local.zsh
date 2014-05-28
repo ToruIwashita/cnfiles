@@ -6,6 +6,7 @@ readonly AG_BIN=~/local/bin/ag
 export EDITOR=~/local/bin/vim                         # ~/local/bin/vimをEDITOR設定
 export MYSQL_CNCT MYSQL_CMD
 export PATH=~/local/bin:${PATH}                       # ~/local/bin有りの時のサンプル
+# export PATH=~/local/bin:/usr/local/git/bin:${PATH}  # for Mac with git
 export LD_LIBRARY_PATH=~/local/lib:${LD_LIBRARY_PATH} # ~/local/lib有りのサンプル
 
 ## エイリアス
