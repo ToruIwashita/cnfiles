@@ -1,20 +1,20 @@
 ## git関数用補完
 __git-modified-files() {
-  local git_status_res changes_not_staged_str_index
+  local changes_not_staged_str_index
+  local -a git_status_res
 
-  git_status_res="$(git status)"
-  changes_not_staged_str_index=$((${${(f@)git_status_res}[(i)*Changes not staged*]} + 4))
+  git_status_res=(${(@f)"$(git status -s)"})
 
-  compadd ${(R)${(M)${${(f@)git_status_res}[$changes_not_staged_str_index,-1]}:#*modified:*}##*: #}
+  compadd ${(R)${(M)git_status_res:#[[:space:]]M*}#*M[[:space:]]}
 }
 
 __git-untracked-files() {
-  local git_status_res untracked_str_index
+  local untracked_str_index
+  local -a git_status_res
 
-  git_status_res="$(git status)"
-  untracked_str_index=$((${${(f@)git_status_res}[(i)*Untracked*]} + 3))
+  git_status_res=(${(@f)"$(git status -s)"})
 
-  compadd ${(R)${(M)${${(f@)git_status_res}[$untracked_str_index,-1]}##\#*}#\#[[:blank:]]}
+  compadd ${(R)${(M)git_status_res:#\?\?*}#\?\?[[:space:]]}
 }
 
 __git-branches() {
