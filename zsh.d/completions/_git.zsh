@@ -26,6 +26,13 @@ __git-staged-files() {
   compadd ${(R)${(M)git_status_res:#M[[:space:]]*}#M[[:space:]][[:space:]]}
 }
 
+__git-both-modified-files() {
+  local -a git_status_res
+
+  git_status_res=(${(@f)"$(__git-status)"})
+  compadd ${(R)${(M)git_status_res:#UU*}#UU[[:space:]]}
+}
+
 __git-branches() {
   compadd ${(R)$(git branch)#\*}
 }
@@ -49,6 +56,14 @@ _gau() {
 _grh() {
   if [[ -d ./.git ]]; then
     _arguments : '(-)*:argument:__git-staged-files'
+  else
+    _arguments : '(-)*:argument:_files'
+  fi
+}
+
+_gab() {
+  if [[ -d ./.git ]]; then
+    _arguments : '(-)*:argument:__git-both-modified-files'
   else
     _arguments : '(-)*:argument:_files'
   fi
@@ -83,6 +98,7 @@ _gdeleteb() {
 compdef _gam gam
 compdef _gau gau
 compdef _grh grh
+compdef _gab gab
 compdef _gd gd
 compdef _gsw gsw
 compdef _gud gud

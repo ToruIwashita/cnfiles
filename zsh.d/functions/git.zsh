@@ -23,6 +23,18 @@ gau() {
   git add $*
 }
 
+gab() {
+  local gab_usage
+
+  gab_usage="Usage: $0 <Files>"
+  if [[ $# -lt 1 ]]; then
+    print $gab_usage
+    return 1
+  fi
+
+  git add $*
+}
+
 grh() {
   local grh_usage
 
