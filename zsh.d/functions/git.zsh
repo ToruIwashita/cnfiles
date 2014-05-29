@@ -23,6 +23,18 @@ gau() {
   git add $*
 }
 
+grh() {
+  local grh_usage
+
+  grh_usage="Usage: $0 <Files>"
+  if [[ $# -lt 1 ]]; then
+    print $grh_usage
+    return 1
+  fi
+
+  git reset HEAD $*
+}
+
 gd() {
   local gd_usage
 

@@ -1,20 +1,29 @@
 ## git関数用補完
+__git-status() {
+  local git_status
+  git_status=$(git status -s) || return
+  print $git_status
+}
+
 __git-modified-files() {
-  local changes_not_staged_str_index
   local -a git_status_res
 
-  git_status_res=(${(@f)"$(git status -s)"})
-
-  compadd ${(R)${(M)git_status_res:#[[:space:]]M*}#*M[[:space:]]}
+  git_status_res=(${(@f)"$(__git-status)"})
+  compadd ${(R)${(M)git_status_res:#[[:space:]]M*}#[[:space:]]M[[:space:]]}
 }
 
 __git-untracked-files() {
-  local untracked_str_index
   local -a git_status_res
 
-  git_status_res=(${(@f)"$(git status -s)"})
-
+  git_status_res=(${(@f)"$(__git-status)"})
   compadd ${(R)${(M)git_status_res:#\?\?*}#\?\?[[:space:]]}
+}
+
+__git-staged-files() {
+  local -a git_status_res
+
+  git_status_res=(${(@f)"$(__git-status)"})
+  compadd ${(R)${(M)git_status_res:#M[[:space:]]*}#M[[:space:]][[:space:]]}
 }
 
 __git-branches() {
@@ -32,6 +41,14 @@ _gam() {
 _gau() {
   if [[ -d ./.git ]]; then
     _arguments : '(-)*:argument:__git-untracked-files'
+  else
+    _arguments : '(-)*:argument:_files'
+  fi
+}
+
+_grh() {
+  if [[ -d ./.git ]]; then
+    _arguments : '(-)*:argument:__git-staged-files'
   else
     _arguments : '(-)*:argument:_files'
   fi
@@ -65,6 +82,7 @@ _gdeleteb() {
 
 compdef _gam gam
 compdef _gau gau
+compdef _grh grh
 compdef _gd gd
 compdef _gsw gsw
 compdef _gud gud
