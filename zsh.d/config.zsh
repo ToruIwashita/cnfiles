@@ -146,6 +146,7 @@ alias c="cat"
 alias grep="grep --color"
 alias ag="ag --nogroup"
 alias his="history -50n"
+alias curh="curl --head"
 alias tm="tmux -2"
 alias tigb="tig blame"
 # CD
