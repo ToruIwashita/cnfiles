@@ -9,7 +9,7 @@ __git-modified-files() {
   local -a git_status_res
 
   git_status_res=(${(@f)"$(__git-status)"})
-  compadd ${(R)${(M)git_status_res:#[[:space:]]M*}#[[:space:]]M[[:space:]]}
+  compadd ${(R)${(M)git_status_res:#?M*}#?M[[:space:]]}
 }
 
 __git-untracked-files() {
@@ -23,7 +23,7 @@ __git-staged-files() {
   local -a git_status_res
 
   git_status_res=(${(@f)"$(__git-status)"})
-  compadd ${(R)${(M)git_status_res:#M[[:space:]]*}#M[[:space:]][[:space:]]}
+  compadd ${(R)${(M)git_status_res:#M?*}#M?[[:space:]]}
 }
 
 __git-both-modified-files() {
