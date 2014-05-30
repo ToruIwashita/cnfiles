@@ -2,7 +2,7 @@
 __git-status() {
   local git_status
   git_status=$(git status -s) || return
-  print $git_status
+  echo $git_status
 }
 
 __git-modified-files() {

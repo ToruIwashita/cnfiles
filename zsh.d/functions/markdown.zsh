@@ -14,6 +14,6 @@ pmout() {
     return 1
   fi
 
-  print '<meta charset="utf-8">\n' >! ~/works/tmp.txt
-  markdown $1 >> ~/works/tmp.txt
+  print '<meta charset="utf-8">\n' >! $2
+  markdown $1 >> $2
 }
