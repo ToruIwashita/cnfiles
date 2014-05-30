@@ -23,7 +23,7 @@ mq() {
 
   my_cmd="cat $1"
   for ((i=1; i<$#; i++)); do
-    arg_num=`expr $i + 1`
+    arg_num=$(expr $i + 1)
     my_cmd=$my_cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
   done
 
@@ -46,7 +46,7 @@ mqout() {
 
   my_cmd="cat $1"
   for ((i=1; i<$#; i++)); do
-    arg_num=`expr $i + 1`
+    arg_num=$(expr $i + 1)
     my_cmd=$my_cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
   done
 
@@ -81,8 +81,8 @@ myfindg() {
     eval $my_cmd" 'SHOW TABLES' -N | grep --color '${table_name}'"
   elif [[ ${#field_name} -gt 0 ]]; then
     print "Table: 'name'\nField\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
-    for table_name in `eval $my_cmd" 'SHOW TABLES' -N"`; do
-      cmd_res_field_list=`eval $my_cmd" 'DESC ${table_name}' -N | grep --color '${field_name}'"`
+    for table_name in $(eval $my_cmd" 'SHOW TABLES' -N"); do
+      cmd_res_field_list=$(eval $my_cmd" 'DESC ${table_name}' -N | grep --color '${field_name}'")
       if [[ ${#cmd_res_field_list} -gt 0 ]]; then
         print "Table: ${table_name}"
         for cmd_res_field_name in ${(f)cmd_res_field_list}; do
@@ -106,7 +106,7 @@ mqexp() {
 
   my_cmd="cat $1"
   for ((i=1; i<$#; i++)); do
-    arg_num=`expr $i + 1`
+    arg_num=$(expr $i + 1)
     my_cmd=$my_cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
   done
 

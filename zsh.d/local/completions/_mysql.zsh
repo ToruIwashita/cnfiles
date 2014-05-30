@@ -1,6 +1,6 @@
 ## MYSQL関数用補完
 __my-show-tables() {
-  compadd `eval "${MYSQL_CMD} 'SHOW TABLES' -N"`
+  compadd $(eval "${MYSQL_CMD} 'SHOW TABLES' -N")
 }
 
 _myfindg() {
