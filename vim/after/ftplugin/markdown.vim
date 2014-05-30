@@ -2,7 +2,7 @@
 let s:cpo_save = &cpo
 set cpo&vim
 
-function! g:add_md_space()
+function! s:add_md_space()
   try
     :%s/\(^[^$].*[^  ]$\)/\1  /
     :%s/\(^ \{4}.*[^ ] \{2}$\)/\1  /
