@@ -12,7 +12,7 @@ endfunction
 
 augroup AuAddMdSpace
   autocmd!
-  autocmd BufWrite <buffer> call g:add_md_space()
+  autocmd BufWrite <buffer> call s:add_md_space()
 augroup END
 
 let &cpo = s:cpo_save
