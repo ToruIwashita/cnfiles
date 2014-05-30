@@ -9,7 +9,7 @@ pm() {
 }
 
 pmout() {
-  if [[ $# -lt 1 ]]; then
+  if [[ $# -lt 2 ]]; then
     print "lack of arguments."
     return 1
   fi
