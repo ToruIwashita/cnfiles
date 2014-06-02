@@ -79,7 +79,7 @@ NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 [[ -d $VIM_DIR_PATH/bundle/neobundle.vim ]]   || git clone $NEOBUNDLE_REPOSITORY $VIM_DIR_PATH/bundle/neobundle.vim
 [[ -d $CACHE_DIR_PATH/yankring ]]             || mkdir $CACHE_DIR_PATH/yankring
 
-## update zsh,vim,lua source
+## update source files
 echo "git pull zsh src."
 cd $ZSH_SRC_DIR_PATH && git pull
 echo "git pull vim src."
