@@ -12,3 +12,4 @@
 1.`REST`指向,`CURD`についてまとめる  
 2.ファイル補完のみを行うキーバインド設定  
 3.`completion`についてまとめる  
+4.`ctags`参考: http://archiva.jp/web/tool/vim_ctags.html  
