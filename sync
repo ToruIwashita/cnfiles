@@ -22,9 +22,10 @@ LOCAL_DIR_PATH=~/local
 ZSH_SRC_DIR_PATH=$SRC_DIR_PATH/zsh
 VIM_SRC_DIR_PATH=$SRC_DIR_PATH/vim
 TMUX_SRC_DIR_PATH=$SRC_DIR_PATH/tmux
-LUAJIT_SRC_DIR_PATH=$SRC_DIR_PATH/luajit
-SILVER_SEARCHER_SRC_DIR_PATH=$SRC_DIR_PATH/silver_searcher
 GIT_SRC_DIR_PATH=$SRC_DIR_PATH/git
+LUAJIT_SRC_DIR_PATH=$SRC_DIR_PATH/luajit
+CTAGS_SRC_DIR_PATH=$SRC_DIR_PATH/ctags
+SILVER_SEARCHER_SRC_DIR_PATH=$SRC_DIR_PATH/silver_searcher
 NEOVIM_SRC_DIR_PATH=$SRC_DIR_PATH/neovim  # 使用していない
 
 # repositories
@@ -33,9 +34,10 @@ VIM_REPOSITORY='git://github.com/vim-jp/vim'
 TMUX_REPOSITORY='git://git.code.sf.net/p/tmux/tmux-code'
 ZSH_COMPLETIONS_REPOSITORY='git://github.com/zsh-users/zsh-completions'
 NEOBUNDLE_REPOSITORY='git://github.com/Shougo/neobundle.vim'
-LUAJIT_REPOSITORY='http://luajit.org/git/luajit-2.0.git'
-SILVER_SEARCHER_REPOSITORY='git://github.com/ggreer/the_silver_searcher'
 GIT_REPOSITORY='git://github.com/gitster/git'
+LUAJIT_REPOSITORY='http://luajit.org/git/luajit-2.0.git'
+CTAGS_REPOSITORY='https://github.com/fishman/ctags'
+SILVER_SEARCHER_REPOSITORY='git://github.com/ggreer/the_silver_searcher'
 NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 
 ## init
@@ -45,9 +47,10 @@ NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 [[ -d $ZSH_SRC_DIR_PATH ]]                    || git clone $ZSH_REPOSITORY $ZSH_SRC_DIR_PATH
 [[ -d $VIM_SRC_DIR_PATH ]]                    || git clone $VIM_REPOSITORY $VIM_SRC_DIR_PATH
 [[ -d $TMUX_SRC_DIR_PATH ]]                   || git clone $TMUX_REPOSITORY $TMUX_SRC_DIR_PATH
-[[ -d $LUAJIT_SRC_DIR_PATH ]]                 || git clone $LUAJIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
-[[ -d $SILVER_SEARCHER_SRC_DIR_PATH ]]        || git clone $SILVER_SEARCHER_REPOSITORY $SILVER_SEARCHER_SRC_DIR_PATH
 [[ -d $GIT_SRC_DIR_PATH ]]                    || git clone $GIT_REPOSITORY $GIT_SRC_DIR_PATH
+[[ -d $LUAJIT_SRC_DIR_PATH ]]                 || git clone $LUAJIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
+[[ -d $CTAGS_SRC_DIR_PATH ]]                  || git clone $CTAGS_REPOSITORY $CTAGS_SRC_DIR_PATH
+[[ -d $SILVER_SEARCHER_SRC_DIR_PATH ]]        || git clone $SILVER_SEARCHER_REPOSITORY $SILVER_SEARCHER_SRC_DIR_PATH
 [[ -d $NEOVIM_SRC_DIR_PATH ]]                 || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
 # cache dir
 [[ -d $CACHE_DIR_PATH ]]                      || mkdir $CACHE_DIR_PATH
@@ -83,12 +86,14 @@ echo "git pull vim src."
 cd $VIM_SRC_DIR_PATH && git pull
 echo "git pull tmux src."
 cd $TMUX_SRC_DIR_PATH && git pull
-echo "git pull luajit src."
-cd $LUAJIT_SRC_DIR_PATH && git pull
-echo "git pull silver_searcher src."
-cd $SILVER_SEARCHER_SRC_DIR_PATH && git pull
 echo "git pull git src."
 cd $GIT_SRC_DIR_PATH && git pull
+echo "git pull luajit src."
+cd $LUAJIT_SRC_DIR_PATH && git pull
+echo "git pull ctags src."
+cd $CTAGS_SRC_DIR_PATH && git pull
+echo "git pull silver_searcher src."
+cd $SILVER_SEARCHER_SRC_DIR_PATH && git pull
 echo "git pull neovim src."
 cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
 echo "git pull zsh-completions."
