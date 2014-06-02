@@ -3,7 +3,7 @@
 ## dir,path
 __FILE__=$_
 BASE_DIR_PATH=${__FILE__%/*}
-WORKING_DIR_PATH=$(pwd)
+WORKING_DIR_PATH=$PWD
 
 # base dir,path
 ZSH_DIR=zsh.d
