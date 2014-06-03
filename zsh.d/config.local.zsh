@@ -14,9 +14,11 @@ export LD_LIBRARY_PATH=~/local/lib:${LD_LIBRARY_PATH} # ~/local/lib有りのサ�
 #alias ls="gls -F --color"
 #alias find="gfind"
 #alias xargs="gxargs"
-# CD系
+# ctags
+alias ct="ctags -f .tags -R --languages=ruby"
+# cd
 alias cdm="~/markdown_texts"
-# MYSQL系
+# mysql
 alias my=$MYSQL_CNCT
 alias myq=$MYSQL_CMD
 alias myshow="$MYSQL_CMD 'SHOW TABLES'"
