@@ -131,11 +131,11 @@ bindkey -M menuselect '^K' accept-and-infer-next-history
 bindkey -M menuselect '^J' double-accept-line
 
 ## エイリアス
-# ZMV
+# zmv
 alias zmv='noglob zmv -W'
-# VIM
+# vim
 alias v="vim"
-# OTHER
+# other
 alias ez="exec zsh"
 alias cp="cp -ip"
 alias mv="mv -i"
@@ -150,7 +150,7 @@ alias his="history -50n"
 alias curh="curl --head"
 alias tm="tmux -2"
 alias tigb="tig blame"
-# CD
+# cd
 alias d="cd"
 alias cdz="cd ~/.zsh.d"
 alias cdv="cd ~/.vim"
@@ -158,7 +158,7 @@ alias cdl="cd ~/local"
 alias cds="cd ~/src"
 alias cdsz="cd ~/src/zsh"
 alias cdsv="cd ~/src/vim"
-# GIT
+# git
 alias ga="git add"
 alias gb="git branch"
 alias gc="git commit"
@@ -166,10 +166,10 @@ alias gf="git fetch"
 alias gs="git status"
 alias gl="git log"
 alias gla="git log --graph --all --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"
-# TIG
+# tig
 alias tigb="tig blame"
 alias tigs="tig status"
-# APACHE
+# apache
 alias ap_err="tailf /var/log/httpd/error_log"
 alias ap_acc="tailf /var/log/httpd/access_log"
 
