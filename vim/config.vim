@@ -79,6 +79,8 @@ cnoremap <C-d> <DEL>
 "" noremap
 " サスペンド無効化
 noremap <C-z> <NOP>
+noremap <C-w><C-z> :<C-u>pclose
+noremap <C-w>z :<C-u>pclose
 " 現在のバッファ削除
 noremap <C-w>x <NOP>
 noremap <C-w>x :<C-u>bdelete<CR>
@@ -126,6 +128,25 @@ endfor
 noremap <C-w>! :<C-u>tabedit %<CR>
 " タブを閉じる
 noremap <C-w>X :<C-u>tabclose<CR>
+" タグ(ctags)関連
+" タグのmapに関わるデフォルトのmapを無効化
+noremap <C-t> <NOP>
+noremap g<C-]> <NOP>
+noremap <C-w>} <NOP>
+" カーソル位置の単語をタグとしてジャンプ
+noremap <C-t>t <C-]>
+" 直前のタグに戻る
+noremap <C-t>T <C-t>
+" 複数候補がある時タグリスト表示
+noremap <C-t><C-t> g<C-]>
+" カーソル位置の単語の定義をプレビューウィンドウで開く
+noremap <C-t>w <C-w>}
+" 次のタグへ移動
+noremap <C-t>] :<C-u>tnext<CR>
+noremap <C-t><C-]> :<C-u>tnext<CR>
+" 前のタグへ移動
+noremap <C-t>[ :<C-u>tprevious<CR>
+noremap <C-t><C-[> :<C-u>tprevious<CR>
 
 "" nnoremap
 " *,#で検索した後に移動しない
@@ -163,7 +184,9 @@ vnoremap > >gv
 vnoremap <ESC> v_<ESC>
 
 "" cnoreabbrev
-cnorea t tabnew
+cnorea t :<C-u>tabnew
+cnorea ts :<C-u>tselect
+cnorea pt :<C-u>ptag
 cnorea ev :<C-u>source ~/.vimrc
 
 "" autocmd
