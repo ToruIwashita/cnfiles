@@ -137,10 +137,10 @@ nnoremap N Nzz
 " <ESC>2回で検索ハイライト消し
 nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 " qqq:キーコマンド履歴表示
-nnoremap qqq: <Esc>q:
+nnoremap qqq: <ESC>q:
 " qqq/,qqq?検索履歴表示
-nnoremap qqq/ <Esc>q/
-nnoremap qqq? <Esc>q?
+nnoremap qqq/ <ESC>q/
+nnoremap qqq? <ESC>q?
 " q:,q/,q?無効化
 nnoremap q: <NOP>
 nnoremap q/ <NOP>
