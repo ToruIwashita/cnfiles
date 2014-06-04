@@ -166,10 +166,3 @@ alias gf="git fetch"
 alias gs="git status"
 alias gl="git log"
 alias gla="git log --graph --all --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"
-# tig
-alias tigb="tig blame"
-alias tigs="tig status"
-# apache
-alias ap_err="tailf /var/log/httpd/error_log"
-alias ap_acc="tailf /var/log/httpd/access_log"
-
