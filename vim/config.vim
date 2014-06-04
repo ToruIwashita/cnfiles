@@ -148,7 +148,6 @@ nnoremap q? <NOP>
 
 "" inoremap
 " ノーマルモードに切り替え
-inoremap <C-l> <ESC>
 inoremap <C-[> <ESC>
 inoremap <C-]> <ESC>
 " CTRL-@無効化
