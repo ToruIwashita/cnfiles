@@ -15,7 +15,7 @@ export LD_LIBRARY_PATH=~/local/lib:${LD_LIBRARY_PATH} # ~/local/lib有りのサ�
 #alias find="gfind"
 #alias xargs="gxargs"
 # ctags
-alias ct="ctags -f .tags -recurse --tag-relative --sort=yes --languages=ruby"
+alias ct="ctags -f .tags --recurse --tag-relative --sort=yes --languages=ruby"
 # cd
 alias cdm="~/markdown_texts"
 # mysql
