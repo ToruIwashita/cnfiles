@@ -44,8 +44,8 @@ nmap <C-w>- <Plug>(choosewin)
 """ ctrlp
 " Start CtrlP
 let g:ctrlp_map = '<C-s>'
-" 表示行数を最大行数の1/3
-let g:ctrlp_max_height = &lines/3
+" 表示行数を最大行数の1/2
+let g:ctrlp_max_height = &lines/2
 " 開いたファイル履歴保持数
 let g:ctrlp_mruf_max = 500
 " 終了時にキャッシュをクリアしない
