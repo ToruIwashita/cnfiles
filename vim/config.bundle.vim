@@ -13,11 +13,11 @@ let g:neocomplete#enable_at_startup = 1
 "" NERD_tree
 noremap <C-w><C-w> :<C-u>NERDTreeToggle<CR>
 
-""" QuickBuf
+"" QuickBuf
 " `__`で起動
 let g:qb_hotkey = "__"
 
-""" Align
+"" Align
 " 全角文字のハンドリング
 let g:Align_xstrlen = 3
 " GUIのメニュー表示(不要な場合は空文字を入れる)
@@ -26,7 +26,7 @@ let g:DrChipTopLvlMenu = ''
 cnorea A Align
 cnorea '<,'>A '<,'>Align
 
-""" yankring
+"" yankring
 " yankring_historyの保存先を指定
 let g:yankring_history_dir = '~/.cache/yankring/'
 " 記録する最大数
@@ -38,10 +38,10 @@ let g:yankring_ignore_duplicate = 0
 " ヤンク履歴表示
 noremap <C-w>P :<C-u>YRShow<CR>
 
-""" vim-choosewin
+"" vim-choosewin
 nmap <C-w>- <Plug>(choosewin)
 
-""" ctrlp
+"" ctrlp
 " Start CtrlP
 let g:ctrlp_map = '<C-s>'
 " 表示行数を最大行数の1/2
@@ -91,7 +91,7 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtExit()':            ['<ESC>','<C-[>'],
   \ }
 
-""" wildfire
+"" wildfire
 " text-object拡大
 let g:wildfire_fuel_map = "<C-l>"
 " text-object縮小
@@ -108,3 +108,11 @@ let g:wildfire_objects = [
   \ 'it', 'at',
   \ 'ip' 
 \ ]
+
+"" auto-ctags
+" BufWritePostで自動実行しない
+let g:auto_ctags = 0
+" tagsファイル名
+let g:auto_ctags_tags_name = '.tags'
+" ctags実行オプション
+let g:auto_ctags_tags_args = '--recurse --tag-relative --sort=yes --languages=sh,ruby'

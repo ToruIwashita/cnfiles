@@ -69,6 +69,8 @@ NeoBundle 'hallison/vim-markdown'
 NeoBundle 'fugalh/desert.vim'
 " rubyのブロックを%で移動
 NeoBundle 'vim-scripts/ruby-matchit'
+" ctags生成
+NeoBundle 'soramugi/auto-ctags.vim'
 " ヤンク履歴管理
 NeoBundle 'vim-scripts/YankRing.vim'
 " テキスト整形
