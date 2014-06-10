@@ -82,6 +82,7 @@ if [[ -n $LS_COLORS ]]; then
 fi
 
 ## widgets
+# VIM_MODE_COLOR選択
 _zle-keymap-select() {
   case $KEYMAP in
     vicmd)
@@ -93,6 +94,8 @@ _zle-keymap-select() {
   zle reset-prompt
 }
 zle -N zle-keymap-select _zle-keymap-select
+# コマンドラインを$EDITORで編集
+zle -N edit-command-line
 
 ## prompt
 # 色定義
