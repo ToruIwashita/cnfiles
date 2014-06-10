@@ -80,45 +80,45 @@ NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 [[ -d $CACHE_DIR_PATH/yankring ]]             || mkdir $CACHE_DIR_PATH/yankring
 
 ## update source files
-echo "git pull zsh src."
+print "## git pull zsh src."
 cd $ZSH_SRC_DIR_PATH && git pull
-echo "git pull vim src."
+print "## git pull vim src."
 cd $VIM_SRC_DIR_PATH && git pull
-echo "git pull tmux src."
+print "## git pull tmux src."
 cd $TMUX_SRC_DIR_PATH && git pull
-echo "git pull git src."
+print "## git pull git src."
 cd $GIT_SRC_DIR_PATH && git pull
-echo "git pull luajit src."
+print "## git pull luajit src."
 cd $LUAJIT_SRC_DIR_PATH && git pull
-echo "git pull ctags src."
+print "## git pull ctags src."
 cd $CTAGS_SRC_DIR_PATH && git pull
-echo "git pull silver_searcher src."
+print "## git pull silver_searcher src."
 cd $SILVER_SEARCHER_SRC_DIR_PATH && git pull
-echo "git pull neovim src."
+print "## git pull neovim src."
 cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
-echo "git pull zsh-completions."
+print "## git pull zsh-completions."
 cd $ZSH_COMPLETIONS_DIR_PATH && git pull
 
 ## copy files
 cd $BASE_DIR_PATH
 # zsh
-echo "copy zsh main configs."
+print "## copy zsh main configs."
 \cp -p $BASE_DIR_PATH/zshrc               ~/.zshrc
 \cp -p $BASE_DIR_PATH/$ZSH_DIR/config.zsh $ZSH_DIR_PATH/config.zsh
 # vim
-echo "copy vim main configs."
+print "## copy vim main configs."
 \cp -p $BASE_DIR_PATH/vimrc                      ~/.vimrc
 \cp -p $BASE_DIR_PATH/$VIM_DIR/config.vim        $VIM_DIR_PATH/config.vim
 \cp -p $BASE_DIR_PATH/$VIM_DIR/config.bundle.vim $VIM_DIR_PATH/config.bundle.vim
 # tmux
-echo "copy tmux config."
+print "## copy tmux config."
 \cp -p $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
 # pry
-echo "copy pry config."
+print "## copy pry config."
 \cp -p $BASE_DIR_PATH/pryrc ~/.pryrc
 
 # zsh,vim
-echo "copy zsh or vim functions, and other files." 
+print "## copy zsh or vim functions, and other files."
 source_directories=(
   $ZSH_DIR/functions
   $ZSH_DIR/completions
@@ -135,7 +135,7 @@ for dir in ${source_directories[@]}; do
 done
 
 cd $WORKING_DIR_PATH
-echo "sync complete."
+print "## sync complete."
 
 # restart
 exec zsh
