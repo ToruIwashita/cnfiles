@@ -19,10 +19,13 @@ ab <buffer> =d Rails.logger.debug(<<EOS)
   \<ENTER><ESC>i-
   \<ENTER><ESC>iEOS<ENTER><ESC>
 
+" !,?を区切り文字としない
+autocmd FileType ruby setlocal iskeyword+=!,?
+
 " makeで`ruby -w`起動
 compiler ruby
 
-augroup AuRbSyntaxCheck
+augroup AuRubySyntaxCheck
   autocmd!
   " `BufWritePost`で`make -c`
   autocmd BufWritePost *.rb silent make -c -W1 % | redraw!
