@@ -1,2 +1,2 @@
 " Detect pryrc.
-autocmd BufNewFile,BufRead pryrc set filetype=ruby
+autocmd BufNewFile,BufRead pryrc setlocal filetype=ruby
