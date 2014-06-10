@@ -191,13 +191,13 @@ cnorea ev :<C-u>source ~/.vimrc
 
 "" autocmd
 " ファイルを開いたときに最後の変更点へ移動
-augroup previousCursorLine
+augroup PreviousCursorLine
   autocmd!
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
 " ウィンドウ移動でファイル変更チェック
-augroup vimrc-checktime
+augroup VimrcChecktime
   autocmd!
   autocmd WinEnter * checktime
 augroup END
