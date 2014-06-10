@@ -74,40 +74,42 @@ HISTSIZE=100000
 SAVEHIST=100000
 
 ## vimモードキーマップ
-# Ctr+Aで行頭へ
-bindkey -v '^A' beginning-of-line
-# Ctr+Bで１文字左へ
-bindkey -v '^B' backward-char
-# Ctr+Dで１文字削除
-bindkey -v '^D' delete-char-or-list
-# Ctr+Eで行末へ
-bindkey -v '^E' end-of-line
-# Ctr+Fで１文字右へ
-bindkey -v '^F' forward-char
-# Ctr+Gで入力キャンセル
-bindkey -v '^G' send-break
-# Ctr+Gで入力実行
-bindkey -v '^J' accept-line
-# Ctr+Kで行末まで削除
-bindkey -v '^K' kill-line
-# Ctr+Nで１行下へ
-bindkey -v '^N' down-line-or-history
-# Ctr+Oでバッファ残しディレクトリ移動
-bindkey -v '^O' into-dir-and-push-remains-to-prompt
-# Ctr+Pで１行上へ
-bindkey -v '^P' up-line-or-history
-# Ctr+Rでインクリメンタルサーチ
-bindkey -v '^R' history-incremental-search-backward
-# Ctr+Yでコマンドラインスタック(push-lineでも良いが複数行を考慮するとpush-inputの方が良い)
-bindkey -v '^Y' push-input
-# Ctr+Uでkill-word
-bindkey -v '^U' kill-word
+# Ctr+aで行頭へ
+bindkey -v '^a' beginning-of-line
+# Ctr+bで１文字左へ
+bindkey -v '^b' backward-char
+# Ctr+dで１文字削除
+bindkey -v '^d' delete-char-or-list
+# Ctr+eで行末へ
+bindkey -v '^e' end-of-line
+# Ctr+fで１文字右へ
+bindkey -v '^f' forward-char
+# Ctr+gで入力キャンセル
+bindkey -v '^g' send-break
+# Ctr+jで入力実行
+bindkey -v '^j' accept-line
+# Ctr+kで行末まで削除
+bindkey -v '^k' kill-line
+# Ctr+nで１行下へ
+bindkey -v '^n' down-line-or-history
+# Ctr+oでバッファ残しディレクトリ移動
+bindkey -v '^o' into-dir-and-push-remains-to-prompt
+# Ctr+pで１行上へ
+bindkey -v '^p' up-line-or-history
+# Ctr+rでインクリメンタルサーチ
+bindkey -v '^r' history-incremental-search-backward
+# Ctr+yでコマンドラインスタック(push-lineでも良いが複数行を考慮するとpush-inputの方が良い)
+bindkey -v '^y' push-input
+# Ctr+uでkill-word
+bindkey -v '^u' kill-word
 # Ctr+vでstart-editor
-bindkey -v '^L' start-editor
+bindkey -v '^l' start-editor
 # Ctr+qでself-insert
-bindkey -v '^Q' self-insert
-# Ctr+Wでbackward-kill-word
-bindkey -v '^W' backward-kill-word
+bindkey -v '^q' self-insert
+# Ctr+wでbackward-kill-word
+bindkey -v '^w' backward-kill-word
+# Ctr+s,Ctr+lでコマンドライン編集
+bindkey -v '^s^l' edit-command-line
 # Ctr+@でclear-screen
 bindkey -v '^@' clear-screen
 # Ctr+_でcdup
@@ -116,19 +118,19 @@ bindkey -v "^_" cdup
 bindkey -v "^[[Z" reverse-menu-complete
 ## 補完メニュー選択モードキーマップ
 # Ctr+Bで左へ
-bindkey -M menuselect '^B' backward-char
+bindkey -M menuselect '^b' backward-char
 # Ctr+Fで右へ
-bindkey -M menuselect '^F' forward-char
+bindkey -M menuselect '^f' forward-char
 # Ctr+Gでsend-break2回
-bindkey -M menuselect '^G' double-send-break
+bindkey -M menuselect '^g' double-send-break
 # Ctr+Nで下へ
-bindkey -M menuselect '^N' down-line-or-history
+bindkey -M menuselect '^n' down-line-or-history
 # Ctr+Pで上へ
-bindkey -M menuselect '^P' up-line-or-history
+bindkey -M menuselect '^p' up-line-or-history
 # Ctr+Kで次の補完メニュー
-bindkey -M menuselect '^K' accept-and-infer-next-history
+bindkey -M menuselect '^k' accept-and-infer-next-history
 # Ctr+Jでaccept-line２回
-bindkey -M menuselect '^J' double-accept-line
+bindkey -M menuselect '^j' double-accept-line
 
 ## エイリアス
 # zmv
