@@ -52,7 +52,7 @@ set ttyfast
 " スクリプト実行中に画面を描画しない
 set lazyredraw
 " tagsファイル読み込み
-set tags=./tags,./.tags
+set tags=.tags,tags
 
 "" 補完ポップアップメニュー色設定
 hi Pmenu ctermbg=8 guibg=#606060
