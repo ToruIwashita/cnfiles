@@ -80,45 +80,45 @@ NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 [[ -d $CACHE_DIR_PATH/yankring ]]             || mkdir $CACHE_DIR_PATH/yankring
 
 ## update source files
-print "## git pull zsh src."
+printf "### git pull zsh src.\n"
 cd $ZSH_SRC_DIR_PATH && git pull
-print "## git pull vim src."
+printf "### git pull vim src.\n"
 cd $VIM_SRC_DIR_PATH && git pull
-print "## git pull tmux src."
+printf "### git pull tmux src.\n"
 cd $TMUX_SRC_DIR_PATH && git pull
-print "## git pull git src."
+printf "### git pull git src.\n"
 cd $GIT_SRC_DIR_PATH && git pull
-print "## git pull luajit src."
+printf "### git pull luajit src.\n"
 cd $LUAJIT_SRC_DIR_PATH && git pull
-print "## git pull ctags src."
+printf "### git pull ctags src.\n"
 cd $CTAGS_SRC_DIR_PATH && git pull
-print "## git pull silver_searcher src."
+printf "### git pull silver_searcher src.\n"
 cd $SILVER_SEARCHER_SRC_DIR_PATH && git pull
-print "## git pull neovim src."
+printf "### git pull neovim src.\n"
 cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
-print "## git pull zsh-completions."
+printf "### git pull zsh-completions.\n"
 cd $ZSH_COMPLETIONS_DIR_PATH && git pull
 
-## copy files
+### copy files
 cd $BASE_DIR_PATH
 # zsh
-print "## copy zsh main configs."
+printf "### copy zsh main configs.\n"
 \cp -p $BASE_DIR_PATH/zshrc               ~/.zshrc
 \cp -p $BASE_DIR_PATH/$ZSH_DIR/config.zsh $ZSH_DIR_PATH/config.zsh
 # vim
-print "## copy vim main configs."
+printf "### copy vim main configs.\n"
 \cp -p $BASE_DIR_PATH/vimrc                      ~/.vimrc
 \cp -p $BASE_DIR_PATH/$VIM_DIR/config.vim        $VIM_DIR_PATH/config.vim
 \cp -p $BASE_DIR_PATH/$VIM_DIR/config.bundle.vim $VIM_DIR_PATH/config.bundle.vim
 # tmux
-print "## copy tmux config."
+printf "### copy tmux config.\n"
 \cp -p $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
 # pry
-print "## copy pry config."
+printf "### copy pry config.\n"
 \cp -p $BASE_DIR_PATH/pryrc ~/.pryrc
 
 # zsh,vim
-print "## copy zsh or vim functions, and other files."
+printf "### copy zsh or vim functions, and other files.\n"
 source_directories=(
   $ZSH_DIR/functions
   $ZSH_DIR/completions
@@ -135,7 +135,7 @@ for dir in ${source_directories[@]}; do
 done
 
 cd $WORKING_DIR_PATH
-print "## sync complete."
+printf "### sync complete.\n"
 
 # restart
 exec zsh
