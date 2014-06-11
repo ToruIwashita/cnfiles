@@ -119,30 +119,35 @@ alias gs="git status -s"
 alias gl="git log"
 alias gla="git log --graph --all --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"
 
-## functions
-# vcsの情報表示
+## zstyle
+# vcs_info
 zstyle ':vcs_info:*' enable git hg
 zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
 zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
-precmd() { vcs_info }
-## cd後にls実行
-chpwd() {
-  [[ $dirstack[1]:h != $PWD ]] && ls
-}
-
-## complitions
+# completion
 zstyle ':completion:*' completer _complete _match _ignored _prefix # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
 zstyle ':completion:*' menu true select                            # 補完候補のカーソル選択有効
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}              # 補完候補色付け
 
+## functions
+# precmd
+precmd() {
+  vcs_info
+  PROMPT_VIM_MODE_COLOR="blue"
+}
+# chpwd
+chpwd() {
+  [[ $dirstack[1]:h != $PWD ]] && ls
+}
+
 ## widgets
-# VIM_MODE_COLOR選択widgets
+# PROMPT_VIM_MODE_COLOR選択widgets
 _zle-keymap-select() {
   case $KEYMAP in
     vicmd)
-      VIM_MODE_COLOR="cyan" ;;
+      PROMPT_VIM_MODE_COLOR="cyan" ;;
     main|viins)
-      VIM_MODE_COLOR="blue" ;;
+      PROMPT_VIM_MODE_COLOR="blue" ;;
   esac
 
   zle reset-prompt
@@ -158,5 +163,5 @@ color_style='[38;5;33m'
 # プロンプト表示
 PROMPT='%{$color_style%}_%{$default_style%}
 %{$color_style%}|%{$default_style%}[${vcs_info_msg_0_}]:%~/
-%{$color_style%}└-%{$default_style%}(%?)%F{$VIM_MODE_COLOR}%#%f '
+%{$color_style%}└-%{$default_style%}(%?)%F{$PROMPT_VIM_MODE_COLOR}%#%f '
 RPROMPT='[%D{%T}|%n]'
