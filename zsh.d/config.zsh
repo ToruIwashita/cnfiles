@@ -39,7 +39,8 @@ HISTFILE=~/.zsh_history  # ヒストリファイル
 HISTSIZE=100000          # メモリに展開する履歴数
 SAVEHIST=100000          # 保存する履歴数
 
-## vimモードキーマップ
+## bindkey
+# vimモードキーマップ
 bindkey -v '^a' beginning-of-line                    # Ctr+aで行頭へ
 bindkey -v '^b' backward-char                        # Ctr+bで１文字左へ
 bindkey -v '^d' delete-char-or-list                  # Ctr+dで１文字削除
@@ -61,7 +62,7 @@ bindkey -v '^s^l' edit-command-line                  # Ctr+s,Ctr+lでコマン�
 bindkey -v '^@' clear-screen                         # Ctr+@でclear-screen
 bindkey -v "^_" cdup                                 # Ctr+_でcdup
 bindkey -v "^[[Z" reverse-menu-complete              # Shift+tabで逆タブ補完
-## 補完メニュー選択モードキーマップ
+# 補完メニュー選択モードキーマップ
 bindkey -M menuselect '^b' backward-char                  # Ctr+Bで左へ
 bindkey -M menuselect '^f' forward-char                   # Ctr+Fで右へ
 bindkey -M menuselect '^g' double-send-break              # Ctr+Gでsend-break2回
