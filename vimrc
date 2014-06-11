@@ -26,65 +26,39 @@ NeoBundle 'Shougo/vimproc', {
 \    'unix' : 'make -f make_unix.mak',
 \  },
 \}
-" 入力補完機能
 if has('lua')
-  NeoBundle 'Shougo/neocomplete'
+  NeoBundle 'Shougo/neocomplete'         " 入力補完機能
 endif
-" スニペット展開
-NeoBundle 'Shougo/neosnippet'
-NeoBundle 'Shougo/neosnippet-snippets'
-" text-object操作
-NeoBundle 'tpope/vim-surround'
-" vim-surroundの機能を.反復
-NeoBundle 'tpope/vim-repeat'
-" 強化版置換コマンド
-NeoBundle 'tpope/vim-abolish'
-" fugitive(ステータスラインのブランチ名と,Gblame用)
-NeoBundle 'tpope/vim-fugitive'
-" vim-ruby
-NeoBundle 'vim-ruby/vim-ruby'
-" ag(silver_searcher)用プラグイン
-NeoBundle 'rking/ag.vim'
-" コメントアウト
-NeoBundle 'tomtom/tcomment_vim'
-" ステータスライン
-NeoBundle 'itchyny/lightline.vim'
-" BlockDiff(選択範囲の比較)
-NeoBundle 'adie/BlockDiff'
-" visualstar(選択範囲のテキストで検索)
-NeoBundle 'thinca/vim-visualstar'
-" ウィンドウ対話的選択
-NeoBundle 't9md/vim-choosewin'
-" gitv(コミットログ閲覧用)
-NeoBundle 'gregsexton/gitv'
-" ファイラー
-NeoBundle 'scrooloose/nerdtree'
-" 多機能finder
-NeoBundle 'kien/ctrlp.vim'
-" text-object選択
-NeoBundle 'gcmt/wildfire.vim'
-" vim-markdown
-NeoBundle 'hallison/vim-markdown'
-" カラースキーマ
-NeoBundle 'fugalh/desert.vim'
-" rubyのブロックを%で移動
-NeoBundle 'vim-scripts/ruby-matchit'
-" ctags生成
-NeoBundle 'soramugi/auto-ctags.vim'
-" ヤンク履歴管理
-NeoBundle 'vim-scripts/YankRing.vim'
-" テキスト整形
-NeoBundle 'vim-scripts/Align'
-" バッファ操作
-NeoBundle 'vim-scripts/QuickBuf'
-" QuickFixエラーにマーカー
-NeoBundle 'vim-scripts/errormarker.vim'
+NeoBundle 'Shougo/neosnippet'            " スニペット展開
+NeoBundle 'Shougo/neosnippet-snippets'   " スニペット本体
+NeoBundle 'tpope/vim-surround'           " text-object操作
+NeoBundle 'tpope/vim-repeat'             " vim-surroundの機能を.反復
+NeoBundle 'tpope/vim-abolish'            " 強化版置換コマンド
+NeoBundle 'tpope/vim-fugitive'           " fugitive(ステータスラインのブランチ名と,Gblame用)
+NeoBundle 'vim-ruby/vim-ruby'            " vim-ruby
+NeoBundle 'rking/ag.vim'                 " ag(silver_searcher)用プラグイン
+NeoBundle 'tomtom/tcomment_vim'          " コメントアウト
+NeoBundle 'itchyny/lightline.vim'        " ステータスライン
+NeoBundle 'adie/BlockDiff'               " BlockDiff(選択範囲の比較)
+NeoBundle 'thinca/vim-visualstar'        " visualstar(選択範囲のテキストで検索)
+NeoBundle 't9md/vim-choosewin'           " ウィンドウ対話的選択
+NeoBundle 'gregsexton/gitv'              " gitv(コミットログ閲覧用)
+NeoBundle 'scrooloose/nerdtree'          " ファイラー
+NeoBundle 'kien/ctrlp.vim'               " 多機能finder
+NeoBundle 'gcmt/wildfire.vim'            " text-object選択
+NeoBundle 'hallison/vim-markdown'        " vim-markdown
+NeoBundle 'fugalh/desert.vim'            " カラースキーマ
+NeoBundle 'vim-scripts/ruby-matchit'     " rubyのブロックを%で移動
+NeoBundle 'soramugi/auto-ctags.vim'      " ctags生成
+NeoBundle 'vim-scripts/YankRing.vim'     " ヤンク履歴管理
+NeoBundle 'vim-scripts/Align'            " テキスト整形
+NeoBundle 'vim-scripts/QuickBuf'         " バッファ操作
+NeoBundle 'vim-scripts/errormarker.vim'  " QuickFixエラーにマーカー
 "" end
 
 " ファイルタイプの検出,ファイルタイプ用プラグインプラグイン,インデントを有効化(NeoBundleによる処理が終了した後に実施)
 filetype plugin indent on
 
-""" 各種設定読込
-"" 基本設定
+"" 各種設定読込
 source ~/.vim/config.vim
 source ~/.vim/config.bundle.vim
