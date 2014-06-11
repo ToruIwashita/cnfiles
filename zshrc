@@ -1,5 +1,5 @@
 ## 変数の設定
-local zsh_dir zsh_plugin_dir zsh_completions_src dir function_path
+local zsh_dir zsh_plugin_dir zsh_completions_src dir file
 local -a zsh_function_dirs
 
 zsh_dir=.zsh.d
@@ -42,8 +42,8 @@ source ~/$zsh_dir/config.zsh
 source ~/$zsh_dir/config.local.zsh
 # 関数読込
 for dir in ${zsh_function_dirs[@]}; do
-  for function_path in ${dir}/*.zsh(.); do
-    autoload -Uz $function_path:t && $function_path:t
+  for file in ${dir}/*.zsh(.); do
+    autoload -Uz $file:t && $file:t
   done
 done
 
