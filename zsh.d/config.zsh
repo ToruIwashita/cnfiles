@@ -156,12 +156,8 @@ zle -N zle-keymap-select _zle-keymap-select  # _zle-keymap-selectをzle-keymap-s
 zle -N edit-command-line                     # コマンドラインを$EDITORで編集
 
 ## prompt
-# 色定義
-local default_style color_style
-default_style='[0m'
-color_style='[38;5;33m'
 # プロンプト表示
-PROMPT='%{$color_style%}_%{$default_style%}
-%{$color_style%}|%{$default_style%}[${vcs_info_msg_0_}]:%~/
-%{$color_style%}└-%{$default_style%}(%?)%F{$PROMPT_VIM_MODE_COLOR}%#%f '
+PROMPT='%{[38;5;33m%}_%{[0m%}
+%{[38;5;33m%}|%{[0m%}[${vcs_info_msg_0_}]:%~/
+%{[38;5;33m%}└-%{[0m%}(%?)%F{$PROMPT_VIM_MODE_COLOR}%#%f '
 RPROMPT='[%D{%T}|%n]'
