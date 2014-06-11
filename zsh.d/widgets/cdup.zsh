@@ -1,4 +1,4 @@
-## cdup widgets
+## cdup widget
 _cdup() {
   local precmd_func after_buffer
   local -a args
