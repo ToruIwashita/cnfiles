@@ -133,7 +133,7 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}              # 補完候�
 # precmd
 precmd() {
   vcs_info
-  PROMPT_VIM_MODE_COLOR="blue"
+  PROMPT_VIM_MODE_COLOR='blue'
 }
 # chpwd
 chpwd() {
