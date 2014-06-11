@@ -1,58 +1,38 @@
 "" FILE: config.vim
 " Vimの基本的な設定を記述
 
-"" オプション
-" 補完設定
+"" シンタックスハイライト
+syntax on
+"" 補完設定
 set wildmenu
 set wildmode=full
 " `wildchar`:ワイルドカード展開に使用する文字(補完開始)
 " `wildcharm`:マクロでも使えるワイルドカード展開に使用する文字
 " 以下の設定によりコマンドラインモード(cnoremap)で元のマッピングが機能するようになる
 let &wildcharm = &wildchar
-" シンタックスハイライト
-syntax on
-" シンタックスハイライトの開始/終了タグ検索の閾値
-syntax sync minlines=500 maxlines=1000
-" エンコーディングUTF-8
-set encoding=utf8
-" 256色モード
-set t_Co=256
-" ステータスライン常に表示
-set laststatus=2
-" タブライン常に表示
-set showtabline=2
-" カレントバッファ内のファイルの文字UTF-8
-set fileencoding=utf-8
-" タブ文字の代わりに半角スペース
-set expandtab
-" C言語スタイルインデント
-set autoindent
-" オートインデント時の空白文字数
-set shiftwidth=2
-" tabが対応する空白の文字数
-set tabstop=2
-" 行数表示
-set number
-" インクリメンタルサーチ
-set incsearch
-" サーチ結果ハイライト
-set hlsearch
-" 外部で変更のあったファイルを自動的に読み直す
-set autoread
-" インサートモード時backspece有効
-set backspace=indent,eol,start
-" <C-a>,<C-x>で使う基数を10進数に
-set nrformats=octal
-" 矩形ビジュアル無文字部分カーソル移動
-set virtualedit=block
-" 上下3行の表示を固定
-set scrolloff=2
-" 横分割かつ,ターミナルが部分スクロールをサポートしていないとき,再描画が滑らかになる
-set ttyfast
-" スクリプト実行中に画面を描画しない
-set lazyredraw
-" tagsファイル読み込み
-set tags=.tags,tags
+syntax sync minlines=500 maxlines=1000  " シンタックスハイライトの開始/終了タグ検索の閾値
+
+"" 通常オプション
+set encoding=utf8               " エンコーディングUTF-8
+set t_Co=256                    " 256色モード
+set laststatus=2                " ステータスライン常に表示
+set showtabline=2               " タブライン常に表示
+set fileencoding=utf-8          " カレントバッファ内のファイルの文字UTF-8
+set expandtab                   " タブ文字の代わりに半角スペース
+set autoindent                  " C言語スタイルインデント
+set shiftwidth=2                " オートインデント時の空白文字数
+set tabstop=2                   " tabが対応する空白の文字数
+set number                      " 行数表示
+set incsearch                   " インクリメンタルサーチ
+set hlsearch                    " サーチ結果ハイライト
+set autoread                    " 外部で変更のあったファイルを自動的に読み直す
+set backspace=indent,eol,start  " インサートモード時backspece有効
+set nrformats=octal             " <C-a>,<C-x>で使う基数を10進数に
+set virtualedit=block           " 矩形ビジュアル無文字部分カーソル移動
+set scrolloff=2                 " 上下3行の表示を固定
+set ttyfast                     " 横分割かつ,ターミナルが部分スクロールをサポートしていないとき,再描画が滑らかになる
+set lazyredraw                  " スクリプト実行中に画面を描画しない
+set tags=.tags,tags             " tagsファイル読み込み
 
 "" 補完ポップアップメニュー色設定
 hi Pmenu ctermbg=8 guibg=#606060
