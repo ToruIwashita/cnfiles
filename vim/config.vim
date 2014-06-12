@@ -59,8 +59,9 @@ cnoremap <C-d> <DEL>
 "" noremap
 " サスペンド無効化
 noremap <C-z> <NOP>
-noremap <C-w><C-z> :<C-u>pclose
-noremap <C-w>z :<C-u>pclose
+" プレビューウィンドウクローズ
+noremap <C-w><C-z> :<C-u>pclose<CR>
+noremap <C-w>z :<C-u>pclose<CR>
 " 現在のバッファ削除
 noremap <C-w>x <NOP>
 noremap <C-w>x :<C-u>bdelete<CR>
