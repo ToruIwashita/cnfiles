@@ -182,3 +182,9 @@ augroup VimrcChecktime
   autocmd!
   autocmd WinEnter * checktime
 augroup END
+
+" quickfixのサイズ調整
+augroup AdjustQuickfixWindow
+  autocmd!
+  autocmd FileType qf exe max([min([line('$'),&lines/2]),10]).'wincmd _'
+augroup END
