@@ -21,6 +21,13 @@ let g:DrChipTopLvlMenu = ''  " GUIのメニュー表示(不要な場合は空文
 " コマンドラインモードabbreviate
 cnorea A Align
 cnorea '<,'>A '<,'>Align
+vnoremap <CR> :<C-u>'<,'>Align<SPACE>
+
+"" ag
+" コマンドラインモードabbreviate
+nnoremap <C-a> :<C-u>Ag<SPACE>
+vnoremap <C-a> :<C-u>Ag<SPACE><C-r><C-w><SPACE>
+
 
 "" yankring
 let g:yankring_history_dir = '~/.cache/yankring/'  " yankring_historyの保存先を指定
@@ -97,3 +104,5 @@ let g:wildfire_objects = [
 let g:auto_ctags = 0                                                                    " BufWritePostで自動実行しない
 let g:auto_ctags_tags_name = '.tags'                                                    " tagsファイル名
 let g:auto_ctags_tags_args = '--recurse --tag-relative --sort=yes --languages=sh,ruby'  " ctags実行オプション
+" コマンドラインモードabbreviate
+cnorea C Ctags
