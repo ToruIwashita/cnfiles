@@ -60,8 +60,8 @@ bindkey -v '^q' self-insert                          # Ctr+qでself-insert
 bindkey -v '^w' backward-kill-word                   # Ctr+wでbackward-kill-word
 bindkey -v '^s^l' edit-command-line                  # Ctr+s,Ctr+lでコマンドライン編集
 bindkey -v '^@' clear-screen                         # Ctr+@でclear-screen
-bindkey -v "^_" cdup                                 # Ctr+_でcdup
-bindkey -v "^[[Z" reverse-menu-complete              # Shift+tabで逆タブ補完
+bindkey -v '^_' cdup                                 # Ctr+_でcdup
+bindkey -v '^[[Z' reverse-menu-complete              # Shift+tabで逆タブ補完
 # 補完メニュー選択モードキーマップ
 bindkey -M menuselect '^b' backward-char                  # Ctr+Bで左へ
 bindkey -M menuselect '^f' forward-char                   # Ctr+Fで右へ
