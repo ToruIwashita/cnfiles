@@ -1,6 +1,11 @@
 ## stty画面出力停止無効
 stty stop undef
 
+## コマンド履歴
+HISTFILE=~/.zsh_history  # ヒストリファイル
+HISTSIZE=100000          # メモリに展開する履歴数
+SAVEHIST=100000          # 保存する履歴数
+
 ## オプション設定
 setopt no_beep               # ビープ音なし
 setopt auto_cd               # 自動CD
@@ -33,11 +38,6 @@ setopt numeric_glob_sort     # ファイル名を数値としてソート
 setopt multios               # 複数リダイレクト記述有効
 setopt no_clobber            # リダイレクト時既に存在するファイル上書きエラー
 setopt no_flow_control       # フローコントロール無効
-
-## コマンド履歴
-HISTFILE=~/.zsh_history  # ヒストリファイル
-HISTSIZE=100000          # メモリに展開する履歴数
-SAVEHIST=100000          # 保存する履歴数
 
 ## bindkey
 # vimモードキーマップ
@@ -120,12 +120,11 @@ alias gs="git status -s"
 alias gl="git log"
 alias gla="git log --graph --all --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"
 
-## zstyle
+## completion
 # vcs_info
 zstyle ':vcs_info:*' enable git hg
 zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
 zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
-# completion
 zstyle ':completion:*' completer _complete _match _ignored _prefix # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
 zstyle ':completion:*' menu true select                            # 補完候補のカーソル選択有効
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}              # 補完候補色付け
@@ -162,3 +161,7 @@ PROMPT='%{[38;5;33m%}_%{[0m%}
 %{[38;5;33m%}|%{[0m%}[${vcs_info_msg_0_}]:%~/
 %{[38;5;33m%}└-%{[0m%}(%?)%F{$PROMPT_VIM_MODE_COLOR}%#%f '
 RPROMPT='[%D{%T}|%n]'
+
+## command-line
+# 色定義
+zle_highlight=(region:standout special:standout suffix:bold isearch:fg=red)
