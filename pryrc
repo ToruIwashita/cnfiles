@@ -5,6 +5,10 @@ default_command_set = Pry::CommandSet.new do
     system 'clear'
   end
 
+  command 'q!' do
+    exit!
+  end
+
   command 'caller_method' do |depth|
     depth = depth.to_i || 1
     if /^(.+?):(\d+)(?::in `(.*)')?/ =~ caller(depth+1).first
@@ -34,9 +38,6 @@ if File.exist?(rails)
 
   # r! to reload Rails console
   def r!; reload! end
-
-  # q! to exit Rails console
-  def q!; exit! end
 
   # SQL commands through the AR
   def sql(query)
