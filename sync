@@ -13,9 +13,6 @@ ZSH_DIR_PATH=~/.$ZSH_DIR
 VIM_DIR_PATH=~/.$VIM_DIR
 CACHE_DIR_PATH=~/.$CACHE_DIR
 
-# plugin dir,path
-ZSH_COMPLETIONS_DIR_PATH=$ZSH_DIR_PATH/plugin/zsh-completions
-
 # src dir,path
 SRC_DIR_PATH=~/src
 LOCAL_DIR_PATH=~/local
@@ -28,11 +25,16 @@ CTAGS_SRC_DIR_PATH=$SRC_DIR_PATH/ctags
 SILVER_SEARCHER_SRC_DIR_PATH=$SRC_DIR_PATH/silver_searcher
 NEOVIM_SRC_DIR_PATH=$SRC_DIR_PATH/neovim  # 使用していない
 
+# plugin dir,path
+ZSH_COMPLETIONS_DIR_PATH=$ZSH_DIR_PATH/plugin/zsh-completions
+ZSH_HISTORY_SUBSTRING_SEARCH_DIR_PATH=$ZSH_DIR_PATH/plugin/zsh-history-substring-search
+
 # repositories
 ZSH_REPOSITORY='git://github.com/zsh-users/zsh'
 VIM_REPOSITORY='git://github.com/vim-jp/vim'
 TMUX_REPOSITORY='git://git.code.sf.net/p/tmux/tmux-code'
 ZSH_COMPLETIONS_REPOSITORY='git://github.com/zsh-users/zsh-completions'
+ZSH_HISTORY_SUBSTRING_SEARCH_REPOSITORY='git://github.com/zsh-users/zsh-history-substring-search'
 NEOBUNDLE_REPOSITORY='git://github.com/Shougo/neobundle.vim'
 GIT_REPOSITORY='git://github.com/gitster/git'
 LUAJIT_REPOSITORY='http://luajit.org/git/luajit-2.0.git'
@@ -42,42 +44,43 @@ NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 
 ## init
 # source or local
-[[ -d $SRC_DIR_PATH ]]                        || mkdir $SRC_DIR_PATH
-[[ -d $LOCAL_DIR_PATH ]]                      || mkdir $LOCAL_DIR_PATH
-[[ -d $ZSH_SRC_DIR_PATH ]]                    || git clone $ZSH_REPOSITORY $ZSH_SRC_DIR_PATH
-[[ -d $VIM_SRC_DIR_PATH ]]                    || git clone $VIM_REPOSITORY $VIM_SRC_DIR_PATH
-[[ -d $TMUX_SRC_DIR_PATH ]]                   || git clone $TMUX_REPOSITORY $TMUX_SRC_DIR_PATH
-[[ -d $GIT_SRC_DIR_PATH ]]                    || git clone $GIT_REPOSITORY $GIT_SRC_DIR_PATH
-[[ -d $LUAJIT_SRC_DIR_PATH ]]                 || git clone $LUAJIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
-[[ -d $CTAGS_SRC_DIR_PATH ]]                  || git clone $CTAGS_REPOSITORY $CTAGS_SRC_DIR_PATH
-[[ -d $SILVER_SEARCHER_SRC_DIR_PATH ]]        || git clone $SILVER_SEARCHER_REPOSITORY $SILVER_SEARCHER_SRC_DIR_PATH
-[[ -d $NEOVIM_SRC_DIR_PATH ]]                 || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
+[[ -d $SRC_DIR_PATH ]]                          || mkdir $SRC_DIR_PATH
+[[ -d $LOCAL_DIR_PATH ]]                        || mkdir $LOCAL_DIR_PATH
+[[ -d $ZSH_SRC_DIR_PATH ]]                      || git clone $ZSH_REPOSITORY $ZSH_SRC_DIR_PATH
+[[ -d $VIM_SRC_DIR_PATH ]]                      || git clone $VIM_REPOSITORY $VIM_SRC_DIR_PATH
+[[ -d $TMUX_SRC_DIR_PATH ]]                     || git clone $TMUX_REPOSITORY $TMUX_SRC_DIR_PATH
+[[ -d $GIT_SRC_DIR_PATH ]]                      || git clone $GIT_REPOSITORY $GIT_SRC_DIR_PATH
+[[ -d $LUAJIT_SRC_DIR_PATH ]]                   || git clone $LUAJIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
+[[ -d $CTAGS_SRC_DIR_PATH ]]                    || git clone $CTAGS_REPOSITORY $CTAGS_SRC_DIR_PATH
+[[ -d $SILVER_SEARCHER_SRC_DIR_PATH ]]          || git clone $SILVER_SEARCHER_REPOSITORY $SILVER_SEARCHER_SRC_DIR_PATH
+[[ -d $NEOVIM_SRC_DIR_PATH ]]                   || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
 # cache dir
-[[ -d $CACHE_DIR_PATH ]]                      || mkdir $CACHE_DIR_PATH
+[[ -d $CACHE_DIR_PATH ]]                        || mkdir $CACHE_DIR_PATH
 # zsh
-[[ -d $ZSH_DIR_PATH ]]                        || mkdir $ZSH_DIR_PATH
-[[ -f $ZSH_DIR_PATH/config.zsh ]]             || touch $ZSH_DIR_PATH/config.zsh
-[[ -f $ZSH_DIR_PATH/config.local.zsh ]]       || touch $ZSH_DIR_PATH/config.local.zsh
-[[ -d $ZSH_DIR_PATH/functions ]]              || mkdir $ZSH_DIR_PATH/functions
-[[ -d $ZSH_DIR_PATH/completions ]]            || mkdir $ZSH_DIR_PATH/completions
-[[ -d $ZSH_DIR_PATH/widgets ]]                || mkdir $ZSH_DIR_PATH/widgets
-[[ -d $ZSH_DIR_PATH/local ]]                  || mkdir $ZSH_DIR_PATH/local
-[[ -d $ZSH_DIR_PATH/local/functions ]]        || mkdir $ZSH_DIR_PATH/local/functions
-[[ -d $ZSH_DIR_PATH/local/completions ]]      || mkdir $ZSH_DIR_PATH/local/completions
-[[ -d $ZSH_DIR_PATH/plugin ]]                 || mkdir $ZSH_DIR_PATH/plugin
-[[ -d $ZSH_DIR_PATH/plugin/zsh-completions ]] || git clone $ZSH_COMPLETIONS_REPOSITORY $ZSH_COMPLETIONS_DIR_PATH
+[[ -d $ZSH_DIR_PATH ]]                          || mkdir $ZSH_DIR_PATH
+[[ -f $ZSH_DIR_PATH/config.zsh ]]               || touch $ZSH_DIR_PATH/config.zsh
+[[ -f $ZSH_DIR_PATH/config.local.zsh ]]         || touch $ZSH_DIR_PATH/config.local.zsh
+[[ -d $ZSH_DIR_PATH/functions ]]                || mkdir $ZSH_DIR_PATH/functions
+[[ -d $ZSH_DIR_PATH/completions ]]              || mkdir $ZSH_DIR_PATH/completions
+[[ -d $ZSH_DIR_PATH/widgets ]]                  || mkdir $ZSH_DIR_PATH/widgets
+[[ -d $ZSH_DIR_PATH/local ]]                    || mkdir $ZSH_DIR_PATH/local
+[[ -d $ZSH_DIR_PATH/local/functions ]]          || mkdir $ZSH_DIR_PATH/local/functions
+[[ -d $ZSH_DIR_PATH/local/completions ]]        || mkdir $ZSH_DIR_PATH/local/completions
+[[ -d $ZSH_DIR_PATH/plugin ]]                   || mkdir $ZSH_DIR_PATH/plugin
+[[ -d $ZSH_COMPLETIONS_DIR_PATH ]]              || git clone $ZSH_COMPLETIONS_REPOSITORY $ZSH_COMPLETIONS_DIR_PATH
+[[ -d $ZSH_HISTORY_SUBSTRING_SEARCH_DIR_PATH ]] || git clone $ZSH_HISTORY_SUBSTRING_SEARCH_REPOSITORY $ZSH_HISTORY_SUBSTRING_SEARCH_DIR_PATH
 # vim
-[[ -d $VIM_DIR_PATH ]]                        || mkdir $VIM_DIR_PATH
-[[ -f $VIM_DIR_PATH/config.vim ]]             || touch $VIM_DIR_PATH/config.vim
-[[ -f $VIM_DIR_PATH/config.bundle.vim ]]      || touch $VIM_DIR_PATH/config.bundle.vim
-[[ -d $VIM_DIR_PATH/ftplugin ]]               || mkdir $VIM_DIR_PATH/ftplugin
-[[ -d $VIM_DIR_PATH/ftdetect ]]               || mkdir $VIM_DIR_PATH/ftdetect
-[[ -d $VIM_DIR_PATH/after ]]                  || mkdir $VIM_DIR_PATH/after
-[[ -d $VIM_DIR_PATH/after/plugin ]]           || mkdir $VIM_DIR_PATH/after/plugin
-[[ -d $VIM_DIR_PATH/after/ftplugin ]]         || mkdir $VIM_DIR_PATH/after/ftplugin
-[[ -d $VIM_DIR_PATH/bundle ]]                 || mkdir $VIM_DIR_PATH/bundle
-[[ -d $VIM_DIR_PATH/bundle/neobundle.vim ]]   || git clone $NEOBUNDLE_REPOSITORY $VIM_DIR_PATH/bundle/neobundle.vim
-[[ -d $CACHE_DIR_PATH/yankring ]]             || mkdir $CACHE_DIR_PATH/yankring
+[[ -d $VIM_DIR_PATH ]]                          || mkdir $VIM_DIR_PATH
+[[ -f $VIM_DIR_PATH/config.vim ]]               || touch $VIM_DIR_PATH/config.vim
+[[ -f $VIM_DIR_PATH/config.bundle.vim ]]        || touch $VIM_DIR_PATH/config.bundle.vim
+[[ -d $VIM_DIR_PATH/ftplugin ]]                 || mkdir $VIM_DIR_PATH/ftplugin
+[[ -d $VIM_DIR_PATH/ftdetect ]]                 || mkdir $VIM_DIR_PATH/ftdetect
+[[ -d $VIM_DIR_PATH/after ]]                    || mkdir $VIM_DIR_PATH/after
+[[ -d $VIM_DIR_PATH/after/plugin ]]             || mkdir $VIM_DIR_PATH/after/plugin
+[[ -d $VIM_DIR_PATH/after/ftplugin ]]           || mkdir $VIM_DIR_PATH/after/ftplugin
+[[ -d $VIM_DIR_PATH/bundle ]]                   || mkdir $VIM_DIR_PATH/bundle
+[[ -d $VIM_DIR_PATH/bundle/neobundle.vim ]]     || git clone $NEOBUNDLE_REPOSITORY $VIM_DIR_PATH/bundle/neobundle.vim
+[[ -d $CACHE_DIR_PATH/yankring ]]               || mkdir $CACHE_DIR_PATH/yankring
 
 ## update source files
 printf "### git pull zsh src.\n"
@@ -98,6 +101,8 @@ printf "### git pull neovim src.\n"
 cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
 printf "### git pull zsh-completions.\n"
 cd $ZSH_COMPLETIONS_DIR_PATH && git pull
+printf "### git pull zsh-history-substring-search\n"
+cd $ZSH_HISTORY_SUBSTRING_SEARCH_DIR_PATH && git pull
 
 ### copy files
 cd $BASE_DIR_PATH
