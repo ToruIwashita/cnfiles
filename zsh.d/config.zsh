@@ -70,6 +70,7 @@ bindkey -M menuselect '^n' down-line-or-history           # Ctr+Nで下へ
 bindkey -M menuselect '^p' up-line-or-history             # Ctr+Pで上へ
 bindkey -M menuselect '^k' accept-and-infer-next-history  # Ctr+Kで次の補完メニュー
 bindkey -M menuselect '^j' double-accept-line             # Ctr+Jでaccept-line２回
+bindkey -M menuselect '^s' vi-insert                      # Ctr+rでmenu内で絞り込み
 
 ## エイリアス
 # gnu command
