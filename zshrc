@@ -11,7 +11,9 @@ zsh_function_dirs=(
   ~/$zsh_dir/local/functions
   ~/$zsh_dir/local/completions
 )
-zsh_completions_src=$zsh_plugin_dir/zsh-completions/src  # plugin path
+# plugin path
+zsh_completions_dir=$zsh_plugin_dir/zsh-completions/src
+zsh_history_substring_search_src=$zsh_plugin_dir/zsh-history-substring-search/zsh-history-substring-search.zsh
 
 ## 環境変数設定
 export LANG=ja_JP.UTF-8                    # utf-8
@@ -24,8 +26,8 @@ export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 [[ -z $ld_library_path ]] && typeset -xT LD_LIBRARY_PATH ld_library_path
 [[ -z $include ]] && typeset -xT INCLUDE include
 
-## fpath設定
-fpath=($zsh_function_dirs $zsh_completions_src $fpath)
+## fpath設定,ディレクトリ読み込みplugin追加
+fpath=($zsh_function_dirs $zsh_completions_dir $fpath)
 
 ## 関数ロード
 autoload -Uz colors && colors         # 色の定義
@@ -35,6 +37,10 @@ autoload -Uz vcs_info                 # VersionControlSystem
 autoload -Uz add-zsh-hook             # フック関数登録
 autoload -Uz edit-command-line        # コマンドライン編集
 zmodload -i zsh/complist              # 補完メニュー選択モードのキーマップ
+zmodload -i zsh/terminfo              # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
+
+## plugin読み込み
+source $zsh_history_substring_search_src
 
 ## 各種設定・オリジナル関数読込
 # 設定読込

@@ -49,9 +49,9 @@ bindkey -v '^f' forward-char                         # Ctr+fで１文字右へ
 bindkey -v '^g' send-break                           # Ctr+gで入力キャンセル
 bindkey -v '^j' accept-line                          # Ctr+jで入力実行
 bindkey -v '^k' kill-line                            # Ctr+kで行末まで削除
-bindkey -v '^n' down-line-or-history                 # Ctr+nで１行下へ
+bindkey -v '^n' history-substring-search-down        # Ctr+nで部分文字列検索,下
 bindkey -v '^o' into-dir-and-push-remains-to-prompt  # Ctr+oでバッファ残しディレクトリ移動
-bindkey -v '^p' up-line-or-history                   # Ctr+pで１行上へ
+bindkey -v '^p' history-substring-search-up          # Ctr+pで部分文字列検索,上
 bindkey -v '^r' history-incremental-search-backward  # Ctr+rでインクリメンタルサーチ
 bindkey -v '^y' push-input                           # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
 bindkey -v '^u' kill-word                            # Ctr+uでkill-word
