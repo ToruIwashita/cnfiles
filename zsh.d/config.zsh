@@ -74,7 +74,7 @@ bindkey -M menuselect '^k' accept-and-infer-next-history      # Ctr+kで次の�
 bindkey -M menuselect '^n' down-line-or-history               # Ctr+nで下へ
 bindkey -M menuselect '^p' up-line-or-history                 # Ctr+pで上へ
 bindkey -M menuselect '^r' history-incremental-search-forward # Ctr+rでインクリメンタルサーチフォワード
-bindkey -M menuselect '^s' vi-insert                          # Ctr+rでmenu絞り込み
+bindkey -M menuselect '^s' vi-insert                          # Ctr+sでmenu絞り込み
 
 ## エイリアス
 # gnu command
