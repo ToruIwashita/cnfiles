@@ -33,13 +33,13 @@ ZSH_HISTORY_SUBSTRING_SEARCH_DIR_PATH=$ZSH_DIR_PATH/plugin/zsh-history-substring
 ZSH_REPOSITORY='git://github.com/zsh-users/zsh'
 VIM_REPOSITORY='git://github.com/vim-jp/vim'
 TMUX_REPOSITORY='git://git.code.sf.net/p/tmux/tmux-code'
-ZSH_COMPLETIONS_REPOSITORY='git://github.com/zsh-users/zsh-completions'
-ZSH_HISTORY_SUBSTRING_SEARCH_REPOSITORY='git://github.com/zsh-users/zsh-history-substring-search'
-NEOBUNDLE_REPOSITORY='git://github.com/Shougo/neobundle.vim'
 GIT_REPOSITORY='git://github.com/gitster/git'
 LUAJIT_REPOSITORY='http://luajit.org/git/luajit-2.0.git'
 CTAGS_REPOSITORY='git://github.com/fishman/ctags'
 SILVER_SEARCHER_REPOSITORY='git://github.com/ggreer/the_silver_searcher'
+ZSH_COMPLETIONS_REPOSITORY='git://github.com/zsh-users/zsh-completions'
+ZSH_HISTORY_SUBSTRING_SEARCH_REPOSITORY='git://github.com/zsh-users/zsh-history-substring-search'
+NEOBUNDLE_REPOSITORY='git://github.com/Shougo/neobundle.vim'
 NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 
 ## init
@@ -97,12 +97,12 @@ printf "### git pull ctags src.\n"
 cd $CTAGS_SRC_DIR_PATH && git pull
 printf "### git pull silver_searcher src.\n"
 cd $SILVER_SEARCHER_SRC_DIR_PATH && git pull
-printf "### git pull neovim src.\n"
-cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
 printf "### git pull zsh-completions.\n"
 cd $ZSH_COMPLETIONS_DIR_PATH && git pull
 printf "### git pull zsh-history-substring-search\n"
 cd $ZSH_HISTORY_SUBSTRING_SEARCH_DIR_PATH && git pull
+printf "### git pull neovim src.\n"
+cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
 
 ### copy files
 cd $BASE_DIR_PATH
