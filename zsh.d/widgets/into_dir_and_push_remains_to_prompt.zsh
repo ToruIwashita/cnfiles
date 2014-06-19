@@ -10,7 +10,7 @@ _into-dir-and-push-remains-to-prompt() {
 
   dest=$PWD
   if [[ $resource_path =~ '/$' ]]; then
-    args[$resource_index]='./'
+    args[$resource_index]=''
     dest=$resource_path
   elif [[ $resource_path:h != '.' ]]; then
     args[$resource_index]=$resource_path:t
