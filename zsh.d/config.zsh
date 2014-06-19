@@ -54,6 +54,7 @@ bindkey -v '^n' history-substring-search-down        # Ctr+nで部分文字列�
 bindkey -v '^o' into-dir-and-push-remains-to-prompt  # Ctr+oでバッファ残しディレクトリ移動
 bindkey -v '^p' history-substring-search-up          # Ctr+pで部分文字列検索,上
 bindkey -v '^r' history-incremental-search-backward  # Ctr+rでインクリメンタルサーチ
+bindkey -v '^s' insert-current-files                 # Ctr+sでカレントディレクトリのファイルをBUFFERに入れる
 bindkey -v '^y' push-input                           # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
 bindkey -v '^u' kill-word                            # Ctr+uでkill-word
 bindkey -v '^l' start-editor                         # Ctr+vでstart-editor
