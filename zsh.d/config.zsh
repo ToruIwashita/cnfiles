@@ -47,8 +47,9 @@ bindkey -v '^d' delete-char-or-list                  # Ctr+dで１文字削除
 bindkey -v '^e' end-of-line                          # Ctr+eで行末へ
 bindkey -v '^f' forward-char                         # Ctr+fで１文字右へ
 bindkey -v '^g' send-break                           # Ctr+gで入力キャンセル
+bindkey -v '^i' complete-files                       # ファイル補完
 bindkey -v '^j' accept-line                          # Ctr+jで入力実行
-bindkey -v '^k' kill-line                            # Ctr+kで行末まで削除
+bindkey -v '^k' self-insert                          # Prefixとして使用
 bindkey -v '^n' history-substring-search-down        # Ctr+nで部分文字列検索,下
 bindkey -v '^o' into-dir-and-push-remains-to-prompt  # Ctr+oでバッファ残しディレクトリ移動
 bindkey -v '^p' history-substring-search-up          # Ctr+pで部分文字列検索,上
@@ -58,7 +59,8 @@ bindkey -v '^u' kill-word                            # Ctr+uでkill-word
 bindkey -v '^l' start-editor                         # Ctr+vでstart-editor
 bindkey -v '^q' self-insert                          # Ctr+qでself-insert
 bindkey -v '^w' backward-kill-word                   # Ctr+wでbackward-kill-word
-bindkey -v '^s^l' edit-command-line                  # Ctr+s,Ctr+lでコマンドライン編集
+bindkey -v '^k^l' edit-command-line                  # Ctr+s,Ctr+lでコマンドライン編集
+bindkey -v '^k^i' expand-or-complete                 # 通常補完
 bindkey -v '^@' clear-screen                         # Ctr+@でclear-screen
 bindkey -v '^_' cdup                                 # Ctr+_でcdup
 bindkey -v '^[[Z' reverse-menu-complete              # Shift+tabで逆タブ補完
@@ -71,6 +73,7 @@ bindkey -M menuselect '^p' up-line-or-history             # Ctr+Pで上へ
 bindkey -M menuselect '^k' accept-and-infer-next-history  # Ctr+Kで次の補完メニュー
 bindkey -M menuselect '^j' double-accept-line             # Ctr+Jでaccept-line２回
 bindkey -M menuselect '^s' vi-insert                      # Ctr+rでmenu内で絞り込み
+bindkey -M menuselect ' ' accept-and-hold
 
 ## エイリアス
 # gnu command
@@ -120,15 +123,6 @@ alias gs="git status -s"
 alias gl="git log"
 alias gla="git log --graph --all --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"
 
-## completion
-# vcs_info
-zstyle ':vcs_info:*' enable git hg
-zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
-zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
-zstyle ':completion:*' completer _complete _match _ignored _prefix # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
-zstyle ':completion:*' menu true select                            # 補完候補のカーソル選択有効
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}              # 補完候補色付け
-
 ## functions
 # precmd
 precmd() {
@@ -152,8 +146,20 @@ _zle-keymap-select() {
 
   zle reset-prompt
 }
-zle -N zle-keymap-select _zle-keymap-select  # _zle-keymap-selectをzle-keymap-selectに設定
-zle -N edit-command-line                     # コマンドラインを$EDITORで編集
+zle -N zle-keymap-select _zle-keymap-select # _zle-keymap-selectをzle-keymap-selectに設定
+zle -N edit-command-line                    # コマンドラインを$EDITORで編集
+zle -C complete-files list-choices _generic # ファイル補完用ウィジェット
+
+## zstyle
+# vcs_info
+zstyle ':vcs_info:*' enable git hg
+zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
+zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
+# completion
+zstyle ':completion:*' completer _complete _match _ignored _prefix # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
+zstyle ':completion:*' menu true select                            # 補完候補のカーソル選択有効
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}              # 補完候補色付け
+zstyle ':completion:complete-files:*' completer _files             # ファイル補完用ウィジットコンプリータ指定
 
 ## prompt
 # プロンプト表示
