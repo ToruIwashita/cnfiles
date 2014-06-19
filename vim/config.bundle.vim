@@ -25,8 +25,8 @@ vnoremap <CR> :<C-u>'<,'>Align<SPACE>
 
 "" ag
 " コマンドラインモードabbreviate
-nnoremap <C-s> :<C-u>Ag<SPACE>
-vnoremap <C-s> :<C-u>Ag<SPACE><C-r><C-w><SPACE>
+nnoremap <C-j> :<C-u>Ag<SPACE>
+vnoremap <C-j> :<C-u>Ag<SPACE><C-r><C-w><SPACE>
 
 "" yankring
 let g:yankring_history_dir = '~/.cache/yankring/'  " yankring_historyの保存先を指定
@@ -40,7 +40,7 @@ noremap <C-w>P :<C-u>YRShow<CR>
 nmap <C-w>- <Plug>(choosewin)
 
 "" ctrlp
-let g:ctrlp_map = '<C-j>'                         " Start CtrlP
+let g:ctrlp_map = '<C-s>'                         " Start CtrlP
 let g:ctrlp_match_window = 'min:10,max:'.&lines/2 " quickfixサイズ
 let g:ctrlp_mruf_max = 500                        " 開いたファイル履歴保持数
 let g:ctrlp_clear_cache_on_exit = 0               " 終了時にキャッシュをクリアしない
