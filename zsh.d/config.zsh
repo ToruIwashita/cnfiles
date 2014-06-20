@@ -60,8 +60,9 @@ bindkey -v '^u' kill-word                            # Ctr+uでkill-word
 bindkey -v '^l' start-editor                         # Ctr+vでstart-editor
 bindkey -v '^q' self-insert                          # Ctr+qでself-insert
 bindkey -v '^w' backward-kill-word                   # Ctr+wでbackward-kill-word
+bindkey -v '^k^d' kill-line                          # Ctr+k,Ctr+dでカーソル行以降削除
+bindkey -v '^k^k' complete-files                     # Ctr+k,Ctr+kでファイル補完
 bindkey -v '^k^l' edit-command-line                  # Ctr+k,Ctr+lでコマンドライン編集
-bindkey -v '^k^i' complete-files                     # Ctr+k,Ctr+iでファイル補完
 bindkey -v '^@' clear-screen                         # Ctr+@でclear-screen
 bindkey -v '^_' cdup                                 # Ctr+_でcdup
 bindkey -v '^[[Z' reverse-menu-complete              # Shift+tabで逆タブ補完
@@ -69,6 +70,7 @@ bindkey -v '^[[Z' reverse-menu-complete              # Shift+tabで逆タブ補�
 bindkey -M menuselect '^b' backward-char                      # Ctr+bで左へ
 bindkey -M menuselect '^f' forward-char                       # Ctr+fで右へ
 bindkey -M menuselect '^g' send-break                         # Ctr+gでsend-break
+bindkey -M menuselect '^i' expand-or-complete                 # Ctr+iで補完候補選択
 bindkey -M menuselect '^j' .accept-line                       # Ctr+jで.accept-line
 bindkey -M menuselect '^k' accept-and-infer-next-history      # Ctr+kで次の補完メニュー
 bindkey -M menuselect '^n' down-line-or-history               # Ctr+nで下へ
