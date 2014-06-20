@@ -68,8 +68,8 @@ bindkey -v '^[[Z' reverse-menu-complete              # Shift+tabで逆タブ補�
 # 補完メニュー選択モードキーマップ
 bindkey -M menuselect '^b' backward-char                      # Ctr+bで左へ
 bindkey -M menuselect '^f' forward-char                       # Ctr+fで右へ
-bindkey -M menuselect '^g' double-send-break                  # Ctr+gでsend-break2回
-bindkey -M menuselect '^j' double-accept-line                 # Ctr+jでaccept-line２回
+bindkey -M menuselect '^g' send-break                         # Ctr+gでsend-break
+bindkey -M menuselect '^j' .accept-line                       # Ctr+jで.accept-line
 bindkey -M menuselect '^k' accept-and-infer-next-history      # Ctr+kで次の補完メニュー
 bindkey -M menuselect '^n' down-line-or-history               # Ctr+nで下へ
 bindkey -M menuselect '^p' up-line-or-history                 # Ctr+pで上へ
