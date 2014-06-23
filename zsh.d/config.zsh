@@ -80,7 +80,7 @@ bindkey -M menuselect '^p' up-line-or-history                 # Ctr+pで上へ
 bindkey -M menuselect '^r' history-incremental-search-forward # Ctr+rでインクリメンタルサーチフォワード
 bindkey -M menuselect '^s' .accept-line                       # Ctr+sで.accept-line
 bindkey -M menuselect '^u' send-break                         # Ctr+gでsend-break
-bindkey -M menuselect '^@' accept-and-hold                    # <space>で候補をバッファに入れる
+bindkey -M menuselect '^]' accept-and-hold                    # <space>で候補をバッファに入れる
 
 ## エイリアス
 # gnu command
