@@ -49,9 +49,9 @@ bindkey -v '^e' end-of-line                          # Ctr+eで行末へ
 bindkey -v '^f' forward-char                         # Ctr+fで１文字右へ
 bindkey -v '^g' send-break                           # Ctr+gで入力キャンセル
 bindkey -v '^i' expand-or-complete                   # Ctr+iで通常補完
-bindkey -v '^j' insert-subdirectory-file             # Ctr+jでサブディレクトリのファイルをBUFFERに入れる
+bindkey -v '^j' accept-line                          # Ctr+jでaccept-line
 bindkey -v '^k' complete-files                       # Ctr+kでファイル補完
-bindkey -v '^l' start-editor                         # Ctr+vでstart-editor
+bindkey -v '^l' insert-subdirectory-file             # Ctr+lでサブディレクトリのファイルをBUFFERに入れる
 bindkey -v '^m' accept-line                          # Ctr+mでaccept-line
 bindkey -v '^n' history-substring-search-down        # Ctr+nで部分文字列検索,下
 bindkey -v '^o' into-dir-and-push-remains-to-prompt  # Ctr+oでバッファ残しディレクトリ移動
@@ -62,8 +62,9 @@ bindkey -v '^s' self-insert                          # Ctr+sでself-insert,Prefi
 bindkey -v '^u' kill-word                            # Ctr+uでkill-word
 bindkey -v '^w' backward-kill-word                   # Ctr+wでbackward-kill-word
 bindkey -v '^y' push-input                           # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
+bindkey -v '^ss' edit-command-line                   # Ctr+s,sでコマンドライン編集
 bindkey -v '^s^k' kill-line                          # Ctr+s,Ctr+kでカーソル行以降削除
-bindkey -v '^s^l' edit-command-line                  # Ctr+s,Ctr+lでコマンドライン編集
+bindkey -v '^s^s' start-editor                       # Ctr+s,Ctr+sでstart-editor
 bindkey -v '^@' clear-screen                         # Ctr+@でclear-screen
 bindkey -v '^_' cdup                                 # Ctr+_でcdup
 bindkey -v '^[[Z' reverse-menu-complete              # Shift+tabで逆タブ補完
@@ -72,15 +73,15 @@ bindkey -M menuselect '^b' backward-char                      # Ctr+bで左へ
 bindkey -M menuselect '^f' forward-char                       # Ctr+fで右へ
 bindkey -M menuselect '^g' .send-break                        # Ctr+gでsend-break2回
 bindkey -M menuselect '^i' expand-or-complete                 # Ctr+iで補完候補選択
-bindkey -M menuselect '^j' vi-insert                          # Ctr+jでinteractive補完
+bindkey -M menuselect '^j' .accept-line                       # Ctr+jでaccept-line2回
 bindkey -M menuselect '^k' .accept-and-infer-next-history     # Ctr+kで次の補完メニュー
+bindkey -M menuselect '^l' vi-insert                          # Ctr+lでinteractive補完
 bindkey -M menuselect '^m' accept-line                        # Ctr+mでaccept-line
 bindkey -M menuselect '^n' down-line-or-history               # Ctr+nで下へ
 bindkey -M menuselect '^p' up-line-or-history                 # Ctr+pで上へ
 bindkey -M menuselect '^r' history-incremental-search-forward # Ctr+rでインクリメンタルサーチフォワード
-bindkey -M menuselect '^s' .accept-line                       # Ctr+sで.accept-line
-bindkey -M menuselect '^u' send-break                         # Ctr+gでsend-break
-bindkey -M menuselect '^]' accept-and-hold                    # <space>で候補をバッファに入れる
+bindkey -M menuselect '^u' send-break                         # Ctr+uでsend-break
+bindkey -M menuselect '^]' accept-and-hold                    # Ctr+]で候補をバッファに入れる
 
 ## エイリアス
 # gnu command
