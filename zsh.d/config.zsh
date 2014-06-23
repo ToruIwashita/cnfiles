@@ -159,8 +159,13 @@ _zle-keymap-select() {
 
   zle reset-prompt
 }
+_ls-current() {
+  zle -I
+  ls
+}
 zle -N zle-keymap-select _zle-keymap-select               # _zle-keymap-selectをzle-keymap-selectに設定
 zle -N edit-command-line                                  # コマンドラインを$EDITORで編集
+zle -N ls-current _ls-current                             # ls用ウィジェット
 zle -C interactive-complete-files menu-complete _generic  # ファイルインタラクティブ補完用ウィジェット
 
 ## zstyle
