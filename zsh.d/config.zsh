@@ -49,7 +49,7 @@ bindkey -v '^e' end-of-line                          # Ctr+eで行末へ
 bindkey -v '^f' forward-char                         # Ctr+fで１文字右へ
 bindkey -v '^g' send-break                           # Ctr+gで入力キャンセル
 bindkey -v '^i' expand-or-complete                   # Ctr+iで通常補完
-bindkey -v '^j' insert-nest-file                     # Ctr+jでカレントディレクトリのファイルをBUFFERに入れる
+bindkey -v '^j' insert-subdirectory-file             # Ctr+jでサブディレクトリのファイルをBUFFERに入れる
 bindkey -v '^k' complete-files                       # Ctr+kでファイル補完
 bindkey -v '^l' start-editor                         # Ctr+vでstart-editor
 bindkey -v '^m' accept-line                          # Ctr+mでaccept-line
