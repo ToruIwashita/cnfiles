@@ -63,10 +63,15 @@ bindkey -v '^s' self-insert                          # Ctr+sでself-insert,Prefi
 bindkey -v '^u' kill-word                            # Ctr+uでkill-word
 bindkey -v '^w' backward-kill-word                   # Ctr+wでbackward-kill-word
 bindkey -v '^y' push-input                           # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
+bindkey -v '^sj' cat-current                         # Ctr+s,jでBUFFERをcat
+bindkey -v '^sk' ls-current                          # CTr+s,kでls
+bindkey -v '^sl' edit-command-line                   # Ctr+s,lでBUFFERをエディタ編集
+bindkey -v '^s^j' cat-current                        # Ctr+s,Ctr+jでBUFFERをcat
+bindkey -v '^s^k' ls-current                         # Ctr+s,Ctr+kでls
 bindkey -v '^s^l' edit-command-line                  # Ctr+s,Ctr+lでコマンドラインエディタ編集
-bindkey -v '^s^k' kill-line                          # Ctr+s,Ctr+kでカーソル行以降削除
 bindkey -v '^@' clear-screen                         # Ctr+@でclear-screen
 bindkey -v '^_' cdup                                 # Ctr+_でcdup
+bindkey -v '^s^@' kill-line                          # Ctr+s,Ctr+@でカーソル業以降削除
 bindkey -v '^[[Z' reverse-menu-complete              # Shift+tabで逆タブ補完
 # 補完メニュー選択モードキーマップ
 bindkey -M menuselect '^b' backward-char                       # Ctr+bで左へ
