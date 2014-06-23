@@ -48,10 +48,11 @@ bindkey -v '^d' delete-char-or-list                  # Ctr+dで１文字削除
 bindkey -v '^e' end-of-line                          # Ctr+eで行末へ
 bindkey -v '^f' forward-char                         # Ctr+fで１文字右へ
 bindkey -v '^g' send-break                           # Ctr+gで入力キャンセル
+bindkey -v '^h' backward-delete-char                 # Ctr+hでbackward
 bindkey -v '^i' expand-or-complete                   # Ctr+iで通常補完
 bindkey -v '^j' accept-line                          # Ctr+jでaccept-line
-bindkey -v '^k' complete-files                       # Ctr+kでファイル補完
-bindkey -v '^l' insert-subdirectory-file             # Ctr+lでサブディレクトリのファイルをBUFFERに入れる
+bindkey -v '^k' interactive-complete-files           # Ctr+kでファイルインタラクティブ補完
+bindkey -v '^l' start-editor                         # Ctr+lでstart-editor
 bindkey -v '^m' accept-line                          # Ctr+mでaccept-line
 bindkey -v '^n' history-substring-search-down        # Ctr+nで部分文字列検索,下
 bindkey -v '^o' into-dir-and-push-remains-to-prompt  # Ctr+oでバッファ残しディレクトリ移動
@@ -62,26 +63,25 @@ bindkey -v '^s' self-insert                          # Ctr+sでself-insert,Prefi
 bindkey -v '^u' kill-word                            # Ctr+uでkill-word
 bindkey -v '^w' backward-kill-word                   # Ctr+wでbackward-kill-word
 bindkey -v '^y' push-input                           # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
-bindkey -v '^ss' edit-command-line                   # Ctr+s,sでコマンドライン編集
+bindkey -v '^s^l' edit-command-line                  # Ctr+s,Ctr+lでコマンドラインエディタ編集
 bindkey -v '^s^k' kill-line                          # Ctr+s,Ctr+kでカーソル行以降削除
-bindkey -v '^s^s' start-editor                       # Ctr+s,Ctr+sでstart-editor
 bindkey -v '^@' clear-screen                         # Ctr+@でclear-screen
 bindkey -v '^_' cdup                                 # Ctr+_でcdup
 bindkey -v '^[[Z' reverse-menu-complete              # Shift+tabで逆タブ補完
 # 補完メニュー選択モードキーマップ
-bindkey -M menuselect '^b' backward-char                      # Ctr+bで左へ
-bindkey -M menuselect '^f' forward-char                       # Ctr+fで右へ
-bindkey -M menuselect '^g' .send-break                        # Ctr+gでsend-break2回
-bindkey -M menuselect '^i' expand-or-complete                 # Ctr+iで補完候補選択
-bindkey -M menuselect '^j' .accept-line                       # Ctr+jでaccept-line2回
-bindkey -M menuselect '^k' .accept-and-infer-next-history     # Ctr+kで次の補完メニュー
-bindkey -M menuselect '^l' vi-insert                          # Ctr+lでinteractive補完
-bindkey -M menuselect '^m' accept-line                        # Ctr+mでaccept-line
-bindkey -M menuselect '^n' down-line-or-history               # Ctr+nで下へ
-bindkey -M menuselect '^p' up-line-or-history                 # Ctr+pで上へ
-bindkey -M menuselect '^r' history-incremental-search-forward # Ctr+rでインクリメンタルサーチフォワード
-bindkey -M menuselect '^u' send-break                         # Ctr+uでsend-break
-bindkey -M menuselect '^]' accept-and-hold                    # Ctr+]で候補をバッファに入れる
+bindkey -M menuselect '^b' backward-char                       # Ctr+bで左へ
+bindkey -M menuselect '^f' forward-char                        # Ctr+fで右へ
+bindkey -M menuselect '^g' .send-break                         # Ctr+gでsend-break2回
+bindkey -M menuselect '^i' expand-or-complete                  # Ctr+iで補完候補選択
+bindkey -M menuselect '^j' .accept-line                        # Ctr+jでaccept-line2回
+bindkey -M menuselect '^k' .accept-and-infer-next-history      # Ctr+kで次の補完メニュー
+bindkey -M menuselect '^h' backward-delete-char                # Ctr+hでbackward-delete-char(interactiveでbackword)
+bindkey -M menuselect '^m' accept-line                         # Ctr+mでaccept-line
+bindkey -M menuselect '^n' down-line-or-history                # Ctr+nで下へ
+bindkey -M menuselect '^p' up-line-or-history                  # Ctr+pで上へ
+bindkey -M menuselect '^r' history-incremental-search-forward  # Ctr+rでインクリメンタルサーチフォワード
+bindkey -M menuselect '^u' send-break                          # Ctr+uでsend-break
+bindkey -M menuselect '^]' accept-and-hold                     # Ctr+]で候補をバッファに入れる
 
 ## エイリアス
 # gnu command
@@ -154,9 +154,9 @@ _zle-keymap-select() {
 
   zle reset-prompt
 }
-zle -N zle-keymap-select _zle-keymap-select # _zle-keymap-selectをzle-keymap-selectに設定
-zle -N edit-command-line                    # コマンドラインを$EDITORで編集
-zle -C complete-files menu-select _generic # ファイル補完用ウィジェット
+zle -N zle-keymap-select _zle-keymap-select               # _zle-keymap-selectをzle-keymap-selectに設定
+zle -N edit-command-line                                  # コマンドラインを$EDITORで編集
+zle -C interactive-complete-files menu-complete _generic  # ファイルインタラクティブ補完用ウィジェット
 
 ## zstyle
 # vcs_info
@@ -164,10 +164,11 @@ zstyle ':vcs_info:*' enable git hg
 zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
 zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
 # completion
-zstyle ':completion:*' completer _complete _match _ignored _prefix # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
-zstyle ':completion:*' menu true select                            # 補完候補のカーソル選択有効
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}              # 補完候補色付け
-zstyle ':completion:complete-files:*' completer _files             # ファイル補完用ウィジットコンプリータ指定
+zstyle ':completion:*' completer _complete _match _ignored _prefix         # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
+zstyle ':completion:*' menu true select                                    # 補完候補のカーソル選択有効
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}                      # 補完候補色付け
+zstyle ':completion:interactive-complete-files:*' completer _files         # ファイル補完用ウィジットコンプリータ指定
+zstyle ':completion:interactive-complete-files:*' menu select interactive  # interactive-mode
 
 ## prompt
 # プロンプト表示
