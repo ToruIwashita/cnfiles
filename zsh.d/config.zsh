@@ -35,6 +35,7 @@ setopt hist_reduce_blanks    # 余分なスペースは保存しない
 setopt hist_ignore_space     # 行頭がスペースで始まるコマンドを記録しない
 setopt extended_glob         # 拡張ファイルグロブを有効にする
 setopt numeric_glob_sort     # ファイル名を数値としてソート
+setopt nonomatch             # グロブパターンにマッチしない場合は標準エラー出力する
 setopt multios               # 複数リダイレクト記述有効
 setopt no_clobber            # リダイレクト時既に存在するファイル上書きエラー
 setopt no_flow_control       # フローコントロール無効
@@ -73,7 +74,7 @@ bindkey -M menuselect '^g' .send-break                        # Ctr+gでsend-bre
 bindkey -M menuselect '^i' expand-or-complete                 # Ctr+iで補完候補選択
 bindkey -M menuselect '^j' vi-insert                          # Ctr+jでinteractive補完
 bindkey -M menuselect '^k' .accept-and-infer-next-history     # Ctr+kで次の補完メニュー
-bindkey -M menuselect '^m' .accept-line                       # Ctr+mでaccept-line2回
+bindkey -M menuselect '^m' accept-line                        # Ctr+mでaccept-line
 bindkey -M menuselect '^n' down-line-or-history               # Ctr+nで下へ
 bindkey -M menuselect '^p' up-line-or-history                 # Ctr+pで上へ
 bindkey -M menuselect '^r' history-incremental-search-forward # Ctr+rでインクリメンタルサーチフォワード
