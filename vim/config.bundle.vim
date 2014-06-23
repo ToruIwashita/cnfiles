@@ -40,7 +40,7 @@ noremap <C-w>P :<C-u>YRShow<CR>
 nmap <C-w>- <Plug>(choosewin)
 
 "" ctrlp
-let g:ctrlp_map = '<C-j>'                         " Start CtrlP
+let g:ctrlp_map = '<C-k>'                         " Start CtrlP
 let g:ctrlp_match_window = 'min:10,max:'.&lines/2 " quickfixサイズ
 let g:ctrlp_mruf_max = 500                        " 開いたファイル履歴保持数
 let g:ctrlp_clear_cache_on_exit = 0               " 終了時にキャッシュをクリアしない
