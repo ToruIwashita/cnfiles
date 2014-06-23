@@ -156,7 +156,7 @@ _zle-keymap-select() {
 }
 zle -N zle-keymap-select _zle-keymap-select # _zle-keymap-selectをzle-keymap-selectに設定
 zle -N edit-command-line                    # コマンドラインを$EDITORで編集
-zle -C complete-files list-choices _generic # ファイル補完用ウィジェット
+zle -C complete-files menu-select _generic # ファイル補完用ウィジェット
 
 ## zstyle
 # vcs_info
