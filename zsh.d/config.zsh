@@ -150,13 +150,8 @@ _zle-keymap-select() {
 
   zle reset-prompt
 }
-_ls-current() {
-  zle -I
-  ls
-}
 zle -N zle-keymap-select _zle-keymap-select               # _zle-keymap-selectをzle-keymap-selectに設定
 zle -N edit-command-line                                  # コマンドラインを$EDITORで編集
-zle -N ls-current _ls-current                             # ls用ウィジェット
 zle -C interactive-complete-files menu-complete _generic  # ファイルインタラクティブ補完用ウィジェット
 
 ## zstyle
@@ -166,10 +161,9 @@ zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
 zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
 # completion
 zstyle ':completion:*' completer _complete _match _ignored _prefix         # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
-zstyle ':completion:*' menu true select                                    # 補完候補のカーソル選択有効
+zstyle ':completion:*' menu select interactive                             # menuselect+interactive-mode(補完全般共通)
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}                      # 補完候補色付け
 zstyle ':completion:interactive-complete-files:*' completer _files         # ファイル補完用ウィジットコンプリータ指定
-zstyle ':completion:interactive-complete-files:*' menu select interactive  # interactive-mode
 
 ## prompt
 # プロンプト表示
