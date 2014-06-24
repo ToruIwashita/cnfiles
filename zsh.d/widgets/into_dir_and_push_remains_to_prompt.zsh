@@ -3,7 +3,6 @@ _into-dir-and-push-remains-to-prompt() {
   local chpwd_func resource_index resource_path dest
   local -a args
   args=("${(z)BUFFER}")
-  chpwd_func=$(typeset -f chpwd)
 
   resource_index=$#args
   resource_path=$args[$resource_index]
@@ -17,11 +16,9 @@ _into-dir-and-push-remains-to-prompt() {
     dest=$resource_path:h
   fi
 
-  chpwd() { }
+  zle -I
   cd $dest
-  eval $chpwd_func
 
-  zle reset-prompt
   zle kill-whole-line
   BUFFER=$args
   zle end-of-line
