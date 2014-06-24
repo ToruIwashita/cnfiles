@@ -76,6 +76,7 @@ bindkey -v '^?' backward-delete-char                 # BSでbackward-delete-char
 bindkey -v '^[[Z' reverse-menu-complete              # Shift+tabで逆タブ補完
 # 補完メニュー選択モードキーマップ
 bindkey -M menuselect '^g' .send-break                         # Ctr+gでsend-break2回
+bindkey -M menuselect '^i' forward-char                        # tabかCtr+iで補完候補1つ右へ
 bindkey -M menuselect '^j' .accept-line                        # Ctr+jでaccept-line2回
 bindkey -M menuselect '^k' .accept-and-infer-next-history      # Ctr+kで次の補完メニュー
 bindkey -M menuselect '^m' accept-line                         # Ctr+mでaccept-line
