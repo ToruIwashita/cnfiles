@@ -51,7 +51,7 @@ bindkey -v '^g' send-break                           # Ctr+gで入力キャン�
 bindkey -v '^h' backward-delete-char                 # Ctr+hでbackward
 bindkey -v '^i' expand-or-complete                   # Ctr+iで通常補完
 bindkey -v '^j' accept-line                          # Ctr+jでaccept-line
-bindkey -v '^k' interactive-complete-files           # Ctr+kでファイルインタラクティブ補完
+bindkey -v '^k' menu-complete-files                  # Ctr+kでファイル補完
 bindkey -v '^l' start-editor                         # Ctr+lでstart-editor
 bindkey -v '^m' accept-line                          # Ctr+mでaccept-line
 bindkey -v '^n' history-substring-search-down        # Ctr+nで部分文字列検索,下
@@ -150,20 +150,20 @@ _zle-keymap-select() {
 
   zle reset-prompt
 }
-zle -N zle-keymap-select _zle-keymap-select               # _zle-keymap-selectをzle-keymap-selectに設定
-zle -N edit-command-line                                  # コマンドラインを$EDITORで編集
-zle -C interactive-complete-files menu-complete _generic  # ファイルインタラクティブ補完用ウィジェット
+zle -N zle-keymap-select _zle-keymap-select       # _zle-keymap-selectをzle-keymap-selectに設定
+zle -N edit-command-line                          # コマンドラインを$EDITORで編集
+zle -C menu-complete-files menu-complete _generic # ファイルインタラクティブ補完用ウィジェット
 
 ## zstyle
 # vcs_info
 zstyle ':vcs_info:*' enable git hg
 zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
 zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
-# completion
-zstyle ':completion:*' completer _complete _match _ignored _prefix         # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
-zstyle ':completion:*' menu select interactive                             # menuselect+interactive-mode(補完全般共通)
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}                      # 補完候補色付け
-zstyle ':completion:interactive-complete-files:*' completer _files         # ファイル補完用ウィジットコンプリータ指定
+                                                                      # completion
+zstyle ':completion:*' completer _complete _match _ignored _prefix    # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
+zstyle ':completion:*' menu select interactive                        # menuselect+interactive-mode(補完全般共通)
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}                 # 補完候補色付け
+zstyle ':completion:menu-complete-files:*' completer _files           # ファイル補完用ウィジットコンプリータ指定
 
 ## prompt
 # プロンプト表示
