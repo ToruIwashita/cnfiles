@@ -43,12 +43,12 @@ setopt no_flow_control       # フローコントロール無効
 ## bindkey
 # vimモードキーマップ
 bindkey -v '^a' beginning-of-line                    # Ctr+aで行頭へ
-bindkey -v '^b' backward-char                        # Ctr+bで１文字左へ
+bindkey -v '^b' backward-char                        # Ctr+bで１文字左へ(menuselectも同様)
 bindkey -v '^d' delete-char-or-list                  # Ctr+dで１文字削除
 bindkey -v '^e' end-of-line                          # Ctr+eで行末へ
-bindkey -v '^f' forward-char                         # Ctr+fで１文字右へ
+bindkey -v '^f' forward-char                         # Ctr+fで１文字右へ(menuselectも同様)
 bindkey -v '^g' send-break                           # Ctr+gで入力キャンセル
-bindkey -v '^h' backward-delete-char                 # Ctr+hでbackward
+bindkey -v '^h' backward-delete-char                 # Ctr+hでbackward-delete-char(menuselectのinteractive-modeでbackword)
 bindkey -v '^i' expand-or-complete                   # Ctr+iで通常補完
 bindkey -v '^j' accept-line                          # Ctr+jでaccept-line
 bindkey -v '^k' menu-complete-files                  # Ctr+kでファイル補完
@@ -69,18 +69,15 @@ bindkey -v '^sl' edit-command-line                   # Ctr+s,lでBUFFERをエデ
 bindkey -v '^s^j' cat-current                        # Ctr+s,Ctr+jでBUFFERをcat
 bindkey -v '^s^k' ls-current                         # Ctr+s,Ctr+kでls
 bindkey -v '^s^l' edit-command-line                  # Ctr+s,Ctr+lでコマンドラインエディタ編集
-bindkey -v '^@' clear-screen                         # Ctr+@でclear-screen
-bindkey -v '^_' cdup                                 # Ctr+_でcdup
 bindkey -v '^s^@' kill-line                          # Ctr+s,Ctr+@でカーソル業以降削除
+bindkey -v '^_' cdup                                 # Ctr+_でcdup
+bindkey -v '^@' clear-screen                         # Ctr+@でclear-screen
+bindkey -v '^?' backward-delete-char                 # BSでbackward-delete-char(menuselectのinteractive-modeでbackword)
 bindkey -v '^[[Z' reverse-menu-complete              # Shift+tabで逆タブ補完
 # 補完メニュー選択モードキーマップ
-bindkey -M menuselect '^b' backward-char                       # Ctr+bで左へ
-bindkey -M menuselect '^f' forward-char                        # Ctr+fで右へ
 bindkey -M menuselect '^g' .send-break                         # Ctr+gでsend-break2回
-bindkey -M menuselect '^i' expand-or-complete                  # Ctr+iで補完候補選択
 bindkey -M menuselect '^j' .accept-line                        # Ctr+jでaccept-line2回
 bindkey -M menuselect '^k' .accept-and-infer-next-history      # Ctr+kで次の補完メニュー
-bindkey -M menuselect '^h' backward-delete-char                # Ctr+hでbackward-delete-char(interactive-modeでbackword)
 bindkey -M menuselect '^m' accept-line                         # Ctr+mでaccept-line
 bindkey -M menuselect '^n' down-line-or-history                # Ctr+nで下へ
 bindkey -M menuselect '^p' up-line-or-history                  # Ctr+pで上へ
