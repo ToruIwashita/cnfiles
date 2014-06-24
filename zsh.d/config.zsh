@@ -80,11 +80,12 @@ bindkey -M menuselect '^g' .send-break                         # Ctr+gでsend-br
 bindkey -M menuselect '^i' expand-or-complete                  # Ctr+iで補完候補選択
 bindkey -M menuselect '^j' .accept-line                        # Ctr+jでaccept-line2回
 bindkey -M menuselect '^k' .accept-and-infer-next-history      # Ctr+kで次の補完メニュー
-bindkey -M menuselect '^h' backward-delete-char                # Ctr+hでbackward-delete-char(interactiveでbackword)
+bindkey -M menuselect '^h' backward-delete-char                # Ctr+hでbackward-delete-char(interactive-modeでbackword)
 bindkey -M menuselect '^m' accept-line                         # Ctr+mでaccept-line
 bindkey -M menuselect '^n' down-line-or-history                # Ctr+nで下へ
 bindkey -M menuselect '^p' up-line-or-history                  # Ctr+pで上へ
 bindkey -M menuselect '^r' history-incremental-search-forward  # Ctr+rでインクリメンタルサーチフォワード
+bindkey -M menuselect '^s' vi-insert                           # Ctr+sでinteractive-mode
 bindkey -M menuselect '^u' send-break                          # Ctr+uでsend-break
 bindkey -M menuselect '^]' accept-and-hold                     # Ctr+]で候補をバッファに入れる
 
