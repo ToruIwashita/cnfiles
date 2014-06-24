@@ -10,6 +10,9 @@ export PATH=~/local/bin:${PATH}                        # ~/local/bin有りの時
 export LD_LIBRARY_PATH=~/local/lib:${LD_LIBRARY_PATH}  # ~/local/lib有りのサンプル
 
 ## エイリアス
+# for Mac
+#alias find="gfind"
+#alias xargs="gxargs"
 # mysql
 alias my=$MYSQL_CNCT
 alias myq=$MYSQL_CMD

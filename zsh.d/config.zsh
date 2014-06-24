@@ -89,24 +89,14 @@ bindkey -M menuselect '^u' send-break                          # Ctr+uでsend-br
 bindkey -M menuselect '^]' accept-and-hold                     # Ctr+]で候補をバッファに入れる
 
 ## エイリアス
-# gnu command
-if type gls > /dev/null 2>&1; then
-  alias ls="gls -F --color"
-else
-  alias ls="ls -F --color"
-fi
-if type gfind > /dev/null 2>&1; then
-  alias find="gfind"
-fi
-if type gxargs > /dev/null 2>&1; then
-  alias xargs="gxargs"
-fi
 # zmv
 alias zmv='noglob zmv -W'
 # vim
 alias v="vim"
 # tmux
 alias tm="tmux -2"
+# ls
+alias ls="colorful-ls"
 # other
 alias ez="exec zsh"
 alias cp="cp -ip"
