@@ -94,13 +94,12 @@ alias zmv='noglob zmv -W'
 alias v="vim"
 # tmux
 alias tm="tmux -2"
-# ls
-alias ls="colorful-ls"
 # other
 alias ez="exec zsh"
 alias cp="cp -ip"
 alias mv="mv -i"
 alias rm="rm -i"
+alias ls="ls -F --color"
 alias l="ls"
 alias c="cat"
 alias grep="grep --color"

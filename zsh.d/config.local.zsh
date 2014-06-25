@@ -10,7 +10,8 @@ export PATH=~/local/bin:${PATH}                        # ~/local/bin有りの時
 export LD_LIBRARY_PATH=~/local/lib:${LD_LIBRARY_PATH}  # ~/local/lib有りのサンプル
 
 ## エイリアス
-# for Mac
+# for Mac(GNU系のコマンドはシンボリックリンクを貼り直すことを推奨するので以下コメントアウト)
+#alias ls="gls -F --color"
 #alias find="gfind"
 #alias xargs="gxargs"
 # mysql
