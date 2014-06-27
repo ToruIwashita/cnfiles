@@ -42,38 +42,39 @@ setopt no_flow_control       # フローコントロール無効
 
 ## bindkey
 # vimモードキーマップ
-bindkey -v '^a' beginning-of-line                    # Ctr+aで行頭へ
-bindkey -v '^b' backward-char                        # Ctr+bで１文字左へ(menuselectも同様)
-bindkey -v '^d' delete-char-or-list                  # Ctr+dで１文字削除
-bindkey -v '^e' end-of-line                          # Ctr+eで行末へ
-bindkey -v '^f' forward-char                         # Ctr+fで１文字右へ(menuselectも同様)
-bindkey -v '^g' send-break                           # Ctr+gで入力キャンセル
-bindkey -v '^h' backward-delete-char                 # Ctr+hでbackward-delete-char(menuselectのinteractive-modeでbackword)
-bindkey -v '^i' expand-or-complete                   # Ctr+iで通常補完
-bindkey -v '^j' accept-line                          # Ctr+jでaccept-line
-bindkey -v '^k' menu-complete-files                  # Ctr+kでファイル補完
-bindkey -v '^l' start-editor                         # Ctr+lでstart-editor
-bindkey -v '^m' accept-line                          # Ctr+mでaccept-line
-bindkey -v '^n' history-substring-search-down        # Ctr+nで部分文字列検索,下
-bindkey -v '^o' into-leaf-dir                        # Ctr+oでリーフディレクトリ移動
-bindkey -v '^p' history-substring-search-up          # Ctr+pで部分文字列検索,上
-bindkey -v '^q' self-insert                          # Ctr+qでself-insert
-bindkey -v '^r' history-incremental-search-backward  # Ctr+rでインクリメンタルサーチ
-bindkey -v '^s' self-insert                          # Ctr+sでself-insert,Prefixとして使用
-bindkey -v '^u' kill-word                            # Ctr+uでkill-word
-bindkey -v '^w' backward-kill-word                   # Ctr+wでbackward-kill-word
-bindkey -v '^y' push-input                           # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
-bindkey -v '^sj' cat-current                         # Ctr+s,jでBUFFERをcat
-bindkey -v '^sk' ls-current                          # CTr+s,kでls
-bindkey -v '^sl' edit-command-line                   # Ctr+s,lでBUFFERをエディタ編集
-bindkey -v '^s^j' cat-current                        # Ctr+s,Ctr+jでBUFFERをcat
-bindkey -v '^s^k' ls-current                         # Ctr+s,Ctr+kでls
-bindkey -v '^s^l' edit-command-line                  # Ctr+s,Ctr+lでコマンドラインエディタ編集
-bindkey -v '^s^@' kill-line                          # Ctr+s,Ctr+@でカーソル業以降削除
-bindkey -v '^_' cdup                                 # Ctr+_でcdup
-bindkey -v '^@' clear-screen                         # Ctr+@でclear-screen
-bindkey -v '^?' backward-delete-char                 # BSでbackward-delete-char(menuselectのinteractive-modeでbackword)
-bindkey -v '^[[Z' reverse-menu-complete              # Shift+tabで逆タブ補完
+bindkey -v '^a' beginning-of-line                           # Ctr+aで行頭へ
+bindkey -v '^b' backward-char                               # Ctr+bで１文字左へ(menuselectも同様)
+bindkey -v '^d' delete-char-or-list                         # Ctr+dで１文字削除
+bindkey -v '^e' end-of-line                                 # Ctr+eで行末へ
+bindkey -v '^f' forward-char                                # Ctr+fで１文字右へ(menuselectも同様)
+bindkey -v '^g' send-break                                  # Ctr+gで入力キャンセル
+bindkey -v '^h' backward-delete-char                        # Ctr+hでbackward-delete-char(menuselectのinteractive-modeでbackword)
+bindkey -v '^i' expand-or-complete                          # Ctr+iで通常補完
+bindkey -v '^j' accept-line                                 # Ctr+jでaccept-line
+bindkey -v '^k' menu-complete-files                         # Ctr+kでファイル補完
+bindkey -v '^l' start-editor                                # Ctr+lでstart-editor
+bindkey -v '^m' accept-line                                 # Ctr+mでaccept-line
+bindkey -v '^n' history-substring-search-down               # Ctr+nで部分文字列検索,下
+bindkey -v '^o' into-leaf-dir                               # Ctr+oでリーフディレクトリ移動
+bindkey -v '^p' history-substring-search-up                 # Ctr+pで部分文字列検索,上
+bindkey -v '^q' self-insert                                 # Ctr+qでself-insert
+bindkey -v '^r' history-incremental-search-backward         # Ctr+rでインクリメンタルサーチ
+bindkey -v '^s' self-insert                                 # Ctr+sでself-insert,Prefixとして使用
+bindkey -v '^u' kill-word                                   # Ctr+uでkill-word
+bindkey -v '^w' backward-kill-word                          # Ctr+wでbackward-kill-word
+bindkey -v '^y' push-input                                  # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
+bindkey -v '^sj' cat-current                                # Ctr+s,jでBUFFERをcat
+bindkey -v '^sk' ls-current                                 # CTr+s,kでls
+bindkey -v '^sl' edit-command-line                          # Ctr+s,lでBUFFERをエディタ編集
+bindkey -v '^s^j' cat-current                               # Ctr+s,Ctr+jでBUFFERをcat
+bindkey -v '^s^k' ls-current                                # Ctr+s,Ctr+kでls
+bindkey -v '^s^l' edit-command-line                         # Ctr+s,Ctr+lでコマンドラインエディタ編集
+bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctr+s,Ctr+oでバッファ残しリーフディレクトリ補完
+bindkey -v '^s^@' kill-line                                 # Ctr+s,Ctr+@でカーソル業以降削除
+bindkey -v '^_' cdup                                        # Ctr+_でcdup
+bindkey -v '^@' clear-screen                                # Ctr+@でclear-screen
+bindkey -v '^?' backward-delete-char                        # BSでbackward-delete-char(menuselectのinteractive-modeでbackword)
+bindkey -v '^[[Z' reverse-menu-complete                     # Shift+tabで逆タブ補完
 # 補完メニュー選択モードキーマップ
 bindkey -M menuselect '^g' .send-break                         # Ctr+gでsend-break2回
 bindkey -M menuselect '^i' forward-char                        # tabかCtr+iで補完候補1つ右へ
