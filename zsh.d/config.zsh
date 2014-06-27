@@ -55,7 +55,7 @@ bindkey -v '^k' menu-complete-files                  # Ctr+kでファイル補�
 bindkey -v '^l' start-editor                         # Ctr+lでstart-editor
 bindkey -v '^m' accept-line                          # Ctr+mでaccept-line
 bindkey -v '^n' history-substring-search-down        # Ctr+nで部分文字列検索,下
-bindkey -v '^o' into-dir-and-push-remains-to-prompt  # Ctr+oでバッファ残しディレクトリ移動
+bindkey -v '^o' into-leaf-dir                        # Ctr+oでリーフディレクトリ移動
 bindkey -v '^p' history-substring-search-up          # Ctr+pで部分文字列検索,上
 bindkey -v '^q' self-insert                          # Ctr+qでself-insert
 bindkey -v '^r' history-incremental-search-backward  # Ctr+rでインクリメンタルサーチ
