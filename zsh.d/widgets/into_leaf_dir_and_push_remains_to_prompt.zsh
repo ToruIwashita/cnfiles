@@ -15,6 +15,7 @@ _into-leaf-dir-and-push-remains-to-prompt() {
     args[$resource_index]=$resource_path:t
     dest=$resource_path:h
   fi
+  [[ $dest =~ '^~' ]] && dest=$HOME${dest#*~}
 
   zle -I
   zle kill-whole-line

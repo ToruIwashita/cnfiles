@@ -11,6 +11,7 @@ _into-leaf-dir() {
   else
     dest=$resource_path:h
   fi
+  [[ $dest =~ '^~' ]] && dest=$HOME${dest#*~}
 
   zle -I
   zle kill-whole-line
