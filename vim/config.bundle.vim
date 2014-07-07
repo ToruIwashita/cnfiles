@@ -80,7 +80,7 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtSelectMove("u")':   ['<NOP>'],
   \ 'PrtSelectMove("d")':   ['<NOP>'],
   \ 'PrtClearCache()':      ['<C-r>'],
-  \ 'PrtExit()':            ['<ESC>','<C-[>'],
+  \ 'PrtExit()':            ['<ESC>','<C-[>']
   \ }
 
 "" wildfire
