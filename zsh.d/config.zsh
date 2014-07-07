@@ -67,9 +67,10 @@ bindkey -v '^sj' cat-current                                # Ctr+s,jでBUFFER�
 bindkey -v '^sk' ls-current                                 # CTr+s,kでls
 bindkey -v '^sl' edit-command-line                          # Ctr+s,lでBUFFERをエディタ編集
 bindkey -v '^s^j' cat-current                               # Ctr+s,Ctr+jでBUFFERをcat
-bindkey -v '^s^k' ls-current                                # Ctr+s,Ctr+kでls
+bindkey -v '^s^k' peco-file-finder                          # Ctr+s,Ctr+kでpeco-file-finder
 bindkey -v '^s^l' edit-command-line                         # Ctr+s,Ctr+lでコマンドラインエディタ編集
 bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctr+s,Ctr+oでバッファ残しリーフディレクトリ補完
+bindkey -v '^s^s' ls-current                                # Ctr+s,Ctr+sでls
 bindkey -v '^s^@' kill-line                                 # Ctr+s,Ctr+@でカーソル業以降削除
 bindkey -v '^_' cdup                                        # Ctr+_でcdup
 bindkey -v '^@' clear-screen                                # Ctr+@でclear-screen
