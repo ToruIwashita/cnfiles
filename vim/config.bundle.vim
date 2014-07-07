@@ -48,8 +48,8 @@ let g:ctrlp_max_depth = 40                        " ディレクトリ再帰検�
 let g:ctrlp_open_new_file = 'r'                   " 新しいファイルをカレントウィンドウに開く
 " CtrlPキーマッピング
 let g:ctrlp_prompt_mappings = {
-  \ 'ToggleRegex()':        ['<C-l>'],
-  \ 'ToggleByFname()':      ['<C-_>'],
+  \ 'ToggleRegex()':        ['<C-_>'],
+  \ 'ToggleByFname()':      ['<C-@>'],
   \ 'PrtBS()':              ['<C-h>','<BS>'],
   \ 'PrtDelete()':          ['<C-d>'],
   \ 'PrtDeleteWord()':      ['<C-w>'],
@@ -64,7 +64,7 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtHistory(1)':        ['<C-p>'],
   \ 'ToggleFocus()':        ['<S-TAB>'],
   \ 'PrtExpandDir()':       ['<TAB>','<C-i>'],
-  \ 'AcceptSelection("e")': ['<C-o>','<CR>'],
+  \ 'AcceptSelection("e")': ['<C-l>','<C-o>','<CR>'],
   \ 'AcceptSelection("h")': ['<C-s>'],
   \ 'AcceptSelection("t")': ['<C-t>'],
   \ 'AcceptSelection("v")': ['<C-v>'],
