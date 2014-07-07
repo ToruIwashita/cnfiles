@@ -8,9 +8,11 @@ WORKING_DIR_PATH=$PWD
 # base dir,path
 ZSH_DIR=zsh.d
 VIM_DIR=vim
+PECO_DIR=peco
 CACHE_DIR=cache
 ZSH_DIR_PATH=~/.$ZSH_DIR
 VIM_DIR_PATH=~/.$VIM_DIR
+PECO_DIR_PATH=~/.$PECO_DIR
 CACHE_DIR_PATH=~/.$CACHE_DIR
 
 # src dir,path
@@ -56,6 +58,8 @@ NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 [[ -d $NEOVIM_SRC_DIR_PATH ]]                   || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
 # cache dir
 [[ -d $CACHE_DIR_PATH ]]                        || mkdir $CACHE_DIR_PATH
+# peco dir
+[[ -d $PECO_DIR_PATH ]]                         || mkdir $PECO_DIR_PATH
 # zsh
 [[ -d $ZSH_DIR_PATH ]]                          || mkdir $ZSH_DIR_PATH
 [[ -f $ZSH_DIR_PATH/config.zsh ]]               || touch $ZSH_DIR_PATH/config.zsh
@@ -118,6 +122,9 @@ printf "### copy vim main configs.\n"
 # tmux
 printf "### copy tmux config.\n"
 \cp -p $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
+# peco
+printf "### copy peco config.\n"
+\cp -p $BASE_DIR_PATH/peco.config.json $PECO_DIR_PATH/config.json
 # pry
 printf "### copy pry config.\n"
 \cp -p $BASE_DIR_PATH/pryrc ~/.pryrc
