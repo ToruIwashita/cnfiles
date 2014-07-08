@@ -4,14 +4,11 @@
 __FILE__=$_
 BASE_DIR_PATH=${__FILE__%/./*}
 WORKING_DIR_PATH=$PWD
-echo $BASE_DIR_PATH
 
 # base dir,path
 ZSH_DIR=zsh.d
-PECO_DIR=peco
 CACHE_DIR=cache
 ZSH_DIR_PATH=~/.$ZSH_DIR
-PECO_DIR_PATH=~/.$PECO_DIR
 CACHE_DIR_PATH=~/.$CACHE_DIR
 
 # src dir,path
@@ -58,8 +55,6 @@ NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 # cache dir
 [[ -d $CACHE_DIR_PATH ]]                        || mkdir $CACHE_DIR_PATH
 [[ -d $CACHE_DIR_PATH/yankring ]]               || mkdir $CACHE_DIR_PATH/yankring
-# peco dir
-[[ -d $PECO_DIR_PATH ]]                         || mkdir $PECO_DIR_PATH
 # zsh
 [[ -d $ZSH_DIR_PATH ]]                          || mkdir $ZSH_DIR_PATH
 [[ -f $ZSH_DIR_PATH/config.zsh ]]               || touch $ZSH_DIR_PATH/config.zsh
@@ -103,18 +98,18 @@ printf "### copy zsh main configs.\n"
 \cp -p $BASE_DIR_PATH/zshrc               ~/.zshrc
 \cp -p $BASE_DIR_PATH/$ZSH_DIR/config.zsh $ZSH_DIR_PATH/config.zsh
 # vim
-printf "### create symlink vim.\n"
+printf "### create symlink for vim config.\n"
 ln -sf $BASE_DIR_PATH/vimrc ~/.vimrc
 ln -sf $BASE_DIR_PATH/vim ~/.vim
 # tmux
-printf "### copy tmux config.\n"
-\cp -p $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
+printf "### create symlink for tmux config.\n"
+ln -sf $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
 # peco
-printf "### copy peco config.\n"
-\cp -p $BASE_DIR_PATH/peco.config.json $PECO_DIR_PATH/config.json
+printf "### create symlink for peco config.\n"
+ln -sf $BASE_DIR_PATH/peco ~/.peco
 # pry
-printf "### copy pry config.\n"
-\cp -p $BASE_DIR_PATH/pryrc ~/.pryrc
+printf "### create symlink for pry config.\n"
+ln -sf $BASE_DIR_PATH/pryrc ~/.pryrc
 
 # zsh,vim
 printf "### copy zsh or vim functions, and other files.\n"
