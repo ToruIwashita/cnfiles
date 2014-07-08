@@ -5,12 +5,6 @@ __FILE__=$_
 BASE_DIR_PATH=${__FILE__%/./*}
 WORKING_DIR_PATH=$PWD
 
-# base dir,path
-ZSH_DIR=zsh.d
-CACHE_DIR=cache
-ZSH_DIR_PATH=~/.$ZSH_DIR
-CACHE_DIR_PATH=~/.$CACHE_DIR
-
 # src dir,path
 SRC_DIR_PATH=~/src
 LOCAL_DIR_PATH=~/local
@@ -23,10 +17,6 @@ CTAGS_SRC_DIR_PATH=$SRC_DIR_PATH/ctags
 SILVER_SEARCHER_SRC_DIR_PATH=$SRC_DIR_PATH/silver_searcher
 NEOVIM_SRC_DIR_PATH=$SRC_DIR_PATH/neovim  # 使用していない
 
-# plugin dir,path
-ZSH_COMPLETIONS_DIR_PATH=$ZSH_DIR_PATH/plugin/zsh-completions
-ZSH_HISTORY_SUBSTRING_SEARCH_DIR_PATH=$ZSH_DIR_PATH/plugin/zsh-history-substring-search
-
 # repositories
 ZSH_REPOSITORY='git://github.com/zsh-users/zsh'
 VIM_REPOSITORY='git://github.com/vim-jp/vim'
@@ -35,10 +25,11 @@ GIT_REPOSITORY='git://github.com/gitster/git'
 LUAJIT_REPOSITORY='http://luajit.org/git/luajit-2.0.git'
 CTAGS_REPOSITORY='git://github.com/fishman/ctags'
 SILVER_SEARCHER_REPOSITORY='git://github.com/ggreer/the_silver_searcher'
-ZSH_COMPLETIONS_REPOSITORY='git://github.com/zsh-users/zsh-completions'
-ZSH_HISTORY_SUBSTRING_SEARCH_REPOSITORY='git://github.com/zsh-users/zsh-history-substring-search'
-NEOBUNDLE_REPOSITORY='git://github.com/Shougo/neobundle.vim'
 NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
+
+# base dir,path
+CACHE_DIR=cache
+CACHE_DIR_PATH=~/.$CACHE_DIR
 
 ## init
 # source or local
@@ -55,19 +46,6 @@ NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 # cache dir
 [[ -d $CACHE_DIR_PATH ]]                        || mkdir $CACHE_DIR_PATH
 [[ -d $CACHE_DIR_PATH/yankring ]]               || mkdir $CACHE_DIR_PATH/yankring
-# zsh
-[[ -d $ZSH_DIR_PATH ]]                          || mkdir $ZSH_DIR_PATH
-[[ -f $ZSH_DIR_PATH/config.zsh ]]               || touch $ZSH_DIR_PATH/config.zsh
-[[ -f $ZSH_DIR_PATH/config.local.zsh ]]         || touch $ZSH_DIR_PATH/config.local.zsh
-[[ -d $ZSH_DIR_PATH/functions ]]                || mkdir $ZSH_DIR_PATH/functions
-[[ -d $ZSH_DIR_PATH/completions ]]              || mkdir $ZSH_DIR_PATH/completions
-[[ -d $ZSH_DIR_PATH/widgets ]]                  || mkdir $ZSH_DIR_PATH/widgets
-[[ -d $ZSH_DIR_PATH/local ]]                    || mkdir $ZSH_DIR_PATH/local
-[[ -d $ZSH_DIR_PATH/local/functions ]]          || mkdir $ZSH_DIR_PATH/local/functions
-[[ -d $ZSH_DIR_PATH/local/completions ]]        || mkdir $ZSH_DIR_PATH/local/completions
-[[ -d $ZSH_DIR_PATH/plugin ]]                   || mkdir $ZSH_DIR_PATH/plugin
-[[ -d $ZSH_COMPLETIONS_DIR_PATH ]]              || git clone $ZSH_COMPLETIONS_REPOSITORY $ZSH_COMPLETIONS_DIR_PATH
-[[ -d $ZSH_HISTORY_SUBSTRING_SEARCH_DIR_PATH ]] || git clone $ZSH_HISTORY_SUBSTRING_SEARCH_REPOSITORY $ZSH_HISTORY_SUBSTRING_SEARCH_DIR_PATH
 
 ## update source files
 printf "### git pull zsh src.\n"
@@ -84,23 +62,19 @@ printf "### git pull ctags src.\n"
 cd $CTAGS_SRC_DIR_PATH && git pull
 printf "### git pull silver_searcher src.\n"
 cd $SILVER_SEARCHER_SRC_DIR_PATH && git pull
-printf "### git pull zsh-completions.\n"
-cd $ZSH_COMPLETIONS_DIR_PATH && git pull
-printf "### git pull zsh-history-substring-search\n"
-cd $ZSH_HISTORY_SUBSTRING_SEARCH_DIR_PATH && git pull
 printf "### git pull neovim src.\n"
 cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
 
 ### copy files
 cd $BASE_DIR_PATH
 # zsh
-printf "### copy zsh main configs.\n"
-\cp -p $BASE_DIR_PATH/zshrc               ~/.zshrc
-\cp -p $BASE_DIR_PATH/$ZSH_DIR/config.zsh $ZSH_DIR_PATH/config.zsh
+printf "### create symlink for zsh configs.\n"
+ln -sf  $BASE_DIR_PATH/zshrc ~/.zshrc
+ln -sfn $BASE_DIR_PATH/zsh.d ~/.zsh.d
 # vim
 printf "### create symlink for vim config.\n"
-ln -sf $BASE_DIR_PATH/vimrc ~/.vimrc
-ln -sfn $BASE_DIR_PATH/vim ~/.vim
+ln -sf  $BASE_DIR_PATH/vimrc ~/.vimrc
+ln -sfn $BASE_DIR_PATH/vim   ~/.vim
 # tmux
 printf "### create symlink for tmux config.\n"
 ln -sf $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
@@ -110,19 +84,6 @@ ln -sfn $BASE_DIR_PATH/peco ~/.peco
 # pry
 printf "### create symlink for pry config.\n"
 ln -sf $BASE_DIR_PATH/pryrc ~/.pryrc
-
-# zsh,vim
-printf "### copy zsh or vim functions, and other files.\n"
-source_directories=(
-  $ZSH_DIR/functions
-  $ZSH_DIR/completions
-  $ZSH_DIR/widgets
-)
-for dir in ${source_directories[@]}; do
-  for file in `ls $BASE_DIR_PATH/${dir}`; do
-    \cp -p $BASE_DIR_PATH/${dir}/${file} ~/.${dir}/${file}
-  done
-done
 
 cd $WORKING_DIR_PATH
 printf "### sync complete.\n"
