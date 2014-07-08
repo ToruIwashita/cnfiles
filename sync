@@ -103,7 +103,7 @@ printf "### copy zsh main configs.\n"
 \cp -p $BASE_DIR_PATH/zshrc               ~/.zshrc
 \cp -p $BASE_DIR_PATH/$ZSH_DIR/config.zsh $ZSH_DIR_PATH/config.zsh
 # vim
-printf "### copy vim main configs.\n"
+printf "### create symlink vim.\n"
 ln -sf $BASE_DIR_PATH/vimrc ~/.vimrc
 ln -sf $BASE_DIR_PATH/vim ~/.vim
 # tmux
