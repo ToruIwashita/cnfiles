@@ -2,16 +2,15 @@
 
 ## dir,path
 __FILE__=$_
-BASE_DIR_PATH=${__FILE__%/*}
+BASE_DIR_PATH=${__FILE__%/./*}
 WORKING_DIR_PATH=$PWD
+echo $BASE_DIR_PATH
 
 # base dir,path
 ZSH_DIR=zsh.d
-VIM_DIR=vim
 PECO_DIR=peco
 CACHE_DIR=cache
 ZSH_DIR_PATH=~/.$ZSH_DIR
-VIM_DIR_PATH=~/.$VIM_DIR
 PECO_DIR_PATH=~/.$PECO_DIR
 CACHE_DIR_PATH=~/.$CACHE_DIR
 
@@ -58,6 +57,7 @@ NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 [[ -d $NEOVIM_SRC_DIR_PATH ]]                   || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
 # cache dir
 [[ -d $CACHE_DIR_PATH ]]                        || mkdir $CACHE_DIR_PATH
+[[ -d $CACHE_DIR_PATH/yankring ]]               || mkdir $CACHE_DIR_PATH/yankring
 # peco dir
 [[ -d $PECO_DIR_PATH ]]                         || mkdir $PECO_DIR_PATH
 # zsh
@@ -73,18 +73,6 @@ NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 [[ -d $ZSH_DIR_PATH/plugin ]]                   || mkdir $ZSH_DIR_PATH/plugin
 [[ -d $ZSH_COMPLETIONS_DIR_PATH ]]              || git clone $ZSH_COMPLETIONS_REPOSITORY $ZSH_COMPLETIONS_DIR_PATH
 [[ -d $ZSH_HISTORY_SUBSTRING_SEARCH_DIR_PATH ]] || git clone $ZSH_HISTORY_SUBSTRING_SEARCH_REPOSITORY $ZSH_HISTORY_SUBSTRING_SEARCH_DIR_PATH
-# vim
-[[ -d $VIM_DIR_PATH ]]                          || mkdir $VIM_DIR_PATH
-[[ -f $VIM_DIR_PATH/config.vim ]]               || touch $VIM_DIR_PATH/config.vim
-[[ -f $VIM_DIR_PATH/config.bundle.vim ]]        || touch $VIM_DIR_PATH/config.bundle.vim
-[[ -d $VIM_DIR_PATH/ftplugin ]]                 || mkdir $VIM_DIR_PATH/ftplugin
-[[ -d $VIM_DIR_PATH/ftdetect ]]                 || mkdir $VIM_DIR_PATH/ftdetect
-[[ -d $VIM_DIR_PATH/after ]]                    || mkdir $VIM_DIR_PATH/after
-[[ -d $VIM_DIR_PATH/after/plugin ]]             || mkdir $VIM_DIR_PATH/after/plugin
-[[ -d $VIM_DIR_PATH/after/ftplugin ]]           || mkdir $VIM_DIR_PATH/after/ftplugin
-[[ -d $VIM_DIR_PATH/bundle ]]                   || mkdir $VIM_DIR_PATH/bundle
-[[ -d $VIM_DIR_PATH/bundle/neobundle.vim ]]     || git clone $NEOBUNDLE_REPOSITORY $VIM_DIR_PATH/bundle/neobundle.vim
-[[ -d $CACHE_DIR_PATH/yankring ]]               || mkdir $CACHE_DIR_PATH/yankring
 
 ## update source files
 printf "### git pull zsh src.\n"
@@ -116,9 +104,8 @@ printf "### copy zsh main configs.\n"
 \cp -p $BASE_DIR_PATH/$ZSH_DIR/config.zsh $ZSH_DIR_PATH/config.zsh
 # vim
 printf "### copy vim main configs.\n"
-\cp -p $BASE_DIR_PATH/vimrc                      ~/.vimrc
-\cp -p $BASE_DIR_PATH/$VIM_DIR/config.vim        $VIM_DIR_PATH/config.vim
-\cp -p $BASE_DIR_PATH/$VIM_DIR/config.bundle.vim $VIM_DIR_PATH/config.bundle.vim
+ln -sf $BASE_DIR_PATH/vimrc ~/.vimrc
+ln -sf $BASE_DIR_PATH/vim ~/.vim
 # tmux
 printf "### copy tmux config.\n"
 \cp -p $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
@@ -135,10 +122,6 @@ source_directories=(
   $ZSH_DIR/functions
   $ZSH_DIR/completions
   $ZSH_DIR/widgets
-  $VIM_DIR/ftplugin
-  $VIM_DIR/ftdetect
-  $VIM_DIR/after/plugin
-  $VIM_DIR/after/ftplugin
 )
 for dir in ${source_directories[@]}; do
   for file in `ls $BASE_DIR_PATH/${dir}`; do
