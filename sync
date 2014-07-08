@@ -100,13 +100,13 @@ printf "### copy zsh main configs.\n"
 # vim
 printf "### create symlink for vim config.\n"
 ln -sf $BASE_DIR_PATH/vimrc ~/.vimrc
-ln -sf $BASE_DIR_PATH/vim ~/.vim
+ln -sfn $BASE_DIR_PATH/vim ~/.vim
 # tmux
 printf "### create symlink for tmux config.\n"
 ln -sf $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
 # peco
 printf "### create symlink for peco config.\n"
-ln -sf $BASE_DIR_PATH/peco ~/.peco
+ln -sfn $BASE_DIR_PATH/peco ~/.peco
 # pry
 printf "### create symlink for pry config.\n"
 ln -sf $BASE_DIR_PATH/pryrc ~/.pryrc
