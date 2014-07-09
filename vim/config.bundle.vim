@@ -53,7 +53,7 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtBS()':              ['<C-h>','<BS>'],
   \ 'PrtDelete()':          ['<C-d>'],
   \ 'PrtDeleteWord()':      ['<C-w>'],
-  \ 'PrtClear()':           ['<c-u>'],
+  \ 'PrtClear()':           ['<C-u>'],
   \ 'PrtCurStart()':        ['<C-a>'],
   \ 'PrtCurEnd()':          ['<C-e>'],
   \ 'PrtCurLeft()':         ['<C-b>'],
