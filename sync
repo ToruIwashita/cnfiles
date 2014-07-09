@@ -65,6 +65,8 @@ printf "### git pull ctags src.\n"
 cd $CTAGS_SRC_DIR_PATH && git pull
 printf "### git pull silver_searcher src.\n"
 cd $SILVER_SEARCHER_SRC_DIR_PATH && git pull
+printf "### git pull peco src.\n"
+cd $PECO_SRC_DIR_PATH && git pull
 printf "### git pull neovim src.\n"
 cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
 
