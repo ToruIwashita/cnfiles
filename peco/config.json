@@ -1,4 +1,5 @@
 {
+  "Prompt": ">>>",
   "Keymap": {
     "C-_": "peco.RotateMatcher",
     "C-h": "peco.DeleteBackwardChar",
@@ -14,8 +15,7 @@
     "C-k": "peco.SelectPrevious",
     "C-n": "peco.SelectPreviousPage",
     "C-p": "peco.SelectNextPage",
-    "C-o": "peco.Finish",
-    "C-l": "peco.Finish",
+    "C-l,C-o": "peco.Finish",
     "Esc": "peco.Cancel"
   }
 }
