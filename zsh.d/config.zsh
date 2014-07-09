@@ -173,4 +173,6 @@ RPROMPT='[%D{%T}|%n]'
 
 ## command-line
 # 色定義
-zle_highlight=(region:standout special:standout suffix:bold isearch:fg=red)
+zle_highlight=(region:standout special:standout suffix:bold isearch:bg=magenta,fg=white)
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white'
+HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white'
