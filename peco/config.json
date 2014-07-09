@@ -15,6 +15,7 @@
     "C-k": "peco.SelectPrevious",
     "C-n": "peco.SelectPreviousPage",
     "C-p": "peco.SelectNextPage",
+    "C-]": "peco.ToggleSelectionAndSelectNext",
     "C-l,C-o": "peco.Finish",
     "Esc": "peco.Cancel"
   }
