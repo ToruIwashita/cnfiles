@@ -44,7 +44,7 @@ CACHE_DIR_PATH=~/.$CACHE_DIR
 [[ -d $LUAJIT_SRC_DIR_PATH ]]                   || git clone $LUAJIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
 [[ -d $CTAGS_SRC_DIR_PATH ]]                    || git clone $CTAGS_REPOSITORY $CTAGS_SRC_DIR_PATH
 [[ -d $SILVER_SEARCHER_SRC_DIR_PATH ]]          || git clone $SILVER_SEARCHER_REPOSITORY $SILVER_SEARCHER_SRC_DIR_PATH
-[[ -d $PECO_REPOSITORY ]]                       || git clone $PECO_REPOSITORY $PECO_RSC_DIR_PATH
+[[ -d $PECO_SRC_DIR_PATH ]]                     || git clone $PECO_REPOSITORY $PECO_RSC_DIR_PATH
 [[ -d $NEOVIM_SRC_DIR_PATH ]]                   || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
 # cache dir
 [[ -d $CACHE_DIR_PATH ]]                        || mkdir $CACHE_DIR_PATH
