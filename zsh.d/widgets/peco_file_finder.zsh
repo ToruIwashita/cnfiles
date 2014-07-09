@@ -1,6 +1,6 @@
 ## zpeco widget
 _peco-file-finder() {
-  local resource_path arg
+  local arg resource_path
   arg=$BUFFER
   resource_path=$(find | peco)
 
