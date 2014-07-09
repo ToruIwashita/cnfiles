@@ -6,7 +6,7 @@ _into-leaf-dir() {
 
   resource_path=$args[$#args]
 
-  if [[ $resource_path =~ '/$' ]]; then
+  if [[ -d $resource_path ]]; then
     dest=$resource_path
   else
     dest=$resource_path:h
