@@ -1,10 +1,13 @@
 ## peco_silver_search_and_start_editor
 _peco-silver-search-and-start-editor() {
-  local arg resource_info resource_path line_number cmd
+  local arg ag_output resource_info resource_path line_number cmd
   arg=$BUFFER
   [[ -z $arg ]] && return
 
-  resource_info=$(ag "$arg" | peco)
+  ag_output=$(ag "$arg")
+  [[ -z $ag_output ]] && return
+
+  resource_info=$(echo $ag_output | peco)
   [[ -z $resource_info ]] && return
 
   resource_path=${resource_info%%:*}
