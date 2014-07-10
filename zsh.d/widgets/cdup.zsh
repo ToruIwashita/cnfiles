@@ -5,9 +5,7 @@ _cdup() {
   args=("${(z)BUFFER}")
 
   if [[ $#args -ge 2 ]]; then
-    args[$#args]=''
-    typeset -a after_buffer
-    after_buffer=$args
+    after_buffer="$args[1] "
   else
     after_buffer=$BUFFER
   fi
