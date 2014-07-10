@@ -32,6 +32,7 @@ setopt incappend_history     # コマンド履歴・シェル横断実行時間�
 setopt extended_history      # コマンド履歴・コマンド実行時間保存
 setopt hist_no_store         # historyコマンドを記録しない
 setopt hist_reduce_blanks    # 余分なスペースは保存しない
+setopt inc_append_history    # 履歴をインクリメンタルに追加(履歴が即書き込まれる)
 setopt hist_ignore_space     # 行頭がスペースで始まるコマンドを記録しない
 setopt extended_glob         # 拡張ファイルグロブを有効にする
 setopt numeric_glob_sort     # ファイル名を数値としてソート
@@ -105,6 +106,7 @@ alias c="cat"
 alias grep="grep --color"
 alias less="less -R"
 alias his="history -f"
+alias his-all="history -E 1"
 alias curh="curl --head"
 # cd
 alias d="cd"
