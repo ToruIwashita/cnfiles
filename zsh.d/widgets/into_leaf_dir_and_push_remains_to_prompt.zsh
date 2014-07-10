@@ -1,6 +1,6 @@
 ## into-leaf-dir-and-push-remains-to-prompt wedget
 _into-leaf-dir-and-push-remains-to-prompt() {
-  local chpwd_func resource_index resource_path dest
+  local resource_index resource_path dest
   local -a args
   args=("${(z)BUFFER}")
 
@@ -20,7 +20,7 @@ _into-leaf-dir-and-push-remains-to-prompt() {
   zle -I
   zle kill-whole-line
 
-  cd $dest
+  print -s $dest && cd $dest
   BUFFER=$args
   zle end-of-line
 }

@@ -15,7 +15,7 @@ _into-leaf-dir() {
 
   zle -I
   zle kill-whole-line
-  cd $dest
+  print -s $dest && cd $dest
 }
 
 zle -N into-leaf-dir _into-leaf-dir
