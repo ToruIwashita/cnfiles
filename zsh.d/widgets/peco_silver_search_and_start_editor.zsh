@@ -15,7 +15,7 @@ _peco-silver-search-and-start-editor() {
   cmd="$EDITOR $resource_path +$line_number < $TTY"
 
   zle -I
-  print -s "$cmd" && eval $cmd
+  print -s $cmd && eval $cmd
 }
 
 zle -N peco-silver-search-and-start-editor _peco-silver-search-and-start-editor

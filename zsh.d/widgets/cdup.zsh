@@ -10,7 +10,7 @@ _cdup() {
     after_buffer=$BUFFER
   fi
 
-  cd ..
+  print -s 'cd ..' && cd ..
   type precmd > /dev/null 2>&1 && precmd 
   for precmd_func in $precmd_functions; do
     $precmd_func

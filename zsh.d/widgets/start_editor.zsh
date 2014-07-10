@@ -6,7 +6,7 @@ _start-editor() {
   cmd="$EDITOR ${args[$#args]} < $TTY"
 
   zle -I
-  print -s "$cmd" && eval $cmd
+  print -s $cmd && eval $cmd
 }
 
 zle -N start-editor _start-editor
