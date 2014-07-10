@@ -12,10 +12,10 @@ _peco-silver-search-and-start-editor() {
 
   resource_path=${resource_info%%:*}
   line_number=${${resource_info#*:}%%:*}
-  cmd="$EDITOR $resource_path +$line_number < $TTY"
+  cmd="$EDITOR $resource_path +$line_number"
 
   zle -I
-  print -s $cmd && eval $cmd
+  print -s $cmd && eval "$cmd < $TTY"
 }
 
 zle -N peco-silver-search-and-start-editor _peco-silver-search-and-start-editor

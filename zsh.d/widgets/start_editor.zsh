@@ -3,10 +3,10 @@ _start-editor() {
   local cmd
   local -a args
   args=("${(z)BUFFER}")
-  cmd="$EDITOR ${args[$#args]} < $TTY"
+  cmd="$EDITOR ${args[$#args]}"
 
   zle -I
-  print -s $cmd && eval $cmd
+  print -s $cmd && eval "$cmd < $TTY"
 }
 
 zle -N start-editor _start-editor
