@@ -4,10 +4,7 @@ _peco-silver-search-and-start-editor() {
   arg=$BUFFER
   [[ -z $arg ]] && return
 
-  ag_output=$(ag "$arg")
-  [[ -z $ag_output ]] && return
-
-  resource_info=$(echo $ag_output | peco)
+  resource_info=$(ag "$arg" | peco)
   [[ -z $resource_info ]] && return
 
   resource_path=${resource_info%%:*}
