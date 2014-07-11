@@ -49,10 +49,10 @@ let g:ctrlp_open_new_file = 'r'                   " 新しいファイルをカ�
 " CtrlPキーマッピング
 let g:ctrlp_prompt_mappings = {
   \ 'ToggleRegex()':        ['<C-_>'],
-  \ 'ToggleByFname()':      ['<C-@>'],
+  \ 'ToggleByFname()':      ['<C-^>'],
   \ 'ToggleFocus()':        ['<S-TAB>'],
   \ 'ToggleType(1)':        ['<NOP>'],
-  \ 'ToggleType(-1)':       ['<C-^>'],
+  \ 'ToggleType(-1)':       ['<C-@>'],
   \ 'PrtBS()':              ['<C-h>','<BS>'],
   \ 'PrtDelete()':          ['<C-d>'],
   \ 'PrtDeleteWord()':      ['<C-w>'],
