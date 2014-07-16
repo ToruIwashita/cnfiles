@@ -1,7 +1,7 @@
 ## markdown関連関数
 pm() {
   if [[ $# -lt 1 ]]; then
-    print "lack of arguments."
+    print 'lack of arguments.'
     return 1
   fi
 
@@ -9,11 +9,11 @@ pm() {
 }
 
 pmout() {
-  if [[ $# -lt 2 ]]; then
-    print "lack of arguments."
+  if [[ $# -lt 1 ]]; then
+    print 'lack of arguments.'
     return 1
   fi
 
-  print '<meta charset="utf-8">\n' >! $2
-  markdown $1 >> $2
+  echo '<meta charset="utf-8">\n'
+  markdown $1
 }
