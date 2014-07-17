@@ -56,47 +56,47 @@ CACHE_DIR_PATH=~/.$CACHE_DIR
 ## update source files
 printf "### git pull zsh src.\n"
 cd $ZSH_SRC_DIR_PATH && git pull
-printf "### git pull vim src.\n"
+printf "\n### git pull vim src.\n"
 cd $VIM_SRC_DIR_PATH && git pull
-printf "### git pull tmux src.\n"
+printf "\n### git pull tmux src.\n"
 cd $TMUX_SRC_DIR_PATH && git pull
-printf "### git pull git src.\n"
+printf "\n### git pull git src.\n"
 cd $GIT_SRC_DIR_PATH && git pull
-printf "### git pull luajit src.\n"
+printf "\n### git pull luajit src.\n"
 cd $LUAJIT_SRC_DIR_PATH && git pull
-printf "### git pull ctags src.\n"
+printf "\n### git pull ctags src.\n"
 cd $CTAGS_SRC_DIR_PATH && git pull
-printf "### git pull silver_searcher src.\n"
+printf "\n### git pull silver_searcher src.\n"
 cd $SILVER_SEARCHER_SRC_DIR_PATH && git pull
-printf "### git pull peco src.\n"
+printf "\n### git pull peco src.\n"
 cd $PECO_SRC_DIR_PATH && git pull
-printf "### git pull tmux-mem-cpu-load src.\n"
+printf "\n### git pull tmux-mem-cpu-load src.\n"
 cd $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH && git pull
-printf "### git pull neovim src.\n"
+printf "\n### git pull neovim src.\n"
 cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
 
 ### copy files
 cd $BASE_DIR_PATH
 # zsh
-printf "### create symlink for zsh configs.\n"
+printf "\n### create symlink for zsh configs.\n"
 ln -sf  $BASE_DIR_PATH/zshrc ~/.zshrc
 ln -sfn $BASE_DIR_PATH/zsh.d ~/.zsh.d
 # vim
-printf "### create symlink for vim config.\n"
+printf "\n### create symlink for vim config.\n"
 ln -sf  $BASE_DIR_PATH/vimrc ~/.vimrc
 ln -sfn $BASE_DIR_PATH/vim   ~/.vim
 # tmux
-printf "### create symlink for tmux config.\n"
+printf "\n### create symlink for tmux config.\n"
 ln -sf $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
 # peco
-printf "### create symlink for peco config.\n"
+printf "\n### create symlink for peco config.\n"
 ln -sfn $BASE_DIR_PATH/peco ~/.peco
 # pry
-printf "### create symlink for pry config.\n"
+printf "\n### create symlink for pry config.\n"
 ln -sf $BASE_DIR_PATH/pryrc ~/.pryrc
 
 cd $WORKING_DIR_PATH
-printf "### sync complete.\n"
+printf "\nsync complete.\n"
 
 # restart
 exec zsh
