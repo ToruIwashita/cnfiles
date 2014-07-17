@@ -98,6 +98,20 @@ gll() {
   git pull origin $current_branch
 }
 
+glls() {
+  local glls_usage
+
+  glls_usage="Usage:<pwd=./.git> $0"
+  if [[ ! -d ./.git ]]; then
+    print $glls_usage;
+    return 1
+  fi
+
+  print "submodules update & pull master"
+  git submodule init && git submodule update
+  git submodule foreach 'git checkout master && git pull origin master'
+}
+
 gsh() {
   local gsh_usage current_branch
 
