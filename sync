@@ -16,6 +16,7 @@ LUAJIT_SRC_DIR_PATH=$SRC_DIR_PATH/luajit
 CTAGS_SRC_DIR_PATH=$SRC_DIR_PATH/ctags
 SILVER_SEARCHER_SRC_DIR_PATH=$SRC_DIR_PATH/silver_searcher
 PECO_SRC_DIR_PATH=$SRC_DIR_PATH/peco
+TMUX_MEM_CPU_LOAD_SRC_DIR_PATH=$SRC_DIR_PATH/tmux-mem-cpu-load
 NEOVIM_SRC_DIR_PATH=$SRC_DIR_PATH/neovim  # 使用していない
 
 # repositories
@@ -27,6 +28,7 @@ LUAJIT_REPOSITORY='http://luajit.org/git/luajit-2.0.git'
 CTAGS_REPOSITORY='git://github.com/fishman/ctags'
 SILVER_SEARCHER_REPOSITORY='git://github.com/ggreer/the_silver_searcher'
 PECO_REPOSITORY='git://github.com/peco/peco'
+TMUX_MEM_CPU_LOAD_REPOSITORY='git://github.com/thewtex/tmux-mem-cpu-load'
 NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 
 # base dir,path
@@ -45,6 +47,7 @@ CACHE_DIR_PATH=~/.$CACHE_DIR
 [[ -d $CTAGS_SRC_DIR_PATH ]]                    || git clone $CTAGS_REPOSITORY $CTAGS_SRC_DIR_PATH
 [[ -d $SILVER_SEARCHER_SRC_DIR_PATH ]]          || git clone $SILVER_SEARCHER_REPOSITORY $SILVER_SEARCHER_SRC_DIR_PATH
 [[ -d $PECO_SRC_DIR_PATH ]]                     || git clone $PECO_REPOSITORY $PECO_SRC_DIR_PATH
+[[ -d $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH ]]        || git clone $TMUX_MEM_CPU_LOAD_REPOSITORY $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH
 [[ -d $NEOVIM_SRC_DIR_PATH ]]                   || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
 # cache dir
 [[ -d $CACHE_DIR_PATH ]]                        || mkdir $CACHE_DIR_PATH
@@ -67,6 +70,8 @@ printf "### git pull silver_searcher src.\n"
 cd $SILVER_SEARCHER_SRC_DIR_PATH && git pull
 printf "### git pull peco src.\n"
 cd $PECO_SRC_DIR_PATH && git pull
+printf "### git pull tmux-mem-cpu-load src.\n"
+cd $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH && git pull
 printf "### git pull neovim src.\n"
 cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
 
