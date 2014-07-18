@@ -29,7 +29,7 @@ pgfmout() {
 
 text=$(<"$1")
 text=${text//\"/\\\"}
-text=${text// /\\\t}
+text=${text//	/\\\t}
 text=${text//
 /\\\n}
 
