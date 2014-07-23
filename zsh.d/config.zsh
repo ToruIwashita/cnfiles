@@ -8,6 +8,7 @@ SAVEHIST=100000          # 保存する履歴数
 
 ## オプション設定
 setopt no_beep               # ビープ音なし
+setopt notify                # バックグラウンドジョブの状態を即時通知
 setopt auto_cd               # 自動CD
 setopt auto_pushd            # 自動的にディレクトリスタックにカレントディレクトリ追加
 setopt pushd_to_home         # 引数の無いpushdは$HOMEをスタックする
