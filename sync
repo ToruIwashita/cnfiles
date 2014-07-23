@@ -55,28 +55,27 @@ CACHE_DIR_PATH=~/.$CACHE_DIR
 
 ## update source files
 printf "### git pull zsh src.\n"
-cd $ZSH_SRC_DIR_PATH && git pull
+(cd $ZSH_SRC_DIR_PATH && git pull)
 printf "\n### git pull vim src.\n"
-cd $VIM_SRC_DIR_PATH && git pull
+(cd $VIM_SRC_DIR_PATH && git pull)
 printf "\n### git pull tmux src.\n"
-cd $TMUX_SRC_DIR_PATH && git pull
+(cd $TMUX_SRC_DIR_PATH && git pull)
 printf "\n### git pull git src.\n"
-cd $GIT_SRC_DIR_PATH && git pull
+(cd $GIT_SRC_DIR_PATH && git pull)
 printf "\n### git pull luajit src.\n"
-cd $LUAJIT_SRC_DIR_PATH && git pull
+(cd $LUAJIT_SRC_DIR_PATH && git pull)
 printf "\n### git pull ctags src.\n"
-cd $CTAGS_SRC_DIR_PATH && git pull
+(cd $CTAGS_SRC_DIR_PATH && git pull)
 printf "\n### git pull silver_searcher src.\n"
-cd $SILVER_SEARCHER_SRC_DIR_PATH && git pull
+(cd $SILVER_SEARCHER_SRC_DIR_PATH && git pull)
 printf "\n### git pull peco src.\n"
-cd $PECO_SRC_DIR_PATH && git pull
+(cd $PECO_SRC_DIR_PATH && git pull)
 printf "\n### git pull tmux-mem-cpu-load src.\n"
-cd $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH && git pull
+(cd $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH && git pull)
 printf "\n### git pull neovim src.\n"
-cd $NEOVIM_SRC_DIR_PATH && git pull  # 使用していない
+(cd $NEOVIM_SRC_DIR_PATH && git pull)  # 使用していない
 
-### copy files
-cd $BASE_DIR_PATH
+## copy files
 # zsh
 printf "\n### create symlink for zsh configs.\n"
 ln -sf  $BASE_DIR_PATH/zshrc ~/.zshrc
@@ -98,5 +97,6 @@ ln -sf $BASE_DIR_PATH/pryrc ~/.pryrc
 cd $WORKING_DIR_PATH
 printf "\nsync complete.\n"
 
-# restart
+## restart
 exec zsh
+exit 0
