@@ -1,12 +1,12 @@
 ## MYSQL
 _my-check-argv() {
   if [[ $# -lt 1 ]]; then
-    print "lack of arguments."
+    print "lack of arguments." 2>&1
     return 1
   fi
 
   if [[ $1:e != "sql" ]]; then
-    print "invalid extension."
+    print "invalid extension." 2>&1
     return 1
   fi
 
@@ -121,7 +121,7 @@ mqexp() {
 
 mydesc() {
   if [[ $# -lt 1 ]]; then
-    print "lack of arguments."
+    print "lack of arguments." 2>&1
     return 1
   fi
 
@@ -130,7 +130,7 @@ mydesc() {
 
 myindex() {
   if [[ $# -lt 1 ]]; then
-    print "lack of arguments."
+    print "lack of arguments." 2>&1
     return 1
   fi
 
@@ -139,7 +139,7 @@ myindex() {
 
 myfcsv() {
   if [[ $# -lt 1 ]]; then
-    print "lack of arguments."
+    print "lack of arguments." 2>&1
     return 1
   fi
 
@@ -148,7 +148,7 @@ myfcsv() {
 
 mycnt() {
   if [[ $# -lt 1 ]]; then
-    print "lack of arguments."
+    print "lack of arguments." 2>&1
     return 1
   fi
 

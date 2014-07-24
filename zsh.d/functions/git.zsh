@@ -4,7 +4,7 @@ gam() {
 
   gam_usage="Usage: $0 <Files>"
   if [[ $# -lt 1 ]]; then
-    print $gam_usage
+    print $gam_usage 1>&2
     return 1
   fi
 
@@ -16,7 +16,7 @@ gau() {
 
   gau_usage="Usage: $0 <Files>"
   if [[ $# -lt 1 ]]; then
-    print $gau_usage
+    print $gau_usage 1>&2
     return 1
   fi
 
@@ -28,7 +28,7 @@ gab() {
 
   gab_usage="Usage: $0 <Files>"
   if [[ $# -lt 1 ]]; then
-    print $gab_usage
+    print $gab_usage 1>&2
     return 1
   fi
 
@@ -40,7 +40,7 @@ grh() {
 
   grh_usage="Usage: $0 <Files>"
   if [[ $# -lt 1 ]]; then
-    print $grh_usage
+    print $grh_usage 1>&2
     return 1
   fi
 
@@ -52,7 +52,7 @@ gd() {
 
   gd_usage="Usage: $0 <File>"
   if [[ $# -gt 1 ]]; then
-    print $gd_usage
+    print $gd_usage 1>&2
     return 1
   fi
 
@@ -64,7 +64,7 @@ gsw() {
 
   gsw_usage="Usage: $0 <Branch>"
   if [[ $# -ne 1 ]]; then
-    print $gsw_usage;
+    print $gsw_usage 1>&2
     return 1
   fi
 
@@ -76,7 +76,7 @@ gud() {
 
   gud_usage="Usage: $0 <Files>"
   if [[ $# -lt 1 ]]; then
-    print $gud_usage;
+    print $gud_usage 1>&2
     return 1
   fi
 
@@ -88,7 +88,7 @@ gll() {
 
   gll_usage="Usage:<pwd=./.git> $0"
   if [[ ! -d ./.git ]]; then
-    print $gll_usage;
+    print $gll_usage 1>&2
     return 1
   fi
 
@@ -103,7 +103,7 @@ glls() {
 
   glls_usage="Usage:<pwd=./.git> $0"
   if [[ ! -d ./.git ]]; then
-    print $glls_usage;
+    print $glls_usage 1>&2
     return 1
   fi
 
@@ -117,7 +117,7 @@ gsh() {
 
   gsh_usage="Usage:<pwd=./.git> $0"
   if [[ ! -d ./.git ]]; then
-    print $gsh_usage;
+    print $gsh_usage 1>&2
     return 1
   fi
 
@@ -132,7 +132,7 @@ gcloneb() {
 
   gcloneb_usage="Usage: $0 <Branch>"
   if [[ $# -lt 1 ]]; then
-    print $gcloneb_usage;
+    print $gcloneb_usage 1>&2
     return 1
   fi
 
@@ -145,7 +145,7 @@ gdeleteb() {
 
   gdeleteb_usage="Usage: $0 <Branch>"
   if [[ $# -lt 1 ]]; then
-    print $gdeleteb_usage;
+    print $gdeleteb_usage 1>&2
     return 1
   fi
 
@@ -155,6 +155,6 @@ gdeleteb() {
 
 _git-ref-head() {
   local ref
-  ref=$(git symbolic-ref HEAD --short 2> /dev/null) || return
+  ref=$(git symbolic-ref HEAD --short 2>/dev/null) || return 1
   echo $ref
 }

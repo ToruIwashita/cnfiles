@@ -1,7 +1,7 @@
 ## find&grep関数
 findg() {
   if [[ $# -lt 2 ]]; then
-    print "lack of arguments."
+    print "lack of arguments." 1>&2
     return 1
   fi  
 
