@@ -6,6 +6,9 @@ HISTFILE=~/.zsh_history  # ヒストリファイル
 HISTSIZE=100000          # メモリに展開する履歴数
 SAVEHIST=100000          # 保存する履歴数
 
+# ファイルディスクリプタ9を$ZTMPにリダイレクト
+exec 9>! $ZTMP
+
 ## オプション設定
 setopt no_beep               # ビープ音なし
 setopt notify                # バックグラウンドジョブの状態を即時通知
@@ -93,39 +96,43 @@ bindkey -M menuselect '^]' accept-and-hold                     # Ctr+]で候補�
 # zmv
 alias zmv='noglob zmv -W'
 # vim
-alias v="vim"
+alias v='vim'
 # tmux
-alias tm="tmux -2"
+alias tm='tmux -2'
 # other
-alias ez="exec zsh"
-alias cp="cp -ip"
-alias mv="mv -i"
-alias rm="rm -i"
-alias ls="ls -F --color"
-alias l="ls -ahl"
-alias c="cat"
-alias grep="grep --color"
-alias less="less -R"
-alias his="history -f"
-alias his-all="history -E 1"
-alias curh="curl --head"
+alias ez='exec zsh'
+alias cp='cp -ip'
+alias mv='mv -i'
+alias rm='rm -i'
+alias ls='ls -F --color'
+alias l='ls -ahl'
+alias c='cat'
+alias grep='grep --color'
+alias less='less -R'
+alias his='history -f'
+alias his-all='history -E 1'
+alias curh='curl --head'
 # cd
-alias d="cd"
-alias cdz="cd ~/.zsh.d"
-alias cdv="cd ~/.vim"
-alias cdl="cd ~/local"
-alias cds="cd ~/src"
-alias cdsz="cd ~/src/zsh"
-alias cdsv="cd ~/src/vim"
-alias cdst="cd ~/src/tmux"
+alias d='cd'
+alias cdz='cd ~/.zsh.d'
+alias cdv='cd ~/.vim'
+alias cdl='cd ~/local'
+alias cds='cd ~/src'
+alias cdsz='cd ~/src/zsh'
+alias cdsv='cd ~/src/vim'
+alias cdst='cd ~/src/tmux'
 # git
-alias ga="git add"
-alias gb="git branch"
-alias gc="git commit"
-alias gf="git fetch"
-alias gs="git status -s"
-alias gl="git log"
+alias ga='git add'
+alias gb='git branch'
+alias gc='git commit'
+alias gf='git fetch'
+alias gs='git status -s'
+alias gl='git log'
 alias gla="git log --graph --all --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"
+# ztmp
+alias zc=":>! $ZTMP"
+alias -g z=$ZTMP
+alias -g Z='>&9'
 
 ## functions
 # precmd
