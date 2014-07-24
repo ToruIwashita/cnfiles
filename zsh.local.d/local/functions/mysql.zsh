@@ -173,14 +173,16 @@ watch-myps() {
 mf() {
   local my_cmd priority_condition group_condition limit_condition order_condition select_fields table_name vertical_option where_condition mf_usage arg
 
-  mf_usage="Usage: $0 <-t 'Table name'>
-         [-c 'Highest priority condition']
-         [-g 'Group condition']
-         [-l 'Limit value']
-         [-o 'Order condition']
-         [-s 'Select fields']
-         [-v 'Vertical display']
-         [-w 'Where condition']"
+  mf_usage=`cat <<EOF
+Usage: $0 <-t 'Table name'>
+          [-c 'Highest priority condition']
+          [-g 'Group condition']
+          [-l 'Limit value']
+          [-o 'Order condition']
+          [-s 'Select fields']
+          [-v 'Vertical display']
+          [-w 'Where condition']
+EOF`
 
   while getopts :c:g:l:o:s:t:vw: arg; do
     case ${arg} in
