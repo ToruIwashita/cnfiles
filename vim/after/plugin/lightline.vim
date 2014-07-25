@@ -5,8 +5,8 @@ set cpo&vim
 let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ],
-  \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
+  \   'left': [ [ 'mode','paste' ], [ 'fugitive','filename' ] ],
+  \   'right': [ [ 'syntastic','lineinfo' ], ['percent'], [ 'getcharcode','fileencoding','filetype','fileformat' ] ]
   \ },
   \ 'component_function': {
   \   'fugitive':     'MyFugitive',
@@ -16,12 +16,13 @@ let g:lightline = {
   \   'fileencoding': 'MyFileencoding',
   \   'mode':         'MyMode',
   \   'ctrlpmark':    'CtrlPMark',
+  \   'getcharcode':  'GetCharCode'
   \ },
   \ 'component_expand': {
-  \   'syntastic': 'SyntasticStatuslineFlag',
+  \   'syntastic': 'SyntasticStatuslineFlag'
   \ },
   \ 'component_type': {
-  \   'syntastic': 'error',
+  \   'syntastic': 'error'
   \ }
 \ }
 
@@ -121,6 +122,7 @@ augroup AutoSyntastic
   autocmd!
   autocmd BufWritePost *.c,*.cpp call s:syntastic()
 augroup END
+
 function! s:syntastic()
   SyntasticCheck
   call lightline#update()
@@ -129,6 +131,37 @@ endfunction
 let g:unite_force_overwrite_statusline = 0
 let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
+
+function! GetCharCode()
+  " Get the output of :ascii
+  redir => ascii
+  silent! ascii
+  redir END
+
+  if match(ascii, 'NUL') != -1
+    return 'NUL'
+  endif
+
+  " Zero pad hex values
+  let nrformat = '0x%02x'
+
+  let encoding = (&fenc == '' ? &enc : &fenc)
+
+  if encoding == 'utf-8'
+    " Zero pad with 4 zeroes in unicode files
+    let nrformat = '0x%04x'
+  endif
+
+  " Get the character and the numeric value from the return value of :ascii
+  " This matches the two first pieces of the return value, e.g.
+  " "<F>  70" => char: 'F', nr: '70'
+  let [str, char, nr; rest] = matchlist(ascii, '\v\<(.{-1,})\>\s*([0-9]+)')
+
+  " Format the numeric value
+  let nr = printf(nrformat, nr)
+
+  return "'". char ."' ". nr
+endfunction
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
