@@ -83,7 +83,7 @@ bindkey -v '^[[Z' reverse-menu-complete                     # Shift+tabで逆タ
 bindkey -M menuselect '^g' .send-break                         # Ctr+gでsend-break2回
 bindkey -M menuselect '^i' forward-char                        # tabかCtr+iで補完候補1つ右へ
 bindkey -M menuselect '^j' .accept-line                        # Ctr+jでaccept-line2回
-bindkey -M menuselect '^k' .accept-and-infer-next-history      # Ctr+kで次の補完メニュー
+bindkey -M menuselect '^k' infer-next-history                  # Ctr+kで次の補完メニュー
 bindkey -M menuselect '^m' accept-line                         # Ctr+mでaccept-line
 bindkey -M menuselect '^n' down-line-or-history                # Ctr+nで下へ
 bindkey -M menuselect '^p' up-line-or-history                  # Ctr+pで上へ
