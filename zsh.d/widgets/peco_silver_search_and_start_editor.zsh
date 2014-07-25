@@ -3,7 +3,10 @@ _peco-silver-search-and-start-editor() {
   local arg resource_info resource_path line_number cmd
 
   resource_info=$(ag "$BUFFER" 2>/dev/null | peco 2>/dev/null)
-  [[ -z $resource_info ]] && return
+  if [[ -z $resource_info ]]; then
+    zle beginning-of-line
+    return 0
+  fi
 
   resource_path=${resource_info%%:*}
   line_number=${${resource_info#*:}%%:*}
