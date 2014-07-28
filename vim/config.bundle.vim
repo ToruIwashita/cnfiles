@@ -13,7 +13,7 @@ let g:neocomplete#enable_at_startup = 1  " neocompleteを起動時に有効化
 noremap <C-w><C-w> :<C-u>NERDTreeToggle<CR>
 
 "" QuickBuf
-let g:qb_hotkey = "__"  " `__`で起動
+let g:qb_hotkey = '__'  " `__`で起動
 
 "" Align
 let g:Align_xstrlen = 3      " 全角文字のハンドリング
