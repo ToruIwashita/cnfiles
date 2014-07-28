@@ -68,12 +68,12 @@ bindkey -v '^s' self-insert                                 # Ctr+sでself-inser
 bindkey -v '^u' kill-word                                   # Ctr+uでkill-word
 bindkey -v '^w' backward-kill-word                          # Ctr+wでbackward-kill-word
 bindkey -v '^y' push-input                                  # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
-bindkey -v '^ss' peco-silver-search-and-start-editor        # Ctr+s,sでファイル内文字列検索してstart-editor
+bindkey -v '^s^s' peco-silver-search-and-start-editor       # Ctr+s,Ctr+sでファイル内文字列検索してstart-editor
+bindkey -v '^s^i' ls-current                                # Ctr+s,Ctr+sでls
 bindkey -v '^s^j' cat-current                               # Ctr+s,Ctr+jでBUFFERをcat
 bindkey -v '^s^k' peco-file-finder                          # Ctr+s,Ctr+kでpeco-file-finder
 bindkey -v '^s^l' edit-command-line                         # Ctr+s,Ctr+lでコマンドラインエディタ編集
 bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctr+s,Ctr+oでバッファ残しリーフディレクトリ補完
-bindkey -v '^s^s' ls-current                                # Ctr+s,Ctr+sでls
 bindkey -v '^s^@' kill-line                                 # Ctr+s,Ctr+@でカーソル業以降削除
 bindkey -v '^_' cdup                                        # Ctr+_でcdup
 bindkey -v '^@' clear-screen                                # Ctr+@でclear-screen
