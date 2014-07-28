@@ -8,7 +8,7 @@ _into-leaf-dir-and-push-remains-to-prompt() {
   resource_path=$args[$resource_index]
 
   dest=$PWD
-  if [[ -d $resource_path ]]; then
+  if [[ -d $resource_path || $resource_path =~ '/$' ]]; then
     args[$resource_index]=''
     dest=$resource_path
   elif [[ $resource_path:h != '.' ]]; then
