@@ -70,6 +70,7 @@ noremap <C-w>x :<C-u>bdelete<CR>
 " ウィンドウ関連
 " ウィンドウのmapに関わるデフォルトのmapを無効化
 noremap <C-w>P <NOP>
+noremap <C-w>q <NOP>
 noremap <C-w>w <NOP>
 noremap <C-w><C-w> <NOP>
 noremap <C-w>W <NOP>
@@ -130,8 +131,10 @@ noremap <C-t><C-]> :<C-u>tnext<CR>
 " 前のタグへ移動
 noremap <C-t>[ :<C-u>tprevious<CR>
 noremap <C-t><C-[> :<C-u>tprevious<CR>
+" ファイル保存
+noremap <C-w>w :<C-u>:w<CR>
 " preview,quickfixウィンドウクローズ
-noremap <silent> <C-w>w :<C-u>pclose<CR>:cclose<CR>
+noremap <silent> <C-w>q :<C-u>pclose<CR>:cclose<CR>
 
 "" nnoremap
 " *,#で検索した後に移動しない
