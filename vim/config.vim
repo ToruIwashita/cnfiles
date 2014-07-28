@@ -1,6 +1,9 @@
 "" FILE: config.vim
 " Vimの基本的な設定を記述
 
+"" leader
+let mapleader = ','
+
 "" シンタックスハイライト
 syntax on
 "" 補完設定
@@ -57,6 +60,8 @@ cnoremap <C-_> <UP>
 cnoremap <C-d> <DEL>
 
 "" noremap
+" ,はleaderとして使用
+noremap , <NOP>
 " サスペンド無効化
 noremap <C-z> <NOP>
 " 現在のバッファ削除
