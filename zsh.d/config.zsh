@@ -163,12 +163,20 @@ zle -N zle-keymap-select _zle-keymap-select       # _zle-keymap-selectをzle-key
 zle -N edit-command-line                          # コマンドラインを$EDITORで編集
 zle -C menu-complete-files menu-complete _generic # ファイルインタラクティブ補完用ウィジェット
 
+## zsh-hook
+# カレントディレクトリを変更したときに呼ばれる特殊関数chpwd_functionsでchpwd_recent_dirsが呼び出されるようにする
+chpwd_functions+=chpwd_recent_dirs
+
 ## zstyle
 # vcs_info
-zstyle ':vcs_info:*' enable git hg
-zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'
-zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'
-                                                                      # completion
+zstyle ':vcs_info:*' enable git hg                                    # git,hgを有効
+zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'                    # 通常時のフォーマット
+zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)' # コンフリクト時など,アクションがある場合のフォーマット
+# chpwd
+zstyle ":chpwd:*" recent-dirs-max 50                                  # 表示させる最大保存ディレクトリ数
+zstyle ":chpwd:*" recent-dirs-default true                            # 2つ以上の引数または数値以外の引数が与えられた場合,cdと同じ動作をする
+zstyle ":completion:*" recent-dirs-insert always                      # recent-dirs-default trueの場合に補完を開始するとディレクトリ名一覧になる
+# completion
 zstyle ':completion:*' completer _complete _match _ignored _prefix    # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
 zstyle ':completion:*' menu select interactive                        # menuselect+interactive-mode(補完全般共通)
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}                 # 補完候補色付け

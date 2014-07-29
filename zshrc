@@ -1,6 +1,9 @@
 ## 変数の設定
+# 局所変数
 local zsh_dir zsh_plugin_dir zsh_completions_src dir file
 local -a zsh_function_dirs
+# グローバル変数
+typeset -ga chpwd_functions
 
 zsh_dir=.zsh.d
 zsh_plugin_dir=~/$zsh_dir/plugin
@@ -27,18 +30,23 @@ export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 [[ -z $ld_library_path ]] && typeset -xT LD_LIBRARY_PATH ld_library_path
 [[ -z $include ]] && typeset -xT INCLUDE include
 
-## fpath設定,ディレクトリ読み込みplugin追加
-fpath=($zsh_function_dirs $zsh_completions_dir $fpath)
-
 ## 関数ロード
 autoload -Uz colors && colors         # 色の定義
 autoload -Uz compinit && compinit -u  # 自動補完
 autoload -Uz zmv                      # 複数のファイルを扱うようなmv
 autoload -Uz vcs_info                 # VersionControlSystem
+autoload -Uz chpwd_recent_dirs        # 最近使用したdir保持
+autoload -Uz cdr                      # 最近使用したディレクトリを補完
 autoload -Uz add-zsh-hook             # フック関数登録
 autoload -Uz edit-command-line        # コマンドライン編集
 zmodload -i zsh/complist              # 補完メニュー選択モードのキーマップ
 zmodload -i zsh/terminfo              # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
+
+## path関連設定
+# fpath設定,ディレクトリ読み込みplugin追加
+fpath=($zsh_function_dirs $zsh_completions_dir $fpath)
+# chpwd_functions設定,カレントディレクトリ変更で呼ばれる特殊関数chpwd_functionsにchpwd_recent_dirs追加
+chpwd_functions=(chpwd_recent_dirs $chpwd_functions)
 
 ## plugin読み込み
 source $zsh_history_substring_search_src
@@ -55,4 +63,4 @@ for dir in ${zsh_function_dirs[@]}; do
 done
 
 # 重複パスを除去(パス設定が全て済んだ後に実施)
-typeset -U path fpath ld_library_path include
+typeset -U path fpath chpwd_functions ld_library_path include
