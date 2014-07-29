@@ -1,6 +1,6 @@
 ## into-leaf-dir wedget
 _into-leaf-dir() {
-  local resource_path dest
+  local precmd_func resource_path dest
   local -a args
   args=("${(z)BUFFER}")
 
@@ -16,6 +16,11 @@ _into-leaf-dir() {
   zle -I
   zle kill-whole-line
   print -s $dest && cd $dest
+
+  type precmd >/dev/null 2>&1 && precmd
+  for precmd_func in $precmd_functions; do
+    $precmd_func
+  done
 }
 
 zle -N into-leaf-dir _into-leaf-dir

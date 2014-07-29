@@ -1,6 +1,6 @@
 ## into-leaf-dir-and-push-remains-to-prompt wedget
 _into-leaf-dir-and-push-remains-to-prompt() {
-  local resource_index resource_path dest
+  local precmd_func resource_index resource_path dest
   local -a args
   args=("${(z)BUFFER}")
 
@@ -19,8 +19,13 @@ _into-leaf-dir-and-push-remains-to-prompt() {
 
   zle -I
   zle kill-whole-line
-
   print -s $dest && cd $dest
+
+  type precmd >/dev/null 2>&1 && precmd
+  for precmd_func in $precmd_functions; do
+    $precmd_func
+  done
+
   BUFFER=$args
   zle end-of-line
 }
