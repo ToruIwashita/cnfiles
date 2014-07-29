@@ -163,10 +163,6 @@ zle -N zle-keymap-select _zle-keymap-select       # _zle-keymap-selectをzle-key
 zle -N edit-command-line                          # コマンドラインを$EDITORで編集
 zle -C menu-complete-files menu-complete _generic # ファイルインタラクティブ補完用ウィジェット
 
-## zsh-hook
-# カレントディレクトリを変更したときに呼ばれる特殊関数chpwd_functionsでchpwd_recent_dirsが呼び出されるようにする
-chpwd_functions+=chpwd_recent_dirs
-
 ## zstyle
 # vcs_info
 zstyle ':vcs_info:*' enable git hg                                    # git,hgを有効
