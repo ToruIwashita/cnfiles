@@ -1,6 +1,6 @@
 ## MYSQL
 _my-check-argv() {
-  if [[ $# -lt 1 ]]; then
+  if (( ! $# )); then
     print "lack of arguments." 2>&1
     return 1
   fi
@@ -120,7 +120,7 @@ mqexp() {
 }
 
 mydesc() {
-  if [[ $# -lt 1 ]]; then
+  if (( ! $# )); then
     print "lack of arguments." 2>&1
     return 1
   fi
@@ -129,7 +129,7 @@ mydesc() {
 }
 
 myindex() {
-  if [[ $# -lt 1 ]]; then
+  if (( ! $# )); then
     print "lack of arguments." 2>&1
     return 1
   fi
@@ -138,7 +138,7 @@ myindex() {
 }
 
 myfcsv() {
-  if [[ $# -lt 1 ]]; then
+  if (( ! $# )); then
     print "lack of arguments." 2>&1
     return 1
   fi
@@ -147,7 +147,7 @@ myfcsv() {
 }
 
 mycnt() {
-  if [[ $# -lt 1 ]]; then
+  if (( ! $# )); then
     print "lack of arguments." 2>&1
     return 1
   fi

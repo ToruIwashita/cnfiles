@@ -3,7 +3,7 @@ gam() {
   local gam_usage
 
   gam_usage="Usage: $0 <Files>"
-  if [[ $# -lt 1 ]]; then
+  if (( ! $# )); then
     print $gam_usage 1>&2
     return 1
   fi
@@ -15,7 +15,7 @@ gau() {
   local gau_usage
 
   gau_usage="Usage: $0 <Files>"
-  if [[ $# -lt 1 ]]; then
+  if (( ! $# )); then
     print $gau_usage 1>&2
     return 1
   fi
@@ -27,7 +27,7 @@ gab() {
   local gab_usage
 
   gab_usage="Usage: $0 <Files>"
-  if [[ $# -lt 1 ]]; then
+  if (( ! $# )); then
     print $gab_usage 1>&2
     return 1
   fi
@@ -39,7 +39,7 @@ grh() {
   local grh_usage
 
   grh_usage="Usage: $0 <Files>"
-  if [[ $# -lt 1 ]]; then
+  if (( ! $# )); then
     print $grh_usage 1>&2
     return 1
   fi
@@ -75,7 +75,7 @@ gud() {
   local gud_usage
 
   gud_usage="Usage: $0 <Files>"
-  if [[ $# -lt 1 ]]; then
+  if (( ! $# )); then
     print $gud_usage 1>&2
     return 1
   fi
@@ -131,7 +131,7 @@ gcloneb() {
   local gcloneb_usage
 
   gcloneb_usage="Usage: $0 <Branch>"
-  if [[ $# -lt 1 ]]; then
+  if (( ! $# )); then
     print $gcloneb_usage 1>&2
     return 1
   fi
@@ -144,7 +144,7 @@ gdeleteb() {
   local gdeleteb_usage
 
   gdeleteb_usage="Usage: $0 <Branch>"
-  if [[ $# -lt 1 ]]; then
+  if (( ! $# )); then
     print $gdeleteb_usage 1>&2
     return 1
   fi
