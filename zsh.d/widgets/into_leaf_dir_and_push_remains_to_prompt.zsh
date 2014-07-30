@@ -1,6 +1,6 @@
 ## into-leaf-dir-and-push-remains-to-prompt wedget
 _into-leaf-dir-and-push-remains-to-prompt() {
-  integer resource_index
+  integer resource_index changed
   local precmd_func resource_path dest
   local -a args
   local -aU reply
@@ -8,21 +8,24 @@ _into-leaf-dir-and-push-remains-to-prompt() {
 
   resource_index=$#args
   resource_path=$args[$resource_index]
-
-  dest=$PWD
-  if [[ -d $resource_path || $resource_path =~ '/$' ]]; then
-    args[$resource_index]=''
+  if [[ $resource_path =~ '^~' ]]; then
+    dest=$HOME${resource_path#*~}
+  else
     dest=$resource_path
-  elif [[ $resource_path:h != '.' ]]; then
-    args[$resource_index]=$resource_path:t
-    dest=$resource_path:h
   fi
-  [[ $dest =~ '^~' ]] && dest=$HOME${dest#*~}
 
   zle -I
   zle kill-whole-line
-  print -s $dest && cd $dest
 
+  cd $dest 2>/dev/null && changed=1
+  if (( changed )); then
+    print -s $dest
+    args[$resource_index]=''
+  elif [[ $resource_path:h != '.' ]]; then
+    dest=$dest:h
+    cd $dest && print -s $dest
+    args[$resource_index]=$resource_path:t
+  fi
 
   if (( ${+functions[chpwd_recent_filehandler]} && ${+functions[chpwd_recent_add]} )); then
     chpwd_recent_filehandler
