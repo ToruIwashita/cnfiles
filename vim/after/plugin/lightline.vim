@@ -26,6 +26,11 @@ let g:lightline = {
   \ }
 \ }
 
+let g:lightline.tabline = {
+  \ 'left': [ [ 'tabs' ] ],
+  \ 'right': [ [ '' ] ]
+\ }
+
 function! MyModified()
   return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
