@@ -14,7 +14,8 @@ _my-check-argv() {
 }
 
 mq() {
-  local my_cmd arg_num
+  integer arg_num
+  local my_cmd
 
   _my-check-argv $argv
   if [[ $? -eq 1 ]]; then
@@ -37,7 +38,8 @@ mq() {
 }
 
 mqout() {
-  local my_cmd arg_num
+  integer arg_num
+  local my_cmd
 
   _my-check-argv $argv
   if [[ $? -eq 1 ]]; then
@@ -97,7 +99,8 @@ myfindg() {
 }
 
 mqexp() {
-  local my_cmd arg_num
+  integer arg_num
+  local my_cmd
 
   _my-check-argv $argv
   if [[ $? -eq 1 ]]; then

@@ -1,6 +1,7 @@
 ## peco_silver_search_and_start_editor
 _peco-silver-search-and-start-editor() {
-  local resource_info resource_path line_number
+  integer line_number
+  local resource_info resource_path
 
   resource_info=$(ag "$BUFFER" 2>/dev/null | peco 2>/dev/null)
   if [[ -z $resource_info ]]; then

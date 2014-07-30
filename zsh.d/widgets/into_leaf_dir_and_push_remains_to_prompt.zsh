@@ -1,6 +1,7 @@
 ## into-leaf-dir-and-push-remains-to-prompt wedget
 _into-leaf-dir-and-push-remains-to-prompt() {
-  local precmd_func resource_index resource_path dest
+  integer resource_index
+  local precmd_func resource_path dest
   local -a args
   args=("${(z)BUFFER}")
 
