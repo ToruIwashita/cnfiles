@@ -2,6 +2,7 @@
 _into-leaf-dir() {
   local precmd_func resource_path dest
   local -a args
+  local -aU reply
   args=("${(z)BUFFER}")
 
   resource_path=$args[$#args]
@@ -17,7 +18,12 @@ _into-leaf-dir() {
   zle kill-whole-line
   print -s $dest && cd $dest
 
-  type precmd >/dev/null 2>&1 && precmd
+  if (( ${+functions[chpwd_recent_filehandler]} && ${+functions[chpwd_recent_add]} )); then
+    chpwd_recent_filehandler
+    chpwd_recent_add $PWD && chpwd_recent_filehandler $reply
+  fi
+
+  (( ${+functions[precmd]} )) && precmd
   for precmd_func in $precmd_functions; do
     $precmd_func
   done
