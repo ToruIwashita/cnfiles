@@ -118,6 +118,7 @@ alias his-all='history -E 1'
 alias curh='curl --head'
 # cd
 alias d='cd'
+alias r='cdr'
 alias cdz='cd ~/.zsh.d'
 alias cdv='cd ~/.vim'
 alias cdl='cd ~/local'
