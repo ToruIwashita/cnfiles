@@ -137,15 +137,21 @@ alias -g z=$ZTMP
 alias -g Z='>&9'
 
 ## functions
-# precmd
-precmd() {
+# _precmd_vcs_info
+_precmd_vcs_info() {
   vcs_info
   PROMPT_VIM_MODE_COLOR='blue'
 }
-# chpwd
-chpwd() {
+# _chpwd_ls
+_chpwd_ls() {
   [[ $dirstack[1]:h != $PWD ]] && ls
 }
+
+## auto-execution of functions
+# precmd_functions設定
+precmd_functions+='_precmd_vcs_info'
+# chpwd_functions設定
+chpwd_functions=(chpwd_recent_dirs _chpwd_ls)
 
 ## widgets
 # PROMPT_VIM_MODE_COLOR選択widgets
