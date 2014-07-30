@@ -2,6 +2,7 @@
 _cdup() {
   local precmd_func after_buffer
   local -a args
+  local -aU reply
   args=("${(z)BUFFER}")
 
   if [[ $#args -ge 2 ]]; then
@@ -11,10 +12,17 @@ _cdup() {
   fi
 
   print -s 'cd ..' && cd ..
-  type precmd >/dev/null 2>&1 && precmd 
+
+  if (( ${+functions[chpwd_recent_filehandler]} && ${+functions[chpwd_recent_add]} )); then
+    chpwd_recent_filehandler
+    chpwd_recent_add $PWD && chpwd_recent_filehandler $reply
+  fi
+
+  (( ${+functions[precmd]} )) && precmd
   for precmd_func in $precmd_functions; do
     $precmd_func
   done
+
   zle reset-prompt
   zle kill-whole-line
   BUFFER=$after_buffer
