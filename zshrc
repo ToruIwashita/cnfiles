@@ -32,16 +32,17 @@ export LS_COLORS='rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;
 [[ -z $include ]] && typeset -xT INCLUDE include
 
 ## 関数ロード
-autoload -Uz colors && colors         # 色の定義
-autoload -Uz compinit && compinit -u  # 自動補完
-autoload -Uz zmv                      # 複数のファイルを扱うようなmv
-autoload -Uz vcs_info                 # VersionControlSystem
-autoload -Uz chpwd_recent_dirs        # 最近使用したdir保持
-autoload -Uz cdr                      # 最近使用したディレクトリを補完
-autoload -Uz add-zsh-hook             # フック関数登録
-autoload -Uz edit-command-line        # コマンドライン編集
-zmodload -i zsh/complist              # 補完メニュー選択モードのキーマップ
-zmodload -i zsh/terminfo              # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
+autoload -Uz colors && colors          # 色の定義
+autoload -Uz compinit && compinit -u   # 自動補完
+autoload -Uz zmv                       # 複数のファイルを扱うようなmv
+autoload -Uz vcs_info                  # VersionControlSystem
+autoload -Uz chpwd_recent_dirs         # 最近使用したdir保持
+autoload -Uz chpwd_recent_filehandler  # 最近使用したdirを保持するfileの操作
+autoload -Uz cdr                       # 最近使用したディレクトリを補完
+autoload -Uz add-zsh-hook              # フック関数登録
+autoload -Uz edit-command-line         # コマンドライン編集
+zmodload -i zsh/complist               # 補完メニュー選択モードのキーマップ
+zmodload -i zsh/terminfo               # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
 
 ## path関連設定
 # fpath設定,ディレクトリ読み込みplugin追加
