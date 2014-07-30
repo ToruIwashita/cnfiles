@@ -64,6 +64,8 @@ cnoremap <C-d> <DEL>
 noremap , <NOP>
 " サスペンド無効化
 noremap <C-z> <NOP>
+" ファイル保存
+noremap <C-j> :<C-u>:w<CR>
 " 現在のバッファ削除
 noremap <C-w>x <NOP>
 noremap <C-w>x :<C-u>bdelete<CR>
@@ -131,8 +133,6 @@ noremap <C-t><C-]> :<C-u>tnext<CR>
 " 前のタグへ移動
 noremap <C-t>[ :<C-u>tprevious<CR>
 noremap <C-t><C-[> :<C-u>tprevious<CR>
-" ファイル保存
-noremap <C-w>w :<C-u>:w<CR>
 " preview,quickfixウィンドウクローズ
 noremap <silent> <C-w>q :<C-u>pclose<CR>:cclose<CR>
 
