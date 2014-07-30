@@ -70,11 +70,12 @@ bindkey -v '^s' self-insert                                 # Ctr+sでself-inser
 bindkey -v '^u' kill-word                                   # Ctr+uでkill-word
 bindkey -v '^w' backward-kill-word                          # Ctr+wでbackward-kill-word
 bindkey -v '^y' push-input                                  # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
-bindkey -v '^ss' peco-silver-search-and-start-editor        # Ctr+s,sでファイル内文字列検索してstart-editor
 bindkey -v '^sj' vi-join                                    # Ctr+s,jでviのjoin
+bindkey -v '^sk' peco-file-finder                           # Ctr+s,Ctr+kでpeco-file-finder
+bindkey -v '^ss' peco-silver-search-and-start-editor        # Ctr+s,sでファイル内文字列検索してstart-editor
 bindkey -v '^s^i' ls-current                                # Ctr+s,Ctr+iでls
 bindkey -v '^s^j' cat-current                               # Ctr+s,Ctr+jでBUFFERをcat
-bindkey -v '^s^k' peco-file-finder                          # Ctr+s,Ctr+kでpeco-file-finder
+bindkey -v '^s^k' menu-complete-recent-dirs                 # Ctr+s,Ctr+kで最近移動したディレクトリへ移動
 bindkey -v '^s^l' edit-command-line                         # Ctr+s,Ctr+lでコマンドラインエディタ編集
 bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctr+s,Ctr+oでバッファ残しリーフディレクトリ補完
 bindkey -v '^s^s' vi-find-next-char                         # Ctr+s,Ctr+sでviのfind-char
@@ -168,24 +169,26 @@ _zle-keymap-select() {
 
   zle reset-prompt
 }
-zle -N zle-keymap-select _zle-keymap-select       # _zle-keymap-selectをzle-keymap-selectに設定
-zle -N edit-command-line                          # コマンドラインを$EDITORで編集
-zle -C menu-complete-files menu-complete _generic # ファイルインタラクティブ補完用ウィジェット
+zle -N zle-keymap-select _zle-keymap-select              # _zle-keymap-selectをzle-keymap-selectに設定
+zle -N edit-command-line                                 # コマンドラインを$EDITORで編集
+zle -C menu-complete-files menu-complete _generic        # ファイルインタラクティブ補完用ウィジェット
+zle -C menu-complete-recent-dirs menu-complete _generic  # 最近移動したディレクトリ補完用ウィジェット
 
 ## zstyle
 # vcs_info
-zstyle ':vcs_info:*' enable git hg                                    # git,hgを有効
-zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'                    # 通常時のフォーマット
-zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)' # コンフリクト時など,アクションがある場合のフォーマット
+zstyle ':vcs_info:*' enable git hg                                     # git,hgを有効
+zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'                     # 通常時のフォーマット
+zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'  # コンフリクト時など,アクションがある場合のフォーマット
 # chpwd
-zstyle ":chpwd:*" recent-dirs-max 50                                  # 表示させる最大保存ディレクトリ数
-zstyle ":chpwd:*" recent-dirs-default true                            # 2つ以上の引数または数値以外の引数が与えられた場合,cdと同じ動作をする
-zstyle ":completion:*" recent-dirs-insert always                      # recent-dirs-default trueの場合に補完を開始するとディレクトリ名一覧になる
+zstyle ":chpwd:*" recent-dirs-max 50                                   # 表示させる最大保存ディレクトリ数
+zstyle ":chpwd:*" recent-dirs-default true                             # 2つ以上の引数または数値以外の引数が与えられた場合,cdと同じ動作をする
+zstyle ":completion:*" recent-dirs-insert always                       # recent-dirs-default trueの場合に補完を開始するとディレクトリ名一覧になる
 # completion
-zstyle ':completion:*' completer _complete _match _ignored _prefix    # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
-zstyle ':completion:*' menu select interactive                        # menuselect+interactive-mode(補完全般共通)
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}                 # 補完候補色付け
-zstyle ':completion:menu-complete-files:*' completer _files           # ファイル補完用ウィジットコンプリータ指定
+zstyle ':completion:*' completer _complete _match _ignored _prefix     # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
+zstyle ':completion:*' menu select interactive                         # menuselect+interactive-mode(補完全般共通)
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}                  # 補完候補色付け
+zstyle ':completion:menu-complete-files:*' completer _files            # ファイル補完用ウィジットコンプリータ指定
+zstyle ':completion:menu-complete-recent-dirs:*' completer _cdr        # 最近移動したディレクトリ補完用ウィジェットコンプリータ指定
 
 ## prompt
 # プロンプト表示
