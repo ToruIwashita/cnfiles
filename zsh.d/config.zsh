@@ -1,5 +1,7 @@
 ## stty画面出力停止無効
 stty stop undef
+## r無効
+disable r
 
 ## コマンド履歴
 HISTFILE=~/.zsh_history  # ヒストリファイル
