@@ -26,7 +26,7 @@ setopt magic_equal_subst     # オプション指定時"="以降も補完
 setopt auto_param_keys       # カッコの対応などを自動的に補完
 setopt complete_in_word      # 単語途中の補完
 setopt auto_param_slash      # ディレクトリ名の補完で末尾の"/"を自動的に付加
-setopt auto_remove_slash     # スペースで /を削除
+setopt auto_remove_slash     # 補完後不要なバックスラッシュを削除
 setopt always_last_prompt    # 補完のときプロンプトの位置を変えない
 setopt list_packed           # 補完候補を詰めて表示
 setopt mark_dirs             # ファイル名の展開でディレクトリにマッチした場合末尾に"/"を付加
