@@ -9,11 +9,12 @@ _peco-silver-search-and-start-editor() {
     return 0
   fi
 
-  file_path=${resource_info%%:*}
   line_number=${${resource_info#*:}%%:*}
+  file_path=${resource_info%%:*}
 
   zle -I
   print -s $EDITOR:t $file_path +$line_number
+  [[ $file_path =~ '^~' ]] && file_path=$HOME${file_path#*~}
   $EDITOR $file_path +$line_number < $TTY
 }
 
