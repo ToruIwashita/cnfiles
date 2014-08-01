@@ -52,15 +52,15 @@ zmodload -i zsh/terminfo               # terminfoの配列データを扱う(zsh
 source $zsh_history_substring_search_src
 
 ## 各種設定・オリジナル関数読込
-# 設定読込
-source ~/$zsh_dir/config.zsh
-source ~/$zsh_dir/config.local.zsh
 # 関数読込
 for dir in ${zsh_function_dirs[@]}; do
   for file in ${dir}/*.zsh(.); do
     autoload -Uz $file:t && $file:t
   done
 done
+# 設定読込
+source ~/$zsh_dir/config.zsh
+source ~/$zsh_dir/config.local.zsh
 
-# 重複パスを除去(パス設定が全て済んだ後に実施)
+# 重複パスを除去
 typeset -U path fpath precmd_functions chpwd_functions ld_library_path include
