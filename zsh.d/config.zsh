@@ -26,12 +26,11 @@ setopt magic_equal_subst     # オプション指定時"="以降も補完
 setopt auto_param_keys       # カッコの対応などを自動的に補完
 setopt complete_in_word      # 単語途中の補完
 setopt auto_param_slash      # ディレクトリ名の補完で末尾の"/"を自動的に付加
-setopt auto_remove_slash     # 補完後不要なバックスラッシュを削除
 setopt always_last_prompt    # 補完のときプロンプトの位置を変えない
 setopt list_packed           # 補完候補を詰めて表示
 setopt mark_dirs             # ファイル名の展開でディレクトリにマッチした場合末尾に"/"を付加
 setopt interactive_comments  # コマンドラインでも"#"以降をコメントと見なす
-setopt noautoremoveslash     # 最後のスラッシュを自動的に削除しない
+setopt no_auto_remove_slash  # 最後のスラッシュを自動的に削除しない
 setopt hist_ignore_all_dups  # 重複コマンド記録しない(古い行を消して新しい行を追加)
 setopt share_history         # コマンド履歴・共有
 setopt incappend_history     # コマンド履歴・シェル横断実行時間順ヒストリ保存
