@@ -12,6 +12,7 @@ zsh_function_dirs=(
   ~/$zsh_dir/functions
   ~/$zsh_dir/completions
   ~/$zsh_dir/widgets
+  ~/$zsh_dir/completion_widgets
   ~/$zsh_dir/local/functions
   ~/$zsh_dir/local/completions
 )

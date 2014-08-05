@@ -170,8 +170,6 @@ _zle-keymap-select() {
 }
 zle -N zle-keymap-select _zle-keymap-select              # _zle-keymap-selectをzle-keymap-selectに設定
 zle -N edit-command-line                                 # コマンドラインを$EDITORで編集
-zle -C menu-complete-files menu-complete _generic        # ファイル補完用ウィジェット
-zle -C menu-complete-recent-dirs menu-complete _generic  # 最近移動したディレクトリ補完用ウィジェット
 
 ## zstyle
 # vcs_info
@@ -186,8 +184,6 @@ zstyle ":completion:*" recent-dirs-insert always                       # recent-
 zstyle ':completion:*' completer _complete _match _ignored _prefix     # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
 zstyle ':completion:*' menu select interactive                         # menuselect+interactive-mode(補完全般共通)
 zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}                  # 補完候補色付け
-zstyle ':completion:menu-complete-files:*' completer _files            # ファイル補完用ウィジットコンプリータ指定
-zstyle ':completion:menu-complete-recent-dirs:*' completer _cdr        # 最近移動したディレクトリ補完用ウィジェットコンプリータ指定
 
 ## prompt
 # プロンプト表示
