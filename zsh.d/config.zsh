@@ -69,8 +69,8 @@ bindkey -v '^s' self-insert                                 # Ctr+sでself-inser
 bindkey -v '^u' kill-word                                   # Ctr+uでkill-word
 bindkey -v '^w' backward-kill-word                          # Ctr+wでbackward-kill-word
 bindkey -v '^y' push-input                                  # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
+bindkey -v '^sf' peco-file-finder                           # Ctr+s,fでpeco-file-finder
 bindkey -v '^sj' vi-join                                    # Ctr+s,jでviのjoin
-bindkey -v '^sk' peco-file-finder                           # Ctr+s,Ctr+kでpeco-file-finder
 bindkey -v '^ss' peco-silver-search-and-start-editor        # Ctr+s,sでファイル内文字列検索してstart-editor
 bindkey -v '^s^i' ls-current                                # Ctr+s,Ctr+iでls
 bindkey -v '^s^j' cat-current                               # Ctr+s,Ctr+jでBUFFERをcat
