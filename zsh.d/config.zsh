@@ -149,12 +149,21 @@ _precmd_vcs_info() {
 _chpwd_ls() {
   [[ $dirstack[1]:h != $PWD ]] && ls
 }
+# _chpwd_recent_add_slash_suffix
+_chpwd_recent_add_slash_suffix() {
+  if (( ${+functions[chpwd_recent_filehandler]} && ${+functions[chpwd_recent_add]} )); then
+    local -a reply_with_slash_suffix
+    chpwd_recent_filehandler
+    reply_with_slash_suffix=(${^reply%/}/)
+    chpwd_recent_filehandler $reply_with_slash_suffix
+  fi
+}
 
 ## auto-execution of functions
 # precmd_functions設定
 precmd_functions+='_precmd_vcs_info'
 # chpwd_functions設定
-chpwd_functions=(chpwd_recent_dirs _chpwd_ls)
+chpwd_functions=(chpwd_recent_dirs _chpwd_ls _chpwd_recent_add_slash_suffix)
 
 ## widgets
 # PROMPT_VIM_MODE_COLOR選択widgets
