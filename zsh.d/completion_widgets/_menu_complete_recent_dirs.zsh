@@ -6,8 +6,7 @@ __complete-recent-dirs() {
   else
     recent_dirs=()
   fi
-  echo $recent_dirs
-  compadd -Q -a recent_dirs
+  compadd -S '' -Q -a recent_dirs
 }
 
 zle -C menu-complete-recent-dirs menu-complete _generic
