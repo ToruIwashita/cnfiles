@@ -152,7 +152,7 @@ _chpwd_ls() {
 # _chpwd_recent_add_slash_suffix
 _chpwd_recent_add_slash_suffix() {
   if (( ${+functions[chpwd_recent_filehandler]} && ${+functions[chpwd_recent_add]} )); then
-    local -aU reply_with_slash_suffix
+    local -a reply_with_slash_suffix
     chpwd_recent_filehandler
     reply_with_slash_suffix=(${^reply%/}/)
     chpwd_recent_filehandler $reply_with_slash_suffix
