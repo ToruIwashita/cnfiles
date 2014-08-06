@@ -2,7 +2,7 @@
 _into-leaf-dir() {
   local precmd_func dest
   local -a args
-  local -aU reply reply_with_slash_suffix
+  local -aU reply
   args=("${(z)BUFFER}")
 
   dest=$args[$#args]
@@ -16,9 +16,6 @@ _into-leaf-dir() {
   if (( ${+functions[chpwd_recent_filehandler]} && ${+functions[chpwd_recent_add]} )); then
     chpwd_recent_filehandler
     chpwd_recent_add $PWD && chpwd_recent_filehandler $reply
-    chpwd_recent_filehandler
-    reply_with_slash_suffix=(${^reply%/}/)
-    chpwd_recent_filehandler $reply_with_slash_suffix
   fi
 
   (( ${+functions[precmd]} )) && precmd
