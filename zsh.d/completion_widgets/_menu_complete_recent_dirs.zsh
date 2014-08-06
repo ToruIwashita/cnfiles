@@ -2,11 +2,11 @@
 __complete-recent-dirs() {
   local -a recent_dirs
   if (( ${+functions[cdr]} )); then
-    recent_dirs=(${^${(f)"$(cdr -l)"}##*[[:space:]]}/)
+    recent_dirs=(${^${(f)"$(cdr -l)"}##<-> ##}/)
   else
     recent_dirs=()
   fi
-  compadd -S '' -Q -a recent_dirs
+  _wanted -V recent-dirs expl 'recent-dirs' compadd -S '' -Q -a recent_dirs
 }
 
 zle -C menu-complete-recent-dirs menu-complete _generic
