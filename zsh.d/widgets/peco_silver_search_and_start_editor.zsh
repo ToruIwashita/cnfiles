@@ -13,20 +13,12 @@ _peco-silver-search-and-start-editor() {
   if [[ $#peco_resulting_line -eq 1 ]]; then
     specified_line=+${${peco_resulting_line#*:}%%:*}
     resource_info=${peco_resulting_line%%:*}
-    if [[ $resource_info =~ '^~' ]]; then
-      file_path+=($HOME${resource_info#*~})
-    else
-      file_path+=($resource_info)
-    fi
+    file_path=$resource_info
   else
     specified_line=''
     resource_info=(${(R)peco_resulting_line%%:*})
     for _resource_info in $resource_info; do
-      if [[ $_resource_info =~ '^~' ]]; then
-        file_path+=($HOME${_resource_info#*~})
-      else
-        file_path+=($_resource_info)
-      fi
+      file_path+=($_resource_info)
     done
   fi
 
