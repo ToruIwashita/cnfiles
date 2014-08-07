@@ -32,7 +32,6 @@ _peco-silver-search-and-start-editor() {
 
   zle -I
   print -s $EDITOR:t $resource_info $specified_line
-  echo $specified_line
   $EDITOR $file_path $specified_line < $TTY
 }
 
