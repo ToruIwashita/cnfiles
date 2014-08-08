@@ -45,7 +45,7 @@ NeoBundle 'thinca/vim-visualstar'        " visualstar(選択範囲のテキス�
 NeoBundle 't9md/vim-choosewin'           " ウィンドウ対話的選択
 NeoBundle 'gregsexton/gitv'              " gitv(コミットログ閲覧用)
 NeoBundle 'scrooloose/nerdtree'          " ファイラー
-NeoBundle 'kien/ctrlp.vim'               " 多機能finder
+NeoBundle 'ctrlpvim/ctrlp.vim'           " 多機能finder
 NeoBundle 'gcmt/wildfire.vim'            " text-object選択
 NeoBundle 'hallison/vim-markdown'        " vim-markdown
 NeoBundle 'fugalh/desert.vim'            " カラースキーマ
