@@ -1,4 +1,4 @@
-## into-leaf-dir-and-push-remains-to-prompt wedget
+## into-leaf-dir-and-push-remains-to-prompt
 _into-leaf-dir-and-push-remains-to-prompt() {
   integer resource_index changed
   local precmd_func file_path dest

@@ -1,4 +1,4 @@
-## zpeco widget
+## peco-file-finder
 _peco-file-finder() {
   local arg
   local -aU file_path

@@ -1,4 +1,4 @@
-## ls-current widget
+## ls-current
 _ls-currnet() {
   local cmd
   local -a args

@@ -1,4 +1,4 @@
-## peco_silver_search_and_start_editor
+## peco-silver-search-and-start-editor
 _peco-silver-search-and-start-editor() {
   local specified_line
   local -a peco_resulting_line
