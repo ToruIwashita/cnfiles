@@ -1,11 +1,19 @@
 ## zpeco widget
 _peco-file-finder() {
-  local arg file_path
+  local arg
+  local -aU file_path
+
   arg=$BUFFER
-  file_path=$(find | peco)
+  [[ -z $arg ]] && arg='*'
+
+  file_path=(${(f)"$(find -name "$arg" 2>/dev/null | peco 2>/dev/null)"})
+  if [[ -z $file_path ]]; then
+    zle beginning-of-line
+    return 0
+  fi
 
   zle kill-whole-line
-  BUFFER="$arg$file_path"
+  BUFFER=$file_path
   zle end-of-line
 }
 zle -N peco-file-finder _peco-file-finder
