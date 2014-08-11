@@ -10,7 +10,7 @@ _into-leaf-dir() {
 
   zle -I
   zle kill-whole-line
-  print -s $dest
+  print -s "cd $dest"
   cd $dest 2>/dev/null || cd $dest:h
 
   if (( ${+functions[chpwd_recent_filehandler]} && ${+functions[chpwd_recent_add]} )); then

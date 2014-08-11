@@ -19,11 +19,11 @@ _into-leaf-dir-and-push-remains-to-prompt() {
 
   cd $dest 2>/dev/null && changed=1
   if (( changed )); then
-    print -s $dest
+    print -s "cd $dest"
     args[$resource_index]=''
   elif [[ $file_path:h != '.' ]]; then
     dest=$dest:h
-    cd $dest && print -s $dest
+    cd $dest && print -s "cd $dest"
     args[$resource_index]=$file_path:t
   fi
 
