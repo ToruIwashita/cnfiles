@@ -9,6 +9,10 @@ _peco-cd-recent-dir() {
 
   recent_dirs=${(F)${${(f)"$(cdr -l)"}##<-> ##}}
   dir_path=(${(f)"$(echo $recent_dirs | peco 2>/dev/null)"})
+  if [[ -z $dir_path ]]; then
+    zle beginning-of-line
+    return 0
+  fi
 
   zle kill-whole-line
   BUFFER="cd $dir_path"
