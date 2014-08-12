@@ -71,7 +71,8 @@ bindkey -v '^w' backward-kill-word                          # Ctr+wでbackward-k
 bindkey -v '^y' push-input                                  # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
 bindkey -v '^sf' peco-file-finder                           # Ctr+s,fでpeco-file-finder
 bindkey -v '^sj' vi-join                                    # Ctr+s,jでviのjoin
-bindkey -v '^sk' peco-cd-recent-dir                         # Ctr+s,kで最近移動したディレクトリを絞り込む
+bindkey -v '^sk' peco-cd-recent-dir                         # Ctr+s,kで最近移動したディレクトリを絞り込んで移動
+bindkey -v '^so' peco-cd-dir                                # Ctr+s,oでディレクトリを絞り込んで移動
 bindkey -v '^ss' peco-silver-search-and-start-editor        # Ctr+s,sでファイル内文字列検索してstart-editor
 bindkey -v '^s^i' ls-current                                # Ctr+s,Ctr+iでls
 bindkey -v '^s^j' cat-current                               # Ctr+s,Ctr+jでBUFFERをcat
