@@ -10,10 +10,8 @@ function! s:add_md_space()
   endtry
 endfunction
 
-augroup AuAddMdSpace
-  autocmd!
-  autocmd BufWrite <buffer> call s:add_md_space()
-augroup END
+command! MdFormat :call s:add_md_space()
+cnorea M MdFormat
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
