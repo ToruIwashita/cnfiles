@@ -5,7 +5,7 @@ set cpo&vim
 let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
-  \   'left': [ [ 'mode','paste' ], [ 'fugitive','filename' ] ],
+  \   'left': [ [ 'mode','paste' ], [ 'fugitive','filename' ], ['ctrlpmark'] ],
   \   'right': [ [ 'syntastic','lineinfo' ], ['percent'], [ 'getcharcode','fileencoding','filetype','fileformat' ] ]
   \ },
   \ 'component_function': {
