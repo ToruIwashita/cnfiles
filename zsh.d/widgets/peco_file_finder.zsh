@@ -6,7 +6,7 @@ _peco-file-finder() {
   arg=$BUFFER
   [[ -z $arg ]] && arg='*'
 
-  file_path=(${(f)"$(find -name "$arg" 2>/dev/null | peco 2>/dev/null)"})
+  file_path=(${(f)"$(find -type f -name "$arg" 2>/dev/null | peco 2>/dev/null)"})
   if [[ -z $file_path ]]; then
     zle beginning-of-line
     return 0
