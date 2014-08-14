@@ -179,7 +179,7 @@ zstyle ':vcs_info:*' enable git hg                                     # git,hg�
 zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'                     # 通常時のフォーマット
 zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'  # コンフリクト時など,アクションがある場合のフォーマット
 # chpwd
-zstyle ":chpwd:*" recent-dirs-max 50                                   # 最近利用したディレクトリ最大保存数
+zstyle ":chpwd:*" recent-dirs-max 100                                  # 最近利用したディレクトリ最大保存数
 zstyle ":chpwd:*" recent-dirs-default true                             # 2つ以上の引数または数値以外の引数が与えられた場合,cdと同じ動作をする
 zstyle ":completion:*" recent-dirs-insert always                       # recent-dirs-default trueの場合に補完を開始するとディレクトリ名一覧になる
 # completion
