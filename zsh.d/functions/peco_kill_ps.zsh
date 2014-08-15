@@ -13,9 +13,13 @@ peco-kill-ps() {
     print -n "Kill process $pid (y/n)? "
     read answer
     case "$answer" in
-      [yY]) kill $pid; return 0 ;;
-      [nN]) return 0 ;;
-      *) print -n 'Please enter y or n. ' ;;
+      [yY]) kill $pid
+            break
+            ;;
+      [nN]) break
+            ;;
+      *)    print -n 'Please enter y or n. '
+            ;;
     esac
   done
 }
