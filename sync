@@ -31,27 +31,32 @@ PECO_REPOSITORY='git://github.com/peco/peco'
 TMUX_MEM_CPU_LOAD_REPOSITORY='git://github.com/thewtex/tmux-mem-cpu-load'
 NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
 
-# base dir,path
+# cache
 CACHE_DIR=cache
 CACHE_DIR_PATH=~/.$CACHE_DIR
 
+# golang
+GOPATH=~/.go
+
 ## init
 # source or local
-[[ -d $SRC_DIR_PATH ]]                          || mkdir $SRC_DIR_PATH
-[[ -d $LOCAL_DIR_PATH ]]                        || mkdir $LOCAL_DIR_PATH
-[[ -d $ZSH_SRC_DIR_PATH ]]                      || git clone $ZSH_REPOSITORY $ZSH_SRC_DIR_PATH
-[[ -d $VIM_SRC_DIR_PATH ]]                      || git clone $VIM_REPOSITORY $VIM_SRC_DIR_PATH
-[[ -d $TMUX_SRC_DIR_PATH ]]                     || git clone $TMUX_REPOSITORY $TMUX_SRC_DIR_PATH
-[[ -d $GIT_SRC_DIR_PATH ]]                      || git clone $GIT_REPOSITORY $GIT_SRC_DIR_PATH
-[[ -d $LUAJIT_SRC_DIR_PATH ]]                   || git clone $LUAJIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
-[[ -d $CTAGS_SRC_DIR_PATH ]]                    || git clone $CTAGS_REPOSITORY $CTAGS_SRC_DIR_PATH
-[[ -d $SILVER_SEARCHER_SRC_DIR_PATH ]]          || git clone $SILVER_SEARCHER_REPOSITORY $SILVER_SEARCHER_SRC_DIR_PATH
-[[ -d $PECO_SRC_DIR_PATH ]]                     || git clone $PECO_REPOSITORY $PECO_SRC_DIR_PATH
-[[ -d $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH ]]        || git clone $TMUX_MEM_CPU_LOAD_REPOSITORY $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH
-[[ -d $NEOVIM_SRC_DIR_PATH ]]                   || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
+[[ -d $SRC_DIR_PATH ]]                   || mkdir $SRC_DIR_PATH
+[[ -d $LOCAL_DIR_PATH ]]                 || mkdir $LOCAL_DIR_PATH
+[[ -d $ZSH_SRC_DIR_PATH ]]               || git clone $ZSH_REPOSITORY $ZSH_SRC_DIR_PATH
+[[ -d $VIM_SRC_DIR_PATH ]]               || git clone $VIM_REPOSITORY $VIM_SRC_DIR_PATH
+[[ -d $TMUX_SRC_DIR_PATH ]]              || git clone $TMUX_REPOSITORY $TMUX_SRC_DIR_PATH
+[[ -d $GIT_SRC_DIR_PATH ]]               || git clone $GIT_REPOSITORY $GIT_SRC_DIR_PATH
+[[ -d $LUAJIT_SRC_DIR_PATH ]]            || git clone $LUAJIT_REPOSITORY $LUAJIT_SRC_DIR_PATH
+[[ -d $CTAGS_SRC_DIR_PATH ]]             || git clone $CTAGS_REPOSITORY $CTAGS_SRC_DIR_PATH
+[[ -d $SILVER_SEARCHER_SRC_DIR_PATH ]]   || git clone $SILVER_SEARCHER_REPOSITORY $SILVER_SEARCHER_SRC_DIR_PATH
+[[ -d $PECO_SRC_DIR_PATH ]]              || git clone $PECO_REPOSITORY $PECO_SRC_DIR_PATH
+[[ -d $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH ]] || git clone $TMUX_MEM_CPU_LOAD_REPOSITORY $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH
+[[ -d $NEOVIM_SRC_DIR_PATH ]]            || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
 # cache dir
-[[ -d $CACHE_DIR_PATH ]]                        || mkdir $CACHE_DIR_PATH
-[[ -d $CACHE_DIR_PATH/yankring ]]               || mkdir $CACHE_DIR_PATH/yankring
+[[ -d $CACHE_DIR_PATH ]]                 || mkdir $CACHE_DIR_PATH
+[[ -d $CACHE_DIR_PATH/yankring ]]        || mkdir $CACHE_DIR_PATH/yankring
+# gopath dir
+[[ -d $GOPATH ]]                         || mkdir $GOPATH
 
 ## update source files
 printf "### git pull zsh src.\n"
