@@ -7,9 +7,13 @@ export GOROOT=~/local/go
 export GOPATH=~/.go
 export MYSQL_CNCT MYSQL_CMD
 
-# path
+# path関連環境変数
 export PATH=~/local/bin:$GOROOT/bin:$GOPATH/bin:$PATH
 export LD_LIBRARY_PATH=~/local/lib64:~/local/lib:$LD_LIBRARY_PATH
+
+## plugin読み込み
+# go
+source $GOROOT/misc/zsh/go
 
 ## エイリアス
 # cd
