@@ -128,6 +128,7 @@ alias cds='cd ~/src'
 alias cdsz='cd ~/src/zsh'
 alias cdsv='cd ~/src/vim'
 alias cdst='cd ~/src/tmux'
+alias cdsg='cd ~/src/go'
 # git
 alias ga='git add'
 alias gb='git branch'
