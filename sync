@@ -18,8 +18,9 @@ SILVER_SEARCHER_SRC_DIR_PATH=$SRC_DIR_PATH/silver_searcher
 PECO_SRC_DIR_PATH=$SRC_DIR_PATH/peco
 TMUX_MEM_CPU_LOAD_SRC_DIR_PATH=$SRC_DIR_PATH/tmux-mem-cpu-load
 NEOVIM_SRC_DIR_PATH=$SRC_DIR_PATH/neovim  # 使用していない
+GO_SRC_DIR_PATH=$SRC_DIR_PATH/go
 
-# repositories
+# git repositories
 ZSH_REPOSITORY='git://github.com/zsh-users/zsh'
 VIM_REPOSITORY='git://github.com/vim-jp/vim'
 TMUX_REPOSITORY='git://git.code.sf.net/p/tmux/tmux-code'
@@ -30,6 +31,8 @@ SILVER_SEARCHER_REPOSITORY='git://github.com/ggreer/the_silver_searcher'
 PECO_REPOSITORY='git://github.com/peco/peco'
 TMUX_MEM_CPU_LOAD_REPOSITORY='git://github.com/thewtex/tmux-mem-cpu-load'
 NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
+# hg repositories
+GO_REPOSITORY='https://code.google.com/p/go'
 
 # cache
 CACHE_DIR=cache
@@ -39,9 +42,10 @@ CACHE_DIR_PATH=~/.$CACHE_DIR
 GOPATH=~/.go
 
 ## init
-# source or local
+# source,local
 [[ -d $SRC_DIR_PATH ]]                   || mkdir $SRC_DIR_PATH
 [[ -d $LOCAL_DIR_PATH ]]                 || mkdir $LOCAL_DIR_PATH
+# git repositories
 [[ -d $ZSH_SRC_DIR_PATH ]]               || git clone $ZSH_REPOSITORY $ZSH_SRC_DIR_PATH
 [[ -d $VIM_SRC_DIR_PATH ]]               || git clone $VIM_REPOSITORY $VIM_SRC_DIR_PATH
 [[ -d $TMUX_SRC_DIR_PATH ]]              || git clone $TMUX_REPOSITORY $TMUX_SRC_DIR_PATH
@@ -52,6 +56,8 @@ GOPATH=~/.go
 [[ -d $PECO_SRC_DIR_PATH ]]              || git clone $PECO_REPOSITORY $PECO_SRC_DIR_PATH
 [[ -d $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH ]] || git clone $TMUX_MEM_CPU_LOAD_REPOSITORY $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH
 [[ -d $NEOVIM_SRC_DIR_PATH ]]            || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
+# hg repositories
+[[ -d $GO_SRC_DIR_PATH ]]                || hg clone -u release $GO_REPOSITORY $GO_SRC_DIR_PATH
 # cache dir
 [[ -d $CACHE_DIR_PATH ]]                 || mkdir $CACHE_DIR_PATH
 [[ -d $CACHE_DIR_PATH/yankring ]]        || mkdir $CACHE_DIR_PATH/yankring
@@ -59,6 +65,7 @@ GOPATH=~/.go
 [[ -d $GOPATH ]]                         || mkdir $GOPATH
 
 ## update source files
+# git
 printf "### git pull zsh src.\n"
 (cd $ZSH_SRC_DIR_PATH && git pull)
 printf "\n### git pull vim src.\n"
@@ -79,6 +86,9 @@ printf "\n### git pull tmux-mem-cpu-load src.\n"
 (cd $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH && git pull)
 printf "\n### git pull neovim src.\n"
 (cd $NEOVIM_SRC_DIR_PATH && git pull)  # 使用していない
+# hg
+printf "\n### hg pull go src.\n"
+(cd $GO_SRC_DIR_PATH && hg pull)
 
 ## copy files
 # zsh
