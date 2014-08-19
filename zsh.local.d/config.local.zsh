@@ -12,6 +12,8 @@ export PATH=~/local/bin:$GOROOT/bin:$GOPATH/bin:$PATH
 export LD_LIBRARY_PATH=~/local/lib64:~/local/lib:$LD_LIBRARY_PATH
 
 ## エイリアス
+# cd
+alias cdw='~/works'
 # mysql
 alias my=$MYSQL_CNCT
 alias myq=$MYSQL_CMD
