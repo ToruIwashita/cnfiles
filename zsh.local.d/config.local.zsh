@@ -17,7 +17,16 @@ source $GOROOT/misc/zsh/go
 
 ## エイリアス
 # cd
-alias cdw='~/works'
+alias cdz='cd ~/.zsh.d'
+alias cdv='cd ~/.vim'
+alias cdg='cd ~/.go'
+alias cdl='cd ~/local'
+alias cds='cd ~/src'
+alias cdsz='cd ~/src/zsh'
+alias cdsv='cd ~/src/vim'
+alias cdst='cd ~/src/tmux'
+alias cdsg='cd ~/src/go'
+alias cdw='cd ~/works'
 # mysql
 alias my=$MYSQL_CNCT
 alias myq=$MYSQL_CMD
