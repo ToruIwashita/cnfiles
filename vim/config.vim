@@ -184,7 +184,7 @@ augroup PreviousCursorLine
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
-" ウィンドウ移動でファイル変更チェック
+" ウィンドウ移動で外部でのファイル変更チェック
 augroup VimrcChecktime
   autocmd!
   autocmd WinEnter * checktime
