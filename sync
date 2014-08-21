@@ -108,6 +108,9 @@ ln -sfn $BASE_DIR_PATH/peco ~/.peco
 # pry
 printf "\n### create symlink for pry config.\n"
 ln -sf $BASE_DIR_PATH/pryrc ~/.pryrc
+# go
+printf "\n### create symlink for go.\n"
+ln -sfn $SRC_DIR_PATH/go $LOCAL_DIR_PATH/go
 
 cd $WORKING_DIR_PATH
 printf "\nsync complete.\n"
