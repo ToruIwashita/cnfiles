@@ -4,7 +4,7 @@ _peco-silver-search-and-start-editor() {
   local -a peco_resulting_line
   local -aU file_path
 
-  peco_resulting_line=(${(f)"$(ag "$BUFFER" 2>/dev/null | peco --layout bottom-up 2>/dev/null)"})
+  peco_resulting_line=(${(f)"$(ag "$BUFFER" 2>/dev/null | peco 2>/dev/null)"})
   if [[ -z $peco_resulting_line ]]; then
     zle beginning-of-line
     return 0

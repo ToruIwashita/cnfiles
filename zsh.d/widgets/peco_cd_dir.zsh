@@ -4,7 +4,7 @@ _peco-cd-dir() {
   local -aU dir_path
 
   arg=${BUFFER:-*}
-  dir_path=(${(f)"$(find -type d -name "$arg" 2>/dev/null | peco --layout bottom-up 2>/dev/null)"})
+  dir_path=(${(f)"$(find -type d -name "$arg" 2>/dev/null | peco 2>/dev/null)"})
   if [[ -z $dir_path ]]; then
     zle beginning-of-line
     return 0
