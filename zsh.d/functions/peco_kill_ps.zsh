@@ -3,7 +3,7 @@ peco-kill-ps() {
   local pid answer
   local -a pids
 
-  pids=(${(f)"$(ps -ef | peco --layout bottom-up | awk '{ print $2 }')"})
+  pids=(${(f)"$(ps -ef | peco | awk '{ print $2 }')"})
 
   if [[ -z $pids ]]; then
     return 0
