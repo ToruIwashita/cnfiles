@@ -29,10 +29,10 @@ nnoremap <C-s> :<C-u>Ag<SPACE>
 vnoremap <C-s> :<C-u>Ag<SPACE><C-r><C-w><SPACE>
 
 "" yankring
-let g:yankring_history_dir = '~/.cache/yankring/'  " yankring_historyの保存先を指定
-let g:yankring_max_history = 30                    " 記録する最大数
-let g:yankring_max_display = 30                    " YRShowの最大表示数
-let g:yankring_ignore_duplicate = 0                " yankring_historyの重複テキストを保存しない
+let g:yankring_history_dir = "$HOME/.cache/yankring/" " yankring_historyの保存先を指定
+let g:yankring_max_history = 30                       " 記録する最大数
+let g:yankring_max_display = 30                       " YRShowの最大表示数
+let g:yankring_ignore_duplicate = 0                   " yankring_historyの重複テキストを保存しない
 " ヤンク履歴表示
 noremap <C-w>P :<C-u>YRShow<CR>
 
