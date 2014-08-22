@@ -20,9 +20,8 @@ if !exists('g:neocomplete#sources#omni#input_patterns')
 endif
 " オムニ補完の関数を呼び出しキーワードパターン設定(ruby用)
 let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+
 "" neocomplete key-mappings
-" Ctr+Jで補完候補確定
-inoremap <expr><C-j> neocomplete#close_popup()
 " Ctr+Gで補完キャンセル&ポップアップを閉じる
 inoremap <expr><C-g> neocomplete#cancel_popup()
 " <TAB>で補完候補移動(下)

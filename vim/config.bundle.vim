@@ -104,5 +104,3 @@ let g:auto_ctags = 0                                                            
 let g:auto_ctags_bin_path = "$HOME/local/bin/ctags"                                     " ctagsのbinパス
 let g:auto_ctags_tags_name = '.tags'                                                    " tagsファイル名
 let g:auto_ctags_tags_args = '--recurse --tag-relative --sort=yes --languages=sh,ruby'  " ctags実行オプション
-" コマンドラインモードabbreviate
-cnorea C Ctags
