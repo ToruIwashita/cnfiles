@@ -65,7 +65,7 @@ noremap , <NOP>
 " サスペンド無効化
 noremap <C-z> <NOP>
 " ファイル保存
-noremap <C-j> :<C-u>:w<CR>
+noremap <C-i> :<C-u>:w<CR>
 " 現在のバッファ削除
 noremap <C-w>x <NOP>
 noremap <C-w>x :<C-u>bdelete<CR>
