@@ -66,6 +66,8 @@ noremap , <NOP>
 noremap <C-z> <NOP>
 " ファイル保存
 noremap <C-i> :<C-u>:w<CR>
+" <ESC>
+noremap <C-j> <ESC>
 " 現在のバッファ削除
 noremap <C-w>x <NOP>
 noremap <C-w>x :<C-u>bdelete<CR>
@@ -156,7 +158,7 @@ nnoremap q/ <NOP>
 nnoremap q? <NOP>
 
 "" inoremap
-" ノーマルモードに切り替え
+" ノーマルモードに切り替え<ESC>
 inoremap <C-[> <ESC>
 inoremap <C-]> <ESC>
 inoremap <C-j> <ESC>
