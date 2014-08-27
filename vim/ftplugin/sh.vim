@@ -8,7 +8,7 @@ setlocal errorformat=%f:\ line\ %l:\ %m
 augroup AuShSyntaxCheck
   autocmd!
   " `BufWritePost`で`make`
-  autocmd BufWritePost *.bash silent make % | redraw!
+  autocmd BufWritePost *.sh,*.bash silent make % | redraw!
   " `make`したら`quickfix`リストを表示
   autocmd QuickfixCmdPost make cw
 augroup END
