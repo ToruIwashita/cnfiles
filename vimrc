@@ -32,7 +32,8 @@ if has('lua')
   NeoBundle 'Shougo/neocomplete'         " 入力補完機能
 endif
 NeoBundle 'Shougo/neosnippet'            " スニペット展開
-NeoBundle 'Shougo/neosnippet-snippets'   " スニペット本体
+NeoBundle 'Shougo/neosnippet-snippets'   " neosnippetの標準
+NeoBundle 'honza/vim-snippets'           " 各種snippet
 NeoBundle 'tpope/vim-surround'           " text-object操作
 NeoBundle 'tpope/vim-repeat'             " vim-surroundの機能を.反復
 NeoBundle 'tpope/vim-abolish'            " 強化版置換コマンド
