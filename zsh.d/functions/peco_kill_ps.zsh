@@ -5,10 +5,6 @@ peco-kill-ps() {
 
   pids=(${(f)"$(ps -ef | peco | awk '{ print $2 }')"})
 
-  if [[ -z $pids ]]; then
-    return 0
-  fi
-
   for pid in $pids; do
     while :; do
       print -n "Kill process $pid (y/n)? "
