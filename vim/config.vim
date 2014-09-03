@@ -35,6 +35,7 @@ set virtualedit=block           " 矩形ビジュアル無文字部分カーソ�
 set scrolloff=2                 " 上下3行の表示を固定
 set ttyfast                     " 横分割かつ,ターミナルが部分スクロールをサポートしていないとき,再描画が滑らかになる
 set lazyredraw                  " スクリプト実行中に画面を描画しない
+set nowrapscan                  " ファイルの末端で検索を止める
 set tags=.tags,tags             " tagsファイル読み込み
 
 "" 補完ポップアップメニュー色設定
