@@ -1,32 +1,32 @@
-[submodule "src/git"]
-	path = src/git
+[submodule "modules/git"]
+	path = modules/git
 	url = git://github.com/gitster/git
-[submodule "src/zsh"]
-	path = src/zsh
+[submodule "modules/zsh"]
+	path = modules/zsh
 	url = git://github.com/zsh-users/zsh
-[submodule "src/vim"]
-	path = src/vim
+[submodule "modules/vim"]
+	path = modules/vim
 	url = git://github.com/vim-jp/vim
-[submodule "src/tmux-code"]
-	path = src/tmux-code
+[submodule "modules/tmux-code"]
+	path = modules/tmux-code
 	url = git://git.code.sf.net/p/tmux/tmux-code
-[submodule "src/luajit-2.0"]
-	path = src/luajit-2.0
+[submodule "modules/luajit-2.0"]
+	path = modules/luajit-2.0
 	url = http://luajit.org/git/luajit-2.0.git
 [submodule "vim/bundle/neobundle.vim"]
 	path = vim/bundle/neobundle.vim
 	url = git://github.com/Shougo/neobundle.vim
-[submodule "src/peco"]
-	path = src/peco
+[submodule "modules/peco"]
+	path = modules/peco
 	url = git://github.com/peco/peco
-[submodule "src/the_silver_searcher"]
-	path = src/the_silver_searcher
+[submodule "modules/the_silver_searcher"]
+	path = modules/the_silver_searcher
 	url = git://github.com/ggreer/the_silver_searcher
-[submodule "src/ctags"]
-	path = src/ctags
+[submodule "modules/ctags"]
+	path = modules/ctags
 	url = git://github.com/fishman/ctags
-[submodule "src/tmux-mem-cpu-load"]
-	path = src/tmux-mem-cpu-load
+[submodule "modules/tmux-mem-cpu-load"]
+	path = modules/tmux-mem-cpu-load
 	url = git://github.com/thewtex/tmux-mem-cpu-load
 [submodule "zsh.d/plugin/zsh-completions"]
 	path = zsh.d/plugin/zsh-completions
