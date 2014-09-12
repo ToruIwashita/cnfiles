@@ -1,51 +1,26 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
 ## dir,path
 __FILE__=$_
 BASE_DIR_PATH=${__FILE__%/./*}
-WORKING_DIR_PATH=$PWD
 
 # src dir,path
 SRC_DIR_PATH=~/src
 LOCAL_DIR_PATH=~/local
-NEOVIM_SRC_DIR_PATH=$SRC_DIR_PATH/neovim  # 使用していない
-GO_SRC_DIR_PATH=$SRC_DIR_PATH/go
-
-# git repositories
-NEOVIM_REPOSITORY='git://github.com/neovim/neovim'  # 使用していない
-# hg repositories
-GO_REPOSITORY='https://code.google.com/p/go'
 
 # cache
 CACHE_DIR=cache
 CACHE_DIR_PATH=~/.$CACHE_DIR
 
-# golang
-GOPATH=~/.go
-
 ## init
 # source,local
 [[ -d $SRC_DIR_PATH ]]            || mkdir $SRC_DIR_PATH
 [[ -d $LOCAL_DIR_PATH ]]          || mkdir $LOCAL_DIR_PATH
-# git repositories
-[[ -d $NEOVIM_SRC_DIR_PATH ]]     || git clone $NEOVIM_REPOSITORY $NEOVIM_SRC_DIR_PATH  # 使用していない
-# hg repositories
-[[ -d $GO_SRC_DIR_PATH ]]         || hg clone -u release $GO_REPOSITORY $GO_SRC_DIR_PATH
 # cache dir
 [[ -d $CACHE_DIR_PATH ]]          || mkdir $CACHE_DIR_PATH
 [[ -d $CACHE_DIR_PATH/yankring ]] || mkdir $CACHE_DIR_PATH/yankring
-# gopath dir
-[[ -d $GOPATH ]]                  || mkdir $GOPATH
 
-## update source files
-# git
-printf "\n### git pull neovim src.\n"
-(cd $NEOVIM_SRC_DIR_PATH && git pull)  # 使用していない
-# hg
-printf "\n### hg pull go src.\n"
-(cd $GO_SRC_DIR_PATH && hg pull)
-
-## copy files
+## create symlink
 # zsh
 printf "\n### create symlink for zsh configs.\n"
 ln -sf  $BASE_DIR_PATH/zshrc ~/.zshrc
@@ -67,9 +42,5 @@ ln -sf $BASE_DIR_PATH/pryrc ~/.pryrc
 printf "\n### create symlink for go.\n"
 ln -sfn $SRC_DIR_PATH/go $LOCAL_DIR_PATH/go
 
-cd $WORKING_DIR_PATH
-printf "\nsync complete.\n"
-
-## restart
-exec zsh
+printf "\ninit complete.\n"
 exit 0
