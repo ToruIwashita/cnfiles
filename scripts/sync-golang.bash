@@ -7,12 +7,12 @@ GO_REPOSITORY='https://code.google.com/p/go'
 GOROOT=$SRC_DIR_PATH/go
 GOPATH=~/.go
 
-if [[ -d $GOROOT ]]; then
+if [[ ! -d $GOROOT ]]; then
   printf "clone '$GO_REPOSITORY' to $GOROOT\n"
   hg clone -u release $GO_REPOSITORY $GOROOT
 fi
 
-if [[ -d $GOPATH ]]; then
+if [[ ! -d $GOPATH ]]; then
   printf "mkdir $GOPATH\n"
   mkdir -p $GOPATH
 fi
