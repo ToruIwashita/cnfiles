@@ -3,13 +3,13 @@
 # src dir,path
 SRC_DIR_PATH=~/src
 LOCAL_DIR_PATH=~/local
-GO_SRC_DIR_PATH=$SRC_DIR_PATH/go
-GO_REPOSITORY='https://code.google.com/p/go' # hg repositories
-GOPATH=~/.go                                 # golang
+GO_REPOSITORY='https://code.google.com/p/go'
+GOROOT=$SRC_DIR_PATH/go
+GOPATH=~/.go
 
-if [[ -d $GO_SRC_DIR_PATH ]]; then
-  printf "clone '$GO_REPOSITORY' to $GO_SRC_DIR_PATH\n"
-  hg clone -u release $GO_REPOSITORY $GO_SRC_DIR_PATH
+if [[ -d $GOROOT ]]; then
+  printf "clone '$GO_REPOSITORY' to $GOROOT\n"
+  hg clone -u release $GO_REPOSITORY $GOROOT
 fi
 
 if [[ -d $GOPATH ]]; then
@@ -17,5 +17,8 @@ if [[ -d $GOPATH ]]; then
   mkdir -p $GOPATH
 fi
 
-printf "\nhg pull go src.\n"
-(cd $GO_SRC_DIR_PATH && hg pull)
+printf "\nhg pull go src\n"
+(cd $GOROOT && hg pull)
+
+printf "complete\n"
+exit 0
