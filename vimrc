@@ -33,7 +33,6 @@ if has('lua')
 endif
 NeoBundle 'Shougo/neosnippet'            " スニペット展開
 NeoBundle 'Shougo/neosnippet-snippets'   " neosnippetの標準
-NeoBundle 'Shougo/vinarise'              " バイナリ編集
 NeoBundle 'honza/vim-snippets'           " 各種snippet
 NeoBundle 'tpope/vim-surround'           " text-object操作
 NeoBundle 'tpope/vim-repeat'             " vim-surroundの機能を.反復
