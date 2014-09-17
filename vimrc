@@ -49,7 +49,7 @@ NeoBundle 'gregsexton/gitv'              " gitv(コミットログ閲覧用)
 NeoBundle 'scrooloose/nerdtree'          " ファイラー
 NeoBundle 'ctrlpvim/ctrlp.vim'           " 多機能finder
 NeoBundle 'gcmt/wildfire.vim'            " text-object選択
-NeoBundle 'hallison/vim-markdown'        " vim-markdown
+NeoBundle 'plasticboy/vim-markdown'      " vim-markdown
 NeoBundle 'fugalh/desert.vim'            " カラースキーマ
 NeoBundle 'vim-scripts/ruby-matchit'     " rubyのブロックを%で移動
 NeoBundle 'soramugi/auto-ctags.vim'      " ctags生成
