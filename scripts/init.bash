@@ -24,24 +24,21 @@ CACHE_DIR_PATH=~/.$CACHE_DIR
 ## create symlink
 # zsh
 printf "\n### create symlink for zsh configs\n"
-ln -sf  $BASE_DIR_PATH/zshrc ~/.zshrc
-ln -sfn $BASE_DIR_PATH/zsh.d ~/.zsh.d
+ln -is  $BASE_DIR_PATH/zshrc ~/.zshrc
+ln -isn $BASE_DIR_PATH/zsh.d ~/.zsh.d
 # vim
 printf "\n### create symlink for vim configs\n"
-ln -sf  $BASE_DIR_PATH/vimrc ~/.vimrc
-ln -sfn $BASE_DIR_PATH/vim   ~/.vim
+ln -is  $BASE_DIR_PATH/vimrc ~/.vimrc
+ln -isn $BASE_DIR_PATH/vim   ~/.vim
 # tmux
 printf "\n### create symlink for tmux config\n"
-ln -sf $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
+ln -is $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
 # peco
 printf "\n### create symlink for peco config\n"
-ln -sfn $BASE_DIR_PATH/peco ~/.peco
+ln -isn $BASE_DIR_PATH/peco ~/.peco
 # pry
 printf "\n### create symlink for pry config\n"
-ln -sf $BASE_DIR_PATH/pryrc ~/.pryrc
-# go
-printf "\n### create symlink for go\n"
-ln -sfn $SRC_DIR_PATH/go $LOCAL_DIR_PATH/go
+ln -is $BASE_DIR_PATH/pryrc ~/.pryrc
 
 printf "\ninit complete\n"
 exit 0
