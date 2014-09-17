@@ -8,17 +8,22 @@ GOROOT=$SRC_DIR_PATH/go
 GOPATH=~/.go
 
 if [[ ! -d $GOROOT ]]; then
-  printf "clone '$GO_REPOSITORY' to $GOROOT\n"
+  printf "\nclone '$GO_REPOSITORY' to $GOROOT\n"
   hg clone -u release $GO_REPOSITORY $GOROOT
 fi
 
 if [[ ! -d $GOPATH ]]; then
-  printf "mkdir $GOPATH\n"
+  printf "\nmkdir $GOPATH\n"
   mkdir -p $GOPATH
 fi
 
 printf "\nhg pull go src\n"
 (cd $GOROOT && hg pull)
 
-printf "complete\n"
+if [[ ! -L $LOCAL_DIR_PATH/go ]]; then
+  printf "\ncreate symlink for go\n"
+  ln -ins $SRC_DIR_PATH/go $LOCAL_DIR_PATH/go
+fi
+
+printf "\ncomplete\n"
 exit 0
