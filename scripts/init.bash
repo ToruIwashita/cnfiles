@@ -13,13 +13,38 @@ LOCAL_DIR_PATH=~/local
 CACHE_DIR=cache
 CACHE_DIR_PATH=~/.$CACHE_DIR
 
-## init
-# source,local
-[[ -d $SRC_DIR_PATH ]]            || mkdir $SRC_DIR_PATH
-[[ -d $LOCAL_DIR_PATH ]]          || mkdir $LOCAL_DIR_PATH
+## create base dir
+# source dir
+if [[ -d $SRC_DIR_PATH ]]; then
+  printf "\n$SRC_DIR_PATH already exists\n"
+else
+  printf "\nmkdir $SRC_DIR_PATH\n"
+  mkdir $SRC_DIR_PATH
+fi
+
+# local dir
+if [[ -d $LOCAL_DIR_PATH ]]; then
+  printf "\n$LOCAL_DIR_PATH already exists\n"
+else
+  printf "\nmkdir $LOCAL_DIR_PATH\n"
+  mkdir $LOCAL_DIR_PATH
+fi
+
 # cache dir
-[[ -d $CACHE_DIR_PATH ]]          || mkdir $CACHE_DIR_PATH
-[[ -d $CACHE_DIR_PATH/yankring ]] || mkdir $CACHE_DIR_PATH/yankring
+if [[ -d $CACHE_DIR_PATH ]]; then
+  printf "\n$CACHE_DIR_PATH already exists\n"
+else
+  printf "\nmkdir $CACHE_DIR_PATH\n"
+  mkdir $CACHE_DIR_PATH
+fi
+
+# yankring dir
+if [[ -d $CACHE_DIR_PATH/yankring ]]; then
+  printf "\n$CACHE_DIR_PATH/yankring already exists\n"
+else
+  printf "\nmkdir $CACHE_DIR_PATH/yankring\n"
+  mkdir $CACHE_DIR_PATH/yankring
+fi
 
 ## create symlink
 # zsh
@@ -27,6 +52,7 @@ if [[ ! -L ~/.zshrc ]]; then
   printf "\n### create symlink for zshrc\n"
   ln -is  $BASE_DIR_PATH/zshrc ~/.zshrc
 fi
+
 if [[ ! -L ~/.zsh.d ]]; then
   printf "\n### create symlink for zsh.d dir\n"
   ln -isn $BASE_DIR_PATH/zsh.d ~/.zsh.d
@@ -37,6 +63,7 @@ if [[ ! -L ~/.vimrc ]]; then
   printf "\n### create symlink for vimrc\n"
   ln -is  $BASE_DIR_PATH/vimrc ~/.vimrc
 fi
+
 if [[ ! -L ~/.vim ]]; then
   printf "\n### create symlink for vim dir\n"
   ln -isn $BASE_DIR_PATH/vim   ~/.vim
