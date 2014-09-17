@@ -7,12 +7,16 @@ GO_REPOSITORY='https://code.google.com/p/go'
 GOROOT=$SRC_DIR_PATH/go
 GOPATH=~/.go
 
-if [[ ! -d $GOROOT ]]; then
+if [[ -d $GOROOT ]]; then
+  printf "\n$GOROOT already exists\n"
+else
   printf "\nclone '$GO_REPOSITORY' to $GOROOT\n"
   hg clone -u release $GO_REPOSITORY $GOROOT
 fi
 
-if [[ ! -d $GOPATH ]]; then
+if [[ -d $GOPATH ]]; then
+  printf "\n$GOPATH already exists\n"
+else
   printf "\nmkdir $GOPATH\n"
   mkdir -p $GOPATH
 fi
@@ -20,7 +24,9 @@ fi
 printf "\nhg pull go src\n"
 (cd $GOROOT && hg pull)
 
-if [[ ! -L $LOCAL_DIR_PATH/go ]]; then
+if [[ -L $LOCAL_DIR_PATH/go ]]; then
+  printf "\n$LOCAL_DIR_PATH/go symlink already exists\n"
+else
   printf "\ncreate symlink for go\n"
   ln -ins $SRC_DIR_PATH/go $LOCAL_DIR_PATH/go
 fi
