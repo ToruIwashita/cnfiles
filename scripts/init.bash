@@ -23,22 +23,42 @@ CACHE_DIR_PATH=~/.$CACHE_DIR
 
 ## create symlink
 # zsh
-printf "\n### create symlink for zsh configs\n"
-ln -is  $BASE_DIR_PATH/zshrc ~/.zshrc
-ln -isn $BASE_DIR_PATH/zsh.d ~/.zsh.d
-# vim
-printf "\n### create symlink for vim configs\n"
-ln -is  $BASE_DIR_PATH/vimrc ~/.vimrc
-ln -isn $BASE_DIR_PATH/vim   ~/.vim
-# tmux
-printf "\n### create symlink for tmux config\n"
-ln -is $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
-# peco
-printf "\n### create symlink for peco config\n"
-ln -isn $BASE_DIR_PATH/peco ~/.peco
-# pry
-printf "\n### create symlink for pry config\n"
-ln -is $BASE_DIR_PATH/pryrc ~/.pryrc
+if [[ ! -L ~/.zshrc ]]; then
+  printf "\n### create symlink for zshrc\n"
+  ln -is  $BASE_DIR_PATH/zshrc ~/.zshrc
+fi
+if [[ ! -L ~/.zsh.d ]]; then
+  printf "\n### create symlink for zsh.d dir\n"
+  ln -isn $BASE_DIR_PATH/zsh.d ~/.zsh.d
+fi
 
-printf "\ninit complete\n"
+# vim
+if [[ ! -L ~/.vimrc ]]; then
+  printf "\n### create symlink for vimrc\n"
+  ln -is  $BASE_DIR_PATH/vimrc ~/.vimrc
+fi
+if [[ ! -L ~/.vim ]]; then
+  printf "\n### create symlink for vim dir\n"
+  ln -isn $BASE_DIR_PATH/vim   ~/.vim
+fi
+
+# tmux
+if [[ ! -L ~/.tmux.conf ]]; then
+  printf "\n### create symlink for tmux.config\n"
+  ln -is $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
+fi
+
+# peco
+if [[ ! -L ~/.peco ]]; then
+  printf "\n### create symlink for peco dir\n"
+  ln -isn $BASE_DIR_PATH/peco ~/.peco
+fi
+
+# pry
+if [[ ! -L ~/.pryrc ]]; then
+  printf "\n### create symlink for pryrc\n"
+  ln -is $BASE_DIR_PATH/pryrc ~/.pryrc
+fi
+
+printf "\ncomplete\n"
 exit 0
