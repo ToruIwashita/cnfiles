@@ -1,4 +1,4 @@
-"" FILE: markdown.vim
+"" FILE: mkd.vim
 let s:cpo_save = &cpo
 set cpo&vim
 
