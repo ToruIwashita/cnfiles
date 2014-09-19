@@ -2,10 +2,10 @@
 readonly MYSQL_CNCT="mysql test"
 readonly MYSQL_CMD="$MYSQL_CNCT -e"
 
+export CNBUNDLE=~/.cnbundle
 export EDITOR=~/local/bin/vim
 export GOROOT=~/local/go
 export GOPATH=~/.go
-export CNBUNDLE=~/.cnbundle
 export MYSQL_CNCT MYSQL_CMD
 
 # path関連環境変数
