@@ -39,6 +39,10 @@ noremap <C-w>P :<C-u>YRShow<CR>
 "" vim-choosewin
 nmap <C-w>- <Plug>(choosewin)
 
+"" syntastic
+let g:syntastic_mode_map = { 'mode': 'passive' }
+let g:syntastic_auto_loc_list = 1
+
 "" ctrlp
 let g:ctrlp_map = '<C-k>'                         " Start CtrlP
 let g:ctrlp_match_window = 'min:10,max:'.&lines/2 " quickfixサイズ
@@ -81,7 +85,7 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtSelectMove("d")':   ['<NOP>'],
   \ 'PrtClearCache()':      ['<C-r>'],
   \ 'PrtExit()':            ['<ESC>','<C-[>']
-  \ }
+\ }
 
 "" wildfire
 let g:wildfire_fuel_map = '<C-l>'   " text-object拡大

@@ -22,16 +22,5 @@ ab <buffer> =d Rails.logger.debug(<<EOS)
 " !,?を区切り文字としない
 autocmd FileType ruby setlocal iskeyword+=!,?
 
-" makeで`ruby -w`起動
-compiler ruby
-
-augroup AuRubySyntaxCheck
-  autocmd!
-  " `BufWritePost`で`make -c`
-  autocmd BufWritePost *.rb silent make -c -W1 % | redraw!
-  " `make`したら`quickfix`リストを表示
-  autocmd QuickfixCmdPost make cw
-augroup END
-
 let &cpo = s:cpo_save
 unlet s:cpo_save

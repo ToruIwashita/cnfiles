@@ -47,6 +47,7 @@ NeoBundle 'thinca/vim-visualstar'        " visualstar(選択範囲のテキス�
 NeoBundle 't9md/vim-choosewin'           " ウィンドウ対話的選択
 NeoBundle 'gregsexton/gitv'              " gitv(コミットログ閲覧用)
 NeoBundle 'scrooloose/nerdtree'          " ファイラー
+NeoBundle 'scrooloose/syntastic'         " シンタックスチェック
 NeoBundle 'ctrlpvim/ctrlp.vim'           " 多機能finder
 NeoBundle 'gcmt/wildfire.vim'            " text-object選択
 NeoBundle 'plasticboy/vim-markdown'      " vim-markdown
@@ -56,7 +57,6 @@ NeoBundle 'vim-scripts/ruby-matchit'     " rubyのブロックを%で移動
 NeoBundle 'vim-scripts/YankRing.vim'     " ヤンク履歴管理
 NeoBundle 'vim-scripts/Align'            " テキスト整形
 NeoBundle 'vim-scripts/QuickBuf'         " バッファ操作
-NeoBundle 'vim-scripts/errormarker.vim'  " QuickFixエラーにマーカー
 "" end
 
 " ファイルタイプの検出,ファイルタイプ用プラグインプラグイン,インデントを有効化(NeoBundleによる処理が終了した後に実施)

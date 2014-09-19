@@ -18,6 +18,7 @@ vim/bundle/neosnippet-snippets/
 vim/bundle/neosnippet/
 vim/bundle/nerdtree/
 vim/bundle/ruby-matchit/
+vim/bundle/syntastic/
 vim/bundle/tcomment_vim/
 vim/bundle/vim-abolish/
 vim/bundle/vim-choosewin/
