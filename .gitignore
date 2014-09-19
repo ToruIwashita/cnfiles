@@ -25,6 +25,7 @@ vim/bundle/vim-choosewin/
 vim/bundle/vim-fugitive/
 vim/bundle/vim-markdown/
 vim/bundle/vim-repeat/
+vim/bundle/vim-rubocop/
 vim/bundle/vim-ruby/
 vim/bundle/vim-snippets/
 vim/bundle/vim-surround/
