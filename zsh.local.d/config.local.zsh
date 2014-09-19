@@ -5,6 +5,7 @@ readonly MYSQL_CMD="$MYSQL_CNCT -e"
 export EDITOR=~/local/bin/vim
 export GOROOT=~/local/go
 export GOPATH=~/.go
+export CNBUNDLE=~/.cnbundle
 export MYSQL_CNCT MYSQL_CMD
 
 # path関連環境変数
@@ -22,9 +23,7 @@ alias cdv='cd ~/.vim'
 alias cdg='cd ~/.go'
 alias cdl='cd ~/local'
 alias cds='cd ~/src'
-alias cdsz='cd ~/src/zsh'
-alias cdsv='cd ~/src/vim'
-alias cdst='cd ~/src/tmux'
+alias cdb='cd ~/.cnbundle'
 alias cdsg='cd ~/src/go'
 alias cdw='cd ~/works'
 # mysql
