@@ -3,6 +3,8 @@ _peco-cd-dir() {
   local arg
   local -aU dir_path
 
+  [[ "$BUFFER" != '' ]] && print -s "$BUFFER"
+
   arg=${BUFFER:-*}
   dir_path=(${(f)"$(find -type d -name "$arg" 2>/dev/null | peco 2>/dev/null)"})
   if [[ -z $dir_path ]]; then
