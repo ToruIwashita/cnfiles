@@ -21,5 +21,8 @@ cd $ZSH_SRC_DIR_PATH
   --enable-multibyte --enable-locale
 make && make install
 
+git checkout .
+git clean -f -d
+
 printf "\ncomplete\n"
 exit 0

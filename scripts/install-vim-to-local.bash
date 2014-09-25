@@ -37,6 +37,7 @@ cd $VIM_SRC_DIR_PATH
   --with-luajit
 make && make install
 
+git checkout .
 git clean -f -d
 
 printf "\ncomplete\n"
