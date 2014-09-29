@@ -137,7 +137,7 @@ noremap <C-t><C-]> :<C-u>tnext<CR>
 noremap <C-t>[ :<C-u>tprevious<CR>
 noremap <C-t><C-[> :<C-u>tprevious<CR>
 " preview,quickfixウィンドウクローズ
-noremap <silent> <C-w>w :<C-u>pclose<CR>:cclose<CR>
+noremap <silent> <C-w>w :<C-u>pclose<CR>:lclose<CR>
 
 "" nnoremap
 " *,#で検索した後に移動しない
