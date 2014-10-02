@@ -138,6 +138,8 @@ noremap <C-t>[ :<C-u>tprevious<CR>
 noremap <C-t><C-[> :<C-u>tprevious<CR>
 " preview,quickfixウィンドウクローズ
 noremap <silent> <C-w>w :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
+" カーソル上の文字列を置換対象として:%sに配置する
+noremap <leader>s :<C-u>%s/<C-r><C-w>/
 
 "" nnoremap
 " *,#で検索した後に移動しない
@@ -146,8 +148,9 @@ nnoremap # #N
 " 検索後にカーソルを中央に移動
 nnoremap n nzz
 nnoremap N Nzz
-" <ESC>2回で検索ハイライト消し
+" <ESC>か<C-j>2回で検索ハイライト消し
 nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
+nnoremap <C-j><C-j> :<C-u>nohlsearch<CR>
 " qqq:キーコマンド履歴表示
 nnoremap qqq: <ESC>q:
 " qqq/,qqq?検索履歴表示
