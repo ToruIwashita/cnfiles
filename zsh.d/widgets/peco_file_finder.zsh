@@ -3,8 +3,10 @@ _peco-file-finder() {
   local arg
   local -aU file_path
 
+  [[ "$BUFFER" != '' ]] && print -s "$BUFFER"
+
   arg=${BUFFER:-*}
-  file_path=(${(f)"$(find -type f -name "$arg" 2>/dev/null | peco 2>/dev/null)"})
+  file_path=(${(f)"$(find -type f -name "*$arg*" 2>/dev/null | peco 2>/dev/null)"})
   if [[ -z $file_path ]]; then
     zle beginning-of-line
     return 0
