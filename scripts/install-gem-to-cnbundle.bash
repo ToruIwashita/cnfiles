@@ -3,7 +3,7 @@
 # install dir
 CNBUNDLE=~/.cnbundle
 
-bundle instal --path $CNBUNDLE
+bundle install --path $CNBUNDLE
 
 printf "\ncomplete\n"
 exit 0
