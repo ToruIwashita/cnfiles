@@ -45,6 +45,7 @@ NeoBundle 'tomtom/tcomment_vim'          " コメントアウト
 NeoBundle 'itchyny/lightline.vim'        " ステータスライン
 NeoBundle 'adie/BlockDiff'               " BlockDiff(選択範囲の比較)
 NeoBundle 'thinca/vim-visualstar'        " visualstar(選択範囲のテキストで検索)
+NeoBundle 'thinca/vim-prettyprint'       " vimのデバッグ用prettyprint
 NeoBundle 't9md/vim-choosewin'           " ウィンドウ対話的選択
 NeoBundle 'gregsexton/gitv'              " gitv(コミットログ閲覧用)
 NeoBundle 'scrooloose/nerdtree'          " ファイラー

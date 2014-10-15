@@ -72,6 +72,7 @@ bindkey -v '^y' push-input                                  # Ctr+yでコマン�
 bindkey -v '^sf' peco-file-finder                           # Ctr+s,fでpeco-file-finder
 bindkey -v '^sj' vi-join                                    # Ctr+s,jでviのjoin
 bindkey -v '^sk' peco-cd-recent-dir                         # Ctr+s,kで最近移動したディレクトリを絞り込んで移動
+bindkey -v '^sl' peco-file-find-and-start-editor            # Ctr+s,lでファイル検索してstart-editor
 bindkey -v '^so' peco-cd-dir                                # Ctr+s,oでディレクトリを絞り込んで移動
 bindkey -v '^ss' peco-silver-search-and-start-editor        # Ctr+s,sでファイル内文字列検索してstart-editor
 bindkey -v '^s^i' ls-current                                # Ctr+s,Ctr+iでls
@@ -80,7 +81,7 @@ bindkey -v '^s^k' menu-complete-recent-dirs                 # Ctr+s,Ctr+kで最�
 bindkey -v '^s^l' edit-command-line                         # Ctr+s,Ctr+lでコマンドラインエディタ編集
 bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctr+s,Ctr+oでバッファ残しリーフディレクトリ補完
 bindkey -v '^s^s' vi-find-next-char                         # Ctr+s,Ctr+sでviのfind-char
-bindkey -v '^s^@' kill-line                                 # Ctr+s,Ctr+@でカーソル業以降削除
+bindkey -v '^s^@' kill-line                                 # Ctr+s,Ctr+@でカーソル行以降削除
 bindkey -v '^_' cdup                                        # Ctr+_でcdup
 bindkey -v '^@' clear-screen                                # Ctr+@でclear-screen
 bindkey -v '^?' backward-delete-char                        # BSでbackward-delete-char(menuselectのinteractive-modeでbackword)
@@ -163,8 +164,8 @@ _zle-keymap-select() {
 
   zle reset-prompt
 }
-zle -N zle-keymap-select _zle-keymap-select              # _zle-keymap-selectをzle-keymap-selectに設定
-zle -N edit-command-line                                 # コマンドラインを$EDITORで編集
+zle -N zle-keymap-select _zle-keymap-select  # _zle-keymap-selectをzle-keymap-selectに設定
+zle -N edit-command-line                     # コマンドラインを$EDITORで編集
 
 ## zstyle
 # vcs_info

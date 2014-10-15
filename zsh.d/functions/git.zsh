@@ -108,7 +108,7 @@ glls() {
   fi
 
   print "submodules update & pull master"
-  git submodule init && git submodule update
+  git submodule update --init
   git submodule foreach 'git checkout master && git pull origin master'
 }
 
