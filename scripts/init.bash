@@ -8,6 +8,10 @@ BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 # src dir,path
 SRC_DIR_PATH=~/src
 LOCAL_DIR_PATH=~/local
+ZSH_CONFIG_LOCAL_FILE_SOUCE_PATH=$BASE_DIR_PATH/zsh.local.d/config.local.zsh
+ZSH_CONFIG_LOCAL_DIR_SOUCE_PATH=$BASE_DIR_PATH/zsh.local.d/local
+ZSH_CONFIG_LOCAL_FILE_DEST_PATH=$BASE_DIR_PATH/zsh.d/config.local.zsh
+ZSH_CONFIG_LOCAL_DIR_DEST_PATH=$BASE_DIR_PATH/zsh.d/local
 
 # cache
 CACHE_DIR=cache
@@ -28,6 +32,22 @@ if [[ -d $LOCAL_DIR_PATH ]]; then
 else
   printf "\nmkdir $LOCAL_DIR_PATH\n"
   mkdir $LOCAL_DIR_PATH
+fi
+
+# zsh.d/config.local.zsh file
+if [[ -f $ZSH_CONFIG_LOCAL_FILE_DEST_PATH ]]; then
+  printf "\n$ZSH_CONFIG_LOCAL_FILE_DEST_PATH file already exists\n"
+else
+  printf "\ncopy file $ZSH_CONFIG_LOCAL_FILE_SOUCE_PATH to $ZSH_CONFIG_LOCAL_FILE_DEST_PATH\n"
+  cp -p $ZSH_CONFIG_LOCAL_FILE_SOUCE_PATH $ZSH_CONFIG_LOCAL_FILE_DEST_PATH
+fi
+
+# zsh.d/local dir
+if [[ -d $ZSH_CONFIG_LOCAL_DIR_DEST_PATH ]]; then
+  printf "\n$ZSH_CONFIG_LOCAL_DIR_DEST_PATH dir already exists\n"
+else
+  printf "\ncopy dir $ZSH_CONFIG_LOCAL_DIR_SOURCE_PATH to $ZSH_CONFIG_LOCAL_DIR_DEST_PATH\n"
+  cp -rp $ZSH_CONFIG_LOCAL_DIR_SOURCE_PATH $ZSH_CONFIG_LOCAL_DIR_DEST_PATH
 fi
 
 # cache dir
