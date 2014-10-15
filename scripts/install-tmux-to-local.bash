@@ -3,7 +3,7 @@
 # base dir
 __FILE__=$_
 BASE_DIR_PATH=${__FILE__%/./*}
-BASE_DIR_PATH=${BASE_DIR_PATH%/scripts}
+BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 CURRENT_DIR=`pwd`
 # tmux src dir
 TMUX_SRC_DIR_PATH=$BASE_DIR_PATH/modules/tmux-code

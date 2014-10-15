@@ -3,7 +3,7 @@
 ## dir,path
 __FILE__=$_
 BASE_DIR_PATH=${__FILE__%/./*}
-BASE_DIR_PATH=${BASE_DIR_PATH%/scripts}
+BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
 # src dir,path
 SRC_DIR_PATH=~/src
