@@ -22,7 +22,7 @@ else
 fi
 
 printf "\nhg pull go src\n"
-(cd $GOROOT && hg pull)
+(cd $GOROOT && hg pull && hg update release)
 
 if [[ -L $LOCAL_DIR_PATH/go ]]; then
   printf "\n$LOCAL_DIR_PATH/go dir symlink already exists\n"
