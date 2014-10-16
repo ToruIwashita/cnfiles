@@ -2,7 +2,7 @@
 
 ## dir,path
 __FILE__=$_
-BASE_DIR_PATH=${__FILE__%/./*}
+BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
 # src dir,path

@@ -2,9 +2,9 @@
 
 # base dir
 __FILE__=$_
-BASE_DIR_PATH=${__FILE__%/./*}
+BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
-CURRENT_DIR=`pwd`
+
 # zsh src dir
 ZSH_SRC_DIR_PATH=$BASE_DIR_PATH/modules/zsh
 # install dir
