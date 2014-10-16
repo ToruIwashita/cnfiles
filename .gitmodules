@@ -22,6 +22,9 @@
 [submodule "modules/ctags"]
 	path = modules/ctags
 	url = git://github.com/fishman/ctags
+[submodule "modules/tig"]
+	path = modules/tig
+	url = git://github.com/jonas/tig
 [submodule "modules/tmux-mem-cpu-load"]
 	path = modules/tmux-mem-cpu-load
 	url = git://github.com/thewtex/tmux-mem-cpu-load
