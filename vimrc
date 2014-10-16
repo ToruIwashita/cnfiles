@@ -14,7 +14,6 @@ if has('vim_starting')
   set nocompatible  " Be iMproved
 
   set runtimepath+=~/.vim/bundle/neobundle.vim/
-  set runtimepath+=$GOROOT/misc/vim
   exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
 endif
 " neobundle.vimの初期化
@@ -57,6 +56,7 @@ NeoBundle 'gcmt/wildfire.vim'           " text-object選択
 NeoBundle 'plasticboy/vim-markdown'     " vim-markdown
 NeoBundle 'fugalh/desert.vim'           " カラースキーマ
 NeoBundle 'soramugi/auto-ctags.vim'     " ctags生成
+NeoBundle 'vim-jp/vim-go-extra'         " extra vim plugin for go
 NeoBundle 'vim-scripts/ruby-matchit'    " rubyのブロックを%で移動
 NeoBundle 'vim-scripts/YankRing.vim'    " ヤンク履歴管理
 NeoBundle 'vim-scripts/Align'           " テキスト整形

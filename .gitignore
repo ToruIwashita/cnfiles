@@ -24,6 +24,7 @@ vim/bundle/tcomment_vim/
 vim/bundle/vim-abolish/
 vim/bundle/vim-choosewin/
 vim/bundle/vim-fugitive/
+vim/bundle/vim-go-extra/
 vim/bundle/vim-markdown/
 vim/bundle/vim-prettyprint/
 vim/bundle/vim-repeat/
