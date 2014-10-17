@@ -107,9 +107,9 @@ glls() {
     return 1
   fi
 
-  print "submodules update & pull master"
+  print "submodules update & pull master" && echo
   git submodule update --init
-  git submodule foreach 'git checkout master && git pull origin master'
+  git submodule foreach 'git checkout master && git pull origin master && echo'
 }
 
 gsh() {
