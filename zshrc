@@ -19,6 +19,7 @@ zsh_function_dirs=(
 # plugin path
 zsh_completions_dir=$zsh_plugin_dir/zsh-completions/src
 zsh_history_substring_search_src=$zsh_plugin_dir/zsh-history-substring-search/zsh-history-substring-search.zsh
+zsh_golang_misc_src=$zsh_plugin_dir/golang-misc-zsh/src/go.zsh
 
 ## 環境変数設定
 export LANG=ja_JP.UTF-8                    # utf-8
@@ -51,6 +52,7 @@ zmodload -i zsh/terminfo               # terminfoの配列データを扱う(zsh
 
 ## plugin読み込み
 source $zsh_history_substring_search_src
+source $zsh_golang_misc_src
 
 ## 各種設定・オリジナル関数読込
 # 関数読込
