@@ -21,6 +21,7 @@ vim/bundle/nerdtree/
 vim/bundle/ruby-matchit/
 vim/bundle/syntastic/
 vim/bundle/tcomment_vim/
+vim/bundle/toggle_word.vim/
 vim/bundle/vim-abolish/
 vim/bundle/vim-choosewin/
 vim/bundle/vim-fugitive/

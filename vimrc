@@ -30,37 +30,38 @@ NeoBundle 'Shougo/vimproc', {
 \  },
 \}
 if has('lua')
-  NeoBundle 'Shougo/neocomplete'        " 入力補完機能
+  NeoBundle 'Shougo/neocomplete'         " 入力補完機能
 endif
-NeoBundle 'Shougo/neosnippet'           " スニペット展開
-NeoBundle 'Shougo/neosnippet-snippets'  " neosnippetの標準
-NeoBundle 'honza/vim-snippets'          " 各種snippet
-NeoBundle 'tpope/vim-surround'          " text-object操作
-NeoBundle 'tpope/vim-repeat'            " vim-surroundの機能を.反復
-NeoBundle 'tpope/vim-abolish'           " 強化版置換コマンド
-NeoBundle 'tpope/vim-fugitive'          " fugitive(ステータスラインのブランチ名と,Gblame用)
-NeoBundle 'vim-ruby/vim-ruby'           " vim-ruby
-NeoBundle 'ngmy/vim-rubocop'            " vim-rubocop
-NeoBundle 'rking/ag.vim'                " ag(silver_searcher)用プラグイン
-NeoBundle 'tomtom/tcomment_vim'         " コメントアウト
-NeoBundle 'itchyny/lightline.vim'       " ステータスライン
-NeoBundle 'adie/BlockDiff'              " BlockDiff(選択範囲の比較)
-NeoBundle 'thinca/vim-visualstar'       " visualstar(選択範囲のテキストで検索)
-NeoBundle 'thinca/vim-prettyprint'      " vimのデバッグ用prettyprint
-NeoBundle 't9md/vim-choosewin'          " ウィンドウ対話的選択
-NeoBundle 'gregsexton/gitv'             " gitv(コミットログ閲覧用)
-NeoBundle 'scrooloose/nerdtree'         " ファイラー
-NeoBundle 'scrooloose/syntastic'        " シンタックスチェック
-NeoBundle 'ctrlpvim/ctrlp.vim'          " 多機能finder
-NeoBundle 'gcmt/wildfire.vim'           " text-object選択
-NeoBundle 'plasticboy/vim-markdown'     " vim-markdown
-NeoBundle 'fugalh/desert.vim'           " カラースキーマ
-NeoBundle 'soramugi/auto-ctags.vim'     " ctags生成
-NeoBundle 'vim-jp/vim-go-extra'         " extra vim plugin for go
-NeoBundle 'vim-scripts/ruby-matchit'    " rubyのブロックを%で移動
-NeoBundle 'vim-scripts/YankRing.vim'    " ヤンク履歴管理
-NeoBundle 'vim-scripts/Align'           " テキスト整形
-NeoBundle 'vim-scripts/QuickBuf'        " バッファ操作
+NeoBundle 'Shougo/neosnippet'            " スニペット展開
+NeoBundle 'Shougo/neosnippet-snippets'   " neosnippetの標準
+NeoBundle 'honza/vim-snippets'           " 各種snippet
+NeoBundle 'tpope/vim-surround'           " text-object操作
+NeoBundle 'tpope/vim-repeat'             " vim-surroundの機能を.反復
+NeoBundle 'tpope/vim-abolish'            " 強化版置換コマンド
+NeoBundle 'tpope/vim-fugitive'           " fugitive(ステータスラインのブランチ名と,Gblame用)
+NeoBundle 'vim-ruby/vim-ruby'            " vim-ruby
+NeoBundle 'ngmy/vim-rubocop'             " vim-rubocop
+NeoBundle 'rking/ag.vim'                 " ag(silver_searcher)用プラグイン
+NeoBundle 'tomtom/tcomment_vim'          " コメントアウト
+NeoBundle 'itchyny/lightline.vim'        " ステータスライン
+NeoBundle 'adie/BlockDiff'               " BlockDiff(選択範囲の比較)
+NeoBundle 'thinca/vim-visualstar'        " visualstar(選択範囲のテキストで検索)
+NeoBundle 'thinca/vim-prettyprint'       " vimのデバッグ用prettyprint
+NeoBundle 't9md/vim-choosewin'           " ウィンドウ対話的選択
+NeoBundle 'gregsexton/gitv'              " gitv(コミットログ閲覧用)
+NeoBundle 'scrooloose/nerdtree'          " ファイラー
+NeoBundle 'scrooloose/syntastic'         " シンタックスチェック
+NeoBundle 'ctrlpvim/ctrlp.vim'           " 多機能finder
+NeoBundle 'gcmt/wildfire.vim'            " text-object選択
+NeoBundle 'plasticboy/vim-markdown'      " vim-markdown
+NeoBundle 'fugalh/desert.vim'            " カラースキーマ
+NeoBundle 'soramugi/auto-ctags.vim'      " ctags生成
+NeoBundle 'vim-jp/vim-go-extra'          " extra vim plugin for go
+NeoBundle 'vim-scripts/ruby-matchit'     " rubyのブロックを%で移動
+NeoBundle 'vim-scripts/YankRing.vim'     " ヤンク履歴管理
+NeoBundle 'vim-scripts/Align'            " テキスト整形
+NeoBundle 'vim-scripts/QuickBuf'         " バッファ操作
+NeoBundle 'vim-scripts/toggle_word.vim'  " on,off,true,false,0,1のtoggle
 
 call neobundle#end()
 
