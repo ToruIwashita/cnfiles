@@ -122,6 +122,9 @@ alias curh='curl --head'
 # cd
 alias d='cd'
 alias dr='cdr'
+# tar
+alias totar='tar cvf'
+alias untar='tar xvf'
 # git
 alias ga='git add'
 alias gb='git branch'
