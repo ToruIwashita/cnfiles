@@ -179,7 +179,7 @@ vnoremap > >gv
 vnoremap <ESC> v_<ESC>
 
 "" cnoreabbrev
-cnorea t :<C-u>tabnew
+cnorea tn :<C-u>tabnew
 cnorea ts :<C-u>tselect
 cnorea pt :<C-u>ptag
 cnorea ev :<C-u>source ~/.vimrc
