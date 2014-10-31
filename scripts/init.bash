@@ -130,13 +130,5 @@ else
   ln -is $BASE_DIR_PATH/pryrc ~/.pryrc
 fi
 
-# npm
-if [[ -L ~/.npmrc ]]; then
-  printf "\n$BASE_DIR_PATH/.npmrc symlink already exists\n"
-else
-  printf "\ncreate symlink ~/.npmrc\n"
-  ln -is $BASE_DIR_PATH/npmrc ~/.npmrc
-fi
-
 printf "\ncomplete\n"
 exit 0
