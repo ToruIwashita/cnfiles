@@ -40,10 +40,10 @@ noremap <C-w>P :<C-u>YRShow<CR>
 nmap <C-w>- <Plug>(choosewin)
 
 "" syntastic
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_error_symbol = '✗'
-let g:syntastic_warning_symbol = '⚠'
-let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_auto_loc_list = 1                " エラーがあったら自動でロケーションリストを開く
+let g:syntastic_error_symbol = '✗'               " errorのマーカー
+let g:syntastic_warning_symbol = '⚠'             " warningのマーカー
+let g:syntastic_javascript_checkers = ['jshint'] " jsをチェックするツール指定
 let g:syntastic_mode_map = { 'mode': 'passive' }
 
 "" ctrlp
