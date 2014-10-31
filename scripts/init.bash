@@ -8,6 +8,7 @@ BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 # src dir,path
 SRC_DIR_PATH=~/src
 LOCAL_DIR_PATH=~/local
+CNBUNDLE_DIR_PATH=~/.cnbundle
 ZSH_CONFIG_LOCAL_FILE_SOUCE_PATH=$BASE_DIR_PATH/zsh.local.d/config.local.zsh
 ZSH_CONFIG_LOCAL_DIR_SOUCE_PATH=$BASE_DIR_PATH/zsh.local.d/local
 ZSH_CONFIG_LOCAL_FILE_DEST_PATH=$BASE_DIR_PATH/zsh.d/config.local.zsh
@@ -66,6 +67,14 @@ else
   mkdir $CACHE_DIR_PATH/yankring
 fi
 
+# cnbundle dir
+if [[ -d $CNBUNDLE_DIR_PATH ]]; then
+  printf "\n$CNBUNDLE_DIR_PATH dir already exists\n"
+else
+  printf "\nmkdir $CNBUNDLE_DIR_PATH\n"
+  mkdir $CNBUNDLE_DIR_PATH
+fi
+
 ## create symlink
 # zsh
 if [[ -L ~/.zshrc ]]; then
@@ -119,6 +128,14 @@ if [[ -L ~/.pryrc ]]; then
 else
   printf "\ncreate symlink ~/.pryrc\n"
   ln -is $BASE_DIR_PATH/pryrc ~/.pryrc
+fi
+
+# npm
+if [[ -L ~/.npmrc ]]; then
+  printf "\n$BASE_DIR_PATH/.npmrc symlink already exists\n"
+else
+  printf "\ncreate symlink ~/.npmrc\n"
+  ln -is $BASE_DIR_PATH/npmrc ~/.npmrc
 fi
 
 printf "\ncomplete\n"
