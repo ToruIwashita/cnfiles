@@ -9,12 +9,8 @@ export GOPATH=~/.go
 export MYSQL_CNCT MYSQL_CMD
 
 # path関連環境変数
-export PATH=~/local/bin:$GOROOT/bin:$GOPATH/bin:/usr/local/bin:$PATH
+export PATH=~/local/bin:$GOROOT/bin:$GOPATH/bin:/usr/local/bin:$PATH  # gem,node-packageのパス追加必要
 export LD_LIBRARY_PATH=~/local/lib64:~/local/lib:$LD_LIBRARY_PATH
-
-## plugin読み込み
-# go
-# source $GOROOT/misc/zsh/go
 
 ## エイリアス
 # cd
