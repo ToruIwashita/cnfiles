@@ -8,11 +8,10 @@ function! s:rubocop_auto_correct()
   unlet g:vimrubocop_extra_args
 endfunction
 
+" インターフェースの定義
 command! RubocopAutoCorrect call s:rubocop_auto_correct()
 
-cnorea RA RubocopAutoCorrect
-
-noremap <leader>ra :<C-u>RubocopAutoCorrect<CR>
+noremap <leader>ca :<C-u>RubocopAutoCorrect<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save

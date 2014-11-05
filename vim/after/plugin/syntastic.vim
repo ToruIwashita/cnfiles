@@ -9,11 +9,10 @@ function! s:rubocop_check()
   unlet g:syntastic_ruby_checkers
 endfunction
 
+" インターフェースの定義
 command! RubocopCheck call s:rubocop_check()
 
-cnorea R RubocopCheck
-
-noremap <leader>r :<C-u>RubocopCheck<CR>
+noremap <leader>c :<C-u>RubocopCheck<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
