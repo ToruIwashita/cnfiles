@@ -60,6 +60,7 @@ NeoBundle 'soramugi/auto-ctags.vim'      " ctags生成
 NeoBundle 'vim-jp/vim-go-extra'          " extra vim plugin for go
 NeoBundle 'vim-scripts/ruby-matchit'     " rubyのブロックを%で移動
 NeoBundle 'vim-scripts/YankRing.vim'     " ヤンク履歴管理
+NeoBundle 'vim-scripts/AnsiEsc.vim'      " ANSIカラー表示
 NeoBundle 'vim-scripts/Align'            " テキスト整形
 NeoBundle 'vim-scripts/QuickBuf'         " バッファ操作
 NeoBundle 'vim-scripts/toggle_word.vim'  " on,off,true,false,0,1のtoggle

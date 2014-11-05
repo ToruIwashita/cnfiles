@@ -4,6 +4,7 @@ zsh.d/config.local.zsh
 zsh.d/local/
 vim/bundle/.neobundle/
 vim/bundle/Align/
+vim/bundle/AnsiEsc.vim/
 vim/bundle/BlockDiff/
 vim/bundle/QuickBuf/
 vim/bundle/YankRing.vim/
