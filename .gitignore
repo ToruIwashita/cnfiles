@@ -11,7 +11,6 @@ vim/bundle/ag.vim/
 vim/bundle/auto-ctags.vim/
 vim/bundle/ctrlp.vim/
 vim/bundle/desert.vim/
-vim/bundle/errormarker.vim/
 vim/bundle/gitv/
 vim/bundle/lightline.vim/
 vim/bundle/neocomplete/
@@ -28,6 +27,7 @@ vim/bundle/vim-fugitive/
 vim/bundle/vim-go-extra/
 vim/bundle/vim-markdown/
 vim/bundle/vim-prettyprint/
+vim/bundle/vim-quickrun/
 vim/bundle/vim-repeat/
 vim/bundle/vim-rubocop/
 vim/bundle/vim-ruby/
