@@ -27,7 +27,7 @@ let g:quickrun_config['rspec/normal'] = {
 " <Leader>lrをタイプした時に<ESC>:QuickRun -cmdopt '-l (カーソル行)'を実行するキーマップを定義する
 function! RSpecQuickrun()
   let b:quickrun_config = {'type' : 'rspec/bundle'}
-  nnoremap <expr> <leader>r ':<C-u>QuickRun -cmdopt ":' . line('.') . '"<CR>'
+  nnoremap <expr> <leader>r ':<C-u>QuickRun -cmdopt ":'.line('.').'"<CR>'
   nnoremap <leader>ra :<C-u>QuickRun<CR>
 endfunction
 
