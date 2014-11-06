@@ -36,6 +36,8 @@ set scrolloff=2                 " 上下3行の表示を固定
 set ttyfast                     " 横分割かつ,ターミナルが部分スクロールをサポートしていないとき,再描画が滑らかになる
 set lazyredraw                  " スクリプト実行中に画面を描画しない
 set nowrapscan                  " ファイルの末端で検索を止める
+set splitbelow                  " 新しいウィンドウを下に開く
+set splitright                  " 新しいウィンドウを右に開く
 set tags=.tags,tags             " tagsファイル読み込み
 
 "" 補完ポップアップメニュー色設定
@@ -69,9 +71,6 @@ noremap <C-z> <NOP>
 noremap <C-i> :<C-u>:w<CR>
 " <ESC>
 noremap <C-j> <ESC>
-" 現在のバッファ削除
-noremap <C-w>x <NOP>
-noremap <C-w>x :<C-u>bdelete<CR>
 " ウィンドウ関連
 " ウィンドウのmapに関わるデフォルトのmapを無効化
 noremap <C-w>P <NOP>
@@ -86,6 +85,9 @@ noremap <C-w><C-n> <C-w>w
 " 前のウィンドウへ移動
 noremap <C-w>p <C-w>W
 noremap <C-w><C-p> <C-w>W
+" 現在のウィンドウを閉じる
+noremap <C-w>x <NOP>
+noremap <C-w>x :<C-u>close<CR>
 " タブ関連
 " タブのmapに関わるデフォルトのmapを無効化
 noremap ] <NOP>
