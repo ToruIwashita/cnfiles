@@ -112,11 +112,9 @@ noremap <C-w>[ gT
 noremap <C-w><C-[> gT
 " <C-w>1..9で任意の番号のタブへ移動
 for i in range(1, 9)
-  execute 'nnoremap <C-w>'.i.' <NOP>'
-  execute 'nnoremap <C-w>'.i.' :<C-u>tabnext '.i.'<CR>'
+  execute 'nnoremap <C-w>' . i . ' <NOP>'
+  execute 'nnoremap <C-w>' . i . ' :<C-u>tabnext ' . i . '<CR>'
 endfor
-" 現在のバッファを新しいタブで開く
-noremap <C-w>! :<C-u>tabedit %<CR>
 " タブを閉じる
 noremap <C-w>X :<C-u>tabclose<CR>
 " タグ(ctags)関連
