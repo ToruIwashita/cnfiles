@@ -8,7 +8,7 @@ function! s:add_md_space(line1,line2)
 endfunction
 
 command! -range MdFormat call s:add_md_space(<line1>,<line2>)
-cnorea M MdFormat
+cnorea %M %MdFormat
 cnorea '<,'>M '<,'>MdFormat
 
 let &cpo = s:cpo_save
