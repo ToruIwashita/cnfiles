@@ -8,6 +8,7 @@ BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 # src dir,path
 SRC_DIR_PATH=~/src
 LOCAL_DIR_PATH=~/local
+LOCAL_BIN_DIR_PATH=$LOCAL_DIR_PATH/bin
 CNBUNDLE_DIR_PATH=~/.cnbundle
 ZSH_CONFIG_LOCAL_FILE_SOUCE_PATH=$BASE_DIR_PATH/zsh.local.d/config.local.zsh
 ZSH_CONFIG_LOCAL_DIR_SOUCE_PATH=$BASE_DIR_PATH/zsh.local.d/local
@@ -33,6 +34,14 @@ if [[ -d $LOCAL_DIR_PATH ]]; then
 else
   printf "\nmkdir $LOCAL_DIR_PATH\n"
   mkdir $LOCAL_DIR_PATH
+fi
+
+# local bin dir
+if [[ -d $LOCAL_BIN_DIR_PATH ]]; then
+  printf "\n$LOCAL_BIN_DIR_PATH dir already exists\n"
+else
+  printf "\nmkdir $LOCAL_BIN_DIR_PATH\n"
+  mkdir $LOCAL_BIN_DIR_PATH
 fi
 
 # zsh.d/config.local.zsh file
