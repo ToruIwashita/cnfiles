@@ -14,10 +14,11 @@ ZSH_CONFIG_LOCAL_FILE_SOURCE_PATH=$BASE_DIR_PATH/zsh.local.d/config.local.zsh
 ZSH_CONFIG_LOCAL_DIR_SOURCE_PATH=$BASE_DIR_PATH/zsh.local.d/local
 ZSH_CONFIG_LOCAL_FILE_DEST_PATH=$BASE_DIR_PATH/zsh.d/config.local.zsh
 ZSH_CONFIG_LOCAL_DIR_DEST_PATH=$BASE_DIR_PATH/zsh.d/local
-
 # cache
 CACHE_DIR=cache
 CACHE_DIR_PATH=~/.$CACHE_DIR
+
+$(cd $BASE_DIR_PATH;git submodule update --init)
 
 ## create base dir
 # source dir
