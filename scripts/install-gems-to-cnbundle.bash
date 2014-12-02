@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
 # install dir
-CNBUNDLE_DIR_PATH=~/.cnbundle
+CNBUNDLE_RUBY_DIR_PATH=~/.cnbundle/ruby
+export GEM_HOME=$CNBUNDLE_RUBY_DIR_PATH 
 
-bundle install --path $CNBUNDLE_DIR_PATH
+gem install pry 
+gem install rubocop
+gem install rspec
 
 printf "\ncomplete\n"
 exit 0
