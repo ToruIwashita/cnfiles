@@ -4,6 +4,7 @@ readonly MYSQL_CMD="$MYSQL_CNCT -e"
 
 export CNBUNDLE=~/.cnbundle
 export EDITOR=~/local/bin/vim
+export GEM_HOME=$CNBUNDLE/ruby
 export GOROOT=~/local/go
 export GOPATH=~/.go
 export MYSQL_CNCT MYSQL_CMD
