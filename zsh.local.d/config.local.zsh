@@ -1,5 +1,5 @@
 ## 環境変数設定
-readonly MYSQL_CNCT="mysql test"
+readonly MYSQL_CNCT='mysql --defaults-extra-file=~/.my.cnf test'
 readonly MYSQL_CMD="$MYSQL_CNCT -e"
 
 export CNBUNDLE=~/.cnbundle
