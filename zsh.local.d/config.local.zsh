@@ -1,4 +1,4 @@
-## 環境変数設定
+# 環境変数設定
 readonly MYSQL_CNCT='mysql --defaults-extra-file=~/.my.cnf test'
 readonly MYSQL_CMD="$MYSQL_CNCT -e"
 
@@ -13,7 +13,7 @@ export MYSQL_CNCT MYSQL_CMD
 export PATH=~/local/bin:$GOROOT/bin:$GOPATH/bin:/usr/local/bin:$PATH  # gem,node-packageのパス追加必要
 export LD_LIBRARY_PATH=~/local/lib64:~/local/lib:$LD_LIBRARY_PATH
 
-## エイリアス
+## alias
 # cd
 alias cdz='cd ~/.zsh.d'
 alias cdv='cd ~/.vim'
@@ -34,10 +34,13 @@ alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,r
 alias tigb='tig blame'
 alias tigs='tig status'
 
-## グローバルエイリアス
+## global alias
 alias -g TT='>! ~/works/tmp.txt'
 
-# for Mac(GNU系のコマンドはシンボリックリンクを貼り直すことを推奨するので以下コメントアウト)
+## for Mac(GNU系のコマンドはシンボリックリンクを貼り直すことを推奨するので以下コメントアウト)
+## bindkey
+#bindkey -v '^sp' pbcopy-current # Ctr+s,pでBUFFERをcatしてpbcopy
+## alias
 #alias ls="gls -F --color"
 #alias find="gfind"
 #alias xargs="gxargs"
