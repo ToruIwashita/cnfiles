@@ -96,7 +96,7 @@ bindkey -M menuselect '^s' vi-insert                           # Ctr+sでinterac
 bindkey -M menuselect '^u' send-break                          # Ctr+uでsend-break
 bindkey -M menuselect '^]' accept-and-hold                     # Ctr+]で候補をバッファに入れる
 
-## エイリアス
+## alias
 # zmv
 alias zmv='noglob zmv -W'
 # vim
