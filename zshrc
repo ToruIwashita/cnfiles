@@ -15,6 +15,7 @@ zsh_function_dirs=(
   ~/$zsh_dir/completion_widgets
   ~/$zsh_dir/local/functions
   ~/$zsh_dir/local/completions
+  ~/$zsh_dir/local/widgets
 )
 # plugin path
 zsh_completions_dir=$zsh_plugin_dir/zsh-completions/src
