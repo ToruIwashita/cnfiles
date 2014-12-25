@@ -130,6 +130,7 @@ alias gf='git fetch'
 alias gs='git status -s'
 alias gl='git log'
 alias gla="git log --graph --all --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"
+alias gdf='git diff --name-only'
 
 ## functions
 # _precmd_vcs_info
