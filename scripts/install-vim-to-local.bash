@@ -10,15 +10,15 @@ VIM_SRC_DIR_PATH=$BASE_DIR_PATH/modules/vim
 # install dir
 LOCAL_DIR_PATH=~/local
 # ruby path
-RUBY_PATH=$1
+RUBY_PATH=${1:-$(which ruby)}
 
 if [[ -z $RUBY_PATH ]]; then
-  printf "Ruby path is required as argument\n"
+  printf "ruby not found\n"
   exit 1
 fi
 
 if [[ $(which luajit) != $LOCAL_DIR_PATH/bin/luajit ]]; then
-  printf "Luajit bin is required in $LOCAL_DIR_PATH\n"
+  printf "luajit bin is required in $LOCAL_DIR_PATH\n"
   exit 1
 fi
 
