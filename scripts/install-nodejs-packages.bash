@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # install dir
-CNBUNDLE_NODEJS_DIR_PATH=~/.cnbundle/node
+NODE_HOME=~/.node
 
-npm -g install jshint --prefix=$CNBUNDLE_NODEJS_DIR_PATH
+npm -g install jshint --prefix=$NODE_HOME
 npm update jshint
 
 printf "\ncomplete\n"

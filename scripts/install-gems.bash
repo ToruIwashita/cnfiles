@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
 # install dir
-CNBUNDLE_RUBY_DIR_PATH=~/.cnbundle/ruby
-GEM_HOME=$CNBUNDLE_RUBY_DIR_PATH 
+GEM_HOME=~/.gem
 
 gem install pry 
 gem install rubocop

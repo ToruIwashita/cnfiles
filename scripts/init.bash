@@ -9,7 +9,6 @@ BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 SRC_DIR_PATH=~/src
 LOCAL_DIR_PATH=~/local
 LOCAL_BIN_DIR_PATH=$LOCAL_DIR_PATH/bin
-CNBUNDLE_DIR_PATH=~/.cnbundle
 ZSH_CONFIG_LOCAL_FILE_SOURCE_PATH=$BASE_DIR_PATH/zsh.local.d/config.local.zsh
 ZSH_CONFIG_LOCAL_DIR_SOURCE_PATH=$BASE_DIR_PATH/zsh.local.d/local
 ZSH_CONFIG_LOCAL_FILE_DEST_PATH=$BASE_DIR_PATH/zsh.d/config.local.zsh
@@ -75,14 +74,6 @@ if [[ -d $CACHE_DIR_PATH/yankring ]]; then
 else
   printf "\nmkdir $CACHE_DIR_PATH/yankring\n"
   mkdir $CACHE_DIR_PATH/yankring
-fi
-
-# cnbundle dir
-if [[ -d $CNBUNDLE_DIR_PATH ]]; then
-  printf "\n$CNBUNDLE_DIR_PATH dir already exists\n"
-else
-  printf "\nmkdir $CNBUNDLE_DIR_PATH\n"
-  mkdir $CNBUNDLE_DIR_PATH
 fi
 
 ## create symlink

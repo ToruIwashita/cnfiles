@@ -2,10 +2,11 @@
 readonly MYSQL_CNCT='mysql --defaults-extra-file=~/.my.cnf test'
 readonly MYSQL_CMD="$MYSQL_CNCT -e"
 
-export CNBUNDLE=~/.cnbundle
 export EDITOR=~/local/bin/vim
 export GOROOT=~/local/go
 export GOPATH=~/.go
+export GEM_HOME=~/.gem
+export NODE_HOME=~/.node
 export MYSQL_CNCT MYSQL_CMD
 
 # path関連環境変数
@@ -22,7 +23,6 @@ alias cdv='cd ~/.vim'
 alias cdg='cd ~/.go'
 alias cdl='cd ~/local'
 alias cds='cd ~/src'
-alias cdb='cd ~/.cnbundle'
 alias cdsg='cd ~/src/go'
 alias cdw='cd ~/works'
 alias cdc='cd ~/.cnfiles'
