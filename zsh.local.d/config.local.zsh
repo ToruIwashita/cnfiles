@@ -10,8 +10,19 @@ export NPM_HOME=~/.npm
 export MYSQL_CNCT MYSQL_CMD
 
 # path関連環境変数
-export PATH=~/local/bin:$GOROOT/bin:$GOPATH/bin:/usr/local/bin:$PATH  # gem,node-packageのパス追加必要
-export LD_LIBRARY_PATH=~/local/lib64:~/local/lib:$LD_LIBRARY_PATH
+path=(
+  ~/local/bin
+  $GOROOT/bin
+  $GOPATH/bin
+  $NPM_HOME/bin
+  /usr/local/bin
+  $path
+)
+ld_library_path=(
+  local/lib64
+  ~/local/lib
+  $ld_library_path
+)
 
 # rbenv
 eval "$(rbenv init - zsh 2>/dev/null)"
