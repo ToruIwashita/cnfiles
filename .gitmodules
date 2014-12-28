@@ -43,3 +43,9 @@
 [submodule "modules/node"]
 	path = modules/node
 	url = git@github.com:joyent/node.git
+[submodule "modules/ruby-build"]
+	path = modules/ruby-build
+	url = https://github.com/sstephenson/ruby-build.git
+[submodule "modules/rbenv"]
+	path = modules/rbenv
+	url = https://github.com/sstephenson/rbenv.git
