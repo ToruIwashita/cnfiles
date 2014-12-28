@@ -14,12 +14,13 @@ path=(
   ~/local/bin
   $GOROOT/bin
   $GOPATH/bin
+  $GEM_HOME/bin
   $NPM_HOME/bin
   /usr/local/bin
   $path
 )
 ld_library_path=(
-  local/lib64
+  ~/local/lib64
   ~/local/lib
   $ld_library_path
 )
