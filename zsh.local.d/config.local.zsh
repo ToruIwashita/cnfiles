@@ -6,7 +6,7 @@ export EDITOR=~/local/bin/vim
 export GOROOT=~/local/go
 export GOPATH=~/.go
 export GEM_HOME=~/.gem
-export NODE_HOME=~/.node
+export NPM_HOME=~/.npm
 export MYSQL_CNCT MYSQL_CMD
 
 # path関連環境変数

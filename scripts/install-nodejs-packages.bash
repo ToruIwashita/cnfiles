@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 # install dir
-NODE_HOME=~/.node
+NPM_HOME=~/.npm
 
-npm -g install jshint --prefix=$NODE_HOME
+npm -g install jshint --prefix=$NPM_HOME
 npm update jshint
 
 printf "\ncomplete\n"
