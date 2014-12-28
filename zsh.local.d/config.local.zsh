@@ -4,14 +4,16 @@ readonly MYSQL_CMD="$MYSQL_CNCT -e"
 
 export CNBUNDLE=~/.cnbundle
 export EDITOR=~/local/bin/vim
-export GEM_HOME=$CNBUNDLE/ruby
 export GOROOT=~/local/go
 export GOPATH=~/.go
 export MYSQL_CNCT MYSQL_CMD
 
 # path関連環境変数
-export PATH=~/local/bin:$GOROOT/bin:$GOPATH/bin:/usr/local/bin:$PATH  # gem,node-packageのパス追加必要
+export PATH=~/local/bin:$GOROOT/bin:$GOPATH/bin:~/.rbenv/bin:/usr/local/bin:$PATH  # gem,node-packageのパス追加必要
 export LD_LIBRARY_PATH=~/local/lib64:~/local/lib:$LD_LIBRARY_PATH
+
+# rbenv
+eval "$(rbenv init - zsh)"
 
 ## alias
 # cd
