@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 ## dir,path
 __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)

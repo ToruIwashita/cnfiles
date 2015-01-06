@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # install dir
 NPM_HOME=~/.npm
 
