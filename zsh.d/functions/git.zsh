@@ -127,6 +127,34 @@ gsh() {
   git push origin $current_branch
 }
 
+gsh_force() {
+  local gsh_usage current_branch answer
+
+  gsh_usage="Usage:<pwd=./.git> $0"
+  if [[ ! -d ./.git ]]; then
+    print $gsh_usage 1>&2
+    return 1
+  fi
+
+  current_branch=$(_git-ref-head)
+
+  print "push $current_branch branch"
+
+  while :; do
+    print -n "Force push (y/n)? "
+    read answer
+    case "$answer" in
+      [yY]) git push --force origin $current_branch
+            break
+            ;;
+      [nN]) break
+            ;;
+      *)    print -n 'Please enter y or n. '
+            ;;
+    esac
+  done
+}
+
 gcloneb() {
   local gcloneb_usage
 
