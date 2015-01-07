@@ -29,7 +29,7 @@ end
 
 Pry.config.commands.import default_command_set
 Pry.config.commands.alias_command 'q', 'exit'
-Pry.config.commands.alias_command 'grep', 'ls --grep'
+Pry.config.commands.alias_command 'lg', 'ls --grep'
 
 ## Rails
 rails = File.join(Dir.getwd,'config','environment.rb')
