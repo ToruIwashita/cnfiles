@@ -21,14 +21,15 @@ default_command_set = Pry::CommandSet.new do
 
   command 'benchmark' do |repeat=1000,&blk|
     Benchmark.bmbm do |x|
-      x.report { repeat.times &blk }
+      x.report { repeat.times(&blk) }
     end
     nil
   end
 end
 
 Pry.config.commands.import default_command_set
-Pry.config.commands.alias_command "q", "exit"
+Pry.config.commands.alias_command 'q', 'exit'
+Pry.config.commands.alias_command 'grep', 'ls --grep'
 
 ## Rails
 rails = File.join(Dir.getwd,'config','environment.rb')
