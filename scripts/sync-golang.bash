@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 # src dir,path
 SRC_DIR_PATH=~/src
 LOCAL_DIR_PATH=~/local
