@@ -49,3 +49,6 @@
 [submodule "modules/rbenv"]
 	path = modules/rbenv
 	url = https://github.com/sstephenson/rbenv.git
+[submodule "modules/jq"]
+	path = modules/jq
+	url = git@github.com:stedolan/jq.git
