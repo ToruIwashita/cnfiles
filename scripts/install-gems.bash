@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-set -e
-
 # install dir
 GEM_HOME=~/.gem
+
+set -e
 
 gem install pry 
 gem install rubocop

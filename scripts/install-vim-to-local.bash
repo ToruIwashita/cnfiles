@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 # base dir
 __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
@@ -13,6 +11,8 @@ VIM_SRC_DIR_PATH=$BASE_DIR_PATH/modules/vim
 LOCAL_DIR_PATH=~/local
 # ruby path
 RUBY_PATH=${1:-$(which ruby)}
+
+set -e
 
 if [[ -z $RUBY_PATH ]]; then
   printf "ruby not found\n"
