@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 ## dir,path
 __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
@@ -18,6 +16,8 @@ ZSH_CONFIG_LOCAL_DIR_DEST_PATH=$BASE_DIR_PATH/zsh.d/local
 # cache
 CACHE_DIR=cache
 CACHE_DIR_PATH=~/.$CACHE_DIR
+
+set -e
 
 $(cd $BASE_DIR_PATH;git submodule update --init)
 

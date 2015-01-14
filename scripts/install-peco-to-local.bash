@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 # base dir
 __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
@@ -13,6 +11,8 @@ PECO_SRC_DIR_PATH=$BASE_DIR_PATH/modules/peco
 LOCAL_BIN_DIR_PATH=~/local/bin
 # go path
 PECO_GITHUB_DIR_PATH_IN_GOPATH=~/.go/src/github.com/peco
+
+set -e
 
 cd $PECO_SRC_DIR_PATH
 

@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 # base dir
 __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
@@ -14,7 +12,8 @@ RUBY_BUILD_SRC_DIR_PATH=$BASE_DIR_PATH/modules/ruby-build
 # install dir
 LOCAL_DIR_PATH=~/local
 
-# install rbenv
+set -e
+
 cd $RBENV_SRC_DIR_PATH
 ls bin/ | while read line; do
   ln -is $RBENV_SRC_DIR_PATH/bin/$line $LOCAL_DIR_PATH/bin/$line

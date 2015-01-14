@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-set -e
-
 # src dir,path
 SRC_DIR_PATH=~/src
 LOCAL_DIR_PATH=~/local
 GO_REPOSITORY='https://code.google.com/p/go'
 GOROOT=$SRC_DIR_PATH/go
 GOPATH=~/.go
+
+set -e
 
 if [[ -d $GOROOT ]]; then
   printf "\n$GOROOT dir already exists\n"

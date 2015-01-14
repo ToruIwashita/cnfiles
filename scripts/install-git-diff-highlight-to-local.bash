@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 # base dir
 __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
@@ -11,6 +9,8 @@ BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 GIT_SRC_DIR_PATH=$BASE_DIR_PATH/modules/git
 # install dir
 LOCAL_BIN_DIR_PATH=~/local/bin
+
+set -e
 
 cd $GIT_SRC_DIR_PATH
 

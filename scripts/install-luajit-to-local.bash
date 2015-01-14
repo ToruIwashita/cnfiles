@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 # base dir
 __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
@@ -11,6 +9,8 @@ BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 LUA_SRC_DIR_PATH=$BASE_DIR_PATH/modules/luajit-2.0
 # install dir
 LOCAL_DIR_PATH=~/local
+
+set -e
 
 cd $LUA_SRC_DIR_PATH
 
