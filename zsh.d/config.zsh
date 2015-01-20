@@ -115,7 +115,6 @@ alias grep='grep --color'
 alias less='less -R'
 alias his='history -f'
 alias his-all='history -E 1'
-alias cl='curl -kIL'
 # cd
 alias d='cd'
 alias dr='cdr'
