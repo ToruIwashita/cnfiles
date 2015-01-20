@@ -44,6 +44,7 @@ let g:syntastic_auto_loc_list = 1                " エラーがあったら自�
 let g:syntastic_error_symbol = '✗'               " errorのマーカー
 let g:syntastic_warning_symbol = '⚠'             " warningのマーカー
 let g:syntastic_javascript_checkers = ['jshint'] " jsをチェックするツール指定
+let g:syntastic_coffee_checkers = ['coffeelint'] " coffeeのチェックをするツール指定
 let g:syntastic_mode_map = { 'mode': 'passive' }
 
 "" ctrlp
