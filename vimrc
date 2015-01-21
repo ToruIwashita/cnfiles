@@ -41,6 +41,7 @@ NeoBundle 'tpope/vim-abolish'                     " 強化版置換コマンド
 NeoBundle 'tpope/vim-fugitive'                    " fugitive(ステータスラインのブランチ名と,Gblame用)
 NeoBundle 'vim-ruby/vim-ruby'                     " vim-ruby
 NeoBundle 'ngmy/vim-rubocop'                      " vim-rubocop
+NeoBundle 'kchmck/vim-coffee-script'              " vim-coffee-script
 NeoBundle 'rking/ag.vim'                          " ag(silver_searcher)用プラグイン
 NeoBundle 'tomtom/tcomment_vim'                   " コメントアウト
 NeoBundle 'itchyny/lightline.vim'                 " ステータスライン
