@@ -6,7 +6,7 @@ _peco-silver-search-and-start-editor() {
 
   [[ "$BUFFER" != '' ]] && print -s "$BUFFER"
 
-  peco_resulting_line=(${(f)"$(ag "$BUFFER" 2>/dev/null | peco 2>/dev/null)"})
+  peco_resulting_line=(${(f)"$(ag --silent "$BUFFER" | peco 2>/dev/null)"})
   if [[ -z $peco_resulting_line ]]; then
     zle beginning-of-line
     return 0
