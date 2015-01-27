@@ -128,7 +128,7 @@ alias gc='git commit'
 alias gf='git fetch'
 alias gs='git status -s'
 alias gl='git log'
-alias gla="git log --graph --all --pretty='%x09%h %cn%x09%s %Cred%d%Creset'"
+alias gla='git log --graph --date-order -C -M --pretty=format:"<%h> %ad [%an] %Cgreen%d%Creset %s" --all --date=short'
 alias gdf='git diff --name-only'
 
 ## functions
