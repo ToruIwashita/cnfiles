@@ -69,6 +69,7 @@ noremap , <NOP>
 noremap <C-z> <NOP>
 " ファイル保存
 noremap <C-i> :<C-u>:w<CR>
+noremap <leader>q :<C-u>:wq<CR>
 " <ESC>
 noremap <C-j> <ESC>
 " ウィンドウ関連
