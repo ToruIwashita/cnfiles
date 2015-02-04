@@ -68,7 +68,7 @@ noremap , <NOP>
 " サスペンド無効化
 noremap <C-z> <NOP>
 " ファイル保存
-noremap <C-i> :<C-u>:w<CR>
+noremap <C-i> :<C-u>:wa<CR>
 noremap <leader>q :<C-u>:q<CR>
 noremap <leader>i :<C-u>:wa<CR>:<C-u>:qa<CR>
 " <ESC>
