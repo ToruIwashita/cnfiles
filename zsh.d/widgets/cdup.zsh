@@ -26,7 +26,7 @@ _cdup() {
   zle reset-prompt
   zle kill-whole-line
   BUFFER=$after_buffer
-  zle end-of-line
+  zle beginning-of-line
 }
 
 zle -N cdup _cdup

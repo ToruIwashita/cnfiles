@@ -12,6 +12,6 @@ _peco-file-finder() {
 
   zle kill-whole-line
   BUFFER=$file_path
-  zle end-of-line
+  zle beginning-of-line
 }
 zle -N peco-file-finder _peco-file-finder
