@@ -65,7 +65,7 @@ NeoBundle 'vim-scripts/AnsiEsc.vim'               " ANSIカラー表示
 NeoBundle 'vim-scripts/Align'                     " テキスト整形
 NeoBundle 'vim-scripts/QuickBuf'                  " バッファ操作
 NeoBundle 'vim-scripts/toggle_word.vim'           " on,off,true,false,0,1のtoggle
-NeoBundle 'ToruIwashita/shift-window-to-tab.vim'  " ウィンドウで開いているバッファをタブに切り替える
+NeoBundle 'ToruIwashita/tab-assist.vim'           " タブ移動補助
 
 call neobundle#end()
 

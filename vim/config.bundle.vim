@@ -115,4 +115,5 @@ let g:auto_ctags_tags_args = '--recurse --tag-relative --sort=yes --languages=sh
 
 "" shift-window-to-tab
 " ウィンドウを閉じて新しいタブで開く
-noremap <C-w>! :<C-u>ShiftWindowToTab<CR>
+noremap <C-w>! :<C-u>TShift<CR>
+noremap <C-w>m :<C-u>TMove<SPACE>
