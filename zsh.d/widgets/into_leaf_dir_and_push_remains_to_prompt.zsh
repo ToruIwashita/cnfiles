@@ -38,7 +38,7 @@ _into-leaf-dir-and-push-remains-to-prompt() {
   done
 
   BUFFER=$args
-  zle beggining-of-line
+  zle beginning-of-line
 }
 
 zle -N into-leaf-dir-and-push-remains-to-prompt _into-leaf-dir-and-push-remains-to-prompt
