@@ -15,16 +15,12 @@ noremap <C-w><C-w> :<C-u>NERDTreeToggle<CR>
 "" QuickBuf
 let g:qb_hotkey = '__'  " `__`で起動
 
-"" Align
-let g:Align_xstrlen = 3      " 全角文字のハンドリング
-let g:DrChipTopLvlMenu = ''  " GUIのメニュー表示(不要な場合は空文字を入れる)
-" コマンドラインモードabbreviate
-cnorea A Align
-cnorea '<,'>A '<,'>Align
-vnoremap <CR> :<C-u>'<,'>Align<SPACE>
+"" EasyAlign
+cnorea E EasyAlign
+cnorea '<,'>E '<,'>EasyAlign
+vnoremap <CR> <Plug>(EasyAlign)
 
 "" ag
-" コマンドラインモードabbreviate
 nnoremap <C-s> :<C-u>Ag<SPACE>
 vnoremap <C-s> :<C-u>Ag<SPACE><C-r><C-w><SPACE>
 
