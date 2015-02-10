@@ -18,7 +18,7 @@ let g:qb_hotkey = '__'  " `__`で起動
 "" EasyAlign
 cnorea E EasyAlign
 cnorea '<,'>E '<,'>EasyAlign
-vnoremap <CR> <Plug>(EasyAlign)
+vmap <CR> <Plug>(EasyAlign)
 
 "" ag
 nnoremap <C-s> :<C-u>Ag<SPACE>
