@@ -1,15 +1,7 @@
 ## cdup
 _cdup() {
-  local precmd_func after_buffer
-  local -a args
+  local precmd_func
   local -aU reply
-  args=("${(z)BUFFER}")
-
-  if [[ $#args -ge 2 ]]; then
-    after_buffer="$args[1] "
-  else
-    after_buffer=$BUFFER
-  fi
 
   print -s 'cd ..' && cd ..
 
@@ -24,9 +16,6 @@ _cdup() {
   done
 
   zle reset-prompt
-  zle kill-whole-line
-  BUFFER=$after_buffer
-  zle beginning-of-line
 }
 
 zle -N cdup _cdup
