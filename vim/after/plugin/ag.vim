@@ -22,6 +22,7 @@ command! -range SilverSearchRange call s:silver_search_range()
 
 nnoremap <C-s>s :<C-u>SilverSearch<CR>
 vnoremap <C-s>s :<C-u>SilverSearchRange<CR>
+cnorea A Ag
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
