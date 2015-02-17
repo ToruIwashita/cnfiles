@@ -2,38 +2,20 @@
 " neobundleで管理しているプラグインでfunction,autocmd,mapなどを含まずに設定できる(もしくはafter/以下では動作しない設定)を記述する
 
 "" colorscheme
-" desert
-colorscheme desert
+colorscheme desert   " desert
 set background=light
 
 "" neocomplete
-let g:neocomplete#enable_at_startup = 1  " neocompleteを起動時に有効化
-
-"" NERD_tree
-noremap <C-w><C-w> :<C-u>NERDTreeToggle<CR>
+let g:neocomplete#enable_at_startup = 1 " neocompleteを起動時に有効化
 
 "" QuickBuf
 let g:qb_hotkey = '__'  " `__`で起動
 
-"" EasyAlign
-cnorea E EasyAlign
-cnorea '<,'>E '<,'>EasyAlign
-vmap <CR> <Plug>(EasyAlign)
-
-"" ag
-nnoremap <C-s> :<C-u>Ag<SPACE>
-vnoremap <C-s> :<C-u>Ag<SPACE><C-r><C-w><SPACE>
-
 "" yankring
-let g:yankring_history_dir = "$HOME/.cache/yankring/" " yankring_historyの保存先を指定
-let g:yankring_max_history = 30                       " 記録する最大数
-let g:yankring_max_display = 30                       " YRShowの最大表示数
-let g:yankring_ignore_duplicate = 0                   " yankring_historyの重複テキストを保存しない
-" ヤンク履歴表示
-noremap <C-w>P :<C-u>YRShow<CR>
-
-"" vim-choosewin
-nmap <C-w>- <Plug>(choosewin)
+let g:yankring_history_dir      = "$HOME/.cache/yankring/" " yankring_historyの保存先を指定
+let g:yankring_max_history      = 30                       " 記録する最大数
+let g:yankring_max_display      = 30                       " YRShowの最大表示数
+let g:yankring_ignore_duplicate = 0                        " yankring_historyの重複テキストを保存しない
 
 "" syntastic
 let g:syntastic_auto_loc_list = 1                " エラーがあったら自動でロケーションリストを開く
@@ -88,8 +70,8 @@ let g:ctrlp_prompt_mappings = {
 \ }
 
 "" wildfire
-let g:wildfire_fuel_map = '<C-l>'   " text-object拡大
-let g:wildfire_water_map = '<C-h>'  " text-object縮小
+let g:wildfire_fuel_map = '<C-l>'  " text-object拡大
+let g:wildfire_water_map = '<C-h>' " text-object縮小
 " text-object対象
 let g:wildfire_objects = [
   \ "i'", "a'",
@@ -104,12 +86,7 @@ let g:wildfire_objects = [
 \ ]
 
 "" auto-ctags
-let g:auto_ctags = 0                                                                    " BufWritePostで自動実行しない
-let g:auto_ctags_bin_path = "$HOME/local/bin/ctags"                                     " ctagsのbinパス
-let g:auto_ctags_tags_name = '.tags'                                                    " tagsファイル名
-let g:auto_ctags_tags_args = '--recurse --tag-relative --sort=yes --languages=sh,ruby'  " ctags実行オプション
-
-"" shift-window-to-tab
-" ウィンドウを閉じて新しいタブで開く
-noremap <C-w>! :<C-u>TShift<CR>
-noremap <C-w>m :<C-u>TMove<SPACE>
+let g:auto_ctags = 0                                                                   " BufWritePostで自動実行しない
+let g:auto_ctags_bin_path = "$HOME/local/bin/ctags"                                    " ctagsのbinパス
+let g:auto_ctags_tags_name = '.tags'                                                   " tagsファイル名
+let g:auto_ctags_tags_args = '--recurse --tag-relative --sort=yes --languages=sh,ruby' " ctags実行オプション
