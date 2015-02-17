@@ -2,8 +2,8 @@
 let s:cpo_save = &cpo
 set cpo&vim
 
-noremap <C-w>! :<C-u>TShift<CR>
-noremap <C-w>m :<C-u>TMove<SPACE>
+noremap <C-w>! :<C-u>TabShift<CR>
+noremap <C-w>m :<C-u>TabMove<SPACE>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
