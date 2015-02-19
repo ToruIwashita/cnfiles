@@ -74,17 +74,9 @@ let g:wildfire_fuel_map = '<C-l>'  " text-object拡大
 let g:wildfire_water_map = '<C-h>' " text-object縮小
 " text-object対象
 let g:wildfire_objects = [
-  \ "iw", "aw",
-  \ "iW", "aW",
-  \ "i'", "a'",
-  \ 'i"', 'a"',
-  \ 'i`', 'a`',
-  \ 'i)', 'a)',
-  \ 'i]', 'a]',
-  \ 'i}', 'a}',
-  \ 'i>', 'a>',
-  \ 'it', 'at',
-  \ 'ip' 
+  \ 'iW', 'i"', 'a"', "i'", "a'", 'i`', 'a`',
+  \ 'i)', 'a)', 'i]', 'a]', 'i}', 'a}', 'i>', 'a>',
+  \ 'it', 'at', 'is', 'iS', 'ip' 
 \ ]
 
 "" auto-ctags
