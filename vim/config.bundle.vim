@@ -72,11 +72,21 @@ let g:ctrlp_prompt_mappings = {
 "" wildfire
 let g:wildfire_fuel_map = '<C-l>'  " text-object拡大
 let g:wildfire_water_map = '<C-h>' " text-object縮小
+"" wildfire,vim-textobj-user
 " text-object対象
 let g:wildfire_objects = [
-  \ 'iW', 'i"', 'a"', "i'", "a'", 'i`', 'a`',
-  \ 'i)', 'a)', 'i]', 'a]', 'i}', 'a}', 'i>', 'a>',
-  \ 'it', 'at', 'is', 'iS', 'ip' 
+  \ 'iW',
+  \ "i'", "a'",
+  \ 'i"', 'a"',
+  \ 'i`', 'a`',
+  \ 'i)', 'a)',
+  \ 'i]', 'a]',
+  \ 'i}', 'a}',
+  \ 'i>', 'a>',
+  \ 'it', 'at',
+  \ 'il', 'al',
+  \ 'is', 'as',
+  \ 'ip', 'ap'
 \ ]
 
 "" auto-ctags
