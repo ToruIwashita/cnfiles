@@ -117,6 +117,13 @@ else
   ln -is $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
 fi
 
+if [[ -L ~/.tmux ]]; then
+  printf "\n$BASE_DIR_PATH/.tmux dir symlink already exists\n"
+else
+  printf "\ncreate symlink ~/.tmux dir\n"
+  ln -isn $BASE_DIR_PATH/tmux   ~/.tmux
+fi
+
 # peco
 if [[ -L ~/.peco ]]; then
   printf "\n$BASE_DIR_PATH/.peco dir symlink already exists\n"
