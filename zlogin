@@ -1,6 +1,6 @@
 # ログインと同時にtmuxアタッチ
 if [[ -z $TMUX && -z $STY ]]; then
-  if type tmux > /dev/null 2>&1; then
+  if type tmux >/dev/null 2>&1; then
     if tmux has-session; then
       tmux -u attach && echo 'tmux attached session'
     else

@@ -12,10 +12,10 @@ let g:neocomplete#enable_at_startup = 1 " neocompleteを起動時に有効化
 let g:qb_hotkey = '__'  " `__`で起動
 
 "" yankring
-let g:yankring_history_dir      = "$HOME/.cache/yankring/" " yankring_historyの保存先を指定
-let g:yankring_max_history      = 30                       " 記録する最大数
-let g:yankring_max_display      = 30                       " YRShowの最大表示数
-let g:yankring_ignore_duplicate = 0                        " yankring_historyの重複テキストを保存しない
+let g:yankring_history_dir = "$HOME/.cache/yankring/" " yankring_historyの保存先を指定
+let g:yankring_max_history = 30                       " 記録する最大数
+let g:yankring_max_display = 30                       " YRShowの最大表示数
+let g:yankring_ignore_duplicate = 0                   " yankring_historyの重複テキストを保存しない
 
 "" syntastic
 let g:syntastic_auto_loc_list = 1                " エラーがあったら自動でロケーションリストを開く
@@ -72,11 +72,21 @@ let g:ctrlp_prompt_mappings = {
 "" wildfire
 let g:wildfire_fuel_map = '<C-l>'  " text-object拡大
 let g:wildfire_water_map = '<C-h>' " text-object縮小
+"" wildfire,vim-textobj-user
 " text-object対象
 let g:wildfire_objects = [
-  \ 'iW', 'i"', 'a"', "i'", "a'", 'i`', 'a`',
-  \ 'i)', 'a)', 'i]', 'a]', 'i}', 'a}', 'i>', 'a>',
-  \ 'it', 'at', 'is', 'iS', 'ip' 
+  \ 'iW',
+  \ "i'", "a'",
+  \ 'i"', 'a"',
+  \ 'i`', 'a`',
+  \ 'i)', 'a)',
+  \ 'i]', 'a]',
+  \ 'i}', 'a}',
+  \ 'i>', 'a>',
+  \ 'it', 'at',
+  \ 'il', 'al',
+  \ 'is', 'as',
+  \ 'ip', 'ap'
 \ ]
 
 "" auto-ctags

@@ -34,10 +34,12 @@ if has('lua')
 endif
 NeoBundle 'Shougo/neosnippet'           " スニペット展開
 NeoBundle 'honza/vim-snippets'          " 各種snippet
-NeoBundle 'tpope/vim-surround'          " text-object操作
 NeoBundle 'tpope/vim-repeat'            " vim-surroundの機能を.反復
 NeoBundle 'tpope/vim-abolish'           " 強化版置換コマンド
 NeoBundle 'tpope/vim-fugitive'          " fugitive(ステータスラインのブランチ名と,Gblame用)
+NeoBundle 'tpope/vim-surround'          " text-object操作
+NeoBundle 'kana/vim-textobj-user'       " 独自text-object定義
+NeoBundle 'kana/vim-textobj-line'       " lineのtext-object(vim-textobj-userに依存している)
 NeoBundle 'vim-ruby/vim-ruby'           " vim-ruby
 NeoBundle 'ngmy/vim-rubocop'            " vim-rubocop
 NeoBundle 'kchmck/vim-coffee-script'    " vim-coffee-script

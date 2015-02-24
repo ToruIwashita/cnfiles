@@ -35,6 +35,8 @@
 /vim/bundle/vim-snippets/
 /vim/bundle/vim-surround/
 /vim/bundle/vim-tmux/
+/vim/bundle/vim-textobj-line/
+/vim/bundle/vim-textobj-user/
 /vim/bundle/vim-visualstar/
 /vim/bundle/vimproc/
 /vim/bundle/wildfire.vim/
