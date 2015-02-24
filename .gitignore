@@ -17,7 +17,7 @@
 /vim/bundle/nerdtree/
 /vim/bundle/ruby-matchit/
 /vim/bundle/syntastic/
-vim/bundle/tab-assist.vim/
+/vim/bundle/tab-assist.vim/
 /vim/bundle/tcomment_vim/
 /vim/bundle/toggle_word.vim/
 /vim/bundle/vim-abolish/
@@ -38,5 +38,6 @@ vim/bundle/tab-assist.vim/
 /vim/bundle/vim-visualstar/
 /vim/bundle/vimproc/
 /vim/bundle/wildfire.vim/
+/tmux/plugins/tmux-resurrect
 /.bundle
 /.tags
