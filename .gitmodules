@@ -49,3 +49,6 @@
 [submodule "modules/rbenv"]
 	path = modules/rbenv
 	url = https://github.com/sstephenson/rbenv.git
+[submodule "tmux/plugins/tpm"]
+	path = tmux/plugins/tpm
+	url = git@github.com:tmux-plugins/tpm.git
