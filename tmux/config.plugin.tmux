@@ -2,5 +2,5 @@
 
 # resurrect
 set -g @resurrect-save 'C-s'
-set -g @resurrect-restore 'C-a'
+set -g @resurrect-restore 'C-r'
 set -g @resurrect-dir ~/.cache/resurrect/
