@@ -24,7 +24,7 @@ function! s:silver_search_range() range
   endif
 
   tabnew
-  execute 'Ag "'.selected_range.'"'
+  execute 'Ag '.selected_range
 endfunction
 
 command! SilverSearch call s:silver_search()
