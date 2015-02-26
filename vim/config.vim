@@ -125,19 +125,17 @@ noremap <C-t> <NOP>
 noremap g<C-]> <NOP>
 noremap <C-w>} <NOP>
 " カーソル位置の単語をタグとしてジャンプ
-noremap <C-t>t <C-]>
-" 直前のタグに戻る
-noremap <C-t>T <C-t>
+noremap <C-e>e <C-]>
 " 複数候補がある時タグリスト表示
-noremap <C-t><C-t> g<C-]>
-" カーソル位置の単語の定義をプレビューウィンドウで開く
-noremap <C-t>w <C-w>}
+noremap <C-e>E g<C-]>
+" 直前のタグに戻る
+noremap <C-e><C-e> <C-t>
 " 次のタグへ移動
-noremap <C-t>] :<C-u>tnext<CR>
-noremap <C-t><C-]> :<C-u>tnext<CR>
+noremap <C-s>] :<C-u>tnext<CR>
+noremap <C-s><C-]> :<C-u>tnext<CR>
 " 前のタグへ移動
-noremap <C-t>[ :<C-u>tprevious<CR>
-noremap <C-t><C-[> :<C-u>tprevious<CR>
+noremap <C-s>[ :<C-u>tprevious<CR>
+noremap <C-s><C-[> :<C-u>tprevious<CR>
 " preview,quickfixウィンドウクローズ
 noremap <silent> <C-w>w :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
 " カーソル上の文字列を置換対象として:%sに配置する
