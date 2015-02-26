@@ -4,6 +4,11 @@ set cpo&vim
 
 function! s:silver_search()
   let keyword = expand('<cword>')
+
+  if empty(keyword)
+    return 0
+  endif
+
   tabnew
   execute 'Ag '.keyword
 endfunction
@@ -13,6 +18,11 @@ function! s:silver_search_range() range
   silent normal gvy
   let selected_range = @@
   let @@ = unnamed_register
+
+  if strlen(matchstr(selected_range,"^\\s*$"))
+    return 0
+  endif
+
   tabnew
   execute 'Ag "'.selected_range.'"'
 endfunction
