@@ -58,7 +58,7 @@ bindkey -v '^k' menu-complete-files                         # Ctr+kでファイ�
 bindkey -v '^l' start-editor                                # Ctr+lでstart-editor
 bindkey -v '^m' accept-line                                 # Ctr+mでaccept-line
 bindkey -v '^n' history-substring-search-down               # Ctr+nで部分文字列検索,下
-bindkey -v '^o' into-leaf-dir                               # Ctr+oでリーフディレクトリ移動
+bindkey -v '^o' into-leaf-dir-and-push-remains-to-prompt    # Ctr+oでバッファ残しリーフディレクトリ補完
 bindkey -v '^p' history-substring-search-up                 # Ctr+pで部分文字列検索,上
 bindkey -v '^q' self-insert                                 # Ctr+qでself-insert
 bindkey -v '^r' history-incremental-search-backward         # Ctr+rでインクリメンタルサーチ
@@ -76,7 +76,7 @@ bindkey -v '^s^i' ls-current                                # Ctr+s,Ctr+iでls
 bindkey -v '^s^j' cat-current                               # Ctr+s,Ctr+jでBUFFERをcat
 bindkey -v '^s^k' menu-complete-recent-dirs                 # Ctr+s,Ctr+kで最近移動したディレクトリへ移動
 bindkey -v '^s^l' edit-command-line                         # Ctr+s,Ctr+lでコマンドラインエディタ編集
-bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctr+s,Ctr+oでバッファ残しリーフディレクトリ補完
+bindkey -v '^s^o' into-leaf-dir                             # Ctr+s,Ctr+oでリーフディレクトリ移動
 bindkey -v '^s^s' vi-find-next-char                         # Ctr+s,Ctr+sでviのfind-char
 bindkey -v '^s^@' kill-line                                 # Ctr+s,Ctr+@でカーソル行以降削除
 bindkey -v '^_' cdup                                        # Ctr+_でcdup
