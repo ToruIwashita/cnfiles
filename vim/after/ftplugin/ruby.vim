@@ -5,6 +5,8 @@ set cpo&vim
 " RubyCursorIdentifier()とタブ移動のmap競合を解消
 silent! nunmap <buffer> <C-w>]
 silent! nunmap <buffer> <C-w><C-]>
+" タグ移動のmapを解除
+silent! nunmap <buffer> <C-]>
 
 ab <buffer> =p binding.pry
 ab <buffer> =8 # coding: utf-8
