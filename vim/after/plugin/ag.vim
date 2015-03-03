@@ -10,7 +10,12 @@ function! s:silver_search()
   endif
 
   tabnew
-  execute 'Ag '.keyword
+
+  try
+    silent! execute 'Ag '.keyword
+  finally
+    if line('$') == 1 && getline(1) == '' | tabclose | endif
+  endtry
 endfunction
 
 function! s:silver_search_range() range
@@ -24,7 +29,12 @@ function! s:silver_search_range() range
   endif
 
   tabnew
-  execute 'Ag '.selected_range
+
+  try
+    silent! execute 'Ag '.selected_range
+  finally
+    if line('$') == 1 && getline(1) == '' | tabclose | endif
+  endtry
 endfunction
 
 command! SilverSearch call s:silver_search()
