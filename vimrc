@@ -66,8 +66,8 @@ NeoBundle 'vim-scripts/ruby-matchit'        " rubyのブロックを%で移動
 NeoBundle 'vim-scripts/YankRing.vim'        " ヤンク履歴管理
 NeoBundle 'vim-scripts/AnsiEsc.vim'         " ANSIカラー表示
 NeoBundle 'vim-scripts/QuickBuf'            " バッファ操作
-NeoBundle 'ToruIwashita/tab-assist.vim'     " タブ移動補助
-NeoBundle 'ToruIwashita/tag-tnjump.vim'     " タブ移動補助
+NeoBundle 'ToruIwashita/tabmove-assist.vim' " タブ移動補助
+NeoBundle 'ToruIwashita/tag-tnjump.vim'     " タグジャンプ補助
 
 call neobundle#end()
 

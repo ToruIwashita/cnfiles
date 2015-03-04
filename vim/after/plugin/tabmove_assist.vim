@@ -1,4 +1,4 @@
-"" FILE: tab_assist.vim
+"" FILE: tabmove_assist.vim
 let s:cpo_save = &cpo
 set cpo&vim
 
