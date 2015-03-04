@@ -1,4 +1,4 @@
-"" FILE: tag_assist.vim
+"" FILE: tag_tnjump.vim
 let s:cpo_save = &cpo
 set cpo&vim
 
