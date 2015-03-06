@@ -10,7 +10,8 @@ silent! nunmap <buffer> <C-]>
 
 ab <buffer> =p binding.pry
 ab <buffer> =8 # coding: utf-8
-ab <buffer> =c , current: true
+ab <buffer> =t , current: true
+ab <buffer> =c context "current", current: true do
 ab <buffer> =d Rails.logger.debug(<<EOS)
   \<ENTER><ESC>i-
   \<ENTER><ESC>i-
