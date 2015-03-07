@@ -138,8 +138,6 @@ noremap <C-s>[ :<C-u>tprevious<CR>
 noremap <C-s><C-[> :<C-u>tprevious<CR>
 " preview,quickfixウィンドウクローズ
 noremap <silent> <C-w>w :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
-" カーソル上の文字列を置換対象として:%sに配置する
-noremap <leader>s :<C-u>%s/<C-r><C-w>/
 
 "" nnoremap
 " *,#で検索した後に移動しない
