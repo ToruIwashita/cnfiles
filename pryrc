@@ -1,5 +1,11 @@
 require 'benchmark'
 
+begin
+  require 'awesome_print'
+  AwesomePrint.pry!
+rescue LoadError
+end
+
 default_command_set = Pry::CommandSet.new do
   command 'clear' do
     system 'clear'

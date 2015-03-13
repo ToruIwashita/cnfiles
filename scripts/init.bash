@@ -140,5 +140,13 @@ else
   ln -is $BASE_DIR_PATH/pryrc ~/.pryrc
 fi
 
+# awesome_print
+if [[ -L ~/.aprc ]]; then
+  printf "\n$BASE_DIR_PATH/.aprc symlink already exists\n"
+else
+  printf "\ncreate symlink ~/.aprc\n"
+  ln -is $BASE_DIR_PATH/aprc ~/.aprc
+fi
+
 printf "\ncomplete\n"
 exit 0
