@@ -8,6 +8,15 @@ pm() {
   w3m -T text/html =(markdown $1)
 }
 
+pgfm() {
+  if (( ! $# )); then
+    print 'lack of arguments.' 2>&1
+    return 1
+  fi
+
+  w3m -T text/html =(pgfmout $1)
+}
+
 pmout() {
   if (( ! $# )); then
     print 'lack of arguments.' 2>&1
