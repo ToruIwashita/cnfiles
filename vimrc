@@ -14,7 +14,7 @@ if has('vim_starting')
   set nocompatible  " Be iMproved
 
   set runtimepath+=~/.vim/bundle/neobundle.vim/
-  exe "set rtp+=".globpath($GOPATH, "src/github.com/nsf/gocode/vim")
+  exe 'set rtp+='.globpath($GOPATH, 'src/github.com/nsf/gocode/vim')
 endif
 " neobundle.vimの初期化
 call neobundle#begin(expand('~/.vim/bundle/'))
@@ -78,5 +78,5 @@ filetype plugin indent on
 NeoBundleCheck
 
 "" 各種設定読込
-source ~/.vim/config.vim
-source ~/.vim/config.plugin.vim
+if filereadable(expand('~/.vim/config.vim')) | source ~/.vim/config.vim | en
+if filereadable(expand('~/.vim/config.plugin.vim')) | source ~/.vim/config.plugin.vim | en
