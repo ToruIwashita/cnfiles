@@ -69,10 +69,11 @@ cnoremap <C-s> <C-r><C-w>
 noremap , <NOP>
 " サスペンド無効化
 noremap <C-z> <NOP>
-" ファイル保存
+" ファイル保存,閉じる
 noremap <C-i> :<C-u>w<CR>
 noremap <leader>i :<C-u>wa<CR>
 noremap <leader>q :<C-u>wa<CR>:<C-u>qa<CR>
+noremap <leader>x :<C-u>qa<CR>
 " <ESC>
 noremap <C-j> <ESC>
 " ウィンドウ関連
@@ -140,6 +141,9 @@ noremap <C-s>[ :<C-u>tprevious<CR>
 noremap <C-s><C-[> :<C-u>tprevious<CR>
 " preview,quickfixウィンドウクローズ
 noremap <silent> <C-w>w :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
+"" マーク関連
+" 指定マークへ移動
+noremap <leader>e '
 
 "" nnoremap
 " *,#で検索した後に移動しない
