@@ -6,16 +6,16 @@ local -a zsh_function_dirs
 typeset -ga precmd_functions
 typeset -ga chpwd_functions
 
-zsh_dir=.zsh.d
-zsh_plugin_dir=~/$zsh_dir/plugin
+zsh_dir=~/.zsh.d
+zsh_plugin_dir=$zsh_dir/plugin
 zsh_function_dirs=(
-  ~/$zsh_dir/functions
-  ~/$zsh_dir/completions
-  ~/$zsh_dir/widgets
-  ~/$zsh_dir/completion_widgets
-  ~/$zsh_dir/local/functions
-  ~/$zsh_dir/local/completions
-  ~/$zsh_dir/local/widgets
+  $zsh_dir/functions
+  $zsh_dir/completions
+  $zsh_dir/widgets
+  $zsh_dir/completion_widgets
+  $zsh_dir/local/functions
+  $zsh_dir/local/completions
+  $zsh_dir/local/widgets
 )
 
 # plugin path
@@ -52,8 +52,8 @@ zmodload -i zsh/complist               # 補完メニュー選択モードのキ
 zmodload -i zsh/terminfo               # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
 
 ## plugin読み込み
-source $zsh_history_substring_search_src
-source $zsh_golang_misc_src
+[[ -f $zsh_history_substring_search_src ]] && source $zsh_history_substring_search_src
+[[ -f $zsh_golang_misc_src ]] && source $zsh_golang_misc_src
 
 ## 各種設定・オリジナル関数読込
 # 関数読込
@@ -63,8 +63,8 @@ for dir in ${zsh_function_dirs[@]}; do
   done
 done
 # 設定読込
-source ~/$zsh_dir/config.zsh
-source ~/$zsh_dir/config.local.zsh
+[[ -f $zsh_dir/config.zsh ]] && source $zsh_dir/config.zsh
+[[ -f $zsh_dir/config.local.zsh ]] && source $zsh_dir/config.local.zsh
 
 # 重複パスを除去
 typeset -U path fpath precmd_functions chpwd_functions ld_library_path include
