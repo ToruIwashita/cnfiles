@@ -67,8 +67,6 @@ cnoremap <C-s> <C-r><C-w>
 "" noremap
 " ,はleaderとして使用
 noremap , <NOP>
-" サスペンド無効化
-noremap <C-z> <NOP>
 " ファイル保存,閉じる
 noremap <C-i> :<C-u>w<CR>
 noremap <leader>i :<C-u>wa<CR>
