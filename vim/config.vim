@@ -170,6 +170,10 @@ inoremap <C-]> <ESC>
 inoremap <C-j> <ESC>
 " CTRL-@無効化
 inoremap <C-@> <NOP>
+" 右へ移動
+inoremap <C-f> <right>
+" 左へ移動
+inoremap <C-b> <left>
 " 一文字delete
 inoremap <C-d> <delete>
 
