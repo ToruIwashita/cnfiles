@@ -46,7 +46,6 @@ NeoBundle 'kchmck/vim-coffee-script'        " vim-coffee-script
 NeoBundle 'rking/ag.vim'                    " ag(silver_searcher)用プラグイン
 NeoBundle 'tomtom/tcomment_vim'             " コメントアウト
 NeoBundle 'itchyny/lightline.vim'           " ステータスライン
-NeoBundle 'adie/BlockDiff'                  " BlockDiff(選択範囲の比較)
 NeoBundle 'thinca/vim-visualstar'           " visualstar(選択範囲のテキストで検索)
 NeoBundle 'thinca/vim-prettyprint'          " vimのデバッグ用prettyprint
 NeoBundle 'thinca/vim-quickrun'             " バッファ上のソースコードを実行してvimへ出力
@@ -62,10 +61,12 @@ NeoBundle 'fugalh/desert.vim'               " カラースキーマ
 NeoBundle 'junegunn/vim-easy-align'         " テキスト整形
 NeoBundle 'soramugi/auto-ctags.vim'         " ctags生成
 NeoBundle 'vim-jp/vim-go-extra'             " extra vim plugin for go
-NeoBundle 'vim-scripts/ruby-matchit'        " rubyのブロックを%で移動
+NeoBundle 'tmhedberg/matchit'               " 対応する括弧などにジャンプする
+NeoBundle 'jiangmiao/auto-pairs'            " 自動で閉じ記号を付与
+NeoBundle 'kshenoy/vim-signature'           " マーカー表示
+NeoBundle 'adie/BlockDiff'                  " BlockDiff(選択範囲の比較)
 NeoBundle 'vim-scripts/YankRing.vim'        " ヤンク履歴管理
 NeoBundle 'vim-scripts/AnsiEsc.vim'         " ANSIカラー表示
-NeoBundle 'kshenoy/vim-signature'           " マーカー表示
 NeoBundle 'vim-scripts/QuickBuf'            " バッファ操作
 NeoBundle 'ToruIwashita/tabmove-assist.vim' " タブ移動補助
 NeoBundle 'ToruIwashita/tag-tnjump.vim'     " タグジャンプ補助
