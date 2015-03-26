@@ -70,8 +70,8 @@ noremap , <NOP>
 " ファイル保存,閉じる
 noremap <C-i> :<C-u>w<CR>
 noremap <leader>i :<C-u>wa<CR>
-noremap <leader>q :<C-u>wa<CR>:<C-u>qa<CR>
-noremap <leader>x :<C-u>qa<CR>
+noremap <leader>x :<C-u>wa<CR>:<C-u>qa<CR>
+noremap <leader>q :<C-u>wq<CR>
 " <ESC>
 noremap <C-j> <ESC>
 " ウィンドウ関連
