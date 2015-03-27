@@ -67,6 +67,7 @@ cnoremap <C-s> <C-r><C-w>
 "" noremap
 " ,はleaderとして使用
 noremap , <NOP>
+noremap <leader>, ,
 " ファイル保存,閉じる
 noremap <C-i> :<C-u>w<CR>
 noremap <leader>i :<C-u>wa<CR>
@@ -141,7 +142,7 @@ noremap <C-s><C-[> :<C-u>tprevious<CR>
 noremap <silent> <C-w>w :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
 "" マーク関連
 " 指定マークへ移動
-noremap <leader>e '
+noremap <C-s>o '
 
 "" nnoremap
 " *,#で検索した後に移動しない
