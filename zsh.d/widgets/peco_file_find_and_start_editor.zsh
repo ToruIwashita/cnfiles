@@ -1,6 +1,5 @@
 ## peco-file-find-and-start-editor
 _peco-file-find-and-start-editor() {
-  local -a peco_resulting_line
   local -aU file_path
 
   [[ "$BUFFER" != '' ]] && print -s "$BUFFER"

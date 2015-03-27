@@ -23,7 +23,7 @@ _peco-silver-search-and-start-editor() {
   fi
 
   if [[ $#peco_resulting_line -eq 1 ]]; then
-    specified_line=+${${peco_resulting_line#*:}%%:*}
+    specified_line=+${${peco_resulting_line#*:}%%[:-]*}
     file_path=${peco_resulting_line%%:*}
   else
     specified_line=''
