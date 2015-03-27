@@ -23,8 +23,8 @@ let g:quickrun_config['rspec/normal'] = {
   \ 'exec': '%c %s%o --color --drb --tty'
 \}
 
-" :QuickRunで実行されるコマンドをrspec用の定義に設定する
-" <Leader>lrをタイプした時に<ESC>:QuickRun -cmdopt '-l (カーソル行)'を実行するキーマップを定義する
+" :QuickRunで実行されるrpsecコマンドを定義する
+" <leader>r,<leader>raをタイプした時に<ESC>:QuickRun [-cmdopt  '-l (カーソル行)']を実行するキーマップを定義する
 function! RSpecQuickrun()
   let b:quickrun_config = {'type' : 'rspec/bundle'}
   nnoremap <expr> <leader>r ':<C-u>:wa<CR>:QuickRun -cmdopt ":'.line('.').'"<CR>'
