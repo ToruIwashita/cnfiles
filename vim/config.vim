@@ -142,7 +142,7 @@ noremap <C-s><C-[> :<C-u>tprevious<CR>
 noremap <silent> <C-w>w :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
 "" マーク関連
 " 指定マークへ移動
-noremap <C-s>o '
+noremap <leader>e '
 
 "" nnoremap
 " *,#で検索した後に移動しない
