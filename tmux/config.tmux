@@ -8,6 +8,8 @@ setw -g utf8 on
 set -g status-utf8 on
 # キーストロークのディレイ0sec
 set -s escape-time 0
+# プレフィックスキーのリピート時間(デフォルト500ms)
+set -g repeat-time 500
 # desplay-panesの表示時間5000ms
 set -g display-panes-time 5000
 # ステータスリフレッシュ間隔(デフォルト15)
