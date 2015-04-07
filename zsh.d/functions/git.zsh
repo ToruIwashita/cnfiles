@@ -165,7 +165,7 @@ gcloneb() {
   fi
 
   print "clone origin/$1"
-  git branch $1 origin/$1
+  git branch $1 origin/$1 && gsw $1
 }
 
 gdeleteb() {
