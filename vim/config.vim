@@ -38,6 +38,7 @@ set lazyredraw                  " スクリプト実行中に画面を描画し�
 set nowrapscan                  " ファイルの末端で検索を止める
 set splitbelow                  " 新しいウィンドウを下に開く
 set splitright                  " 新しいウィンドウを右に開く
+set iskeyword+=@-@,-            " @と-を単語の一部とみなす
 set tags=.tags,tags             " tagsファイル読み込み
 
 "" 補完ポップアップメニュー色設定
