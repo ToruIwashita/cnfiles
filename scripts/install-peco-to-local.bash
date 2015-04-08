@@ -16,6 +16,7 @@ set -e
 
 cd $PECO_SRC_DIR_PATH
 
+go get github.com/google/btree
 go get github.com/jessevdk/go-flags
 go get github.com/mattn/go-runewidth
 go get github.com/nsf/termbox-go
