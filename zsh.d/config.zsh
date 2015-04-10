@@ -78,7 +78,9 @@ bindkey -v '^s^k' menu-complete-recent-dirs                 # Ctr+s,Ctr+kで最�
 bindkey -v '^s^l' edit-command-line                         # Ctr+s,Ctr+lでコマンドラインエディタ編集
 bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctr+oでバッファ残しリーフディレクトリ補完
 bindkey -v '^s^s' vi-find-next-char                         # Ctr+s,Ctr+sでviのfind-char
+bindkey -v '^s^]' vi-backward-word                          # Ctr+s,Ctr+]で前の単語の先頭に移動
 bindkey -v '^s^@' kill-line                                 # Ctr+s,Ctr+@でカーソル行以降削除
+bindkey -v '^]' vi-forward-word                             # Ctr+]で次の単語の先頭に移動
 bindkey -v '^_' cdup                                        # Ctr+_でcdup
 bindkey -v '^@' clear-screen                                # Ctr+@でclear-screen
 bindkey -v '^?' backward-delete-char                        # BSでbackward-delete-char(menuselectのinteractive-modeでbackword)
