@@ -168,16 +168,19 @@ nnoremap q? <NOP>
 "" inoremap
 " ノーマルモードに切り替え<ESC>
 inoremap <C-[> <ESC>
-inoremap <C-]> <ESC>
 inoremap <C-j> <ESC>
 " CTRL-@無効化
 inoremap <C-@> <NOP>
 " 右へ移動
-inoremap <C-f> <right>
+inoremap <C-f> <RIGHT>
 " 左へ移動
-inoremap <C-b> <left>
+inoremap <C-b> <LEFT>
+" 次の単語の先頭に移動
+inoremap <C-]> <S-RIGHT>
+" 前の単語の先頭に移動
+inoremap <C-s><C-]> <S-LEFT>
 " 一文字delete
-inoremap <C-d> <delete>
+inoremap <C-d> <DELETE>
 
 "" vnoremap
 " ビジュアルモードのインデント後選択継続
