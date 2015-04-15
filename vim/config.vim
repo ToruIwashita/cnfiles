@@ -142,6 +142,8 @@ noremap <C-s><C-[> :<C-u>tprevious<CR>
 " preview,quickfixウィンドウクローズ
 noremap <silent> <C-w>w :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
 "" マーク関連
+" マーク関連の動作に仕様するキーのデフォルトの動きを無効化
+noremap <C-e> <NOP>
 " 指定マークへ移動
 noremap <leader>e '
 

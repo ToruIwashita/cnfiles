@@ -3,11 +3,11 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " 次のマークへジャンプ
-map <C-e>] ]`
-map <C-e><C-]> ]`
+nnoremap <C-e>] ]`
+nnoremap <C-e><C-]> ]`
 " 前のマークへジャンプ
-map <C-e>[ [`
-map <C-e><C-[> [`
+nnoremap <C-e>[ [`
+nnoremap <C-e><C-[> [`
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
