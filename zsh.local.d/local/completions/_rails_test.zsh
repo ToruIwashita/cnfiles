@@ -9,4 +9,10 @@ _brspec() {
     '(:)-t[Tag]:Input spec tag word:__add-current-of-word'
 }
 
+_brspec_all() {
+  _arguments : \
+    '(:)-t[Tag]:Input spec tag word:__add-current-of-word'
+}
+
 compdef _brspec brspec
+compdef _brspec_all brspec_all
