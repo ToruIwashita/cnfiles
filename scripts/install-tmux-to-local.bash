@@ -14,6 +14,7 @@ set -e
 
 cd $SRC_DIR_PATH
 
+# backup
 if [[ -f $LOCAL_DIR_PATH/bin/tmux ]]; then
   mv $LOCAL_DIR_PATH/bin/{tmux,tmux.prev}
 fi

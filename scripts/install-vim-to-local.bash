@@ -26,6 +26,7 @@ fi
 
 cd $SRC_DIR_PATH
 
+# backup
 if [[ -f $LOCAL_DIR_PATH/bin/vim ]]; then
   mv $LOCAL_DIR_PATH/bin/{vim,vim.prev}
 fi
