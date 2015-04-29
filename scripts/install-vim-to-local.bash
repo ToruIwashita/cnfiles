@@ -6,7 +6,7 @@ BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
 # vim src dir
-VIM_SRC_DIR_PATH=$BASE_DIR_PATH/modules/vim
+SRC_DIR_PATH=$BASE_DIR_PATH/modules/vim
 # install dir
 LOCAL_DIR_PATH=~/local
 # ruby path
@@ -24,7 +24,7 @@ if [[ $(which luajit) != $LOCAL_DIR_PATH/bin/luajit ]]; then
   exit 1
 fi
 
-cd $VIM_SRC_DIR_PATH
+cd $SRC_DIR_PATH
 
 ./configure                         \
   --prefix=$LOCAL_DIR_PATH          \

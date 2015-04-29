@@ -6,13 +6,13 @@ BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
 # zsh src dir
-ZSH_SRC_DIR_PATH=$BASE_DIR_PATH/modules/zsh
+SRC_DIR_PATH=$BASE_DIR_PATH/modules/zsh
 # install dir
 LOCAL_DIR_PATH=~/local
 
 set -e
 
-cd $ZSH_SRC_DIR_PATH
+cd $SRC_DIR_PATH
 
 ./Util/preconfig
 ./configure                                     \

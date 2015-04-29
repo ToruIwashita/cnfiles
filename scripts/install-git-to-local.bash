@@ -6,13 +6,13 @@ BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
 # git src dir
-GIT_SRC_DIR_PATH=$BASE_DIR_PATH/modules/git
+SRC_DIR_PATH=$BASE_DIR_PATH/modules/git
 # install dir
 LOCAL_DIR_PATH=~/local
 
 set -e
 
-cd $GIT_SRC_DIR_PATH
+cd $SRC_DIR_PATH
 
 make configure
 ./configure --prefix=$LOCAL_DIR_PATH

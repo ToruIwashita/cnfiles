@@ -6,13 +6,13 @@ BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
 # luajit src dir
-LUA_SRC_DIR_PATH=$BASE_DIR_PATH/modules/luajit-2.0
+SRC_DIR_PATH=$BASE_DIR_PATH/modules/luajit-2.0
 # install dir
 LOCAL_DIR_PATH=~/local
 
 set -e
 
-cd $LUA_SRC_DIR_PATH
+cd $SRC_DIR_PATH
 
 make
 make install PREFIX=$LOCAL_DIR_PATH

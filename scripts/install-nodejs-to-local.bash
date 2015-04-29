@@ -6,13 +6,13 @@ BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
 # nodejs src dir
-NODEJS_SRC_DIR_PATH=$BASE_DIR_PATH/modules/node
+SRC_DIR_PATH=$BASE_DIR_PATH/modules/node
 # install dir
 LOCAL_DIR_PATH=~/local
 
 set -e
 
-cd $NODEJS_SRC_DIR_PATH
+cd $SRC_DIR_PATH
 
 ./configure --prefix=$LOCAL_DIR_PATH
 make && make install
