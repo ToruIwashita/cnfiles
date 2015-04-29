@@ -5,7 +5,7 @@ __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
-# zsh src dir
+# src dir
 SRC_DIR_PATH=$BASE_DIR_PATH/modules/zsh
 # install dir
 LOCAL_DIR_PATH=~/local
@@ -13,6 +13,10 @@ LOCAL_DIR_PATH=~/local
 set -e
 
 cd $SRC_DIR_PATH
+
+if [[ -f $LOCAL_DIR_PATH/bin/zsh ]]; then
+  mv $LOCAL_DIR_PATH/bin/{zsh,zsh.prev}
+fi
 
 ./Util/preconfig
 ./configure                                     \

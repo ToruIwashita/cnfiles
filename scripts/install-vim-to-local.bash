@@ -5,7 +5,7 @@ __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
-# vim src dir
+# src dir
 SRC_DIR_PATH=$BASE_DIR_PATH/modules/vim
 # install dir
 LOCAL_DIR_PATH=~/local
@@ -25,6 +25,10 @@ if [[ $(which luajit) != $LOCAL_DIR_PATH/bin/luajit ]]; then
 fi
 
 cd $SRC_DIR_PATH
+
+if [[ -f $LOCAL_DIR_PATH/bin/vim ]]; then
+  mv $LOCAL_DIR_PATH/bin/{vim,vim.prev}
+fi
 
 ./configure                         \
   --prefix=$LOCAL_DIR_PATH          \
