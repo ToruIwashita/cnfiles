@@ -73,7 +73,7 @@ noremap <leader>, ,
 noremap <C-i> :<C-u>w<CR>
 noremap <leader>i :<C-u>wa<CR>
 noremap <leader>x :<C-u>wa<CR>:<C-u>qa<CR>
-noremap <leader>q :<C-u>q<CR>
+noremap <leader>q :<C-u>close<CR>
 " <ESC>
 noremap <C-j> <ESC>
 " ウィンドウ関連
@@ -93,6 +93,8 @@ noremap <C-w><C-p> <C-w>W
 " 現在のウィンドウを閉じる
 noremap <C-w>x <NOP>
 noremap <C-w>x :<C-u>close<CR>
+" 右のウィンドウを閉じる
+noremap <leader>w <C-w>l:<C-u>close<CR>
 " タブ関連
 " タブのmapに関わるデフォルトのmapを無効化
 noremap ] <NOP>
