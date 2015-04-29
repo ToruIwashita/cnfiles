@@ -5,7 +5,7 @@ __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
-# git src dir
+# src dir
 SRC_DIR_PATH=$BASE_DIR_PATH/modules/git
 # install dir
 LOCAL_BIN_DIR_PATH=~/local/bin

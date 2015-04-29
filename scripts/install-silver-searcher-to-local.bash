@@ -5,7 +5,7 @@ __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
-# luajit src dir
+# src dir
 SRC_DIR_PATH=$BASE_DIR_PATH/modules/the_silver_searcher
 # install dir
 LOCAL_DIR_PATH=~/local
