@@ -14,10 +14,6 @@ set -e
 
 cd $SRC_DIR_PATH
 
-if [[ -f $LOCAL_DIR_PATH/bin/git ]]; then
-  mv $LOCAL_DIR_PATH/bin/{git,git.prev}
-fi
-
 make configure
 ./configure --prefix=$LOCAL_DIR_PATH
 make && make install
