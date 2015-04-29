@@ -148,5 +148,5 @@ else
   ln -is $BASE_DIR_PATH/aprc ~/.aprc
 fi
 
-printf "init complete\n"
+printf "\ninit complete\n"
 exit 0

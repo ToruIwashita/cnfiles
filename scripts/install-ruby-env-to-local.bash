@@ -25,5 +25,5 @@ done
 cd $RUBY_BUILD_SRC_DIR_PATH
 PREFIX=$LOCAL_DIR_PATH ./install.sh
 
-printf "complete\n"
+printf "\ncomplete\n"
 exit 0
