@@ -109,7 +109,7 @@ glls() {
 
   print "submodules update & pull master\n"
   git submodule update --init
-  git submodule foreach "git checkout master && git pull origin master\n"
+  git submodule foreach "git checkout master && git pull origin master && echo"
 }
 
 gsh() {
