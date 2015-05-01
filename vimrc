@@ -56,6 +56,7 @@ NeoBundle 'gregsexton/gitv'                 " gitv(コミットログ閲覧用)
 NeoBundle 'scrooloose/nerdtree'             " ファイラー
 NeoBundle 'scrooloose/syntastic'            " シンタックスチェック
 NeoBundle 'ctrlpvim/ctrlp.vim'              " 多機能finder
+NeoBundle 'tacahiroy/ctrlp-funky'           " ctrlpで関数を絞り込む
 NeoBundle 'jasoncodes/ctrlp-modified.vim'   " ctrlpでgitで変更があったファイルを絞り込む
 NeoBundle 'gcmt/wildfire.vim'               " text-object選択
 NeoBundle 'plasticboy/vim-markdown'         " vim-markdown
