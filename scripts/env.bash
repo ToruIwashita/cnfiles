@@ -1,3 +1,5 @@
+#!/usr/bin/env bash 
+
 __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
