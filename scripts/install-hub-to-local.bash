@@ -1,17 +1,6 @@
 #!/usr/bin/env bash
 
-# base dir
-__FILE__=$_
-BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
-BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
-
-# hub src dir
-HUB_SRC_DIR_PATH=$BASE_DIR_PATH/modules/hub
-# create bin symlink dir
-LOCAL_BIN_DIR_PATH=~/local/bin
-# go path
-HUB_GITHUB_DIR_PATH_IN_GOPATH=~/.go/src/github.com/github
-
+source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
 cd $HUB_SRC_DIR_PATH

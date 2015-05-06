@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-# install dir
-NPM_HOME=~/.npm
-
+source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
 npm -g install jshint --prefix=$NPM_HOME

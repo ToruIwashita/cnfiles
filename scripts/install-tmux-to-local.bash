@@ -1,22 +1,13 @@
 #!/usr/bin/env bash
 
-# base dir
-__FILE__=$_
-BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
-BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
-
-# src dir
-SRC_DIR_PATH=$BASE_DIR_PATH/modules/tmux-code
-# install dir
-LOCAL_DIR_PATH=~/local
-
+source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-cd $SRC_DIR_PATH
+cd $TMUX_CODE_SRC_DIR_PATH
 
 # backup
-if [[ -f $LOCAL_DIR_PATH/bin/tmux ]]; then
-  mv $LOCAL_DIR_PATH/bin/{tmux,tmux.prev}
+if [[ -f $LOCAL_BIN_DIR_PATH/tmux ]]; then
+  mv $LOCAL_BIN_DIR_PATH/{tmux,tmux.prev}
 fi
 
 ./autogen.sh

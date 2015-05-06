@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-# install dir
-GEM_HOME=~/.gem
-
+source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
 gem install pry 

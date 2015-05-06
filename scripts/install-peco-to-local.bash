@@ -1,20 +1,9 @@
 #!/usr/bin/env bash
 
-# base dir
-__FILE__=$_
-BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
-BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
-
-# peco src dir
-SRC_DIR_PATH=$BASE_DIR_PATH/modules/peco
-# create bin symlink dir
-LOCAL_BIN_DIR_PATH=~/local/bin
-# go path
-PECO_GITHUB_DIR_PATH_IN_GOPATH=~/.go/src/github.com/peco
-
+source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-cd $SRC_DIR_PATH
+cd $PECO_SRC_DIR_PATH
 
 go get github.com/google/btree
 go get github.com/jessevdk/go-flags

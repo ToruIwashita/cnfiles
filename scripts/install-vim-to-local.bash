@@ -1,34 +1,25 @@
 #!/usr/bin/env bash
 
-# base dir
-__FILE__=$_
-BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
-BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
-
-# src dir
-SRC_DIR_PATH=$BASE_DIR_PATH/modules/vim
-# install dir
-LOCAL_DIR_PATH=~/local
-# ruby path
-RUBY_PATH=${1:-$(which ruby)}
-
+source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
+# check ruby
 if [[ -z $RUBY_PATH ]]; then
   printf "ruby not found\n"
   exit 1
 fi
 
-if [[ $(which luajit) != $LOCAL_DIR_PATH/bin/luajit ]]; then
-  printf "luajit bin is required in $LOCAL_DIR_PATH\n"
+# check luajit
+if [[ $(which luajit) != $LOCAL_BIN_DIR_PATH/luajit ]]; then
+  printf "luajit bin is required in $LOCAL_BIN_DIR_PATH\n"
   exit 1
 fi
 
-cd $SRC_DIR_PATH
+cd $VIM_SRC_DIR_PATH
 
 # backup
-if [[ -f $LOCAL_DIR_PATH/bin/vim ]]; then
-  mv $LOCAL_DIR_PATH/bin/{vim,vim.prev}
+if [[ -f $LOCAL_BIN_DIR_PATH/vim ]]; then
+  mv $LOCAL_BIN_DIR_PATH/{vim,vim.prev}
 fi
 
 ./configure                         \

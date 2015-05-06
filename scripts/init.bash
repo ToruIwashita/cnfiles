@@ -1,23 +1,13 @@
 #!/usr/bin/env bash
 
-## dir,path
-__FILE__=$_
-BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
-BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
+source $(cd $(dirname $_);pwd)/env.bash
+set -e
 
 # src dir,path
-SRC_DIR_PATH=~/src
-LOCAL_DIR_PATH=~/local
-LOCAL_BIN_DIR_PATH=$LOCAL_DIR_PATH/bin
 ZSH_CONFIG_LOCAL_FILE_SOURCE_PATH=$BASE_DIR_PATH/zsh.local.d/config.local.zsh
 ZSH_CONFIG_LOCAL_DIR_SOURCE_PATH=$BASE_DIR_PATH/zsh.local.d/local
 ZSH_CONFIG_LOCAL_FILE_DEST_PATH=$BASE_DIR_PATH/zsh.d/config.local.zsh
 ZSH_CONFIG_LOCAL_DIR_DEST_PATH=$BASE_DIR_PATH/zsh.d/local
-# cache
-CACHE_DIR=cache
-CACHE_DIR_PATH=~/.$CACHE_DIR
-
-set -e
 
 $(cd $BASE_DIR_PATH;git submodule update --init)
 
