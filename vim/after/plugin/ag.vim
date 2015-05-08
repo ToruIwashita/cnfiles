@@ -31,7 +31,7 @@ function! s:silver_search_range() range
   tabnew
 
   try
-    silent! execute "Ag '".selected_range."'"
+    silent! execute 'Ag "'.selected_range.'"'
   finally
     if line('$') == 1 && getline(1) == '' | tabclose | endif
   endtry
