@@ -136,11 +136,11 @@ noremap <C-t>T g<C-]>
 " 直前のタグに戻る
 noremap <C-t><C-t> <C-t>
 " 次のタグへ移動
-noremap <C-s>] :<C-u>tnext<CR>
-noremap <C-s><C-]> :<C-u>tnext<CR>
+noremap <C-s>] :<C-u>tnext<CR>zz
+noremap <C-s><C-]> :<C-u>tnext<CR>zz
 " 前のタグへ移動
-noremap <C-s>[ :<C-u>tprevious<CR>
-noremap <C-s><C-[> :<C-u>tprevious<CR>
+noremap <C-s>[ :<C-u>tprevious<CR>zz
+noremap <C-s><C-[> :<C-u>tprevious<CR>zz
 " preview,quickfixウィンドウクローズ
 noremap <silent> <C-w>w :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
 "" マーク関連
