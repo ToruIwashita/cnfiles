@@ -34,9 +34,6 @@
 [submodule "zsh.d/plugin/zsh-completions"]
 	path = zsh.d/plugin/zsh-completions
 	url = git://github.com/zsh-users/zsh-completions
-[submodule "zsh.d/plugin/zsh-history-substring-search"]
-	path = zsh.d/plugin/zsh-history-substring-search
-	url = git://github.com/zsh-users/zsh-history-substring-search
 [submodule "modules/node"]
 	path = modules/node
 	url = git@github.com:joyent/node.git
@@ -52,3 +49,6 @@
 [submodule "modules/hub"]
 	path = modules/hub
 	url = git@github.com:github/hub.git
+[submodule "zsh.d/plugin/zsh-history-substring-search"]
+	path = zsh.d/plugin/zsh-history-substring-search
+	url = git://github.com/zsh-users/zsh-history-substring-search
