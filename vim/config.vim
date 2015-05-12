@@ -117,6 +117,8 @@ noremap <C-w><C-]> gt
 " 前のバッファへ移動
 noremap <C-w>[ gT
 noremap <C-w><C-[> gT
+" 全てのバッファをタブで開く
+noremap <leader>_ :<C-u>tab ball<CR>
 " <C-w>1..9で任意の番号のタブへ移動
 for i in range(1, 9)
   execute 'nnoremap <C-w>'.i.' <NOP>'
