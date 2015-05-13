@@ -38,7 +38,8 @@ NeoBundle 'tpope/vim-repeat'                " vim-surroundの機能を.反復
 NeoBundle 'tpope/vim-abolish'               " 強化版置換コマンド
 NeoBundle 'tpope/vim-fugitive'              " fugitive(ステータスラインのブランチ名と,Gblame用)
 NeoBundle 'tpope/vim-surround'              " text-object操作
-NeoBundle 'tpope/vim-obsession'             " vimのセッション保存
+NeoBundle 'xolox/vim-misc'                  " vim-sessionが依存しているplugin(dependsで依存を表せるが敢えてしていない)
+NeoBundle 'xolox/vim-session'               " セッション保存
 NeoBundle 'kana/vim-textobj-user'           " 独自text-object定義
 NeoBundle 'kana/vim-textobj-line'           " lineのtext-object(vim-textobj-userに依存している)
 NeoBundle 'vim-ruby/vim-ruby'               " vim-ruby
