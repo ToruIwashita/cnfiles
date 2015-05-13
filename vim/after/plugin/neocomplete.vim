@@ -12,8 +12,13 @@ let g:neocomplete#manual_completion_start_length = 2
 let g:neocomplete#enable_ignore_case = 0
 " 大文字が入力されるまで大文字小文字の区別を無視設定無効
 let g:neocomplete#enable_smart_case = 0
+
 "" オムニ補完の関数を呼び出しキーワードパターン設定(ruby用)
-autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+augroup Rubycomplete
+  autocmd!
+  autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
+augroup END
+
 " オムニ補完の関数を呼び出しキーワードパターン設定初期化
 if !exists('g:neocomplete#sources#omni#input_patterns')
   let g:neocomplete#sources#omni#input_patterns = {}
