@@ -2,9 +2,6 @@
 let s:cpo_save = &cpo
 set cpo&vim
 
-" quickrunの出力結果にAnsiEscを実行して色付けする
-autocmd FileType quickrun AnsiEsc
-
 " quickrunの実行モジュールをvimprocに設定
 let g:quickrun_config = {}
 let g:quickrun_config._ = {'runner' : 'vimproc'}
@@ -31,8 +28,13 @@ function! RSpecQuickrun()
   nnoremap <leader>ra :<C-u>:wa<CR>:QuickRun<CR>
 endfunction
 
-" ファイル名が_spec.rbで終わるファイルを読み込んだ時に上記の設定を自動で読み込む
-autocmd BufReadPost *_spec.rb call RSpecQuickrun()
+augroup quickrun
+  autocmd!
+  " quickrunの出力結果にAnsiEscを実行して色付けする
+  autocmd FileType quickrun AnsiEsc
+  " ファイル名が_spec.rbで終わるファイルを読み込んだ時に上記の設定を自動で読み込む
+  autocmd BufReadPost *_spec.rb call RSpecQuickrun()
+augroup END
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
