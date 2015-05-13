@@ -28,7 +28,7 @@ function! RSpecQuickrun()
   nnoremap <leader>ra :<C-u>:wa<CR>:QuickRun<CR>
 endfunction
 
-augroup quickrun
+augroup Quickrun
   autocmd!
   " quickrunの出力結果にAnsiEscを実行して色付けする
   autocmd FileType quickrun AnsiEsc
