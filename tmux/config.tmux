@@ -94,8 +94,6 @@ bind C-h select-pane -L
 bind C-j select-pane -D
 bind C-k select-pane -U
 bind C-l select-pane -R
-bind C-n select-pane -t :.+
-bind C-p select-pane -t :.-
 # ペインリサイズ
 bind -r H resize-pane -L 2
 bind -r J resize-pane -D 1
