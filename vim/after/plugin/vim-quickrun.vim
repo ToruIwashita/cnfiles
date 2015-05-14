@@ -3,7 +3,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " quickrunの実行モジュールをvimprocに設定
-let g:quickrun_config = {}
+let g:quickrun_config = {'*': {'split': 'vertical'}}
 let g:quickrun_config._ = {'runner' : 'vimproc'}
 
 " rspecを実行するための設定定義
