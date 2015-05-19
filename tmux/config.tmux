@@ -55,6 +55,7 @@ unbind ]
 unbind C-j
 unbind C-n
 unbind C-p
+unbind ,
 unbind C-[
 unbind C-]
 ## bind
@@ -65,6 +66,8 @@ bind r source-file ~/.tmux.conf
 # 新しいウィンドウを作る
 bind t new-window
 bind C-t new-window
+# ウィンドウのリネーム
+bind C-q command-prompt "rename-window %%"
 # ペイン選択
 bind - display-panes
 # ウィンドウkill
