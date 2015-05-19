@@ -77,11 +77,11 @@ bind s split-window -v
 # ウィンドウ左右分割
 bind v split-window -h
 # ウィンドウindex変更
-bind m command-prompt -p "move-window -t:" "move-window -t '%%'"
-# ウィンドウ選択choose
-bind w choose-window
+bind m command-prompt "move-window -t %%"
 # ウィンドウ選択select
-bind W command-prompt -p "select-window -t:" "select-window -t '%%'"
+bind w command-prompt "select-window -t %%"
+# ウィンドウ選択choose
+bind W choose-window
 # 次のウィンドウへ
 bind -r ] next-window
 bind -r C-] next-window
