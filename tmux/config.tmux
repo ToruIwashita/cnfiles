@@ -68,7 +68,7 @@ bind r source-file ~/.tmux.conf
 bind t new-window
 bind C-t new-window
 # ウィンドウのリネーム
-bind . command-prompt "rename-window %%"
+bind . command-prompt "rename-window '%%'"
 # ペイン選択
 bind - display-panes
 # ウィンドウkill
