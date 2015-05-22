@@ -73,7 +73,7 @@ noremap <leader>, ,
 noremap <C-i> :<C-u>w<CR>
 noremap <leader>i :<C-u>wa<CR>
 noremap <leader>x :<C-u>wa<CR>:<C-u>qa<CR>
-noremap <leader>z :<C-u>q<CR>
+noremap <leader>d :<C-u>q<CR>
 " <ESC>
 noremap <C-j> <ESC>
 " ウィンドウ関連
