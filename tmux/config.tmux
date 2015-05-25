@@ -49,14 +49,14 @@ unbind n
 unbind o
 unbind p
 unbind z
-unbind C-z
+unbind ,
+unbind .
 unbind [
 unbind ]
 unbind C-j
 unbind C-n
 unbind C-p
-unbind ,
-unbind .
+unbind C-z
 unbind C-[
 unbind C-]
 ## bind
@@ -105,8 +105,6 @@ bind -r K resize-pane -U 1
 bind -r L resize-pane -R 2
 # ペインkill
 bind x kill-pane
-# ペインブレイク
-bind b break-pane
 # コピーモード
 bind y copy-mode
 bind C-y copy-mode
