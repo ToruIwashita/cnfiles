@@ -154,8 +154,8 @@ noremap <leader>e '
 nnoremap * *N
 nnoremap # #N
 " 検索後にカーソルを中央に移動
-nnoremap n nzt5<C-y>
-nnoremap N Nzt5<C-y>
+nnoremap n nzz
+nnoremap N Nzz
 " <ESC>か<C-j>2回で検索ハイライト消し
 nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 nnoremap <C-j><C-j> :<C-u>nohlsearch<CR>
