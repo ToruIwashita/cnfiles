@@ -138,11 +138,11 @@ noremap <C-t>T g<C-]>
 " 直前のタグに戻る
 noremap <C-t><C-t> <C-t>
 " 次のタグへ移動
-noremap <C-s>] :<C-u>tnext<CR>zz
-noremap <C-s><C-]> :<C-u>tnext<CR>zz
+noremap <C-s>] :<C-u>tnext<CR>zt5<C-y>
+noremap <C-s><C-]> :<C-u>tnext<CR>zt5<C-y>
 " 前のタグへ移動
-noremap <C-s>[ :<C-u>tprevious<CR>zz
-noremap <C-s><C-[> :<C-u>tprevious<CR>zz
+noremap <C-s>[ :<C-u>tprevious<CR>zt5<C-y>
+noremap <C-s><C-[> :<C-u>tprevious<CR>zt5<C-y>
 " preview,quickfixウィンドウクローズ
 noremap <silent> <C-w>w :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
 "" マーク関連
@@ -154,8 +154,8 @@ noremap <leader>e '
 nnoremap * *N
 nnoremap # #N
 " 検索後にカーソルを中央に移動
-nnoremap n nzz
-nnoremap N Nzz
+nnoremap n nzt5<C-y>
+nnoremap N Nzt5<C-y>
 " <ESC>か<C-j>2回で検索ハイライト消し
 nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 nnoremap <C-j><C-j> :<C-u>nohlsearch<CR>
