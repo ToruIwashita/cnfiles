@@ -1,4 +1,6 @@
 require 'benchmark'
+require 'psych'
+require 'psych/y'
 
 begin
   require 'awesome_print'
