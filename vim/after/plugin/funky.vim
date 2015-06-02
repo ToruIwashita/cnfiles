@@ -2,6 +2,9 @@
 let s:cpo_save = &cpo
 set cpo&vim
 
+" 移動後の画面位置
+let g:ctrlp_funky_after_jump = 'zxzt'
+
 function! s:ctrlp_funky_range() range
   let unnamed_register = @@
   silent normal gvy

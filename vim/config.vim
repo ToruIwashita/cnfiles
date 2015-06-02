@@ -32,7 +32,7 @@ set autoread                    " 外部で変更のあったファイルを自�
 set backspace=indent,eol,start  " インサートモード時backspece有効
 set nrformats=octal             " <C-a>,<C-x>で使う基数を10進数に
 set virtualedit=block           " 矩形ビジュアル無文字部分カーソル移動
-set scrolloff=2                 " 上下3行の表示を固定
+set scrolloff=5                 " 上下5行の表示を固定
 set ttyfast                     " 横分割かつ,ターミナルが部分スクロールをサポートしていないとき,再描画が滑らかになる
 set lazyredraw                  " スクリプト実行中に画面を描画しない
 set nowrapscan                  " ファイルの末端で検索を止める
@@ -138,11 +138,11 @@ noremap <C-t>T g<C-]>
 " 直前のタグに戻る
 noremap <C-t><C-t> <C-t>
 " 次のタグへ移動
-noremap <C-s>] :<C-u>tnext<CR>zt5<C-y>
-noremap <C-s><C-]> :<C-u>tnext<CR>zt5<C-y>
+noremap <C-s>] :<C-u>tnext<CR>zt
+noremap <C-s><C-]> :<C-u>tnext<CR>zt
 " 前のタグへ移動
-noremap <C-s>[ :<C-u>tprevious<CR>zt5<C-y>
-noremap <C-s><C-[> :<C-u>tprevious<CR>zt5<C-y>
+noremap <C-s>[ :<C-u>tprevious<CR>zt
+noremap <C-s><C-[> :<C-u>tprevious<CR>zt
 " preview,quickfixウィンドウクローズ
 noremap <silent> <C-w>w :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
 "" マーク関連
@@ -153,9 +153,9 @@ noremap <leader>e '
 " *,#で検索した後に移動しない
 nnoremap * *N
 nnoremap # #N
-" 検索後にカーソルを中央に移動
-nnoremap n nzz
-nnoremap N Nzz
+" 検索後にカーソルを上に移動
+nnoremap n nzt
+nnoremap N Nzt
 " <ESC>か<C-j>2回で検索ハイライト消し
 nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 nnoremap <C-j><C-j> :<C-u>nohlsearch<CR>
