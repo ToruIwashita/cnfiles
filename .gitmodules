@@ -49,3 +49,6 @@
 [submodule "zsh.d/plugin/zsh-history-substring-search"]
 	path = zsh.d/plugin/zsh-history-substring-search
 	url = git://github.com/zsh-users/zsh-history-substring-search
+[submodule "modules/tmux"]
+	path = modules/tmux
+	url = git@github.com:tmux/tmux.git
