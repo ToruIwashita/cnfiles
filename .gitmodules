@@ -7,9 +7,6 @@
 [submodule "modules/vim"]
 	path = modules/vim
 	url = git://github.com/vim-jp/vim
-[submodule "modules/tmux-code"]
-	path = modules/tmux-code
-	url = git://git.code.sf.net/p/tmux/tmux-code
 [submodule "modules/luajit-2.0"]
 	path = modules/luajit-2.0
 	url = http://luajit.org/git/luajit-2.0.git
