@@ -52,6 +52,7 @@ NeoBundle 'thinca/vim-visualstar'           " visualstar(選択範囲のテキ�
 NeoBundle 'thinca/vim-prettyprint'          " vimのデバッグ用prettyprint
 NeoBundle 'thinca/vim-quickrun'             " バッファ上のソースコードを実行してvimへ出力
 NeoBundle 'thinca/vim-tabrecent'            " 直前のタブに戻る
+NeoBundle 'osyo-manga/shabadou.vim'         " 汎用的なquickrun-hook
 NeoBundle 'tmux-plugins/vim-tmux'           " vim-tmux
 NeoBundle 't9md/vim-choosewin'              " ウィンドウ対話的選択
 NeoBundle 'gregsexton/gitv'                 " gitv(コミットログ閲覧用)
