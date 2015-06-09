@@ -150,6 +150,13 @@ noremap <silent> <C-w>w :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
 noremap <leader>e '
 
 "" nnoremap
+" j,kで表示単位移動
+nnoremap <silent> j gj
+nnoremap <silent> gj j
+nnoremap <silent> k gk
+nnoremap <silent> gk k
+nnoremap <silent> $ g$
+nnoremap <silent> g$ $
 " *,#で検索した後に移動しない
 nnoremap * *N
 nnoremap # #N
@@ -187,6 +194,13 @@ inoremap <C-s><C-]> <S-LEFT>
 inoremap <C-d> <DELETE>
 
 "" vnoremap
+" j,kで表示単位移動
+vnoremap <silent> j gj
+vnoremap <silent> gj j
+vnoremap <silent> k gk
+vnoremap <silent> gk k
+vnoremap <silent> $ g$
+vnoremap <silent> g$ $
 " ビジュアルモードのインデント後選択継続
 vnoremap < <gv
 vnoremap > >gv
