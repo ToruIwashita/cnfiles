@@ -3,8 +3,13 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " quickrunの実行モジュールをvimprocに設定
-let g:quickrun_config = {'*': {'split': 'vertical'}}
-let g:quickrun_config._ = {'runner' : 'vimproc'}
+let g:quickrun_config = {
+  \ '_': {
+  \   'runner': 'vimproc',
+  \   'runner/vimproc/updatetime': 40,
+  \   'hook/running/enable': 1
+  \ }
+\ }
 
 " rspecを実行するための設定定義
 let g:quickrun_config['rspec/bundle'] = {
@@ -12,18 +17,19 @@ let g:quickrun_config['rspec/bundle'] = {
   \ 'command': 'rspec',
   \ 'outputter': 'buffered:target=buffer',
   \ 'exec': 'bundle exec %c %s%o --color --drb --tty'
-\}
+\ }
+
 let g:quickrun_config['rspec/normal'] = {
   \ 'type': 'rspec/normal',
   \ 'command': 'rspec',
   \ 'outputter': 'buffered:target=buffer',
   \ 'exec': '%c %s%o --color --drb --tty'
-\}
+\ }
 
 " :QuickRunで実行されるrpsecコマンドを定義する
 " <leader>r,<leader>raをタイプした時に<ESC>:QuickRun [-cmdopt  '-l (カーソル行)']を実行するキーマップを定義する
 function! RSpecQuickrun()
-  let b:quickrun_config = {'type' : 'rspec/bundle'}
+  let b:quickrun_config = {'type': 'rspec/bundle'}
   nnoremap <expr> <leader>r ':<C-u>:wa<CR>:QuickRun -cmdopt ":'.line('.').'"<CR>'
   nnoremap <leader>ra :<C-u>:wa<CR>:QuickRun<CR>
 endfunction
