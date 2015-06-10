@@ -24,11 +24,11 @@ call neobundle#begin(expand('~/.vim/bundle/'))
 NeoBundleFetch 'Shougo/neobundle.vim'
 " 非同期処理を可能にするプラグイン('build'は自動インストール設定)
 NeoBundle 'Shougo/vimproc', {
-\  'build' : {
-\    'mac'  : 'make -f make_mac.mak',
-\    'unix' : 'make -f make_unix.mak',
-\  },
-\}
+  \ 'build': {
+  \   'mac': 'make -f make_mac.mak',
+  \   'unix': 'make -f make_unix.mak'
+  \ }
+\ }
 if has('lua')
   NeoBundle 'Shougo/neocomplete'  " 入力補完機能
 endif
