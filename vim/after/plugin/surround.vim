@@ -4,23 +4,23 @@ set cpo&vim
 
 if !exists("g:surround_no_mappings") || ! g:surround_no_mappings
   " normal
-  nmap ,( csw(
-  nmap ,) csw)
-  nmap ,{ csw{
-  nmap ,} csw}
-  nmap ,[ csw[
-  nmap ,] csw]
-  nmap ,' csw'
-  nmap ," csw"
+  nmap <leader>( csw(
+  nmap <leader>) csw)
+  nmap <leader>{ csw{
+  nmap <leader>} csw}
+  nmap <leader>[ csw[
+  nmap <leader>] csw]
+  nmap <leader>' csw'
+  nmap <leader>" csw"
   " visual
-  xmap ,( S(
-  xmap ,) S)
-  xmap ,{ S{
-  xmap ,} S}
-  xmap ,[ S[
-  xmap ,] S]
-  xmap ,' S'
-  xmap ," S"
+  xmap <leader>( S(
+  xmap <leader>) S)
+  xmap <leader>{ S{
+  xmap <leader>} S}
+  xmap <leader>[ S[
+  xmap <leader>] S]
+  xmap <leader>' S'
+  xmap <leader>" S"
 endif
 
 let &cpo = s:cpo_save
