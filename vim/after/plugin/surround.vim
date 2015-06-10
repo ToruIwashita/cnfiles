@@ -13,6 +13,7 @@ if !exists("g:surround_no_mappings") || ! g:surround_no_mappings
   nmap <leader>' csw'
   nmap <leader>" csw"
   nmap <leader>` csw`
+  nmap <leader><BAR> csw<BAR>
   " visual
   xmap <leader>( S(
   xmap <leader>) S)
@@ -23,6 +24,7 @@ if !exists("g:surround_no_mappings") || ! g:surround_no_mappings
   xmap <leader>' S'
   xmap <leader>" S"
   xmap <leader>` S`
+  xmap <leader><BAR> S<BAR>
 endif
 
 let &cpo = s:cpo_save
