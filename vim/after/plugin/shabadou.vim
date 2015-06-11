@@ -6,10 +6,10 @@ function! s:running_quickrun()
   return shabadou#make_quickrun_hook_anim(
     \ 'running',
     \ [
-    \  ':QuickRun |',
-    \  ':QuickRun /',
-    \  ':QuickRun -',
-    \  ':QuickRun \'
+    \   ':QuickRun |',
+    \   ':QuickRun /',
+    \   ':QuickRun -',
+    \   ':QuickRun \'
     \ ],
     \ 3
   \ )
