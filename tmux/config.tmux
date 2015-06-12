@@ -89,6 +89,9 @@ bind -r C-] next-window
 # 前のウィンドウへ
 bind -r [ previous-window
 bind -r C-[ previous-window
+# 直前のウィンドウへ
+bind -r _ last-window
+bind -r C-_ last-window
 # ペイン移動
 bind h select-pane -L
 bind j select-pane -D
