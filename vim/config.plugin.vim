@@ -24,6 +24,7 @@ let g:syntastic_warning_symbol = '⚠'             " warningのマーカー
 let g:syntastic_javascript_checkers = ['jshint'] " jsをチェックするツール指定
 let g:syntastic_coffee_checkers = ['coffeelint'] " coffeeのチェックをするツール指定
 let g:syntastic_mode_map = { 'mode': 'passive' }
+let g:syntastic_coffee_coffeelint_args = '-f ~/.coffeelint.json'
 
 "" ctrlp
 let g:ctrlp_map = '<C-k>'                         " Start CtrlP
