@@ -42,7 +42,7 @@ text=${text//	/\\\t}
 text=${text//
 /\\\n}
 
-  result=$(curl --silent https://api.github.com/markdown -d "{\"text\": \"$text\",\"mode\": \"gfm\",\"context\": \"\"}")
+  result=$(curl -X POST --silent https://api.github.com/markdown -d "{\"text\": \"$text\",\"mode\": \"gfm\",\"context\": \"\"}")
 
   cat <<EOS
 <!DOCTYPE HTML>
