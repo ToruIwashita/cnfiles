@@ -3,12 +3,6 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-# src dir,path
-ZSH_CONFIG_LOCAL_FILE_SOURCE_PATH=$BASE_DIR_PATH/zsh.local.d/config.local.zsh
-ZSH_CONFIG_LOCAL_DIR_SOURCE_PATH=$BASE_DIR_PATH/zsh.local.d/local
-ZSH_CONFIG_LOCAL_FILE_DEST_PATH=$BASE_DIR_PATH/zsh.d/config.local.zsh
-ZSH_CONFIG_LOCAL_DIR_DEST_PATH=$BASE_DIR_PATH/zsh.d/local
-
 $(cd $BASE_DIR_PATH;git submodule update --init)
 
 ## create base dir
