@@ -26,7 +26,7 @@ let g:syntastic_style_warning_symbol = '⚠s'      " style warningのマーカ�
 let g:syntastic_javascript_checkers = ['jshint'] " jsをチェックするツール指定
 let g:syntastic_coffee_checkers = ['coffeelint'] " coffeeのチェックをするツール指定
 let g:syntastic_mode_map = { 'mode': 'passive' }
-let g:syntastic_coffee_coffeelint_args = '-f ~/.coffeelint.json'
+let g:syntastic_coffee_coffeelint_args = '-f ~/.lint/coffeelint.json'
 
 "" ctrlp
 let g:ctrlp_map = '<C-k>'                         " Start CtrlP
