@@ -63,11 +63,11 @@ cnoremap <C-_> <UP>
 " コマンドライン文字削除,補完メニュー文字削除
 cnoremap <C-d> <DEL>
 " コマンドラインにカーソル上の文字を入力
-cnoremap <C-s>s <C-r><C-w>
+cnoremap <C-]> <C-r><C-w>
 " コマンドラインにヤンクした文字列をペースト
 cnoremap <C-w>p <C-r>"
 " コマンドラインに検索した文字列を入力
-cnoremap <C-s>* <C-r>/
+cnoremap <C-w>* <C-r>/
 
 "" noremap
 " ,はleaderとして使用
