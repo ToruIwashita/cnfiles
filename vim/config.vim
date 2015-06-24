@@ -222,7 +222,7 @@ cnorea T :<C-u>tag
 " ファイルを開いたときに最後の変更点へ移動
 augroup PreviousCursorLine
   autocmd!
-  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | exe 'normal! g`"zt' | endif
 augroup END
 
 " ウィンドウ移動で外部でのファイル変更チェック
