@@ -3,7 +3,11 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 function! s:rubocop_auto_correct()
-  let g:vimrubocop_extra_args = '--auto-correct'
+  if filereadable('./config/environment.rb')
+    let g:vimrubocop_extra_args = '--config ~/.lint/rubocop.yml --rails --auto-correct'
+  else
+    let g:vimrubocop_extra_args = '--config ~/.lint/rubocop.yml --auto-correct'
+  endif
   RuboCop
   unlet g:vimrubocop_extra_args
 endfunction

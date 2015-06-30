@@ -4,6 +4,11 @@ set cpo&vim
 
 function! s:rubocop_check()
   let g:syntastic_ruby_checkers = ['rubocop']
+  if filereadable('./config/environment.rb')
+    let g:syntastic_ruby_rubocop_args = '--config ~/.lint/rubocop.yml --rails'
+  else
+    let g:syntastic_ruby_rubocop_args = '--config ~/.lint/rubocop.yml'
+  endif
   SyntasticCheck
   call lightline#update()
   unlet g:syntastic_ruby_checkers
