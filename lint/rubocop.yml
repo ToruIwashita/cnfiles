@@ -4,4 +4,4 @@ AllCops:
     - 'spec/fixtures/**/*'
 
 Style/Encoding:
-  Enabled: true
+  Enabled: false
