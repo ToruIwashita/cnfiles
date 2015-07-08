@@ -17,7 +17,7 @@ endfunction
 " インターフェースの定義
 command! RubocopCheck call s:rubocop_check()
 
-noremap <leader>c :<C-u>RubocopCheck<CR>
+noremap <leader>a :<C-u>RubocopCheck<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save

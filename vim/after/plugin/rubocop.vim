@@ -15,7 +15,7 @@ endfunction
 " インターフェースの定義
 command! RubocopAutoCorrect call s:rubocop_auto_correct()
 
-noremap <leader>ca :<C-u>:w<CR>:RubocopAutoCorrect<CR>
+noremap <leader>as :<C-u>:w<CR>:RubocopAutoCorrect<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
