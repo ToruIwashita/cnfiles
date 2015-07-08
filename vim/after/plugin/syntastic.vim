@@ -12,6 +12,7 @@ function! s:rubocop_check()
   SyntasticCheck
   call lightline#update()
   unlet g:syntastic_ruby_checkers
+  unlet g:syntastic_ruby_rubocop_args
 endfunction
 
 " インターフェースの定義
