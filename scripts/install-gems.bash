@@ -3,6 +3,9 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
+ruby -v
+printf "GEM_HOME: $GEM_HOME\n"
+
 gem install bundle 
 gem install pry 
 gem install rubocop
