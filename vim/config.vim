@@ -165,8 +165,8 @@ nnoremap <silent> g$ $
 nnoremap * *N
 nnoremap # #N
 " 検索後にカーソルを上に移動
-nnoremap n nzt
-nnoremap N Nzt
+nnoremap n nzz
+nnoremap N Nzz
 " <ESC>か<C-j>2回で検索ハイライト消し
 nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 nnoremap <C-j><C-j> :<C-u>nohlsearch<CR>
