@@ -25,9 +25,6 @@ ld_library_path=(
   $ld_library_path
 )
 
-# rbenv
-eval "$(rbenv init - zsh 2>/dev/null)"
-
 ## alias
 # cd
 alias cdz='cd ~/.zsh.d'

@@ -1,0 +1,4 @@
+# rbenv設定
+if [[ -d ~/.rbenv ]]; then
+  eval "$(rbenv init - zsh 2>/dev/null)"
+fi
