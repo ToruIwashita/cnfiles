@@ -45,7 +45,6 @@ NeoBundle 'kana/vim-textobj-line'           " lineのtext-object(vim-textobj-use
 NeoBundle 'vim-ruby/vim-ruby'               " vim-ruby
 NeoBundle 'ngmy/vim-rubocop'                " vim-rubocop
 NeoBundle 'kchmck/vim-coffee-script'        " vim-coffee-script
-NeoBundle 'rking/ag.vim'                    " ag(silver_searcher)用プラグイン
 NeoBundle 'tomtom/tcomment_vim'             " コメントアウト
 NeoBundle 'itchyny/lightline.vim'           " ステータスライン
 NeoBundle 'thinca/vim-visualstar'           " visualstar(選択範囲のテキストで検索)
@@ -61,6 +60,7 @@ NeoBundle 'scrooloose/syntastic'            " シンタックスチェック
 NeoBundle 'ctrlpvim/ctrlp.vim'              " 多機能finder
 NeoBundle 'tacahiroy/ctrlp-funky'           " ctrlpで関数を絞り込む
 NeoBundle 'jasoncodes/ctrlp-modified.vim'   " ctrlpでgitで変更があったファイルを絞り込む
+NeoBundle 'dyng/ctrlsf.vim'                 " 文字列検索
 NeoBundle 'gcmt/wildfire.vim'               " text-object選択
 NeoBundle 'plasticboy/vim-markdown'         " vim-markdown
 NeoBundle 'fugalh/desert.vim'               " カラースキーマ

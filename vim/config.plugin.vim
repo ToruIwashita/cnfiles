@@ -28,6 +28,17 @@ let g:syntastic_coffee_checkers = ['coffeelint'] " coffeeのチェックをす�
 let g:syntastic_mode_map = { 'mode': 'passive' }
 let g:syntastic_coffee_coffeelint_args = '-f ~/.lint/coffeelint.json'
 
+"" ctrlsf
+let g:ctrlsf_indent = 2          " 結果前方のインデント数
+let g:ctrlsf_context = '-C 2'    " ヒットした文字列の前後表示行数
+let g:ctrlsf_position = 'bottom' " 結果の出す位置
+let g:ctrlsf_winsize = &lines/2  " 結果ウィンドウサイズ
+" 検索結果画面のキーマップ
+let g:ctrlsf_mapping = {
+  \ 'next': 'n',
+  \ 'prev': 'N'
+\ }
+
 "" ctrlp
 let g:ctrlp_map = '<C-k>'                         " Start CtrlP
 let g:ctrlp_match_window = 'min:10,max:'.&lines/2 " quickfixサイズ
