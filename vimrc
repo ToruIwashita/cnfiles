@@ -61,6 +61,7 @@ NeoBundle 'ctrlpvim/ctrlp.vim'              " 多機能finder
 NeoBundle 'tacahiroy/ctrlp-funky'           " ctrlpで関数を絞り込む
 NeoBundle 'jasoncodes/ctrlp-modified.vim'   " ctrlpでgitで変更があったファイルを絞り込む
 NeoBundle 'dyng/ctrlsf.vim'                 " 文字列検索
+NeoBundle 'terryma/vim-multiple-cursors'    " マルチカーソル
 NeoBundle 'gcmt/wildfire.vim'               " text-object選択
 NeoBundle 'plasticboy/vim-markdown'         " vim-markdown
 NeoBundle 'fugalh/desert.vim'               " カラースキーマ
