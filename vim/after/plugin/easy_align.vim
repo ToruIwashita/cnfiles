@@ -2,7 +2,7 @@
 let s:cpo_save = &cpo
 set cpo&vim
 
-cnorea E EasyAlign
+cnorea E :<C-u>EasyAlign
 cnorea '<,'>E '<,'>EasyAlign
 vmap <CR> <Plug>(EasyAlign)
 
