@@ -11,13 +11,6 @@ let g:neocomplete#enable_at_startup = 1 " neocompleteを起動時に有効化
 "" QuickBuf
 let g:qb_hotkey = '__'
 
-"" vim-multiple-cursors
-let g:multi_cursor_use_default_mapping = 0
-let g:multi_cursor_next_key = '<C-]>'
-let g:multi_cursor_prev_key = '<C-d>'
-let g:multi_cursor_skip_key = '<C-f>'
-let g:multi_cursor_quit_key = '<ESC>'
-
 "" yankring
 let g:yankring_history_dir = '~/.cache/yankring/' " yankring_historyの保存先を指定
 let g:yankring_max_history = 30                   " 記録する最大数
