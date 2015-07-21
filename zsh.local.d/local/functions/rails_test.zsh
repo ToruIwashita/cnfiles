@@ -1,6 +1,6 @@
 # rails test
 brspec() {
-  local arg file_path tag_option usage
+  local arg cmd file_path tag_option usage
 
   usage=`cat <<EOF
 Usage: $0 <-f 'spec file path'>
@@ -21,11 +21,18 @@ EOF`
     return 1
   fi
 
-  eval "bundle exec rspec $tag_option $file_path"
+  if [[ -f './bin/spring'  ]]; then
+    cmd='bundle exec spring rspec'
+  else
+    cmd='bundle exec rspec'
+  fi
+
+  print $cmd
+  eval "$cmd $tag_option $file_path"
 }
 
 brspec_all() {
-  local arg tag_option usage
+  local arg cmd tag_option usage
 
   usage=`cat <<EOF
 Usage: $0 [-t 'tag of test target']
@@ -44,5 +51,12 @@ EOF`
     return 1
   fi
 
-  eval "bundle exec rspec $tag_option $*"
+  if [[ -f './bin/spring'  ]]; then
+    cmd='bundle exec spring rspec'
+  else
+    cmd='bundle exec rspec'
+  fi
+
+  print $cmd
+  eval "$cmd $tag_option $*"
 }
