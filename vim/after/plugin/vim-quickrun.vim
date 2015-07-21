@@ -12,33 +12,58 @@ let g:quickrun_config = {
 \ }
 
 " rspecを実行するための設定定義
-let g:quickrun_config['rspec/bundle'] = {
-  \ 'type': 'rspec/bundle',
+let s:rspec_quickrun_config = {
   \ 'command': 'rspec',
   \ 'outputter': 'buffered:target=buffer',
-  \ 'exec': 'bundle exec %c %s%o --color --drb --tty'
 \ }
 
-let g:quickrun_config['rspec/normal'] = {
+let g:quickrun_config['rspec/normal'] = extend(copy(s:rspec_quickrun_config), {
   \ 'type': 'rspec/normal',
-  \ 'command': 'rspec',
-  \ 'outputter': 'buffered:target=buffer',
-  \ 'exec': '%c %s%o --color --drb --tty'
-\ }
+  \ 'exec': '%c %s%o --color --tty'
+\ })
+
+let g:quickrun_config['rspec/bundle'] = extend(copy(s:rspec_quickrun_config), {
+  \ 'type': 'rspec/bundle',
+  \ 'exec': 'bundle exec %c %s%o --color --tty'
+\ })
+
+let g:quickrun_config['rspec/spring'] = extend(copy(s:rspec_quickrun_config), {
+  \ 'type': 'rspec/spring',
+  \ 'exec': 'bundle exec spring rspec %s%o --color --tty'
+\ })
 
 " :QuickRunで実行されるrpsecコマンドを定義する
 " <leader>r,<leader>raをタイプした時に<ESC>:QuickRun [-cmdopt  '-l (カーソル行)']を実行するキーマップを定義する
 function! RSpecQuickrun()
-  let b:quickrun_config = {'type': 'rspec/bundle'}
+  if filereadable('./bin/spring')
+    let b:quickrun_config = {'type': 'rspec/spring'}
+  else
+    let b:quickrun_config = {'type': 'rspec/bundle'}
+  endif
+
   nnoremap <expr> <leader>r ':<C-u>:wa<CR>:QuickRun -cmdopt ":'.line('.').'"<CR>'
   nnoremap <leader>ra :<C-u>:wa<CR>:QuickRun<CR>
 endfunction
 
+" normal設定の適用
+function! s:set_rspec_quickrun(arg)
+  if match(a:arg, 'spring') != -1
+    let b:quickrun_config = {'type': 'rspec/spring'}
+  elseif match(a:arg, 'bundle') != -1
+    let b:quickrun_config = {'type': 'rspec/bundle'}
+  else
+    let b:quickrun_config = {'type': 'rspec/normal'}
+  endif
+  echo a:arg
+endfunction
+
+" インターフェースの定義
+command! -nargs=1 SetRspecQuickrun call s:set_rspec_quickrun(<args>)
+
+" quickrunの出力結果にAnsiEscを実行して色付けする
 augroup Quickrun
   autocmd!
-  " quickrunの出力結果にAnsiEscを実行して色付けする
   autocmd FileType quickrun AnsiEsc
-  " ファイル名が_spec.rbで終わるファイルを読み込んだ時に上記の設定を自動で読み込む
   autocmd BufReadPost *_spec.rb call RSpecQuickrun()
 augroup END
 
