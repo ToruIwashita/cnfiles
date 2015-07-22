@@ -71,7 +71,7 @@ NeoBundle 'tmhedberg/matchit'               " 対応する括弧などにジャ�
 NeoBundle 'jiangmiao/auto-pairs'            " 自動で閉じ記号を付与
 NeoBundle 'kshenoy/vim-signature'           " マーカー表示
 NeoBundle 'adie/BlockDiff'                  " BlockDiff(選択範囲の比較)
-NeoBundle 'vim-scripts/YankRing.vim'        " ヤンク履歴管理
+NeoBundle 'LeafCage/yankround.vim'          " ヤンク履歴管理
 NeoBundle 'vim-scripts/AnsiEsc.vim'         " ANSIカラー表示
 NeoBundle 'vim-scripts/QuickBuf'            " バッファ操作
 NeoBundle 'ToruIwashita/tabmove-assist.vim' " タブ移動補助

@@ -11,11 +11,9 @@ let g:neocomplete#enable_at_startup = 1 " neocompleteを起動時に有効化
 "" QuickBuf
 let g:qb_hotkey = '__'
 
-"" yankring
-let g:yankring_history_dir = '~/.cache/yankring/' " yankring_historyの保存先を指定
-let g:yankring_max_history = 30                   " 記録する最大数
-let g:yankring_max_display = 30                   " YRShowの最大表示数
-let g:yankring_ignore_duplicate = 0               " yankring_historyの重複テキストを保存しない
+"" yankround
+let g:yankround_dir = '~/.cache/yankround/'
+let g:yankround_max_history = 30
 
 "" syntastic
 let g:syntastic_auto_loc_list = 1                " エラーがあったら自動でロケーションリストを開く
