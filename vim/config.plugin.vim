@@ -33,8 +33,8 @@ let g:ctrlsf_position = 'bottom' " 結果の出す位置
 let g:ctrlsf_winsize = &lines/2  " 結果ウィンドウサイズ
 " 検索結果画面のキーマップ
 let g:ctrlsf_mapping = {
-  \ 'next': 'n',
-  \ 'prev': 'N'
+  \ 'next': '<C-n>',
+  \ 'prev': '<C-p>'
 \ }
 
 "" ctrlp
