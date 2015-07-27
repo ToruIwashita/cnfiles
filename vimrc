@@ -40,10 +40,11 @@ NeoBundle 'tpope/vim-fugitive'              " fugitive(ステータスライン�
 NeoBundle 'tpope/vim-surround'              " text-object操作
 NeoBundle 'xolox/vim-misc'                  " vim-sessionが依存しているplugin(dependsで依存を表せるが敢えてしていない)
 NeoBundle 'xolox/vim-session'               " セッション保存
-NeoBundle 'kana/vim-textobj-user'           " 独自text-object定義
-NeoBundle 'kana/vim-textobj-line'           " lineのtext-object(vim-textobj-userに依存している)
-NeoBundle 'kana/vim-niceblock'              " ビジュアル選択時にI,Aで行頭,行末に文字挿入
 NeoBundle 'kana/vim-submode'                " 連続入力などをサポートするサブモードを定義する
+NeoBundle 'kana/vim-textobj-user'           " 独自text-object定義
+NeoBundle 'kana/vim-textobj-line'           " lineのtext-object(vim-textobj-user依存)
+NeoBundle 'kana/vim-textobj-indent'         " カーゾル行と同じインデントのtext-object(vim-textobj-user依存)
+NeoBundle 'kana/vim-niceblock'              " ビジュアル選択時にI,Aで行頭,行末に文字挿入
 NeoBundle 'vim-ruby/vim-ruby'               " vim-ruby
 NeoBundle 'ngmy/vim-rubocop'                " vim-rubocop
 NeoBundle 'kchmck/vim-coffee-script'        " vim-coffee-script
