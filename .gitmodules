@@ -16,9 +16,6 @@
 [submodule "modules/peco"]
 	path = modules/peco
 	url = git://github.com/peco/peco
-[submodule "modules/ctags"]
-	path = modules/ctags
-	url = git://github.com/fishman/ctags
 [submodule "modules/tig"]
 	path = modules/tig
 	url = git://github.com/jonas/tig
