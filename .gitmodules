@@ -49,3 +49,6 @@
 [submodule "modules/tmux"]
 	path = modules/tmux
 	url = git@github.com:tmux/tmux.git
+[submodule "modules/ctags"]
+	path = modules/ctags
+	url = git@github.com:universal-ctags/ctags.git
