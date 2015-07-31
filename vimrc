@@ -30,7 +30,7 @@ NeoBundle 'Shougo/vimproc', {
   \ }
 \ }
 if has('lua')
-  NeoBundle 'Shougo/neocomplete'  " 入力補完機能
+  NeoBundle 'Shougo/neocomplete' " 入力補完機能
 endif
 NeoBundle 'Shougo/neosnippet'               " スニペット展開
 NeoBundle 'honza/vim-snippets'              " 各種snippet
@@ -70,6 +70,7 @@ NeoBundle 'plasticboy/vim-markdown'         " vim-markdown
 NeoBundle 'fugalh/desert.vim'               " カラースキーマ
 NeoBundle 'junegunn/vim-easy-align'         " テキスト整形
 NeoBundle 'soramugi/auto-ctags.vim'         " ctags生成
+NeoBundle 'majutsushi/tagbar'               " コード概要ビューア
 NeoBundle 'vim-jp/vim-go-extra'             " extra vim plugin for go
 NeoBundle 'tmhedberg/matchit'               " 対応する括弧などにジャンプする
 NeoBundle 'jiangmiao/auto-pairs'            " 自動で閉じ記号を付与
