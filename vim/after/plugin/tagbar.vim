@@ -16,6 +16,7 @@ let g:tagbar_type_ruby = {
 \ }
 
 noremap <C-w>l :<C-u>TagbarToggle<CR>
+noremap <C-w><C-l> :<C-u>TagbarToggle<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
