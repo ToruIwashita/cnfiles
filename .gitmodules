@@ -4,9 +4,6 @@
 [submodule "modules/zsh"]
 	path = modules/zsh
 	url = git://github.com/zsh-users/zsh
-[submodule "modules/vim"]
-	path = modules/vim
-	url = git://github.com/vim-jp/vim
 [submodule "modules/luajit-2.0"]
 	path = modules/luajit-2.0
 	url = http://luajit.org/git/luajit-2.0.git
