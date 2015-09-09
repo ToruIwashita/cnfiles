@@ -49,3 +49,6 @@
 [submodule "modules/vim"]
 	path = modules/vim
 	url = git@github.com:vim/vim.git
+[submodule "modules/node"]
+	path = modules/node
+	url = git@github.com:nodejs/node.git
