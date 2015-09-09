@@ -25,9 +25,6 @@
 [submodule "zsh.d/plugin/zsh-completions"]
 	path = zsh.d/plugin/zsh-completions
 	url = git://github.com/zsh-users/zsh-completions
-[submodule "modules/node"]
-	path = modules/node
-	url = git@github.com:joyent/node.git
 [submodule "modules/ruby-build"]
 	path = modules/ruby-build
 	url = git@github.com:sstephenson/ruby-build.git
