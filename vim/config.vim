@@ -172,15 +172,15 @@ nnoremap N Nzz
 " <ESC>か<C-j>2回で検索ハイライト消し
 nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 nnoremap <C-j><C-j> :<C-u>nohlsearch<CR>
+" q:,q/,q?無効化
+nnoremap q: <NOP>
+nnoremap q/ <NOP>
+nnoremap q? <NOP>
 " qqq:キーコマンド履歴表示
 nnoremap qqq: <ESC>q:
 " qqq/,qqq?検索履歴表示
 nnoremap qqq/ <ESC>q/
 nnoremap qqq? <ESC>q?
-" q:,q/,q?無効化
-nnoremap q: <NOP>
-nnoremap q/ <NOP>
-nnoremap q? <NOP>
 
 "" inoremap
 " ノーマルモードに切り替え<ESC>
