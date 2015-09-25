@@ -125,8 +125,8 @@ noremap <C-w><C-[> gT
 noremap <leader>_ :<C-u>tab ball<CR>
 " <C-w>1..9で任意の番号のタブへ移動
 for i in range(1, 9)
-  execute 'nnoremap <C-w>'.i.' <NOP>'
-  execute 'nnoremap <C-w>'.i.' :<C-u>tabnext '.i.'<CR>'
+  execute 'noremap <C-w>'.i.' <NOP>'
+  execute 'noremap <C-w>'.i.' :<C-u>tabnext '.i.'<CR>'
 endfor
 " タブを閉じる
 noremap <C-w>X :<C-u>tabclose<CR>
@@ -172,6 +172,8 @@ nnoremap N Nzz
 " <ESC>か<C-j>2回で検索ハイライト消し
 nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 nnoremap <C-j><C-j> :<C-u>nohlsearch<CR>
+" pasteモード
+nnoremap <leader>p :<C-u>set paste<CR>i
 " q:,q/,q?無効化
 nnoremap q: <NOP>
 nnoremap q/ <NOP>
@@ -228,7 +230,7 @@ augroup PreviousCursorLine
 augroup END
 
 " ウィンドウ移動で外部でのファイル変更チェック
-augroup VimrcChecktime
+augroup FileChangeChecktime
   autocmd!
   autocmd WinEnter * checktime
 augroup END
@@ -237,4 +239,10 @@ augroup END
 augroup AdjustQuickfixWindow
   autocmd!
   autocmd FileType qf exe max([min([line('$'),&lines/2]),10]).'wincmd _'
+augroup END
+
+" insertモード終了時自動でpasteモードを終了する
+augroup AutoPasteLeave
+  autocmd!
+  autocmd InsertLeave * set nopaste
 augroup END
