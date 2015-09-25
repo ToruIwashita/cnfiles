@@ -44,7 +44,7 @@ let g:ctrlp_mruf_max = 100                        " 開いたファイル履歴�
 let g:ctrlp_clear_cache_on_exit = 0               " 終了時にキャッシュをクリアしない
 let g:ctrlp_max_depth = 30                        " ディレクトリ再帰検索深度
 let g:ctrlp_open_new_file = 'r'                   " 新しいファイルをカレントウィンドウに開く
-let g:ctrlp_open_multiple_files = 'rj'            " 複数ファイルを開く時1つ目をカレントウィンドウに開き,全て開き終わった後1つ目に移動する
+let g:ctrlp_open_multiple_files = 'jt'            " 複数ファイルを開く時新しいタブで開き,全て開き終わった後1つ目に移動する
 " CtrlPキーマッピング
 let g:ctrlp_prompt_mappings = {
   \ 'ToggleRegex()':        ['<C-_>'],
