@@ -10,9 +10,8 @@ _peco-file-find-and-start-editor() {
     return 0
   fi
 
-  zle -I
-  print -s $EDITOR:t $file_path
-  $EDITOR $file_path < $TTY
+  BUFFER="$EDITOR $file_path"
+  zle accept-line
 }
 
 zle -N peco-file-find-and-start-editor _peco-file-find-and-start-editor

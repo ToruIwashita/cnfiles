@@ -30,9 +30,8 @@ _peco-silver-search-and-start-editor() {
     file_path=(${(R)peco_resulting_line%%:*})
   fi
 
-  zle -I
-  print -s $EDITOR:t $file_path $specified_line
-  $EDITOR $file_path $specified_line < $TTY
+  BUFFER="$EDITOR $file_path $specified_line"
+  zle accept-line
 }
 
 zle -N peco-silver-search-and-start-editor _peco-silver-search-and-start-editor
