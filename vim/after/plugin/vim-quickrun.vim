@@ -45,7 +45,7 @@ function! RSpecQuickrun()
   nnoremap <leader>ra :<C-u>:wa<CR>:QuickRun<CR>
 endfunction
 
-" normal設定の適用
+" 設定変更用の関数
 function! s:set_rspec_quickrun(arg)
   if match(a:arg, 'spring') != -1
     let b:quickrun_config = {'type': 'rspec/spring'}
@@ -57,8 +57,10 @@ function! s:set_rspec_quickrun(arg)
   echo a:arg
 endfunction
 
-" インターフェースの定義
+" 設定変更の用インターフェース
 command! -nargs=1 SetRspecQuickrun call s:set_rspec_quickrun(<args>)
+" quickrunの中断用インターフェース
+command! StopQuickrun call quickrun#sweep_sessions()
 
 " quickrunの出力結果にAnsiEscを実行して色付けする
 augroup Quickrun
@@ -66,6 +68,8 @@ augroup Quickrun
   autocmd FileType quickrun AnsiEsc
   autocmd BufReadPost *_spec.rb call RSpecQuickrun()
 augroup END
+
+nnoremap <expr> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
