@@ -28,11 +28,11 @@ let g:neocomplete#sources#omni#input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 
 "" neocomplete key-mappings
 " Ctr+Gで補完キャンセル&ポップアップを閉じる
-inoremap <expr><C-g> neocomplete#cancel_popup()
+inoremap <expr> <C-g> neocomplete#cancel_popup()
 " <TAB>で補完候補移動(下)
-inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 " <TAB>で補完候補移動(上)
-inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<S-TAB>"
+inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
