@@ -3,15 +3,22 @@ readonly MYSQL_CNCT='mysql --defaults-extra-file=~/.my.cnf test'
 readonly MYSQL_CMD="$MYSQL_CNCT -e"
 
 export EDITOR=~/local/bin/vim
+export RBENV_ROOT=~/.rbenv
 export GOROOT=~/local/go
 export GOPATH=~/.go
 export GEM_HOME=~/.gem
 export NPM_HOME=~/.npm
 export MYSQL_CNCT MYSQL_CMD
 
+# rbenv設定
+if [[ -d ~/.rbenv  ]]; then
+  eval "$(rbenv init - zsh 2>/dev/null)"
+fi
+
 # path関連環境変数
 path=(
   ~/local/bin
+  $RBENV_ROOT/shims
   $GOROOT/bin
   $GOPATH/bin
   $GEM_HOME/bin
