@@ -46,9 +46,9 @@
 [submodule "modules/ctags"]
 	path = modules/ctags
 	url = git@github.com:universal-ctags/ctags.git
-[submodule "modules/vim"]
-	path = modules/vim
-	url = git@github.com:vim/vim.git
 [submodule "modules/node"]
 	path = modules/node
 	url = git@github.com:nodejs/node.git
+[submodule "modules/vim"]
+	path = modules/vim
+	url = git@github.com:vim/vim.git
