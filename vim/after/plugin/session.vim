@@ -15,16 +15,24 @@ let g:session_autoload = 'no'
 " 1分間に1回自動保存をしない(する場合は1)
 let g:session_autosave_periodic = 0
 
-function! s:save_session()
-  SaveSession
+function! s:save_session(...)
+  if a:0
+    execute 'SaveSession .'.a:1
+  else
+    SaveSession
+  endif
 endfunction
 
-function! s:load_session()
-  execute 'OpenSession'.g:session_default_name
+function! s:load_session(...)
+  if a:0
+    execute 'OpenSession .'.a:1
+  else
+    execute 'OpenSession '.g:session_default_name
+  endif
 endfunction
 
-command! SaveS call s:save_session()
-command! LoadS call s:load_session()
+command! -nargs=? SaveS call s:save_session(<f-args>)
+command! -nargs=? LoadS call s:load_session(<f-args>)
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
