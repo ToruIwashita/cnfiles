@@ -3,7 +3,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " session保存ファイル名
-let g:session_default_name = '.session'
+let g:session_default_name = '.default.session'
 " session保持ファイルの拡張子
 let g:session_extension = '.vim'
 " session保存ディレクトリを現在のディレクトリにする
@@ -17,7 +17,7 @@ let g:session_autosave_periodic = 0
 
 function! s:save_session(...)
   if a:0
-    execute 'SaveSession .'.a:1
+    execute 'SaveSession .'.a:1.'.session'
   else
     SaveSession
   endif
@@ -25,7 +25,7 @@ endfunction
 
 function! s:load_session(...)
   if a:0
-    execute 'OpenSession .'.a:1
+    execute 'OpenSession .'.a:1.'.session'
   else
     execute 'OpenSession '.g:session_default_name
   endif
