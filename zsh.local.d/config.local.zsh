@@ -1,6 +1,8 @@
 # 環境変数設定
-readonly MYSQL_CNCT='mysql --defaults-extra-file=~/.my.cnf test'
+readonly MYSQL_CNCT='mysql mydatabase'  # ~/.my.cnfに設定を書く
 readonly MYSQL_CMD="$MYSQL_CNCT -e"
+readonly PGSQL_CNCT="psql -h localhost -p 5432 -U guest -d mydatabase"  # ~/.pgpassに設定を書く
+readonly PGSQL_CMD="$PGSQL_CNCT -c"
 
 export EDITOR=~/local/bin/vim
 export RBENV_ROOT=~/.rbenv
@@ -46,6 +48,10 @@ alias cdc='cd ~/.cnfiles'
 alias my=$MYSQL_CNCT
 alias myq=$MYSQL_CMD
 alias myshow="$MYSQL_CMD 'SHOW TABLES'"
+# pgsql
+alias pg=$PGSQL_CNCT
+alias pgq=$PGSQL_CMD
+alias pgshow="$PGSQL_CMD '\d'"
 # ctags
 alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,ruby'
 # tig
