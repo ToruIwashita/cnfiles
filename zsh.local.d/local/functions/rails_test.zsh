@@ -31,7 +31,7 @@ EOF`
   eval "$cmd $tag_option $file_path"
 }
 
-brspec_all() {
+brspec-all() {
   local arg cmd tag_option usage
 
   usage=`cat <<EOF
