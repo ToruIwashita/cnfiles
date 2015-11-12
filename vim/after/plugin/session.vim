@@ -17,7 +17,13 @@ let g:session_autosave_periodic = 0
 
 function! s:save_session(...)
   if a:0
-    execute 'SaveSession .'.a:1.'.session'
+    let session_name = a:1
+  else
+    let session_name = fugitive#head()
+  end
+
+  if strlen(session_name)
+    execute 'SaveSession .'.session_name.'.session'
   else
     SaveSession
   endif
@@ -25,7 +31,13 @@ endfunction
 
 function! s:load_session(...)
   if a:0
-    execute 'OpenSession .'.a:1.'.session'
+    let session_name = a:1
+  else
+    let session_name = fugitive#head()
+  end
+  
+  if strlen(session_name)
+    execute 'OpenSession .'.session_name.'.session'
   else
     execute 'OpenSession '.g:session_default_name
   endif
