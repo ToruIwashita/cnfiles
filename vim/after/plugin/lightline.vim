@@ -9,12 +9,12 @@ let g:lightline = {
   \   'right': [ [ 'syntastic','lineinfo' ], ['percent'], [ 'getcharcode','fileencoding','filetype','fileformat' ] ]
   \ },
   \ 'component_function': {
-  \   'fugitive':     'MyFugitive',
-  \   'filename':     'MyFilename',
-  \   'fileformat':   'MyFileformat',
-  \   'filetype':     'MyFiletype',
-  \   'fileencoding': 'MyFileencoding',
-  \   'mode':         'MyMode',
+  \   'fugitive':     'LightLineFugitive',
+  \   'filename':     'LightLineFilename',
+  \   'fileformat':   'LightLineFileformat',
+  \   'filetype':     'LightLineFiletype',
+  \   'fileencoding': 'LightLineFileencoding',
+  \   'mode':         'LightLineMode',
   \   'ctrlpmark':    'CtrlPMark',
   \   'getcharcode':  'GetCharCode'
   \ },
@@ -31,15 +31,15 @@ let g:lightline.tabline = {
   \ 'right': [ [ '' ] ]
 \ }
 
-function! MyModified()
+function! LightLineModified()
   return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
-function! MyReadonly()
+function! LightLineReadonly()
   return &ft !~? 'help' && &readonly ? 'RO' : ''
 endfunction
 
-function! MyFilename()
+function! LightLineFilename()
   let fname = expand('%:t')
   return fname == 'ControlP' ? g:lightline.ctrlp_item :
         \ fname == '__Tagbar__' ? g:lightline.fname :
@@ -47,12 +47,12 @@ function! MyFilename()
         \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
         \ &ft == 'unite' ? unite#get_status_string() :
         \ &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ ('' != MyReadonly() ? MyReadonly() . ' ' : '') .
+        \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
         \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != MyModified() ? ' ' . MyModified() : '')
+        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
-function! MyFugitive()
+function! LightLineFugitive()
   try
     if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
       let mark = ''  " edit here for cool mark
@@ -64,19 +64,19 @@ function! MyFugitive()
   return ''
 endfunction
 
-function! MyFileformat()
+function! LightLineFileformat()
   return winwidth(0) > 70 ? &fileformat : ''
 endfunction
 
-function! MyFiletype()
+function! LightLineFiletype()
   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
 endfunction
 
-function! MyFileencoding()
+function! LightLineFileencoding()
   return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
 endfunction
 
-function! MyMode()
+function! LightLineMode()
   let fname = expand('%:t')
   return fname == '__Tagbar__' ? 'Tagbar' :
         \ fname == 'ControlP' ? 'CtrlP' :
