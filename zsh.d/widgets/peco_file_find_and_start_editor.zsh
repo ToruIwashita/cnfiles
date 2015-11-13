@@ -4,7 +4,7 @@ _peco-file-find-and-start-editor() {
 
   [[ "$BUFFER" != '' ]] && print -s "$BUFFER"
 
-  file_path=(${(R)${(f)"$(find -type f -name "*$BUFFER*" 2>/dev/null | peco 2>/dev/null)"}%%:*})
+  file_path=(${(R)${(f)"$(find -type f -name "*$BUFFER*" 2>/dev/null | peco --select-1 2>/dev/null)"}%%:*})
   if [[ -z $file_path ]]; then
     zle beginning-of-line
     return 0
