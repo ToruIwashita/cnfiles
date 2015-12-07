@@ -133,6 +133,7 @@ alias gs='git status -s'
 alias gl='git log'
 alias gla='git log --graph --date-order -C -M --pretty=format:"<%h> %ad [%an] %Cgreen%d%Creset %s" --all --date=short'
 alias gdf='git diff --name-only'
+alias gcb='git checkout -b'
 # vim
 alias clear-vim-session='rm .*.session.vim'
 
