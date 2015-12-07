@@ -1,5 +1,5 @@
 # _menu_complete_recent_dirs
-__complete-recent-dirs() {
+_complete-recent-dirs() {
   local -a recent_dirs
   if (( ${+functions[cdr]} )); then
     recent_dirs=(${^${(f)"$(cdr -l)"}##<-> ##}/)
@@ -10,4 +10,4 @@ __complete-recent-dirs() {
 }
 
 zle -C menu-complete-recent-dirs menu-complete _generic
-zstyle ':completion:menu-complete-recent-dirs:*' completer __complete-recent-dirs
+zstyle ':completion:menu-complete-recent-dirs:*' completer _complete-recent-dirs
