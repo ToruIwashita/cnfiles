@@ -9,39 +9,39 @@ HISTSIZE=100000          # メモリに展開する履歴数
 SAVEHIST=100000          # 保存する履歴数
 
 ## オプション設定
-setopt no_beep               # ビープ音なし
-setopt notify                # バックグラウンドジョブの状態を即時通知
-setopt auto_cd               # 自動CD
-setopt auto_pushd            # 自動的にディレクトリスタックにカレントディレクトリ追加
-setopt pushd_to_home         # 引数の無いpushdは$HOMEをスタックする
-setopt pushd_ignore_dups     # 重複ディレクトリはスタックしない
-setopt prompt_subst          # PROMPT変数に対して変数等展開
-setopt list_types            # ファイル補完種類表示
-setopt auto_list             # 補完候補を一覧表示
-setopt menu_complete         # 候補が複数ある時直ちにメニュー補完に移行
-setopt magic_equal_subst     # オプション指定時"="以降も補完
-setopt auto_param_keys       # カッコの対応などを自動的に補完
-setopt complete_in_word      # 単語途中の補完
-setopt auto_param_slash      # ディレクトリ名の補完で末尾の"/"を自動的に付加
-setopt always_last_prompt    # 補完のときプロンプトの位置を変えない
-setopt list_packed           # 補完候補を詰めて表示
-setopt mark_dirs             # ファイル名の展開でディレクトリにマッチした場合末尾に"/"を付加
-setopt interactive_comments  # コマンドラインでも"#"以降をコメントと見なす
-setopt no_auto_remove_slash  # 最後のスラッシュを自動的に削除しない
-setopt hist_ignore_all_dups  # 重複コマンド記録しない(古い行を消して新しい行を追加)
-setopt share_history         # コマンド履歴・共有
-setopt incappend_history     # コマンド履歴・シェル横断実行時間順ヒストリ保存
-setopt extended_history      # コマンド履歴・コマンド実行時間保存
-setopt hist_no_store         # historyコマンドを記録しない
-setopt hist_reduce_blanks    # 余分なスペースは保存しない
-setopt inc_append_history    # 履歴をインクリメンタルに追加(履歴が即書き込まれる)
-setopt hist_ignore_space     # 行頭がスペースで始まるコマンドを記録しない
-setopt extended_glob         # 拡張ファイルグロブを有効にする
-setopt numeric_glob_sort     # ファイル名を数値としてソート
-setopt nonomatch             # グロブパターンにマッチしない場合は標準エラー出力する
-setopt multios               # 複数リダイレクト記述有効
-setopt no_clobber            # リダイレクト時既に存在するファイル上書きエラー
-setopt no_flow_control       # フローコントロール無効
+setopt nobeep              # ビープ音なし
+setopt notify              # バックグラウンドジョブの状態を即時通知
+setopt autocd              # 自動CD
+setopt autopushd           # 自動的にディレクトリスタックにカレントディレクトリ追加
+setopt pushdtohome         # 引数の無いpushdは$HOMEをスタックする
+setopt pushdignoredups     # 重複ディレクトリはスタックしない
+setopt promptsubst         # PROMPT変数に対して変数等展開
+setopt listtypes           # ファイル補完種類表示
+setopt autolist            # 補完候補を一覧表示
+setopt menucomplete        # 候補が複数ある時直ちにメニュー補完に移行
+setopt magicequalsubst     # オプション指定時"="以降も補完
+setopt autoparamkeys       # カッコの対応などを自動的に補完
+setopt completeinword      # 単語途中の補完
+setopt autoparamslash      # ディレクトリ名の補完で末尾の"/"を自動的に付加
+setopt alwayslastprompt    # 補完のときプロンプトの位置を変えない
+setopt listpacked          # 補完候補を詰めて表示
+setopt markdirs            # ファイル名の展開でディレクトリにマッチした場合末尾に"/"を付加
+setopt interactivecomments # コマンドラインでも"#"以降をコメントと見なす
+setopt noautoremoveslash   # 最後のスラッシュを自動的に削除しない
+setopt histignorealldups   # 重複コマンド記録しない(古い行を消して新しい行を追加)
+setopt sharehistory        # コマンド履歴・共有
+setopt incappendhistory    # コマンド履歴・シェル横断実行時間順ヒストリ保存
+setopt extendedhistory     # コマンド履歴・コマンド実行時間保存
+setopt histnostore         # historyコマンドを記録しない
+setopt histreduceblanks    # 余分なスペースは保存しない
+setopt incappendhistory    # 履歴をインクリメンタルに追加(履歴が即書き込まれる)
+setopt histignorespace     # 行頭がスペースで始まるコマンドを記録しない
+setopt extendedglob        # 拡張ファイルグロブを有効にする
+setopt numericglobsort     # ファイル名を数値としてソート
+setopt nonomatch           # グロブパターンにマッチしない場合は標準エラー出力する
+setopt multios             # 複数リダイレクト記述有効
+setopt noclobber           # リダイレクト時既に存在するファイル上書きエラー
+setopt noflowcontrol       # フローコントロール無効
 
 ## bindkey
 # vimモードキーマップ
