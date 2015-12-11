@@ -49,5 +49,8 @@ command! -nargs=? LoadS call s:load_session(<f-args>)
 cnorea S SaveS
 cnorea L LoadS
 
+nnoremap <C-w><C-i> :<C-u>SaveS<CR>
+nnoremap <C-w><C-r> :<C-u>LoadS<CR>
+
 let &cpo = s:cpo_save
 unlet s:cpo_save
