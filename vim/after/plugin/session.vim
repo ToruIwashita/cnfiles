@@ -46,5 +46,8 @@ endfunction
 command! -nargs=? SaveS call s:save_session(<f-args>)
 command! -nargs=? LoadS call s:load_session(<f-args>)
 
+cnorea S SaveS
+cnorea L LoadS
+
 let &cpo = s:cpo_save
 unlet s:cpo_save

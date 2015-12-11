@@ -42,14 +42,14 @@ endfunction
 function! LightLineFilename()
   let fname = expand('%:t')
   return fname == 'ControlP' ? g:lightline.ctrlp_item :
-        \ fname == '__Tagbar__' ? g:lightline.fname :
-        \ fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \ &ft == 'unite' ? unite#get_status_string() :
-        \ &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-        \ ('' != fname ? fname : '[No Name]') .
-        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+         \ fname == '__Tagbar__' ? g:lightline.fname :
+         \ fname =~ '__Gundo\|NERD_tree' ? '' :
+         \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+         \ &ft == 'unite' ? unite#get_status_string() :
+         \ &ft == 'vimshell' ? vimshell#get_status_string() :
+         \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+         \ ('' != fname ? fname : '[No Name]') .
+         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
 function! LightLineFugitive()
@@ -79,14 +79,14 @@ endfunction
 function! LightLineMode()
   let fname = expand('%:t')
   return fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname == 'ControlP' ? 'CtrlP' :
-        \ fname == '__Gundo__' ? 'Gundo' :
-        \ fname == '__Gundo_Preview' ? 'Gundo Preview' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &ft == 'unite' ? 'Unite' :
-        \ &ft == 'vimfiler' ? 'VimFiler' :
-        \ &ft == 'vimshell' ? 'VimShell' :
-        \ winwidth(0) > 60 ? lightline#mode() : ''
+         \ fname == 'ControlP' ? 'CtrlP' :
+         \ fname == '__Gundo__' ? 'Gundo' :
+         \ fname == '__Gundo_Preview' ? 'Gundo Preview' :
+         \ fname =~ 'NERD_tree' ? 'NERDTree' :
+         \ &ft == 'unite' ? 'Unite' :
+         \ &ft == 'vimfiler' ? 'VimFiler' :
+         \ &ft == 'vimshell' ? 'VimShell' :
+         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
 function! CtrlPMark()
