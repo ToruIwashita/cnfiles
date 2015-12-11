@@ -14,7 +14,6 @@ if has('vim_starting')
   set nocompatible  " Be iMproved
 
   set runtimepath+=~/.vim/bundle/neobundle.vim/
-  exe 'set rtp+='.globpath($GOPATH, 'src/github.com/nsf/gocode/vim')
 endif
 " neobundle.vimの初期化
 call neobundle#begin(expand('~/.vim/bundle/'))
