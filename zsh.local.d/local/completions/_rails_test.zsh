@@ -1,18 +1,18 @@
 ## rails test関連の補完
-__add-current-of-word() {
+__word-of-current() {
   compadd 'current'
 }
 
 _brspec() {
   _arguments : \
     '(:)-f[File path]:Input spec file path' \
-    '(:)-t[Tag]:Input spec tag word:__add-current-of-word'
+    '(:)-t[Tag]:Input spec tag word:__word-of-current'
 }
 
-_brspec_all() {
+_brspec-all() {
   _arguments : \
-    '(:)-t[Tag]:Input spec tag word:__add-current-of-word'
+    '(:)-t[Tag]:Input spec tag word:__word-of-current'
 }
 
 compdef _brspec brspec
-compdef _brspec_all brspec_all
+compdef _brspec-all brspec-all

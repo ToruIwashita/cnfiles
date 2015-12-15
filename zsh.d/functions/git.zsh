@@ -127,7 +127,7 @@ gsh() {
   git push origin $current_branch
 }
 
-gsh_force() {
+gsh-force() {
   local gsh_usage current_branch answer
 
   gsh_usage="Usage:<pwd=./.git> $0"
