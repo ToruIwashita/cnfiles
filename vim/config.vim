@@ -97,8 +97,6 @@ noremap <C-w><C-p> <C-w>W
 " 現在のウィンドウを閉じる
 noremap <C-w>x <NOP>
 noremap <C-w>x :<C-u>close<CR>
-" 右のウィンドウを閉じる
-noremap <silent> <leader>w <C-w>l:<C-u>close<CR>
 " タブ関連
 " タブのmapに関わるデフォルトのmapを無効化
 noremap ] <NOP>
