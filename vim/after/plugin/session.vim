@@ -15,7 +15,7 @@ let g:session_autoload = 'no'
 " 1分間に1回自動保存をしない(する場合は1)
 let g:session_autosave_periodic = 0
 
-function! s:save_session(...)
+fun! s:save_session(...)
   if a:0
     let session_name = a:1
   else
@@ -27,9 +27,9 @@ function! s:save_session(...)
   else
     SaveSession
   endif
-endfunction
+endf
 
-function! s:load_session(...)
+fun! s:load_session(...)
   if a:0
     let session_name = a:1
   else
@@ -41,13 +41,25 @@ function! s:load_session(...)
   else
     execute 'OpenSession '.g:session_default_name
   endif
-endfunction
+endf
+
+fun! s:git_branches(arg_lead, cmd_line, cursor_pos)
+  let branches = filter(split(system('git branch')), 'v:val != "*"')
+
+  if branches[0] == 'fatal:'
+    return []
+  endif
+
+  return filter(branches, 'v:val =~ "^'. fnameescape(a:arg_lead) . '"')
+endf
 
 command! -nargs=? SaveS call s:save_session(<f-args>)
 command! -nargs=? LoadS call s:load_session(<f-args>)
+command! -nargs=1 -complete=customlist,s:git_branches Gsw :<C-u>Git checkout <args>:<C-u>LoadS<CR>
 
 cnorea S SaveS
 cnorea L LoadS
+cnorea G Gsw
 
 nnoremap <C-w><C-i> :<C-u>SaveS<CR>
 nnoremap <C-w><C-r> :<C-u>LoadS<CR>
