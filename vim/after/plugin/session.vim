@@ -43,7 +43,7 @@ fun! s:load_session(...)
   endif
 endf
 
-fun! s:git_branches(arg_lead, cmd_line, cursor_pos)
+fun! s:_git_branches(arg_lead, cmd_line, cursor_pos)
   let branches = filter(split(system('git branch')), 'v:val != "*"')
 
   if branches[0] == 'fatal:'
@@ -53,9 +53,14 @@ fun! s:git_branches(arg_lead, cmd_line, cursor_pos)
   return filter(branches, 'v:val =~ "^'. fnameescape(a:arg_lead) . '"')
 endf
 
-command! -nargs=? SaveS call s:save_session(<f-args>)
-command! -nargs=? LoadS call s:load_session(<f-args>)
-command! -nargs=1 -complete=customlist,s:git_branches Gsw :<C-u>Git checkout <args>:<C-u>LoadS<CR>
+fun! s:git_switch(...)
+  exe 'Git checkout '.a:1
+  silent! call s:load_session()
+endf
+
+command! -nargs=* SaveS call s:save_session(<f-args>)
+command! -nargs=* LoadS call s:load_session(<f-args>)
+command! -nargs=1 -complete=customlist,s:_git_branches Gsw call s:git_switch(<f-args>)
 
 cnorea S SaveS
 cnorea L LoadS
