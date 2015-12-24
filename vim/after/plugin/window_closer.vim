@@ -4,6 +4,8 @@ set cpo&vim
 
 " 右のウィンドウを閉じる
 noremap <leader>w :<C-u>CloseRightWin<CR>
+" 左のウィンドウを閉じる
+noremap <leader>o :<C-u>CloseLeftWin<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
