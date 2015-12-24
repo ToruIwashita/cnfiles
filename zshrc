@@ -17,7 +17,6 @@ zsh_function_dirs=(
   $zsh_dir/local/completions
   $zsh_dir/local/widgets
 )
-
 # plugin path
 zsh_completions_dir=$zsh_plugin_dir/zsh-completions/src
 zsh_history_substring_search_src=$zsh_plugin_dir/zsh-history-substring-search/zsh-history-substring-search.zsh
