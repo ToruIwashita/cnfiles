@@ -74,8 +74,8 @@ cnoremap <C-w>* <C-r>/
 noremap , <NOP>
 noremap <leader>, ,
 " ファイル保存,閉じる
-noremap <C-i> <ESC>:<C-u>w<CR>
-noremap <leader>i :<C-u>wa<CR>
+noremap <C-o> <ESC>:<C-u>w<CR>
+noremap <leader>o :<C-u>wa<CR>
 noremap <leader>x :<C-u>wa<CR>:<C-u>qa<CR>
 noremap <leader>f :<C-u>q<CR>
 " <ESC>
