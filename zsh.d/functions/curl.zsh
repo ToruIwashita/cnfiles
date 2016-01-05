@@ -17,7 +17,7 @@ cl() {
     return 1
   fi
 
-  if (( ! ${#option} )); then
+  if (( ! $#option )); then
     curl -kL -I $*
   else
     curl -kL $option $* >/dev/null
