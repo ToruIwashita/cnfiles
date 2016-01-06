@@ -2,7 +2,7 @@
 cl() {
   local usage option arg
 
-  usage="Usage: $0 [-v 'verbose'] <URL>"
+  usage="usage: $0 [-v 'verbose'] <URL>"
 
   while getopts :v arg; do
     case ${arg} in

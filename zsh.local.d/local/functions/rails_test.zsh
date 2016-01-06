@@ -3,7 +3,7 @@ brspec() {
   local arg cmd file_path tag_option usage
 
   usage=`cat <<EOF
-Usage: $0 <-f 'spec file path'>
+usage: $0 <-f 'spec file path'>
           [-t 'tag of test target']
 EOF`
 
@@ -35,7 +35,7 @@ brspec-all() {
   local arg cmd tag_option usage
 
   usage=`cat <<EOF
-Usage: $0 [-t 'tag of test target']
+usage: $0 [-t 'tag of test target']
 EOF`
 
   while getopts :t: arg; do

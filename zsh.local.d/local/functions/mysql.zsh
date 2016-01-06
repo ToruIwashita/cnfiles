@@ -64,7 +64,7 @@ mqout() {
 myfindg() {
   local my_cmd cmd_res_field_list cmd_res_field_name table_name field_name tmp_line myfindg_usage arg
 
-  myfindg_usage="Usage: $0 [-f 'Part of field info'] [-t 'Part of table name']"
+  myfindg_usage="usage: $0 [-f 'Part of field info'] [-t 'Part of table name']"
   while getopts :f:t: arg; do
     case ${arg} in
       f) field_name=${OPTARG} ;;
@@ -161,7 +161,7 @@ mycnt() {
 watch-myps() {
   local arg full_opt g_opt
 
-  watch_myps_usage="Usage: $0 [-f(FULL PROCESSLIST)] [-g(\\G)]"
+  watch_myps_usage="usage: $0 [-f(FULL PROCESSLIST)] [-g(\\G)]"
   while getopts :fgh arg; do
     case ${arg} in
       f) full_opt='FULL' ;;
@@ -177,7 +177,7 @@ mf() {
   local my_cmd priority_condition group_condition limit_condition order_condition select_fields table_name vertical_option where_condition mf_usage arg
 
   mf_usage=`cat <<EOF
-Usage: $0 <-t 'Table name'>
+usage: $0 <-t 'Table name'>
           [-c 'Highest priority condition']
           [-g 'Group condition']
           [-l 'Limit value']
