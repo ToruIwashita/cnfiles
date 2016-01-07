@@ -129,11 +129,10 @@ alias ga='git add'
 alias gb='git branch'
 alias gc='git commit'
 alias gf='git fetch --prune'
-alias gs='git status -s'
 alias gl='git log'
-alias gla='git log --graph --date-order -C -M --pretty=format:"<%h> %ad [%an] %Cgreen%d%Creset %s" --all --date=short'
-alias gdf='git diff --name-only'
+alias gs='git status -s'
 alias gcb='git checkout -b'
+alias gdf='git diff --name-only'
 # vim
 alias clear-vim-session='rm .*.session.vim'
 
