@@ -4,7 +4,7 @@ gam() {
 
   usage="usage: $0 <Files>"
   if (( ! $# )); then
-    print $gam_usage 1>&2
+    print $usage 1>&2
     return 1
   fi
 
@@ -16,7 +16,7 @@ gau() {
 
   usage="usage: $0 <Files>"
   if (( ! $# )); then
-    print $gau_usage 1>&2
+    print $usage 1>&2
     return 1
   fi
 
@@ -28,7 +28,7 @@ gab() {
 
   usage="usage: $0 <Files>"
   if (( ! $# )); then
-    print $gab_usage 1>&2
+    print $usage 1>&2
     return 1
   fi
 
@@ -40,7 +40,7 @@ grh() {
 
   usage="usage: $0 <Files>"
   if (( ! $# )); then
-    print $grh_usage 1>&2
+    print $usage 1>&2
     return 1
   fi
 
@@ -52,7 +52,7 @@ gd() {
 
   usage="usage: $0 <File>"
   if [[ $# -gt 1 ]]; then
-    print $gd_usage 1>&2
+    print $usage 1>&2
     return 1
   fi
 
@@ -64,7 +64,7 @@ gsw() {
 
   usage="usage: $0 <Branch>"
   if [[ $# -ne 1 ]]; then
-    print $gsw_usage 1>&2
+    print $usage 1>&2
     return 1
   fi
 
@@ -76,7 +76,7 @@ gud() {
 
   usage="usage: $0 <Files>"
   if (( ! $# )); then
-    print $gud_usage 1>&2
+    print $usage 1>&2
     return 1
   fi
 
@@ -88,7 +88,7 @@ gll() {
 
   usage="usage:<pwd=./.git> $0"
   if [[ ! -d ./.git ]]; then
-    print $gll_usage 1>&2
+    print $usage 1>&2
     return 1
   fi
 
@@ -101,9 +101,10 @@ gll() {
 glls() {
   local usage
 
-  usage="usage:<pwd=./.git> $0"
+  usage="usage: $0"
   if [[ ! -d ./.git ]]; then
-    print $glls_usage 1>&2
+    print 'Not a git repository: .git'
+    print $usage 1>&2
     return 1
   fi
 
@@ -113,11 +114,15 @@ glls() {
 }
 
 gsh() {
-  local gsh_usage current_branch
+  local usage current_branch
 
-  gsh_usage="usage:<pwd=./.git> $0"
+  usage=`cat <<EOF
+usage: $0 [-f 'force push']
+EOF`
+
   if [[ ! -d ./.git ]]; then
-    print $gsh_usage 1>&2
+    print 'Not a git repository: .git'
+    print $usage 1>&2
     return 1
   fi
 
@@ -132,7 +137,7 @@ gsh-force() {
 
   usage="usage:<pwd=./.git> $0"
   if [[ ! -d ./.git ]]; then
-    print $gsh_usage 1>&2
+    print $usage 1>&2
     return 1
   fi
 
@@ -160,7 +165,7 @@ gcloneb() {
 
   usage="usage: $0 <Branch>"
   if (( ! $# )); then
-    print $gcloneb_usage 1>&2
+    print $usage 1>&2
     return 1
   fi
 
@@ -173,7 +178,7 @@ gdeleteb() {
 
   usage="usage: $0 <Branch>"
   if (( ! $# )); then
-    print $gdeleteb_usage 1>&2
+    print $usage 1>&2
     return 1
   fi
 
