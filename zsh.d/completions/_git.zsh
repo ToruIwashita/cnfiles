@@ -89,6 +89,12 @@ _gud() {
   fi
 }
 
+_gsh() {
+  if [[ -d ./.git ]]; then
+    _arguments : '(:)-f[force push]:force push'
+  fi
+}
+
 _gdeleteb() {
   if [[ -d ./.git ]]; then
     _arguments : '(:)*:argument:__git-branches'
@@ -102,4 +108,5 @@ compdef _gab gab
 compdef _gd gd
 compdef _gsw gsw
 compdef _gud gud
+compdef _gsh gsh
 compdef _gdeleteb gdeleteb

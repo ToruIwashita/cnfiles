@@ -114,7 +114,7 @@ glls() {
 }
 
 gsh() {
-  local usage current_branch
+  local usage force current_branch answer arg
 
   usage=`cat <<EOF
 usage: $0 [-f 'force push']
@@ -126,38 +126,35 @@ EOF`
     return 1
   fi
 
-  current_branch=$(_git-ref-head)
-
-  print "push $current_branch branch"
-  git push origin $current_branch
-}
-
-gsh-force() {
-  local usage current_branch answer
-
-  usage="usage:<pwd=./.git> $0"
-  if [[ ! -d ./.git ]]; then
-    print $usage 1>&2
-    return 1
-  fi
-
-  current_branch=$(_git-ref-head)
-
-  print "push $current_branch branch"
-
-  while :; do
-    print -n "Force push (y/n)? "
-    read answer
-    case "$answer" in
-      [yY]) git push --force origin $current_branch
-            break
-            ;;
-      [nN]) break
-            ;;
-      *)    print -n 'Please enter y or n. '
-            ;;
+  while getopts :f arg; do
+    case ${arg} in
+      f) force=1 ;;
+      \?) print $usage; return 1 ;;
     esac
   done
+  shift $((OPTIND-1))
+
+  current_branch=$(_git-ref-head)
+
+  print "push $current_branch branch"
+
+  if (( $force )); then
+    while :; do
+      print -n "Force push (y/n)? "
+      read answer
+      case "$answer" in
+        [yY]) git push --force origin $current_branch
+              break
+              ;;
+        [nN]) break
+              ;;
+        *)    print -n 'Please enter y or n. '
+              ;;
+      esac
+    done
+  else
+    git push origin $current_branch
+  fi
 }
 
 gcloneb() {
