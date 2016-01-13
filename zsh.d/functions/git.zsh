@@ -1,8 +1,8 @@
 ## git関連関数
 gam() {
-  local gam_usage
+  local usage
 
-  gam_usage="usage: $0 <Files>"
+  usage="usage: $0 <Files>"
   if (( ! $# )); then
     print $gam_usage 1>&2
     return 1
@@ -12,9 +12,9 @@ gam() {
 }
 
 gau() {
-  local gau_usage
+  local usage
 
-  gau_usage="usage: $0 <Files>"
+  usage="usage: $0 <Files>"
   if (( ! $# )); then
     print $gau_usage 1>&2
     return 1
@@ -24,9 +24,9 @@ gau() {
 }
 
 gab() {
-  local gab_usage
+  local usage
 
-  gab_usage="usage: $0 <Files>"
+  usage="usage: $0 <Files>"
   if (( ! $# )); then
     print $gab_usage 1>&2
     return 1
@@ -36,9 +36,9 @@ gab() {
 }
 
 grh() {
-  local grh_usage
+  local usage
 
-  grh_usage="usage: $0 <Files>"
+  usage="usage: $0 <Files>"
   if (( ! $# )); then
     print $grh_usage 1>&2
     return 1
@@ -48,9 +48,9 @@ grh() {
 }
 
 gd() {
-  local gd_usage
+  local usage
 
-  gd_usage="usage: $0 <File>"
+  usage="usage: $0 <File>"
   if [[ $# -gt 1 ]]; then
     print $gd_usage 1>&2
     return 1
@@ -60,9 +60,9 @@ gd() {
 }
 
 gsw() {
-  local gsw_usage
+  local usage
 
-  gsw_usage="usage: $0 <Branch>"
+  usage="usage: $0 <Branch>"
   if [[ $# -ne 1 ]]; then
     print $gsw_usage 1>&2
     return 1
@@ -72,9 +72,9 @@ gsw() {
 }
 
 gud() {
-  local gud_usage
+  local usage
 
-  gud_usage="usage: $0 <Files>"
+  usage="usage: $0 <Files>"
   if (( ! $# )); then
     print $gud_usage 1>&2
     return 1
@@ -84,9 +84,9 @@ gud() {
 }
 
 gll() {
-  local gll_usage current_branch
+  local usage current_branch
 
-  gll_usage="usage:<pwd=./.git> $0"
+  usage="usage:<pwd=./.git> $0"
   if [[ ! -d ./.git ]]; then
     print $gll_usage 1>&2
     return 1
@@ -99,9 +99,9 @@ gll() {
 }
 
 glls() {
-  local glls_usage
+  local usage
 
-  glls_usage="usage:<pwd=./.git> $0"
+  usage="usage:<pwd=./.git> $0"
   if [[ ! -d ./.git ]]; then
     print $glls_usage 1>&2
     return 1
@@ -128,9 +128,9 @@ gsh() {
 }
 
 gsh-force() {
-  local gsh_usage current_branch answer
+  local usage current_branch answer
 
-  gsh_usage="usage:<pwd=./.git> $0"
+  usage="usage:<pwd=./.git> $0"
   if [[ ! -d ./.git ]]; then
     print $gsh_usage 1>&2
     return 1
@@ -156,9 +156,9 @@ gsh-force() {
 }
 
 gcloneb() {
-  local gcloneb_usage
+  local usage
 
-  gcloneb_usage="usage: $0 <Branch>"
+  usage="usage: $0 <Branch>"
   if (( ! $# )); then
     print $gcloneb_usage 1>&2
     return 1
@@ -169,9 +169,9 @@ gcloneb() {
 }
 
 gdeleteb() {
-  local gdeleteb_usage
+  local usage
 
-  gdeleteb_usage="usage: $0 <Branch>"
+  usage="usage: $0 <Branch>"
   if (( ! $# )); then
     print $gdeleteb_usage 1>&2
     return 1
