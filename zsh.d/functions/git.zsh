@@ -157,7 +157,7 @@ glls() {
 }
 
 gsh() {
-  local usage force current_branch answer arg
+  local usage force current_branch answer opt
 
   usage=`cat <<EOF
 usage: $0 [-f 'force push']
@@ -169,8 +169,8 @@ EOF`
     return 1
   fi
 
-  while getopts :f arg; do
-    case ${arg} in
+  while getopts :f opt; do
+    case ${opt} in
       f) force=1 ;;
       \?) print $usage; return 1 ;;
     esac

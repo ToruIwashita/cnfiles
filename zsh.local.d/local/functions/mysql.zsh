@@ -62,11 +62,11 @@ mqout() {
 }
 
 myfindg() {
-  local my_cmd cmd_res_field_list cmd_res_field_name table_name field_name tmp_line myfindg_usage arg
+  local my_cmd cmd_res_field_list cmd_res_field_name table_name field_name tmp_line myfindg_usage opt
 
   myfindg_usage="usage: $0 [-f 'Part of field info'] [-t 'Part of table name']"
-  while getopts :f:t: arg; do
-    case ${arg} in
+  while getopts :f:t: opt; do
+    case ${opt} in
       f) field_name=${OPTARG} ;;
       t) table_name=${OPTARG} ;;
       :|\?) print $myfindg_usage; return 1 ;;
@@ -159,11 +159,11 @@ mycnt() {
 }
 
 watch-myps() {
-  local arg full_opt g_opt
+  local opt full_opt g_opt
 
   watch_myps_usage="usage: $0 [-f(FULL PROCESSLIST)] [-g(\\G)]"
-  while getopts :fgh arg; do
-    case ${arg} in
+  while getopts :fgh opt; do
+    case ${opt} in
       f) full_opt='FULL' ;;
       g) g_opt='\G' ;;
       h|:|\?) print $watch_myps_usage; return 2 ;;
@@ -174,7 +174,7 @@ watch-myps() {
 }
 
 mf() {
-  local my_cmd priority_condition group_condition limit_condition order_condition select_fields table_name vertical_option where_condition mf_usage arg
+  local my_cmd priority_condition group_condition limit_condition order_condition select_fields table_name vertical_option where_condition mf_usage opt
 
   mf_usage=`cat <<EOF
 usage: $0 <-t 'Table name'>
@@ -187,8 +187,8 @@ usage: $0 <-t 'Table name'>
           [-w 'Where condition']
 EOF`
 
-  while getopts :c:g:l:o:s:t:vw: arg; do
-    case ${arg} in
+  while getopts :c:g:l:o:s:t:vw: opt; do
+    case ${opt} in
       c) priority_condition=' '${OPTARG} ;;
       g) group_condition=' GROUP BY '${OPTARG} ;;
       l) limit_condition=' LIMIT '${OPTARG} ;;
