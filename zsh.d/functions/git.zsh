@@ -3,6 +3,12 @@ gam() {
   local usage
 
   usage="usage: $0 <Files>"
+  if [[ ! -d ./.git ]]; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
   if (( ! $# )); then
     print $usage 1>&2
     return 1
@@ -15,6 +21,12 @@ gau() {
   local usage
 
   usage="usage: $0 <Files>"
+  if [[ ! -d ./.git ]]; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
   if (( ! $# )); then
     print $usage 1>&2
     return 1
@@ -27,6 +39,12 @@ gab() {
   local usage
 
   usage="usage: $0 <Files>"
+  if [[ ! -d ./.git ]]; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
   if (( ! $# )); then
     print $usage 1>&2
     return 1
@@ -39,6 +57,12 @@ grh() {
   local usage
 
   usage="usage: $0 <Files>"
+  if [[ ! -d ./.git ]]; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
   if (( ! $# )); then
     print $usage 1>&2
     return 1
@@ -51,6 +75,12 @@ gd() {
   local usage
 
   usage="usage: $0 <File>"
+  if [[ ! -d ./.git ]]; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
   if [[ $# -gt 1 ]]; then
     print $usage 1>&2
     return 1
@@ -63,6 +93,12 @@ gsw() {
   local usage
 
   usage="usage: $0 <Branch>"
+  if [[ ! -d ./.git ]]; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
   if [[ $# -ne 1 ]]; then
     print $usage 1>&2
     return 1
@@ -75,6 +111,12 @@ gud() {
   local usage
 
   usage="usage: $0 <Files>"
+  if [[ ! -d ./.git ]]; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
   if (( ! $# )); then
     print $usage 1>&2
     return 1
@@ -86,8 +128,9 @@ gud() {
 gll() {
   local usage current_branch
 
-  usage="usage:<pwd=./.git> $0"
+  usage="usage: $0"
   if [[ ! -d ./.git ]]; then
+    print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
   fi
@@ -161,6 +204,12 @@ gcloneb() {
   local usage
 
   usage="usage: $0 <Branch>"
+  if [[ ! -d ./.git ]]; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
   if (( ! $# )); then
     print $usage 1>&2
     return 1
@@ -174,6 +223,12 @@ gdeleteb() {
   local usage
 
   usage="usage: $0 <Branch>"
+  if [[ ! -d ./.git ]]; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
   if (( ! $# )); then
     print $usage 1>&2
     return 1
