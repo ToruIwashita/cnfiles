@@ -3,7 +3,7 @@ gam() {
   local usage
 
   usage="usage: $0 <Files>"
-  if [[ ! -d ./.git ]]; then
+  if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -21,7 +21,7 @@ gau() {
   local usage
 
   usage="usage: $0 <Files>"
-  if [[ ! -d ./.git ]]; then
+  if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -39,7 +39,7 @@ gab() {
   local usage
 
   usage="usage: $0 <Files>"
-  if [[ ! -d ./.git ]]; then
+  if !  $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -57,7 +57,7 @@ grh() {
   local usage
 
   usage="usage: $0 <Files>"
-  if [[ ! -d ./.git ]]; then
+  if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -75,7 +75,7 @@ gd() {
   local usage
 
   usage="usage: $0 <File>"
-  if [[ ! -d ./.git ]]; then
+  if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -93,7 +93,7 @@ gsw() {
   local usage
 
   usage="usage: $0 <Branch>"
-  if [[ ! -d ./.git ]]; then
+  if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -111,7 +111,7 @@ gud() {
   local usage
 
   usage="usage: $0 <Files>"
-  if [[ ! -d ./.git ]]; then
+  if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -129,7 +129,7 @@ gll() {
   local usage current_branch
 
   usage="usage: $0"
-  if [[ ! -d ./.git ]]; then
+  if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -145,7 +145,7 @@ glls() {
   local usage
 
   usage="usage: $0"
-  if [[ ! -d ./.git ]]; then
+  if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -163,7 +163,7 @@ gsh() {
 usage: $0 [-f 'force push']
 EOF`
 
-  if [[ ! -d ./.git ]]; then
+  if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -204,7 +204,7 @@ gcloneb() {
   local usage
 
   usage="usage: $0 <Branch>"
-  if [[ ! -d ./.git ]]; then
+  if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -223,7 +223,7 @@ gdeleteb() {
   local usage
 
   usage="usage: $0 <Branch>"
-  if [[ ! -d ./.git ]]; then
+  if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1

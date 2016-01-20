@@ -38,7 +38,7 @@ __git-branches() {
 }
 
 _gam() {
-  if [[ -d ./.git ]]; then
+  if $(git rev-parse 2>/dev/null); then
     _arguments : '(-)*:argument:__git-modified-files'
   else
     _arguments : '(-)*:argument:_files'
@@ -46,7 +46,7 @@ _gam() {
 }
 
 _gau() {
-  if [[ -d ./.git ]]; then
+  if $(git rev-parse 2>/dev/null); then
     _arguments : '(-)*:argument:__git-untracked-files'
   else
     _arguments : '(-)*:argument:_files'
@@ -54,7 +54,7 @@ _gau() {
 }
 
 _grh() {
-  if [[ -d ./.git ]]; then
+  if $(git rev-parse 2>/dev/null); then
     _arguments : '(-)*:argument:__git-staged-files'
   else
     _arguments : '(-)*:argument:_files'
@@ -62,7 +62,7 @@ _grh() {
 }
 
 _gab() {
-  if [[ -d ./.git ]]; then
+  if $(git rev-parse 2>/dev/null); then
     _arguments : '(-)*:argument:__git-both-modified-files'
   else
     _arguments : '(-)*:argument:_files'
@@ -70,7 +70,7 @@ _gab() {
 }
 
 _gd() {
-  if [[ -d ./.git ]]; then
+  if $(git rev-parse 2>/dev/null); then
     _arguments : '(-)*:argument:__git-modified-files'
   else
     _arguments : '(-)*:argument:_files'
@@ -78,25 +78,25 @@ _gd() {
 }
 
 _gsw() {
-  if [[ -d ./.git ]]; then
+  if $(git rev-parse 2>/dev/null); then
     _arguments : '(:)*:argument:__git-branches'
   fi
 }
 
 _gud() {
-  if [[ -d ./.git ]]; then
+  if $(git rev-parse 2>/dev/null); then
     _arguments : '(-)*:argument:__git-modified-files'
   fi
 }
 
 _gsh() {
-  if [[ -d ./.git ]]; then
+  if $(git rev-parse 2>/dev/null); then
     _arguments : '(:)-f[force push]:force push'
   fi
 }
 
 _gdeleteb() {
-  if [[ -d ./.git ]]; then
+  if $(git rev-parse 2>/dev/null); then
     _arguments : '(:)*:argument:__git-branches'
   fi
 }
