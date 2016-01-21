@@ -1,5 +1,5 @@
-## cat-current
-_cat-current() {
+## immediate-cat
+_immediate-cat() {
   local cmd
   local -a args
   args=("${(z)BUFFER}")
@@ -12,4 +12,4 @@ _cat-current() {
   fi
 }
 
-zle -N cat-current _cat-current
+zle -N immediate-cat _immediate-cat

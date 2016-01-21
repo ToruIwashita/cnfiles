@@ -1,5 +1,5 @@
-## ls-current
-_ls-currnet() {
+## immediate-ls
+_immediate-ls() {
   local cmd
   local -a args
   args=("${(z)BUFFER}")
@@ -9,4 +9,4 @@ _ls-currnet() {
   print -s $cmd && eval $cmd
 }
 
-zle -N ls-current _ls-currnet
+zle -N immediate-ls _immediate-ls

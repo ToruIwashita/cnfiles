@@ -72,8 +72,8 @@ bindkey -v '^sk' peco-cd-recent-dir                         # Ctr+s,kで最近�
 bindkey -v '^sl' peco-file-find-and-start-editor            # Ctr+s,lでファイル検索してstart-editor
 bindkey -v '^so' peco-cd-dir                                # Ctr+s,oでディレクトリを絞り込んで移動
 bindkey -v '^ss' peco-silver-search-and-start-editor        # Ctr+s,sでファイル内文字列検索してstart-editor
-bindkey -v '^s^i' ls-current                                # Ctr+s,Ctr+iでls
-bindkey -v '^s^j' cat-current                               # Ctr+s,Ctr+jでBUFFERをcat
+bindkey -v '^s^i' immediate-ls                              # Ctr+s,Ctr+iでls
+bindkey -v '^s^j' immediate-cat                             # Ctr+s,Ctr+jでBUFFERをcat
 bindkey -v '^s^k' menu-complete-recent-dirs                 # Ctr+s,Ctr+kで最近移動したディレクトリへ移動
 bindkey -v '^s^l' edit-command-line                         # Ctr+s,Ctr+lでコマンドラインエディタ編集
 bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctr+oでバッファ残しリーフディレクトリ補完
