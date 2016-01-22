@@ -6,14 +6,14 @@ set -e
 ruby -v
 printf "GEM_HOME: $GEM_HOME\n"
 
-gem install bundle 
+gem install bundler
 gem install pry 
 gem install pry-remote 
 gem install rubocop
 gem install rspec
 gem install awesome_print
 
-gem update bundle 
+gem update bundler
 gem update pry
 gem update pry-remote 
 gem update rubocop
