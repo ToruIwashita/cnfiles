@@ -63,7 +63,7 @@ alias -g TT='>! ~/works/tmp.txt'
 
 ## for Mac(GNU系のコマンドはシンボリックリンクを貼り直すことを推奨するので以下コメントアウト)
 ## bindkey
-#bindkey -v '^sp' pbcopy-current # Ctr+s,pでBUFFERをcatしてpbcopy
+#bindkey -v '^sc' pbcopy-current # Ctr+s,pでBUFFERをcatしてpbcopy
 ## alias
 #alias ls="gls -F --color"
 #alias find="gfind"
