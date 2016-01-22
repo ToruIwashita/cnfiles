@@ -77,6 +77,7 @@ bindkey -v '^s^j' immediate-cat                             # Ctr+s,Ctr+jでBUFF
 bindkey -v '^s^k' menu-complete-recent-dirs                 # Ctr+s,Ctr+kで最近移動したディレクトリへ移動
 bindkey -v '^s^l' edit-command-line                         # Ctr+s,Ctr+lでコマンドラインエディタ編集
 bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctr+oでバッファ残しリーフディレクトリ補完
+bindkey -v '^s^p' copy-prev-shell-word                      # Ctr+s,Ctr+pで1つ前の文字列をコピペ(空欄区切りで文字列判定)
 bindkey -v '^s^s' vi-find-next-char                         # Ctr+s,Ctr+sでviのfind-char
 bindkey -v '^s^]' vi-backward-word                          # Ctr+s,Ctr+]で前の単語の先頭に移動
 bindkey -v '^s^@' kill-line                                 # Ctr+s,Ctr+@でカーソル行以降削除
