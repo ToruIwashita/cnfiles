@@ -27,6 +27,4 @@ peco-kill-ps() {
       esac
     done
   done
-
-  return 0
 }
