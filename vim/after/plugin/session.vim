@@ -50,7 +50,7 @@ fun! s:_git_branches(arg_lead, cmd_line, cursor_pos)
     return []
   endif
 
-  return filter(branches, 'v:val =~ "^'. fnameescape(a:arg_lead) . '"')
+  return filter(branches, 'v:val =~ "^'.fnameescape(a:arg_lead).'"')
 endf
 
 fun! s:git_switch(...)
