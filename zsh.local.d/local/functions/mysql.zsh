@@ -174,7 +174,7 @@ watch-myps() {
 }
 
 mf() {
-  local my_cmd priority_condition group_condition limit_condition order_condition select_fields table_name vertical_option where_condition mf_usage opt
+  local my_cmd priority_condition group_condition limit_condition order_condition selected_field_list table_name vertical_option where_condition mf_usage opt
 
   mf_usage=`cat <<EOF
 usage: $0 <-t 'Table name'>
@@ -193,7 +193,7 @@ EOF`
       g) group_condition=' GROUP BY '${OPTARG} ;;
       l) limit_condition=' LIMIT '${OPTARG} ;;
       o) order_condition=' ORDER BY '${OPTARG} ;;
-      s) select_fields=' '${OPTARG} ;;
+      s) selected_field_list=' '${OPTARG} ;;
       t) table_name=' '${OPTARG} ;;
       v) vertical_option='\G' ;;
       w) where_condition=' WHERE '${OPTARG} ;;
@@ -206,12 +206,12 @@ EOF`
     return 1
   fi
 
-  [[ ${#select_fields} -eq 0 ]] && select_fields=' *'
+  [[ ${#selected_field_list} -eq 0 ]] && selected_field_list=' *'
 
   if [[ ${#priority_condition} -eq 0 ]]; then
-    my_cmd="SELECT${select_fields} FROM${table_name}${where_condition}${group_condition}${order_condition}${limit_condition}${vertical_option}"
+    my_cmd="SELECT${selected_field_list} FROM${table_name}${where_condition}${group_condition}${order_condition}${limit_condition}${vertical_option}"
   else
-    my_cmd="SELECT${select_fields} FROM${table_name}${priority_condition}"
+    my_cmd="SELECT${selected_field_list} FROM${table_name}${priority_condition}"
   fi
 
   print "> $my_cmd;"
