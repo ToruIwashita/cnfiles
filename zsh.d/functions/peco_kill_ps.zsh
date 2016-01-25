@@ -1,13 +1,20 @@
 ## peco-kill-ps
 peco-kill-ps() {
-  local pid answer
-  local -a pids
+  local process_list_header process pid answer 
+  local -a processes pids
 
-  pids=(${(f)"$(ps -ef | peco | awk '{ print $2 }')"})
+  process_list_header=$(ps -ef | head -1)
+  processes=(${(f)"$(ps -ef | peco)"})
 
-  for pid in $pids; do
+  for process in $processes; do
+    pid=$(echo $process | awk '{ print $2 }')
+
+    print "\n$process_list_header" 
+    print "$process\n"
+
     while :; do
-      print -n "Kill process $pid (y/n)? "
+      print -n "Kill $pid process (y/n)? "
+
       read answer
       case "$answer" in
         [yY]) kill $pid
