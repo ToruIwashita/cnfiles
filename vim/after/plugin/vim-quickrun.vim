@@ -14,7 +14,7 @@ let g:quickrun_config = {
 " rspecを実行するための設定定義
 let s:rspec_quickrun_config = {
   \ 'command': 'rspec',
-  \ 'outputter': 'buffered:target=buffer',
+  \ 'outputter': 'buffered:target=buffer'
 \ }
 
 let g:quickrun_config['rspec/normal'] = extend(copy(s:rspec_quickrun_config), {
@@ -27,16 +27,16 @@ let g:quickrun_config['rspec/bundle'] = extend(copy(s:rspec_quickrun_config), {
   \ 'exec': 'bundle exec %c %s%o --color --tty'
 \ })
 
-let g:quickrun_config['rspec/spring'] = extend(copy(s:rspec_quickrun_config), {
-  \ 'type': 'rspec/spring',
-  \ 'exec': 'bundle exec spring rspec %s%o --color --tty'
+let g:quickrun_config['rspec/bin'] = extend(copy(s:rspec_quickrun_config), {
+  \ 'type': 'rspec/bin',
+  \ 'exec': 'bundle exec ./bin/%c %s%o --color --tty'
 \ })
 
 " :QuickRunで実行されるrpsecコマンドを定義する
 " <leader>r,<leader>raをタイプした時に<ESC>:QuickRun [-cmdopt  '-l (カーソル行)']を実行するキーマップを定義する
-function! RSpecQuickrun()
-  if filereadable('./bin/spring')
-    let b:quickrun_config = {'type': 'rspec/spring'}
+function! RspecQuickrun()
+  if filereadable('./bin/rspec')
+    let b:quickrun_config = {'type': 'rspec/bin'}
   else
     let b:quickrun_config = {'type': 'rspec/bundle'}
   endif
@@ -46,19 +46,24 @@ function! RSpecQuickrun()
 endfunction
 
 " 設定変更用の関数
-function! s:set_rspec_quickrun(arg)
-  if match(a:arg, 'spring') != -1
-    let b:quickrun_config = {'type': 'rspec/spring'}
+function! s:switch_rspec_quickrun(arg)
+  if match(a:arg, 'bin') != -1
+    let b:quickrun_config = {'type': 'rspec/bin'}
   elseif match(a:arg, 'bundle') != -1
     let b:quickrun_config = {'type': 'rspec/bundle'}
-  else
+  elseif
     let b:quickrun_config = {'type': 'rspec/normal'}
   endif
   echo a:arg
 endfunction
 
+" 設定変更可能なrspecの種類補完
+fun! s:_types_of_rspec(arg_lead, cmd_line, cursor_pos)
+  return filter(['normal', 'bundle', 'bin'], 'v:val =~ "^'.fnameescape(a:arg_lead).'"')
+endf
+
 " 設定変更の用インターフェース
-command! -nargs=1 SetRspecQuickrun call s:set_rspec_quickrun(<args>)
+command! -nargs=1 -complete=customlist,s:_types_of_rspec SwitchRspecQuickrun call s:switch_rspec_quickrun(<args>)
 " quickrunの中断用インターフェース
 command! StopQuickrun call quickrun#sweep_sessions()
 
@@ -66,7 +71,7 @@ command! StopQuickrun call quickrun#sweep_sessions()
 augroup Quickrun
   autocmd!
   autocmd FileType quickrun AnsiEsc
-  autocmd BufReadPost *_spec.rb call RSpecQuickrun()
+  autocmd BufReadPost *_spec.rb call RspecQuickrun()
 augroup END
 
 nnoremap <expr> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
