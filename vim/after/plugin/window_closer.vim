@@ -3,8 +3,8 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " 右のウィンドウを閉じる
-noremap <leader>l :<C-u>CloseRightWin<CR>
-noremap <leader>h :<C-u>CloseLeftWin<CR>
+noremap <silent> <leader>l :<C-u>CloseRightWin<CR>
+noremap <silent> <leader>h :<C-u>CloseLeftWin<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
