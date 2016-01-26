@@ -29,7 +29,7 @@ let g:quickrun_config['rspec/bundle'] = extend(copy(s:rspec_quickrun_config), {
 
 let g:quickrun_config['rspec/bin'] = extend(copy(s:rspec_quickrun_config), {
   \ 'type': 'rspec/bin',
-  \ 'exec': 'bundle exec ./bin/%c %s%o --color --tty'
+  \ 'exec': './bin/rspec %s%o --color --tty'
 \ })
 
 " :QuickRunで実行されるrpsecコマンドを定義する
@@ -51,9 +51,15 @@ function! s:switch_rspec_quickrun(arg)
     let b:quickrun_config = {'type': 'rspec/bin'}
   elseif match(a:arg, 'bundle') != -1
     let b:quickrun_config = {'type': 'rspec/bundle'}
-  elseif
+  elseif match(a:arg, 'normal') != -1
     let b:quickrun_config = {'type': 'rspec/normal'}
+  else
+    if exists('b:quickrun_config')
+      echo b:quickrun_config['type']
+      return
+    endif
   endif
+
   echo a:arg
 endfunction
 
@@ -63,7 +69,7 @@ fun! s:_types_of_rspec(arg_lead, cmd_line, cursor_pos)
 endf
 
 " 設定変更の用インターフェース
-command! -nargs=1 -complete=customlist,s:_types_of_rspec SwitchRspecQuickrun call s:switch_rspec_quickrun(<args>)
+command! -nargs=? -complete=customlist,s:_types_of_rspec SwitchRspecQuickrun call s:switch_rspec_quickrun(<q-args>)
 " quickrunの中断用インターフェース
 command! StopQuickrun call quickrun#sweep_sessions()
 
