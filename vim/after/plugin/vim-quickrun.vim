@@ -19,17 +19,17 @@ let s:rspec_quickrun_config = {
 
 let g:quickrun_config['rspec/normal'] = extend(copy(s:rspec_quickrun_config), {
   \ 'type': 'rspec/normal',
-  \ 'exec': '%c %s%o --color --tty'
+  \ 'exec': 'time %c %s%o --color --tty'
 \ })
 
 let g:quickrun_config['rspec/bundle'] = extend(copy(s:rspec_quickrun_config), {
   \ 'type': 'rspec/bundle',
-  \ 'exec': 'bundle exec %c %s%o --color --tty'
+  \ 'exec': 'time bundle exec %c %s%o --color --tty'
 \ })
 
 let g:quickrun_config['rspec/bin'] = extend(copy(s:rspec_quickrun_config), {
   \ 'type': 'rspec/bin',
-  \ 'exec': './bin/rspec %s%o --color --tty'
+  \ 'exec': 'time ./bin/rspec %s%o --color --tty'
 \ })
 
 " :QuickRunで実行されるrpsecコマンドを定義する
