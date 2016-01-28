@@ -214,11 +214,10 @@ vnoremap > >gv
 vnoremap <ESC> v_<ESC>
 
 "" cnoreabbrev
-cnorea tn :<C-u>tabnew
-cnorea ts :<C-u>tselect
-cnorea pt :<C-u>ptag
-cnorea ev :<C-u>source ~/.vimrc
 cnorea T :<C-u>tag
+cnorea Ts :<C-u>tselect
+cnorea Tn :<C-u>tabnew
+cnorea ev :<C-u>source ~/.vimrc
 
 "" autocmd
 " ファイルを開いたときに最後の変更点へ移動
