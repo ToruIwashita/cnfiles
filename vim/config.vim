@@ -86,10 +86,8 @@ noremap <C-a> zt
 " ウィンドウのmapに関わるデフォルトのmapを無効化
 noremap <C-w>P <NOP>
 noremap <C-w>q <NOP>
-noremap <C-w>w <NOP>
 noremap <C-w><C-w> <NOP>
 noremap <C-w>W <NOP>
-noremap <C-w><C-W> <NOP>
 " 次のウィンドウへ移動
 noremap <C-w>n <C-w>w
 noremap <C-w><C-n> <C-w>w
