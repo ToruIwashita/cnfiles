@@ -3,7 +3,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " タグジャンプ後のカーソル画面位置
-let g:tag_tnjump_after_jump = 'zt'
+let g:tag_tnjump_after_jump = 'zz'
 
 noremap <C-s><C-l> :<C-u>NewTjump<CR>
 noremap <C-s>l :<C-u>NewTag<CR>

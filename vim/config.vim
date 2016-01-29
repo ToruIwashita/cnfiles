@@ -140,11 +140,11 @@ noremap <C-t>T g<C-]>
 " 直前のタグに戻る
 noremap <C-t><C-t> <C-t>
 " 次のタグへ移動
-noremap <C-s>] :<C-u>tnext<CR>zt
-noremap <C-s><C-]> :<C-u>tnext<CR>zt
+noremap <C-s>] :<C-u>tnext<CR>zz
+noremap <C-s><C-]> :<C-u>tnext<CR>zz
 " 前のタグへ移動
-noremap <C-s>[ :<C-u>tprevious<CR>zt
-noremap <C-s><C-[> :<C-u>tprevious<CR>zt
+noremap <C-s>[ :<C-u>tprevious<CR>zz
+noremap <C-s><C-[> :<C-u>tprevious<CR>zz
 " preview,quickfixウィンドウクローズ
 noremap <silent> <C-w><C-w> :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
 " 全てのバッファをタブにする
@@ -223,7 +223,7 @@ cnorea ev :<C-u>source ~/.vimrc
 " ファイルを開いたときに最後の変更点へ移動
 augroup PreviousCursorLine
   autocmd!
-  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | exe 'normal! g`"zt' | endif
+  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | exe 'normal! g`"zz' | endif
 augroup END
 
 " ウィンドウ移動で外部でのファイル変更チェック
