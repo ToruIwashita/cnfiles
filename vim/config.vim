@@ -80,6 +80,8 @@ noremap <leader>x :<C-u>wa<CR>:<C-u>qa<CR>
 noremap <leader>f :<C-u>q<CR>
 " <ESC>
 noremap <C-j> <ESC>
+" カーソル行が画面の上端に来るようにスクロール
+noremap <C-a> zt
 " ウィンドウ関連
 " ウィンドウのmapに関わるデフォルトのmapを無効化
 noremap <C-w>P <NOP>
