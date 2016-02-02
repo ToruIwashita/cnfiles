@@ -39,41 +39,41 @@ __git-branches() {
 
 _gam() {
   if $(git rev-parse 2>/dev/null); then
-    _arguments : '(-)*:argument:__git-modified-files'
+    _arguments : '(:)*:argument:__git-modified-files'
   else
-    _arguments : '(-)*:argument:_files'
+    _arguments : '(:)*:argument:_files'
   fi
 }
 
 _gau() {
   if $(git rev-parse 2>/dev/null); then
-    _arguments : '(-)*:argument:__git-untracked-files'
+    _arguments : '(:)*:argument:__git-untracked-files'
   else
-    _arguments : '(-)*:argument:_files'
+    _arguments : '(:)*:argument:_files'
   fi
 }
 
 _grh() {
   if $(git rev-parse 2>/dev/null); then
-    _arguments : '(-)*:argument:__git-staged-files'
+    _arguments : '(:)*:argument:__git-staged-files'
   else
-    _arguments : '(-)*:argument:_files'
+    _arguments : '(:)*:argument:_files'
   fi
 }
 
 _gab() {
   if $(git rev-parse 2>/dev/null); then
-    _arguments : '(-)*:argument:__git-both-modified-files'
+    _arguments : '(:)*:argument:__git-both-modified-files'
   else
-    _arguments : '(-)*:argument:_files'
+    _arguments : '(:)*:argument:_files'
   fi
 }
 
 _gd() {
   if $(git rev-parse 2>/dev/null); then
-    _arguments : '(-)*:argument:__git-modified-files'
+    _arguments : '(:)*:argument:__git-modified-files'
   else
-    _arguments : '(-)*:argument:_files'
+    _arguments : '(:)*:argument:_files'
   fi
 }
 
@@ -85,7 +85,7 @@ _gsw() {
 
 _gud() {
   if $(git rev-parse 2>/dev/null); then
-    _arguments : '(-)*:argument:__git-modified-files'
+    _arguments : '(:)*:argument:__git-modified-files'
   fi
 }
 
