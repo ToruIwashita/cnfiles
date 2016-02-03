@@ -5,18 +5,16 @@ __my-show-tables() {
 
 _myfindg() {
   _arguments : \
-    '(:)-t[Table name]:Input a part of table name or table name:__my-show-tables' \
-    '(:)-f[Field info]:A part of field info'
+    -t'[Table name]:Input a part of table name or table name:__my-show-tables' \
+    -f'[Field info]:A part of field info'
 }
 
 _mf() {
-  _arguments : \
-    '(:)-t[Table name]:Input a part of table name or table name:__my-show-tables'
+  _arguments -t'[Table name]:Input a part of table name or table name:__my-show-tables'
 }
 
 _myst() {
-  _arguments : \
-    '(:)*:Input table name:__my-show-tables'
+  _arguments '(:)*: :__my-show-tables'
 }
 
 compdef _myfindg myfindg

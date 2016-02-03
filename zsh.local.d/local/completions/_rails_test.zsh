@@ -4,14 +4,13 @@ __word-of-current() {
 }
 
 _brspec() {
-  _arguments : \
-    '(:)-f[File path]:Input spec file path' \
-    '(:)-t[Tag]:Input spec tag word:__word-of-current'
+  _argumentsa \
+    -f'[File path]:Input spec file path' \
+    -t'[Tag]:Input spec tag word:__word-of-current'
 }
 
 _brspec-all() {
-  _arguments : \
-    '(:)-t[Tag]:Input spec tag word:__word-of-current'
+  _arguments -t'[Tag]:Input spec tag word:__word-of-current'
 }
 
 compdef _brspec brspec
