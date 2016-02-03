@@ -18,39 +18,11 @@ gam() {
 }
 
 gau() {
-  local usage
-
-  usage="usage: $0 <Files>"
-  if ! $(git rev-parse 2>/dev/null); then
-    print 'Not a git repository: .git'
-    print $usage 1>&2
-    return 1
-  fi
-
-  if (( ! $# )); then
-    print $usage 1>&2
-    return 1
-  fi
-
-  git add $*
+  _ga $*
 }
 
 gab() {
-  local usage
-
-  usage="usage: $0 <Files>"
-  if !  $(git rev-parse 2>/dev/null); then
-    print 'Not a git repository: .git'
-    print $usage 1>&2
-    return 1
-  fi
-
-  if (( ! $# )); then
-    print $usage 1>&2
-    return 1
-  fi
-
-  git add $*
+  _ga $*
 }
 
 grh() {
@@ -242,4 +214,22 @@ _git-ref-head() {
   local ref
   ref=$(git symbolic-ref HEAD --short 2>/dev/null) || return 1
   echo $ref
+}
+
+_ga() {
+  local usage
+
+  usage="usage: $0 <Files>"
+  if ! $(git rev-parse 2>/dev/null); then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  if (( ! $# )); then
+    print $usage 1>&2
+    return 1
+  fi
+
+  git add $*
 }

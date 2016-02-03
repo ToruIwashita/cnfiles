@@ -103,8 +103,8 @@ _gdeleteb() {
 
 compdef _gam gam
 compdef _gau gau
-compdef _grh grh
 compdef _gab gab
+compdef _grh grh
 compdef _gd gd
 compdef _gsw gsw
 compdef _gud gud
