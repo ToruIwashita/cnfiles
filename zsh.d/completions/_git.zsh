@@ -79,7 +79,7 @@ _gd() {
 
 _gsw() {
   if $(git rev-parse 2>/dev/null); then
-    _arguments '*: :__git-branches'
+    _arguments '(:)*: :__git-branches'
   fi
 }
 
@@ -97,7 +97,7 @@ _gsh() {
 
 _gdeleteb() {
   if $(git rev-parse 2>/dev/null); then
-    _arguments '*: :__git-branches'
+    _arguments '(:)*: :__git-branches'
   fi
 }
 
