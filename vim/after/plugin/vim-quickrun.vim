@@ -34,7 +34,7 @@ let g:quickrun_config['rspec/bin'] = extend(copy(s:rspec_quickrun_config), {
 
 " :QuickRunで実行されるrpsecコマンドを定義する
 " <leader>r,<leader>raをタイプした時に<ESC>:QuickRun [-cmdopt  '-l (カーソル行)']を実行するキーマップを定義する
-function! RspecQuickrun()
+function! s:rspec_quickrun()
   if filereadable('./bin/rspec')
     let b:quickrun_config = {'type': 'rspec/bin'}
   else
@@ -77,7 +77,7 @@ command! StopQuickrun call quickrun#sweep_sessions()
 augroup Quickrun
   autocmd!
   autocmd FileType quickrun AnsiEsc
-  autocmd BufReadPost *_spec.rb call RspecQuickrun()
+  autocmd BufReadPost *_spec.rb call s:rspec_quickrun()
 augroup END
 
 nnoremap <expr> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
