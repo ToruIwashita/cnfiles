@@ -174,37 +174,100 @@ watch-myps() {
 }
 
 mf() {
-  local my_cmd priority_condition group_condition limit_condition order_condition selected_field_list table_name vertical_option where_condition usage opt
+  local -a params
+  local my_cmd priority_condition group_condition limit_condition order_condition selected_field_list vertical_option where_condition table_name self_cmd help usage
 
+  self_cmd=$(echo "$0" | sed -e 's,.*/,,')
+  help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $0 <-t 'Table name'>
-          [-c 'Highest priority condition']
-          [-g 'Group condition']
-          [-l 'Limit value']
-          [-o 'Order condition']
-          [-s 'Select fields']
-          [-v 'Vertical display']
-          [-w 'Where condition']
+usage: $self_cmd <table name>
+          [-c --primary-condition <highest priority condition>]
+          [-g --group-by <group condition>]
+          [-l --limit <limit value>]
+          [-o --order-by <order condition>]
+          [-s --select <select fields>]
+          [-v --vertical 'vertical display']
+          [-w --where <where condition>]
 EOF`
 
-  while getopts :c:g:l:o:s:t:vw: opt; do
-    case ${opt} in
-      c) priority_condition=' '${OPTARG} ;;
-      g) group_condition=' GROUP BY '${OPTARG} ;;
-      l) limit_condition=' LIMIT '${OPTARG} ;;
-      o) order_condition=' ORDER BY '${OPTARG} ;;
-      s) selected_field_list=' '${OPTARG} ;;
-      t) table_name=' '${OPTARG} ;;
-      v) vertical_option='\G' ;;
-      w) where_condition=' WHERE '${OPTARG} ;;
-      :|\?) print $usage; return 1 ;;
+  while (( $# > 0 )); do
+    case "$1" in
+      --primary-condition | -c)
+        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        priority_condition=" $2"
+        shift 2
+        ;;
+      --group-by | -g)
+        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        group_condition=" GROUP BY $2"
+        shift 2
+        ;;
+      --limit | -l)
+        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        limit_condition=" LIMIT $2"
+        shift 2
+        ;;
+      --order-by | -o)
+        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        order_condition=" ORDER BY $2"
+        shift 2
+        ;;
+      --select | -s)
+        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        selected_field_list=" $2"
+        shift 2
+        ;;
+      --vertical | -v)
+        vertical_option='\G'
+        shift 1
+        ;;
+      --where | -w)
+        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        where_condition=" WHERE $2"
+        shift 2
+        ;;
+      --help | -h)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift;
+        params+=("$@")
+        break ;;
+      -*)
+        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        params+=("$1")
+        shift 1
+        ;;
     esac
   done
 
-  if [[ ${#table_name} -eq 0 ]]; then
+  if [[ ${#params} -eq 0 ]]; then
     print $usage
     return 1
   fi
+  table_name=" ${params[1]}"
 
   [[ ${#selected_field_list} -eq 0 ]] && selected_field_list=' *'
 

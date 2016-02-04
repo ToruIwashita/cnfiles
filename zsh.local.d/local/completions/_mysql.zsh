@@ -4,13 +4,21 @@ __my-show-tables() {
 }
 
 _myfindg() {
-  _arguments : \
+  _arguments \
     -t'[Table name]:Input a part of table name or table name:__my-show-tables' \
     -f'[Field info]:A part of field info'
 }
 
 _mf() {
-  _arguments -t'[Table name]:Input a part of table name or table name:__my-show-tables'
+  _arguments \
+    '(-c --primary-condition)'{-c,--primary-condition}'[Highest priority condition]' \
+    '(-g --group-by)'{-g,--group-by}'[Group condition]' \
+    '(-l --limit)'{-l,--limit}'[Limit value]' \
+    '(-o --order-by)'{-o,--order-by}'[Order condition]' \
+    '(-s --select)'{-s,--select}'[Select fields]' \
+    '(-v --vertical)'{-v,--vertical}'[Vertical display]' \
+    '(-w --where)'{-w,--where}'[Where condition]' \
+    '(:)*: :__my-show-tables'
 }
 
 _myst() {
