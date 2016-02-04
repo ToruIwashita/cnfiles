@@ -2,7 +2,7 @@
 gam() {
   local usage
 
-  usage="usage: $0 <Files>"
+  usage="usage: $0 <files>"
   if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
@@ -28,7 +28,7 @@ gab() {
 grh() {
   local usage
 
-  usage="usage: $0 <Files>"
+  usage="usage: $0 <files>"
   if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
@@ -46,7 +46,7 @@ grh() {
 gd() {
   local usage
 
-  usage="usage: $0 <File>"
+  usage="usage: $0 <file>"
   if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
@@ -64,7 +64,7 @@ gd() {
 gsw() {
   local usage
 
-  usage="usage: $0 <Branch>"
+  usage="usage: $0 <branch>"
   if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
@@ -82,7 +82,7 @@ gsw() {
 gud() {
   local usage
 
-  usage="usage: $0 <Files>"
+  usage="usage: $0 <files>"
   if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
@@ -175,7 +175,7 @@ EOF`
 gcloneb() {
   local usage
 
-  usage="usage: $0 <Branch>"
+  usage="usage: $0 <branch>"
   if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
@@ -194,7 +194,7 @@ gcloneb() {
 gdeleteb() {
   local usage
 
-  usage="usage: $0 <Branch>"
+  usage="usage: $0 <branch>"
   if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
@@ -219,7 +219,7 @@ __git-ref-head() {
 __ga() {
   local usage
 
-  usage="usage: $0 <Files>"
+  usage="usage: $0 <files>"
   if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2

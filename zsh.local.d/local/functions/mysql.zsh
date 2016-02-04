@@ -62,14 +62,14 @@ mqout() {
 }
 
 myfindg() {
-  local my_cmd cmd_res_field_list cmd_res_field_name table_name field_name tmp_line myfindg_usage opt
+  local my_cmd cmd_res_field_list cmd_res_field_name table_name field_name tmp_line usage opt
 
-  myfindg_usage="usage: $0 [-f 'Part of field info'] [-t 'Part of table name']"
+  usage="usage: $0 [-f 'Part of field info'] [-t 'Part of table name']"
   while getopts :f:t: opt; do
     case ${opt} in
       f) field_name=${OPTARG} ;;
       t) table_name=${OPTARG} ;;
-      :|\?) print $myfindg_usage; return 1 ;;
+      :|\?) print $usage; return 1 ;;
     esac
   done
 
@@ -94,7 +94,7 @@ myfindg() {
       fi
     done
   else
-    print $myfindg_usage
+    print $usage
   fi
 }
 
@@ -159,14 +159,14 @@ mycnt() {
 }
 
 watch-myps() {
-  local opt full_opt g_opt
+  local opt full_opt g_opt usage
 
-  watch_myps_usage="usage: $0 [-f(FULL PROCESSLIST)] [-g(\\G)]"
+  usage="usage: $0 [-f(FULL PROCESSLIST)] [-g(\\G)]"
   while getopts :fgh opt; do
     case ${opt} in
       f) full_opt='FULL' ;;
       g) g_opt='\G' ;;
-      h|:|\?) print $watch_myps_usage; return 2 ;;
+      h|:|\?) print $usage; return 2 ;;
     esac
   done
 
@@ -174,9 +174,9 @@ watch-myps() {
 }
 
 mf() {
-  local my_cmd priority_condition group_condition limit_condition order_condition selected_field_list table_name vertical_option where_condition mf_usage opt
+  local my_cmd priority_condition group_condition limit_condition order_condition selected_field_list table_name vertical_option where_condition usage opt
 
-  mf_usage=`cat <<EOF
+  usage=`cat <<EOF
 usage: $0 <-t 'Table name'>
           [-c 'Highest priority condition']
           [-g 'Group condition']
@@ -197,12 +197,12 @@ EOF`
       t) table_name=' '${OPTARG} ;;
       v) vertical_option='\G' ;;
       w) where_condition=' WHERE '${OPTARG} ;;
-      :|\?) print $mf_usage; return 1 ;;
+      :|\?) print $usage; return 1 ;;
     esac
   done
 
   if [[ ${#table_name} -eq 0 ]]; then
-    print $mf_usage
+    print $usage
     return 1
   fi
 

@@ -9,7 +9,7 @@ brspec() {
   local opt cmd file_path tag_option usage
 
   usage=`cat <<EOF
-usage: $0 <-f 'spec file path'>
+usage: $0 <-f <spec file>>
               [-t 'tag of test target']
 EOF`
 
