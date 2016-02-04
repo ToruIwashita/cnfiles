@@ -1,5 +1,5 @@
 ## PGSQL
-_pg-check-argv() {
+__pg-check-argv() {
   if (( ! $# )); then
     print "lack of arguments." 2>&1
     return 1
@@ -17,7 +17,7 @@ pq() {
   integer arg_num
   local pg_cmd
 
-  _pg-check-argv $argv
+  __pg-check-argv $argv
   if [[ $? -eq 1 ]]; then
     return 1
   fi
@@ -41,7 +41,7 @@ pqout() {
   integer arg_num
   local pg_cmd
 
-  _pg-check-argv $argv
+  __pg-check-argv $argv
   if [[ $? -eq 1 ]]; then
     return 1
   fi
@@ -65,7 +65,7 @@ pqexp() {
   integer arg_num
   local pg_cmd
 
-  _pg-check-argv $argv
+  __pg-check-argv $argv
   if [[ $? -eq 1 ]]; then
     return 1
   fi

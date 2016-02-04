@@ -18,11 +18,11 @@ gam() {
 }
 
 gau() {
-  _ga $*
+  __ga $*
 }
 
 gab() {
-  _ga $*
+  __ga $*
 }
 
 grh() {
@@ -107,7 +107,7 @@ gll() {
     return 1
   fi
 
-  current_branch=$(_git-ref-head)
+  current_branch=$(__git-ref-head)
 
   print "pull $current_branch branch"
   git pull origin $current_branch
@@ -149,7 +149,7 @@ EOF`
   done
   shift $((OPTIND-1))
 
-  current_branch=$(_git-ref-head)
+  current_branch=$(__git-ref-head)
 
   print "push $current_branch branch"
 
@@ -210,13 +210,13 @@ gdeleteb() {
   git branch -d $1 && git push --delete origin $1
 }
 
-_git-ref-head() {
+__git-ref-head() {
   local ref
   ref=$(git symbolic-ref HEAD --short 2>/dev/null) || return 1
   echo $ref
 }
 
-_ga() {
+__ga() {
   local usage
 
   usage="usage: $0 <Files>"

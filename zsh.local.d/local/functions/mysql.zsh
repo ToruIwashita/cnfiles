@@ -1,5 +1,5 @@
 ## MYSQL
-_my-check-argv() {
+__my-check-argv() {
   if (( ! $# )); then
     print "lack of arguments." 2>&1
     return 1
@@ -17,7 +17,7 @@ mq() {
   integer arg_num
   local my_cmd
 
-  _my-check-argv $argv
+  __my-check-argv $argv
   if [[ $? -eq 1 ]]; then
     return 1
   fi
@@ -41,7 +41,7 @@ mqout() {
   integer arg_num
   local my_cmd
 
-  _my-check-argv $argv
+  __my-check-argv $argv
   if [[ $? -eq 1 ]]; then
     return 1
   fi
@@ -102,7 +102,7 @@ mqexp() {
   integer arg_num
   local my_cmd
 
-  _my-check-argv $argv
+  __my-check-argv $argv
   if [[ $? -eq 1 ]]; then
     return 1
   fi
