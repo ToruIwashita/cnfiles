@@ -18,7 +18,7 @@ _mf() {
     '(-s --select)'{-s,--select}'[Select fields]' \
     '(-v --vertical)'{-v,--vertical}'[Vertical display]' \
     '(-w --where)'{-w,--where}'[Where condition]' \
-    '(:)*: :__my-show-tables'
+    '*: :__my-show-tables'
 }
 
 _myst() {
