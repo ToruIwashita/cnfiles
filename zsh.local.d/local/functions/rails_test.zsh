@@ -12,10 +12,10 @@ brspec() {
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [spec file]
-          [-h --help]
-          [-m --modified-file <spec file>]
-          [-t --tag <tag name>]
-          [-u --untracked-file <spec file>]
+              [-h --help]
+              [-m --modified-file <spec file>]
+              [-t --tag <tag name>]
+              [-u --untracked-file <spec file>]
 EOF`
 
   while (( $# > 0 )); do
