@@ -271,7 +271,7 @@ EOF`
   fi
   table_name=" ${params[1]}"
 
-  [[ ${#selected_field_list} -eq 0 ]] && selected_field_list=' *'
+  [[ -z $selected_field_list ]] && selected_field_list=' *'
 
   if [[ ${#priority_condition} -eq 0 ]]; then
     my_cmd="SELECT${selected_field_list} FROM${table_name}${where_condition}${group_condition}${order_condition}${limit_condition}${vertical_option}"
