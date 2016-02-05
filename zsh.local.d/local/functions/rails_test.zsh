@@ -2,27 +2,68 @@
 init-test() {
   RAILS_ENV=test bundle exec rake db:create
   RAILS_ENV=test bundle exec rake db:migrate
-  RAILS_ENV=test bundle exec rake db:seed
 }
 
 brspec() {
-  local opt cmd file_path tag_option usage
+  local -a args file_paths
+  local self_cmd help usage tag_option
 
+  self_cmd=$(echo "$0" | sed -e 's,.*/,,')
+  help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $0 <-f <spec file>>
-              [-t 'tag of test target']
+usage: $self_cmd [spec file]
+          [-h --help]
+          [-m --modified-file <spec file>]
+          [-t --tag <tag name>]
+          [-u --untracked-file <spec file>]
 EOF`
 
-  while getopts :f:t: opt; do
-    case ${opt} in
-      f) file_path="$OPTARG" ;;
-      t) tag_option="--tag $OPTARG" ;;
-      :|\?) print $usage; return 1 ;;
+  while (( $# > 0 )); do
+    case "$1" in
+      --modified-file | -m)
+        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        file_paths+=("$2")
+        shift 2
+        ;;
+      --untracked-file | -u)
+        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        file_paths+=("$2")
+        shift 2
+        ;;
+      --tag | -t)
+        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        tag_option="$2"
+        shift 2
+        ;;
+      --help | -h)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift;
+        file_paths+=("$@")
+        break ;;
+      -*)
+        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        file_paths+=("$1")
+        shift 1
+        ;;
     esac
   done
-  shift $((OPTIND - 1))
 
-  if [[ ${#file_path} -eq 0 ]]; then
+  if [[ ${#file_paths} -eq 0 ]]; then
     print $usage
     return 1
   fi
@@ -34,36 +75,5 @@ EOF`
   fi
 
   print $cmd 
-  eval "$cmd $tag_option $file_path"
-}
-
-brspec-all() {
-  local opt cmd tag_option usage
-
-  usage=`cat <<EOF
-usage: $0 [-t 'tag of test target']
-EOF`
-
-  while getopts :t: opt; do
-    case ${opt} in
-      t) tag_option="--tag $OPTARG" ;;
-      :|\?) print $usage; return 1 ;;
-    esac
-  done
-  shift $((OPTIND - 1))
-
-  if [[ $# -eq 0 ]]; then
-    print $usage
-    return 1
-  fi
-
-
-  if [[ -f './bin/rspec'  ]]; then
-    cmd='./bin/rspec'
-  else
-    cmd='bundle exec rspec'
-  fi
-
-  print $cmd 
-  eval "$cmd $tag_option $*"
+  eval "$cmd $tag_option $file_paths"
 }
