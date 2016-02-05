@@ -183,6 +183,7 @@ mf() {
 usage: $self_cmd <table name>
           [-c --primary-condition <highest priority condition>]
           [-g --group-by <group condition>]
+          [-h --help]
           [-l --limit <limit value>]
           [-o --order-by <order condition>]
           [-s --select <select fields>]
