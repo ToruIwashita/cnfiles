@@ -64,7 +64,7 @@ EOF`
     esac
   done
 
-  if [[ ${#file_paths} -eq 0 ]]; then
+  if [[ -z $file_paths ]]; then
     print $usage
     return 1
   fi

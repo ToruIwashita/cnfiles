@@ -265,7 +265,7 @@ EOF`
     esac
   done
 
-  if [[ ${#params} -eq 0 ]]; then
+  if [[ -z $params ]]; then
     print $usage
     return 1
   fi
