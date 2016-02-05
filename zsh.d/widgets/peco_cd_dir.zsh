@@ -1,17 +1,17 @@
 ## peco-cd-dir
 _peco-cd-dir() {
-  local -aU dir_path
+  local -aU dir_paths
 
   [[ "$BUFFER" != '' ]] && print -s "$BUFFER"
 
-  dir_path=(${(f)"$(find -type d -name "*$BUFFER*" 2>/dev/null | peco --select-1 2>/dev/null)"})
-  if [[ -z $dir_path ]]; then
+  dir_paths=(${(f)"$(find -type d -name "*$BUFFER*" 2>/dev/null | peco --select-1 2>/dev/null)"})
+  if [[ -z $dir_paths ]]; then
     zle beginning-of-line
     return 0
   fi
 
   zle kill-whole-line
-  BUFFER="cd $dir_path"
+  BUFFER="cd $dir_paths"
   zle accept-line
 }
 zle -N peco-cd-dir _peco-cd-dir
