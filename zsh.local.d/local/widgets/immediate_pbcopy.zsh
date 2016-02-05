@@ -1,5 +1,5 @@
-## pbcopy-current
-_pbcopy-current() {
+## immediate-pbcopy
+_immediate-pbcopy() {
   local cmd
   local -a args
   args=("${(z)BUFFER}")
@@ -12,4 +12,4 @@ _pbcopy-current() {
   fi
 }
 
-zle -N pbcopy-current _pbcopy-current
+zle -N immediate-pbcopy _immediate-pbcopy
