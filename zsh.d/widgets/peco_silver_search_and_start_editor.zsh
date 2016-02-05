@@ -2,7 +2,7 @@
 _peco-silver-search-and-start-editor() {
   local context parttern specified_line
   local -a args peco_resulting_line
-  local -aU file_path
+  local -aU file_paths
 
   [[ "$BUFFER" != '' ]] && print -s "$BUFFER"
 
@@ -24,13 +24,13 @@ _peco-silver-search-and-start-editor() {
 
   if [[ $#peco_resulting_line -eq 1 ]]; then
     specified_line=+${${peco_resulting_line#*:}%%[:-]*}
-    file_path=${peco_resulting_line%%:*}
+    file_paths=${peco_resulting_line%%:*}
   else
     specified_line=''
-    file_path=(${(R)peco_resulting_line%%:*})
+    file_paths=(${(R)peco_resulting_line%%:*})
   fi
 
-  BUFFER="$EDITOR $file_path $specified_line"
+  BUFFER="$EDITOR $file_paths $specified_line"
   zle accept-line
 }
 
