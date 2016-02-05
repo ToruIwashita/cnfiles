@@ -237,6 +237,25 @@ EOF`
   fi
 }
 
+grebase() {
+  local usage
+
+  usage="usage: $0 <number for rebase target>"
+  if ! $(git rev-parse 2>/dev/null); then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  if (( ! $# )); then
+    print $usage 1>&2
+    return 1
+  fi
+
+  print "rebase HEAD~$1"
+  git rebase -i HEAD~$1
+}
+
 gcloneb() {
   local usage
 
