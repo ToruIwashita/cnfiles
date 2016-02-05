@@ -41,7 +41,7 @@ EOF`
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
         fi
-        tag_option="$2"
+        tag_option="--tag $2"
         shift 2
         ;;
       --help | -h)
