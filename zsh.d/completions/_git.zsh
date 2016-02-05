@@ -91,7 +91,9 @@ _gud() {
 
 _gsh() {
   if $(git rev-parse 2>/dev/null); then
-    _arguments -f'[force push]'
+    _arguments \
+      '(-f --force)'{-f,--force}'[Force push]' \
+      '(-h --help)'{-h,--help}'[Show this help text]'
   fi
 }
 

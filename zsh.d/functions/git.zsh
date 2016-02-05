@@ -129,25 +129,39 @@ glls() {
 }
 
 gsh() {
-  local usage force current_branch answer opt
+  local -a args
+  local self_cmd help usage force current_branch answer
 
+  self_cmd=$(echo "$0" | sed -e 's,.*/,,')
+  help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $0 [-f 'force push']
+usage: $self_cmd [-f --force 'force push']
+           [-h --help]
 EOF`
 
-  if ! $(git rev-parse 2>/dev/null); then
-    print 'Not a git repository: .git'
-    print $usage 1>&2
-    return 1
-  fi
-
-  while getopts :f opt; do
-    case ${opt} in
-      f) force=1 ;;
-      \?) print $usage; return 1 ;;
+  while (( $# > 0 )); do
+    case "$1" in
+      --force | -f)
+        force=1
+        shift 1
+        ;;
+      --help | -h)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        print "$self_cmd: argument unnecessary '$1'\n$help" 1>&2
+        return 1
+        ;;
     esac
   done
-  shift $((OPTIND-1))
 
   current_branch=$(__git-ref-head)
 
@@ -158,13 +172,16 @@ EOF`
       print -n "Force push (y/n)? "
       read answer
       case "$answer" in
-        [yY]) git push --force origin $current_branch
-              break
-              ;;
-        [nN]) break
-              ;;
-        *)    print -n 'Please enter y or n. '
-              ;;
+        [yY])
+          git push --force origin $current_branch
+          break
+          ;;
+        [nN])
+          break
+          ;;
+        *)
+          print -n 'Please enter y or n. '
+          ;;
       esac
     done
   else
