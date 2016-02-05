@@ -98,19 +98,60 @@ gud() {
 }
 
 gll() {
-  local usage current_branch
+  local -a args
+  local self_cmd help usage current_branch base_branch
 
-  usage="usage: $0"
+  self_cmd=$(echo "$0" | sed -e 's,.*/,,')
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd [-r --rebase 'fetch && rebase']
+           [-h --help]
+EOF`
+
   if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
   fi
 
+  while (( $# > 0 )); do
+    case "$1" in
+      --rebase | -r)
+        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        base_branch="$2"
+        shift 2
+        ;;
+      --help | -h)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
+        return 1
+        ;;
+      -*)
+        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
+        return 1
+        ;;
+    esac
+  done
+
   current_branch=$(__git-ref-head)
 
-  print "pull $current_branch branch"
-  git pull origin $current_branch
+  if [[ -z $base_branch ]]; then
+    print "pull $current_branch branch"
+    git pull origin $current_branch
+  else
+    print "fetch && rebase $current_branch based $base_branch"
+    git pull --rebase origin $base_branch
+  fi
 }
 
 glls() {
@@ -139,6 +180,12 @@ usage: $self_cmd [-f --force 'force push']
            [-h --help]
 EOF`
 
+  if ! $(git rev-parse 2>/dev/null); then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
   while (( $# > 0 )); do
     case "$1" in
       --force | -f)
@@ -150,14 +197,15 @@ EOF`
         return 0
         ;;
       -- | -) # Stop option processing
-        break
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
+        return 1
         ;;
       -*)
         print "$self_cmd: unknown option '$1'\n$help" 1>&2
         return 1
         ;;
       *)
-        print "$self_cmd: argument unnecessary '$1'\n$help" 1>&2
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
         return 1
         ;;
     esac

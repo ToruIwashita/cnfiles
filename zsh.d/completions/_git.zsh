@@ -89,6 +89,14 @@ _gud() {
   fi
 }
 
+_gll() {
+  if $(git rev-parse 2>/dev/null); then
+    _arguments \
+      '(-r --rebase)'{-r,--rebase}'[Pull rebase]: :__git-branches' \
+      '(-h --help)'{-h,--help}'[Show this help text]'
+  fi
+}
+
 _gsh() {
   if $(git rev-parse 2>/dev/null); then
     _arguments \
@@ -110,5 +118,6 @@ compdef _grh grh
 compdef _gd gd
 compdef _gsw gsw
 compdef _gud gud
+compdef _gll gll
 compdef _gsh gsh
 compdef _gdeleteb gdeleteb
