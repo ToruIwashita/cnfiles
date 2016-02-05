@@ -21,14 +21,15 @@ EOF`
         return 0
         ;;
       -- | -) # Stop option processing
-        break
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
+        return 1
         ;;
       -*)
         print "$self_cmd: unknown option '$1'\n$help" 1>&2
         return 1
         ;;
       *)
-        print "$self_cmd: argument unnecessary '$1'\n$help" 1>&2
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
         return 1
         ;;
     esac
