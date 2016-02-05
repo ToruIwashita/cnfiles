@@ -49,6 +49,7 @@ EOF`
             pid=$(echo $process | awk '{ print $2 }')
             kill $pid
           done
+          break
           ;;
         [nN])
           break
