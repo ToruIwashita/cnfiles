@@ -99,7 +99,7 @@ gud() {
 
 gll() {
   local -a args
-  local self_cmd help usage current_branch base_branch
+  local self_cmd help usage current_branch base_branch answer
 
   self_cmd=$(echo "$0" | sed -e 's,.*/,,')
   help="Try \`$self_cmd --help' for more information."
@@ -149,8 +149,24 @@ EOF`
     print "pull $current_branch branch"
     git pull origin $current_branch
   else
-    print "fetch && rebase $current_branch based $base_branch"
-    git pull --rebase origin $base_branch
+    while :; do
+      print -n "Rebase '$current_branch' onto '$base_branch' (y/n)? "
+
+      read answer
+      case "$answer" in
+        [yY])
+          print 'fetch && rebase'
+          git pull --rebase origin $base_branch
+          break
+          ;;
+        [nN])
+          break
+          ;;
+        *)
+          print -n 'Please enter y or n. '
+          ;;
+      esac
+    done
   fi
 }
 
