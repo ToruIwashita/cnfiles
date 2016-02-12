@@ -4,12 +4,14 @@ _immediate-pbcopy() {
   local -a args
   args=("${(z)BUFFER}")
 
-  if [[ -n ${args[$#args]} ]]; then
-    cmd="cat ${args[$#args]} | pbcopy"
-
-    zle -I
-    print -s $cmd && eval $cmd
+  if (( ! ${#args[$#args]} )); then
+    return 0
   fi
+
+  cmd="cat ${args[$#args]} | pbcopy"
+
+  zle -I
+  print -s $cmd && eval $cmd
 }
 
 zle -N immediate-pbcopy _immediate-pbcopy
