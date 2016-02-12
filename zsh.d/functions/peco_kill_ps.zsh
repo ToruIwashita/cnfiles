@@ -3,7 +3,7 @@ peco-kill-ps() {
   local -a args processes pids
   local self_cmd help usage process_list_header process pid answer
 
-  self_cmd=$(echo "$0" | sed -e 's,.*/,,')
+  self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [-f --force 'kill process without confirmation']
