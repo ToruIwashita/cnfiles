@@ -18,7 +18,7 @@ mq() {
   local my_cmd
 
   __my-check-argv $argv
-  if [[ $? -eq 1 ]]; then
+  if (( $? )); then
     return 1
   fi
 
@@ -42,7 +42,7 @@ mqout() {
   local my_cmd
 
   __my-check-argv $argv
-  if [[ $? -eq 1 ]]; then
+  if (( $? )); then
     return 1
   fi
 
@@ -75,17 +75,17 @@ myfindg() {
 
   tmp_line="-------------------------------------------------------"
   my_cmd=$MYSQL_CMD
-  if [[ ${#table_name} -gt 0 && ${#field_name} -gt 0 ]]; then
+  if (( ${#table_name} && ${#field_name} )); then
     print "Field\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
     eval $my_cmd" 'DESC ${table_name}' -N | grep --color '${field_name}'"
-  elif [[ ${#table_name} -gt 0 ]]; then
+  elif (( ${#table_name} )); then
     print "Tables\n${tmp_line}"
     eval $my_cmd" 'SHOW TABLES' -N | grep --color '${table_name}'"
-  elif [[ ${#field_name} -gt 0 ]]; then
+  elif (( ${#field_name} )); then
     print "Table: 'name'\nField\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
     for table_name in $(eval $my_cmd" 'SHOW TABLES' -N"); do
       cmd_res_field_list=$(eval $my_cmd" 'DESC ${table_name}' -N | grep --color '${field_name}'")
-      if [[ ${#cmd_res_field_list} -gt 0 ]]; then
+      if (( ${#cmd_res_field_list} )); then
         print "Table: ${table_name}"
         for cmd_res_field_name in ${(f)cmd_res_field_list}; do
           print $cmd_res_field_name | grep --color "${field_name}"
@@ -103,7 +103,7 @@ mqexp() {
   local my_cmd
 
   __my-check-argv $argv
-  if [[ $? -eq 1 ]]; then
+  if (( $? )); then
     return 1
   fi
 
@@ -177,7 +177,7 @@ mf() {
   local -a params
   local my_cmd priority_condition group_condition limit_condition order_condition selected_field_list vertical_option where_condition table_name self_cmd help usage
 
-  self_cmd=$(echo "$0" | sed -e 's,.*/,,')
+  self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd <table name>
@@ -194,7 +194,7 @@ EOF`
   while (( $# > 0 )); do
     case "$1" in
       --primary-condition | -c)
-        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
         fi
@@ -202,7 +202,7 @@ EOF`
         shift 2
         ;;
       --group-by | -g)
-        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
         fi
@@ -210,7 +210,7 @@ EOF`
         shift 2
         ;;
       --limit | -l)
-        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
         fi
@@ -218,7 +218,7 @@ EOF`
         shift 2
         ;;
       --order-by | -o)
-        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
         fi
@@ -226,7 +226,7 @@ EOF`
         shift 2
         ;;
       --select | -s)
-        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
         fi
@@ -238,7 +238,7 @@ EOF`
         shift 1
         ;;
       --where | -w)
-        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
         fi
@@ -265,15 +265,15 @@ EOF`
     esac
   done
 
-  if [[ -z $params ]]; then
+  if (( ! $#params )); then
     print $usage
     return 1
   fi
   table_name=" ${params[1]}"
 
-  [[ -z $selected_field_list ]] && selected_field_list=' *'
+  (( ! $#selected_field_list )) && selected_field_list=' *'
 
-  if [[ ${#priority_condition} -eq 0 ]]; then
+  if (( $#priority_condition )); then
     my_cmd="SELECT${selected_field_list} FROM${table_name}${where_condition}${group_condition}${order_condition}${limit_condition}${vertical_option}"
   else
     my_cmd="SELECT${selected_field_list} FROM${table_name}${priority_condition}"

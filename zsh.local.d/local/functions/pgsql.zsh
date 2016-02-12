@@ -18,7 +18,7 @@ pq() {
   local pg_cmd
 
   __pg-check-argv $argv
-  if [[ $? -eq 1 ]]; then
+  if (( $? )); then
     return 1
   fi
 
@@ -42,7 +42,7 @@ pqout() {
   local pg_cmd
 
   __pg-check-argv $argv
-  if [[ $? -eq 1 ]]; then
+  if (( $? )); then
     return 1
   fi
 
@@ -66,7 +66,7 @@ pqexp() {
   local pg_cmd
 
   __pg-check-argv $argv
-  if [[ $? -eq 1 ]]; then
+  if (( $? )); then
     return 1
   fi
 

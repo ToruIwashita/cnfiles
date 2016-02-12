@@ -21,7 +21,7 @@ EOF`
   while (( $# > 0 )); do
     case "$1" in
       --modified-file | -m)
-        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
         fi
@@ -29,7 +29,7 @@ EOF`
         shift 2
         ;;
       --untracked-file | -u)
-        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
         fi
@@ -37,7 +37,7 @@ EOF`
         shift 2
         ;;
       --tag | -t)
-        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
         fi
@@ -64,12 +64,12 @@ EOF`
     esac
   done
 
-  if [[ -z $file_paths ]]; then
+  if (( ! $file_paths )); then
     print $usage
     return 1
   fi
 
-  if [[ -f './bin/rspec'  ]]; then
+  if [[ -f './bin/rspec' ]]; then
     cmd='./bin/rspec'
   else
     cmd='bundle exec rspec'
