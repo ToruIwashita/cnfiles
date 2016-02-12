@@ -53,7 +53,7 @@ gd() {
     return 1
   fi
 
-  if [[ $# -gt 1 ]]; then
+  if (( ! $# )); then
     print $usage 1>&2
     return 1
   fi
@@ -71,7 +71,7 @@ gsw() {
     return 1
   fi
 
-  if [[ $# -ne 1 ]]; then
+  if (( $# != 1 )); then
     print $usage 1>&2
     return 1
   fi
@@ -117,7 +117,7 @@ EOF`
   while (( $# > 0 )); do
     case "$1" in
       --rebase | -r)
-        if [[ -z "$2" ]] || [[ "$2" =~ ^-+ ]]; then
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
         fi
@@ -145,7 +145,7 @@ EOF`
 
   current_branch=$(__git-ref-head)
 
-  if [[ -z $base_branch ]]; then
+  if (( ! $#base_branch )); then
     print "pull $current_branch branch"
     git pull origin $current_branch
   else
