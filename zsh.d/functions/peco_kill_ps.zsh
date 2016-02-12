@@ -6,7 +6,7 @@ peco-kill-ps() {
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [-f --force 'kill process without confirmation']
+usage: $self_cmd [-f --force]
                     [-h --help]
 EOF`
 

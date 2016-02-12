@@ -187,7 +187,7 @@ usage: $self_cmd <table name>
           [-l --limit <limit value>]
           [-o --order-by <order condition>]
           [-s --select <select fields>]
-          [-v --vertical 'vertical display']
+          [-v --vertical]
           [-w --where <where condition>]
 EOF`
 

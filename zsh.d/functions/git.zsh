@@ -104,7 +104,7 @@ gll() {
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [-r --rebase 'fetch && rebase']
+usage: $self_cmd [-r --rebase <base branch>]
            [-h --help]
 EOF`
 
@@ -192,7 +192,7 @@ gsh() {
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [-f --force 'force push']
+usage: $self_cmd [-f --force]
            [-h --help]
 EOF`
 
