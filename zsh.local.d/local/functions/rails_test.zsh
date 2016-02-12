@@ -8,7 +8,7 @@ brspec() {
   local -a args file_paths
   local self_cmd help usage tag_option
 
-  self_cmd=$(echo "$0" | sed -e 's,.*/,,')
+  self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [spec file]
