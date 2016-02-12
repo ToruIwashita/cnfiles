@@ -4,7 +4,7 @@ _immediate-cat() {
   local -a args
   args=("${(z)BUFFER}")
 
-  if [[ -n ${args[$#args]} ]]; then
+  if (( ${#args[$#args]} )); then
     cmd="cat ${args[$#args]}"
 
     zle -I

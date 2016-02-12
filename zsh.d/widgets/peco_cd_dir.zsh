@@ -2,10 +2,10 @@
 _peco-cd-dir() {
   local -aU dir_paths
 
-  [[ "$BUFFER" != '' ]] && print -s "$BUFFER"
+  (( $#BUFFER )) && print -s "$BUFFER"
 
   dir_paths=(${(f)"$(find -type d -name "*$BUFFER*" 2>/dev/null | peco --select-1 2>/dev/null)"})
-  if [[ -z $dir_paths ]]; then
+  if (( ! $#dir_paths )); then
     zle beginning-of-line
     return 0
   fi

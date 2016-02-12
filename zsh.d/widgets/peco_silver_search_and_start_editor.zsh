@@ -4,10 +4,10 @@ _peco-silver-search-and-start-editor() {
   local -a args peco_resulting_line
   local -aU file_paths
 
-  [[ "$BUFFER" != '' ]] && print -s "$BUFFER"
+  (( $#BUFFER )) && print -s "$BUFFER"
 
   args=("${(z)BUFFER}")
-  if [[ $#args -ge 2 ]] && [[ ${args[-1]} =~ '^[0-9]*$' ]]; then
+  if (( $#args >= 2 )) && [[ ${args[-1]} =~ '^[0-9]*$' ]]; then
     context="-C ${args[-1]}"
     pattern=${args:0:-1}
   else
@@ -17,12 +17,12 @@ _peco-silver-search-and-start-editor() {
 
   peco_resulting_line=(${(f)"$(ag --silent $context "$pattern" | LANG=C sed /^--$/d | peco --select-1 2>/dev/null)"})
 
-  if [[ -z $peco_resulting_line ]]; then
+  if (( ! $#peco_resulting_line )); then
     zle beginning-of-line
     return 0
   fi
 
-  if [[ $#peco_resulting_line -eq 1 ]]; then
+  if (( $#peco_resulting_line == 1 )); then
     specified_line=+${${peco_resulting_line#*:}%%[:-]*}
     file_paths=${peco_resulting_line%%:*}
   else
