@@ -15,7 +15,7 @@ _peco-silver-search-and-start-editor() {
     pattern=$args
   fi
 
-  peco_resulting_line=(${(f)"$(ag --silent $context "$pattern" | LANG=C sed /^--$/d | peco --select-1 2>/dev/null)"})
+  peco_resulting_line=(${(f)"$(ag --silent $context "$pattern" | peco --select-1 2>/dev/null)"})
 
   if (( ! $#peco_resulting_line )); then
     zle beginning-of-line
