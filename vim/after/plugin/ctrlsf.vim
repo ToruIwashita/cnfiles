@@ -14,7 +14,7 @@ nnoremap <C-s><C-s> :<C-u>execute 'BCtrlSF '.expand('<cword>')<CR>
 nnoremap <C-s>* <Plug>CtrlSFPwordPath<CR>
 nnoremap <C-s>f :<C-u>CtrlSF<SPACE>
 nnoremap <C-s><C-f> :<C-u>BCtrlSF<SPACE>
-nnoremap <C-s><C-w> :<C->CtrlSFToggle<CR>
+nnoremap <C-s>w :<C-u>CtrlSFToggle<CR>
 vnoremap <C-s>s <Plug>CtrlSFVwordExec
 
 let &cpo = s:cpo_save
