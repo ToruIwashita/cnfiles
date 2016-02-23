@@ -54,12 +54,12 @@ else
   mkdir $CACHE_DIR_PATH
 fi
 
-# yankring dir
-if [[ -d $CACHE_DIR_PATH/yankring ]]; then
-  printf "\e[32m$CACHE_DIR_PATH/yankring dir already exists\e[0m\n"
+# vim/session dir
+if [[ -d $CACHE_DIR_PATH/vim/session ]]; then
+  printf "\e[32m$CACHE_DIR_PATH/vim/session dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $CACHE_DIR_PATH/yankring\e[0m\n"
-  mkdir $CACHE_DIR_PATH/yankring
+  printf "\e[31mmkdir $CACHE_DIR_PATH/vim/session\e[0m\n"
+  mkdir $CACHE_DIR_PATH/vim/session
 fi
 
 ## create symlink
