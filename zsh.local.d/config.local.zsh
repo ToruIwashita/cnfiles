@@ -25,14 +25,20 @@ path=(
   $GOPATH/bin
   $GEM_HOME/bin
   $NPM_HOME/bin
+  # gitインストール時にbrewでインストールしたopensslを使用する
+  # /usr/local/opt/openssl/bin
   /usr/local/bin
   $path
 )
 ld_library_path=(
   ~/local/lib64
   ~/local/lib
+  # gitインストール時にbrewでインストールしたopensslを使用する
+  # /usr/local/opt/openssl/lib
   $ld_library_path
 )
+# gitインストール時にbrewでインストールしたopensslを使用する
+# export CPATH=/usr/local/opt/openssl/include:$LD_LIBRARY_PATH
 
 ## alias
 # cd
