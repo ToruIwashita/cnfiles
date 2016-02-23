@@ -4,7 +4,7 @@ readonly MYSQL_CMD="$MYSQL_CNCT -e"
 readonly PGSQL_CNCT="psql -h localhost -p 5432 -U guest -d mydatabase"  # ~/.pgpassに設定を書く
 readonly PGSQL_CMD="$PGSQL_CNCT -c"
 
-export EDITOR=~/local/bin/vim
+export EDITOR=vim
 export RBENV_ROOT=~/.rbenv
 export GOROOT=~/local/go
 export GOPATH=~/.go
