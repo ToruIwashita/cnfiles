@@ -2,6 +2,8 @@
 let s:cpo_save = &cpo
 set cpo&vim
 
+" キャッシュディレクトリ
+let g:neocomplete#data_directory = '~/.cache/vim/neocomplete'
 " ポップアップメニューで表示される候補の数
 let g:neocomplete#max_list = 30
 " シンタックスをキャッシュするときの最小文字長

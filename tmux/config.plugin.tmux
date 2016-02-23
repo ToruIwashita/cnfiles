@@ -3,4 +3,4 @@
 # resurrect
 set -g @resurrect-save 'C-i'
 set -g @resurrect-restore 'C-r'
-set -g @resurrect-dir ~/.cache/resurrect/
+set -g @resurrect-dir ~/.cache/tmux/resurrect

@@ -12,7 +12,7 @@ let g:neocomplete#enable_at_startup = 1 " neocompleteを起動時に有効化
 let g:qb_hotkey = '__'
 
 "" yankround
-let g:yankround_dir = '~/.cache/yankround/'
+let g:yankround_dir = '~/.cache/vim/yankround'
 let g:yankround_max_history = 30
 
 "" syntastic
@@ -45,6 +45,7 @@ let g:ctrlp_clear_cache_on_exit = 0               " 終了時にキャッシュ�
 let g:ctrlp_max_depth = 30                        " ディレクトリ再帰検索深度
 let g:ctrlp_open_new_file = 'r'                   " 新しいファイルをカレントウィンドウに開く
 let g:ctrlp_open_multiple_files = 'jt'            " 複数ファイルを開く時新しいタブで開き,全て開き終わった後1つ目に移動する
+let g:ctrlp_cache_dir = '~/.cache/vim/ctrlp'      " キャッシュディレクトリ
 " CtrlPキーマッピング
 let g:ctrlp_prompt_mappings = {
   \ 'ToggleRegex()':        ['<C-_>'],
