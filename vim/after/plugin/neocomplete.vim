@@ -6,14 +6,14 @@ set cpo&vim
 let g:neocomplete#data_directory = '~/.cache/vim/neocomplete'
 " ポップアップメニューで表示される候補の数
 let g:neocomplete#max_list = 30
-" シンタックスをキャッシュするときの最小文字長
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-" 手動補完時に補完を行う入力数
-let g:neocomplete#manual_completion_start_length = 2
 " 補完候補検索時に大文字・小文字を区別する
 let g:neocomplete#enable_ignore_case = 0
 " 大文字が入力されるまで大文字小文字の区別を無視設定無効
 let g:neocomplete#enable_smart_case = 0
+" 補完を開始する入力数
+let g:neocomplete#auto_completion_start_length = 1
+let g:neocomplete#manual_completion_start_length = 0
+let g:neocomplete#min_keyword_length = 2
 
 "" オムニ補完の関数を呼び出しキーワードパターン設定(ruby用)
 augroup Rubycomplete
