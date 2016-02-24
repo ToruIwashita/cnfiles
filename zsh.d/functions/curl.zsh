@@ -1,25 +1,48 @@
 ## curl関連
 cl() {
-  local usage verbose_mode opt
+  local -a args
+  local self_cmd help usage verbose_mode
 
-  usage="usage: $0 [-v 'verbose'] <URL>"
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <URL> [-v --verbose]
+EOF`
 
-  while getopts :v opt; do
-    case ${opt} in
-      v) verbose_mode=1 ;;
-      :|\?) print $usage; return 1 ;;
+  while (( $# > 0 )); do
+    case "$1" in
+      --verbose | -v)
+        verbose_mode=1
+        shift 1
+        ;;
+      --help | -h)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift;
+        args+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        args+=("$1")
+        shift 1
+        ;;
     esac
   done
-  shift $((OPTIND-1))
 
-  if (( ! $# )); then
+  if (( ! $#args )); then
     print $usage
     return 1
   fi
 
   if (( $verbose_mode )); then
-    curl -kL -I $*
+    curl -kL $args
   else
-    curl -kL $option $* >/dev/null
+    curl -kL -I $args
   fi
 }

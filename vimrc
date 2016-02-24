@@ -58,7 +58,6 @@ NeoBundle 'osyo-manga/vim-over'             " 置換プレビュー
 NeoBundle 'tmux-plugins/vim-tmux'           " vim-tmux
 NeoBundle 't9md/vim-choosewin'              " ウィンドウ対話的選択
 NeoBundle 'gregsexton/gitv'                 " gitv(コミットログ閲覧用)
-NeoBundle 'scrooloose/nerdtree'             " ファイラー
 NeoBundle 'scrooloose/syntastic'            " シンタックスチェック
 NeoBundle 'ctrlpvim/ctrlp.vim'              " 多機能finder
 NeoBundle 'tacahiroy/ctrlp-funky'           " ctrlpで関数を絞り込む
