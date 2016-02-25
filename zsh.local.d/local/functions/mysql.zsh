@@ -1,12 +1,18 @@
 ## MYSQL
-__my-check-argv() {
+__my-check-presence-of-args() {
   if (( ! $# )); then
-    print "lack of arguments." 2>&1
+    print 'lack of arguments.' 2>&1
     return 1
   fi
 
-  if [[ $1:e != "sql" ]]; then
-    print "invalid extension." 2>&1
+  return 0
+}
+__my-check-args() {
+  __my-check-presence-of-args $*
+  (( $? )) && return 1
+
+  if [[ $1:e != 'sql' ]]; then
+    print 'invalid extension.' 2>&1
     return 1
   fi
 
@@ -17,15 +23,13 @@ mq() {
   integer arg_num
   local my_cmd
 
-  __my-check-argv $argv
-  if (( $? )); then
-    return 1
-  fi
+  __my-check-args $*
+  (( $? )) && return 1
 
   my_cmd="cat $1"
   for ((i=1; i<$#; i++)); do
     arg_num=$(expr $i + 1)
-    my_cmd=$my_cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
+    my_cmd=$my_cmd" | sed -e 's/\${$i}/${*[$arg_num]}/g'"
   done
 
   print "<<Query"
@@ -41,15 +45,13 @@ mqout() {
   integer arg_num
   local my_cmd
 
-  __my-check-argv $argv
-  if (( $? )); then
-    return 1
-  fi
+  __my-check-args $*
+  (( $? )) && return 1
 
   my_cmd="cat $1"
   for ((i=1; i<$#; i++)); do
     arg_num=$(expr $i + 1)
-    my_cmd=$my_cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
+    my_cmd=$my_cmd" | sed -e 's/\${$i}/${*[$arg_num]}/g'"
   done
 
   print "<<Query"
@@ -102,15 +104,13 @@ mqexp() {
   integer arg_num
   local my_cmd
 
-  __my-check-argv $argv
-  if (( $? )); then
-    return 1
-  fi
+  __my-check-args $*
+  (( $? )) && return 1
 
   my_cmd="cat $1"
   for ((i=1; i<$#; i++)); do
     arg_num=$(expr $i + 1)
-    my_cmd=$my_cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
+    my_cmd=$my_cmd" | sed -e 's/\${$i}/${*[$arg_num]}/g'"
   done
 
   print "<<Query"
@@ -123,37 +123,29 @@ mqexp() {
 }
 
 mydesc() {
-  if (( ! $# )); then
-    print "lack of arguments." 2>&1
-    return 1
-  fi
+  __my-check-presence-of-args $*
+  (( $? )) && return 1
 
   eval "${MYSQL_CMD} 'DESC ${1}'"
 }
 
 myindex() {
-  if (( ! $# )); then
-    print "lack of arguments." 2>&1
-    return 1
-  fi
+  __my-check-presence-of-args $*
+  (( $? )) && return 1
 
   eval "${MYSQL_CMD} 'SHOW INDEX FROM ${1}'"
 }
 
 myfcsv() {
-  if (( ! $# )); then
-    print "lack of arguments." 2>&1
-    return 1
-  fi
+  __my-check-presence-of-args $*
+  (( $? )) && return 1
 
   eval "${MYSQL_CMD} 'DESC ${1}' -N | sed s/$'\t'.*//g | xargs echo | sed -e 's/ /,/g'"
 }
 
 mycnt() {
-  if (( ! $# )); then
-    print "lack of arguments." 2>&1
-    return 1
-  fi
+  __my-check-presence-of-args $*
+  (( $? )) && return 1
 
   eval "${MYSQL_CMD} 'SELECT COUNT(1) FROM ${1}'"
 }
@@ -273,10 +265,10 @@ EOF`
 
   (( ! $#selected_field_list )) && selected_field_list=' *'
 
-  if (( $#priority_condition )); then
-    my_cmd="SELECT${selected_field_list} FROM${table_name}${where_condition}${group_condition}${order_condition}${limit_condition}${vertical_option}"
-  else
+  if (( ${#priority_condition} )); then
     my_cmd="SELECT${selected_field_list} FROM${table_name}${priority_condition}"
+  else
+    my_cmd="SELECT${selected_field_list} FROM${table_name}${where_condition}${group_condition}${order_condition}${limit_condition}${vertical_option}"
   fi
 
   print "> $my_cmd;"
