@@ -253,7 +253,7 @@ EOF`
   fi
 }
 
-grebase() {
+grb() {
   local usage
 
   usage="usage: $0 <number for rebase target>"
