@@ -56,7 +56,7 @@ pqout() {
   eval $pg_cmd
   print "Query\n"
 
-  pg_cmd=$pg_cmd" | xargs -0 -i ${PGSQL_CMD} '{}' -t | sed -e 's/\t/,/g' >! ~/works/tmp.txt"
+  pg_cmd=$pg_cmd" | xargs -0 -i ${PGSQL_CMD} '{}' -t | sed -e 's/\t/,/g' >! $TMP"
   print "command: ${pg_cmd}\n"
   eval $pg_cmd
 }

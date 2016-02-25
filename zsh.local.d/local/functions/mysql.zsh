@@ -56,7 +56,7 @@ mqout() {
   eval $my_cmd
   print "Query\n"
 
-  my_cmd=$my_cmd" | xargs -0 -i ${MYSQL_CMD} '{}' -N | sed -e 's/\t/,/g' >! ~/works/tmp.txt"
+  my_cmd=$my_cmd" | xargs -0 -i ${MYSQL_CMD} '{}' -N | sed -e 's/\t/,/g' >! $TMP"
   print "command: ${my_cmd}\n"
   eval $my_cmd
 }

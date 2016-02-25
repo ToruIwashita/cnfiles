@@ -11,6 +11,7 @@ export GOPATH=~/.go
 export GEM_HOME=~/.gem
 export NPM_HOME=~/.npm
 export MYSQL_CNCT MYSQL_CMD
+export TMP=~/works/tmp/tmp.txt
 
 # rbenv設定
 if [[ -d ~/.rbenv  ]]; then
