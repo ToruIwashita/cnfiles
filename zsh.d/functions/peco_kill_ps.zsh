@@ -38,6 +38,8 @@ EOF`
   process_list_header=$(ps -ef | head -1)
   processes=(${(f)"$(ps -ef | peco)"})
 
+  (( ! $#processes )) && return 0
+
   if (( $force )); then
     while :; do
       print -n "Force kill (y/n)? "
