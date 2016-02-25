@@ -28,9 +28,9 @@ mq() {
     my_cmd=$my_cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
   done
 
-  print "<<Q"
+  print "<<Query"
   eval $my_cmd
-  print "Q\n"
+  print "Query\n"
 
   my_cmd=$my_cmd" | xargs -0 -i ${MYSQL_CMD} '{}'"
   print "command: ${my_cmd}\n"
@@ -52,9 +52,9 @@ mqout() {
     my_cmd=$my_cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
   done
 
-  print "<<Q"
+  print "<<Query"
   eval $my_cmd
-  print "Q\n"
+  print "Query\n"
 
   my_cmd=$my_cmd" | xargs -0 -i ${MYSQL_CMD} '{}' -N | sed -e 's/\t/,/g' >! ~/works/tmp.txt"
   print "command: ${my_cmd}\n"
@@ -113,9 +113,9 @@ mqexp() {
     my_cmd=$my_cmd" | sed -e 's/\${$i}/${argv[arg_num]}/g'"
   done
 
-  print "<<Q"
+  print "<<Query"
   eval $my_cmd
-  print "Q\n"
+  print "Query\n"
 
   my_cmd=$my_cmd" | xargs -0 -i ${MYSQL_CMD} 'EXPLAIN {}\G'"
   print "command: ${my_cmd}\n"
