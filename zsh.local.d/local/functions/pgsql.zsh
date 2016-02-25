@@ -69,7 +69,7 @@ pqexp() {
   local pg_cmd
 
   __pg-check-args $*
-  (( $? == 1 )) && return 1
+  (( $? )) && return 1
 
   pg_cmd="cat $1"
   for ((i=1; i<$#; i++)); do
