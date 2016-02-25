@@ -265,7 +265,7 @@ EOF`
 
   (( ! $#selected_field_list )) && selected_field_list=' *'
 
-  if (( ${#priority_condition} )); then
+  if (( $#priority_condition )); then
     my_cmd="SELECT${selected_field_list} FROM${table_name}${priority_condition}"
   else
     my_cmd="SELECT${selected_field_list} FROM${table_name}${where_condition}${group_condition}${order_condition}${limit_condition}${vertical_option}"
