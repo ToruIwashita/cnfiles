@@ -1,0 +1,17 @@
+[core]
+  editor = ~/local/bin/vim
+  attributesfile = ~/.gitattributes
+[status]
+  short = true
+[fetch]
+  prune = true
+[rebase]
+  autostash = true
+[pager]
+  log = git-diff-highlight | less
+  show = git-diff-highlight | less
+  diff = git-diff-highlight | less
+[alias]
+  log-all = log --graph --date-order -C -M --pretty=format:'<%h> %ad [%an] %Cgreen%d%Creset %s' --all --date=short
+[include]
+  path = ~/.gitconfig.local
