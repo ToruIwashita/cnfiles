@@ -128,7 +128,6 @@ alias untar='tar xvf'
 # git
 alias ga='git add'
 alias gb='git branch'
-alias gc='git commit'
 alias gf='git fetch'
 alias gl='git log'
 alias gs='git status'

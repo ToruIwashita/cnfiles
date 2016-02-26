@@ -43,6 +43,48 @@ grh() {
   git reset HEAD $*
 }
 
+gc() {
+  local usage
+
+  usage="usage: $0 [-i --immediate]"
+  if ! $(git rev-parse 2>/dev/null); then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  while (( $# > 0 )); do
+    case "$1" in
+      --immediate | -i)
+        immediate=1
+        shift 1
+        ;;
+      --help | -h)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
+        return 1
+        ;;
+      -*)
+        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
+        return 1
+        ;;
+    esac
+  done
+
+  if (( immediate )); then
+    git commit -m "[temporary commit]($(__git-ref-head)) $(date)"
+  else
+    git commit
+  fi
+}
+
 gd() {
   local usage
 

@@ -53,6 +53,14 @@ _gau() {
   fi
 }
 
+_gab() {
+  if $(git rev-parse 2>/dev/null); then
+    _arguments '*: :__git-both-modified-files'
+  else
+    _arguments '*: :_files'
+  fi
+}
+
 _grh() {
   if $(git rev-parse 2>/dev/null); then
     _arguments '*: :__git-staged-files'
@@ -61,11 +69,11 @@ _grh() {
   fi
 }
 
-_gab() {
+_gc() {
   if $(git rev-parse 2>/dev/null); then
-    _arguments '*: :__git-both-modified-files'
-  else
-    _arguments '*: :_files'
+    _arguments \
+      '(-i --immediate)'{-i,--immediate}'[immediately commit]' \
+      '(-h --help)'{-h,--help}'[Show this help text]'
   fi
 }
 
@@ -115,6 +123,7 @@ compdef _gam gam
 compdef _gau gau
 compdef _gab gab
 compdef _grh grh
+compdef _gc gc
 compdef _gd gd
 compdef _gsw gsw
 compdef _gud gud
