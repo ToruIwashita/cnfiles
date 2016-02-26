@@ -22,7 +22,7 @@ bind generic ~ !@hub browse -- commit/%(commit)
 # 選択したcommitのci-statusを確認
 # bind generic = !hub ci-status %(commit)
 # 即時コミット
-bind generic T !git commit -m 'temporary commit'
+bind generic T !git commit -m '[temporary commit]'
 # 選択したコミットより上にあるコミットをリベース
 bind main B !git rebase -i %(commit)
 bind diff B !git rebase -i %(commit)
