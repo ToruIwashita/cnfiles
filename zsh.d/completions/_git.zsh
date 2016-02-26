@@ -100,7 +100,7 @@ _gud() {
 _gll() {
   if $(git rev-parse 2>/dev/null); then
     _arguments \
-      '(-r --rebase)'{-r,--rebase}'[Pull rebase]: :__git-branches' \
+      '(-b --rebase)'{-b,--rebase}'[Pull rebase]: :__git-branches' \
       '(-h --help)'{-h,--help}'[Show this help text]'
   fi
 }

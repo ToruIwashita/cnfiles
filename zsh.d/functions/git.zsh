@@ -146,7 +146,7 @@ gll() {
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [-r --rebase <base branch>]
+usage: $self_cmd [-b --rebase <base branch>]
            [-h --help]
 EOF`
 
@@ -158,7 +158,7 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
-      --rebase | -r)
+      --rebase | -b)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
