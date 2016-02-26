@@ -7,11 +7,20 @@ set split-view-height = 85%
 # 差分の前後の表示行数
 set diff-context = 5
 
-# <C-n>,<C-p>で末端へ移動
-bind generic <C-N> none
+# <C-p>で先頭へ移動
 bind generic <C-P> none
-bind generic <C-N> move-last-line
 bind generic <C-P> move-first-line
+# <C-n>で末端へ移動
+bind generic <C-N> none
+bind generic <C-N> move-last-line
+# リポジトリのGitHubを表示
+bind generic ^ !@hub browse
+# pullsを表示
+bind generic - !@hub browse -- pulls
+# 選択したcommitをGitHubで表示
+bind generic ~ !@hub browse -- commit/%(commit)
+# 選択したcommitのci-statusを確認
+# bind generic = !hub ci-status %(commit)
 
 # Rで選択したコミットより上にあるコミットをリベース
 bind main R !git rebase -i %(commit)
