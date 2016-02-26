@@ -46,7 +46,7 @@ grh() {
 gc() {
   local usage
 
-  usage="usage: $0 [-i --immediate]"
+  usage="usage: $0 [-t --temporary]"
   if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
@@ -55,8 +55,8 @@ gc() {
 
   while (( $# > 0 )); do
     case "$1" in
-      --immediate | -i)
-        immediate=1
+      --temporary | -t)
+        temporary=1
         shift 1
         ;;
       --help | -h)
@@ -78,7 +78,7 @@ gc() {
     esac
   done
 
-  if (( immediate )); then
+  if (( temporary )); then
     git commit -m "[temporary commit]($(__git-ref-head)) $(date)"
   else
     git commit

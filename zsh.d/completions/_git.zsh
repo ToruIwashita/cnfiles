@@ -72,7 +72,7 @@ _grh() {
 _gc() {
   if $(git rev-parse 2>/dev/null); then
     _arguments \
-      '(-i --immediate)'{-i,--immediate}'[immediately commit]' \
+      '(-t --temporary)'{-i,--immediate}'[Temporary commit]' \
       '(-h --help)'{-h,--help}'[Show this help text]'
   fi
 }
