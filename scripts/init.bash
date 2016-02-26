@@ -124,6 +124,22 @@ else
   ln -is $BASE_DIR_PATH/lint ~/.lint
 fi
 
+# gitconfig
+if [[ -L ~/.gitconfig ]]; then
+  printf "\e[32m$BASE_DIR_PATH/.gitconfig symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.gitconfig\e[0m\n"
+  ln -is $BASE_DIR_PATH/gitconfig ~/.gitconfig
+fi
+
+# gitattributes
+if [[ -L ~/.gitattributes ]]; then
+  printf "\e[32m$BASE_DIR_PATH/.gitattributes symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.gitattributes\e[0m\n"
+  ln -is $BASE_DIR_PATH/gitattributes ~/.gitattributes
+fi
+
 # tig
 if [[ -L ~/.tigrc ]]; then
   printf "\e[32m$BASE_DIR_PATH/.tigrc symlink already exists\e[0m\n"
