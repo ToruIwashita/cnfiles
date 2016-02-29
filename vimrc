@@ -80,6 +80,7 @@ NeoBundle 'vim-scripts/QuickBuf'            " バッファ操作
 NeoBundle 'ToruIwashita/tabmove-assist.vim' " タブ移動補助
 NeoBundle 'ToruIwashita/tag-tnjump.vim'     " タグジャンプ補助
 NeoBundle 'ToruIwashita/window-closer.vim'  " ウィンドウを閉じる動作の制御
+NeoBundle 'ToruIwashita/git-switcher.vim'   " git管理プロジェクトのセッション切り替え
 
 call neobundle#end()
 
