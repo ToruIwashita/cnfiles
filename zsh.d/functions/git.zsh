@@ -118,7 +118,7 @@ gsw() {
     return 1
   fi
 
-  git checkout $1 && git branch
+  (git checkout $1 2>/dev/null && print "Switched to branch '$1'") || git checkout -b $1
 }
 
 gud() {
