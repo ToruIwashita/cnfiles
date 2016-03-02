@@ -24,18 +24,7 @@ bind generic ~ !@hub browse -- commit/%(commit)
 ## main
 # 選択したコミットより上にあるコミットをリベース
 bind main B !git rebase -i %(commit)
-# 入力したブランチを元にリベース
-bind main L !git pull --rebase origin %(prompt)
 
 ## status
-bind status F !git fetch
-bind status P !git push origin %(branch)
-bind status L !git pull origin %(branch)
 # 即時コミット
 bind status T !git commit -m '[temporary commit]'
-
-## refs
-# 新規ブランチ作成
-bind refs B !git checkout -b %(prompt)
-# 入力したブランチをマージ
-bind refs M !git merge %(prompt)
