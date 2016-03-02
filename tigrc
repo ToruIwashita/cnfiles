@@ -37,3 +37,5 @@ bind main B !git rebase -i %(commit)
 bind diff B !git rebase -i %(commit)
 # 新規ブランチ作成
 bind refs B !git checkout -b %(prompt)
+# 入力したブランチをマージ
+bind refs M !git merge %(prompt)
