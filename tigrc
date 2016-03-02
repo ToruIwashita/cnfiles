@@ -13,6 +13,7 @@ bind generic <C-P> move-first-line
 # <C-n>で末端へ移動
 bind generic <C-N> none
 bind generic <C-N> move-last-line
+
 # リポジトリのGitHubを表示
 bind generic ^ !@hub browse
 # pullsを表示
@@ -21,10 +22,18 @@ bind generic - !@hub browse -- pulls
 bind generic ~ !@hub browse -- commit/%(commit)
 # 選択したcommitのci-statusを確認
 # bind generic = !hub ci-status %(commit)
+
+# fetch
+bind generic F none
+bind status F !git fetch
+# push
+bind status P !git push origin %(branch)
+# pull
+bind status L !git pull origin %(branch)
 # 即時コミット
 bind generic T !git commit -m '[temporary commit]'
 # 選択したコミットより上にあるコミットをリベース
 bind main B !git rebase -i %(commit)
 bind diff B !git rebase -i %(commit)
-# push
-bind status P !git push origin %(branch)
+# 新規ブランチ作成
+bind refs B !git checkout -b %(prompt)
