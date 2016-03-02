@@ -7,6 +7,8 @@
   prune = true
 [rebase]
   autostash = true
+[push]
+  default = simple
 [pager]
   log = git-diff-highlight | less
   show = git-diff-highlight | less
