@@ -26,3 +26,5 @@ bind generic T !git commit -m '[temporary commit]'
 # 選択したコミットより上にあるコミットをリベース
 bind main B !git rebase -i %(commit)
 bind diff B !git rebase -i %(commit)
+# push
+bind status P !git push origin %(branch)
