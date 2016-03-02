@@ -24,13 +24,12 @@ bind generic ~ !@hub browse -- commit/%(commit)
 ## main
 # 選択したコミットより上にあるコミットをリベース
 bind main B !git rebase -i %(commit)
+# 入力したブランチを元にリベース
+bind main L !git pull --rebase origin %(prompt)
 
 ## status
-# fetch
 bind status F !git fetch
-# push
 bind status P !git push origin %(branch)
-# pull
 bind status L !git pull origin %(branch)
 # 即時コミット
 bind status T !git commit -m '[temporary commit]'
