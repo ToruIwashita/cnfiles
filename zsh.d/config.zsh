@@ -138,8 +138,6 @@ alias gb='git branch'
 alias gf='git fetch'
 alias gl='git log'
 alias gs='git status'
-alias gcb='git checkout -b'
-alias gdf='git diff --name-only'
 # vim
 alias clear-vim-session='rm .*.session.vim'
 
