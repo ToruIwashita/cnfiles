@@ -334,7 +334,7 @@ gcloneb() {
 }
 
 gdeleteb() {
-  local usage
+  local usage merged_branch answer
 
   usage="usage: $0 <branch>"
   if ! $(git rev-parse 2>/dev/null); then
@@ -343,13 +343,25 @@ gdeleteb() {
     return 1
   fi
 
-  if (( ! $# )); then
-    print $usage 1>&2
-    return 1
-  fi
+  for merged_branch in ${(R)${(@f)"$(git branch --merged)"}:#\*[[:space:]]*}; do
+    while :; do
+      print -n "delete '$merged_branch' branch (y/n)? "
 
-  print "delete local and origin branch $1"
-  git branch -d $1 && git push --delete origin $1
+      read answer
+      case "$answer" in
+        [yY])
+          git branch -d $merged_branch && echo
+          break
+          ;;
+        [nN])
+          echo && break
+          ;;
+        *)
+          print -n 'Please enter y or n. '
+          ;;
+      esac
+    done
+  done
 }
 
 __git-ref-head() {
