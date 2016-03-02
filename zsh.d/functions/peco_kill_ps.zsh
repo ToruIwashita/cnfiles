@@ -42,7 +42,7 @@ EOF`
 
   if (( $force )); then
     while :; do
-      print -n "Force kill (y/n)? "
+      print -n 'Force kill (y/n)? '
 
       read answer
       case "$answer" in
