@@ -358,7 +358,7 @@ gdeleteb() {
       read answer
       case "$answer" in
         [yY])
-          git branch -d $merged_branch && echo
+          git branch -D $merged_branch && echo
           break
           ;;
         [nN])
