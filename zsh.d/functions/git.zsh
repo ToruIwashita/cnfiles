@@ -104,7 +104,7 @@ gd() {
 }
 
 gsw() {
-  local usage
+  local usage branch_already_exists
 
   usage="usage: $0 <branch>"
   if ! $(git rev-parse 2>/dev/null); then
@@ -118,8 +118,15 @@ gsw() {
     return 1
   fi
 
-  (git checkout $1 2>/dev/null && print "Switched to branch '$1'") ||
-    (git fetch && git checkout -b $1 && print "Create new branch '$1'")
+  branch_already_exists=${#${(M)${(R)$(git branch)#\*}:#$1}}
+
+  if (( branch_already_exists )); then
+    git checkout $1
+  else
+    gll
+    echo
+    git checkout -b $1
+  fi
 }
 
 gud() {
