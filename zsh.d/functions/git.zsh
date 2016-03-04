@@ -205,7 +205,7 @@ EOF`
       read answer
       case "$answer" in
         [yY])
-          print 'fetch && rebase'
+          print 'fetch & rebase'
           git pull --rebase origin $base_branch
           break
           ;;
