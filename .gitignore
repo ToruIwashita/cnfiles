@@ -5,3 +5,4 @@
 /tmux/plugins/tmux-resurrect
 /.bundle
 /.tags
+/.gitconfig
