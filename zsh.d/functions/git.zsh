@@ -348,7 +348,8 @@ gcloneb() {
 }
 
 gdeleteb() {
-  local self_cmd help usage merged_branches merged_branch answer
+  local -a merged_branches
+  local self_cmd help usage merged_branch answer
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -388,18 +389,18 @@ EOF`
     esac
   done
 
-  git fetch
-  merged_branches=${(R)${(R)${(@f)"$(git branch --merged)"}:#\*[[:space:]]*}##*[[:space:]]}
+  git fetch && echo "Fetched remote\n"
+  merged_branches=(${(R)${(R)${(@f)"$(git branch --merged)"}:#\*[[:space:]]*}##*[[:space:]]})
 
   if (( $force )); then
     while :; do
-      print -n "\nForce delete merged branches (y/n)? "
+      print -n "Force delete merged branches (y/n)? "
 
       read answer
       case "$answer" in
         [yY])
           for merged_branch in $merged_branches; do
-            git branch -D $pid
+            git branch -D $merged_branch
           done
           break
           ;;
@@ -415,9 +416,9 @@ EOF`
     return 0
   fi
 
-  for merged_branch in merged_branches; do
+  for merged_branch in $merged_branches; do
     while :; do
-      print -n "delete '$merged_branch' branch (y/n)? "
+      print -n "Delete '$merged_branch' branch (y/n)? "
 
       read answer
       case "$answer" in
