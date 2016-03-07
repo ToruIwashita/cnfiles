@@ -1,3 +1,6 @@
+[user]
+  name = ToruIwashita
+  email = toru.iwashita@gmail.com
 [core]
   editor = ~/local/bin/vim
   attributesfile = ~/.gitattributes
