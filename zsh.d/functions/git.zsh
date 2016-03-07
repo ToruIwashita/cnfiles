@@ -342,16 +342,74 @@ gcloneb() {
 }
 
 gdeleteb() {
-  local usage merged_branch answer
+  local self_cmd help usage merged_branches merged_branch answer
 
-  usage="usage: $0 <branch>"
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd [-f --force]
+                [-h --help]
+EOF`
+
   if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
   fi
 
-  for merged_branch in ${(R)${(@f)"$(git branch --merged)"}:#\*[[:space:]]*}; do
+  while (( $# > 0 )); do
+    case "$1" in
+      -f | --force)
+        force=1
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
+        return 1
+        ;;
+      -*)
+        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
+        return 1
+        ;;
+    esac
+  done
+
+  git fetch
+  merged_branches=${(R)${(R)${(@f)"$(git branch --merged)"}:#\*[[:space:]]*}##*[[:space:]]}
+
+  if (( $force )); then
+    while :; do
+      print -n "\nForce delete merged branches (y/n)? "
+
+      read answer
+      case "$answer" in
+        [yY])
+          for merged_branch in $merged_branches; do
+            git branch -D $pid
+          done
+          break
+          ;;
+        [nN])
+          break
+          ;;
+        *)
+          print -n 'Please enter y or n. '
+          ;;
+      esac
+    done
+
+    return 0
+  fi
+
+  for merged_branch in merged_branches; do
     while :; do
       print -n "delete '$merged_branch' branch (y/n)? "
 

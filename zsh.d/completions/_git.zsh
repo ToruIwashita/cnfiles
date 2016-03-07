@@ -115,7 +115,9 @@ _gsh() {
 
 _gdeleteb() {
   if $(git rev-parse 2>/dev/null); then
-    _arguments '(:)*: :__git-branches'
+    _arguments \
+      '(-f --force)'{-f,--force}'[Force delete merged branches]' \
+      '(-h --help)'{-h,--help}'[Show this help text]'
   fi
 }
 
