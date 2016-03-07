@@ -20,7 +20,7 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
-      --modified-file | -m)
+      -m | --modified-file)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
@@ -28,7 +28,7 @@ EOF`
         file_paths+=("$2")
         shift 2
         ;;
-      --untracked-file | -u)
+      -u | --untracked-file)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
@@ -36,7 +36,7 @@ EOF`
         file_paths+=("$2")
         shift 2
         ;;
-      --tag | -t)
+      -t | --tag)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
@@ -44,7 +44,7 @@ EOF`
         tag_option="--tag $2"
         shift 2
         ;;
-      --help | -h)
+      -h | --help)
         print $usage
         return 0
         ;;

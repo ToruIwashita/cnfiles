@@ -11,11 +11,11 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
-      --verbose | -v)
+      -v | --verbose)
         verbose_mode=1
         shift 1
         ;;
-      --help | -h)
+      -h | --help)
         print $usage
         return 0
         ;;

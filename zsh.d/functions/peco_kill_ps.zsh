@@ -12,11 +12,11 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
-      --force | -f)
+      -f | --force)
         force=1
         shift 1
         ;;
-      --help | -h)
+      -h | --help)
         print $usage
         return 0
         ;;

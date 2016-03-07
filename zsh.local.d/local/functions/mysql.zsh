@@ -185,7 +185,7 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
-      --primary-condition | -c)
+      -c | --primary-condition)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
@@ -193,7 +193,7 @@ EOF`
         priority_condition=" $2"
         shift 2
         ;;
-      --group-by | -g)
+      -g | --group-by)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
@@ -201,7 +201,7 @@ EOF`
         group_condition=" GROUP BY $2"
         shift 2
         ;;
-      --limit | -l)
+      -l | --limit)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
@@ -209,7 +209,7 @@ EOF`
         limit_condition=" LIMIT $2"
         shift 2
         ;;
-      --order-by | -o)
+      -o | --order-by)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
@@ -217,7 +217,7 @@ EOF`
         order_condition=" ORDER BY $2"
         shift 2
         ;;
-      --select | -s)
+      -s | --select)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
@@ -225,11 +225,11 @@ EOF`
         selected_field_list=" $2"
         shift 2
         ;;
-      --vertical | -v)
+      -v | --vertical)
         vertical_option='\G'
         shift 1
         ;;
-      --where | -w)
+      -w | --where)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
@@ -237,7 +237,7 @@ EOF`
         where_condition=" WHERE $2"
         shift 2
         ;;
-      --help | -h)
+      -h | --help)
         print $usage
         return 0
         ;;

@@ -55,11 +55,11 @@ gc() {
 
   while (( $# > 0 )); do
     case "$1" in
-      --temporary | -t)
+      -t | --temporary)
         temporary=1
         shift 1
         ;;
-      --help | -h)
+      -h | --help)
         print $usage
         return 0
         ;;
@@ -166,7 +166,7 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
-      --rebase | -b)
+      -b | --rebase)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
@@ -174,7 +174,7 @@ EOF`
         base_branch="$2"
         shift 2
         ;;
-      --help | -h)
+      -h | --help)
         print $usage
         return 0
         ;;
@@ -254,11 +254,11 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
-      --force | -f)
+      -f | --force)
         force=1
         shift 1
         ;;
-      --help | -h)
+      -h | --help)
         print $usage
         return 0
         ;;
