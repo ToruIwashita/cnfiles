@@ -44,9 +44,15 @@ grh() {
 }
 
 gc() {
-  local usage
+  local self_cmd help usage
 
-  usage="usage: $0 [-t --temporary]"
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd [-b --rebase <base branch>]
+           [-h --help]
+EOF`
+
   if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
