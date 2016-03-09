@@ -5,7 +5,7 @@ set -e
 
 cd $TMUX_MEM_CPU_LOAD_SRC_DIR_PATH
 
-cmake -DCMAKE_INSTALL_PREFIX=$LOCAL_DIR_PATH .
+cmake -DCMAKE_INSTALL_PREFIX:PATH=$LOCAL_DIR_PATH
 make && make install
 
 git checkout .
