@@ -52,3 +52,6 @@
 [submodule "modules/node"]
 	path = modules/node
 	url = git@github.com:nodejs/node.git
+[submodule "modules/neovim"]
+	path = modules/neovim
+	url = git@github.com:neovim/neovim.git
