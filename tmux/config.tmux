@@ -1,11 +1,13 @@
-## option
+## prefix
 # Ctr+qをprefixに設定
-set-option -g prefix C-q
+set -g prefix C-q
+
+## option
+# utf-8サポート有効
+setw -g utf8 on 
+set -g status-utf8 on
 # vim風copy-mode
 setw -g mode-key vi
-# utf-8サポート有効
-setw -g utf8 on
-set -g status-utf8 on
 # キーストロークのディレイ0sec
 set -s escape-time 0
 # プレフィックスキーのリピート時間(デフォルト500ms)
@@ -16,13 +18,21 @@ set -g display-panes-time 5000
 set -g status-interval 2
 # ウィンドウの番号を0からではなく1からにする
 set -g base-index 1
-# window-status-current
-setw -g window-status-current-fg white
-setw -g window-status-current-bg colour234
-setw -g window-status-current-attr bold#,underscore
 # buffer
 set -g buffer-limit 33
 set -g history-limit 5000
+# ウィンドウで動作があるとハイライト
+setw -g monitor-activity on
+set -g visual-activity off
+# window-status-current
+setw -g window-status-current-fg white
+setw -g window-status-current-bg colour234
+setw -g window-status-current-attr bold
+# pane
+set -g pane-border-fg colour188
+set -g pane-border-bg colour16
+set -g pane-active-border-fg colour188
+set -g pane-active-border-bg colour20
 # status-line
 set -g status-fg colour188
 set -g status-bg colour234
@@ -32,14 +42,6 @@ set -g status-left "#[fg=colour223,bg=colour166,nobold] #(whoami) "
 set -g window-status-format "#[fg=colour188,bg=colour234] #I #W "
 set -g window-status-current-format "#[fg=colour38,bg=colour20,noreverse,nobold] #I #W "
 set -g status-right "#[fg=colour38,bg=colour234,nobold]#(tmux-mem-cpu-load) #[fg=colour223,bg=colour166,nobold] [%Y-%m-%d(%a) %H:%M] "
-## ウィンドウで動作があるとハイライト
-setw -g monitor-activity on
-set -g visual-activity off
-# pane
-set -g pane-border-fg colour188
-set -g pane-border-bg colour16
-set -g pane-active-border-fg colour188
-set -g pane-active-border-bg colour20
 
 ## unbind
 # デフォルトprefixを解除
@@ -59,6 +61,7 @@ unbind C-p
 unbind C-z
 unbind C-[
 unbind C-]
+
 ## bind
 # detach
 bind C-d detach
