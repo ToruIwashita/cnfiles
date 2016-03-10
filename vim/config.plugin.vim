@@ -1,4 +1,4 @@
-"" FILE: config.bundle.vim
+"" FILE: config.plugin.vim
 " vim-plugで管理しているプラグインでafter/以下では動作しない設定を記述する
 
 "" colorscheme
