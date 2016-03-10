@@ -1,7 +1,7 @@
 /vim/bundle/NeoBundle.lock
 /zsh.d/config.local.zsh
 /zsh.d/local/
-/vim/bundle/*
+/vim/plugged/*
 /tmux/plugins/tmux-resurrect
 /.bundle
 /.tags
