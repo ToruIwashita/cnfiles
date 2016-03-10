@@ -1,14 +1,6 @@
-""" NeoBundle設定
-"" Brief help
-" :NeoBundleList          - list configured bundles
-" :NeoBundleInstall(!)    - install bundles
-" :NeoBundleUpdate(!)     - update bundles
-" :NeoBundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-
 "" 初期設定
 " vi互換モードoff(純正のvim設定適用)
 set nocompatible
-filetype off
 " 起動時にvim-plugの存在チェック
 if has('vim_starting')
   set runtimepath+=~/.vim/plugged/vim-plug
@@ -22,10 +14,8 @@ endif
 call plug#begin('~/.vim/plugged')
 
 Plug 'junegunn/vim-plug', {'dir': '~/.vim/plugged/vim-plug/autoload'}
-if has('lua')
-  Plug 'Shougo/neocomplete' " 入力補完機能
-endif
-Plug 'Shougo/vimproc', {'do': 'make'}
+Plug 'Shougo/vimproc',    {'do': 'make'}
+Plug 'Shougo/neocomplete'              " 入力補完機能(luajit依存)
 Plug 'Shougo/neosnippet'               " スニペット展開
 Plug 'honza/vim-snippets'              " 各種snippet
 Plug 'tpope/vim-repeat'                " vim-surroundの機能を.反復
@@ -78,9 +68,6 @@ Plug 'ToruIwashita/window-closer.vim'  " ウィンドウを閉じる動作の制
 Plug 'ToruIwashita/git-switcher.vim'   " git管理プロジェクトのセッション切り替え
 
 call plug#end()
-
-" ファイルタイプの検出,ファイルタイプ用プラグインプラグイン,インデントを有効化(NeoBundleによる処理が終了した後に実施)
-filetype plugin indent on
 
 "" 各種設定読込
 if filereadable(expand('~/.vim/config.vim')) | source ~/.vim/config.vim | en
