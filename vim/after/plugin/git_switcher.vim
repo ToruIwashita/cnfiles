@@ -2,6 +2,8 @@
 let s:cpo_save = &cpo
 set cpo&vim
 
+let g:gsw_session_autoload = 'confirm'
+
 nnoremap <C-s>g :<C-u>Gsw<SPACE>
 nnoremap <C-s>i :<C-u>GswSave<SPACE>
 nnoremap <C-s>r :<C-u>GswLoad<SPACE>
