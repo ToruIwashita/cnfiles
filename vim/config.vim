@@ -18,7 +18,6 @@ syntax sync minlines=500 maxlines=1000  " シンタックスハイライトの�
 "" 通常オプション
 set encoding=utf8               " エンコーディングUTF-8
 set t_Co=256                    " 256色モード
-set clipboard+=unnamed          " 無名レジスタに入るデータを,*レジスタにも入れる(ヤンク時にクリップボード共有)
 set laststatus=2                " ステータスライン常に表示
 set showtabline=2               " タブライン常に表示
 set fileencoding=utf-8          " カレントバッファ内のファイルの文字UTF-8
