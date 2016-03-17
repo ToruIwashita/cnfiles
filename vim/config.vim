@@ -224,25 +224,30 @@ cnorea ev :<C-u>source ~/.vimrc
 
 "" autocmd
 " ファイルを開いたときに最後の変更点へ移動
-augroup PreviousCursorLine
+augroup previous_cursor_line
   autocmd!
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | exe 'normal! g`"zz' | endif
 augroup END
 
 " ウィンドウ移動で外部でのファイル変更チェック
-augroup FileChangeChecktime
+augroup file_change_checktime
   autocmd!
   autocmd WinEnter * checktime
 augroup END
 
 " quickfixのサイズ調整
-augroup AdjustQuickfixWindow
+augroup adjust_quickfix_window
   autocmd!
   autocmd FileType qf exe max([min([line('$'),&lines/2]),10]).'wincmd _'
 augroup END
 
 " insertモード終了時自動でpasteモードを終了する
-augroup AutoPasteLeave
+augroup auto_paste_leave
   autocmd!
   autocmd InsertLeave * set nopaste
+augroup END
+
+augroup delete_netrwhist
+  autocmd!
+  autocmd VimLeave * if filereadable(expand('~/.vim/.netrwhist')) | call delete(expand('~/.vim/.netrwhist')) | endif 
 augroup END
