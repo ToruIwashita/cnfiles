@@ -5,9 +5,9 @@ set nocompatible
 if has('vim_starting')
   set runtimepath+=~/.vim/plugged/vim-plug
   if !isdirectory(expand('~/.vim/plugged/vim-plug'))
-    echo 'install vim-plug...'
+    echo 'install vim-plug'
     call mkdir('~/.vim/plugged/vim-plug', 'p')
-    call system('git clone git@github.com:junegunn/vim-plug.git ~/.vim/plugged/vim-plug/autoload')
+    call system('git clone https://github.com/junegunn/vim-plug.git ~/.vim/plugged/vim-plug/autoload')
   end
 endif
 
@@ -60,6 +60,7 @@ Plug 'jiangmiao/auto-pairs'            " 自動で閉じ記号を付与
 Plug 'kshenoy/vim-signature'           " マーカー表示
 Plug 'adie/BlockDiff'                  " BlockDiff(選択範囲の比較)
 Plug 'LeafCage/yankround.vim'          " ヤンク履歴管理
+Plug 'Konfekt/FastFold'                " 自動折畳
 Plug 'vim-scripts/AnsiEsc.vim'         " ANSIカラー表示
 Plug 'vim-scripts/QuickBuf'            " バッファ操作
 Plug 'ToruIwashita/tabmove-assist.vim' " タブ移動補助
