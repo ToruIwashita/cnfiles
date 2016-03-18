@@ -21,7 +21,6 @@ set t_Co=256                    " 256色モード
 set laststatus=2                " ステータスライン常に表示
 set showtabline=2               " タブライン常に表示
 set fileencoding=utf-8          " カレントバッファ内のファイルの文字UTF-8
-set synmaxcol=200               " 1行のシンタックスハイライトする文字の最大値
 set expandtab                   " タブ文字の代わりに半角スペース
 set autoindent                  " C言語スタイルインデント
 set shiftwidth=2                " オートインデント時の空白文字数
