@@ -42,7 +42,7 @@ Plug 'thinca/vim-quickrun'             " バッファ上のソースコードを
 Plug 'thinca/vim-tabrecent'            " 直前のタブに戻る
 Plug 'osyo-manga/shabadou.vim'         " 汎用的なquickrun-hook
 Plug 'osyo-manga/vim-over'             " 置換プレビュー
-Plug 'tmux-plugins/vim-tmux'           " vim-tmux
+Plug 'tmux-plugins/vim-tmux'           " tmux用プラグイン
 Plug 't9md/vim-choosewin'              " ウィンドウ対話的選択
 Plug 'gregsexton/gitv'                 " gitv(コミットログ閲覧用)
 Plug 'scrooloose/syntastic'            " シンタックスチェック
@@ -63,6 +63,7 @@ Plug 'kshenoy/vim-signature'           " マーカー表示
 Plug 'adie/BlockDiff'                  " BlockDiff(選択範囲の比較)
 Plug 'LeafCage/yankround.vim'          " ヤンク履歴管理
 Plug 'Konfekt/FastFold'                " 自動折畳
+Plug 'chrisbra/vim-zsh'                " zsh用プラグイン
 Plug 'vim-scripts/AnsiEsc.vim'         " ANSIカラー表示
 Plug 'vim-scripts/QuickBuf'            " バッファ操作
 Plug 'ToruIwashita/tabmove-assist.vim' " タブ移動補助
