@@ -3,7 +3,7 @@
 
 "" colorscheme
 colorscheme desert
-set background=light
+set background=dark
 
 "" neocomplete
 let g:neocomplete#enable_at_startup = 1 " neocompleteを起動時に有効化
