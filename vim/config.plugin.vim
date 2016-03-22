@@ -46,6 +46,7 @@ let g:ctrlp_max_depth = 30                        " ディレクトリ再帰検�
 let g:ctrlp_open_new_file = 'r'                   " 新しいファイルをカレントウィンドウに開く
 let g:ctrlp_open_multiple_files = 'jt'            " 複数ファイルを開く時新しいタブで開き,全て開き終わった後1つ目に移動する
 let g:ctrlp_cache_dir = '~/.cache/vim/ctrlp'      " キャッシュディレクトリ
+let g:ctrlp_types = ['fil', 'buf']                " 使用するモード指定(WIP)
 " CtrlPキーマッピング
 let g:ctrlp_prompt_mappings = {
   \ 'ToggleRegex()':        ['<C-_>'],
