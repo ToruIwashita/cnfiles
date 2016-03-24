@@ -15,16 +15,28 @@ let g:session_autoload = 'no'
 " 1分間に1回自動保存をしない(する場合は1)
 let g:session_autosave_periodic = 0
 
-fun! s:save_session(session_name)
-  exec 'SaveSession '.a:session_name.'.session'
+fun! s:save_session(...)
+  if a:0
+    let session_name = a:1
+  else
+    let session_name = 'default'
+  endif
+
+  exec 'SaveSession '.session_name.'.session'
 endf
 
-fun! s:load_session(session_name)
-  exec 'OpenSession '.a:session_name.'.session'
+fun! s:load_session(...)
+  if a:0
+    let session_name = a:1
+  else
+    let session_name = 'default'
+  endif
+
+  exec 'OpenSession '.session_name.'.session'
 endf
 
 fun! s:_load_session_names(arg_lead, cmd_line, cursor_pos)
-  let session_names = map(map(split(expand(g:session_directory.'/*.session.*')), 'fnamemodify(v:val, ":t")'), 'matchstr(v:val, "\\zs\\(.*\\)\\ze\.session\.vim", 0)')
+  let session_names = map(map(split(expand(g:session_directory.'/*.session.*')), 'fnamemodify(v:val, ":t")'), 'matchstr(v:val, "^\\zs\\(.*\\)\\ze\.session\.vim$", 0)')
   return filter(session_names, 'v:val =~ "^'.fnameescape(a:arg_lead).'"')
 endf
 
