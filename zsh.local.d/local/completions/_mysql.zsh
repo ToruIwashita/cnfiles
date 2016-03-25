@@ -19,7 +19,7 @@ _mf() {
     '(-v --vertical)'{-v,--vertical}'[Vertical display]' \
     '(-w --where)'{-w,--where}'[Where condition]' \
     '(-h --help)'{-h,--help}'[Show this help text]' \
-    '*: :__my-show-tables'
+    '(:)*: :__my-show-tables'
 }
 
 _myst() {
