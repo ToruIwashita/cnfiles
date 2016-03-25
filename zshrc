@@ -55,9 +55,10 @@ for dir in ${zsh_function_dirs[@]}; do
     autoload -Uz $file:t && $file:t
   done
 done
+
 # 設定読込
 [[ -f $zsh_dir/config.zsh ]] && source $zsh_dir/config.zsh
 [[ -f $zsh_dir/config.local.zsh ]] && source $zsh_dir/config.local.zsh
 
 # 重複パスを除去
-typeset -U path fpath precmd_functions chpwd_functions ld_library_path include
+typeset -U path fpath ld_library_path include precmd_functions chpwd_functions
