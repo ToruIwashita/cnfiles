@@ -4,6 +4,9 @@ local -a zsh_function_dirs
 # グローバル変数
 typeset -ga precmd_functions
 typeset -ga chpwd_functions
+# LD_LIBRARY_PATH,INCLUDE関連付け
+[[ -z $ld_library_path ]] && typeset -xT LD_LIBRARY_PATH ld_library_path
+[[ -z $include ]] && typeset -xT INCLUDE include
 
 zsh_dir=~/.zsh.d
 zsh_plugin_dir=$zsh_dir/plugin
@@ -16,10 +19,6 @@ zsh_function_dirs=(
   $zsh_dir/local/completions
   $zsh_dir/local/widgets
 )
-
-## LD_LIBRARY_PATH,INCLUDE関連付け
-[[ -z $ld_library_path ]] && typeset -xT LD_LIBRARY_PATH ld_library_path
-[[ -z $include ]] && typeset -xT INCLUDE include
 
 # plugin path
 zsh_completions_src=$zsh_plugin_dir/zsh-completions/zsh-completions.plugin.zsh
