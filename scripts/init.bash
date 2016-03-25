@@ -38,6 +38,14 @@ else
   cp -p $ZSH_CONFIG_LOCAL_FILE_SOURCE_PATH $ZSH_CONFIG_LOCAL_FILE_DEST_PATH
 fi
 
+# zsh.d/env.local.zsh file
+if [[ -f $ZSH_ENV_LOCAL_FILE_DEST_PATH ]]; then
+  printf "\e[32m$ZSH_ENV_LOCAL_FILE_DEST_PATH file already exists\e[0m\n"
+else
+  printf "\e[31mcopy file $ZSH_ENV_LOCAL_FILE_SOURCE_PATH to $ZSH_ENV_LOCAL_FILE_DEST_PATH\e[0m\n"
+  cp -p $ZSH_ENV_LOCAL_FILE_SOURCE_PATH $ZSH_ENV_LOCAL_FILE_DEST_PATH
+fi
+
 # zsh.d/local dir
 if [[ -d $ZSH_CONFIG_LOCAL_DIR_DEST_PATH ]]; then
   printf "\e[32m$ZSH_CONFIG_LOCAL_DIR_DEST_PATH dir already exists\e[0m\n"
