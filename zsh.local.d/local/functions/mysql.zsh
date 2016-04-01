@@ -7,6 +7,7 @@ __my-check-presence-of-args() {
 
   return 0
 }
+
 __my-check-args() {
   __my-check-presence-of-args $*
   (( $? )) && return 1
