@@ -167,7 +167,7 @@ watch-myps() {
 }
 
 mf() {
-  local -a params
+  local -a args
   local my_cmd priority_condition group_condition limit_condition order_condition selected_field_list vertical_option where_condition table_name self_cmd help usage
 
   self_cmd=$0
@@ -244,7 +244,7 @@ EOF`
         ;;
       -- | -) # Stop option processing
         shift;
-        params+=("$@")
+        args+=("$@")
         break
         ;;
       -*)
@@ -252,17 +252,17 @@ EOF`
         return 1
         ;;
       *)
-        params+=("$1")
+        args+=("$1")
         shift 1
         ;;
     esac
   done
 
-  if (( ! $#params )); then
+  if (( ! $#args )); then
     print $usage
     return 1
   fi
-  table_name=" ${params[1]}"
+  table_name=" ${args[1]}"
 
   (( ! $#selected_field_list )) && selected_field_list=' *'
 
