@@ -23,7 +23,7 @@ pmout() {
     return 1
   fi
 
-  echo '<meta charset="utf-8">\n'
+  print '<meta charset="utf-8">\n'
   markdown $1
 }
 
