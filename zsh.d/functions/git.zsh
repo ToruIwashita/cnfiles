@@ -206,7 +206,7 @@ EOF`
     git pull origin $current_branch
   else
     while :; do
-      print -n "'$current_branch' rebase on '$base_branch' (y/n)? "
+      print -n "rebase '$current_branch' based on '$base_branch' (y/n)? "
 
       read answer
       case "$answer" in
