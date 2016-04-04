@@ -110,28 +110,78 @@ gd() {
 }
 
 gsw() {
-  local usage branch_already_exists
+  local -a args branch remote_branch branch_already_exists
+  local self_cmd help usage
 
-  usage="usage: $0 <branch>"
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <argument info>
+          [-r --remote-branch <branch name>]
+          [-h --help]
+EOF`
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -r | --remote-branch)
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        remote_branch="$2"
+        shift 2
+        ;;
+      --help | -h)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift;
+        args+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        args+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
   if ! $(git rev-parse 2>/dev/null); then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
   fi
 
-  if (( $# != 1 )); then
-    print $usage 1>&2
+  if (( ${#args} )); then
+    branch=${args[1]}
+  else
+    branch=$remote_branch
+  fi
+
+  if (( ! $#branch )); then
+    print $usage
     return 1
   fi
 
-  branch_already_exists=${#${(M)${(R)$(git branch)#\*}:#$1}}
+  branch_already_exists=${#${(M)${(R)$(git branch)#\*}:#$branch}}
 
   if (( branch_already_exists )); then
     git checkout $1
   else
-    gll
+    if (( $#remote_branch )); then
+      print 'fetching remote'
+      git fetch && git branch $branch origin/$branch
+    else
+      gll
+    fi
+
     echo
-    git checkout -b $1
+    git checkout -b $branch
   fi
 }
 
@@ -154,7 +204,6 @@ gud() {
 }
 
 gll() {
-  local -a args
   local self_cmd help usage current_branch base_branch answer
 
   self_cmd=$0
@@ -242,7 +291,6 @@ glls() {
 }
 
 gsh() {
-  local -a args
   local self_cmd help usage force current_branch answer
 
   self_cmd=$0
@@ -326,25 +374,6 @@ grb() {
 
   print "rebase HEAD~$1"
   git rebase -i HEAD~$1
-}
-
-gcloneb() {
-  local usage
-
-  usage="usage: $0 <branch>"
-  if ! $(git rev-parse 2>/dev/null); then
-    print 'Not a git repository: .git'
-    print $usage 1>&2
-    return 1
-  fi
-
-  if (( ! $# )); then
-    print $usage 1>&2
-    return 1
-  fi
-
-  print "clone origin/$1"
-  git fetch && git branch $1 origin/$1 && gsw $1
 }
 
 gdeleteb() {

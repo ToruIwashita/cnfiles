@@ -37,6 +37,10 @@ __git-branches() {
   compadd ${(R)$(git branch)#\*}
 }
 
+__git-remote-branches() {
+  compadd ${${${(f)"$(git branch --remote)"}:#*->*}#[[:space:]]*origin/}
+}
+
 _gam() {
   if $(git rev-parse 2>/dev/null); then
     _arguments '*: :__git-modified-files'
@@ -87,7 +91,10 @@ _gd() {
 
 _gsw() {
   if $(git rev-parse 2>/dev/null); then
-    _arguments '(:)*: :__git-branches'
+    _arguments \
+      '(-r --remote-branch)'{-r,--remote-branch}'[Switch remote branch]: :__git-remote-branches' \
+      '(-h --help)'{-h,--help}'[Show this help text]' \
+      '(:)*: :__git-branches'
   fi
 }
 
