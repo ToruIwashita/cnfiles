@@ -9,7 +9,12 @@ local dir file
 # グローバル変数
 typeset -g zsh_dir=~/.zsh.d
 typeset -g zsh_plugin_dir=$zsh_dir/plugin
-typeset -ga zsh_sub_dirs=(
+typeset -ga zsh_sub_dirs
+typeset -ga precmd_functions
+typeset -ga chpwd_functions
+
+# typesetで配列は代入不可
+zsh_sub_dirs=(
   $zsh_dir/functions
   $zsh_dir/completions
   $zsh_dir/widgets
@@ -18,8 +23,6 @@ typeset -ga zsh_sub_dirs=(
   $zsh_dir/local/completions
   $zsh_dir/local/widgets
 )
-typeset -ga precmd_functions
-typeset -ga chpwd_functions
 
 # 環境変数
 [[ -f $zsh_dir/env.zsh ]] && source $zsh_dir/env.zsh

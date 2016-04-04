@@ -206,7 +206,7 @@ EOF`
     git pull origin $current_branch
   else
     while :; do
-      print -n "'$current_branch' rebase on '$base_branch' (y/n)? "
+      print -n "rebase '$current_branch' based on '$base_branch' (y/n)? "
 
       read answer
       case "$answer" in
@@ -389,7 +389,7 @@ EOF`
     esac
   done
 
-  git fetch && echo "Fetched remote\n"
+  git fetch && print "Fetched remote\n"
   merged_branches=(${(R)${(R)${(@f)"$(git branch --merged)"}:#\*[[:space:]]*}##*[[:space:]]})
 
   if (( $force )); then
@@ -440,7 +440,7 @@ EOF`
 __git-ref-head() {
   local ref
   ref=$(git symbolic-ref HEAD --short 2>/dev/null) || return 1
-  echo $ref
+  print $ref
 }
 
 __ga() {
