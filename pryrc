@@ -44,7 +44,15 @@ Pry.config.commands.alias_command 'q', 'exit'
 Pry.config.commands.alias_command 'lg', 'ls --grep'
 Pry.config.commands.alias_command 'wa', 'whereami'
 
-## Rails
+## pry-byebug
+if defined?(PryByebug)
+  Pry.commands.alias_command 'c', 'continue'
+  Pry.commands.alias_command 's', 'step'
+  Pry.commands.alias_command 'n', 'next'
+  Pry.commands.alias_command 'f', 'finish'
+end
+
+## rails
 rails = File.join(Dir.getwd,'config','environment.rb')
 
 if File.exist?(rails)
