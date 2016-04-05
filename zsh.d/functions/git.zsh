@@ -171,7 +171,7 @@ EOF`
   branch_already_exists=${#${(M)${(R)$(git branch)#\*}:#$branch}}
 
   if (( branch_already_exists )); then
-    git checkout $1
+    git checkout $branch
   else
     if (( $#remote_branch )); then
       print 'fetching remote'
