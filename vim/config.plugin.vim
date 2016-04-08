@@ -1,7 +1,6 @@
 set encoding=utf-8
 scriptencoding utf-8
-
-" vim-plugで管理しているプラグインでafter/以下では動作しない設定を記述する
+"" vim-plugで管理しているプラグインでafter/以下では動作しない設定を記述する
 
 "" colorscheme
 colorscheme desert

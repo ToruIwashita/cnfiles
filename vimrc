@@ -1,7 +1,7 @@
 set encoding=utf-8
 scriptencoding utf-8
-
 "" 初期設定
+
 " vi互換モードoff(純正のvim設定適用)
 set nocompatible
 " 起動時にvim-plugの存在チェック
