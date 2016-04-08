@@ -34,6 +34,9 @@ Plug 'kana/vim-niceblock'              " ビジュアル選択時にI,Aで行頭
 Plug 'vim-ruby/vim-ruby'               " vim-ruby
 Plug 'ngmy/vim-rubocop'                " vim-rubocop
 Plug 'kchmck/vim-coffee-script'        " vim-coffee-script
+Plug 'ynkdir/vim-vimlparser'           " vimlのパーサー(構文解析)
+Plug 'syngan/vim-vimlint'              " syntasticのデフォルトvimlシンタックスチェッカー
+Plug 'scrooloose/syntastic'            " シンタックスチェック
 Plug 'tomtom/tcomment_vim'             " コメントアウト
 Plug 'itchyny/lightline.vim'           " ステータスライン
 Plug 'thinca/vim-visualstar'           " visualstar(選択範囲のテキストで検索)
@@ -45,7 +48,6 @@ Plug 'osyo-manga/vim-over'             " 置換プレビュー
 Plug 'tmux-plugins/vim-tmux'           " vim-tmux
 Plug 't9md/vim-choosewin'              " ウィンドウ対話的選択
 Plug 'gregsexton/gitv'                 " gitv(コミットログ閲覧用)
-Plug 'scrooloose/syntastic'            " シンタックスチェック
 Plug 'ctrlpvim/ctrlp.vim'              " 多機能finder
 Plug 'tacahiroy/ctrlp-funky'           " ctrlpで関数を絞り込む
 Plug 'jasoncodes/ctrlp-modified.vim'   " ctrlpでgitで変更があったファイルを絞り込む
