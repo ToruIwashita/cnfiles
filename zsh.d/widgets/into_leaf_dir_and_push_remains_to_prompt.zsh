@@ -17,7 +17,7 @@ _into-leaf-dir-and-push-remains-to-prompt() {
   zle -I
   zle kill-whole-line
 
-  cd $dest 2>/dev/null && changed=1
+  cd $dest 2>/dev/null && (( changed++ ))
   if (( changed )); then
     print -s "cd $dest"
     args[$resource_index]=''
