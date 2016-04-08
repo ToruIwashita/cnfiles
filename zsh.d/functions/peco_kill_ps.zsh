@@ -1,5 +1,6 @@
 ## peco-kill-ps
 peco-kill-ps() {
+  integer force
   local -a args processes pids
   local self_cmd help usage process_list_header process pid answer
 
@@ -13,7 +14,7 @@ EOF`
   while (( $# > 0 )); do
     case "$1" in
       -f | --force)
-        force=1
+        (( force++ ))
         shift 1
         ;;
       -h | --help)
@@ -40,7 +41,7 @@ EOF`
 
   (( ! $#processes )) && return 0
 
-  if (( $force )); then
+  if (( force )); then
     while :; do
       print -n 'Force kill (y/n)? '
 

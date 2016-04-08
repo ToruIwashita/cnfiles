@@ -288,7 +288,8 @@ glls() {
 }
 
 gsh() {
-  local self_cmd help usage force current_branch answer
+  integer force
+  local self_cmd help usage current_branch answer
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -306,7 +307,7 @@ EOF`
   while (( $# > 0 )); do
     case "$1" in
       -f | --force)
-        force=1
+        (( force++ ))
         shift 1
         ;;
       -h | --help)
@@ -332,7 +333,7 @@ EOF`
 
   print "push $current_branch branch"
 
-  if (( $force )); then
+  if (( force )); then
     while :; do
       print -n "Force push (y/n)? "
       read answer
@@ -374,6 +375,7 @@ grb() {
 }
 
 gdeleteb() {
+  integer force
   local -a merged_branches
   local self_cmd help usage merged_branch answer
 
@@ -393,7 +395,7 @@ EOF`
   while (( $# > 0 )); do
     case "$1" in
       -f | --force)
-        force=1
+        (( force++ ))
         shift 1
         ;;
       -h | --help)
@@ -418,7 +420,7 @@ EOF`
   git fetch && print "Fetched remote\n"
   merged_branches=(${(R)${(R)${(@f)"$(git branch --merged)"}:#\*[[:space:]]*}##*[[:space:]]})
 
-  if (( $force )); then
+  if (( force )); then
     while :; do
       print -n "Force delete merged branches (y/n)? "
 

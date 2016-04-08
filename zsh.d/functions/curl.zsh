@@ -1,7 +1,8 @@
 ## curl関連
 cl() {
+  integer verbose_mode
   local -a args
-  local self_cmd help usage verbose_mode
+  local self_cmd help usage
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -12,7 +13,7 @@ EOF`
   while (( $# > 0 )); do
     case "$1" in
       -v | --verbose)
-        verbose_mode=1
+        (( verbose_mode++ ))
         shift 1
         ;;
       -h | --help)
@@ -40,7 +41,7 @@ EOF`
     return 1
   fi
 
-  if (( $verbose_mode )); then
+  if (( verbose_mode )); then
     curl -kL $args
   else
     curl -kL -I $args
