@@ -5,6 +5,10 @@ __git-status() {
   print $git_status
 }
 
+__git-branch-list() {
+  print ${(R)$(git branch)#\*}
+}
+
 __git-modified-files() {
   local -a git_status_res
 
@@ -34,11 +38,23 @@ __git-both-modified-files() {
 }
 
 __git-branches() {
-  compadd ${(R)$(git branch)#\*}
+  compadd $(__git-branch-list)
 }
 
 __git-remote-branches() {
-  compadd ${${${(f)"$(git branch --remote)"}:#*->*}#[[:space:]]*origin/}
+  typeset -A existing_branches
+  local -a remote_branches
+  local existing_branch branch
+
+  for existing_branch in $(__git-branch-list); do
+    existing_branches[$existing_branch]='defined'
+  done
+
+  for branch in ${${${(f)"$(git branch --remote)"}:#*->*}#[[:space:]]*origin/}; do
+    (( ! $+existing_branches[$branch] )) && remote_branches=($remote_branches $branch)
+  done
+
+  compadd $remote_branches
 }
 
 _gam() {
