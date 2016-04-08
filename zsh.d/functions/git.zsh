@@ -170,19 +170,16 @@ EOF`
 
   branch_already_exists=${#${(M)${(R)$(git branch)#\*}:#$branch}}
 
-  if (( branch_already_exists )); then
-    git checkout $branch
-  else
+  if (( ! branch_already_exists )); then
     if (( $#remote_branch )); then
       print 'fetching remote'
       git fetch && git branch $branch origin/$branch
     else
-      gll
+      git branch $branch
     fi
-
-    echo
-    git checkout -b $branch
   fi
+
+  git checkout $branch
 }
 
 gud() {
