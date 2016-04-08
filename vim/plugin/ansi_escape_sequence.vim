@@ -1,4 +1,7 @@
 "" FILE: ansi_escape_sequence.vim
+set encoding=utf-8
+scriptencoding utf-8
+
 let s:cpo_save = &cpo
 set cpo&vim
 
