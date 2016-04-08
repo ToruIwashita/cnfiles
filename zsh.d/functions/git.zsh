@@ -44,6 +44,7 @@ grh() {
 }
 
 gc() {
+  integer temporary
   local self_cmd help usage
 
   self_cmd=$0
@@ -62,7 +63,7 @@ EOF`
   while (( $# > 0 )); do
     case "$1" in
       -t | --temporary)
-        temporary=1
+        (( temporary++ ))
         shift 1
         ;;
       -h | --help)
@@ -110,7 +111,8 @@ gd() {
 }
 
 gsw() {
-  local -a args branch remote_branch branch_already_exists
+  integer branch_already_exists
+  local -a args branch remote_branch
   local self_cmd help usage
 
   self_cmd=$0
