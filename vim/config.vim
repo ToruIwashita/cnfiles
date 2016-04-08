@@ -1,3 +1,4 @@
+"" FILE: config.vim
 set encoding=utf-8
 scriptencoding utf-8
 "" Vimの基本的な設定を記述

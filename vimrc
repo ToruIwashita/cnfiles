@@ -1,3 +1,4 @@
+"" FILE: vimrc
 set encoding=utf-8
 scriptencoding utf-8
 "" 初期設定
