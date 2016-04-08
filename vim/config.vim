@@ -1,8 +1,9 @@
-"" FILE: config.vim
-" Vimの基本的な設定を記述
+set encoding=utf-8
+scriptencoding utf-8
 
+"" Vimの基本的な設定を記述
 "" leader
-let mapleader = ','
+let g:mapleader = ','
 
 "" シンタックスハイライト
 syntax on
