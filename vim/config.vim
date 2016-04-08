@@ -124,9 +124,9 @@ noremap <C-w><C-[> gT
 " 全てのバッファをタブで開く
 noremap <leader>_ :<C-u>tab ball<CR>
 " <C-w>1..9で任意の番号のタブへ移動
-for i in range(1, 9)
-  execute 'noremap <C-w>'.i.' <NOP>'
-  execute 'noremap <C-w>'.i.' :<C-u>tabnext '.i.'<CR>'
+for s:i in range(1, 9)
+  execute 'noremap <C-w>'.s:i.' <NOP>'
+  execute 'noremap <C-w>'.s:i.' :<C-u>tabnext '.s:i.'<CR>'
 endfor
 " タブを閉じる
 noremap <C-w>X :<C-u>tabclose<CR>
