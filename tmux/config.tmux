@@ -8,9 +8,6 @@ set -g prefix C-q
 set -g default-terminal 'screen-256color'
 # screen-256colorでヤンク時にクリップボード共有する
 set -ag terminal-overrides "screen:Ms=\\E]52;%p1%s;%p2%s\\7"
-# utf-8サポート有効
-setw -g utf8 on 
-set -g status-utf8 on
 # vim風copy-mode
 setw -g mode-key vi
 # キーストロークのディレイ0sec
