@@ -34,6 +34,10 @@ let g:lightline.tabline = {
   \ 'right': [ [ '' ] ]
 \ }
 
+let g:lightline.component = {
+  \ 'lineinfo': '%3l/%L:%-2v'
+\ }
+
 function! LightLineModified()
   return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
@@ -72,7 +76,7 @@ function! LightLineFileformat()
 endfunction
 
 function! LightLineFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no filetype') : ''
 endfunction
 
 function! LightLineFileencoding()
