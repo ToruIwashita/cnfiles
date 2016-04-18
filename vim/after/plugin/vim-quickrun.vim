@@ -44,8 +44,8 @@ function! s:rspec_quickrun()
     let b:quickrun_config = {'type': 'rspec/bundle'}
   endif
 
-  nnoremap <expr> <leader>r ':<C-u>:wa<CR>:QuickRun -cmdopt ":'.line('.').'"<CR>'
-  nnoremap <leader>ra :<C-u>:wa<CR>:QuickRun<CR>
+  nnoremap <expr> <leader>s ':<C-u>:wa<CR>:QuickRun -cmdopt ":'.line('.').'"<CR>'
+  nnoremap <leader>sa :<C-u>:wa<CR>:QuickRun<CR>
 endfunction
 
 " 設定変更用の関数
