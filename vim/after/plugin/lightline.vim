@@ -35,7 +35,7 @@ let g:lightline.tabline = {
 \ }
 
 let g:lightline.component = {
-  \ 'lineinfo': '%3l/%L:%-2v'
+  \ 'lineinfo': 'col: %v | row: %l/%L'
 \ }
 
 function! LightLineModified()
