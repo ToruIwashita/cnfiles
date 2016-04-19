@@ -249,6 +249,7 @@ augroup auto_paste_leave
   autocmd InsertLeave * set nopaste
 augroup END
 
+" netrwhistを削除する
 augroup delete_netrwhist
   autocmd!
   autocmd VimLeave * if filereadable(expand('~/.vim/.netrwhist')) | call delete(expand('~/.vim/.netrwhist')) | endif 
