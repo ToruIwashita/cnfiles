@@ -24,8 +24,10 @@ Plug 'Shougo/neosnippet'               " スニペット展開
 Plug 'honza/vim-snippets'              " 各種snippet
 Plug 'tpope/vim-repeat'                " vim-surroundの機能を.反復
 Plug 'tpope/vim-abolish'               " 強化版置換コマンド
-Plug 'tpope/vim-fugitive'              " fugitive(ステータスラインのブランチ名と,Gblame用)
 Plug 'tpope/vim-surround'              " text-object操作
+Plug 'tpope/vim-fugitive'              " fugitive(ステータスラインのブランチ名と,Gblame用)
+Plug 'gregsexton/gitv'                 " gitv(コミットログ閲覧用)
+Plug 'rhysd/committia.vim'             " コミットログ入力サポート
 Plug 'xolox/vim-misc'                  " vim-sessionが依存しているplugin(dependsで依存を表せるが敢えてしていない)
 Plug 'xolox/vim-session'               " セッション保存
 Plug 'kana/vim-submode'                " 連続入力などをサポートするサブモードを定義する
@@ -49,7 +51,6 @@ Plug 'osyo-manga/shabadou.vim'         " 汎用的なquickrun-hook
 Plug 'osyo-manga/vim-over'             " 置換プレビュー
 Plug 'tmux-plugins/vim-tmux'           " vim-tmux
 Plug 't9md/vim-choosewin'              " ウィンドウ対話的選択
-Plug 'gregsexton/gitv'                 " gitv(コミットログ閲覧用)
 Plug 'ctrlpvim/ctrlp.vim'              " 多機能finder
 Plug 'tacahiroy/ctrlp-funky'           " ctrlpで関数を絞り込む
 Plug 'jasoncodes/ctrlp-modified.vim'   " ctrlpでgitで変更があったファイルを絞り込む
