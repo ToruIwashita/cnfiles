@@ -67,8 +67,8 @@ function! s:switch_rspec_quickrun(arg)
 endfunction
 
 " 設定変更可能なrspecの種類補完
-fun! s:_types_of_rspec(arg_lead, cmd_line, cursor_pos)
-  return filter(['normal', 'bundle', 'bin'], 'v:val =~ "^'.fnameescape(a:arg_lead).'"')
+fun! s:_types_of_rspec(...)
+  return filter(['normal', 'bundle', 'bin'], 'v:val =~ "^'.fnameescape(a:1).'"')
 endf
 
 " 設定変更の用インターフェース
@@ -77,7 +77,7 @@ command! -nargs=? -complete=customlist,s:_types_of_rspec SwitchRspecQuickrun cal
 command! StopQuickrun call quickrun#sweep_sessions()
 
 " quickrunの出力結果にAnsiEscを実行して色付けする
-augroup Quickrun
+augroup quickrun
   autocmd!
   autocmd FileType quickrun AnsiEsc
   autocmd BufReadPost *_spec.rb call s:rspec_quickrun()

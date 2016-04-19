@@ -130,7 +130,7 @@ function! TagbarStatusFunc(current, sort, fname, ...) abort
   return lightline#statusline(0)
 endfunction
 
-augroup AutoSyntastic
+augroup auto_syntastic
   autocmd!
   autocmd BufWritePost * call s:syntastic()
 augroup END
