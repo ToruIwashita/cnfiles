@@ -8,6 +8,8 @@ set split-view-height = 85%
 set diff-context = 5
 
 ## generic
+# grepを無効化
+bind generic g none
 # <C-p>で先頭へ移動
 bind generic <C-P> move-first-line
 # <C-n>で末端へ移動
