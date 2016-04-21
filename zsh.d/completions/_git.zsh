@@ -1,12 +1,16 @@
 ## git関数用補完
 __git-status() {
   local git_status
-  git_status=$(git status -s) || return
+  git_status=$(git status -s --porcelain) || return
   print $git_status
 }
 
 __git-branch-list() {
   print ${(R)$(git branch)#\*}
+}
+
+__git-changed-files() {
+  compadd $(git diff --name-only origin/HEAD...HEAD)
 }
 
 __git-modified-files() {
