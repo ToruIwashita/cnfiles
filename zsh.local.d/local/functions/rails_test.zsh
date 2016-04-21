@@ -12,15 +12,16 @@ brspec() {
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [spec file]
-              [-h --help]
+              [-c --changed-file <spec file>]
               [-m --modified-file <spec file>]
               [-t --tag <tag name>]
               [-u --untracked-file <spec file>]
+              [-h --help]
 EOF`
 
   while (( $# > 0 )); do
     case "$1" in
-      -m | --modified-file)
+      -c | --changed-file)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
@@ -28,7 +29,7 @@ EOF`
         file_paths+=("$2")
         shift 2
         ;;
-      -u | --untracked-file)
+      -m | --modified-file)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
           return 1
@@ -42,6 +43,14 @@ EOF`
           return 1
         fi
         tag_option="--tag $2"
+        shift 2
+        ;;
+      -u | --untracked-file)
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        file_paths+=("$2")
         shift 2
         ;;
       -h | --help)
