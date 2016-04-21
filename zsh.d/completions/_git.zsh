@@ -1,7 +1,7 @@
 ## git関数用補完
 __git-status() {
   local git_status
-  git_status=$(git status -s --porcelain) || return
+  git_status=$(git status --short --porcelain) || return
   print $git_status
 }
 
