@@ -358,7 +358,7 @@ EOF`
 }
 
 grb() {
-  local usage
+  local usage rebase_target
 
   usage="usage: $0 <number for rebase target>"
   if ! $(git rev-parse 2>/dev/null); then
@@ -368,12 +368,13 @@ grb() {
   fi
 
   if (( ! $# )); then
-    print $usage 1>&2
-    return 1
+    rebase_target='origin/HEAD'
+  else
+    rebase_target="HEAD~$1"
   fi
 
-  print "rebase HEAD~$1"
-  git rebase -i HEAD~$1
+  print "rebase $rebase_target"
+  git rebase -i $rebase_target
 }
 
 gdeleteb() {
