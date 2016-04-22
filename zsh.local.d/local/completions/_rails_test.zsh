@@ -3,13 +3,25 @@ __word-of-current() {
   compadd 'current'
 }
 
-# _git.zshの補完も使用
+# _git.zshの補完使用
+__git-changed-spec-files() {
+  compadd ${(M)$(__git-changed-list)#*_spec.rb}
+}
+
+__git-modified-spec-files() {
+  compadd ${(M)$(__git-modified-list)#*_spec.rb}
+}
+
+__git-untracked-spec-files() {
+  compadd ${(M)$(__git-untracked-list)#*_spec.rb}
+}
+
 _brspec() {
   _arguments \
-    '(-c --changed-file)'{-c,--changed-file}'[With changed file completion]: :__git-changed-files' \
-    '(-m --modified-file)'{-m,--modified-file}'[With modified file completion]: :__git-modified-files' \
-    '(-u --untracked-file)'{-u,--untracked-file}'[With untraced file completion]: :__git-untracked-files' \
+    '(-c --changed-file)'{-c,--changed-file}'[With changed file completion]: :__git-changed-spec-files' \
+    '(-m --modified-file)'{-m,--modified-file}'[With modified file completion]: :__git-modified-spec-files' \
     '(-t --tag)'{-t,--tag}'[Tag name]: :__word-of-current' \
+    '(-u --untracked-file)'{-u,--untracked-file}'[With untraced file completion]: :__git-untracked-spec-files' \
     '(-h --help)'{-h,--help}'[Show this help text]' \
     '*: :_files'
 }
