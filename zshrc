@@ -13,7 +13,8 @@ typeset -ga zsh_sub_dirs
 typeset -ga precmd_functions
 typeset -ga chpwd_functions
 
-# typesetで配列は代入不可
+# typesetで配列は代入不可なので別定義
+# 読み込みはfunctions,completionsの順で優先
 zsh_sub_dirs=(
   $zsh_dir/functions
   $zsh_dir/completions
