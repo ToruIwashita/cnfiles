@@ -1,51 +1,13 @@
 ## git関数用補完
 __git-status() {
-  local git_status
-  git_status=$(git status --short --porcelain) || return
-  print $git_status
+  print "$(git status --short --porcelain)"
 }
 
 __git-branch-list() {
   print ${(R)$(git branch)#\*}
 }
 
-__git-changed-files() {
-  compadd $(git diff --name-only origin/HEAD...HEAD)
-}
-
-__git-modified-files() {
-  local -a git_status_res
-
-  git_status_res=(${(@f)"$(__git-status)"})
-  compadd ${(R)${(M)git_status_res:#?M*}#?M[[:space:]]}
-}
-
-__git-untracked-files() {
-  local -a git_status_res
-
-  git_status_res=(${(@f)"$(__git-status)"})
-  compadd ${(R)${(M)git_status_res:#\?\?*}#\?\?[[:space:]]}
-}
-
-__git-staged-files() {
-  local -a git_status_res
-
-  git_status_res=(${(@f)"$(__git-status)"})
-  compadd ${(R)${(M)git_status_res:#M?*}#M?[[:space:]]}
-}
-
-__git-both-modified-files() {
-  local -a git_status_res
-
-  git_status_res=(${(@f)"$(__git-status)"})
-  compadd ${(R)${(M)git_status_res:#UU*}#UU[[:space:]]}
-}
-
-__git-branches() {
-  compadd $(__git-branch-list)
-}
-
-__git-remote-branches() {
+__git-remote-branch-list() {
   typeset -A existing_branches
   local -a remote_branches
   local existing_branch branch
@@ -58,7 +20,67 @@ __git-remote-branches() {
     (( ! $+existing_branches[$branch] )) && remote_branches=($remote_branches $branch)
   done
 
-  compadd $remote_branches
+  print $remote_branches
+}
+
+__git-changed-list() {
+  print "$(git diff --name-only origin/HEAD...HEAD)"
+}
+
+__git-modified-list() {
+  local -a git_status_res
+
+  git_status_res=(${(@f)"$(__git-status)"})
+  print ${(R)${(M)git_status_res:#?M*}#?M[[:space:]]}
+}
+
+__git-untracked-list() {
+  local -a git_status_res
+
+  git_status_res=(${(@f)"$(__git-status)"})
+  print ${(R)${(M)git_status_res:#\?\?*}#\?\?[[:space:]]}
+}
+
+__git-staged-list() {
+  local -a git_status_res
+
+  git_status_res=(${(@f)"$(__git-status)"})
+  print ${(R)${(M)git_status_res:#M?*}#M?[[:space:]]}
+}
+
+__git-both-modified-list() {
+  local -a git_status_res
+
+  git_status_res=(${(@f)"$(__git-status)"})
+  print ${(R)${(M)git_status_res:#UU*}#UU[[:space:]]}
+}
+
+__git-branches() {
+  compadd $(__git-branch-list)
+}
+
+__git-remote-branches() {
+  compadd $(__git-remote-branch-list)
+}
+
+__git-changed-files() {
+  compadd $(__git-changed-list)
+}
+
+__git-modified-files() {
+  compadd $(__git-modified-list)
+}
+
+__git-untracked-files() {
+  compadd $(__git-untracked-list)
+}
+
+__git-staged-files() {
+  compadd $(__git-staged-list)
+}
+
+__git-both-modified-files() {
+  compadd $(__git-both-modified-list)
 }
 
 _gam() {
