@@ -1,13 +1,20 @@
 ## git関数用補完
+__git-inside-work-tree() {
+  [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true ]]
+}
+
 __git-status() {
+  __git-inside-work-tree || return
   print "$(git status --short --porcelain)"
 }
 
 __git-branch-list() {
+  __git-inside-work-tree || return
   print ${(R)$(git branch)#\*}
 }
 
 __git-remote-branch-list() {
+  __git-inside-work-tree || return
   typeset -A existing_branches
   local -a remote_branches
   local existing_branch branch
@@ -24,10 +31,12 @@ __git-remote-branch-list() {
 }
 
 __git-changed-list() {
-  print "$(git diff --name-only origin/HEAD...HEAD)"
+  __git-inside-work-tree || return
+  print $(git diff --name-only origin/HEAD...HEAD)
 }
 
 __git-modified-list() {
+  __git-inside-work-tree || return
   local -a git_status_res
 
   git_status_res=(${(@f)"$(__git-status)"})
@@ -35,6 +44,7 @@ __git-modified-list() {
 }
 
 __git-untracked-list() {
+  __git-inside-work-tree || return
   local -a git_status_res
 
   git_status_res=(${(@f)"$(__git-status)"})
@@ -42,6 +52,7 @@ __git-untracked-list() {
 }
 
 __git-staged-list() {
+  __git-inside-work-tree || return
   local -a git_status_res
 
   git_status_res=(${(@f)"$(__git-status)"})
@@ -49,6 +60,7 @@ __git-staged-list() {
 }
 
 __git-both-modified-list() {
+  __git-inside-work-tree || return
   local -a git_status_res
 
   git_status_res=(${(@f)"$(__git-status)"})
@@ -84,90 +96,58 @@ __git-both-modified-files() {
 }
 
 _gam() {
-  if $(git rev-parse 2>/dev/null); then
-    _arguments '*: :__git-modified-files'
-  else
-    _arguments '*: :_files'
-  fi
+  _arguments '*: :__git-modified-files'
 }
 
 _gau() {
-  if $(git rev-parse 2>/dev/null); then
-    _arguments '*: :__git-untracked-files'
-  else
-    _arguments '*: :_files'
-  fi
+  _arguments '*: :__git-untracked-files'
 }
 
 _gab() {
-  if $(git rev-parse 2>/dev/null); then
-    _arguments '*: :__git-both-modified-files'
-  else
-    _arguments '*: :_files'
-  fi
+  _arguments '*: :__git-both-modified-files'
 }
 
 _grh() {
-  if $(git rev-parse 2>/dev/null); then
-    _arguments '*: :__git-staged-files'
-  else
-    _arguments '*: :_files'
-  fi
+  _arguments '*: :__git-staged-files'
 }
 
 _gc() {
-  if $(git rev-parse 2>/dev/null); then
-    _arguments \
-      '(-t --temporary)'{-i,--immediate}'[Temporary commit]' \
-      '(-h --help)'{-h,--help}'[Show this help text]'
-  fi
+  _arguments \
+    '(-t --temporary)'{-i,--immediate}'[Temporary commit]' \
+    '(-h --help)'{-h,--help}'[Show this help text]'
 }
 
 _gd() {
-  if $(git rev-parse 2>/dev/null); then
-    _arguments '*: :__git-modified-files'
-  else
-    _arguments '*: :_files'
-  fi
+  _arguments '*: :__git-modified-files'
 }
 
 _gsw() {
-  if $(git rev-parse 2>/dev/null); then
-    _arguments \
-      '(-r --remote-branch)'{-r,--remote-branch}'[Switch remote branch]: :__git-remote-branches' \
-      '(-h --help)'{-h,--help}'[Show this help text]' \
-      '(:)*: :__git-branches'
-  fi
+  _arguments \
+    '(-r --remote-branch)'{-r,--remote-branch}'[Switch remote branch]: :__git-remote-branches' \
+    '(-h --help)'{-h,--help}'[Show this help text]' \
+    '(:)*: :__git-branches'
 }
 
 _gud() {
-  if $(git rev-parse 2>/dev/null); then
-    _arguments '*: :__git-modified-files'
-  fi
+  _arguments '*: :__git-modified-files'
 }
 
 _gll() {
-  if $(git rev-parse 2>/dev/null); then
-    _arguments \
-      '(-b --rebase)'{-b,--rebase}'[Pull rebase]: :__git-branches' \
-      '(-h --help)'{-h,--help}'[Show this help text]'
-  fi
+  _arguments \
+    '(-b --rebase)'{-b,--rebase}'[Pull rebase]: :__git-branches' \
+    '(-h --help)'{-h,--help}'[Show this help text]'
 }
 
 _gsh() {
-  if $(git rev-parse 2>/dev/null); then
-    _arguments \
-      '(-f --force)'{-f,--force}'[Force push]' \
-      '(-h --help)'{-h,--help}'[Show this help text]'
-  fi
+  _arguments \
+    '(-f --force)'{-f,--force}'[Force push]' \
+    '(-h --help)'{-h,--help}'[Show this help text]'
 }
 
 _gdeleteb() {
-  if $(git rev-parse 2>/dev/null); then
-    _arguments \
-      '(-f --force)'{-f,--force}'[Force delete merged branches]' \
-      '(-h --help)'{-h,--help}'[Show this help text]'
-  fi
+  _arguments \
+    '(-f --force)'{-f,--force}'[Force delete merged branches]' \
+    '(-h --help)'{-h,--help}'[Show this help text]'
 }
 
 compdef _gam gam
