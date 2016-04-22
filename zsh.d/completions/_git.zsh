@@ -1,8 +1,4 @@
 ## git関数用補完
-__git-inside-work-tree() {
-  [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true ]]
-}
-
 __git-status() {
   __git-inside-work-tree || return
   print "$(git status --short --porcelain)"

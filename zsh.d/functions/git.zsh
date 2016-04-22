@@ -1,9 +1,37 @@
 ## git関連関数
+__git-ref-head() {
+  local ref
+  ref=$(git symbolic-ref HEAD --short 2>/dev/null) || return 1
+  print $ref
+}
+
+__git-inside-work-tree() {
+  [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true  ]]
+}
+
+__ga() {
+  local usage
+
+  usage="usage: $0 <files>"
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  if (( ! $# )); then
+    print $usage 1>&2
+    return 1
+  fi
+
+  git add $*
+}
+
 gam() {
   local usage
 
   usage="usage: $0 <files>"
-  if ! $(git rev-parse 2>/dev/null); then
+  if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -29,7 +57,7 @@ grh() {
   local usage
 
   usage="usage: $0 <files>"
-  if ! $(git rev-parse 2>/dev/null); then
+  if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -54,7 +82,7 @@ usage: $self_cmd [-b --rebase <base branch>]
            [-h --help]
 EOF`
 
-  if ! $(git rev-parse 2>/dev/null); then
+  if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -96,7 +124,7 @@ gd() {
   local usage
 
   usage="usage: $0 <file>"
-  if ! $(git rev-parse 2>/dev/null); then
+  if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -153,7 +181,7 @@ EOF`
     esac
   done
 
-  if ! $(git rev-parse 2>/dev/null); then
+  if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -188,7 +216,7 @@ gud() {
   local usage
 
   usage="usage: $0 <files>"
-  if ! $(git rev-parse 2>/dev/null); then
+  if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -212,7 +240,7 @@ usage: $self_cmd [-b --rebase <base branch>]
            [-h --help]
 EOF`
 
-  if ! $(git rev-parse 2>/dev/null); then
+  if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -278,7 +306,7 @@ glls() {
   local usage
 
   usage="usage: $0"
-  if ! $(git rev-parse 2>/dev/null); then
+  if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -300,7 +328,7 @@ usage: $self_cmd [-f --force]
            [-h --help]
 EOF`
 
-  if ! $(git rev-parse 2>/dev/null); then
+  if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -361,7 +389,7 @@ grb() {
   local usage rebase_target
 
   usage="usage: $0 <number for rebase target>"
-  if ! $(git rev-parse 2>/dev/null); then
+  if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -389,7 +417,7 @@ usage: $self_cmd [-f --force]
                 [-h --help]
 EOF`
 
-  if ! $(git rev-parse 2>/dev/null); then
+  if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
@@ -466,28 +494,4 @@ EOF`
       esac
     done
   done
-}
-
-__git-ref-head() {
-  local ref
-  ref=$(git symbolic-ref HEAD --short 2>/dev/null) || return 1
-  print $ref
-}
-
-__ga() {
-  local usage
-
-  usage="usage: $0 <files>"
-  if ! $(git rev-parse 2>/dev/null); then
-    print 'Not a git repository: .git'
-    print $usage 1>&2
-    return 1
-  fi
-
-  if (( ! $# )); then
-    print $usage 1>&2
-    return 1
-  fi
-
-  git add $*
 }
