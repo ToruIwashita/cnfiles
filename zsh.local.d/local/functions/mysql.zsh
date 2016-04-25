@@ -1,21 +1,9 @@
 ## MYSQL
-__my-check-presence-of-args() {
-  if (( ! $# )); then
-    print 'lack of arguments.' 2>&1
-    return 1
-  fi
-
-  return 0
-}
-
 __my-check-args() {
-  __my-check-presence-of-args $*
+  __check-presence-of-args $*
   (( $? )) && return 1
-
-  if [[ $1:e != 'sql' ]]; then
-    print 'invalid extension.' 2>&1
-    return 1
-  fi
+  __check-arg-suffix 'sql' $1
+  (( $? )) && return 1
 
   return 0
 }
