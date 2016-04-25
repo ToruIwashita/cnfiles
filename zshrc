@@ -43,10 +43,14 @@ zmodload -i zsh/terminfo               # terminfoの配列データを扱う(zsh
 
 ## 各種設定・オリジナル関数読込
 # lib読込
-source $zsh_dir/lib/*.zsh(.)
+for file in $zsh_dir/lib/*.zsh(.); do
+  source $file
+done
 # 関数読込
 for dir in ${zsh_sub_dirs[@]}; do
-  source ${dir}/*.zsh(.)
+  for file in ${dir}/*.zsh(.); do
+    source $file
+  done
 done
 
 # 設定読込
