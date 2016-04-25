@@ -1,32 +1,4 @@
 ## git関連関数
-__git-ref-head() {
-  local ref
-  ref=$(git symbolic-ref HEAD --short 2>/dev/null) || return 1
-  print $ref
-}
-
-__git-inside-work-tree() {
-  [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true  ]]
-}
-
-__ga() {
-  local usage
-
-  usage="usage: $0 <files>"
-  if ! __git-inside-work-tree; then
-    print 'Not a git repository: .git'
-    print $usage 1>&2
-    return 1
-  fi
-
-  if (( ! $# )); then
-    print $usage 1>&2
-    return 1
-  fi
-
-  git add $*
-}
-
 gam() {
   local usage
 
