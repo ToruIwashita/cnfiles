@@ -42,15 +42,11 @@ zmodload -i zsh/complist               # 補完メニュー選択モードのキ
 zmodload -i zsh/terminfo               # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
 
 ## 各種設定・オリジナル関数読込
-# lib/以下読込
-for file in $zsh_dir/lib/*.zsh(.); do
-  source $file
-done
+# lib読込
+source $zsh_dir/lib/*.zsh(.)
 # 関数読込
 for dir in ${zsh_sub_dirs[@]}; do
-  for file in ${dir}/*.zsh(.); do
-    source $file
-  done
+  source ${dir}/*.zsh(.)
 done
 
 # 設定読込
