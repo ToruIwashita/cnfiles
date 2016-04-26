@@ -3,6 +3,8 @@ set encoding=utf-8
 scriptencoding utf-8
 "" 初期設定
 
+let g:vim_dir = '~/.vim'
+
 " 起動時にvim-plugの存在チェック
 if has('vim_starting')
   set runtimepath+=~/.vim/plugged/vim-plug
@@ -14,8 +16,7 @@ if has('vim_starting')
 endif
 
 let g:plug_url_format = 'git@github.com:%s.git'
-
-call plug#begin('~/.vim/plugged')
+call plug#begin(expand(vim_dir.'/plugged'))
 
 Plug 'junegunn/vim-plug', {'dir': '~/.vim/plugged/vim-plug/autoload'}
 Plug 'Shougo/vimproc',    {'do': 'make'}
@@ -80,5 +81,5 @@ Plug 'ToruIwashita/git-switcher.vim'   " git管理プロジェクトのセッシ
 call plug#end()
 
 "" 各種設定読込
-if filereadable(expand('~/.vim/config.vim')) | source ~/.vim/config.vim | en
-if filereadable(expand('~/.vim/config.plugin.vim')) | source ~/.vim/config.plugin.vim | en
+if filereadable(expand(vim_dir.'/config.vim')) | exec 'source' expand(vim_dir.'/config.vim') | en
+if filereadable(expand(vim_dir.'/config.plugin.vim')) | exec 'source' expand(vim_dir.'/config.plugin.vim') | en
