@@ -5,7 +5,7 @@ fi
 
 ## alias
 # cd
-alias cdz='cd ~/.zsh.d'
+alias cdz="cd $zsh_dir"
 alias cdv='cd ~/.vim'
 alias cdg='cd ~/.go'
 alias cdl='cd ~/local'
