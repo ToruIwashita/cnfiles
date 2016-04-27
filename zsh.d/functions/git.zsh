@@ -175,7 +175,7 @@ EOF`
   if (( ! branch_already_exists )); then
     if (( $#remote_branch )); then
       print 'fetching remote'
-      git fetch && git branch $branch origin/$branch
+      git fetch --prune && git branch $branch origin/$branch
     else
       git branch $branch
     fi
@@ -420,7 +420,7 @@ EOF`
     esac
   done
 
-  git fetch && print "Fetched remote\n"
+  git fetch --prune && print "Fetched remote\n"
   merged_branches=(${(R)${(R)${(@f)"$(git branch --merged)"}:#\*[[:space:]]*}##*[[:space:]]})
 
   if (( force )); then

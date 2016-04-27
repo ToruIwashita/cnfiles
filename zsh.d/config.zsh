@@ -131,7 +131,7 @@ alias untar='tar xvf'
 # git
 alias ga='git add'
 alias gb='git branch'
-alias gf='git fetch'
+alias gf='git fetch --prune'
 alias gl='git log'
 alias gs='git status'
 # vim

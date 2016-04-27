@@ -1,7 +1,7 @@
 ## immediate-git-fetch
 _immediate-git-fetch() {
   local cmd
-  cmd='git fetch'
+  cmd='git fetch --prune'
 
   if ! $(git rev-parse 2>/dev/null); then
     return 1
