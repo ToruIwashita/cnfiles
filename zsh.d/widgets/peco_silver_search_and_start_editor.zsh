@@ -30,7 +30,7 @@ _peco-silver-search-and-start-editor() {
     file_paths=(${(R)peco_resulting_line%%:*})
   fi
 
-  BUFFER="$EDITOR $file_paths $specified_line"
+  BUFFER="${EDITOR:-vim} $file_paths $specified_line"
   zle accept-line
 }
 

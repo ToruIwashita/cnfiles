@@ -10,7 +10,7 @@ _peco-file-find-and-start-editor() {
     return 0
   fi
 
-  BUFFER="$EDITOR $file_paths"
+  BUFFER="${EDITOR:-vim} $file_paths"
   zle accept-line
 }
 

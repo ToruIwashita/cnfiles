@@ -5,7 +5,7 @@ _start-editor() {
   args=("${(z)BUFFER}")
   file_path=${args[$#args]}
 
-  BUFFER="$EDITOR $file_path"
+  BUFFER="${EDITOR:-vim} $file_path"
   zle accept-line
 }
 
