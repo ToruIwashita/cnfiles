@@ -1,4 +1,8 @@
 ## git関連関数
+gchanged-files() {
+  __git-changed-list | tr ' ' '\n'
+}
+
 gam() {
   local usage
 
