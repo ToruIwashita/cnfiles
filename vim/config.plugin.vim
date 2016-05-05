@@ -19,10 +19,10 @@ let g:yankround_max_history = 30
 
 "" syntastic
 let g:syntastic_auto_loc_list = 1                " エラーがあったら自動でロケーションリストを開く
-let g:syntastic_error_symbol = 'x'               " syntax errorのマーカー
-let g:syntastic_warning_symbol = '!'             " syntax warningのマーカー
-let g:syntastic_style_error_symbol = 'xs'        " style errorのマーカー
-let g:syntastic_style_warning_symbol = '!s'      " style warningのマーカー
+let g:syntastic_error_symbol = '✗'               " syntax errorのマーカー
+let g:syntastic_warning_symbol = '⚠'             " syntax warningのマーカー
+let g:syntastic_style_error_symbol = '✗s'        " style errorのマーカー
+let g:syntastic_style_warning_symbol = '⚠s'      " style warningのマーカー
 let g:syntastic_javascript_checkers = ['jshint'] " jsをチェックするツール指定
 let g:syntastic_coffee_checkers = ['coffeelint'] " coffeeのチェックをするツール指定
 let g:syntastic_mode_map = { 'mode': 'passive' }
