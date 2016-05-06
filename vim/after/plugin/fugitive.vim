@@ -8,6 +8,8 @@ set cpo&vim
 nnoremap <leader>gb :<C-u>Gblame<CR>
 nnoremap <leader>gd :<C-u>Gdiff<CR>
 nnoremap <leader>gs :<C-u>Gstatus<CR><C-w>T
+nnoremap <silent><buffer> <leader>c :<C-u>Gcommit -v<CR>
+nnoremap <silent><buffer> <leader>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("date"), "\n$", "", "")<CR>'<CR>
 
 fun! s:fugitive_settings()
   nnoremap <silent><buffer> <leader>c :<C-u>Gcommit -v<CR>
