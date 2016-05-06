@@ -79,7 +79,7 @@ noremap <leader>, ,
 noremap <C-o> <ESC>:<C-u>w<CR>
 noremap <leader>o :<C-u>wa<CR>
 noremap <leader>x :<C-u>wa<CR>:<C-u>qa<CR>
-noremap <leader>f :<C-u>q<CR>
+noremap <leader>f :<C-u>wq<CR>
 " <ESC>
 noremap <C-j> <ESC>
 " ファイルリロード
