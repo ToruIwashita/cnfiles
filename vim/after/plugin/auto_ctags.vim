@@ -5,7 +5,7 @@ scriptencoding utf-8
 let s:cpo_save = &cpo
 set cpo&vim
 
-cnorea C :<C-u>Ctags
+nnoremap <leader>c :<C-u>Ctags<CR>:echo 'tags creating'<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
