@@ -175,8 +175,6 @@ nnoremap N Nzz
 " <ESC>か<C-j>2回で検索ハイライト消し
 nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 nnoremap <C-j><C-j> :<C-u>nohlsearch<CR>
-" pasteモード
-nnoremap <leader>p :<C-u>set paste<CR>i
 " q:,q/,q?無効化
 nnoremap q: <NOP>
 nnoremap q/ <NOP>

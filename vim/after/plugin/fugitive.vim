@@ -9,5 +9,14 @@ nnoremap <leader>gb :<C-u>Gblame<CR>
 nnoremap <leader>gd :<C-u>Gdiff<CR>
 nnoremap <leader>gs :<C-u>Gstatus<CR>
 
+fun! s:fugitive_settings()
+  nnoremap <buffer> <leader>t :<C-u>Gcommit -m '[temporary commit]'<CR>
+endf
+
+augroup local_fugitive
+  autocmd!
+  autocmd FileType gitcommit call s:fugitive_settings()
+augroup END
+
 let &cpo = s:cpo_save
 unlet s:cpo_save
