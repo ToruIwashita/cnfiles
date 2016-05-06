@@ -7,7 +7,7 @@ set cpo&vim
 
 nnoremap <leader>gb :<C-u>Gblame<CR>
 nnoremap <leader>gd :<C-u>Gdiff<CR>
-nnoremap <leader>gs :<C-u>Gstatus<CR>
+nnoremap <leader>gs :<C-u>Gstatus<CR><C-w>T
 
 fun! s:fugitive_settings()
   nnoremap <buffer> <leader>t :<C-u>Gcommit -m '[temporary commit]'<CR>
