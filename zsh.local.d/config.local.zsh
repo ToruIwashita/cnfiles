@@ -23,10 +23,6 @@ alias pgq=$PGSQL_CMD
 alias pgshow="$PGSQL_CMD '\d'"
 # ctags
 alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,ruby'
-# tig
-alias tigb='tig blame'
-alias tigs='tig status'
-alias tigr='tig refs'
 
 ## global alias
 alias -g TT='>! ~/works/tmp.txt'
