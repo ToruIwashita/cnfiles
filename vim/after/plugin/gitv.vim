@@ -19,7 +19,6 @@ endfunction
 
 function! s:toggle_git_folding()
   if &filetype ==# 'git'
-    setlocal foldlevel=0
     setlocal foldenable!
   endif
 endfunction
@@ -34,7 +33,6 @@ endf
 " FileTypeがgitの場合に折りたたみを行わない
 augroup local_gitv
   autocmd!
-  autocmd FileType git setlocal foldlevel=100
   autocmd FileType gitv call s:gitv_settiongs()
 augroup END
 
