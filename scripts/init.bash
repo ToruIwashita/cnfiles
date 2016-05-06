@@ -148,14 +148,6 @@ else
   ln -is $BASE_DIR_PATH/gitattributes ~/.gitattributes
 fi
 
-# tig
-if [[ -L ~/.tigrc ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.tigrc symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink ~/.tigrc\e[0m\n"
-  ln -is $BASE_DIR_PATH/tigrc ~/.tigrc
-fi
-
 # pry
 if [[ -L ~/.pryrc ]]; then
   printf "\e[32m$BASE_DIR_PATH/.pryrc symlink already exists\e[0m\n"
