@@ -20,6 +20,9 @@ bind generic <C-N> move-last-line
 bind main B !git rebase -i %(commit)
 
 ## status
+# uを無効化
+bind status u none
+# -でstatus-update
 bind status - status-update
 # 即時コミット
 bind status T !git commit -m '[temporary commit]'
