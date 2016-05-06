@@ -5,7 +5,10 @@ scriptencoding utf-8
 let s:cpo_save = &cpo
 set cpo&vim
 
+" Gitvを水平分割
 let g:Gitv_OpenHorizontal = 1
+" コミットメッセージが長い場合は隠す
+let g:Gitv_TruncateCommitSubjects = 1
 
 nnoremap <leader>gv :<C-u>Gitv!<CR>
 nnoremap <leader>gl :<C-u>Gitv<CR>
