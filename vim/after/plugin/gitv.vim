@@ -30,7 +30,6 @@ fun! s:gitv_settiongs()
   nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
 endf
 
-" FileTypeがgitの場合に折りたたみを行わない
 augroup local_gitv
   autocmd!
   autocmd FileType gitv call s:gitv_settiongs()
