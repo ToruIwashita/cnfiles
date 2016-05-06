@@ -10,7 +10,9 @@ nnoremap <leader>gd :<C-u>Gdiff<CR>
 nnoremap <leader>gs :<C-u>Gstatus<CR><C-w>T
 
 fun! s:fugitive_settings()
+  nnoremap <buffer> <leader>c :<C-u>Gcommit<CR>
   nnoremap <buffer> <leader>t :<C-u>Gcommit -m '[temporary commit]'<CR>
+  nmap <buffer> t O
 endf
 
 augroup local_fugitive
