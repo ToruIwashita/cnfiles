@@ -300,7 +300,7 @@ gsh() {
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [-f --force]
+usage: $self_cmd [-f --force-with-lease]
            [-h --help]
 EOF`
 
@@ -312,7 +312,7 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
-      -f | --force)
+      -f | --force-with-lease)
         (( force++ ))
         shift 1
         ;;
@@ -345,7 +345,7 @@ EOF`
       read answer
       case "$answer" in
         [yY])
-          git push --force origin $current_branch
+          git push --force-with-lease origin $current_branch
           break
           ;;
         [nN])
