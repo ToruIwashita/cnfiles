@@ -7,6 +7,7 @@ set cpo&vim
 
 noremap <silent> <leader>l :<C-u>CloseRightWin<CR>
 noremap <silent> <leader>h :<C-u>CloseLeftWin<CR>
+noremap <silent> <leader>j :<C-u>CloseDownWin<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
