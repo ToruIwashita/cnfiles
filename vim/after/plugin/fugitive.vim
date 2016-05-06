@@ -9,10 +9,12 @@ nnoremap <leader>gb :<C-u>Gblame<CR>
 nnoremap <leader>gd :<C-u>Gdiff<CR>
 nnoremap <leader>gs :<C-u>Gstatus<CR>
 nnoremap <leader>ga :<C-u>Gwrite<CR>
-nnoremap <silent><buffer> <leader>gc :<C-u>Gcommit -v<CR>
-nnoremap <silent><buffer> <leader>gt :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("date"), "\n$", "", "")<CR>'<CR>
+nnoremap <leader>gc :<C-u>Gcommit -v<CR>
+nnoremap <leader>gt :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("date"), "\n$", "", "")<CR>'<CR>
 
 fun! s:fugitive_settings()
+  nnoremap <silent><buffer> <leader>gc :<C-u>Gcommit -v<CR>
+  nnoremap <silent><buffer> <leader>gt :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("date"), "\n$", "", "")<CR>'<CR>
   nmap <buffer> t O
 endf
 
