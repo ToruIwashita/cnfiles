@@ -7,6 +7,7 @@ set cpo&vim
 
 let g:Gitv_OpenHorizontal = 1
 
+nnoremap <leader>gv :<C-u>Gitv!<CR>
 nnoremap <leader>gl :<C-u>Gitv<CR>
 
 fun! s:gitv_get_current_hash()
