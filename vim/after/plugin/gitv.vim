@@ -24,9 +24,9 @@ function! s:toggle_git_folding()
 endfunction
 
 fun! s:gitv_settiongs()
-  nnoremap <buffer> <leader>b :<C-u>Git rebase -i <C-r>=<SID>gitv_get_current_hash()<CR><CR>
-  nnoremap <buffer> <leader>p :<C-u>Git cherry-pick <C-r>=<SID>gitv_get_current_hash()<CR><CR>
-  nnoremap <buffer> <leader>r :<C-u>Git revert <C-r>=<SID>gitv_get_current_hash(<CR><CR>
+  nnoremap <buffer> <leader>B :<C-u>Git rebase -i <C-r>=<SID>gitv_get_current_hash()<CR><CR>
+  nnoremap <buffer> <leader>P :<C-u>Git cherry-pick <C-r>=<SID>gitv_get_current_hash()<CR><CR>
+  nnoremap <buffer> <leader>R :<C-u>Git revert <C-r>=<SID>gitv_get_current_hash(<CR><CR>
   nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
 endf
 

@@ -8,17 +8,22 @@ set cpo&vim
 let g:gsw_autoload_session = 'confirm'
 let g:gsw_switch_autostash = 1
 
-nnoremap <C-s>i :<C-u>GswSave<SPACE>
-nnoremap <C-s>r :<C-u>GswLoad<SPACE>
-nnoremap <C-s>g :<C-u>Gsw<SPACE>
+" <C-s>プレフィックス
 nnoremap <C-s>p :<C-u>GswPull<CR>
 nnoremap <C-s>n :<C-u>GswFetch<CR>
-nnoremap <C-s>b :<C-u>GswBranch<CR>
-nnoremap <C-s><C-b> :<C-u>GswBranchRemote<CR>
-nnoremap <C-s><C-g> :<C-u>GswRemote<SPACE>
+
+" <C-w>プレフィックス
 nnoremap <C-w><C-i> :<C-u>GswSave<CR>
 nnoremap <C-w><C-r> :<C-u>GswLoad<CR>
-nnoremap <C-w><C-g> :<C-u>GswClearState
+
+" <C-g>プレフィックス
+nnoremap <C-g>g :<C-u>Gsw<SPACE>
+nnoremap <C-g><C-g> :<C-u>GswRemote<SPACE>
+nnoremap <C-g>b :<C-u>GswBranch<CR>
+nnoremap <C-g><C-b> :<C-u>GswBranchRemote<CR>
+nnoremap <C-g>i :<C-u>GswSave<SPACE>
+nnoremap <C-g>r :<C-u>GswLoad<SPACE>
+nnoremap <C-g>c :<C-u>GswClearState
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
