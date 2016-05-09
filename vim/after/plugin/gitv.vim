@@ -10,8 +10,8 @@ let g:Gitv_OpenHorizontal = 1
 " コミットメッセージが長い場合は隠す
 let g:Gitv_TruncateCommitSubjects = 1
 
-nnoremap <leader>gv :<C-u>Gitv!<CR>
-nnoremap <leader>gl :<C-u>Gitv<CR>
+nnoremap <C-g>v :<C-u>Gitv!<CR>
+nnoremap <C-g>l :<C-u>Gitv<CR>
 
 fun! s:gitv_get_current_hash()
   return matchstr(getline('.'), '\[\zs.\{7\}\ze\]$')

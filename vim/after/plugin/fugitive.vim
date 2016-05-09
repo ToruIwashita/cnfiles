@@ -5,16 +5,19 @@ scriptencoding utf-8
 let s:cpo_save = &cpo
 set cpo&vim
 
-nnoremap <leader>gb :<C-u>Gblame<CR>
-nnoremap <leader>gd :<C-u>Gdiff<CR>
-nnoremap <leader>gs :<C-u>Gstatus<CR>
-nnoremap <leader>ga :<C-u>Gwrite<CR>
-nnoremap <leader>gc :<C-u>Gcommit -v<CR>
-nnoremap <leader>gt :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("date"), "\n$", "", "")<CR>'<CR>
+" <C-s>プレフィックス
+nnoremap <C-s>i :<C-u>Gstatus<CR>
+
+" <C-g>プレフィックス
+nnoremap <C-g>d :<C-u>Gdiff<CR>
+nnoremap <C-g>a :<C-u>Gwrite<CR>
+nnoremap <C-g>c :<C-u>Gcommit -v<CR>
+nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("date"), "\n$", "", "")<CR>'<CR>
+nnoremap <C-g><C-v> :<C-u>Gblame<CR>
 
 fun! s:fugitive_settings()
-  nnoremap <silent><buffer> <leader>gc :<C-u>Gcommit -v<CR>
-  nnoremap <silent><buffer> <leader>gt :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("date"), "\n$", "", "")<CR>'<CR>
+  nnoremap <silent><buffer> <C-g>c :<C-u>Gcommit -v<CR>
+  nnoremap <silent><buffer> <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("date"), "\n$", "", "")<CR>'<CR>
   nmap <buffer> t O
 endf
 
