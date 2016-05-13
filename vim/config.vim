@@ -155,7 +155,7 @@ noremap <C-s><C-[> :<C-u>tprevious<CR>zz
 " preview,quickfixウィンドウクローズ
 noremap <silent> <C-w><C-w> :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
 " 全てのバッファをタブにする
-noremap <leader>tb :<C-u>tab ball<CR>
+noremap <leader>ta :<C-u>tab ball<CR>
 "" マーク関連
 " 指定マークへ移動
 noremap <leader>e '
