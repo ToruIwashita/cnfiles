@@ -38,13 +38,13 @@ fun! s:load_session(...)
   exec 'OpenSession '.session_name.'.session'
 endf
 
-fun! s:_load_session_names(arg_lead, cmd_line, cursor_pos)
+fun! s:_saved_session_names(arg_lead, cmd_line, cursor_pos)
   let session_names = map(map(split(expand(g:session_directory.'/*.session.*')), 'fnamemodify(v:val, ":t")'), 'matchstr(v:val, "^\\zs\\(.*\\)\\ze\.session\.vim$", 0)')
   return filter(session_names, 'v:val =~ "^'.fnameescape(a:arg_lead).'"')
 endf
 
-command! -nargs=* SaveS call s:save_session(<f-args>)
-command! -nargs=* -complete=customlist,s:_load_session_names LoadS call s:load_session(<f-args>)
+command! -nargs=* SSave call s:save_session(<f-args>)
+command! -nargs=* -complete=customlist,s:_saved_session_names SLoad call s:load_session(<f-args>)
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
