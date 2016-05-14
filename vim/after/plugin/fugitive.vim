@@ -10,7 +10,7 @@ nnoremap <C-s>i :<C-u>Gstatus<CR>
 
 " <C-g>プレフィックス
 nnoremap <C-g>d :<C-u>Gdiff<CR>
-nnoremap <C-g>a :<C-u>Gwrite<CR>
+nnoremap <C-g>a :<C-u>w<CR>:<C-u>Gwrite<CR>
 nnoremap <C-g>c :<C-u>Gcommit -v<CR>
 nnoremap <C-g><C-c> :<C-u>Gwrite<CR>:<C-u>Gcommit -v<CR>
 nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("date"), "\n$", "", "")<CR>'<CR>
