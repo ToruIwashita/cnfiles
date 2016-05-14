@@ -18,7 +18,7 @@ fun! s:git_exec(cmd) abort
   return join(results, '\n')
 endf
 
-fun! s:git_push(bang)
+fun! s:git_push(bang) abort
   try
     let current_branch = s:git_exec('symbolic-ref --short HEAD')
 
@@ -26,7 +26,7 @@ fun! s:git_push(bang)
 
     let opt = ''
     if a:bang
-      if confirm('force push with-lease?', '&Yes\n&No', 1) != 1
+      if confirm('force push with-lease?', "&Yes\n&No", 1) != 1
         return 1
       endif
 
