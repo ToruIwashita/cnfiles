@@ -7,32 +7,42 @@ set cpo&vim
 
 nnoremap <C-g>p :<C-u>Gsh
 
-fun! s:git_exec_and_return_stdout(cmd)
-  return substitute(system('\git '.a:cmd.' 2>/dev/null'), '\n', '', '')
-endf
+fun! s:git_exec(cmd) abort
+  let results = split(system('\git '.a:cmd.' 2>/dev/null; echo $?'), '\n')
+  let exit_status = remove(results, -1)
 
-fun! s:git_exec(cmd)
-  if system('\git '.a:cmd.' >/dev/null 2>&1; echo $?')
-    throw 'error: git '.a:cmd
+  if exit_status
+    throw 'failed to '.a:cmd
   endif
+
+  return join(results, '\n')
 endf
 
-fun! s:git_push()
+fun! s:git_push(bang)
   try
-    let current_branch = s:git_exec_and_return_stdout('symbolic-ref --short HEAD')
+    let current_branch = s:git_exec('symbolic-ref --short HEAD')
 
     echo "push '".current_branch."' branch."
 
-    call s:git_exec('push origin '.current_branch)
+    let opt = ''
+    if a:bang
+      if confirm('force push with-lease?', '&Yes\n&No', 1) != 1
+        return 1
+      endif
+
+      let opt = ' --force-with-lease'
+    endif
+
+    call s:git_exec('push'.opt.' origin '.current_branch)
     redraw!
     echo 'pushed.'
   catch
     redraw!
-    echo 'pushing failed.'
+    echo v:exception
   endtry
 endf
 
-command! Gsh call s:git_push()
+command! -bang Gsh call s:git_push(<bang>0)
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
