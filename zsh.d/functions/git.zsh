@@ -341,7 +341,7 @@ EOF`
 
   if (( force )); then
     while :; do
-      print -n "Force push with-lease (y/n)? "
+      print -n "Force push with lease (y/n)? "
       read answer
       case "$answer" in
         [yY])
