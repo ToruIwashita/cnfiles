@@ -7,7 +7,7 @@ readonly PGSQL_CMD="$PGSQL_CNCT -c"
 export EDITOR=vim
 export RBENV_ROOT=~/.rbenv
 export GOROOT=~/local/go
-export GOPATH=~/.go
+export GOPATH=~/.go/third-party:~/.go/local
 export GEM_HOME=~/.gem
 export NPM_HOME=~/.npm
 export MYSQL_CNCT MYSQL_CMD
