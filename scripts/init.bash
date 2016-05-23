@@ -30,22 +30,6 @@ else
   mkdir $LOCAL_BIN_DIR_PATH
 fi
 
-# zsh.d/config.local.zsh file
-if [[ -f $ZSH_CONFIG_LOCAL_FILE_DEST_PATH ]]; then
-  printf "\e[32m$ZSH_CONFIG_LOCAL_FILE_DEST_PATH file already exists\e[0m\n"
-else
-  printf "\e[31mcopy file $ZSH_CONFIG_LOCAL_FILE_SOURCE_PATH to $ZSH_CONFIG_LOCAL_FILE_DEST_PATH\e[0m\n"
-  cp -p $ZSH_CONFIG_LOCAL_FILE_SOURCE_PATH $ZSH_CONFIG_LOCAL_FILE_DEST_PATH
-fi
-
-# zsh.d/env.local.zsh file
-if [[ -f $ZSH_ENV_LOCAL_FILE_DEST_PATH ]]; then
-  printf "\e[32m$ZSH_ENV_LOCAL_FILE_DEST_PATH file already exists\e[0m\n"
-else
-  printf "\e[31mcopy file $ZSH_ENV_LOCAL_FILE_SOURCE_PATH to $ZSH_ENV_LOCAL_FILE_DEST_PATH\e[0m\n"
-  cp -p $ZSH_ENV_LOCAL_FILE_SOURCE_PATH $ZSH_ENV_LOCAL_FILE_DEST_PATH
-fi
-
 # zsh.d/local dir
 if [[ -d $ZSH_CONFIG_LOCAL_DIR_DEST_PATH ]]; then
   printf "\e[32m$ZSH_CONFIG_LOCAL_DIR_DEST_PATH dir already exists\e[0m\n"
@@ -68,6 +52,39 @@ if [[ -d $CACHE_DIR_PATH/vim/session ]]; then
 else
   printf "\e[31mmkdir $CACHE_DIR_PATH/vim/session\e[0m\n"
   mkdir $CACHE_DIR_PATH/vim/session
+fi
+
+# dir of go path for third party 
+if [[ -d $GOPATH_THIRD_PARTY ]]; then
+  printf "\e[32m$GOPATH_THIRD_PARTY dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $GOPATH_THIRD_PARTY\e[0m\n"
+  mkdir $GOPATH_THIRD_PARTY
+fi
+
+# dir of go path for local
+if [[ -d $GOPATH_LOCAL ]]; then
+  printf "\e[32m$GOPATH_LOCAL dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $GOPATH_LOCAL\e[0m\n"
+  mkdir $GOPATH_LOCAL
+fi
+
+## copy zsh config file
+# zsh.d/config.local.zsh file
+if [[ -f $ZSH_CONFIG_LOCAL_FILE_DEST_PATH ]]; then
+  printf "\e[32m$ZSH_CONFIG_LOCAL_FILE_DEST_PATH file already exists\e[0m\n"
+else
+  printf "\e[31mcopy file $ZSH_CONFIG_LOCAL_FILE_SOURCE_PATH to $ZSH_CONFIG_LOCAL_FILE_DEST_PATH\e[0m\n"
+  cp -p $ZSH_CONFIG_LOCAL_FILE_SOURCE_PATH $ZSH_CONFIG_LOCAL_FILE_DEST_PATH
+fi
+
+# zsh.d/env.local.zsh file
+if [[ -f $ZSH_ENV_LOCAL_FILE_DEST_PATH ]]; then
+  printf "\e[32m$ZSH_ENV_LOCAL_FILE_DEST_PATH file already exists\e[0m\n"
+else
+  printf "\e[31mcopy file $ZSH_ENV_LOCAL_FILE_SOURCE_PATH to $ZSH_ENV_LOCAL_FILE_DEST_PATH\e[0m\n"
+  cp -p $ZSH_ENV_LOCAL_FILE_SOURCE_PATH $ZSH_ENV_LOCAL_FILE_DEST_PATH
 fi
 
 ## create symlink

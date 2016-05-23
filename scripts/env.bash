@@ -45,7 +45,9 @@ RUBY_PATH=${1:-$(which ruby)}
 
 # go
 GOROOT=$SRC_DIR_PATH/go
-GOPATH=~/.go/third-party
+GOPATH_THIRD_PARTY=~/.go/third-party
+GOPATH_LOCAL=~/.go/local
+GOPATH=$GOPATH_THIRD_PARTY:$GOPATH_LOCAL
 GO_REPOSITORY='https://code.google.com/p/go'
 
 # go path
