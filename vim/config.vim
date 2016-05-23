@@ -161,6 +161,8 @@ noremap <C-s>t :<C-u>tab ball<CR>
 noremap <leader>e '
 
 "" nnoremap
+" <C-g>無効化
+nnoremap <C-g> <NOP>
 " j,kで表示単位移動
 nnoremap <silent> j gj
 nnoremap <silent> gj j
