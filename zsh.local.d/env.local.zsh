@@ -23,7 +23,8 @@ path=(
   ~/local/bin
   $RBENV_ROOT/shims
   $GOROOT/bin
-  $GOPATH/bin
+  $GOPATH_THIRD_PARTY/bin
+  $GOPATH_LOCAL/bin
   $GEM_HOME/bin
   $NPM_HOME/bin
   # gitインストール時にbrewでインストールしたopensslを使用する
