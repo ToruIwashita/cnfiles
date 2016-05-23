@@ -5,11 +5,6 @@ set -e
 
 cd $PECO_SRC_DIR_PATH
 
-go get github.com/google/btree
-go get github.com/jessevdk/go-flags
-go get github.com/mattn/go-runewidth
-go get github.com/nsf/termbox-go
-
 # github.com/peco dir
 if [[ -d $PECO_GITHUB_DIR_PATH_IN_GOPATH ]]; then
   printf "\n$PECO_GITHUB_DIR_PATH_IN_GOPATH dir already exists\n"
