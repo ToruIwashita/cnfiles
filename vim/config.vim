@@ -163,6 +163,8 @@ noremap <leader>e '
 "" nnoremap
 " <C-g>無効化
 nnoremap <C-g> <NOP>
+" ファイルパス表示
+nnoremap <C-s>g :<C-u>f<CR>
 " j,kで表示単位移動
 nnoremap <silent> j gj
 nnoremap <silent> gj j
