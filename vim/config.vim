@@ -161,6 +161,9 @@ noremap <C-s>t :<C-u>tab ball<CR>
 noremap <leader>e '
 
 "" nnoremap
+" recording
+nnoremap q <NOP>
+nnoremap <leader>q q
 " <C-g>無効化
 nnoremap <C-g> <NOP>
 " ファイルパス表示
