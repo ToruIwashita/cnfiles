@@ -52,3 +52,6 @@
 [submodule "modules/neovim"]
 	path = modules/neovim
 	url = git@github.com:neovim/neovim.git
+[submodule "modules/go"]
+	path = modules/go
+	url = git@github.com:golang/go.git
