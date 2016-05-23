@@ -27,7 +27,7 @@ if [[ -L $LOCAL_BIN_DIR_PATH/hub ]]; then
   printf "\n$LOCAL_BIN_DIR_PATH/hub symlink already exists\n"
 else
   printf "\ncreate symlink $LOCAL_BIN_DIR_PATH/hub\n"
-  ln -is $HUB_GITHUB_DIR_PATH_IN_GOPATH/hub/hub $LOCAL_BIN_DIR_PATH/hub
+  ln -is $HUB_GITHUB_DIR_PATH_IN_GOPATH/hub/bin/hub $LOCAL_BIN_DIR_PATH/hub
 fi
 
 git checkout .
