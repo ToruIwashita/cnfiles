@@ -46,13 +46,11 @@ RUBY_PATH=${1:-$(which ruby)}
 
 # go
 GOROOT=$LOCAL_DIR_PATH/go
-GOPATH_THIRD_PARTY=~/.go/third-party
-GOPATH_LOCAL=~/.go/local
-GOPATH=$GOPATH_THIRD_PARTY:$GOPATH_LOCAL
+GOPATH=~/.go
 
 # go path
-HUB_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH_THIRD_PARTY/src/github.com/github
-PECO_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH_THIRD_PARTY/src/github.com/peco
+HUB_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH/src/github.com/github
+PECO_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH/src/github.com/peco
 
 # etc
 GEM_HOME=~/.gem

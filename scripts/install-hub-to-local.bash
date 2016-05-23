@@ -10,7 +10,7 @@ if [[ -d $HUB_GITHUB_DIR_PATH_IN_GOPATH ]]; then
   printf "\n$HUB_GITHUB_DIR_PATH_IN_GOPATH dir already exists\n"
 else
   printf "\nmkdir $HUB_GITHUB_DIR_PATH_IN_GOPATH\n"
-  mkdir $HUB_GITHUB_DIR_PATH_IN_GOPATH
+  mkdir -p $HUB_GITHUB_DIR_PATH_IN_GOPATH
 fi
 
 # create hub dir symlink 

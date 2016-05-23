@@ -54,20 +54,12 @@ else
   mkdir $CACHE_DIR_PATH/vim/session
 fi
 
-# dir of go path for third party 
-if [[ -d $GOPATH_THIRD_PARTY ]]; then
-  printf "\e[32m$GOPATH_THIRD_PARTY dir already exists\e[0m\n"
+# go path dir
+if [[ -d $GOPATH ]]; then
+  printf "\e[32m$GOPATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $GOPATH_THIRD_PARTY\e[0m\n"
-  mkdir $GOPATH_THIRD_PARTY
-fi
-
-# dir of go path for local
-if [[ -d $GOPATH_LOCAL ]]; then
-  printf "\e[32m$GOPATH_LOCAL dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir $GOPATH_LOCAL\e[0m\n"
-  mkdir $GOPATH_LOCAL
+  printf "\e[31mmkdir $GOPATH\e[0m\n"
+  mkdir $GOPATH
 fi
 
 ## copy zsh config file
