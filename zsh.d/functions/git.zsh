@@ -254,7 +254,7 @@ EOF`
   current_branch=$(__git-ref-head)
 
   if (( ! $#base_branch )); then
-    print "pull $current_branch branch"
+    print "pull '$current_branch' branch"
     git pull origin $current_branch
   else
     while :; do
@@ -337,7 +337,7 @@ EOF`
 
   current_branch=$(__git-ref-head)
 
-  print "push $current_branch branch"
+  print "push '$current_branch' branch"
 
   if (( force )); then
     while :; do
