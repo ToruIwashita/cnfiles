@@ -424,7 +424,7 @@ EOF`
     esac
   done
 
-  git fetch --prune && print "Fetched remote\n"
+  git fetch --prune
   merged_branches=(${(R)${(R)${(@f)"$(git branch --merged)"}:#\*[[:space:]]*}##*[[:space:]]})
 
   if (( force )); then
