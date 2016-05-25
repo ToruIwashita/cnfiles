@@ -77,11 +77,11 @@ cnoremap <C-w>* <C-r>/
 noremap , <NOP>
 noremap <leader>, ,
 " ファイル保存,閉じる
-noremap <C-o> <ESC>:<C-u>w<CR>
+noremap <C-o> :<C-u>w<CR>
 noremap <leader>o :<C-u>wa<CR>
 noremap <leader>x :<C-u>wa<CR>:<C-u>qa<CR>
 noremap <leader>f :<C-u>q<CR>
-noremap <leader>ww :<C-u>wq<CR>
+noremap <leader>w :<C-u>wq<CR>
 " <ESC>
 noremap <C-j> <ESC>
 " ファイルリロード
