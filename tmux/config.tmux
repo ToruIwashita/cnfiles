@@ -1,4 +1,3 @@
-
 ## prefix
 # Ctr+qをprefixに設定
 set -g prefix C-q
