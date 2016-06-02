@@ -90,7 +90,7 @@ EOF`
   done
 
   if (( temporary )); then
-    git commit -m "[temporary commit]($(__git-ref-head)) $(date)"
+    git commit -m "[temporary commit]($(__git-ref-head)) $(LANG=C date)"
   else
     git commit
   fi
