@@ -5,7 +5,7 @@ scriptencoding utf-8
 let s:cpo_save = &cpo
 set cpo&vim
 
-let g:tagbar_ctags_bin = '~/local/bin/ctags'
+let g:tagbar_ctags_bin = local_dir_path.'/bin/ctags'
 let g:tagbar_autofocus = 1
 let g:tagbar_left = 1
 let g:tagbar_type_ruby = {

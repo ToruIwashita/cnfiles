@@ -6,7 +6,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " キャッシュディレクトリ
-let g:neocomplete#data_directory = '~/.cache/vim/neocomplete'
+let g:neocomplete#data_directory = cache_dir_path.'/vim/neocomplete'
 " ポップアップメニューで表示される候補の数
 let g:neocomplete#max_list = 30
 " 補完候補検索時に大文字・小文字を区別する

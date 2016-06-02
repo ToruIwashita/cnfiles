@@ -10,7 +10,7 @@ let g:session_default_name = 'default.session'
 " session保持ファイルの拡張子
 let g:session_extension = '.vim'
 " session保存ディレクトリを現在のディレクトリにする
-let g:session_directory = '~/.cache/vim/session'
+let g:session_directory = cache_dir_path.'/vim/session'
 " vim終了時に自動保存しない
 let g:session_autosave = 'no'
 " 引数なしでvimを起動した時にセッションを復元しない
