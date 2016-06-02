@@ -13,7 +13,6 @@ LOCAL_INCLUDE_DIR_PATH=$LOCAL_DIR_PATH/include
 SUBMODULES_DIR_PATH=$BASE_DIR_PATH/modules
 
 # cache
-CACHE_DIR=cache
 CACHE_DIR_PATH=~/.cache
 
 # submodules src dir
