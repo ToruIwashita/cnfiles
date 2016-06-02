@@ -13,14 +13,14 @@ nnoremap <C-g>d :<C-u>Gdiff<CR>
 nnoremap <C-g>a :<C-u>w<CR>:<C-u>Gwrite<CR>
 nnoremap <C-g>c :<C-u>Gcommit -v<CR>
 nnoremap <C-g><C-c> :<C-u>Gwrite<CR>:<C-u>Gcommit -v<CR>
-nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("date"), "\n$", "", "")<CR>'<CR>
-nnoremap <C-g><C-t> :<C-u>Gwrite<CR>:<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("date"), "\n$", "", "")<CR>'<CR>
+nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
+nnoremap <C-g><C-t> :<C-u>Gwrite<CR>:<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
 nnoremap <C-g><C-v> :<C-u>Gblame<CR>
 nnoremap <C-g><C-h> :<C-u>Gbrowse<CR>
 
 fun! s:fugitive_settings()
   nnoremap <silent><buffer> <C-g>c :<C-u>Gcommit -v<CR>
-  nnoremap <silent><buffer> <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("date"), "\n$", "", "")<CR>'<CR>
+  nnoremap <silent><buffer> <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
   nmap <buffer> t O
 endf
 
