@@ -5,10 +5,10 @@ fi
 
 ## alias
 # cd
-alias cdz="cd $zsh_dir"
-alias cdv='cd ~/.vim'
+alias cdz="cd $ZSH_DIR_PATH"
+alias cdv="cd $VIM_DIR_PATH"
 alias cdg='cd ~/.go'
-alias cdl='cd ~/local'
+alias cdl="cd $LOCAL_DIR_PATH"
 alias cds='cd ~/src'
 alias cdsg='cd ~/src/go'
 alias cdw='cd ~/works'
