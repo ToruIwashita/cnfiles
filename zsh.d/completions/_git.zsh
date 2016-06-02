@@ -45,7 +45,7 @@ _grh() {
 
 _gc() {
   _arguments \
-    '(-t --temporary)'{-i,--immediate}'[Temporary commit]' \
+    '(-t --temporary)'{-t,--temporary}'[Temporary commit]' \
     '(-h --help)'{-h,--help}'[Show this help text]'
 }
 
