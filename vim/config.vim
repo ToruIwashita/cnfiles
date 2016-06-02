@@ -229,7 +229,6 @@ vnoremap <ESC> v_<ESC>
 cnorea T :<C-u>tag
 cnorea Ts :<C-u>tselect
 cnorea Tn :<C-u>tabnew
-cnorea ev :<C-u>source ~/.vimrc
 
 "" autocmd
 " ファイルを開いたときに最後の変更点へ移動
@@ -259,5 +258,5 @@ augroup END
 " netrwhistを削除する
 augroup delete_netrwhist
   autocmd!
-  autocmd VimLeave * if filereadable(expand(vim_dir.'/.netrwhist')) | call delete(expand(vim_dir.'/.netrwhist')) | endif 
+  autocmd VimLeave * if filereadable(expand(vim_dir_path.'/.netrwhist')) | call delete(expand(vim_dir_path.'/.netrwhist')) | endif 
 augroup END
