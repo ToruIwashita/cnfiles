@@ -4,29 +4,29 @@
 [[ -z $include ]] && typeset -xT INCLUDE include
 
 # ローカル変数
-local dir file
+local dir_path file_path
 
 # グローバル変数
-typeset -g zsh_dir=~/.zsh.d
-typeset -g zsh_plugin_dir=$zsh_dir/plugin
-typeset -ga zsh_sub_dirs
+typeset -g zsh_dir_path=~/.zsh.d
+typeset -g zsh_plugin_dir_path=$zsh_dir_path/plugin
+typeset -ga zsh_sub_dir_paths
 typeset -ga precmd_functions
 typeset -ga chpwd_functions
 
 # typesetで配列は代入不可なので別定義
-zsh_sub_dirs=(
-  $zsh_dir/functions
-  $zsh_dir/completions
-  $zsh_dir/widgets
-  $zsh_dir/completion_widgets
-  $zsh_dir/local/functions
-  $zsh_dir/local/completions
-  $zsh_dir/local/widgets
+zsh_sub_dir_paths=(
+  $zsh_dir_path/functions
+  $zsh_dir_path/completions
+  $zsh_dir_path/widgets
+  $zsh_dir_path/completion_widgets
+  $zsh_dir_path/local/functions
+  $zsh_dir_path/local/completions
+  $zsh_dir_path/local/widgets
 )
 
 # 環境変数
-[[ -f $zsh_dir/env.zsh ]] && source $zsh_dir/env.zsh
-[[ -f $zsh_dir/env.local.zsh ]] && source $zsh_dir/env.local.zsh
+[[ -f $zsh_dir_path/env.zsh ]] && source $zsh_dir_path/env.zsh
+[[ -f $zsh_dir_path/env.local.zsh ]] && source $zsh_dir_path/env.local.zsh
 
 ## 関数ロード
 autoload -Uz colors && colors          # 色の定義
@@ -43,19 +43,19 @@ zmodload -i zsh/terminfo               # terminfoの配列データを扱う(zsh
 
 ## 各種設定・オリジナル関数読込
 # lib読込
-for file in $zsh_dir/lib/*.zsh(.); do
-  source $file
+for file_path in $zsh_dir_path/lib/*.zsh(.); do
+  source $file_path
 done
 # 関数読込
-for dir in ${zsh_sub_dirs[@]}; do
-  for file in ${dir}/*.zsh(.); do
-    source $file
+for dir_path in ${zsh_sub_dir_paths[@]}; do
+  for file_path in ${dir_path}/*.zsh(.); do
+    source $file_path
   done
 done
 
 # 設定読込
-[[ -f $zsh_dir/config.zsh ]] && source $zsh_dir/config.zsh
-[[ -f $zsh_dir/config.local.zsh ]] && source $zsh_dir/config.local.zsh
+[[ -f $zsh_dir_path/config.zsh ]] && source $zsh_dir_path/config.zsh
+[[ -f $zsh_dir_path/config.local.zsh ]] && source $zsh_dir_path/config.local.zsh
 
 # 重複パスを除去
 typeset -U path fpath ld_library_path include precmd_functions chpwd_functions
