@@ -5,7 +5,7 @@ readonly PGSQL_CNCT="psql -h localhost -p 5432 -U guest -d mydatabase"  # ~/.pgp
 readonly PGSQL_CMD="$PGSQL_CNCT -c"
 
 export RBENV_ROOT=~/.rbenv
-export GOROOT=~/local/go
+export GOROOT=$LOCAL_DIR_PATH/go
 export GOPATH=~/.go
 export GEM_HOME=~/.gem
 export NPM_HOME=~/.npm
