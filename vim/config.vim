@@ -65,6 +65,8 @@ cnoremap <C-k> <DOWN>
 cnoremap <C-_> <UP>
 " コマンドライン文字削除,補完メニュー文字削除
 cnoremap <C-d> <DEL>
+" コマンドラインでkill-wordと似た動作をする
+cnoremap <C-u> <S-RIGHT><C-w>
 " コマンドラインにカーソル上の文字を入力
 cnoremap <C-]> <C-r><C-w>
 " コマンドラインにヤンクした文字列をペースト
