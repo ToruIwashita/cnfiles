@@ -23,7 +23,7 @@ nnoremap <C-g>b :<C-u>GswBranch<CR>
 nnoremap <C-g><C-b> :<C-u>GswBranchRemote<CR>
 nnoremap <C-g>i :<C-u>GswSave<SPACE>
 nnoremap <C-g>r :<C-u>GswLoad<SPACE>
-nnoremap <C-g>@ :<C-u>GswClearState
+nnoremap <C-s>@ :<C-u>GswClearState
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
