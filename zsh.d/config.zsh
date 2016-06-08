@@ -74,6 +74,7 @@ bindkey -v '^sn' immediate-git-fetch                        # Ctr+s,nでgit fetc
 bindkey -v '^so' peco-cd-dir                                # Ctr+s,oでディレクトリを絞り込んで移動
 bindkey -v '^sp' immediate-git-pull                         # Ctr+s,pでgit pull
 bindkey -v '^ss' peco-silver-search-and-start-editor        # Ctr+s,sでファイル内文字列検索してstart-editor
+bindkey -v '^s@' clear-screen                               # Ctr+@でclear-screen
 bindkey -v '^s^i' immediate-ls                              # Ctr+s,Ctr+iでls
 bindkey -v '^s^j' immediate-cat                             # Ctr+s,jでBUFFERをcat
 bindkey -v '^s^k' menu-complete-recent-dirs                 # Ctr+s,Ctr+kで最近移動したディレクトリへ移動
@@ -86,7 +87,6 @@ bindkey -v '^s^]' vi-backward-word                          # Ctr+s,Ctr+]で前�
 bindkey -v '^s^@' kill-line                                 # Ctr+s,Ctr+@でカーソル行以降削除
 bindkey -v '^]' vi-forward-word                             # Ctr+]で次の単語の先頭に移動
 bindkey -v '^_' cdup                                        # Ctr+_でcdup
-bindkey -v '^@' clear-screen                                # Ctr+@でclear-screen
 bindkey -v '^?' backward-delete-char                        # BSでbackward-delete-char(menuselectのinteractive-modeでbackword)
 bindkey -v '^[[Z' reverse-menu-complete                     # Shift+tabで逆タブ補完
 # 補完メニュー選択モードキーマップ
