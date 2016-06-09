@@ -44,6 +44,7 @@ Plug 'ngmy/vim-rubocop'                  " vim-rubocop
 Plug 'kchmck/vim-coffee-script'          " vim-coffee-script
 Plug 'ynkdir/vim-vimlparser'             " vimlのパーサー(構文解析)
 Plug 'syngan/vim-vimlint'                " syntasticのデフォルトvimlシンタックスチェッカー
+Plug 'scrooloose/nerdtree'               " ディレクトリツリーエクスプローラー
 Plug 'scrooloose/syntastic'              " シンタックスチェック
 Plug 'tomtom/tcomment_vim'               " コメントアウト
 Plug 'itchyny/lightline.vim'             " ステータスライン
