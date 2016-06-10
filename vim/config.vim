@@ -195,6 +195,8 @@ nnoremap qqq: <ESC>q:
 " qqq/,qqq?検索履歴表示
 nnoremap qqq/ <ESC>q/
 nnoremap qqq? <ESC>q?
+" tag入力
+nnoremap <C-s>, :<C-u>tselect<SPACE>
 
 "" inoremap
 " ノーマルモードに切り替え<ESC>
@@ -226,11 +228,6 @@ vnoremap < <gv
 vnoremap > >gv
 " <ESC>でビジュアルモード終了
 vnoremap <ESC> v_<ESC>
-
-"" cnoreabbrev
-cnorea T :<C-u>tag
-cnorea Ts :<C-u>tselect
-cnorea Tn :<C-u>tabnew
 
 "" autocmd
 " ファイルを開いたときに最後の変更点へ移動
