@@ -19,8 +19,8 @@ nnoremap <C-g><C-v> :<C-u>Gblame<CR>
 nnoremap <C-g><C-h> :<C-u>Gbrowse<CR>
 
 fun! s:fugitive_settings()
-  nnoremap <silent><buffer> <C-g>c :<C-u>Gcommit -v<CR>
-  nnoremap <silent><buffer> <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
+  nnoremap <buffer> <C-g><C-c> <NOP>
+  nnoremap <buffer> <C-g><C-t> <NOP>
   nmap <buffer> t O
 endf
 
