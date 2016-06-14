@@ -12,6 +12,8 @@
   autostash = true
 [push]
   default = simple
+[diff]
+	compactionheuristic = true
 [pager]
   log = git-diff-highlight | less
   show = git-diff-highlight | less
