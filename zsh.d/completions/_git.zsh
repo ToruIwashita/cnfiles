@@ -40,7 +40,9 @@ _gab() {
 }
 
 _grh() {
-  _arguments '*: :__git-staged-files'
+  _arguments \
+    '(-h --help)'{-h,--help}'[Show this help text]' \
+    '(:)*: :__git-staged-files'
 }
 
 _gc() {

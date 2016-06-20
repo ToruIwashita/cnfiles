@@ -30,17 +30,61 @@ gab() {
 }
 
 grh() {
-  local usage
+  local self_cmd help usage answer
 
-  usage="usage: $0 <files>"
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd [files]
+           [-h --help]
+EOF`
+
   if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
   fi
 
-  if (( ! $# )); then
-    print $usage 1>&2
+  while (( $# > 0 )); do
+    case "$1" in
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
+        return 1
+        ;;
+      -*)
+        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
+        return 1
+        ;;
+    esac
+  done
+
+  if (( ! $#args )); then
+    while :; do
+      print -n "reset '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
+
+      read answer
+      case "$answer" in
+        [yY])
+          git reset HEAD^
+          break
+          ;;
+        [nN])
+          break
+          ;;
+        *)
+          print -n 'Please enter y or n. '
+          ;;
+      esac
+    done
+
     return 1
   fi
 
