@@ -28,20 +28,9 @@ let g:syntastic_coffee_checkers = ['coffeelint']  " coffeeのチェックをす�
 let g:syntastic_mode_map = { 'mode': 'passive' }
 let g:syntastic_coffee_coffeelint_args = '-f '.lint_dir_path.'/coffeelint.json'
 
-"" ctrlsf
-let g:ctrlsf_indent = 2           " 結果前方のインデント数
-let g:ctrlsf_context = '-C 2'     " ヒットした文字列の前後表示行数
-let g:ctrlsf_position = 'bottom'  " 結果の出す位置
-let g:ctrlsf_winsize = &lines/2   " 結果ウィンドウサイズ
-" 検索結果画面のキーマップ
-let g:ctrlsf_mapping = {
-  \ 'next': '<C-n>',
-  \ 'prev': '<C-p>'
-\ }
-
 "" ctrlp
 let g:ctrlp_map = '<C-k>'                            " Start CtrlP
-let g:ctrlp_match_window = 'min:10,max:'.&lines/2    " quickfixサイズ
+let g:ctrlp_match_window = 'min:10,max:'.&lines/3    " quickfixサイズ
 let g:ctrlp_mruf_max = 100                           " 開いたファイル履歴保持数
 let g:ctrlp_clear_cache_on_exit = 0                  " 終了時にキャッシュをクリアしない
 let g:ctrlp_max_depth = 30                           " ディレクトリ再帰検索深度
@@ -68,11 +57,11 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtSelectMove("k")':   ['<C-k>'],
   \ 'PrtHistory(-1)':       ['<C-n>'],
   \ 'PrtHistory(1)':        ['<C-p>'],
-  \ 'PrtExpandDir()':       ['<TAB>','<C-i>'],
+  \ 'PrtExpandDir()':       ['<NOP>'],
   \ 'AcceptSelection("e")': ['<C-l>','<CR>'],
   \ 'AcceptSelection("h")': ['<C-s>'],
   \ 'AcceptSelection("t")': ['<C-t>'],
-  \ 'AcceptSelection("v")': ['<C-v>'],
+  \ 'AcceptSelection("v")': ['<C-i>'],
   \ 'OpenMulti()':          ['<C-o>'],
   \ 'MarkToOpen()':         ['<C-]>'],
   \ 'PrtInsert()':          ['<NOP>'],
