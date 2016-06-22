@@ -6,6 +6,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " <C-s>プレフィックス
+nnoremap <C-s>g :<C-u>Gbrowse<CR>
 nnoremap <C-s><C-u> :<C-u>Gstatus<CR>
 
 " <C-g>プレフィックス
@@ -16,7 +17,6 @@ nnoremap <C-g><C-c> :<C-u>Gwrite<CR>:<C-u>Gcommit -v<CR>
 nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
 nnoremap <C-g><C-t> :<C-u>Gwrite<CR>:<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
 nnoremap <C-g><C-v> :<C-u>Gblame<CR>
-nnoremap <C-g><C-h> :<C-u>Gbrowse<CR>
 
 fun! s:fugitive_settings()
   nnoremap <buffer> <C-g><C-c> <NOP>
