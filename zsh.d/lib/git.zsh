@@ -70,7 +70,7 @@ __git-both-modified-list() {
 }
 
 __git-inside-work-tree() {
-  [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true  ]]
+  [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true ]]
 }
 
 __ga() {
