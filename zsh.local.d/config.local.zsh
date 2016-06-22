@@ -13,8 +13,6 @@ alias cds='cd ~/src'
 alias cdsg='cd ~/src/go'
 alias cdw='cd ~/works'
 alias cdc='cd ~/.cnfiles'
-# hub
-alias gh='hub browse'
 # mysql
 alias my=$MYSQL_CNCT
 alias myq=$MYSQL_CMD
