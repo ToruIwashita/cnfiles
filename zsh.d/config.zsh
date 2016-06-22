@@ -66,6 +66,7 @@ bindkey -v '^s' self-insert                                 # Ctr+sでself-inser
 bindkey -v '^u' kill-word                                   # Ctr+uでkill-word
 bindkey -v '^w' backward-kill-word                          # Ctr+wでbackward-kill-word
 bindkey -v '^y' push-input                                  # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
+bindkey -v '^sg' immediate-hub-browse                       # Ctr+s,hでhub browse
 bindkey -v '^sf' peco-file-finder                           # Ctr+s,fでpeco-file-finder
 bindkey -v '^sj' vi-join                                    # Ctr+s,jでviのjoin
 bindkey -v '^sk' peco-cd-recent-dir                         # Ctr+s,kで最近移動したディレクトリを絞り込んで移動
