@@ -14,8 +14,8 @@ function! s:open_github_file_range(line1,line2)
 endfunction
 
 command! -range OpenGithubFileRange call s:open_github_file_range(<line1>, <line2>)
-cnorea %O %OpenGithubFileRange
-cnorea '<,'>O '<,'>OpenGithubFileRange
+cnorea %G %OpenGithubFileRange
+cnorea '<,'>G '<,'>OpenGithubFileRange
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
