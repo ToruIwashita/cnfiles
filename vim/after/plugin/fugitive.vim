@@ -6,7 +6,6 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " <C-s>プレフィックス
-nnoremap <C-s>g :<C-u>Gbrowse<CR>
 nnoremap <C-s><C-u> :<C-u>Gstatus<CR>
 
 " <C-g>プレフィックス
