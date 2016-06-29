@@ -41,14 +41,14 @@ _gab() {
 
 _grh() {
   _arguments \
-    '(-h --help)'{-h,--help}'[Show this help text]' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
     '(:)*: :__git-staged-files'
 }
 
 _gc() {
   _arguments \
     '(-t --temporary)'{-t,--temporary}'[Temporary commit]' \
-    '(-h --help)'{-h,--help}'[Show this help text]'
+    '(-h --help)'{-h,--help}'[Show help text]'
 }
 
 _gd() {
@@ -58,7 +58,7 @@ _gd() {
 _gsw() {
   _arguments \
     '(-r --remote-branch)'{-r,--remote-branch}'[Switch remote branch]: :__git-remote-branches' \
-    '(-h --help)'{-h,--help}'[Show this help text]' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
     '(:)*: :__git-branches'
 }
 
@@ -69,19 +69,19 @@ _gud() {
 _gll() {
   _arguments \
     '(-b --rebase)'{-b,--rebase}'[Pull rebase]: :__git-branches' \
-    '(-h --help)'{-h,--help}'[Show this help text]'
+    '(-h --help)'{-h,--help}'[Show help text]'
 }
 
 _gsh() {
   _arguments \
     '(-f --force)'{-f,--force}'[Force push]' \
-    '(-h --help)'{-h,--help}'[Show this help text]'
+    '(-h --help)'{-h,--help}'[Show help text]'
 }
 
 _gdeleteb() {
   _arguments \
     '(-f --force)'{-f,--force}'[Force delete merged branches]' \
-    '(-h --help)'{-h,--help}'[Show this help text]'
+    '(-h --help)'{-h,--help}'[Show help text]'
 }
 
 compdef _gam gam

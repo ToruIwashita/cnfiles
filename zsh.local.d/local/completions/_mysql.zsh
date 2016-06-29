@@ -18,7 +18,7 @@ _mf() {
     '(-s --select)'{-s,--select}'[Select fields]' \
     '(-v --vertical)'{-v,--vertical}'[Vertical display]' \
     '(-w --where)'{-w,--where}'[Where condition]' \
-    '(-h --help)'{-h,--help}'[Show this help text]' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
     '(:)*: :__my-show-tables'
 }
 
