@@ -110,25 +110,19 @@ alias zmv='noglob zmv -W'
 alias v='vim'
 # tmux
 alias tm='tmux -2'
-# other
-alias ez='exec zsh'
-alias cp='cp -ip'
-alias mv='mv -i'
-alias rm='rm -i'
+# ls
 alias ls='ls -F --color'
 alias l='ls -ahl'
 alias wl='watch "ls -ahl"'
-alias c='cat'
-alias grep='grep --color'
-alias less='less -R'
-alias his='history -f'
-alias his-all='history -E 1'
 # cd
 alias d='cd'
 alias dr='cdr'
 # tar
 alias totar='tar cvf'
 alias untar='tar xvf'
+# history
+alias his='history -f'
+alias his-all='history -E 1'
 # git
 alias ga='git add'
 alias gb='git branch'
@@ -138,6 +132,16 @@ alias gl='git log'
 alias gs='git status'
 # vim
 alias clear-vim-session='rm .*.session.vim'
+# ping
+alias ping-one='ping -v -c 1'
+# other
+alias ez='exec zsh'
+alias cp='cp -ip'
+alias mv='mv -i'
+alias rm='rm -i'
+alias c='cat'
+alias grep='grep --color'
+alias less='less -R'
 
 ## functions
 # _precmd_vcs_info
