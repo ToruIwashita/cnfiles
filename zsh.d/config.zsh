@@ -113,7 +113,7 @@ alias tm='tmux -2'
 # ls
 alias ls='ls -F --color'
 alias l='ls -ahl'
-alias wl='watch "ls -ahl"'
+alias wl='watch "ls -al"'
 # cd
 alias d='cd'
 alias dr='cdr'
