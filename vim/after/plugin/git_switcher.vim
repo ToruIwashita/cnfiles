@@ -13,16 +13,16 @@ nnoremap <C-s>p :<C-u>GswPull<CR>
 nnoremap <C-s>n :<C-u>GswFetch<CR>
 
 " <C-w>プレフィックス
-nnoremap <C-w><C-i> :<C-u>GswSave<CR>
+nnoremap <C-w><C-o> :<C-u>GswSave<CR>
+nnoremap <C-w>o :<C-u>GswSave<SPACE>
 nnoremap <C-w><C-r> :<C-u>GswLoad<CR>
+nnoremap <C-w>r :<C-u>GswLoad<SPACE>
 
 " <C-g>プレフィックス
 nnoremap <C-g>g :<C-u>Gsw<SPACE>
 nnoremap <C-g><C-g> :<C-u>GswRemote<SPACE>
 nnoremap <C-g>b :<C-u>GswBranch<CR>
 nnoremap <C-g><C-b> :<C-u>GswBranchRemote<CR>
-nnoremap <C-g>i :<C-u>GswSave<SPACE>
-nnoremap <C-g>r :<C-u>GswLoad<SPACE>
 nnoremap <C-s>@ :<C-u>GswClearState
 
 let &cpo = s:cpo_save
