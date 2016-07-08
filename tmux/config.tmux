@@ -80,7 +80,7 @@ bind X kill-window
 # ウィンドウ上下分割
 bind s split-window -v
 # ウィンドウ左右分割
-bind v split-window -h
+bind i split-window -h
 # ウィンドウindex変更
 bind m command-prompt "move-window -t %%"
 # ウィンドウ選択select
