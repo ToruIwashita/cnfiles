@@ -11,7 +11,7 @@ _peco-cd-recent-dir() {
   dir_paths=(${(f)"$(echo $recent_dirs | peco --select-1 2>/dev/null)"})
   if (( ! $#dir_paths )); then
     zle beginning-of-line
-    return 0
+    return
   fi
 
   zle kill-whole-line

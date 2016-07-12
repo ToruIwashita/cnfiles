@@ -7,7 +7,7 @@ _peco-file-find-and-start-editor() {
   file_paths=(${(R)${(f)"$(find -type f -name "*$BUFFER*" 2>/dev/null | peco --select-1 2>/dev/null)"}%%:*})
   if (( ! $#file_paths )); then
     zle beginning-of-line
-    return 0
+    return
   fi
 
   BUFFER="${EDITOR:-vim} $file_paths"

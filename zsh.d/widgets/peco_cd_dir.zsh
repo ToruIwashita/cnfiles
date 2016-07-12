@@ -7,7 +7,7 @@ _peco-cd-dir() {
   dir_paths=(${(f)"$(find -type d -name "*$BUFFER*" 2>/dev/null | peco --select-1 2>/dev/null)"})
   if (( ! $#dir_paths )); then
     zle beginning-of-line
-    return 0
+    return
   fi
 
   zle kill-whole-line

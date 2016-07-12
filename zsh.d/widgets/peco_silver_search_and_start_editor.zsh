@@ -19,7 +19,7 @@ _peco-silver-search-and-start-editor() {
 
   if (( ! $#peco_resulting_line )); then
     zle beginning-of-line
-    return 0
+    return
   fi
 
   if (( $#peco_resulting_line == 1 )); then

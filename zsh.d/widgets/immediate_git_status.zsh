@@ -3,9 +3,7 @@ _immediate-git-status() {
   local cmd
   cmd='git status --short'
 
-  if ! $(git rev-parse 2>/dev/null); then
-    return 1
-  fi
+  ( ! $(git rev-parse 2>/dev/null) ) && return
 
   zle -I
   print -s $cmd && eval $cmd
