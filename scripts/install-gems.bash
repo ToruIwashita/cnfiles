@@ -7,7 +7,6 @@ ruby -v
 echo
 printf "GEM_HOME: $GEM_HOME\n"
 
-rbenv exec gem install awesome_print
 rbenv exec gem install bundler
 rbenv exec gem install rails
 rbenv exec gem install pry
