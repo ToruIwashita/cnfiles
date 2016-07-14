@@ -52,3 +52,6 @@
 [submodule "modules/go"]
 	path = modules/go
 	url = git@github.com:golang/go.git
+[submodule "modules/git"]
+	path = modules/git
+	url = git@github.com:git/git.git
