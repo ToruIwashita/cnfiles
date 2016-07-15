@@ -7,6 +7,7 @@ _into-leaf-dir() {
 
   dest=$args[$#args]
   [[ $dest =~ '^~' ]] && dest=$HOME${dest#*~}
+  dest=${dest//\\/}
 
   zle -I
   zle kill-whole-line

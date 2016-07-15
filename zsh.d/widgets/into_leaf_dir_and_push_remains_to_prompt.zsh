@@ -13,6 +13,7 @@ _into-leaf-dir-and-push-remains-to-prompt() {
   else
     dest=$file_path
   fi
+  dest=${dest//\\/}
 
   zle -I
   zle kill-whole-line
