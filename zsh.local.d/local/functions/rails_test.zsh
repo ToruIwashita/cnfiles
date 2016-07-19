@@ -84,6 +84,6 @@ EOF`
     cmd='bundle exec rspec'
   fi
 
-  print $cmd 
+  print $cmd
   eval "$cmd $tag_option $file_paths"
 }
