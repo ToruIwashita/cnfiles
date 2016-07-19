@@ -44,7 +44,7 @@ set splitright                 " 新しいウィンドウを右に開く
 set iskeyword+=@-@,-           " @と-を単語の一部とみなす
 set tags=.tags,tags            " tagsファイル読み込み
 set list                       " listモード(タブや行末を文字表示する)
-set listchars=tab:»-,trail:-   " listモードでタブと行末の空白を表示する
+set listchars=tab:»-,trail:_   " listモードでタブと行末の空白を表示する
 
 "" 補完ポップアップメニュー色設定
 hi Pmenu ctermbg=8 guibg=#606060
