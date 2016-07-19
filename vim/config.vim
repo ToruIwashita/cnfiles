@@ -18,31 +18,33 @@ let &wildcharm = &wildchar
 syntax sync minlines=500 maxlines=1000  " シンタックスハイライトの開始/終了タグ検索の閾値
 
 "" 通常オプション
-set encoding=utf8               " エンコーディングUTF-8
-set t_Co=256                    " 256色モード
-set laststatus=2                " ステータスライン常に表示
-set showtabline=2               " タブライン常に表示
-set fileencoding=utf-8          " カレントバッファ内のファイルの文字UTF-8
-set expandtab                   " タブ文字の代わりに半角スペース
-set autoindent                  " C言語スタイルインデント
-set shiftwidth=2                " オートインデント時の空白文字数
-set tabstop=2                   " <TAB>を含むファイルを開いた際,<TAB>を何文字の空白に変換するか
-set softtabstop=2               " キーボードで<TAB>を入力した際,<TAB>を何文字の空白に変換するか
-set number                      " 行数表示
-set incsearch                   " インクリメンタルサーチ
-set hlsearch                    " サーチ結果ハイライト
-set autoread                    " 外部で変更のあったファイルを自動的に読み直す
-set backspace=indent,eol,start  " インサートモード時backspece有効
-set nrformats=octal             " <C-a>,<C-x>で使う基数を10進数に
-set virtualedit=block           " 矩形ビジュアル無文字部分カーソル移動
-set scrolloff=5                 " 上下5行の表示を固定
-set ttyfast                     " 横分割かつ,ターミナルが部分スクロールをサポートしていないとき,再描画が滑らかになる
-set lazyredraw                  " スクリプト実行中に画面を描画しない
-set nowrapscan                  " ファイルの末端で検索を止める
-set splitbelow                  " 新しいウィンドウを下に開く
-set splitright                  " 新しいウィンドウを右に開く
-set iskeyword+=@-@,-            " @と-を単語の一部とみなす
-set tags=.tags,tags             " tagsファイル読み込み
+set encoding=utf8                  " エンコーディングUTF-8
+set t_Co=256                       " 256色モード
+set laststatus=2                   " ステータスライン常に表示
+set showtabline=2                  " タブライン常に表示
+set fileencoding=utf-8             " カレントバッファ内のファイルの文字UTF-8
+set expandtab                      " タブ文字の代わりに半角スペース
+set autoindent                     " C言語スタイルインデント
+set shiftwidth=2                   " オートインデント時の空白文字数
+set tabstop=2                      " <TAB>を含むファイルを開いた際,<TAB>を何文字の空白に変換するか
+set softtabstop=2                  " キーボードで<TAB>を入力した際,<TAB>を何文字の空白に変換するか
+set number                         " 行数表示
+set incsearch                      " インクリメンタルサーチ
+set hlsearch                       " サーチ結果ハイライト
+set autoread                       " 外部で変更のあったファイルを自動的に読み直す
+set backspace=indent,eol,start     " インサートモード時backspece有効
+set nrformats=octal                " <C-a>,<C-x>で使う基数を10進数に
+set virtualedit=block              " 矩形ビジュアル無文字部分カーソル移動
+set scrolloff=5                    " 上下5行の表示を固定
+set ttyfast                        " 横分割かつ,ターミナルが部分スクロールをサポートしていないとき,再描画が滑らかになる
+set lazyredraw                     " スクリプト実行中に画面を描画しない
+set nowrapscan                     " ファイルの末端で検索を止める
+set splitbelow                     " 新しいウィンドウを下に開く
+set splitright                     " 新しいウィンドウを右に開く
+set iskeyword+=@-@,-               " @と-を単語の一部とみなす
+set tags=.tags,tags                " tagsファイル読み込み
+set list                           " listモード(タブや行末を文字表示する)
+set listchars=tab:»-,trail:-,eol:$ " listモードでタブと行末の空白と行末を表示する
 
 "" 補完ポップアップメニュー色設定
 hi Pmenu ctermbg=8 guibg=#606060
