@@ -6,7 +6,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 nnoremap <C-s>g :<C-u>OpenGithubProject<CR>
-nnoremap <C-s><C-g> :<C-u>OpenGithubFile<CR>
+nnoremap <C-s><C-g> :<C-u>OpenGithubFile<CR>y<CR>
 
 cnorea '<,'>G '<,'>OpenGithubFile
 
