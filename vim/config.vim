@@ -199,7 +199,7 @@ nnoremap qqq: <ESC>q:
 nnoremap qqq/ <ESC>q/
 nnoremap qqq? <ESC>q?
 " tag入力
-nnoremap <C-s>, :<C-u>tselect<SPACE>
+nnoremap <C-s>h :<C-u>tselect<SPACE>
 
 "" inoremap
 " ノーマルモードに切り替え<ESC>
