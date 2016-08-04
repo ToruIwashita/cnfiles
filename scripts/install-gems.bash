@@ -25,6 +25,7 @@ rbenv exec gem update rubocop
 rbenv exec gem update rspec
 rbenv exec gem update awesome_print
 
+echo
 rbenv rehash
 
 printf "\ncomplete\n"
