@@ -7,6 +7,9 @@ ruby -v
 echo
 printf "GEM_HOME: $GEM_HOME\n"
 
+echo
+printf "install gems"
+
 rbenv exec gem install bundler
 rbenv exec gem install rails
 rbenv exec gem install pry
@@ -15,6 +18,9 @@ rbenv exec gem install pry-remote
 rbenv exec gem install rubocop
 rbenv exec gem install rspec
 rbenv exec gem install awesome_print
+
+echo
+printf "update gems"
 
 rbenv exec gem update bundler
 rbenv exec gem update rails
