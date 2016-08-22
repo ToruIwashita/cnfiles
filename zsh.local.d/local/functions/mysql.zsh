@@ -140,18 +140,17 @@ mycnt() {
 }
 
 watch-myps() {
-  local opt full_opt g_opt usage
+  local opt g_opt usage
 
-  usage="usage: $0 [-f(FULL PROCESSLIST)] [-g(\\G)]"
-  while getopts :fgh opt; do
+  usage="usage: $0 [-g]"
+  while getopts :gh opt; do
     case ${opt} in
-      f) full_opt='FULL' ;;
       g) g_opt='\G' ;;
       h|:|\?) print $usage; return 2 ;;
     esac
   done
 
-  watch -n 3 "${MYSQL_CMD} 'SHOW ${full_opt} PROCESSLIST${g_opt}'"
+  watch -n 3 "${MYSQL_CMD} 'SELECT * FROM information_schema.PROCESSLIST WHERE INFO IS NOT NULL${g_opt}'"
 }
 
 mf() {

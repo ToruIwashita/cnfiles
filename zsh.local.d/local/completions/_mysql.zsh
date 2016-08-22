@@ -22,6 +22,12 @@ _mf() {
     '(:)*: :__my-show-tables'
 }
 
+_watch-myps() {
+  _arguments \
+    -g'[with \\G suffix]' \
+    -h'[Show help text]'
+}
+
 _myst() {
   _arguments '(:)*: :__my-show-tables'
 }
@@ -32,3 +38,4 @@ compdef _myst mydesc
 compdef _myst myindex
 compdef _myst myfcsv
 compdef _myst mycnt
+compdef _watch-myps watch-myps
