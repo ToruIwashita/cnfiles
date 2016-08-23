@@ -55,3 +55,6 @@
 [submodule "modules/neovim"]
 	path = modules/neovim
 	url = git@github.com:neovim/neovim.git
+[submodule "modules/graphviz"]
+	path = modules/graphviz
+	url = git@github.com:ellson/graphviz.git
