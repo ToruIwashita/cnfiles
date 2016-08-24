@@ -5,7 +5,7 @@ scriptencoding utf-8
 let s:cpo_save = &cpo
 set cpo&vim
 
-nnoremap <C-g>B :GllRebase<SPACE>
+nnoremap <C-g>B :GllRebase
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
