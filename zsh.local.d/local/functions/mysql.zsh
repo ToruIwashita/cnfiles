@@ -112,28 +112,28 @@ mqexp() {
 }
 
 mydesc() {
-  __my-check-presence-of-args $*
+  __my-check-args $*
   (( $? )) && return 1
 
   eval "${MYSQL_CMD} 'DESC ${1}'"
 }
 
 myindex() {
-  __my-check-presence-of-args $*
+  __my-check-args $*
   (( $? )) && return 1
 
   eval "${MYSQL_CMD} 'SHOW INDEX FROM ${1}'"
 }
 
 myfcsv() {
-  __my-check-presence-of-args $*
+  __my-check-args $*
   (( $? )) && return 1
 
   eval "${MYSQL_CMD} 'DESC ${1}' -N | sed s/$'\t'.*//g | xargs echo | sed -e 's/ /,/g'"
 }
 
 mycnt() {
-  __my-check-presence-of-args $*
+  __my-check-args $*
   (( $? )) && return 1
 
   eval "${MYSQL_CMD} 'SELECT COUNT(1) FROM ${1}'"
