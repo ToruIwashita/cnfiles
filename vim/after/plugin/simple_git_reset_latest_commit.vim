@@ -1,4 +1,4 @@
-"" FILE: simple_git_reset_latest.vim
+"" FILE: simple_git_reset_latest_commit.vim
 set encoding=utf-8
 scriptencoding utf-8
 
