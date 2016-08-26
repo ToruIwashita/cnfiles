@@ -29,7 +29,7 @@ gab() {
   __ga $*
 }
 
-grh() {
+greset_latest() {
   local self_cmd help usage answer
 
   self_cmd=$0
