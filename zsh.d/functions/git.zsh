@@ -98,7 +98,7 @@ gc() {
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [-b --rebase <base branch>]
+usage: $self_cmd [-t --temporary]
            [-h --help]
 EOF`
 
