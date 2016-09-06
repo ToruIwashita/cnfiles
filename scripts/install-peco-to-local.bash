@@ -21,6 +21,8 @@ else
   ln -is $PECO_SRC_DIR_PATH $PECO_GITHUB_DIR_PATH_IN_GOPATH/peco
 fi
 
+cd $PECO_GITHUB_DIR_PATH_IN_GOPATH/peco
+make installdeps
 go build ./cmd/peco/peco.go
 
 if [[ -L $LOCAL_BIN_DIR_PATH/peco ]]; then
