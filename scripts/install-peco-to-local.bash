@@ -10,7 +10,7 @@ if [[ -d $PECO_GITHUB_DIR_PATH_IN_GOPATH ]]; then
   printf "\n$PECO_GITHUB_DIR_PATH_IN_GOPATH dir already exists\n"
 else
   printf "\nmkdir $PECO_GITHUB_DIR_PATH_IN_GOPATH\n"
-  mkdir $PECO_GITHUB_DIR_PATH_IN_GOPATH
+  mkdir -p $PECO_GITHUB_DIR_PATH_IN_GOPATH
 fi
 
 # create peco dir symlink 
