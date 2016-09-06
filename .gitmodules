@@ -58,3 +58,6 @@
 [submodule "modules/graphviz"]
 	path = modules/graphviz
 	url = git@github.com:ellson/graphviz.git
+[submodule "modules/glide"]
+	path = modules/glide
+	url = git@github.com:Masterminds/glide.git
