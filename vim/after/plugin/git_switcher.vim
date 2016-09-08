@@ -6,7 +6,6 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 let g:gsw_autoload_session = 'confirm'
-let g:gsw_switch_autostash = 1
 
 " <C-s>プレフィックス
 nnoremap <C-s>p :<C-u>GswPull<CR>
