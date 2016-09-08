@@ -10,9 +10,6 @@ set background=dark
 "" neocomplete
 let g:neocomplete#enable_at_startup = 1  " neocompleteを起動時に有効化
 
-"" QuickBuf
-let g:qb_hotkey = '__'
-
 "" yankround
 let g:yankround_dir = cache_dir_path.'/vim/yankround'
 let g:yankround_max_history = 30

@@ -79,7 +79,6 @@ Plug 'Konfekt/FastFold'                            " 自動折畳
 Plug 'hashivim/vim-terraform'                      " vim-terraform
 Plug 'chrisbra/vim-zsh'                            " vim-zsh
 Plug 'vim-scripts/AnsiEsc.vim'                     " ANSIカラー表示
-Plug 'vim-scripts/QuickBuf'                        " バッファ操作
 Plug 'ToruIwashita/tabmove-assist.vim'             " タブ移動補助
 Plug 'ToruIwashita/tag-tnjump.vim'                 " タグジャンプ補助
 Plug 'ToruIwashita/window-closer.vim'              " ウィンドウを閉じる動作の制御
