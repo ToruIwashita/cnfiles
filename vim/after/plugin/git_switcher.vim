@@ -6,6 +6,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 let g:gsw_autoload_session = 'confirm'
+let g:gsw_save_session_confirm = 'no'
 
 " <C-s>プレフィックス
 nnoremap <C-s>p :<C-u>GswPull<CR>
