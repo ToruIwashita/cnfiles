@@ -4,6 +4,7 @@ scriptencoding utf-8
 
 "" 初期設定
 let g:vim_dir_path = $VIM_DIR_PATH
+let g:home_dir_path = $HOME
 let g:cache_dir_path = $CACHE_DIR_PATH
 let g:lint_dir_path = $LINT_DIR_PATH
 let g:local_dir_path = $LOCAL_DIR_PATH
@@ -56,6 +57,8 @@ Plug 'thinca/vim-quickrun'                         " バッファ上のソース
 Plug 'thinca/vim-tabrecent'                        " 直前のタブに戻る
 Plug 'osyo-manga/shabadou.vim'                     " 汎用的なquickrun-hook
 Plug 'osyo-manga/vim-over'                         " 置換プレビュー
+Plug 'fuenor/qfixgrep'                             " プレビュー&絞り込み検索付きgrep
+Plug 'glidenote/memolist.vim'                      " メモ管理
 Plug 'tmux-plugins/vim-tmux'                       " vim-tmux
 Plug 't9md/vim-choosewin'                          " ウィンドウ対話的選択
 Plug 'ctrlpvim/ctrlp.vim'                          " 多機能finder
