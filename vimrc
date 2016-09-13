@@ -59,6 +59,7 @@ Plug 'osyo-manga/shabadou.vim'                     " 汎用的なquickrun-hook
 Plug 'osyo-manga/vim-over'                         " 置換プレビュー
 Plug 'fuenor/qfixgrep'                             " プレビュー&絞り込み検索付きgrep
 Plug 'glidenote/memolist.vim'                      " メモ管理
+Plug 'kaneshin/ctrlp-memolist'                     " memolistをctrlpで絞り込む
 Plug 'tmux-plugins/vim-tmux'                       " vim-tmux
 Plug 't9md/vim-choosewin'                          " ウィンドウ対話的選択
 Plug 'ctrlpvim/ctrlp.vim'                          " 多機能finder
