@@ -12,7 +12,7 @@ export ZSH_DIR_PATH=$zsh_dir_path
 export VIM_DIR_PATH=~/.vim
 export TMUX_DIR_PATH=~/.tmux
 export CACHE_DIR_PATH=~/.cache
-export LINT_DIR=_PATH~/.lint
+export LINT_DIR_PATH=~/.lint
 export LOCAL_DIR_PATH=~/local
 
 ## path関連設定
