@@ -13,6 +13,7 @@ alias cds='cd ~/src'
 alias cdsg='cd ~/src/go'
 alias cdw='cd ~/works'
 alias cdc='cd ~/.cnfiles'
+alias cdml='cd ~/.memolist'
 # mysql
 alias my=$MYSQL_CNCT
 alias myq=$MYSQL_CMD
@@ -25,7 +26,7 @@ alias pgshow="$PGSQL_CMD '\d'"
 alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,ruby'
 
 ## global alias
-alias -g TT='>! ~/works/tmp.txt'
+alias -g TT='>! ~/.memolist/0000-00-00-tmp.txt'
 
 ## for Mac(GNU系のコマンドはシンボリックリンクを貼り直すことを推奨するので以下コメントアウト)
 ## bindkey
