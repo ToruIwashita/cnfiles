@@ -10,7 +10,6 @@ export GOPATH=~/.go
 export GEM_HOME=~/.gem
 export NPM_HOME=~/.npm
 export MYSQL_CNCT MYSQL_CMD
-export MEMOLIST_TMP_FILE=~/.memolist/0000-00-00-tmp.txt
 
 # gitインストール時にbrewでインストールしたopensslを使用する
 # export CPATH=/usr/local/opt/openssl/include:$LD_LIBRARY_PATH

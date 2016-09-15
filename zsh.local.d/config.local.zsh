@@ -25,9 +25,6 @@ alias pgshow="$PGSQL_CMD '\d'"
 # ctags
 alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,ruby'
 
-## global alias
-alias -g TT=">! $MEMOLIST_TMP_FILE"
-
 ## for Mac(GNU系のコマンドはシンボリックリンクを貼り直すことを推奨するので以下コメントアウト)
 ## bindkey
 #bindkey -v '^sc' pbcopy-current # Ctr+s,pでBUFFERをcatしてpbcopy

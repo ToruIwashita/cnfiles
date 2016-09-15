@@ -14,6 +14,8 @@ export TMUX_DIR_PATH=~/.tmux
 export CACHE_DIR_PATH=~/.cache
 export LINT_DIR_PATH=~/.lint
 export LOCAL_DIR_PATH=~/local
+export MEMOLIST_DIR_PATH=~/.memolist
+export MEMOLIST_TMP_FILE=$MEMOLIST_DIR_PATH/0000-00-00-tmp.txt
 
 ## path関連設定
 # plugin path
