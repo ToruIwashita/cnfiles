@@ -8,6 +8,8 @@ let g:home_dir_path = $HOME
 let g:cache_dir_path = $CACHE_DIR_PATH
 let g:lint_dir_path = $LINT_DIR_PATH
 let g:local_dir_path = $LOCAL_DIR_PATH
+let g:memolist_dir_path = $MEMOLIST_DIR_PATH
+let g:memolist_tmp_file = $MEMOLIST_TMP_FILE
 
 " 起動時にvim-plugの存在チェック
 if has('vim_starting')
