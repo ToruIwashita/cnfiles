@@ -15,6 +15,9 @@ SUBMODULES_DIR_PATH=$BASE_DIR_PATH/modules
 # cache
 CACHE_DIR_PATH=~/.cache
 
+# memolist
+MEMOLIST_DIR_PATH=~/.memolist
+
 # submodules src dir
 CTAGS_SRC_DIR_PATH=$SUBMODULES_DIR_PATH/ctags
 GIT_SRC_DIR_PATH=$SUBMODULES_DIR_PATH/git
@@ -55,3 +58,6 @@ PECO_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH/src/github.com/peco
 # etc
 GEM_HOME=~/.gem
 NPM_HOME=~/.npm
+
+# memolist tmp file
+MEMOLIST_TMP_FILE=$MEMOLIST_DIR_PATH/0000-00-00-tmp.txt

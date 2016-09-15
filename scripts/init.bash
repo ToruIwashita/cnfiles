@@ -46,12 +46,12 @@ else
   mkdir $CACHE_DIR_PATH
 fi
 
-# vim/session dir
-if [[ -d $CACHE_DIR_PATH/vim/session ]]; then
-  printf "\e[32m$CACHE_DIR_PATH/vim/session dir already exists\e[0m\n"
+# memolist dir
+if [[ -d $MEMOLIST_DIR_PATH ]]; then
+  printf "\e[32m$MEMOLIST_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $CACHE_DIR_PATH/vim/session\e[0m\n"
-  mkdir $CACHE_DIR_PATH/vim/session
+  printf "\e[31mmkdir $MEMOLIST_DIR_PATH\e[0m\n"
+  mkdir $MEMOLIST_DIR_PATH
 fi
 
 # go path dir
@@ -187,6 +187,15 @@ if [[ -L ~/.aprc ]]; then
 else
   printf "\e[31mcreate symlink ~/.aprc\e[0m\n"
   ln -is $BASE_DIR_PATH/aprc ~/.aprc
+fi
+
+## create initiale file
+# memolist tmp file
+if [[ -f $MEMOLIST_TMP_FILE ]]; then
+  printf "\e[32m$MEMOLIST_TMP_FILE file already exists\e[0m\n"
+else
+  printf "\e[31mcreate file $MEMOLIST_TMP_FILE\e[0m\n"
+  touch $MEMOLIST_TMP_FILE
 fi
 
 printf "\ninit complete\n"
