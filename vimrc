@@ -35,8 +35,6 @@ Plug 'gregsexton/gitv'                             " gitv(コミットログ閲�
 Plug 'tyru/open-browser.vim'                       " URIをブラウザで開く
 Plug 'tyru/open-browser-github.vim'                " Githubをブラウザで開く
 Plug 'rhysd/committia.vim'                         " コミットログ入力サポート
-Plug 'xolox/vim-misc'                              " vim-sessionが依存しているplugin(dependsで依存を表せるが敢えてしていない)
-Plug 'xolox/vim-session'                           " セッション保存
 Plug 'kana/vim-submode'                            " 連続入力などをサポートするサブモードを定義する
 Plug 'kana/vim-textobj-user'                       " 独自text-object定義
 Plug 'kana/vim-textobj-line'                       " lineのtext-object(vim-textobj-user依存)
