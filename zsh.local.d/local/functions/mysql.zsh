@@ -150,7 +150,7 @@ watch-myps() {
     esac
   done
 
-  watch -n 3 "${MYSQL_CMD} 'SELECT * FROM information_schema.PROCESSLIST WHERE INFO IS NOT NULL${g_opt}'"
+  watch -n 3 "${MYSQL_CMD} 'SELECT * FROM information_schema.PROCESSLIST WHERE INFO IS NOT NULL ORDER BY TIME DESC${g_opt}'"
 }
 
 mf() {
