@@ -78,6 +78,13 @@ _gsh() {
     '(-h --help)'{-h,--help}'[Show help text]'
 }
 
+_gpickfile() {
+  _arguments \
+    '(-b -branch)'{-b,--branch}'[Checkout target branch]: :__git-branches' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '(:)*: :_files'
+}
+
 _gdeleteb() {
   _arguments \
     '(-f --force)'{-f,--force}'[Force delete merged branches]' \
@@ -94,4 +101,5 @@ compdef _gsw gsw
 compdef _gud gud
 compdef _gll gll
 compdef _gsh gsh
+compdef _gpickfile gpickfile
 compdef _gdeleteb gdeleteb

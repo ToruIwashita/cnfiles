@@ -425,6 +425,64 @@ grb() {
   git rebase -i $rebase_target
 }
 
+gpickfile() {
+  local self_cmd help usage file_name branch_name
+  local -a args
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <file name>
+             <-b --branch <branch name>>
+             [-h --help]
+EOF`
+
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -b | --branch)
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        branch_name="$2"
+        shift 2
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift;
+        args+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        args+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+
+  file_name=${args[1]}
+  if (( ! ${#args} || ! $#branch_name )); then
+    print "$self_cmd: requires arguments\n$help" 1>&2
+    return 1
+  fi
+
+  git checkout $branch_name -- $file_name
+}
+
 gdeleteb() {
   integer force
   local -a merged_branches
