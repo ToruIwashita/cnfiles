@@ -1,5 +1,5 @@
-## peco-silver-search-and-start-editor
-_peco-silver-search-and-start-editor() {
+## peco-ag-and-start-editor
+_peco-ag-and-start-editor() {
   local context parttern specified_line
   local -a args peco_resulting_line
   local -aU file_paths
@@ -34,4 +34,4 @@ _peco-silver-search-and-start-editor() {
   zle accept-line
 }
 
-zle -N peco-silver-search-and-start-editor _peco-silver-search-and-start-editor
+zle -N peco-ag-and-start-editor _peco-ag-and-start-editor
