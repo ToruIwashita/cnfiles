@@ -68,9 +68,10 @@ bindkey -v '^w' backward-kill-word                          # Ctr+wでbackward-k
 bindkey -v '^y' push-input                                  # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
 bindkey -v '^sg' immediate-hub-browse                       # Ctr+s,hでhub browse
 bindkey -v '^sf' peco-file-finder                           # Ctr+s,fでpeco-file-finder
+bindkey -v '^sh' peco-file-find-and-start-editor            # Ctr+s,hでファイル検索してstart-editor
 bindkey -v '^sj' vi-join                                    # Ctr+s,jでviのjoin
 bindkey -v '^sk' peco-cd-recent-dir                         # Ctr+s,kで最近移動したディレクトリを絞り込んで移動
-bindkey -v '^sl' peco-file-find-and-start-editor            # Ctr+s,lでファイル検索してstart-editor
+bindkey -v '^sl' peco-git-grep-and-start-editor             # Ctr+s,lでgit grepしてstart-editor
 bindkey -v '^sn' immediate-git-fetch                        # Ctr+s,nでgit fetch
 bindkey -v '^so' peco-cd-dir                                # Ctr+s,oでディレクトリを絞り込んで移動
 bindkey -v '^sp' immediate-git-pull                         # Ctr+s,pでgit pull
