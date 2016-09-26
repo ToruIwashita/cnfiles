@@ -8,7 +8,7 @@ _peco-silver-search-and-start-editor() {
 
   args=("${(z)BUFFER}")
   if (( $#args >= 2 )) && [[ ${args[-1]} =~ '^[0-9]*$' ]]; then
-    context="-C ${args[-1]}"
+    context="--context=${args[-1]}"
     pattern=${args:0:-1}
   else
     context=''
@@ -23,11 +23,11 @@ _peco-silver-search-and-start-editor() {
   fi
 
   if (( $#peco_resulting_line == 1 )); then
-    specified_line=+${${peco_resulting_line#*:}%%[:-]*}
-    file_paths=${peco_resulting_line%%:*}
+    specified_line=+${${(M)${(M)peco_resulting_line#*[:-][0-9]*[:-]}%[:-][0-9]*[:-]}//[:-]/}
+    file_paths=${(R)${(M)peco_resulting_line#*[:-][0-9]*[:-]}%[:-][0-9]*[:-]}
   else
     specified_line=''
-    file_paths=(${(R)peco_resulting_line%%:*})
+    file_paths=${(R)${(M)peco_resulting_line#*[:-][0-9]*[:-]}%[:-][0-9]*[:-]}
   fi
 
   BUFFER="${EDITOR:-vim} $file_paths $specified_line"
