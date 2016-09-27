@@ -20,6 +20,7 @@ nnoremap <C-g><C-v> :<C-u>Gblame<CR>
 fun! s:fugitive_settings()
   nnoremap <buffer> <C-g><C-c> <NOP>
   nnoremap <buffer> <C-g><C-t> <NOP>
+  nnoremap <buffer> <C-g>d :<C-u>Git diff <C-r>=matchstr(getline('.'), 'modified:\s*\zs.*\ze')<CR><CR>
   nmap <buffer> t O
 endf
 
