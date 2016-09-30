@@ -19,7 +19,7 @@ let g:neocomplete#manual_completion_start_length = 0
 let g:neocomplete#min_keyword_length = 2
 
 "" オムニ補完の関数を呼び出しキーワードパターン設定(ruby用)
-augroup ruby_complete
+augroup local_neocomplete
   autocmd!
   autocmd FileType ruby setlocal omnifunc=rubycomplete#Complete
 augroup END

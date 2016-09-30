@@ -77,7 +77,7 @@ command! -nargs=? -complete=customlist,s:_types_of_rspec SwitchRspecQuickrun cal
 command! StopQuickrun call quickrun#sweep_sessions()
 
 " quickrunの出力結果にAnsiEscを実行して色付けする
-augroup quickrun
+augroup local_vim_quickrun
   autocmd!
   autocmd FileType quickrun AnsiEsc
   autocmd BufReadPost *_spec.rb call s:rspec_quickrun()
