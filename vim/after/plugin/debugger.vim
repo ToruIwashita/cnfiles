@@ -7,7 +7,7 @@ set cpo&vim
 
 augroup local_debugger
   autocmd!
-  autocmd FileType vim DebuggerOn
+  autocmd VimEnter * DebuggerOn
 augroup END
 
 let &cpo = s:cpo_save
