@@ -80,6 +80,7 @@ Plug 'kshenoy/vim-signature'                       " マーカー表示
 Plug 'adie/BlockDiff'                              " BlockDiff(選択範囲の比較)
 Plug 'LeafCage/yankround.vim'                      " ヤンク履歴管理
 Plug 'Konfekt/FastFold'                            " 自動折畳
+Plug 'haya14busa/vim-debugger'                     " Vim script debugger
 Plug 'hashivim/vim-terraform'                      " vim-terraform
 Plug 'chrisbra/vim-zsh'                            " vim-zsh
 Plug 'vim-scripts/AnsiEsc.vim'                     " ANSIカラー表示
