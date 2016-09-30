@@ -5,9 +5,9 @@ scriptencoding utf-8
 let s:cpo_save = &cpo
 set cpo&vim
 
-augroup git_switcher
+augroup local_debugger
   autocmd!
-  autocmd VimEnter * DebuggerOn
+  autocmd FileType vim DebuggerOn
 augroup END
 
 let &cpo = s:cpo_save
