@@ -23,6 +23,7 @@ function! s:toggle_git_folding()
   endif
 endfunction
 
+" gitvはfugitiveに依存しているのでここでfugitiveのコマンドを使用することを許容する
 fun! s:gitv_settiongs()
   nnoremap <buffer> <C-g>B :<C-u>Git rebase -i <C-r>=<SID>gitv_get_current_hash()<CR><CR>
   nnoremap <buffer> <C-g>C :<C-u>Git cherry-pick <C-r>=<SID>gitv_get_current_hash()<CR><CR>

@@ -33,7 +33,7 @@ Plug 'tpope/vim-repeat'                            " vim-surroundの機能を.�
 Plug 'tpope/vim-abolish'                           " 強化版置換コマンド
 Plug 'tpope/vim-surround'                          " text-object操作
 Plug 'tpope/vim-fugitive'                          " fugitive(ステータスラインのブランチ名と,Gblame用)
-Plug 'gregsexton/gitv'                             " gitv(コミットログ閲覧用)
+Plug 'gregsexton/gitv'                             " gitv(コミットログ閲覧用,vim-fugitive依存)
 Plug 'tyru/open-browser.vim'                       " URIをブラウザで開く
 Plug 'tyru/open-browser-github.vim'                " Githubをブラウザで開く
 Plug 'rhysd/committia.vim'                         " コミットログ入力サポート
