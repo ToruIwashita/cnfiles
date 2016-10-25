@@ -13,7 +13,7 @@ else
   mkdir -p $PECO_GITHUB_DIR_PATH_IN_GOPATH
 fi
 
-# create peco dir symlink 
+# create peco dir symlink
 if [[ -L $PECO_GITHUB_DIR_PATH_IN_GOPATH/peco ]]; then
   printf "\n$PECO_GITHUB_DIR_PATH_IN_GOPATH/peco symlink already exists\n"
 else
@@ -23,7 +23,7 @@ fi
 
 cd $PECO_GITHUB_DIR_PATH_IN_GOPATH/peco
 make installdeps
-go build ./cmd/peco/peco.go
+make build
 
 if [[ -L $LOCAL_BIN_DIR_PATH/peco ]]; then
   printf "\n$LOCAL_BIN_DIR_PATH/peco symlink already exists\n"
