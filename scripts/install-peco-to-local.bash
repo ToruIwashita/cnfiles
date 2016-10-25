@@ -22,8 +22,8 @@ else
 fi
 
 cd $PECO_GITHUB_DIR_PATH_IN_GOPATH/peco
-make installdeps
-make build
+glide install
+go build cmd/peco/peco.go
 
 if [[ -L $LOCAL_BIN_DIR_PATH/peco ]]; then
   printf "\n$LOCAL_BIN_DIR_PATH/peco symlink already exists\n"
