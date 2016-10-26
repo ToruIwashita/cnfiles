@@ -7,6 +7,10 @@ set cpo&vim
 
 " 移動後の画面位置
 let g:ctrlp_funky_after_jump = 'zxzz'
+" vimのsessionをロードするとg:ctrlp_builtinsの値が2,つまりg:ctrlp_typesの値がデフォルトになった状態でs:idが算出されるのでプラグインが動かない
+" ここで明示的に値を指定すると動く
+let g:ctrlp_types = ['fil', 'buf']
+let g:ctrlp_builtins = len(g:ctrlp_types)-1
 
 fun! s:ctrlp_funky_range() range
   let unnamed_register = @@
