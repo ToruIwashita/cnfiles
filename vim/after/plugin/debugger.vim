@@ -5,6 +5,8 @@ scriptencoding utf-8
 let s:cpo_save = &cpo
 set cpo&vim
 
+cnorea dh DebugHelp
+
 augroup local_debugger
   autocmd!
   autocmd VimEnter * DebuggerOn
