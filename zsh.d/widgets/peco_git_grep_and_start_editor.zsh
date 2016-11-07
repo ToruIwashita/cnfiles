@@ -1,21 +1,14 @@
-## peco-git-grep-and-start-editor
-_peco-git-grep-and-start-editor() {
-  local context parttern specified_line
+## peco-simple-git-grep-and-start-editor
+_peco-simple-git-grep-and-start-editor() {
+  local specified_line
   local -a args peco_resulting_line
   local -aU file_paths
 
   (( $#BUFFER )) && print -s "$BUFFER"
 
   args=("${(z)BUFFER}")
-  if (( $#args >= 2 )) && [[ ${args[-1]} =~ '^[0-9]*$' ]]; then
-    context="--context=${args[-1]}"
-    pattern=${args:0:-1}
-  else
-    context=''
-    pattern=$args
-  fi
 
-  peco_resulting_line=(${(f)"$(git grep --line-number $context "$pattern" | peco --select-1 2>/dev/null)"})
+  peco_resulting_line=(${(f)"$(git grep --line-number "$args" | peco --select-1 2>/dev/null)"})
 
   if (( ! $#peco_resulting_line )); then
     zle beginning-of-line
@@ -34,4 +27,4 @@ _peco-git-grep-and-start-editor() {
   zle accept-line
 }
 
-zle -N peco-git-grep-and-start-editor _peco-git-grep-and-start-editor
+zle -N peco-simple-git-grep-and-start-editor _peco-simple-git-grep-and-start-editor

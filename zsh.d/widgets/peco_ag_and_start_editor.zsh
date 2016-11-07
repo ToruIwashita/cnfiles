@@ -23,11 +23,11 @@ _peco-ag-and-start-editor() {
   fi
 
   if (( $#peco_resulting_line == 1 )); then
-    specified_line=+${${(M)${(M)peco_resulting_line#*[:-][0-9]*[:-]}%[:-][0-9]*[:-]}//[:-]/}
-    file_paths=${(R)${(M)peco_resulting_line#*[:-][0-9]*[:-]}%[:-][0-9]*[:-]}
+    specified_line=+${${(M)${(M)peco_resulting_line#*[:][0-9]*[:]}%[:][0-9]*[:]}//[:]/}
+    file_paths=${(R)${(M)peco_resulting_line#*[:][0-9]*[:]}%[:][0-9]*[:]}
   else
     specified_line=''
-    file_paths=${(R)${(M)peco_resulting_line#*[:-][0-9]*[:-]}%[:-][0-9]*[:-]}
+    file_paths=${(R)${(M)peco_resulting_line#*[:][0-9]*[:]}%[:][0-9]*[:]}
   fi
 
   BUFFER="${EDITOR:-vim} $file_paths $specified_line"

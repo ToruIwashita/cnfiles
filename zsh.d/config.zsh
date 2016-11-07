@@ -68,14 +68,13 @@ bindkey -v '^w' backward-kill-word                          # Ctr+wでbackward-k
 bindkey -v '^y' push-input                                  # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
 bindkey -v '^sf' peco-file-finder                           # Ctr+s,fでpeco-file-finder
 bindkey -v '^sg' immediate-hub-browse                       # Ctr+s,hでhub browse
-bindkey -v '^sh' peco-git-grep-and-start-editor             # Ctr+s,hでgit grepしてstart-editor
-bindkey -v '^sj' peco-file-find-and-start-editor            # Ctr+s,jでファイル検索してstart-editor
+bindkey -v '^sh' peco-simple-git-grep-and-start-editor      # Ctr+s,hでgit grepしてstart-editor
 bindkey -v '^sk' peco-cd-recent-dir                         # Ctr+s,kで最近移動したディレクトリを絞り込んで移動
-bindkey -v '^sl' peco-ag-and-start-editor                   # Ctr+s,lでagで検索してstart-editor
+bindkey -v '^sl' peco-file-find-and-start-editor            # Ctr+s,lでファイル検索してstart-editor
 bindkey -v '^sn' immediate-git-fetch                        # Ctr+s,nでgit fetch
 bindkey -v '^so' peco-cd-dir                                # Ctr+s,oでディレクトリを絞り込んで移動
 bindkey -v '^sp' immediate-git-pull                         # Ctr+s,pでgit pull
-bindkey -v '^ss' peco-search-and-start-editor               # Ctr+s,sでgitかagで検索してstart-editor
+bindkey -v '^ss' peco-ag-and-start-editor                   # Ctr+s,sでagで検索してstart-editorCtr+s
 bindkey -v '^s@' clear-screen                               # Ctr+@でclear-screen
 bindkey -v '^s^i' immediate-ls                              # Ctr+s,Ctr+iでls
 bindkey -v '^s^j' immediate-cat                             # Ctr+s,jでBUFFERをcat
