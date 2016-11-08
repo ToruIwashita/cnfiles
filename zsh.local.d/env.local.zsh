@@ -11,6 +11,10 @@ export GEM_HOME=~/.gem
 export NPM_HOME=~/.npm
 export MYSQL_CNCT MYSQL_CMD
 
+# export TRELLO_API_KEY=
+# export TRELLO_API_TOKEN=
+# export TRELLO_BOARD_ID=
+
 # gitインストール時にbrewでインストールしたopensslを使用する
 # export CPATH=/usr/local/opt/openssl/include:$LD_LIBRARY_PATH
 
