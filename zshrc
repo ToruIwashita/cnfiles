@@ -8,20 +8,27 @@ local dir_path file_path
 
 # グローバル変数
 typeset -g zsh_dir_path=~/.zsh.d
+typeset -g zsh_local_dir_path=$zsh_dir_path/local
 typeset -g zsh_plugin_dir_path=$zsh_dir_path/plugin
+typeset -ga zsh_lib_dir_paths
 typeset -ga zsh_sub_dir_paths
 typeset -ga precmd_functions
 typeset -ga chpwd_functions
 
-# typesetで配列は代入不可なので別定義
+# 配列はtypesetで代入不可なので別定義
+zsh_lib_dir_paths=(
+  $zsh_dir_path/lib
+  $zsh_local_dir_path/lib
+)
+
 zsh_sub_dir_paths=(
   $zsh_dir_path/functions
   $zsh_dir_path/completions
   $zsh_dir_path/widgets
   $zsh_dir_path/completion_widgets
-  $zsh_dir_path/local/functions
-  $zsh_dir_path/local/completions
-  $zsh_dir_path/local/widgets
+  $zsh_local_dir_path/functions
+  $zsh_local_dir_path/completions
+  $zsh_local_dir_path/widgets
 )
 
 # 環境変数
@@ -43,9 +50,12 @@ zmodload -i zsh/terminfo               # terminfoの配列データを扱う(zsh
 
 ## 各種設定・オリジナル関数読込
 # lib読込
-for file_path in $zsh_dir_path/lib/*.zsh(.); do
-  source $file_path
+for dir_path in ${zsh_lib_dir_paths[@]}; do
+  for file_path in $dir_path/*.zsh(.); do
+    source $file_path
+  done
 done
+
 # 関数読込
 for dir_path in ${zsh_sub_dir_paths[@]}; do
   for file_path in ${dir_path}/*.zsh(.); do
