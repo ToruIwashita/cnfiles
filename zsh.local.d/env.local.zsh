@@ -1,6 +1,6 @@
 ## 環境変数設定
 # mysql (その他の設定は ~/.my.cnf に書く)
-readonly MYSQL_DATABASE="crowdworks_dev"
+readonly MYSQL_DATABASE=
 # psql (全ての設定を環境変数に書く)
 readonly PGDATABASE=
 readonly PGHOST=
