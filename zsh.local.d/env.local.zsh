@@ -1,6 +1,8 @@
 ## 環境変数設定
-readonly MYSQL_CNCT='mysql mydatabase'  # ~/.my.cnfに設定を書く
-readonly MYSQL_CMD="$MYSQL_CNCT -e"
+# mysql (その他の設定は ~/.my.cnf に設定を書く)
+readonly MYSQL_DATABASE="crowdworks_dev"
+
+# postgresql
 readonly PGSQL_CNCT="psql -h localhost -p 5432 -U guest -d mydatabase"  # ~/.pgpassに設定を書く
 readonly PGSQL_CMD="$PGSQL_CNCT -c"
 

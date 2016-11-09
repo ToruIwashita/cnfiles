@@ -1,11 +1,11 @@
-## MYSQL関数用補完
-__my-show-tables() {
-  compadd $(eval "${MYSQL_CMD} 'SHOW TABLES' -N")
+## mysql関数用補完
+__my-table-names() {
+  compadd $(__my-table-list)
 }
 
 _myfindg() {
   _arguments \
-    -t'[Table name]:Input a part of table name or table name:__my-show-tables' \
+    -t'[Table name]:Input a part of table name or table name:__my-table-names' \
     -f'[Field info]:A part of field info'
 }
 
@@ -19,7 +19,7 @@ _mf() {
     '(-v --vertical)'{-v,--vertical}'[Vertical display]' \
     '(-w --where)'{-w,--where}'[Where condition]' \
     '(-h --help)'{-h,--help}'[Show help text]' \
-    '(:)*: :__my-show-tables'
+    '(:)*: :__my-table-names'
 }
 
 _watch-myps() {
@@ -29,7 +29,7 @@ _watch-myps() {
 }
 
 _myst() {
-  _arguments '(:)*: :__my-show-tables'
+  _arguments '(:)*: :__my-table-names'
 }
 
 compdef _myfindg myfindg

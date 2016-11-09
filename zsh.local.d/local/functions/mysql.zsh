@@ -1,11 +1,10 @@
-## MYSQL
-__my-check-args() {
-  __check-presence-of-args $*
-  (( $? )) && return 1
-  __check-arg-suffix 'sql' $1
-  (( $? )) && return 1
+## mysql関連関数
+my() {
+  __my-connect
+}
 
-  return 0
+myq() {
+  __my-cmd $*
 }
 
 mq() {
@@ -25,7 +24,7 @@ mq() {
   eval $my_cmd
   print "Query\n"
 
-  my_cmd=$my_cmd" | xargs -0 -i ${MYSQL_CMD} '{}'"
+  my_cmd=$my_cmd" | xargs -0 -i $(__my-cmd-self) '{}'"
   print "command: ${my_cmd}\n"
   eval $my_cmd
 }
@@ -47,7 +46,7 @@ mqout() {
   eval $my_cmd
   print "Query\n"
 
-  my_cmd=$my_cmd" | xargs -0 -i ${MYSQL_CMD} '{}' -N | sed -e 's/\t/,/g' >! $TMP"
+  my_cmd=$my_cmd" | xargs -0 -i $(__my-cmd-self) '{}' -N | sed -e 's/\t/,/g' >! $TMP"
   print "command: ${my_cmd}\n"
   eval $my_cmd
 }
@@ -65,17 +64,16 @@ myfindg() {
   done
 
   tmp_line="-------------------------------------------------------"
-  my_cmd=$MYSQL_CMD
   if (( ${#table_name} && ${#field_name} )); then
     print "Field\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
-    eval $my_cmd" 'DESC ${table_name}' -N | grep --color '${field_name}'"
+    myq "DESC ${table_name}" -N | grep --color ${field_name}
   elif (( ${#table_name} )); then
     print "Tables\n${tmp_line}"
     eval $my_cmd" 'SHOW TABLES' -N | grep --color '${table_name}'"
   elif (( ${#field_name} )); then
     print "Table: 'name'\nField\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
-    for table_name in $(eval $my_cmd" 'SHOW TABLES' -N"); do
-      cmd_res_field_list=$(eval $my_cmd" 'DESC ${table_name}' -N | grep --color '${field_name}'")
+    for table_name in $(__my-table-list); do
+      cmd_res_field_list=$(myq "DESC ${table_name}" -N | grep --color ${field_name})
       if (( ${#cmd_res_field_list} )); then
         print "Table: ${table_name}"
         for cmd_res_field_name in ${(f)cmd_res_field_list}; do
@@ -106,7 +104,7 @@ mqexp() {
   eval $my_cmd
   print "Query\n"
 
-  my_cmd=$my_cmd" | xargs -0 -i ${MYSQL_CMD} 'EXPLAIN {}\G'"
+  my_cmd=$my_cmd" | xargs -0 -i $(__my-cmd-self) 'EXPLAIN {}\G'"
   print "command: ${my_cmd}\n"
   eval $my_cmd
 }
@@ -115,28 +113,32 @@ mydesc() {
   __check-presence-of-args $*
   (( $? )) && return 1
 
-  eval "${MYSQL_CMD} 'DESC ${1}'"
+  myq "DESC ${1}"
 }
 
 myindex() {
   __check-presence-of-args $*
   (( $? )) && return 1
 
-  eval "${MYSQL_CMD} 'SHOW INDEX FROM ${1}'"
+  myq "SHOW INDEX FROM ${1}"
+}
+
+myshow() {
+  __my-table-list
 }
 
 myfcsv() {
   __check-presence-of-args $*
   (( $? )) && return 1
 
-  eval "${MYSQL_CMD} 'DESC ${1}' -N | sed s/$'\t'.*//g | xargs echo | sed -e 's/ /,/g'"
+  myq "DESC ${1}" -N | sed s/$'\t'.*//g | xargs echo | sed -e 's/ /,/g'
 }
 
 mycnt() {
   __check-presence-of-args $*
   (( $? )) && return 1
 
-  eval "${MYSQL_CMD} 'SELECT COUNT(1) FROM ${1}'"
+  myq "SELECT COUNT(1) FROM ${1}"
 }
 
 watch-myps() {
@@ -150,7 +152,7 @@ watch-myps() {
     esac
   done
 
-  watch -n 3 "${MYSQL_CMD} 'SELECT * FROM information_schema.PROCESSLIST WHERE INFO IS NOT NULL ORDER BY TIME DESC${g_opt}'"
+  watch -n 3 "$(__my-cmd-self) 'SELECT * FROM information_schema.PROCESSLIST WHERE INFO IS NOT NULL ORDER BY TIME DESC${g_opt}'"
 }
 
 mf() {
@@ -260,5 +262,5 @@ EOF`
   fi
 
   print "> $my_cmd;"
-  eval $MYSQL_CMD "'$my_cmd'"
+  myq "$my_cmd"
 }

@@ -14,10 +14,6 @@ alias cdsg='cd ~/src/go'
 alias cdw='cd ~/works'
 alias cdc='cd ~/.cnfiles'
 alias cdml='cd ~/.memolist'
-# mysql
-alias my=$MYSQL_CNCT
-alias myq=$MYSQL_CMD
-alias myshow="$MYSQL_CMD 'SHOW TABLES'"
 # pgsql
 alias pg=$PGSQL_CNCT
 alias pgq=$PGSQL_CMD
