@@ -1,17 +1,24 @@
 ## 環境変数設定
-# mysql (その他の設定は ~/.my.cnf に設定を書く)
+# mysql (その他の設定は ~/.my.cnf に書く)
 readonly MYSQL_DATABASE="crowdworks_dev"
-
-# postgresql
-readonly PGSQL_CNCT="psql -h localhost -p 5432 -U guest -d mydatabase"  # ~/.pgpassに設定を書く
-readonly PGSQL_CMD="$PGSQL_CNCT -c"
+# psql (全ての設定を環境変数に書く)
+readonly PGDATABASE=
+readonly PGHOST=
+readonly PGPORT=
+readonly PGUSER=
+readonly PGPASSWORD=
 
 export RBENV_ROOT=~/.rbenv
 export GOROOT=$LOCAL_DIR_PATH/go
 export GOPATH=~/.go
 export GEM_HOME=~/.gem
 export NPM_HOME=~/.npm
-export MYSQL_CNCT MYSQL_CMD
+export MYSQL_DATABASE
+export PGDATABASE
+export PGHOST
+export PGPORT
+export PGUSER
+export PGPASSWORD
 
 # gitインストール時にbrewでインストールしたopensslを使用する
 # export CPATH=/usr/local/opt/openssl/include:$LD_LIBRARY_PATH

@@ -14,10 +14,6 @@ alias cdsg='cd ~/src/go'
 alias cdw='cd ~/works'
 alias cdc='cd ~/.cnfiles'
 alias cdml='cd ~/.memolist'
-# pgsql
-alias pg=$PGSQL_CNCT
-alias pgq=$PGSQL_CMD
-alias pgshow="$PGSQL_CMD '\d'"
 # ctags
 alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,ruby'
 

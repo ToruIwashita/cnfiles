@@ -1,23 +1,10 @@
-## PGSQL
-__pg-check-presence-of-args() {
-  if (( ! $# )); then
-    print 'lack of arguments.' 2>&1
-    return 1
-  fi
-
-  return 0
+## pgsql関連関数
+pg() {
+  __pg-connect
 }
 
-__pg-check-args() {
-  __pg-check-presence-of-args $*
-  (( $? )) && return 1
-
-  if [[ $1:e != "sql" ]]; then
-    print "invalid extension." 2>&1
-    return 1
-  fi
-
-  return 0
+pgq() {
+  __pg-cmd $*
 }
 
 pq() {
@@ -37,7 +24,7 @@ pq() {
   eval $pg_cmd
   print "Query\n"
 
-  pg_cmd=$pg_cmd" | xargs -0 -i ${PGSQL_CMD} '{}'"
+  pg_cmd=$pg_cmd" | xargs -0 -i $(__pg-cmd-self) '{}'"
   print "command: ${pg_cmd}\n"
   eval $pg_cmd
 }
@@ -59,7 +46,7 @@ pqout() {
   eval $pg_cmd
   print "Query\n"
 
-  pg_cmd=$pg_cmd" | xargs -0 -i ${PGSQL_CMD} '{}' -t | sed -e 's/\t/,/g' >! $TMP"
+  pg_cmd=$pg_cmd" | xargs -0 -i $(__pg-cmd-self) '{}' -t | sed -e 's/\t/,/g' >! $TMP"
   print "command: ${pg_cmd}\n"
   eval $pg_cmd
 }
@@ -81,7 +68,7 @@ pqexp() {
   eval $pg_cmd
   print "Query\n"
 
-  pg_cmd=$pg_cmd" | xargs -0 -i ${PGSQL_CMD} 'EXPLAIN {}'"
+  pg_cmd=$pg_cmd" | xargs -0 -i $(__pg-cmd-self) 'EXPLAIN {}'"
   print "command: ${pg_cmd}\n"
   eval $pg_cmd
 }
