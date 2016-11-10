@@ -58,3 +58,6 @@
 [submodule "modules/graphviz"]
 	path = modules/graphviz
 	url = git@github.com:ellson/graphviz.git
+[submodule "modules/jq"]
+	path = modules/jq
+	url = git@github.com:stedolan/jq.git
