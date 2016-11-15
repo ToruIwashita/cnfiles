@@ -46,13 +46,13 @@ mqout() {
   eval $my_cmd
   print "Query\n"
 
-  my_cmd=$my_cmd" | xargs -0 -i $(__my-cmd-self) '{}' -N | sed -e 's/\t/,/g' >! $TMP"
+  my_cmd=$my_cmd" | xargs -0 -i $(__my-cmd-self) '{}' -N | sed -e 's/\t/,/g' >! $MEMOLIST_TMP_FILE"
   print "command: ${my_cmd}\n"
   eval $my_cmd
 }
 
 myfindg() {
-  local my_cmd cmd_res_field_list cmd_res_field_name table_name field_name tmp_line usage opt
+  local cmd_res_field_list cmd_res_field_name table_name field_name tmp_line usage opt
 
   usage="usage: $0 [-f 'Part of field info'] [-t 'Part of table name']"
   while getopts :f:t: opt; do
@@ -69,7 +69,7 @@ myfindg() {
     myq "DESC ${table_name}" -N | grep --color ${field_name}
   elif (( ${#table_name} )); then
     print "Tables\n${tmp_line}"
-    eval $my_cmd" 'SHOW TABLES' -N | grep --color '${table_name}'"
+    myq "SHOW TABLES" -N | grep --color ${table_name}
   elif (( ${#field_name} )); then
     print "Table: 'name'\nField\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
     for table_name in $(__my-table-list); do
