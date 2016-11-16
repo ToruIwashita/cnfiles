@@ -198,6 +198,8 @@ nnoremap qqq: <ESC>q:
 " qqq/,qqq?検索履歴表示
 nnoremap qqq/ <ESC>q/
 nnoremap qqq? <ESC>q?
+" 現在のファイル名表示
+nnoremap <leader>v :<C-u>echo expand('%')<CR>
 " tag入力
 nnoremap <C-s>h :<C-u>tselect<SPACE>
 
