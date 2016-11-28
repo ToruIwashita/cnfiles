@@ -22,6 +22,12 @@ else
 fi
 
 cd $PECO_GITHUB_DIR_PATH_IN_GOPATH/peco
+
+# backup
+if [[ -f peco ]]; then
+  mv {peco,peco.prev}
+fi
+
 glide install
 go build cmd/peco/peco.go
 
