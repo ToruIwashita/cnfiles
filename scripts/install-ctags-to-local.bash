@@ -5,6 +5,11 @@ set -e
 
 cd $CTAGS_SRC_DIR_PATH
 
+# backup
+if [[ -f $LOCAL_BIN_DIR_PATH/ctags ]]; then
+  mv $LOCAL_BIN_DIR_PATH/{ctags,ctags.prev}
+fi
+
 autoreconf -fi
 ./configure                \
   --prefix=$LOCAL_DIR_PATH \
