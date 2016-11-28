@@ -5,6 +5,11 @@ set -e
 
 cd $JQ_SRC_DIR_PATH
 
+# backup
+if [[ -f $LOCAL_BIN_DIR_PATH/jq ]]; then
+  mv $LOCAL_BIN_DIR_PATH/{jq,jq.prev}
+fi
+
 autoreconf -i
 ./configure                 \
   --prefix=$LOCAL_DIR_PATH  \
