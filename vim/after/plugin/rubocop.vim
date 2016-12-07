@@ -39,8 +39,8 @@ endfunction
 command! RubocopCheck call s:rubocop_check()
 command! RubocopAutoCorrect call s:rubocop_auto_correct()
 
-noremap <leader>a :<C-u>RubocopCheck<CR>
-noremap <leader>as :<C-u>:w<CR>:RubocopAutoCorrect<CR>
+noremap <leader>r :<C-u>RubocopCheck<CR>
+noremap <leader>ra :<C-u>:w<CR>:RubocopAutoCorrect<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
