@@ -10,6 +10,7 @@ nnoremap <C-s><C-u> :<C-u>Gstatus<CR>
 
 " <C-g>プレフィックス
 nnoremap <C-g>d :<C-u>Gdiff<CR>
+nnoremap <C-g>s :<C-u>Git stash
 nnoremap <C-g>a :<C-u>w<CR>:<C-u>Gwrite<CR>
 nnoremap <C-g>c :<C-u>Gcommit -v<CR>
 nnoremap <C-g><C-c> :<C-u>Gwrite<CR>:<C-u>Gcommit -v<CR>
