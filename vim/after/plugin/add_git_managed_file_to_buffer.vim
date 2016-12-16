@@ -5,6 +5,7 @@ scriptencoding utf-8
 let s:cpo_save = &cpo
 set cpo&vim
 
+nnoremap <leader>bt :<C-u>OpenBufferInTab<CR>
 nnoremap <leader>bc :<C-u>AddCToBuffer<CR>
 nnoremap <leader>bm :<C-u>AddMToBuffer<CR>
 nnoremap <leader>bu :<C-u>AddUToBuffer<CR>
