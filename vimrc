@@ -34,6 +34,7 @@ Plug 'tpope/vim-abolish'                               " 強化版置換コマ�
 Plug 'tpope/vim-surround'                              " text-object操作
 Plug 'tpope/vim-fugitive'                              " fugitive(ステータスラインのブランチ名と,Gblame用)
 Plug 'gregsexton/gitv'                                 " gitv(コミットログ閲覧用,vim-fugitive依存)
+Plug 'airblade/vim-gitgutter'                          " gitの差分を左端に表示
 Plug 'tyru/open-browser.vim'                           " URIをブラウザで開く
 Plug 'tyru/open-browser-github.vim'                    " Githubをブラウザで開く
 Plug 'rhysd/committia.vim'                             " コミットログ入力サポート
