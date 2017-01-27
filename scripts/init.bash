@@ -35,7 +35,7 @@ if [[ -d $ZSH_CONFIG_LOCAL_DIR_DEST_PATH ]]; then
   printf "\e[32m$ZSH_CONFIG_LOCAL_DIR_DEST_PATH dir already exists\e[0m\n"
 else
   printf "\e[31mcopy dir $ZSH_CONFIG_LOCAL_DIR_SOURCE_PATH to $ZSH_CONFIG_LOCAL_DIR_DEST_PATH\e[0m\n"
-  cp -rp $ZSH_CONFIG_LOCAL_DIR_SOURCE_PATH $ZSH_CONFIG_LOCAL_DIR_DEST_PATH
+  cp -rp $ZSH_CONFIG_LOCAL_DIR_SOURCE_PATH $ZSH_DIR_PATH
 fi
 
 # cache dir
