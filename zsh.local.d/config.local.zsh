@@ -19,7 +19,8 @@ alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,r
 
 ## for Mac(GNU系のコマンドはシンボリックリンクを貼り直すことを推奨するので以下コメントアウト)
 ## bindkey
-#bindkey -v '^sc' pbcopy-current # Ctr+s,pでBUFFERをcatしてpbcopy
+#bindkey -v '^sb' immediate-pbcopy     # Ctr+s,pでBUFFERをcatしてpbcopy
+#bindkey -v '^sb' immediate-tmp-pbcopy # Ctr+s,Ctr+cでtmpファイルをcatしてpbcopy
 ## alias
 #alias ls="gls -F --color"
 #alias find="gfind"
