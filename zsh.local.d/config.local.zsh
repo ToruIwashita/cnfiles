@@ -16,6 +16,16 @@ alias cdc='cd ~/.cnfiles'
 alias cdml='cd ~/.memolist'
 # ctags
 alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,ruby'
+# rails
+alias brails-s='RAILS_ENV=development bundle exec rails s -b 0.0.0.0 --port 3000'
+alias brails-c='RAILS_ENV=development bundle exec rails c'
+alias brails-r='RAILS_ENV=development bundle exec rails r'
+alias vrouting='vim ~/works/tmp/routing.txt'
+alias diff-routing='diff ~/works/tmp/routing.txt ~/works/tmp/routing.prev.txt'
+# alias output-routing='zsh -c "[[ -f ~/works/tmp/routing.txt ]] && cp ~/works/tmp/{routing.txt,routing.prev.txt}; cd ~/works/${project}/; bundle exec rake routes >! ~/works/tmp/routing.txt"'
+alias output-vrouting='output-routing && vrouting'
+# railsに付随するツール
+alias bspork='bundle exec spork'
 
 ## for Mac(GNU系のコマンドはシンボリックリンクを貼り直すことを推奨するので以下コメントアウト)
 ## bindkey
