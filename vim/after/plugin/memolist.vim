@@ -6,7 +6,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 let g:memolist_path = memolist_dir_path
-let g:memolist_memo_suffix = 'txt'
+let g:memolist_memo_suffix = 'md'
 let g:memolist_memo_date = '%Y-%m-%d %H:%M'
 let g:memolist_qfixgrep = 1
 
