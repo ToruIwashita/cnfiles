@@ -33,7 +33,7 @@ alias bspork='bundle exec spork'
 ## for Mac(GNU系のコマンドはシンボリックリンクを貼り直すことを推奨するので以下コメントアウト)
 ## bindkey
 #bindkey -v '^sb' immediate-pbcopy     # Ctr+s,pでBUFFERをcatしてpbcopy
-#bindkey -v '^sb' immediate-tmp-pbcopy # Ctr+s,Ctr+cでtmpファイルをcatしてpbcopy
+#bindkey -v '^s^b' immediate-tmp-pbcopy # Ctr+s,Ctr+cでtmpファイルをcatしてpbcopy
 ## alias
 #alias ls="gls -F --color"
 #alias find="gfind"
