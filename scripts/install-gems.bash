@@ -11,7 +11,7 @@ echo
 printf "install gems"
 
 rbenv exec gem install bundler
-rbenv exec gem install aws
+rbenv exec gem install aws-sdk
 rbenv exec gem install rails
 rbenv exec gem install pry
 rbenv exec gem install pry-byebug
@@ -24,7 +24,7 @@ echo
 printf "update gems"
 
 rbenv exec gem update bundler
-rbenv exec gem update aws
+rbenv exec gem update aws-sdk
 rbenv exec gem update rails
 rbenv exec gem update pry
 rbenv exec gem update pry-byebug
