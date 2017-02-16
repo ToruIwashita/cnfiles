@@ -45,64 +45,66 @@ setopt noflowcontrol        # フローコントロール無効
 
 ## bindkey
 # vimモードキーマップ
-bindkey -v '^a' beginning-of-line                           # Ctr+aで行頭へ
-bindkey -v '^b' backward-char                               # Ctr+bで１文字左へ(menuselectも同様)
-bindkey -v '^d' delete-char-or-list                         # Ctr+dで１文字削除
-bindkey -v '^e' end-of-line                                 # Ctr+eで行末へ
-bindkey -v '^f' forward-char                                # Ctr+fで１文字右へ(menuselectも同様)
-bindkey -v '^g' send-break                                  # Ctr+gで入力キャンセル
-bindkey -v '^h' backward-delete-char                        # Ctr+hでbackward-delete-char(menuselectのinteractive-modeでbackword)
-bindkey -v '^i' expand-or-complete                          # Ctr+iで通常補完
-bindkey -v '^j' accept-line                                 # Ctr+jでaccept-line
-bindkey -v '^k' menu-complete-files                         # Ctr+kでファイル補完
-bindkey -v '^l' start-editor                                # Ctr+lでstart-editor
-bindkey -v '^m' accept-line                                 # Ctr+mでaccept-line
-bindkey -v '^n' history-substring-search-down               # Ctr+nで部分文字列検索,下
-bindkey -v '^o' into-leaf-dir                               # Ctr+s,Ctr+oでリーフディレクトリ移動
-bindkey -v '^p' history-substring-search-up                 # Ctr+pで部分文字列検索,上
-bindkey -v '^q' self-insert                                 # Ctr+qでself-insert
-bindkey -v '^r' history-incremental-search-backward         # Ctr+rでインクリメンタルサーチ
-bindkey -v '^s' self-insert                                 # Ctr+sでself-insert,Prefixとして使用
-bindkey -v '^u' kill-word                                   # Ctr+uでkill-word
-bindkey -v '^w' backward-kill-word                          # Ctr+wでbackward-kill-word
-bindkey -v '^y' push-input                                  # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
-bindkey -v '^sf' peco-file-finder                           # Ctr+s,fでpeco-file-finder
-bindkey -v '^sg' immediate-hub-browse                       # Ctr+s,hでhub browse
-bindkey -v '^sh' peco-simple-git-grep-and-start-editor      # Ctr+s,hでgit grepしてstart-editor
-bindkey -v '^sj' vi-join                                    # Ctr+s,jでviのjoin
-bindkey -v '^sk' peco-cd-recent-dir                         # Ctr+s,kで最近移動したディレクトリを絞り込んで移動
-bindkey -v '^sl' peco-file-find-and-start-editor            # Ctr+s,lでファイル検索してstart-editor
-bindkey -v '^sn' immediate-git-fetch                        # Ctr+s,nでgit fetch
-bindkey -v '^so' peco-cd-dir                                # Ctr+s,oでディレクトリを絞り込んで移動
-bindkey -v '^sp' immediate-git-pull                         # Ctr+s,pでgit pull
-bindkey -v '^ss' peco-ag-and-start-editor                   # Ctr+s,sでagで検索してstart-editorCtr+s
-bindkey -v '^s@' clear-screen                               # Ctr+@でclear-screen
-bindkey -v '^s^i' immediate-ls                              # Ctr+s,Ctr+iでls
-bindkey -v '^s^j' immediate-cat                             # Ctr+s,jでBUFFERをcat
-bindkey -v '^s^k' menu-complete-recent-dirs                 # Ctr+s,Ctr+kで最近移動したディレクトリへ移動
-bindkey -v '^s^l' edit-command-line                         # Ctr+s,Ctr+lでコマンドラインエディタ編集
-bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctr+oでバッファ残しリーフディレクトリ補完
-bindkey -v '^s^p' copy-prev-shell-word                      # Ctr+s,Ctr+pで1つ前の文字列をコピペ(空欄区切りで文字列判定)
-bindkey -v '^s^u' immediate-git-status                      # Ctr+s,Ctr+uでgit status
-bindkey -v '^s^s' vi-find-next-char                         # Ctr+s,Ctr+sでviのfind-char
-bindkey -v '^s^]' vi-backward-word                          # Ctr+s,Ctr+]で前の単語の先頭に移動
-bindkey -v '^s^@' kill-line                                 # Ctr+s,Ctr+@でカーソル行以降削除
-bindkey -v '^]' vi-forward-word                             # Ctr+]で次の単語の先頭に移動
-bindkey -v '^_' cdup                                        # Ctr+_でcdup
+bindkey -v '^a' beginning-of-line                           # Ctrl+aで行頭へ
+bindkey -v '^b' backward-char                               # Ctrl+bで１文字左へ(menuselectも同様)
+bindkey -v '^d' delete-char-or-list                         # Ctrl+dで１文字削除
+bindkey -v '^e' end-of-line                                 # Ctrl+eで行末へ
+bindkey -v '^f' forward-char                                # Ctrl+fで１文字右へ(menuselectも同様)
+bindkey -v '^g' send-break                                  # Ctrl+gで入力キャンセル
+bindkey -v '^h' backward-delete-char                        # Ctrl+hでbackward-delete-char(menuselectのinteractive-modeでbackword)
+bindkey -v '^i' expand-or-complete                          # Ctrl+iで通常補完
+bindkey -v '^j' accept-line                                 # Ctrl+jでaccept-line
+bindkey -v '^k' menu-complete-files                         # Ctrl+kでファイル補完
+bindkey -v '^l' start-editor                                # Ctrl+lでstart-editor
+bindkey -v '^m' accept-line                                 # Ctrl+mでaccept-line
+bindkey -v '^n' history-substring-search-down               # Ctrl+nで部分文字列検索,下
+bindkey -v '^o' into-leaf-dir                               # Ctrl+s,Ctrl+oでリーフディレクトリ移動
+bindkey -v '^p' history-substring-search-up                 # Ctrl+pで部分文字列検索,上
+bindkey -v '^q' self-insert                                 # Ctrl+qでself-insert
+bindkey -v '^r' history-incremental-search-backward         # Ctrl+rでインクリメンタルサーチ
+bindkey -v '^s' self-insert                                 # Ctrl+sでself-insert,Prefixとして使用
+bindkey -v '^u' kill-word                                   # Ctrl+uでkill-word
+bindkey -v '^w' backward-kill-word                          # Ctrl+wでbackward-kill-word
+bindkey -v '^y' push-input                                  # Ctrl+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
+bindkey -v '^sf' peco-file-finder                           # Ctrl+s,fでpeco-file-finder
+bindkey -v '^sg' immediate-hub-browse                       # Ctrl+s,hでhub browse
+bindkey -v '^sh' immediate-git-log-search                   # Ctrl+s,hでgit log検索
+bindkey -v '^sj' vi-join                                    # Ctrl+s,jでviのjoin
+bindkey -v '^sk' peco-cd-recent-dir                         # Ctrl+s,kで最近移動したディレクトリを絞り込んで移動
+bindkey -v '^sl' peco-file-find-and-start-editor            # Ctrl+s,lでファイル検索してstart-editor
+bindkey -v '^sn' immediate-git-fetch                        # Ctrl+s,nでgit fetch
+bindkey -v '^so' peco-cd-dir                                # Ctrl+s,oでディレクトリを絞り込んで移動
+bindkey -v '^sp' immediate-git-pull                         # Ctrl+s,pでgit pull
+bindkey -v '^ss' peco-ag-and-start-editor                   # Ctrl+s,sでagで検索してstart-editorCtr+s
+bindkey -v '^s@' clear-screen                               # Ctrl+@でclear-screen
+bindkey -v '^s;' peco-simple-git-grep-and-start-editor      # Ctrl+s,hでgit grepしてstart-editor
+bindkey -v '^s^h' immediate-git-log-search-with-diff        # Ctrl+s,Ctrl+hでgit logをdiff出力付きで検索
+bindkey -v '^s^i' immediate-ls                              # Ctrl+s,Ctrl+iでls
+bindkey -v '^s^j' immediate-cat                             # Ctrl+s,jでBUFFERをcat
+bindkey -v '^s^k' menu-complete-recent-dirs                 # Ctrl+s,Ctrl+kで最近移動したディレクトリへ移動
+bindkey -v '^s^l' edit-command-line                         # Ctrl+s,Ctrl+lでコマンドラインエディタ編集
+bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctrl+oでバッファ残しリーフディレクトリ補完
+bindkey -v '^s^p' copy-prev-shell-word                      # Ctrl+s,Ctrl+pで1つ前の文字列をコピペ(空欄区切りで文字列判定)
+bindkey -v '^s^u' immediate-git-status                      # Ctrl+s,Ctrl+uでgit status
+bindkey -v '^s^s' vi-find-next-char                         # Ctrl+s,Ctrl+sでviのfind-char
+bindkey -v '^s^]' vi-backward-word                          # Ctrl+s,Ctrl+]で前の単語の先頭に移動
+bindkey -v '^s^@' kill-line                                 # Ctrl+s,Ctrl+@でカーソル行以降削除
+bindkey -v '^]' vi-forward-word                             # Ctrl+]で次の単語の先頭に移動
+bindkey -v '^_' cdup                                        # Ctrl+_でcdup
 bindkey -v '^?' backward-delete-char                        # BSでbackward-delete-char(menuselectのinteractive-modeでbackword)
 bindkey -v '^[[Z' reverse-menu-complete                     # Shift+tabで逆タブ補完
 # 補完メニュー選択モードキーマップ
-bindkey -M menuselect '^g' .send-break                         # Ctr+gでsend-break2回
-bindkey -M menuselect '^i' forward-char                        # tabかCtr+iで補完候補1つ右へ
-bindkey -M menuselect '^j' .accept-line                        # Ctr+jでaccept-line2回
-bindkey -M menuselect '^k' infer-next-history                  # Ctr+kで次の補完メニュー
-bindkey -M menuselect '^m' accept-line                         # Ctr+mでaccept-line
-bindkey -M menuselect '^n' down-line-or-history                # Ctr+nで下へ
-bindkey -M menuselect '^p' up-line-or-history                  # Ctr+pで上へ
-bindkey -M menuselect '^r' history-incremental-search-forward  # Ctr+rでインクリメンタルサーチフォワード
-bindkey -M menuselect '^s' vi-insert                           # Ctr+sでinteractive-modeをtoggle
-bindkey -M menuselect '^u' send-break                          # Ctr+uでsend-break
-bindkey -M menuselect '^]' accept-and-hold                     # Ctr+]で候補をバッファに入れる
+bindkey -M menuselect '^g' .send-break                         # Ctrl+gでsend-break2回
+bindkey -M menuselect '^i' forward-char                        # tabかCtrl+iで補完候補1つ右へ
+bindkey -M menuselect '^j' .accept-line                        # Ctrl+jでaccept-line2回
+bindkey -M menuselect '^k' infer-next-history                  # Ctrl+kで次の補完メニュー
+bindkey -M menuselect '^m' accept-line                         # Ctrl+mでaccept-line
+bindkey -M menuselect '^n' down-line-or-history                # Ctrl+nで下へ
+bindkey -M menuselect '^p' up-line-or-history                  # Ctrl+pで上へ
+bindkey -M menuselect '^r' history-incremental-search-forward  # Ctrl+rでインクリメンタルサーチフォワード
+bindkey -M menuselect '^s' vi-insert                           # Ctrl+sでinteractive-modeをtoggle
+bindkey -M menuselect '^u' send-break                          # Ctrl+uでsend-break
+bindkey -M menuselect '^]' accept-and-hold                     # Ctrl+]で候補をバッファに入れる
 
 ## alias
 # zmv
