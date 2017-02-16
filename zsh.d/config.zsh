@@ -68,7 +68,7 @@ bindkey -v '^w' backward-kill-word                          # Ctr+wでbackward-k
 bindkey -v '^y' push-input                                  # Ctr+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
 bindkey -v '^sf' peco-file-finder                           # Ctr+s,fでpeco-file-finder
 bindkey -v '^sg' immediate-hub-browse                       # Ctr+s,hでhub browse
-bindkey -v '^sh' peco-simple-git-grep-and-start-editor      # Ctr+s,hでgit grepしてstart-editor
+bindkey -v '^sh' immediate-git-log-search                   # Ctr+s,hでgit log検索
 bindkey -v '^sj' vi-join                                    # Ctr+s,jでviのjoin
 bindkey -v '^sk' peco-cd-recent-dir                         # Ctr+s,kで最近移動したディレクトリを絞り込んで移動
 bindkey -v '^sl' peco-file-find-and-start-editor            # Ctr+s,lでファイル検索してstart-editor
@@ -77,6 +77,8 @@ bindkey -v '^so' peco-cd-dir                                # Ctr+s,oでディ�
 bindkey -v '^sp' immediate-git-pull                         # Ctr+s,pでgit pull
 bindkey -v '^ss' peco-ag-and-start-editor                   # Ctr+s,sでagで検索してstart-editorCtr+s
 bindkey -v '^s@' clear-screen                               # Ctr+@でclear-screen
+bindkey -v '^s;' peco-simple-git-grep-and-start-editor      # Ctr+s,hでgit grepしてstart-editor
+bindkey -v '^s^h' immediate-git-log-search-with-diff        # Ctr+s,Ctr+hでgit logをdiff出力付きで検索
 bindkey -v '^s^i' immediate-ls                              # Ctr+s,Ctr+iでls
 bindkey -v '^s^j' immediate-cat                             # Ctr+s,jでBUFFERをcat
 bindkey -v '^s^k' menu-complete-recent-dirs                 # Ctr+s,Ctr+kで最近移動したディレクトリへ移動
