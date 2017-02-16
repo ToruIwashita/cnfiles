@@ -6,6 +6,11 @@ _peco-simple-git-grep-and-start-editor() {
 
   (( $#BUFFER )) && print -s "$BUFFER"
 
+  if ( ! $(git rev-parse 2>/dev/null) ); then
+    zle beginning-of-line
+    return
+  fi
+
   args=("${(z)BUFFER}")
 
   peco_resulting_line=(${(f)"$(git grep --line-number "$args" | peco --select-1 2>/dev/null)"})
