@@ -13,7 +13,7 @@ else
   mkdir -p $HUB_GITHUB_DIR_PATH_IN_GOPATH
 fi
 
-# create hub dir symlink 
+# create hub dir symlink
 if [[ -L $HUB_GITHUB_DIR_PATH_IN_GOPATH/hub ]]; then
   printf "\n$HUB_GITHUB_DIR_PATH_IN_GOPATH/hub symlink already exists\n"
 else
