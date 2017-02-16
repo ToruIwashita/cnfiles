@@ -1,7 +1,7 @@
 ## peco-simple-git-grep-and-start-editor
 _peco-simple-git-grep-and-start-editor() {
   local specified_line
-  local -a args peco_resulting_line
+  local -a peco_resulting_line
   local -aU file_paths
 
   (( $#BUFFER )) && print -s "$BUFFER"
@@ -11,9 +11,7 @@ _peco-simple-git-grep-and-start-editor() {
     return
   fi
 
-  args=("${(z)BUFFER}")
-
-  peco_resulting_line=(${(f)"$(git grep --line-number "$args" | peco --select-1 2>/dev/null)"})
+  peco_resulting_line=(${(f)"$(git grep --line-number "$BUFFER" | peco --select-1 2>/dev/null)"})
 
   if (( ! $#peco_resulting_line )); then
     zle beginning-of-line
