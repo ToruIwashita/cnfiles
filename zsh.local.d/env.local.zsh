@@ -9,9 +9,10 @@ readonly PGUSER=
 readonly PGPASSWORD=
 
 export RBENV_ROOT=~/.rbenv
+# rbenvを使う場合は不要
+# export GEM_HOME=~/.gem
 export GOROOT=$LOCAL_DIR_PATH/go
 export GOPATH=~/.go
-export GEM_HOME=~/.gem
 export NPM_HOME=~/.npm
 export MYSQL_DATABASE
 export PGDATABASE
@@ -27,9 +28,10 @@ export PGPASSWORD
 path=(
   ~/local/bin
   $RBENV_ROOT/shims
+  # rbenvを使う場合は不要
+  # $GEM_HOME/bin
   $GOROOT/bin
   $GOPATH/bin
-  $GEM_HOME/bin
   $NPM_HOME/bin
   # gitインストール時にbrewでインストールしたopensslを使用する
   # /usr/local/opt/openssl/bin
