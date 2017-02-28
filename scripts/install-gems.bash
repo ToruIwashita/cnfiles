@@ -4,12 +4,14 @@ source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
 ruby -v
+
 echo
 printf "GEM_HOME: $GEM_HOME\n"
 
 echo
 printf "install gems"
 
+echo
 rbenv exec gem install bundler
 rbenv exec gem install aws-sdk
 rbenv exec gem install rails
@@ -26,6 +28,7 @@ rbenv exec gem install awesome_print
 echo
 printf "update gems"
 
+echo
 rbenv exec gem update bundler
 rbenv exec gem update aws-sdk
 rbenv exec gem update rails
@@ -42,5 +45,7 @@ rbenv exec gem update awesome_print
 echo
 rbenv rehash
 
-printf "\ncomplete\n"
+echo
+printf "complete"
+
 exit 0
