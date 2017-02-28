@@ -58,7 +58,6 @@ HUB_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH/src/github.com/github
 PECO_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH/src/github.com/peco
 
 # etc
-GEM_HOME=~/.gem
 NPM_HOME=~/.npm
 
 # memolist tmp file
