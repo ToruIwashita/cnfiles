@@ -41,32 +41,28 @@ __git-modified-list() {
   __git-inside-work-tree || return
   local -a git_status_res
 
-  git_status_res=(${(@f)"$(__git-status)"})
-  print ${(R)${(M)git_status_res:#?M*}#?M[[:space:]]}
+  print ${(R)${(M)${(@f)"$(__git-status)"}:#?M*}#?M[[:space:]]}
 }
 
 __git-untracked-list() {
   __git-inside-work-tree || return
   local -a git_status_res
 
-  git_status_res=(${(@f)"$(__git-status)"})
-  print ${(R)${(M)git_status_res:#\?\?*}#\?\?[[:space:]]}
+  print ${(R)${(M)${(@f)"$(__git-status)"}:#\?\?*}#\?\?[[:space:]]}
 }
 
 __git-staged-list() {
   __git-inside-work-tree || return
   local -a git_status_res
 
-  git_status_res=(${(@f)"$(__git-status)"})
-  print ${(R)${(M)git_status_res:#M?*}#M?[[:space:]]}
+  print ${(R)${(M)${(@f)"$(__git-status)"}:#M?*}#M?[[:space:]]}
 }
 
 __git-both-modified-list() {
   __git-inside-work-tree || return
   local -a git_status_res
 
-  git_status_res=(${(@f)"$(__git-status)"})
-  print ${(R)${(M)git_status_res:#UU*}#UU[[:space:]]}
+  print ${(R)${(M)${(@f)"$(__git-status)"}:#UU*}#UU[[:space:]]}
 }
 
 __git-inside-work-tree() {
