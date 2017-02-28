@@ -6,10 +6,7 @@ set -e
 ruby -v
 
 echo
-printf "GEM_HOME: $GEM_HOME\n"
-
-echo
-printf "install gems"
+printf "install gems using rbenv exec"
 
 echo
 rbenv exec gem install bundler
@@ -26,7 +23,7 @@ rbenv exec gem install rspec
 rbenv exec gem install awesome_print
 
 echo
-printf "update gems"
+printf "update gems using rbenv exec"
 
 echo
 rbenv exec gem update bundler
