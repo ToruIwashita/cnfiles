@@ -1,36 +1,39 @@
 {
-  "Prompt": ">>>",
-  "StickySelection": true,
-  "SingleKeyJump": {
-    "ShowPrefix": true
-  },
-  "Action": {
-    "SelectAllAndFinish": [
-      "peco.SelectAll",
-      "peco.Finish"
-    ]
-  },
-  "Keymap": {
-    "C-a": "peco.BeginningOfLine",
-    "C-b": "peco.BackwardChar",
-    "C-c": "peco.Cancel",
-    "C-d": "peco.DeleteForwardChar",
-    "C-e": "peco.EndOfLine",
-    "C-f": "peco.ForwardChar",
-    "C-g": "peco.DeleteAll",
-    "C-h": "peco.DeleteBackwardChar",
-    "C-j": "peco.SelectNext",
-    "C-k": "peco.SelectPrevious",
-    "C-l": "peco.Finish",
-    "C-n": "peco.SelectNextPage",
-    "C-o": "peco.Finish",
-    "C-p": "peco.SelectPreviousPage",
-    "C-s": "peco.ToggleSingleKeyJump",
-    "C-t": "SelectAllAndFinish",
-    "C-u": "peco.DeleteForwardWord",
-    "C-w": "peco.DeleteBackwardWord",
-    "C-]": "peco.ToggleSelectionAndSelectNext",
-    "C-_": "peco.RotateMatcher",
-    "Esc": "peco.Cancel"
-  }
+    "Prompt": ">>>",
+    "StickySelection": true,
+    {
+        "MaxScanBufferSize": 102400
+    },
+    "SingleKeyJump": {
+        "ShowPrefix": true
+    },
+    "Action": {
+        "SelectAllAndFinish": [
+            "peco.SelectAll",
+            "peco.Finish"
+        ]
+    },
+    "Keymap": {
+        "C-a": "peco.BeginningOfLine",
+        "C-b": "peco.BackwardChar",
+        "C-c": "peco.Cancel",
+        "C-d": "peco.DeleteForwardChar",
+        "C-e": "peco.EndOfLine",
+        "C-f": "peco.ForwardChar",
+        "C-g": "peco.DeleteAll",
+        "C-h": "peco.DeleteBackwardChar",
+        "C-j": "peco.SelectNext",
+        "C-k": "peco.SelectPrevious",
+        "C-l": "peco.Finish",
+        "C-n": "peco.SelectNextPage",
+        "C-o": "peco.Finish",
+        "C-p": "peco.SelectPreviousPage",
+        "C-s": "peco.ToggleSingleKeyJump",
+        "C-t": "SelectAllAndFinish",
+        "C-u": "peco.DeleteForwardWord",
+        "C-w": "peco.DeleteBackwardWord",
+        "C-]": "peco.ToggleSelectionAndSelectNext",
+        "C-_": "peco.RotateMatcher",
+        "Esc": "peco.Cancel"
+    }
 }
