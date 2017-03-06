@@ -1,9 +1,7 @@
 {
     "Prompt": ">>>",
     "StickySelection": true,
-    {
-        "MaxScanBufferSize": 102400
-    },
+    "MaxScanBufferSize": 102400,
     "SingleKeyJump": {
         "ShowPrefix": true
     },
