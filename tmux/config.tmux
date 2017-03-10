@@ -6,7 +6,7 @@ set -g prefix C-q
 # TERM設定
 set -g default-terminal 'screen-256color'
 # screen-256colorでヤンク時にクリップボード共有する
-set -ag terminal-overrides "screen:Ms=\\E]52;%p1%s;%p2%s\\7"
+set -ag terminal-overrides 'screen:Ms=\\E]52;%p1%s;%p2%s\\7'
 # vim風copy-mode
 setw -g mode-key vi
 # キーストロークのディレイ0sec
@@ -39,10 +39,10 @@ set -g status-fg colour188
 set -g status-bg colour234
 set -g status-left-length 32
 set -g status-right-length 150
-set -g status-left "#[fg=colour223,bg=colour166,nobold] #(whoami) "
-set -g window-status-format "#[fg=colour188,bg=colour234] #I #W "
-set -g window-status-current-format "#[fg=colour38,bg=colour20,noreverse,nobold] #I #W "
-set -g status-right "#[fg=colour38,bg=colour234,nobold]#(tmux-mem-cpu-load) #[fg=colour223,bg=colour166,nobold] [%Y-%m-%d(%a) %H:%M] "
+set -g status-left '#[fg=colour223,bg=colour166,nobold] #(whoami) '
+set -g window-status-format '#[fg=colour188,bg=colour234] #I #W '
+set -g window-status-current-format '#[fg=colour38,bg=colour20,noreverse,nobold] #I #W '
+set -g status-right '#[fg=colour38,bg=colour234,nobold]#(tmux-mem-cpu-load) #[fg=colour223,bg=colour166,nobold] [%Y-%m-%d(%a) %H:%M] '
 
 ## unbind
 # デフォルトprefixを解除
@@ -72,7 +72,7 @@ bind r source-file ~/.tmux.conf
 bind t new-window
 bind C-t new-window
 # ウィンドウのリネーム
-bind . command-prompt -I '#W' "rename-window '%%'"
+bind . command-prompt -I '#W' 'rename-window "%%"'
 # ペイン選択
 bind - display-panes
 # ウィンドウkill
@@ -82,9 +82,9 @@ bind s split-window -v
 # ウィンドウ左右分割
 bind i split-window -h
 # ウィンドウindex変更
-bind m command-prompt "move-window -t %%"
+bind m command-prompt 'move-window -t %%'
 # ウィンドウ選択select
-bind w command-prompt "select-window -t %%"
+bind w command-prompt 'select-window -t %%'
 # ウィンドウ選択choose
 bind W choose-window
 # 次のウィンドウへ
