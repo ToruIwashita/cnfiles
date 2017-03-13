@@ -181,6 +181,14 @@ else
   ln -is $BASE_DIR_PATH/pryrc ~/.pryrc
 fi
 
+# rspec
+if [[ -L ~/.rspec ]]; then
+  printf "\e[32m$BASE_DIR_PATH/.rspec symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.rspec\e[0m\n"
+  ln -is $BASE_DIR_PATH/rspec ~/.rspec
+fi
+
 # awesome_print
 if [[ -L ~/.aprc ]]; then
   printf "\e[32m$BASE_DIR_PATH/.aprc symlink already exists\e[0m\n"
