@@ -18,9 +18,7 @@ let g:tagbar_type_ruby = {
   \ ],
   \ 'kind2scope': {
   \   'm': 'module',
-  \   'c': 'class',
-  \   'f': 'method',
-  \   'F': 'singleton method'
+  \   'c': 'class'
   \ }
 \ }
 
