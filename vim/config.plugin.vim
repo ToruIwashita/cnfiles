@@ -91,10 +91,10 @@ let g:wildfire_objects = [
 \ ]
 
 "" auto-ctags
-let g:auto_ctags = 0                                                                                    " BufWritePostで自動実行しない
-let g:auto_ctags_bin_path = local_dir_path.'/bin/ctags'                                                 " ctagsのbinパス
-let g:auto_ctags_tags_name = '.tags'                                                                    " tagsファイル名
-let g:auto_ctags_tags_args = '-R --tag-relative --sort=yes --input-encoding=utf-8 --languages=sh,ruby'  " ctags実行オプション
+let g:auto_ctags = 0                                                                                        " BufWritePostで自動実行しない
+let g:auto_ctags_bin_path = local_dir_path.'/bin/ctags'                                                     " ctagsのbinパス
+let g:auto_ctags_tags_name = '.tags'                                                                        " tagsファイル名
+let g:auto_ctags_tags_args = '-R --tag-relative=yes --sort=yes --input-encoding=utf-8 --languages=sh,ruby'  " ctags実行オプション
 
 "" yankround
 let g:yankround_dir = cache_dir_path.'/vim/yankround'
