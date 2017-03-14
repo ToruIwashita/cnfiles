@@ -18,6 +18,7 @@ ab <buffer> =a , :aggregate_failures
 ab <buffer> =t , current: true
 ab <buffer> =p binding.pry
 ab <buffer> =c context "current", current: true do
+ab <buffer> =f # frozen_string_literal: true
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
