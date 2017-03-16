@@ -5,8 +5,6 @@ set -g prefix C-q
 ## option
 # TERM設定
 set -g default-terminal 'screen-256color'
-# screen-256colorでヤンク時にクリップボード共有する
-set -ag terminal-overrides 'screen:Ms=\\E]52;%p1%s;%p2%s\\7'
 # copy-mode vim
 setw -g mode-key vi
 # キーストロークのディレイ0sec
@@ -95,8 +93,8 @@ bind -r L resize-pane -R 2
 # ペインkill
 bind x kill-pane
 # コピーモード
-bind y copy-mode
-bind C-y copy-mode
+bind v copy-mode
+bind C-v copy-mode
 # コピー開始
 bind -t vi-copy v begin-selection
 # ヤンク
