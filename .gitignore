@@ -3,6 +3,6 @@
 /zsh.d/env.local.zsh
 /zsh.d/local/
 /vim/plugged/*
-/tmux/plugins/tmux-resurrect
+/tmux/plugins/*
 /.bundle
 /.tags
