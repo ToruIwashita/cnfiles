@@ -7,7 +7,7 @@ set -g prefix C-q
 set -g default-terminal 'screen-256color'
 # screen-256colorでヤンク時にクリップボード共有する
 set -ag terminal-overrides 'screen:Ms=\\E]52;%p1%s;%p2%s\\7'
-# vim風copy-mode
+# copy-mode vim
 setw -g mode-key vi
 # キーストロークのディレイ0sec
 set -s escape-time 0
@@ -25,24 +25,6 @@ set -g history-limit 5000
 # ウィンドウで動作があるとハイライト
 setw -g monitor-activity on
 set -g visual-activity off
-# window-status-current
-setw -g window-status-current-fg white
-setw -g window-status-current-bg colour234
-setw -g window-status-current-attr bold
-# pane
-set -g pane-border-fg colour188
-set -g pane-border-bg colour16
-set -g pane-active-border-fg colour188
-set -g pane-active-border-bg colour20
-# status-line
-set -g status-fg colour188
-set -g status-bg colour234
-set -g status-left-length 32
-set -g status-right-length 150
-set -g status-left '#[fg=colour223,bg=colour166,nobold] #(whoami) '
-set -g window-status-format '#[fg=colour188,bg=colour234] #I #W '
-set -g window-status-current-format '#[fg=colour38,bg=colour20,noreverse,nobold] #I #W '
-set -g status-right '#[fg=colour38,bg=colour234,nobold]#(tmux-mem-cpu-load) #[fg=colour223,bg=colour166,nobold] [%Y-%m-%d(%a) %H:%M] '
 
 ## unbind
 # デフォルトprefixを解除
