@@ -13,7 +13,7 @@
 [push]
   default = simple
 [diff]
-	compactionheuristic = true
+  compactionheuristic = true
 [pager]
   log = git-diff-highlight | less
   show = git-diff-highlight | less
