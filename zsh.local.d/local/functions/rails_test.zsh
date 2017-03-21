@@ -6,13 +6,14 @@ init-test() {
 
 brspec() {
   local -a args file_paths
-  local self_cmd help usage tag_option
+  local self_cmd help usage fail_fast_option tag_option
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [spec file]
               [-c --changed-file <spec file>]
+              [-f --fail-fast]
               [-m --modified-file <spec file>]
               [-t --tag <tag name>]
               [-u --untracked-file <spec file>]
@@ -28,6 +29,10 @@ EOF`
         fi
         file_paths+=("$2")
         shift 2
+        ;;
+      -f | --fail-fast)
+        fail_fast_option='--fail-fast'
+        shift 1
         ;;
       -m | --modified-file)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
@@ -85,5 +90,5 @@ EOF`
   fi
 
   print $cmd
-  eval "$cmd $tag_option $file_paths"
+  eval "$cmd $fail_fast_option $tag_option $file_paths"
 }

@@ -19,6 +19,7 @@ __git-untracked-spec-files() {
 _brspec() {
   _arguments \
     '(-c --changed-file)'{-c,--changed-file}'[With changed file completion]: :__git-changed-spec-files' \
+    '(-f --fail-fast)'{-f,--fail-fast}'[Fail fast]' \
     '(-m --modified-file)'{-m,--modified-file}'[With modified file completion]: :__git-modified-spec-files' \
     '(-t --tag)'{-t,--tag}'[Tag name]: :__word-of-current' \
     '(-u --untracked-file)'{-u,--untracked-file}'[With untraced file completion]: :__git-untracked-spec-files' \
