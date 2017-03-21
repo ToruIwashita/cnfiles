@@ -6,7 +6,7 @@ init-test() {
 
 brspec() {
   local -a args file_paths
-  local self_cmd help usage fail_fast_option tag_option
+  local self_cmd help usage fail_fast_option seed_option tag_option
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -15,6 +15,7 @@ usage: $self_cmd [spec file]
               [-c --changed-file <spec file>]
               [-f --fail-fast]
               [-m --modified-file <spec file>]
+              [-s --seed <seed value>]
               [-t --tag <tag name>]
               [-u --untracked-file <spec file>]
               [-h --help]
@@ -40,6 +41,14 @@ EOF`
           return 1
         fi
         file_paths+=("$2")
+        shift 2
+        ;;
+      -s | --seed)
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          return 1
+        fi
+        seed_option="--seed $2"
         shift 2
         ;;
       -t | --tag)
@@ -90,5 +99,5 @@ EOF`
   fi
 
   print $cmd
-  eval "$cmd $fail_fast_option $tag_option $file_paths"
+  eval "$cmd $fail_fast_option $seed_option $tag_option $file_paths"
 }
