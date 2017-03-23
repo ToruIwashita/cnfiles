@@ -36,7 +36,7 @@ let g:quickrun_config['rspec/bin'] = extend(copy(s:rspec_quickrun_config), {
 \ })
 
 " :QuickRunで実行されるrpsecコマンドを定義する
-" <leader>r,<leader>raをタイプした時に<ESC>:QuickRun [-cmdopt  '-l (カーソル行)']を実行するキーマップを定義する
+" <leader>s,<leader>saをタイプした時に:QuickRun [-cmdopt '-l (カーソル行)']を実行するキーマップを定義する
 function! s:rspec_quickrun()
   if filereadable('./bin/rspec')
     let b:quickrun_config = {'type': 'rspec/bin'}
@@ -44,8 +44,10 @@ function! s:rspec_quickrun()
     let b:quickrun_config = {'type': 'rspec/bundle'}
   endif
 
-  nnoremap <expr> <leader>s ':<C-u>:wa<CR>:QuickRun -cmdopt ":'.line('.').'"<CR>'
   nnoremap <leader>sa :<C-u>:wa<CR>:QuickRun<CR>
+  nnoremap <expr> <leader>sd ':<C-u>:wa<CR>:QuickRun -cmdopt " --fail-fast"<CR>'
+  nnoremap <expr> <leader>s ':<C-u>:wa<CR>:QuickRun -cmdopt ":'.line('.').'"<CR>'
+  nnoremap <expr> <leader>ss ':<C-u>:wa<CR>:QuickRun -cmdopt ":'.line('.').' --fail-fast"<CR>'
 endfunction
 
 " 設定変更用の関数
