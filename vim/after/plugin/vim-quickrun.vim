@@ -45,7 +45,7 @@ function! s:rspec_quickrun()
   endif
 
   nnoremap <leader>sa :<C-u>:wa<CR>:QuickRun<CR>
-  nnoremap <expr> <leader>sd ':<C-u>:wa<CR>:QuickRun --cmdopt " --fail-fast"<CR>'
+  nnoremap <expr> <leader>sd ':<C-u>:wa<CR>:QuickRun -cmdopt " --fail-fast"<CR>'
   nnoremap <expr> <leader>s ':<C-u>:wa<CR>:QuickRun -cmdopt ":'.line('.').'"<CR>'
   nnoremap <expr> <leader>ss ':<C-u>:wa<CR>:QuickRun -cmdopt ":'.line('.').' --fail-fast"<CR>'
 endfunction
