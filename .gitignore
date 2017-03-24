@@ -1,3 +1,4 @@
+*.swp
 /vim/bundle/NeoBundle.lock
 /zsh.d/config.local.zsh
 /zsh.d/env.local.zsh
