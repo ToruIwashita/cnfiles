@@ -185,9 +185,9 @@ nnoremap # #N
 " 検索後にカーソルを上に移動
 nnoremap n nzz
 nnoremap N Nzz
-" <ESC>か<C-j>2回で検索ハイライト消し
-nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
-nnoremap <C-j><C-j> :<C-u>nohlsearch<CR>
+" <ESC>か<C-j>2回で再描画&検索ハイライト消し
+nnoremap <ESC><ESC> :<C-u>e!<CR>:<C-u>nohlsearch<CR>
+nnoremap <C-j><C-j> :<C-u>e!<CR>:<C-u>nohlsearch<CR>
 " q:,q/,q?無効化
 nnoremap q: <NOP>
 nnoremap q/ <NOP>
