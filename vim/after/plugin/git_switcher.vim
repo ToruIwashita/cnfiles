@@ -21,6 +21,7 @@ nnoremap <C-w>r :<C-u>GswLoad<SPACE>
 " <C-g>プレフィックス
 nnoremap <C-g>g :<C-u>Gsw<SPACE>
 nnoremap <C-g><C-g> :<C-u>GswRemote<SPACE>
+nnoremap <C-g>_ :<C-u>GswPrev<CR>
 nnoremap <C-g>b :<C-u>GswBranch<CR>
 nnoremap <C-g><C-b> :<C-u>GswBranchRemote<CR>
 nnoremap <C-s>@ :<C-u>GswClearState
