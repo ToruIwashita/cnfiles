@@ -35,6 +35,10 @@ _gau() {
   _arguments '*: :__git-untracked-files'
 }
 
+_gac() {
+  _arguments '*: :__git-changed-files'
+}
+
 _gab() {
   _arguments '*: :__git-both-modified-files'
 }
@@ -93,6 +97,7 @@ _gdeleteb() {
 
 compdef _gam gam
 compdef _gau gau
+compdef _gac gac
 compdef _gab gab
 compdef _grh grh
 compdef _gc gc
