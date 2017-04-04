@@ -488,14 +488,14 @@ EOF`
 }
 
 gdeleteb() {
-  integer force
+  integer all
   local -a merged_branches
   local self_cmd help usage merged_branch answer
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [-f --force]
+usage: $self_cmd [-a --all]
                 [-h --help]
 EOF`
 
@@ -507,8 +507,8 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
-      -f | --force)
-        (( force++ ))
+      -a | --all)
+        (( all++ ))
         shift 1
         ;;
       -h | --help)
@@ -533,9 +533,9 @@ EOF`
   git fetch --prune
   merged_branches=(${(R)${(R)${(@f)"$(git branch --merged)"}:#\*[[:space:]]*}##*[[:space:]]})
 
-  if (( force )); then
+  if (( all )); then
     while :; do
-      print -n "Force delete merged branches (y/n)? "
+      print -n "Delete all merged branches (y/n)? "
 
       read answer
       case "$answer" in

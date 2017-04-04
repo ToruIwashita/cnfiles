@@ -91,7 +91,7 @@ _gpickfile() {
 
 _gdeleteb() {
   _arguments \
-    '(-f --force)'{-f,--force}'[Force delete merged branches]' \
+    '(-a --all)'{-a,--all}'[Delete all merged branches]' \
     '(-h --help)'{-h,--help}'[Show help text]'
 }
 
