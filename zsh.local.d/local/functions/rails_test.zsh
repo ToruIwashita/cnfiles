@@ -5,6 +5,7 @@ init-test() {
 }
 
 brspec() {
+  integer no_binstub
   local -a args file_paths
   local self_cmd help usage fail_fast_option seed_option tag_option
 
@@ -15,6 +16,7 @@ usage: $self_cmd [spec file]
               [-c --changed-file <spec file>]
               [-f --fail-fast]
               [-m --modified-file <spec file>]
+              [-n --no-binstub]
               [-s --seed <seed value>]
               [-t --tag <tag name>]
               [-u --untracked-file <spec file>]
@@ -42,6 +44,10 @@ EOF`
         fi
         file_paths+=("$2")
         shift 2
+        ;;
+      -n | --no-binstub)
+        (( no_binstub++ ))
+        shift 1
         ;;
       -s | --seed)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
@@ -92,7 +98,7 @@ EOF`
     return 1
   fi
 
-  if [[ -f './bin/rspec' ]]; then
+  if (( ! no_binstub )) && [[ -f './bin/rspec' ]]; then
     cmd='./bin/rspec'
   else
     cmd='bundle exec rspec'
