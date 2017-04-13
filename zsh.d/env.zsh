@@ -1,5 +1,5 @@
 ## ローカル変数
-local zsh_completions_path zsh_history_substring_search_path zsh_golang_misc_path
+local zsh_completions_path zsh_history_substring_search_path
 
 ## 環境変数設定
 export LANG=ja_JP.UTF-8                   # utf-8
@@ -21,12 +21,10 @@ export MEMOLIST_TMP_FILE=$MEMOLIST_DIR_PATH/0000-00-00-tmp.md
 # plugin path
 zsh_completions_path=$zsh_plugin_dir_path/zsh-completions/zsh-completions.plugin.zsh
 zsh_history_substring_search_path=$zsh_plugin_dir_path/zsh-history-substring-search/zsh-history-substring-search.zsh
-zsh_golang_misc_path=$zsh_plugin_dir_path/golang-misc-zsh/src/go.zsh
 
 ## plugin読み込み
 [[ -f $zsh_completions_path ]] && source $zsh_completions_path
 [[ -f $zsh_history_substring_search_path ]] && source $zsh_history_substring_search_path
-[[ -f $zsh_golang_misc_path ]] && source $zsh_golang_misc_path
 
 # fpath設定,ディレクトリ読み込みplugin追加
 fpath=($zsh_sub_dir_paths $fpath)
