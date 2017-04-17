@@ -66,24 +66,24 @@ bindkey -v '^s' self-insert                                 # Ctrl+sでself-inse
 bindkey -v '^u' kill-word                                   # Ctrl+uでkill-word
 bindkey -v '^w' backward-kill-word                          # Ctrl+wでbackward-kill-word
 bindkey -v '^y' push-input                                  # Ctrl+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
-bindkey -v '^sf' peco-file-finder                           # Ctrl+s,fでpeco-file-finder
+bindkey -v '^sf' peco-file-find-and-start-editor            # Ctrl+s,fでファイル検索してstart-editor
 bindkey -v '^sg' immediate-hub-browse                       # Ctrl+s,hでhub browse
 bindkey -v '^sh' immediate-git-log-search                   # Ctrl+s,hでgit log検索
 bindkey -v '^sj' vi-join                                    # Ctrl+s,jでviのjoin
 bindkey -v '^sk' peco-cd-recent-dir                         # Ctrl+s,kで最近移動したディレクトリを絞り込んで移動
-bindkey -v '^sl' peco-file-find-and-start-editor            # Ctrl+s,lでファイル検索してstart-editor
+bindkey -v '^sl' edit-command-line                          # Ctrl+s,lでコマンドラインエディタ編集
 bindkey -v '^sn' immediate-git-fetch                        # Ctrl+s,nでgit fetch
 bindkey -v '^so' peco-cd-dir                                # Ctrl+s,oでディレクトリを絞り込んで移動
 bindkey -v '^sp' immediate-git-pull                         # Ctrl+s,pでgit pull
 bindkey -v '^ss' peco-ag-and-start-editor                   # Ctrl+s,sでagで検索してstart-editorCtr+s
 bindkey -v '^s@' clear-screen                               # Ctrl+@でclear-screen
 bindkey -v '^s;' peco-simple-git-grep-and-start-editor      # Ctrl+s,hでgit grepしてstart-editor
+bindkey -v '^s^f' peco-file-finder                          # Ctrl+s,Ctrl+fでpeco-file-finder
 bindkey -v '^s^h' immediate-git-log-search-with-diff        # Ctrl+s,Ctrl+hでgit logをdiff出力付きで検索
 bindkey -v '^s^i' immediate-ls                              # Ctrl+s,Ctrl+iでls
-bindkey -v '^s^j' immediate-cat                             # Ctrl+s,jでBUFFERをcat
+bindkey -v '^s^j' immediate-cat                             # Ctrl+s,Ctrl+jでBUFFERをcat
 bindkey -v '^s^k' menu-complete-recent-dirs                 # Ctrl+s,Ctrl+kで最近移動したディレクトリへ移動
-bindkey -v '^s^l' edit-command-line                         # Ctrl+s,Ctrl+lでコマンドラインエディタ編集
-bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctrl+oでバッファ残しリーフディレクトリ補完
+bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctrl+s,Ctrl+oでバッファ残しリーフディレクトリ補完
 bindkey -v '^s^p' copy-prev-shell-word                      # Ctrl+s,Ctrl+pで1つ前の文字列をコピペ(空欄区切りで文字列判定)
 bindkey -v '^s^u' immediate-git-status                      # Ctrl+s,Ctrl+uでgit status
 bindkey -v '^s^s' vi-find-next-char                         # Ctrl+s,Ctrl+sでviのfind-char
