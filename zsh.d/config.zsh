@@ -58,7 +58,7 @@ bindkey -v '^k' menu-complete-files                         # Ctrl+kでファイ
 bindkey -v '^l' start-editor                                # Ctrl+lでstart-editor
 bindkey -v '^m' accept-line                                 # Ctrl+mでaccept-line
 bindkey -v '^n' history-substring-search-down               # Ctrl+nで部分文字列検索,下
-bindkey -v '^o' into-leaf-dir                               # Ctrl+s,Ctrl+oでリーフディレクトリ移動
+bindkey -v '^o' cd-leaf-dir                                 # Ctrl+s,Ctrl+oでリーフディレクトリ移動
 bindkey -v '^p' history-substring-search-up                 # Ctrl+pで部分文字列検索,上
 bindkey -v '^q' self-insert                                 # Ctrl+qでself-insert
 bindkey -v '^r' history-incremental-search-backward         # Ctrl+rでインクリメンタルサーチ
@@ -83,7 +83,7 @@ bindkey -v '^s^h' immediate-git-log-search-with-diff        # Ctrl+s,Ctrl+hでgi
 bindkey -v '^s^i' immediate-ls                              # Ctrl+s,Ctrl+iでls
 bindkey -v '^s^j' immediate-cat                             # Ctrl+s,Ctrl+jでBUFFERをcat
 bindkey -v '^s^k' menu-complete-recent-dirs                 # Ctrl+s,Ctrl+kで最近移動したディレクトリへ移動
-bindkey -v '^s^o' into-leaf-dir-and-push-remains-to-prompt  # Ctrl+s,Ctrl+oでバッファ残しリーフディレクトリ補完
+bindkey -v '^s^o' cd-leaf-dir-and-insert-leaf-file          # Ctrl+s,Ctrl+oでバッファ残しリーフディレクトリ補完
 bindkey -v '^s^p' copy-prev-shell-word                      # Ctrl+s,Ctrl+pで1つ前の文字列をコピペ(空欄区切りで文字列判定)
 bindkey -v '^s^u' immediate-git-status                      # Ctrl+s,Ctrl+uでgit status
 bindkey -v '^s^s' vi-find-next-char                         # Ctrl+s,Ctrl+sでviのfind-char

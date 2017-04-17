@@ -1,5 +1,5 @@
-## into-leaf-dir wedget
-_into-leaf-dir() {
+## cd-leaf-dir wedget
+_cd-leaf-dir() {
   local precmd_func dest
   local -a args
   local -aU reply
@@ -25,4 +25,4 @@ _into-leaf-dir() {
   done
 }
 
-zle -N into-leaf-dir _into-leaf-dir
+zle -N cd-leaf-dir _cd-leaf-dir

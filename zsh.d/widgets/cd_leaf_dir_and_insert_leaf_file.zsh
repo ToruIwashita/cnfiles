@@ -1,5 +1,5 @@
-## into-leaf-dir-and-push-remains-to-prompt
-_into-leaf-dir-and-push-remains-to-prompt() {
+## cd-leaf-dir-and-insert-leaf-file
+_cd-leaf-dir-and-insert-leaf-file() {
   integer resource_index changed
   local precmd_func file_path dest
   local -a args
@@ -42,4 +42,4 @@ _into-leaf-dir-and-push-remains-to-prompt() {
   zle beginning-of-line
 }
 
-zle -N into-leaf-dir-and-push-remains-to-prompt _into-leaf-dir-and-push-remains-to-prompt
+zle -N cd-leaf-dir-and-insert-leaf-file _cd-leaf-dir-and-insert-leaf-file
