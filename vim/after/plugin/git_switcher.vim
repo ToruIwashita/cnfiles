@@ -7,10 +7,12 @@ set cpo&vim
 
 let g:gsw_autoload_session = 'confirm'
 let g:gsw_save_session_confirm = 'no'
+let g:gsw_switch_prev_confirm = 'yes'
 
 " <C-s>プレフィックス
 nnoremap <C-s>p :<C-u>GswPull<CR>
 nnoremap <C-s>n :<C-u>GswFetch<CR>
+nnoremap <C-s>@ :<C-u>GswClearState
 
 " <C-w>プレフィックス
 nnoremap <C-w><C-o> :<C-u>GswSave<CR>
@@ -24,7 +26,6 @@ nnoremap <C-g><C-g> :<C-u>GswRemote<SPACE>
 nnoremap <C-g>_ :<C-u>GswPrev<CR>
 nnoremap <C-g>b :<C-u>GswBranch<CR>
 nnoremap <C-g><C-b> :<C-u>GswBranchRemote<CR>
-nnoremap <C-s>@ :<C-u>GswClearState
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
