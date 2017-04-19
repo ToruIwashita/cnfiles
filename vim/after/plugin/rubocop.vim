@@ -12,8 +12,10 @@ function! s:rubocop_check()
   endif
 
   if filereadable('./config/environment.rb')
+    let g:vimrubocop_rubocop_cmd = 'bundle exec rubocop '
     let g:vimrubocop_extra_args = '--rails --config '.config_file
   else
+    let g:vimrubocop_rubocop_cmd = 'rbenv exec rubocop '
     let g:vimrubocop_extra_args = '--config '.config_file
   endif
   RuboCop
@@ -27,8 +29,10 @@ function! s:rubocop_auto_correct()
   endif
 
   if filereadable('./config/environment.rb')
+    let g:vimrubocop_rubocop_cmd = 'bundle exec rubocop '
     let g:vimrubocop_extra_args = '--rails --auto-correct --config '.config_file
   else
+    let g:vimrubocop_rubocop_cmd = 'rbenv exec rubocop '
     let g:vimrubocop_extra_args = '--auto-correct --config '.config_file
   endif
   RuboCop
