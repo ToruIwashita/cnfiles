@@ -36,7 +36,8 @@ Plug 'tpope/vim-fugitive'                              " fugitive(ステータ�
 Plug 'gregsexton/gitv'                                 " gitv(コミットログ閲覧用,vim-fugitive依存)
 Plug 'airblade/vim-gitgutter'                          " gitの差分を左端に表示
 Plug 'tyru/open-browser.vim'                           " URIをブラウザで開く
-Plug 'tyru/open-browser-github.vim'                    " Githubをブラウザで開く
+Plug 'tyru/open-browser-github.vim'                    " githubをブラウザで開く
+Plug 'kannokanno/previm'                               " markdownなどのプレビュー用(open-browser依存)
 Plug 'rhysd/committia.vim'                             " コミットログ入力サポート
 Plug 'kana/vim-submode'                                " 連続入力などをサポートするサブモードを定義する
 Plug 'kana/vim-textobj-user'                           " 独自text-object定義
@@ -81,7 +82,7 @@ Plug 'kshenoy/vim-signature'                           " マーカー表示
 Plug 'adie/BlockDiff'                                  " BlockDiff(選択範囲の比較)
 Plug 'LeafCage/yankround.vim'                          " ヤンク履歴管理
 Plug 'Konfekt/FastFold'                                " 自動折畳
-Plug 'haya14busa/vim-debugger'                         " Vim script debugger
+Plug 'haya14busa/vim-debugger'                         " vim script debugger
 Plug 'hashivim/vim-terraform'                          " vim-terraform
 Plug 'chrisbra/vim-zsh'                                " vim-zsh
 Plug 'vim-scripts/AnsiEsc.vim'                         " ANSIカラー表示
