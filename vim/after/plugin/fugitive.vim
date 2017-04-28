@@ -23,6 +23,7 @@ fun! s:fugitive_settings()
   nnoremap <buffer> <C-g><C-t> <NOP>
   nnoremap <buffer> <C-g>d :<C-u>Git diff <C-r>=matchstr(getline('.'), 'modified:\s*\zs.*\ze')<CR><CR>
   nmap <buffer> t O
+  nmap <buffer> ! U
 
   " コミットコメントの為のローカル設定
   ab <buffer> =r refs #<C-r>=split(fugitive#head(), '-')[1]<CR>
