@@ -261,5 +261,5 @@ augroup END
 " netrwhistを削除する
 augroup delete_netrwhist
   autocmd!
-  autocmd VimLeave * if filereadable(expand(vim_dir_path.'/.netrwhist')) | call delete(expand(vim_dir_path.'/.netrwhist')) | endif 
+  autocmd VimLeave * if filereadable(expand(vim_dir_path.'/.netrwhist')) | call delete(expand(vim_dir_path.'/.netrwhist')) | endif
 augroup END
