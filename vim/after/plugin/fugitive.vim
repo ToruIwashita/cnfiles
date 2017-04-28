@@ -22,7 +22,12 @@ fun! s:fugitive_settings()
   nnoremap <buffer> <C-g><C-c> <NOP>
   nnoremap <buffer> <C-g><C-t> <NOP>
   nnoremap <buffer> <C-g>d :<C-u>Git diff <C-r>=matchstr(getline('.'), 'modified:\s*\zs.*\ze')<CR><CR>
+
+  " タブで開く
   nmap <buffer> t O
+  " リロード
+  nmap <buffer> u r
+  " 変更を取り消し
   nmap <buffer> ! U
 
   " コミットコメントの為のローカル設定
