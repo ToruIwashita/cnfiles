@@ -23,12 +23,16 @@ function! s:toggle_git_folding()
   endif
 endfunction
 
-" gitvはfugitiveに依存しているのでここでfugitiveのコマンドを使用することを許容する
 fun! s:gitv_settiongs()
+  nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
+
+  " gitvはfugitiveに依存しているのでここでfugitiveのコマンドを使用することを許容する
   nnoremap <buffer> <C-g>B :<C-u>Git rebase -i <C-r>=<SID>gitv_get_current_sha()<CR><CR>
   nnoremap <buffer> <C-g>C :<C-u>Git cherry-pick <C-r>=<SID>gitv_get_current_sha()<CR><CR>
   nnoremap <buffer> <C-g>R :<C-u>Git revert <C-r>=<SID>gitv_get_current_sha()<CR><CR>
-  nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
+  nnoremap <buffer> <C-s><C-g> :<C-u>Gbrowse <C-r>=<SID>gitv_get_current_sha()<CR><CR>
+
+  nmap <buffer> <leader>r u
 endf
 
 augroup local_gitv

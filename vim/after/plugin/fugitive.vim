@@ -26,7 +26,7 @@ fun! s:fugitive_settings()
   " タブで開く
   nmap <buffer> t O
   " リロード
-  nmap <buffer> u r
+  nmap <buffer> <leader>r r
   " 変更を取り消し
   nmap <buffer> ! U
 
