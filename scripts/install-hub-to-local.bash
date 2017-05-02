@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source $(cd $(dirname $_);pwd)/env.bash
+source ${${(%):-%N}:A:h}/env.bash
 set -e
 
 cd $HUB_SRC_DIR_PATH

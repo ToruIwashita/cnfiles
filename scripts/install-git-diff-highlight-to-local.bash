@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # base dir
-source $(cd $(dirname $_);pwd)/env.bash
+source ${${(%):-%N}:A:h}/env.bash
 set -e
 
 cd $GIT_SRC_DIR_PATH

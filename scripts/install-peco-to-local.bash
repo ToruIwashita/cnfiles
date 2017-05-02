@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source $(cd $(dirname $_);pwd)/env.bash
+source ${${(%):-%N}:A:h}/env.bash
 set -e
 
 cd $PECO_SRC_DIR_PATH

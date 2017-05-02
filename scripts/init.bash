@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source $(cd $(dirname $_);pwd)/env.bash
+source ${${(%):-%N}:A:h}/env.bash
 set -e
 
 $(cd $BASE_DIR_PATH;git submodule update --init)
