@@ -48,13 +48,12 @@ unbind C-]
 bind C-d detach
 # reload config
 bind r source-file ~/.tmux.conf
+
 # 新しいウィンドウを作る
 bind t new-window
 bind C-t new-window
 # ウィンドウのリネーム
 bind . command-prompt -I '#W' 'rename-window "%%"'
-# ペイン選択
-bind - display-panes
 # ウィンドウkill
 bind X kill-window
 # ウィンドウ上下分割
@@ -76,6 +75,9 @@ bind -r C-[ previous-window
 # 直前のウィンドウへ
 bind -r _ last-window
 bind -r C-_ last-window
+
+# ペイン選択
+bind - display-panes
 # ペイン移動
 bind h select-pane -L
 bind j select-pane -D
@@ -92,21 +94,23 @@ bind -r K resize-pane -U 1
 bind -r L resize-pane -R 2
 # ペインkill
 bind x kill-pane
+
 # コピーモード
 bind v copy-mode
 bind C-v copy-mode
 # コピー開始
-bind -t vi-copy v begin-selection
+bind -T copy-mode-vi v send -X begin-selection
+# コピーキャンセル
+bind -T copy-mode-vi C-j send -X clear-selection
 # ヤンク
-bind -t vi-copy y copy-selection
+bind -T copy-mode-vi y send -X copy-selection
 # 1行ヤンク
-bind -t vi-copy Y copy-line
-# C-vで矩形範囲選択
-bind -t vi-copy C-v rectangle-toggle
+bind -T copy-mode-vi Y send -X copy-line
 # 最新バッファペースト
 bind p paste-buffer
 # バッファ選択ペースト
 bind P choose-buffer
+
 # ウィンドウデフォルト表示s-v
 bind S split-window -v \; split-window -h
 # ウィンドウデフォルト表示v-s
