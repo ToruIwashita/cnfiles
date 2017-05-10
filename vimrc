@@ -85,9 +85,9 @@ Plug 'Konfekt/FastFold'                                " 自動折畳
 Plug 'haya14busa/vim-debugger'                         " vim script debugger
 Plug 'hashivim/vim-terraform'                          " vim-terraform
 Plug 'chrisbra/vim-zsh'                                " vim-zsh
-Plug 'wannesm/wmgraphviz.vim'                          " graphviz
 Plug 'vim-scripts/AnsiEsc.vim'                         " ANSIカラー表示
 Plug 'yami-beta/vim-responsive-tabline'                " タブの横幅を調整
+Plug 'ToruIwashita/wmgraphviz.vim'                     " graphviz (forked from wannesm/wmgraphviz.vim)
 Plug 'ToruIwashita/tabmove-assist.vim'                 " タブ移動補助
 Plug 'ToruIwashita/tag-tnjump.vim'                     " タグジャンプ補助
 Plug 'ToruIwashita/window-closer.vim'                  " ウィンドウを閉じる動作の制御
