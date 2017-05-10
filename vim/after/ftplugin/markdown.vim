@@ -10,6 +10,8 @@ function! s:add_md_space_range(line1,line2)
   silent! execute a:line1.','.a:line2.'s/\(^ \{4}.*[^ ] \{2}$\)/\1  /'
 endfunction
 
+ab <buffer> =b <br/>
+
 command! -range MdFormat call s:add_md_space_range(<line1>, <line2>)
 cnorea %M %MdFormat
 cnorea '<,'>M '<,'>MdFormat
