@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ${${(%):-%N}:A:h}/env.bash
+source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
 npm -g install jshint --prefix=$NPM_HOME

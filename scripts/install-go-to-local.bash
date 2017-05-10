@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source ${${(%):-%N}:A:h}/env.bash
+source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
 cd $GO_SRC_DIR_PATH/src
