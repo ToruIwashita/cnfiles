@@ -1,4 +1,4 @@
-#!/usr/bin/env bash 
+#!/usr/bin/env bash
 
 __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
