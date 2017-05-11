@@ -18,7 +18,7 @@ nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) 
 nnoremap <C-g><C-t> :<C-u>Gwrite<CR>:<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
 nnoremap <C-g><C-v> :<C-u>Gblame<CR>
 
-fun! s:fugitive_settings()
+fun! s:fugitive_commit_settings()
   nnoremap <buffer> <C-g><C-c> <NOP>
   nnoremap <buffer> <C-g><C-t> <NOP>
   nnoremap <buffer> <C-g>d :<C-u>Git diff <C-r>=matchstr(getline('.'), 'modified:\s*\zs.*\ze')<CR><CR>
@@ -34,9 +34,14 @@ fun! s:fugitive_settings()
   ab <buffer> =r refs #<C-r>=split(fugitive#head(), '-')[1]<CR>
 endf
 
+fun! s:fugitive_blame_settings()
+  nnoremap <buffer> <C-s><C-g> :<C-u>Gbrowse <C-r>=matchstr(getline('.'), '^\zs[0-9a-f]\{7,10\}\ze')<CR><CR>
+endf
+
 augroup local_fugitive
   autocmd!
-  autocmd FileType gitcommit call s:fugitive_settings()
+  autocmd FileType gitcommit call s:fugitive_commit_settings()
+  autocmd FileType fugitiveblame call s:fugitive_blame_settings()
 augroup END
 
 let &cpo = s:cpo_save
