@@ -12,8 +12,7 @@ nmap <C-a>[ <Plug>GitGutterPrevHunk
 nmap <C-a><C-[> <Plug>GitGutterPrevHunk
 
 " 変更を追加
-nmap <C-g>] <Plug>GitGutterStageHunk
-nmap <C-g><C-]> <Plug>GitGutterStageHunk
+nmap <C-g>a <Plug>GitGutterStageHunk
 " 変更を取り消し
 nmap <C-g>u <Plug>GitGutterUndoHunk
 " 変更のプレビュー
