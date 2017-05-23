@@ -133,8 +133,6 @@ alias gf='git fetch --prune'
 alias gp='git prune'
 alias gl='git log'
 alias gs='git status'
-# vim
-alias clear-vim-session='rm .*.session.vim'
 # ping
 alias ping-one='ping -v -c 1'
 # other
