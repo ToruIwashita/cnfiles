@@ -127,7 +127,7 @@ mytable() {
   __check-presence-of-args $*
   (( $? )) && return 1
 
-  myq "SHOW CREATE TABLE ${1}"
+  myq "SHOW CREATE TABLE ${1}\G"
 }
 
 
