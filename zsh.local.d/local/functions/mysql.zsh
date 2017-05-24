@@ -123,6 +123,14 @@ myindex() {
   myq "SHOW INDEX FROM ${1}"
 }
 
+mytable() {
+  __check-presence-of-args $*
+  (( $? )) && return 1
+
+  myq "SHOW CREATE TABLE ${1}"
+}
+
+
 myshow() {
   __my-table-list
 }
