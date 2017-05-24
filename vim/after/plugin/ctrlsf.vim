@@ -21,7 +21,7 @@ let g:ctrlsf_mapping = {
   \ 'prev':  '<C-p>'
 \ }
 
-fun! s:ctrlsf_settings()
+fun! s:ctrlsf_setting()
   nnoremap <buffer> <C-s> :<C-u>call ctrlsf#JumpTo('split')<CR>:<C-u>CtrlSFOpen<CR>
 endf
 
@@ -42,7 +42,7 @@ command! -nargs=1 BCtrlSF call s:buffer_ctrlsf(<q-args>)
 
 augroup local_ctrlsf
   autocmd!
-  autocmd FileType ctrlsf call s:ctrlsf_settings()
+  autocmd FileType ctrlsf call s:ctrlsf_setting()
 augroup END
 
 let &cpo = s:cpo_save
