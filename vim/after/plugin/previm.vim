@@ -7,7 +7,14 @@ set cpo&vim
 
 let g:previm_enable_realtime = 1
 
-nnoremap <leader>p :<C-u>PrevimOpen<CR>
+fun! s:previm_settings()
+  nnoremap <leader>p :<C-u>PrevimOpen<CR>
+endf
+
+augroup local_previm
+  autocmd!
+  autocmd FileType markdown call s:previm_settings()
+augroup END
 
 let &cpo = s:cpo_save
 unlet s:cpo_save

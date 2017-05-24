@@ -7,7 +7,7 @@ set cpo&vim
 
 let g:WMGraphviz_output = 'svg'
 
-nnoremap <leader>g :<C-u>GraphvizCompile<CR>:<C-u>GraphvizShow<CR>
+nnoremap <leader>p :<C-u>GraphvizCompile<CR>:<C-u>GraphvizShow<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
