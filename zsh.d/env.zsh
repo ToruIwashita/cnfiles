@@ -15,8 +15,9 @@ export CACHE_DIR_PATH=~/.cache
 export LINT_DIR_PATH=~/.lint
 export LOCAL_DIR_PATH=~/local
 export MARKDOWN_TEXTS_DIR_PATH=~/markdown_texts
+export MARKDOWN_TEXTS_MODELING_SESSION_FILE_PATH=$MARKDOWN_TEXTS_DIR_PATH/.modeling.session.vim
 export MEMOLIST_DIR_PATH=~/.memolist
-export MEMOLIST_TMP_FILE=$MEMOLIST_DIR_PATH/0000-00-00-tmp.md
+export MEMOLIST_TMP_FILE_PATH=$MEMOLIST_DIR_PATH/0000-00-00-tmp.md
 
 ## path関連設定
 # plugin path
