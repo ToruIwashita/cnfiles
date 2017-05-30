@@ -8,7 +8,7 @@ set cpo&vim
 let g:previm_enable_realtime = 1
 
 fun! s:previm_setting()
-  nnoremap <leader>p :<C-u>PrevimOpen<CR>
+  nnoremap <buffer> <leader>p :<C-u>PrevimOpen<CR>
 endf
 
 augroup local_previm
