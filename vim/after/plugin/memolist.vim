@@ -12,7 +12,7 @@ let g:memolist_qfixgrep = 1
 
 nnoremap <leader>mn :<C-u>MemoNew<CR>
 nnoremap <leader>mg :<C-u>MemoGrep<CR>
-execute 'nnoremap <leader>mt :<C-u>tabe '.memolist_tmp_file.'<CR>'
+execute 'nnoremap <leader>mt :<C-u>tabe '.memolist_tmp_file_path.'<CR>'
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
