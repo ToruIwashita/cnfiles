@@ -16,7 +16,7 @@ nmap <C-g>a <Plug>GitGutterStageHunk
 " 変更を取り消し
 nmap <C-g>u <Plug>GitGutterUndoHunk
 " 変更のプレビュー
-nmap <C-g><C-g> <Plug>GitGutterPreviewHunk
+nmap <C-g>d <Plug>GitGutterPreviewHunk
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
