@@ -105,3 +105,4 @@ call plug#end()
 "" 各種設定読込
 if filereadable(expand(vim_dir_path.'/config.vim')) | exec 'source' expand(vim_dir_path.'/config.vim') | en
 if filereadable(expand(vim_dir_path.'/config.plugin.vim')) | exec 'source' expand(vim_dir_path.'/config.plugin.vim') | en
+if filereadable(expand(vim_dir_path.'/config.local.vim')) | exec 'source' expand(vim_dir_path.'/config.local.vim') | en
