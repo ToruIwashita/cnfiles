@@ -1,9 +1,9 @@
 *.swp
-/vim/bundle/NeoBundle.lock
 /zsh.d/config.local.zsh
 /zsh.d/env.local.zsh
 /zsh.d/local/
 /vim/plugged/*
+/vim/config.local.vim
 /tmux/plugins/*
 /.bundle
 /.tags
