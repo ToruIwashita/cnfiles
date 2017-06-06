@@ -130,7 +130,6 @@ mytable() {
   myq "SHOW CREATE TABLE ${1}\G"
 }
 
-
 myshow() {
   __my-table-list
 }
