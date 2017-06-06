@@ -29,9 +29,6 @@ fun! s:fugitive_commit_setting()
   nmap <buffer> <leader>r r
   " 変更を取り消し
   nmap <buffer> ! U
-
-  " コミットコメントの為のローカル設定
-  ab <buffer> =r refs #<C-r>=split(fugitive#head(), '-')[1]<CR>
 endf
 
 fun! s:fugitive_blame_setting()
