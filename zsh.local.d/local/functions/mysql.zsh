@@ -109,6 +109,18 @@ mqexp() {
   eval $my_cmd
 }
 
+mytable() {
+  __check-presence-of-args $*
+  (( $? )) && return 1
+
+  echo "> DESC $*;"
+  mydesc $*
+  echo "> SHOW INDEX FROM $*;"
+  myindex $*
+  echo "> SHOW CREATE TABLE $*\G"
+  myctable $*
+}
+
 mydesc() {
   __check-presence-of-args $*
   (( $? )) && return 1
@@ -123,7 +135,7 @@ myindex() {
   myq "SHOW INDEX FROM ${1}"
 }
 
-mytable() {
+myctable() {
   __check-presence-of-args $*
   (( $? )) && return 1
 

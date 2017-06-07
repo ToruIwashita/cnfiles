@@ -34,9 +34,10 @@ _myst() {
 
 compdef _myfindg myfindg
 compdef _mf mf
+compdef _myst mytable
 compdef _myst mydesc
 compdef _myst myindex
-compdef _myst mytable
+compdef _myst myctable
 compdef _myst myfcsv
 compdef _myst mycnt
 compdef _watch-myps watch-myps
