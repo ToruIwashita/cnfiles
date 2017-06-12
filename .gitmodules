@@ -61,3 +61,6 @@
 [submodule "modules/jq"]
 	path = modules/jq
 	url = git@github.com:stedolan/jq.git
+[submodule "modules/pyenv"]
+	path = modules/pyenv
+	url = git@github.com:pyenv/pyenv.git
