@@ -116,14 +116,14 @@ if [[ -L ~/.vimrc ]]; then
   printf "\e[32m$BASE_DIR_PATH/.vimrc symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.vimrc\e[0m\n"
-  ln -is  $BASE_DIR_PATH/vimrc ~/.vimrc
+  ln -is $BASE_DIR_PATH/vimrc ~/.vimrc
 fi
 
 if [[ -L ~/.vim ]]; then
   printf "\e[32m$BASE_DIR_PATH/.vim dir symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.vim dir\e[0m\n"
-  ln -isn $BASE_DIR_PATH/vim   ~/.vim
+  ln -isn $BASE_DIR_PATH/vim ~/.vim
 fi
 
 # tmux
