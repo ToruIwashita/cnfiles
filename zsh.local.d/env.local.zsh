@@ -9,6 +9,7 @@ readonly PGUSER=
 readonly PGPASSWORD=
 
 export RBENV_ROOT=~/.rbenv
+export PYENV_ROOT=~/.pyenv
 # rbenvを使う場合は不要
 # export GEM_HOME=~/.gem
 export GOROOT=$LOCAL_DIR_PATH/go
@@ -27,7 +28,8 @@ export PGPASSWORD
 ## path
 path=(
   ~/local/bin
-  $RBENV_ROOT/shims
+  $RBENV_ROOT/bin
+  $PYENV_ROOT/bin
   # rbenvを使う場合は不要
   # $GEM_HOME/bin
   $GOROOT/bin

@@ -3,16 +3,23 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-cd $RBENV_SRC_DIR_PATH
-ls bin/ | while read line; do
-  if [[ ! -L $LOCAL_BIN_DIR_PATH/$line ]]; then
-    ln -is $RBENV_SRC_DIR_PATH/bin/$line $LOCAL_BIN_DIR_PATH/$line
-  fi
-done
+if [[ -d $RBENV_SRC_DIR_PATH/plugins ]]; then
+  printf "\e[32m$RBENV_SRC_DIR_PATH/plugins dir already exists\e[0m\n"
+else
+  mkdir $RBENV_SRC_DIR_PATH/plugins
+fi
 
-# install ruby-build
-cd $RUBY_BUILD_SRC_DIR_PATH
-PREFIX=$LOCAL_DIR_PATH ./install.sh
+if [[ -L ~/.rbenv ]]; then
+  printf "\e[32m~/.rbenv dir symlink already exists\e[0m\n"
+else
+  ln -isn $RBENV_SRC_DIR_PATH ~/.rbenv
+fi
+
+if [[ -L ~/.rbenv/plugins/ruby-build ]]; then
+  printf "\e[32m~/.rbenv/plugins/ruby-build dir symlink already exists\e[0m\n"
+else
+  ln -isn $RUBY_BUILD_SRC_DIR_PATH ~/.rbenv/plugins/ruby-build
+fi
 
 printf "\ncomplete\n"
 exit 0
