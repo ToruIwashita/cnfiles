@@ -101,7 +101,7 @@ if [[ -L ~/.zshrc ]]; then
   printf "\e[32m$BASE_DIR_PATH/.zshrc symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.zshrc\e[0m\n"
-  ln -is  $BASE_DIR_PATH/zshrc ~/.zshrc
+  ln -is $BASE_DIR_PATH/zshrc ~/.zshrc
 fi
 
 if [[ -L ~/.zsh.d ]]; then
