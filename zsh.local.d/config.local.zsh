@@ -1,6 +1,11 @@
 # rbenv設定
-if [[ -d ~/.rbenv  ]]; then
+if [[ -d ~/.rbenv ]]; then
   eval "$(rbenv init - zsh 2>/dev/null)"
+fi
+
+# pyenv設定
+if [[ -d ~/.pyenv ]]; then
+  eval "$(pyenv init - zsh 2>/dev/null)"
 fi
 
 ## alias
