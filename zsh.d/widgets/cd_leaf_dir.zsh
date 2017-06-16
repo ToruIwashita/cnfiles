@@ -11,6 +11,9 @@ _cd-leaf-dir() {
 
   zle -I
   zle kill-whole-line
+
+  (( ! $#dest )) && return
+
   print -s "cd $dest"
   cd $dest 2>/dev/null || cd $dest:h
 

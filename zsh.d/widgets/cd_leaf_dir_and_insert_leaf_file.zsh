@@ -18,6 +18,8 @@ _cd-leaf-dir-and-insert-leaf-file() {
   zle -I
   zle kill-whole-line
 
+  (( ! $#dest )) && return
+
   cd $dest 2>/dev/null && (( changed++ ))
   if (( changed )); then
     print -s "cd $dest"
