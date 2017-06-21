@@ -144,7 +144,7 @@ alias c='cat'
 alias grep='grep --color'
 alias less='less -R'
 # memolist
-alias -g TT=">! $MEMOLIST_TMP_FILE"
+alias -g TT=">! $MEMOLIST_TMP_FILE_PATH"
 
 ## functions
 # _precmd_vcs_info
