@@ -1,5 +1,10 @@
 ## tpmで管理しているプラグインの設定を記述する
 
+# tpm
+set -g @tpm-install 'I'
+set -g @tpm-update 'U'
+set -g @tpm-clean 'C-u'
+
 # resurrect
 set -g @resurrect-save 'C-o'
 set -g @resurrect-restore 'C-r'
