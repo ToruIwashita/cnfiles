@@ -46,10 +46,10 @@ setopt noflowcontrol        # フローコントロール無効
 ## bindkey
 # vimモードキーマップ
 bindkey -v '^a' beginning-of-line                           # Ctrl+aで行頭へ
-bindkey -v '^b' backward-char                               # Ctrl+bで１文字左へ(menuselectも同様)
-bindkey -v '^d' delete-char-or-list                         # Ctrl+dで１文字削除
+bindkey -v '^b' backward-char                               # Ctrl+bで1文字左へ(menuselectも同様)
+bindkey -v '^d' delete-char-or-list                         # Ctrl+dで1文字削除
 bindkey -v '^e' end-of-line                                 # Ctrl+eで行末へ
-bindkey -v '^f' forward-char                                # Ctrl+fで１文字右へ(menuselectも同様)
+bindkey -v '^f' forward-char                                # Ctrl+fで1文字右へ(menuselectも同様)
 bindkey -v '^g' send-break                                  # Ctrl+gで入力キャンセル
 bindkey -v '^h' backward-delete-char                        # Ctrl+hでbackward-delete-char(menuselectのinteractive-modeでbackword)
 bindkey -v '^i' expand-or-complete                          # Ctrl+iで通常補完
