@@ -49,10 +49,14 @@ zmodload -i zsh/complist               # 補完メニュー選択モードのキ
 zmodload -i zsh/terminfo               # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
 
 ## zplug
+# zplugの存在をチェック
+if [[ ! -d $ZPLUG_HOME ]]; then
+  git clone git@github.com:zplug/zplug.git $ZPLUG_HOME
+fi
+
 source $ZPLUG_HOME/init.zsh
 
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'  # zplugを管理
-
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
 zplug "zsh-users/zsh-history-substring-search"
 zplug "zsh-users/zsh-completions"
 
