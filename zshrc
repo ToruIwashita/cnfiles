@@ -48,6 +48,17 @@ autoload -Uz edit-command-line         # コマンドライン編集
 zmodload -i zsh/complist               # 補完メニュー選択モードのキーマップ
 zmodload -i zsh/terminfo               # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
 
+## zplug
+source $ZPLUG_HOME/init.zsh
+
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'  # zplugを管理
+
+zplug "zsh-users/zsh-history-substring-search"
+zplug "zsh-users/zsh-completions"
+
+# プラグインをロード
+zplug load --verbose
+
 ## 各種設定・オリジナル関数読込
 # lib読込
 for dir_path in ${zsh_lib_dir_paths[@]}; do
