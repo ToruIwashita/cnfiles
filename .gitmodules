@@ -16,9 +16,6 @@
 [submodule "vim/bundle/neobundle.vim"]
 	path = vim/bundle/neobundle.vim
 	url = git://github.com/Shougo/neobundle.vim
-[submodule "zsh.d/plugin/zsh-completions"]
-	path = zsh.d/plugin/zsh-completions
-	url = git://github.com/zsh-users/zsh-completions
 [submodule "modules/ruby-build"]
 	path = modules/ruby-build
 	url = git@github.com:sstephenson/ruby-build.git
@@ -31,9 +28,6 @@
 [submodule "modules/hub"]
 	path = modules/hub
 	url = git@github.com:github/hub.git
-[submodule "zsh.d/plugin/zsh-history-substring-search"]
-	path = zsh.d/plugin/zsh-history-substring-search
-	url = git://github.com/zsh-users/zsh-history-substring-search
 [submodule "modules/tmux"]
 	path = modules/tmux
 	url = git@github.com:tmux/tmux.git

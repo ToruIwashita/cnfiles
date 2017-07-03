@@ -1,6 +1,3 @@
-## ローカル変数
-local zsh_completions_path zsh_history_substring_search_path
-
 ## 環境変数設定
 export LANG=ja_JP.UTF-8                   # utf-8
 export TERM=screen-256color               # 端末の種類(tmuxのサポート対象に設定)
@@ -19,15 +16,6 @@ export MARKDOWN_TEXTS_DIR_PATH=~/markdown_texts
 export MARKDOWN_TEXTS_MODELING_SESSION_FILE_PATH=$MARKDOWN_TEXTS_DIR_PATH/.modeling.session.vim
 export MEMOLIST_DIR_PATH=~/.memolist
 export MEMOLIST_TMP_FILE_PATH=$MEMOLIST_DIR_PATH/0000-00-00-tmp.md
-
-## path関連設定
-# plugin path
-zsh_completions_path=$zsh_plugin_dir_path/zsh-completions/zsh-completions.plugin.zsh
-zsh_history_substring_search_path=$zsh_plugin_dir_path/zsh-history-substring-search/zsh-history-substring-search.zsh
-
-## plugin読み込み
-[[ -f $zsh_completions_path ]] && source $zsh_completions_path
-[[ -f $zsh_history_substring_search_path ]] && source $zsh_history_substring_search_path
 
 # fpath設定,ディレクトリ読み込みplugin追加
 fpath=($zsh_sub_dir_paths $fpath)
