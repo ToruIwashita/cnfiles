@@ -7,6 +7,7 @@ set cpo&vim
 
 nnoremap <C-w>I :<C-u>PlugInstall<CR>
 nnoremap <C-w>U :<C-u>PlugUpdate<CR>
+nnoremap <C-w>C :<C-u>PlugClean<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
