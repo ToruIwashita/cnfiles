@@ -1,4 +1,5 @@
 *.swp
+/zsh.d/zplug/*
 /zsh.d/config.local.zsh
 /zsh.d/env.local.zsh
 /zsh.d/local/
