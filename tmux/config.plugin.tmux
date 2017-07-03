@@ -3,7 +3,7 @@
 # tpm
 set -g @tpm-install 'I'
 set -g @tpm-update 'U'
-set -g @tpm-clean 'C-u'
+set -g @tpm-clean 'C'
 
 # resurrect
 set -g @resurrect-save 'C-o'
