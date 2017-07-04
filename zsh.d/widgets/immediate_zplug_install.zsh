@@ -1,7 +1,7 @@
 ## immediate-zplug-install
 _immediate-zplug-install() {
   local cmd
-  cmd="zplug clear && zplug install && ZPLUG_USE_CACHE=false zplug load --verbose"
+  cmd="zplug clear && zplug install"
 
   zle -I
   print -s $cmd && eval $cmd
