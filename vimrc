@@ -91,7 +91,7 @@ Plug 'chrisbra/vim-zsh'                                " vim-zsh
 Plug 'vim-scripts/AnsiEsc.vim'                         " ANSIカラー表示
 Plug 'yami-beta/vim-responsive-tabline'                " タブの横幅を調整
 Plug 'wannesm/wmgraphviz.vim'                          " graphviz
-Plug 'ToruIwashita/tabmove-assist.vim'                 " タブ移動補助
+Plug 'ToruIwashita/tab-relocator.vim'                  " タブ移動補助
 Plug 'ToruIwashita/nimble-tag-jump.vim'                " タグジャンプ補助
 Plug 'ToruIwashita/window-closer.vim'                  " ウィンドウを閉じる動作の制御
 Plug 'ToruIwashita/simple-git-push.vim'                " git pushのインターフェースを提供
