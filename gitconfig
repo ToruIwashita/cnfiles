@@ -14,10 +14,8 @@
   default = simple
 [diff]
   compactionheuristic = true
-[pager]
-  log = git-diff-highlight | less
-  show = git-diff-highlight | less
-  diff = git-diff-highlight | less
+[interactive]
+  diffFilter = diff-highlight
 [alias]
   log-all = log --graph --date-order -C -M --pretty=format:'<%h> %ad [%an] %Cgreen%d%Creset %s' --all --date=short
 [include]
