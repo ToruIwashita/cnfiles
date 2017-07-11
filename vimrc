@@ -18,7 +18,7 @@ if has('vim_starting')
   exec 'set runtimepath+='.expand(vim_dir_path.'/plugged/vim-plug')
   if !isdirectory(expand(vim_dir_path.'/plugged/vim-plug'))
     echo 'install vim-plug'
-    call mkdir(expand(vim_dir_path.'/plugged/vim-plug', 'p'))
+    call mkdir(expand(vim_dir_path.'/plugged/vim-plug'), 'p')
     call system('git clone git@github.com:junegunn/vim-plug.git '.expand(vim_dir_path.'/plugged/vim-plug/autoload'))
   end
 endif
