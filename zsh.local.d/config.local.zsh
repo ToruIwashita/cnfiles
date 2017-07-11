@@ -18,6 +18,7 @@ alias cds='cd ~/src'
 alias cdsg='cd ~/src/go'
 alias cdw='cd ~/works'
 alias cdc='cd ~/.cnfiles'
+alias cdm='cd ~/markdown_texts'
 alias cdml='cd ~/.memolist'
 # rbenv
 alias bundle='rbenv exec bundle'
