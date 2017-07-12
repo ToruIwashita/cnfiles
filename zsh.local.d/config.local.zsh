@@ -25,7 +25,6 @@ alias bundle='rbenv exec bundle'
 alias pry='rbenv exec pry'
 alias rails='rbenv exec rails'
 alias rspec='rbenv exec rspec'
-alias aws='rbenv exec aws'
 # ctags
 alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,ruby'
 # rails
