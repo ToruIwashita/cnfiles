@@ -3,30 +3,30 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-# 2016/5月現在、./all.bashはgo1.4の実行環境が入っていないと動かない
-# go1.4のバイナリを~/go1.4/bin/goに配置する必要ある
-if [[ -d $GOPATH_1_4 ]]; then
-  printf "\n$GOPATH_1_4 dir already exists\n"
+INSTALL_TARGET_BRANCH=release-branch.go1.8
+
+# ./all.bash は go1.4 がないと動かない
+# go1.4 のバイナリを配置し, GOROOT_BOOTSTRAP を設定する必要がある
+if [[ -x $GOROOT_1_4/bin/go ]]; then
+  printf "\n$GOROOT_1_4/bin/go already exists\n"
 else
   printf "\ngit clone go1.4 branch\n"
-  git clone -b release-branch.go1.4 git@github.com:golang/go.git $GOPATH_1_4
-fi
+  git clone -b release-branch.go1.4 git@github.com:golang/go.git $GOROOT_1_4
 
-# install go 1.4
-cd $GOPATH_1_4/src
-./make.bash
+  printf "\ninstall go1.4\n"
+  cd $GOROOT_1_4/src
+  ./make.bash
+fi
 
 # install go latest
-cd $GO_SRC_DIR_PATH/src
-./all.bash
-
-# create peco dir symlink 
-if [[ -L $LOCAL_DIR_PATH/go ]]; then
-  printf "\n$LOCAL_DIR_PATH/go symlink already exists\n"
-else
-  printf "\ncreate symlink $LOCAL_DIR_PATH/go\n"
-  ln -is $GO_SRC_DIR_PATH $LOCAL_DIR_PATH/go
+if [[ -d $GOROOT ]]; then
+  printf "\nremove $GOROOT\n"
+  rm -rf $GOROOT
 fi
+git clone -b $INSTALL_TARGET_BRANCH git@github.com:golang/go.git $GOROOT
+
+cd $GOROOT/src
+GOROOT_BOOTSTRAP=$GOROOT_1_4 ./all.bash
 
 printf "\ncomplete\n"
 exit 0

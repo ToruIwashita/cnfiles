@@ -53,9 +53,8 @@ RUBY_PATH=${1:-$(which ruby)}
 # go
 GOROOT=$LOCAL_DIR_PATH/go
 GOPATH=~/.go
-
 # go1.4
-GOPATH_1_4=~/go1.4
+GOROOT_1_4=$LOCAL_DIR_PATH/go1.4
 
 # go path
 HUB_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH/src/github.com/github
