@@ -6,6 +6,9 @@ set -e
 ruby -v
 
 echo
+which gem
+
+echo
 printf "install gems using rbenv exec"
 
 echo
