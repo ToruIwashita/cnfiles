@@ -3,19 +3,22 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-python -v
+python --version
 
 echo
-printf "install gems using rbenv exec"
+which pip
 
 echo
-rbenv exec gem install bundler
+printf "install pyps using pyenv exec"
 
 echo
-printf "update gems using rbenv exec"
+pyenv exec pip install awscli
 
 echo
-rbenv exec gem update awesome_print
+printf "update pyps using pyenv exec"
+
+echo
+pyenv exec pip install -U awscli
 
 echo
 pyenv rehash
