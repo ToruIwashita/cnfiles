@@ -3,11 +3,6 @@ stty stop undef
 ## r無効
 disable r
 
-## コマンド履歴
-HISTFILE=~/.zsh_history  # ヒストリファイル
-HISTSIZE=100000          # メモリに展開する履歴数
-SAVEHIST=100000          # 保存する履歴数
-
 ## オプション設定
 setopt nobeep               # ビープ音なし
 setopt notify               # バックグラウンドジョブの状態を即時通知

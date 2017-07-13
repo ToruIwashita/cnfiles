@@ -1,6 +1,9 @@
 ## 環境変数設定
 export LANG=ja_JP.UTF-8                   # utf-8
 export TERM=screen-256color               # 端末の種類(tmuxのサポート対象に設定)
+export HISTFILE=~/.zsh_history            # 履歴ファイル
+export HISTSIZE=100000                    # メモリに展開する履歴数
+export SAVEHIST=100000                    # 保存する履歴数
 export EDITOR=vim                         # デフォルトで使用されるエディタ
 export WORDCHARS='*?_-[]~=&;!#$%^(){}<>'  # 区切り文字
 export PROMPT_VIM_MODE_COLOR='blue'       # PROMPTのVIMモード色
@@ -13,6 +16,7 @@ export TMUX_DIR_PATH=~/.tmux
 export CACHE_DIR_PATH=~/.cache
 export LINT_DIR_PATH=~/.lint
 export LOCAL_DIR_PATH=~/local
+export SRC_DIR_PATH=~/src
 export MARKDOWN_TEXTS_DIR_PATH=~/markdown_texts
 export MARKDOWN_TEXTS_MODELING_SESSION_FILE_PATH=$MARKDOWN_TEXTS_DIR_PATH/.modeling.session.vim
 export MEMOLIST_DIR_PATH=~/.memolist

@@ -1,11 +1,11 @@
 # rbenv設定
 if [[ -d ~/.rbenv ]]; then
-  eval "$(rbenv init - zsh 2>/dev/null)"
+  eval "$(rbenv init -)"
 fi
 
 # pyenv設定
 if [[ -d ~/.pyenv ]]; then
-  eval "$(pyenv init - zsh 2>/dev/null)"
+  eval "$(pyenv init -)"
 fi
 
 ## alias
@@ -15,31 +15,25 @@ alias cdv="cd $VIM_DIR_PATH"
 alias cdg='cd ~/.go'
 alias cdl="cd $LOCAL_DIR_PATH"
 alias cds='cd ~/src'
-alias cdsg='cd ~/src/go'
 alias cdw='cd ~/works'
 alias cdc='cd ~/.cnfiles'
 alias cdm='cd ~/markdown_texts'
 alias cdml='cd ~/.memolist'
-# rbenv
-alias bundle='rbenv exec bundle'
-alias pry='rbenv exec pry'
-alias rails='rbenv exec rails'
-alias rspec='rbenv exec rspec'
 # ctags
 alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,ruby'
 # rails
 alias brails-s='RAILS_ENV=development bundle exec rails s -b 0.0.0.0 --port 3000'
 alias brails-c='RAILS_ENV=development bundle exec rails c'
 alias brails-r='RAILS_ENV=development bundle exec rails r'
-# rails routing
+# railsに付随するツール
+alias bspork='bundle exec spork'
+## rails routing
 # alias output-routing='zsh -c "cd ~/works/${project}/; bundle exec rake routes >! ~/works/tmp/routing.txt"'
 # alias archive-routing='[[ -f ~/works/tmp/routing.txt ]] && cp ~/works/tmp/{routing.txt,routing.prev.txt}'
 # alias vrouting='vim ~/works/tmp/routing.txt'
 # alias drouting='diff ~/works/tmp/routing.txt ~/works/tmp/routing.prev.txt'
 # alias output-vrouting='output-routing && vrouting'
 # alias output-drouting='output-routing && drouting'
-# railsに付随するツール
-alias bspork='bundle exec spork'
 
 ## for Mac(GNU系のコマンドはシンボリックリンクを貼り直すことを推奨するので以下コメントアウト)
 ## bindkey
