@@ -12,13 +12,13 @@ fi
 # cd
 alias cdz="cd $ZSH_DIR_PATH"
 alias cdv="cd $VIM_DIR_PATH"
-alias cdg='cd ~/.go'
+alias cdg="cd $GOPATH"
 alias cdl="cd $LOCAL_DIR_PATH"
-alias cds='cd ~/src'
+alias cds="cd $SRC_DIR_PATH"
 alias cdw='cd ~/works'
-alias cdc='cd ~/.cnfiles'
-alias cdm='cd ~/markdown_texts'
-alias cdml='cd ~/.memolist'
+alias cdc="cd $CNFILES_DIR_PATH"
+alias cdm="cd $MARKDOWN_TEXTS_DIR_PATH"
+alias cdml="cd $MEMOLIST_DIR_PATH"
 # ctags
 alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,ruby'
 # rails
