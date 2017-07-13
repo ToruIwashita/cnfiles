@@ -197,7 +197,7 @@ else
   ln -is $BASE_DIR_PATH/aprc ~/.aprc
 fi
 
-## create initiale file
+## create initial file
 # memolist tmp file
 if [[ -f $MEMOLIST_TMP_FILE ]]; then
   printf "\e[32m$MEMOLIST_TMP_FILE file already exists\e[0m\n"
