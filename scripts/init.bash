@@ -30,6 +30,22 @@ else
   mkdir $LOCAL_BIN_DIR_PATH
 fi
 
+# works dir
+if [[ -d $WORKS_DIR_PATH ]]; then
+  printf "\e[32m$WORKS_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $WORKS_DIR_PATH\e[0m\n"
+  mkdir $WORKS_DIR_PATH
+fi
+
+# tmp dir
+if [[ -d $TMP_DIR_PATH ]]; then
+  printf "\e[32m$TMP_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $TMP_DIR_PATH\e[0m\n"
+  mkdir $TMP_DIR_PATH
+fi
+
 # zsh.d/local dir
 if [[ -d $ZSH_CONFIG_LOCAL_DIR_DEST_PATH ]]; then
   printf "\e[32m$ZSH_CONFIG_LOCAL_DIR_DEST_PATH dir already exists\e[0m\n"

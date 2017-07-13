@@ -15,6 +15,10 @@ SUBMODULES_DIR_PATH=$BASE_DIR_PATH/modules
 # cache
 CACHE_DIR_PATH=~/.cache
 
+# works
+WORKS_DIR_PATH=~/works
+TMP_DIR_PATH=$WORKS_DIR_PATH/tmp
+
 # memolist
 MEMOLIST_DIR_PATH=~/.memolist
 
