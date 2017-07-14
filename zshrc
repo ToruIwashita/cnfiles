@@ -66,14 +66,14 @@ zplug load --verbose
 ## 各種設定・オリジナル関数読込
 # lib読込
 for dir_path in ${zsh_lib_dir_paths[@]}; do
-  for file_path in $dir_path/*.zsh(.); do
+  for file_path in $dir_path/*(N-.); do
     source $file_path
   done
 done
 
 # 関数読込
 for dir_path in ${zsh_sub_dir_paths[@]}; do
-  for file_path in ${dir_path}/*.zsh(.); do
+  for file_path in ${dir_path}/*(N-.); do
     source $file_path
   done
 done
