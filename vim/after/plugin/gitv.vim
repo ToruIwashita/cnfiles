@@ -24,9 +24,6 @@ function! s:toggle_git_folding()
 endfunction
 
 fun! s:gitv_settiongs()
-  " デフォルトの<buffer> <C-l>マッピングを無効化
-  unmap <buffer> <C-L>
-
   " foldingをトグル
   nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
 
