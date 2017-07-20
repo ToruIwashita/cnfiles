@@ -36,7 +36,7 @@ setopt numericglobsort      # ファイル名を数値としてソート
 setopt nonomatch            # グロブパターンにマッチしない場合は標準エラー出力する
 setopt multios              # 複数リダイレクト記述有効
 setopt noclobber            # リダイレクト時既に存在するファイル上書きエラー
-setopt noflowcontrol        # フローコントロール無効
+setopt noflowcontrol        # フローコントロール無効(C-s,C-qのフローコントロールがなくなるので,^sのプレフィックスが使える)
 
 ## bindkey
 # vimモードキーマップ
