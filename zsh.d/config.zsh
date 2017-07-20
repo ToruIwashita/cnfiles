@@ -90,7 +90,6 @@ bindkey -v '^sU' immediate-zplug-update                     # Ctrl+s,Uでzplug u
 bindkey -v '^]' vi-forward-word                             # Ctrl+]で次の単語の先頭に移動
 bindkey -v '^_' cdup                                        # Ctrl+_でcdup
 bindkey -v '^?' backward-delete-char                        # BSでbackward-delete-char(menuselectのinteractive-modeでbackword)
-bindkey -v '^[[Z' reverse-menu-complete                     # Shift+tabで逆タブ補完
 # 補完メニュー選択モードキーマップ
 bindkey -M menuselect '^g' .send-break                         # Ctrl+gでsend-break2回
 bindkey -M menuselect '^i' forward-char                        # tabかCtrl+iで補完候補1つ右へ
