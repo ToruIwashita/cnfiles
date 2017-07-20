@@ -13,7 +13,12 @@ fun! s:delete_current_file()
   call delete(expand('%')) | bdelete!
 endf
 
+fun! s:buffer_delete_current_file()
+  bdelete!
+endf
+
 command! DeleteCurrentFile call s:delete_current_file()
+command! BufferDeleteCurrentFile call s:buffer_delete_current_file()
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
