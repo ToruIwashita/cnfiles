@@ -24,6 +24,10 @@ function! s:toggle_git_folding()
 endfunction
 
 fun! s:gitv_settiongs()
+  " デフォルトの<buffer> <C-l>マッピングを無効化
+  unmap <buffer> <C-L>
+
+  " foldingをトグル
   nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
 
   " gitvはfugitiveに依存しているのでここでfugitiveのコマンドを使用することを許容する
@@ -32,6 +36,7 @@ fun! s:gitv_settiongs()
   nnoremap <buffer> <C-g>R :<C-u>Git revert <C-r>=<SID>gitv_get_current_sha()<CR><CR>
   nnoremap <buffer> <C-s><C-g> :<C-u>Gbrowse <C-r>=<SID>gitv_get_current_sha()<CR><CR>
 
+  " リロード
   nmap <buffer> <leader>r u
 endf
 
