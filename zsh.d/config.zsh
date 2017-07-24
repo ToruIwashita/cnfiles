@@ -130,6 +130,8 @@ alias gf='git fetch --prune'
 alias gp='git prune'
 alias gl='git log'
 alias gs='git status'
+alias gss='git stash save'
+alias gsp='git stash pop'
 # ping
 alias ping-one='ping -v -c 1'
 # other
