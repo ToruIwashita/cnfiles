@@ -84,9 +84,9 @@ bindkey -v '^s^u' immediate-git-status                      # Ctrl+s,Ctrl+uでgi
 bindkey -v '^s^s' vi-find-next-char                         # Ctrl+s,Ctrl+sでviのfind-char
 bindkey -v '^s^]' vi-backward-word                          # Ctrl+s,Ctrl+]で前の単語の先頭に移動
 bindkey -v '^s^@' kill-line                                 # Ctrl+s,Ctrl+@でカーソル行以降削除
-bindkey -v '^sC' immediate-zplug-clean                      # Ctrl+s,Cでzplug clean
-bindkey -v '^sI' immediate-zplug-install                    # Ctrl+s,Iでzplug install
-bindkey -v '^sU' immediate-zplug-update                     # Ctrl+s,Uでzplug update
+bindkey -v '^sC' immediate-antigen-clean                    # Ctrl+s,Cでantigen cleanup
+bindkey -v '^sI' immediate-antigen-install                  # Ctrl+s,Iでantigen appy
+bindkey -v '^sU' immediate-antigen-update                   # Ctrl+s,Uでantigen update
 bindkey -v '^]' vi-forward-word                             # Ctrl+]で次の単語の先頭に移動
 bindkey -v '^_' cdup                                        # Ctrl+_でcdup
 bindkey -v '^?' backward-delete-char                        # BSでbackward-delete-char(menuselectのinteractive-modeでbackword)
