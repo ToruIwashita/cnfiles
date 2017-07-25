@@ -48,19 +48,8 @@ autoload -Uz edit-command-line         # コマンドライン編集
 zmodload -i zsh/complist               # 補完メニュー選択モードのキーマップ
 zmodload -i zsh/terminfo               # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
 
-## antigen
-# antigenの存在をチェック
-if [[ ! -d $ADOTDIR ]]; then
-  git clone git@github.com:zsh-users/antigen.git $ADOTDIR
-fi
-
-source $ADOTDIR/antigen.zsh
-
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-history-substring-search
-
-# プラグインを適用
-antigen apply
+# 重複パスを除去
+typeset -U path fpath ld_library_path include precmd_functions chpwd_functions
 
 ## 各種設定・オリジナル関数読込
 # lib読込
@@ -81,5 +70,16 @@ done
 [[ -f $zsh_dir_path/config.zsh ]] && source $zsh_dir_path/config.zsh
 [[ -f $zsh_dir_path/config.local.zsh ]] && source $zsh_dir_path/config.local.zsh
 
-# 重複パスを除去
-typeset -U path fpath ld_library_path include precmd_functions chpwd_functions
+# antigen (最後に読み込まないとsource $ADOTDIR/antigen.zshの部分で補完がバグる)
+# antigenの存在をチェック
+if [[ ! -d $ADOTDIR ]]; then
+  git clone git@github.com:zsh-users/antigen.git $ADOTDIR
+fi
+
+source $ADOTDIR/antigen.zsh
+
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-history-substring-search
+
+# プラグインを適用
+antigen apply
