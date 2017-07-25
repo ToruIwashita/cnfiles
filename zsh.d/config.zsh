@@ -135,7 +135,7 @@ alias gsp='git stash pop'
 # ping
 alias ping-one='ping -v -c 1'
 # other
-alias ez='exec zsh -l'
+alias ez="exec $SHELL -l"
 alias cp='cp -ip'
 alias mv='mv -i'
 alias rm='rm -i'
