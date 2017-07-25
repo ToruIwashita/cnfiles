@@ -48,20 +48,19 @@ autoload -Uz edit-command-line         # コマンドライン編集
 zmodload -i zsh/complist               # 補完メニュー選択モードのキーマップ
 zmodload -i zsh/terminfo               # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
 
-## zplug
-# zplugの存在をチェック
-if [[ ! -d $ZPLUG_HOME ]]; then
-  git clone git@github.com:zplug/zplug.git $ZPLUG_HOME
+## antigen
+# antigenの存在をチェック
+if [[ ! -d $ADOTDIR ]]; then
+  git clone git@github.com:zsh-users/antigen.git $ADOTDIR
 fi
 
-source $ZPLUG_HOME/init.zsh
+source $ADOTDIR/antigen.zsh
 
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-zplug "zsh-users/zsh-history-substring-search"
-zplug "zsh-users/zsh-completions"
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-history-substring-search
 
-# プラグインをロード
-zplug load --verbose
+# プラグインを適用
+antigen apply
 
 ## 各種設定・オリジナル関数読込
 # lib読込
