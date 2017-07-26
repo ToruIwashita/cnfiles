@@ -33,6 +33,10 @@ gab() {
   __ga $*
 }
 
+gad() {
+  __ga $*
+}
+
 greset-latest() {
   local self_cmd help usage answer
 

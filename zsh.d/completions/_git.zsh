@@ -15,6 +15,10 @@ __git-modified-files() {
   compadd $(__git-modified-list)
 }
 
+__git-deleted-files() {
+  compadd $(__git-deleted-list)
+}
+
 __git-untracked-files() {
   compadd $(__git-untracked-list)
 }
@@ -41,6 +45,10 @@ _gac() {
 
 _gab() {
   _arguments '*: :__git-both-modified-files'
+}
+
+_gad() {
+  _arguments '*: :__git-deleted-files'
 }
 
 _grh() {
@@ -99,6 +107,7 @@ compdef _gam gam
 compdef _gau gau
 compdef _gac gac
 compdef _gab gab
+compdef _gad gad
 compdef _grh grh
 compdef _gc gc
 compdef _gd gd

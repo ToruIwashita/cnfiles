@@ -65,6 +65,13 @@ __git-both-modified-list() {
   print ${(R)${(M)${(@f)"$(__git-status)"}:#UU*}#UU[[:space:]]}
 }
 
+__git-deleted-list() {
+  __git-inside-work-tree || return
+  local -a git_status_res
+
+  print ${(R)${(M)${(@f)"$(__git-status)"}:#?D*}#?D[[:space:]]}
+}
+
 __git-inside-work-tree() {
   [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true ]]
 }
