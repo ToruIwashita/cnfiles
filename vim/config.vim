@@ -92,8 +92,8 @@ noremap <leader>f :<C-u>q<CR>
 noremap <leader>w :<C-u>wq<CR>
 " <ESC>
 noremap <C-j> <ESC>
-" ファイルリロード
-noremap <leader>r :<C-u>e!<CR>
+" ファイル再読込
+noremap <leader>r :<C-u>checktime<CR>
 " カーソル行が画面の上端に来るようにスクロール(対の動きをする<C-b>は無効化)
 noremap <C-f> zt
 noremap <C-b> <NOP>
