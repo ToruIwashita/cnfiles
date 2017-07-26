@@ -143,21 +143,21 @@ alias less='less -R'
 alias -g TT=">! $MEMOLIST_TMP_FILE_PATH"
 
 ## functions
-# _precmd_vcs_info
-_precmd_vcs_info() {
+# _precmd-vcs-info
+_precmd-vcs-info() {
   vcs_info
   PROMPT_VIM_MODE_COLOR='blue'
 }
-# _chpwd_ls
-_chpwd_ls() {
+# _chpwd-ls
+_chpwd-ls() {
   [[ $dirstack[1]:h != $PWD ]] && ls
 }
 
 ## auto-execution of functions
 # precmd_functions設定
-precmd_functions+='_precmd_vcs_info'
+precmd_functions+='_precmd-vcs-info'
 # chpwd_functions設定
-chpwd_functions=(chpwd_recent_dirs _chpwd_ls)
+chpwd_functions=(chpwd_recent_dirs _chpwd-ls)
 
 ## widgets
 # PROMPT_VIM_MODE_COLOR選択widgets
