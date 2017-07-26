@@ -144,20 +144,20 @@ alias -g TT=">! $MEMOLIST_TMP_FILE_PATH"
 
 ## functions
 # _precmd-vcs-info
-_precmd-vcs-info() {
+__precmd-vcs-info() {
   vcs_info
   PROMPT_VIM_MODE_COLOR='blue'
 }
 # _chpwd-ls
-_chpwd-ls() {
+__chpwd-ls() {
   [[ $dirstack[1]:h != $PWD ]] && ls
 }
 
 ## auto-execution of functions
 # precmd_functions設定
-precmd_functions+='_precmd-vcs-info'
+precmd_functions+='__precmd-vcs-info'
 # chpwd_functions設定
-chpwd_functions=(chpwd_recent_dirs _chpwd-ls)
+chpwd_functions=(chpwd_recent_dirs __chpwd-ls)
 
 ## widgets
 # PROMPT_VIM_MODE_COLOR選択widgets
