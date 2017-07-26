@@ -1,7 +1,11 @@
 ## antigen関連
-ant-install() {
+ez() {
   antigen reset
   exec $SHELL -l
+}
+
+ant-install() {
+  ez
 }
 
 ant-update() {
@@ -13,5 +17,5 @@ ant-update() {
 
 ant-clean() {
   antigen cleanup --force
-  ant-install
+  ez
 }
