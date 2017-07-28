@@ -7,6 +7,7 @@ set cpo&vim
 
 let g:gsw_autoload_session = 'confirm'
 let g:gsw_save_session_confirm = 'no'
+let g:gsw_load_session_confirm = 'yes'
 let g:gsw_switch_prev_confirm = 'yes'
 
 " <C-s>プレフィックス
