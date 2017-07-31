@@ -1,6 +1,6 @@
 ## stty画面出力停止無効
 stty stop undef
-## r無効
+## built-inコマンドのrを無効化
 disable r
 
 ## オプション設定
