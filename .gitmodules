@@ -55,3 +55,6 @@
 [submodule "modules/pyenv"]
 	path = modules/pyenv
 	url = git@github.com:pyenv/pyenv.git
+[submodule "modules/scalaenv"]
+	path = modules/scalaenv
+	url = git@github.com:scalaenv/scalaenv.git
