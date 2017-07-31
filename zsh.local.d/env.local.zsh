@@ -8,13 +8,14 @@ readonly PGPORT=
 readonly PGUSER=
 readonly PGPASSWORD=
 
+# programming language environment
 export RBENV_ROOT=~/.rbenv
 export PYENV_ROOT=~/.pyenv
-# rbenvを使う場合は不要
-# export GEM_HOME=~/.gem
+export SCALAENV_ROOT=~/.scalaenv
 export GOROOT=$LOCAL_DIR_PATH/go
 export GOPATH=~/.go
 export NPM_HOME=~/.npm
+# DB
 export MYSQL_DATABASE
 export PGDATABASE
 export PGHOST
@@ -30,8 +31,7 @@ path=(
   ~/local/bin
   $RBENV_ROOT/bin
   $PYENV_ROOT/bin
-  # rbenvを使う場合は不要
-  # $GEM_HOME/bin
+  $SCALAENV_ROOT/bin
   $GOROOT/bin
   $GOPATH/bin
   $NPM_HOME/bin

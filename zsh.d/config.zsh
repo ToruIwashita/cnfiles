@@ -101,6 +101,16 @@ bindkey -M menuselect '^u' send-break                          # Ctrl+uでsend-b
 bindkey -M menuselect '^]' accept-and-hold                     # Ctrl+]で候補をバッファに入れる
 
 ## alias
+# cd
+alias cdz="cd $ZSH_DIR_PATH"
+alias cdv="cd $VIM_DIR_PATH"
+alias cdl="cd $LOCAL_DIR_PATH"
+alias cds="cd $SRC_DIR_PATH"
+alias cdw="cd $WORKS_DIR_PATH"
+alias cdt="cd $TMP_DIR_PATH"
+alias cdc="cd $CNFILES_DIR_PATH"
+alias cdm="cd $MARKDOWN_TEXTS_DIR_PATH"
+alias cdml="cd $MEMOLIST_DIR_PATH"
 # zmv
 alias zmv='noglob zmv -W'
 # vim
@@ -138,6 +148,8 @@ alias rm='rm -i'
 alias c='cat'
 alias grep='grep --color'
 alias less='less -R'
+# ctags
+alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,ruby'
 # memolist
 alias -g TT=">! $MEMOLIST_TMP_FILE_PATH"
 

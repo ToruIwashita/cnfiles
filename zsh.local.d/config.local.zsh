@@ -8,20 +8,12 @@ if [[ -d ~/.pyenv ]]; then
   eval "$(pyenv init -)"
 fi
 
+# scalaenv設定
+if [[ -d ~/.scalaenv ]]; then
+  eval "$(scalaenv init -)"
+fi
+
 ## alias
-# cd
-alias cdz="cd $ZSH_DIR_PATH"
-alias cdv="cd $VIM_DIR_PATH"
-alias cdg="cd $GOPATH"
-alias cdl="cd $LOCAL_DIR_PATH"
-alias cds="cd $SRC_DIR_PATH"
-alias cdw="cd $WORKS_DIR_PATH"
-alias cdt="cd $TMP_DIR_PATH"
-alias cdc="cd $CNFILES_DIR_PATH"
-alias cdm="cd $MARKDOWN_TEXTS_DIR_PATH"
-alias cdml="cd $MEMOLIST_DIR_PATH"
-# ctags
-alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,ruby'
 # rails
 alias brails-s='RAILS_ENV=development bundle exec rails s -b 0.0.0.0 --port 3000'
 alias brails-c='RAILS_ENV=development bundle exec rails c'
