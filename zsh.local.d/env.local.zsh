@@ -29,7 +29,7 @@ export PGPASSWORD
 
 ## path
 path=(
-  ~/local/bin
+  $LOCAL_DIR_PATH/bin
   $RBENV_ROOT/bin
   $PYENV_ROOT/bin
   $SCALAENV_ROOT/bin
@@ -44,9 +44,13 @@ path=(
 
 ## ld_library_path
 ld_library_path=(
-  ~/local/lib64
-  ~/local/lib
+  $LOCAL_DIR_PATH/lib
   # gitインストール時にbrewでインストールしたopensslを使用する
   # /usr/local/opt/openssl/lib
   $ld_library_path
+)
+
+## fpath
+fpath=(
+  $fpath
 )
