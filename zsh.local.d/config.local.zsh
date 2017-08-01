@@ -13,6 +13,11 @@ if [[ -d ~/.scalaenv ]]; then
   eval "$(scalaenv init -)"
 fi
 
+# sbtenv設定
+if [[ -d ~/.sbtenv ]]; then
+  eval "$(sbtenv init -)"
+fi
+
 ## alias
 # rails
 alias brails-s='RAILS_ENV=development bundle exec rails s -b 0.0.0.0 --port 3000'
