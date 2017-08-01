@@ -14,6 +14,8 @@ export RBENV_ROOT=~/.rbenv
 export PYENV_ROOT=~/.pyenv
 export SCALAENV_ROOT=~/.scalaenv
 export SBTENV_ROOT=~/.sbtenv
+# programming language environment variable
+export SBT_HOME=~/.sbt
 export GOROOT=$LOCAL_DIR_PATH/go
 export GOPATH=~/.go
 export NPM_HOME=~/.npm
