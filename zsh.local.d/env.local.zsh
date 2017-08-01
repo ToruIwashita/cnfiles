@@ -13,6 +13,7 @@ readonly PGPASSWORD=
 export RBENV_ROOT=~/.rbenv
 export PYENV_ROOT=~/.pyenv
 export SCALAENV_ROOT=~/.scalaenv
+export SBTENV_ROOT=~/.sbtenv
 export GOROOT=$LOCAL_DIR_PATH/go
 export GOPATH=~/.go
 export NPM_HOME=~/.npm
@@ -33,6 +34,7 @@ path=(
   $RBENV_ROOT/bin
   $PYENV_ROOT/bin
   $SCALAENV_ROOT/bin
+  $SBTENV_ROOT/bin
   $GOROOT/bin
   $GOPATH/bin
   $NPM_HOME/bin

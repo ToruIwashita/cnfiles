@@ -1,20 +1,20 @@
 # rbenv設定
-if [[ -d ~/.rbenv ]]; then
+if [[ -d $RBENV_ROOT ]]; then
   eval "$(rbenv init -)"
 fi
 
 # pyenv設定
-if [[ -d ~/.pyenv ]]; then
+if [[ -d $PYENV_ROOT ]]; then
   eval "$(pyenv init -)"
 fi
 
 # scalaenv設定
-if [[ -d ~/.scalaenv ]]; then
+if [[ -d $SCALAENV_ROOT ]]; then
   eval "$(scalaenv init -)"
 fi
 
 # sbtenv設定
-if [[ -d ~/.sbtenv ]]; then
+if [[ -d $SBTENV_ROOT ]]; then
   eval "$(sbtenv init -)"
 fi
 
