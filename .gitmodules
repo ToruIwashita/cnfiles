@@ -58,3 +58,6 @@
 [submodule "modules/scalaenv"]
 	path = modules/scalaenv
 	url = git@github.com:scalaenv/scalaenv.git
+[submodule "modules/sbtenv"]
+	path = modules/sbtenv
+	url = git@github.com:sbtenv/sbtenv.git
