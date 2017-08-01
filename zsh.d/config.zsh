@@ -52,9 +52,7 @@ bindkey -v '^j' accept-line                             # Ctrl+jでaccept-line
 bindkey -v '^k' menu-complete-files                     # Ctrl+kでファイル補完
 bindkey -v '^l' start-editor                            # Ctrl+lでstart-editor
 bindkey -v '^m' accept-line                             # Ctrl+mでaccept-line
-bindkey -v '^n' history-substring-search-down           # Ctrl+nで部分文字列検索,下
 bindkey -v '^o' cd-leaf-dir                             # Ctrl+s,Ctrl+oでリーフディレクトリ移動
-bindkey -v '^p' history-substring-search-up             # Ctrl+pで部分文字列検索,上
 bindkey -v '^q' self-insert                             # Ctrl+qでself-insert
 bindkey -v '^r' history-incremental-search-backward     # Ctrl+rでインクリメンタルサーチ
 bindkey -v '^s' self-insert                             # Ctrl+sでself-insert,Prefixとして使用
@@ -209,5 +207,3 @@ RPROMPT='[%D{%T}|%n]'
 ## command-line
 # 色定義
 zle_highlight=(region:standout special:standout suffix:bold isearch:bg=magenta,fg=white)
-HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white'
-HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white'

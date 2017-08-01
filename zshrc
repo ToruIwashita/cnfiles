@@ -66,7 +66,7 @@ for dir_path in ${zsh_sub_dir_paths[@]}; do
   done
 done
 
-# 設定読込
+## 設定読込
 [[ -f $zsh_dir_path/config.zsh ]] && source $zsh_dir_path/config.zsh
 [[ -f $zsh_dir_path/config.local.zsh ]] && source $zsh_dir_path/config.local.zsh
 
@@ -83,3 +83,6 @@ antigen bundle zsh-users/zsh-history-substring-search
 
 # プラグインを適用
 antigen apply
+
+## plugin設定読込
+[[ -f $zsh_dir_path/config.plugin.zsh ]] && source $zsh_dir_path/config.plugin.zsh
