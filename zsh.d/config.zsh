@@ -50,7 +50,7 @@ bindkey -v '^h' backward-delete-char                    # Ctrl+hでbackward-dele
 bindkey -v '^i' expand-or-complete                      # Ctrl+iで通常補完
 bindkey -v '^j' accept-line                             # Ctrl+jでaccept-line
 bindkey -v '^k' menu-complete-files                     # Ctrl+kでファイル補完
-bindkey -v '^l' start-editor                            # Ctrl+lでstart-editor
+bindkey -v '^l' edge-start-editor                       # Ctrl+lでedge-start-editor
 bindkey -v '^m' accept-line                             # Ctrl+mでaccept-line
 bindkey -v '^o' cd-leaf-dir                             # Ctrl+s,Ctrl+oでリーフディレクトリ移動
 bindkey -v '^q' self-insert                             # Ctrl+qでself-insert
@@ -64,7 +64,7 @@ bindkey -v '^sg' immediate-hub-browse                   # Ctrl+s,hでhub browse
 bindkey -v '^sh' immediate-git-log-search               # Ctrl+s,hでgit log検索
 bindkey -v '^sj' vi-join                                # Ctrl+s,jでviのjoin
 bindkey -v '^sk' peco-cd-recent-dir                     # Ctrl+s,kで最近移動したディレクトリを絞り込んで移動
-bindkey -v '^sl' edit-command-line                      # Ctrl+s,lでコマンドラインエディタ編集
+bindkey -v '^sl' start-editor                           # Ctrl+s,lでstart-editor
 bindkey -v '^sn' immediate-git-fetch                    # Ctrl+s,nでgit fetch
 bindkey -v '^so' peco-cd-dir                            # Ctrl+s,oでディレクトリを絞り込んで移動
 bindkey -v '^sp' immediate-git-pull                     # Ctrl+s,pでgit pull
