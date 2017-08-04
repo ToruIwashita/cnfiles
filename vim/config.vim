@@ -162,8 +162,6 @@ noremap <C-s><C-]> :<C-u>tnext<CR>zz
 " 前のタグへ移動
 noremap <C-s>[ :<C-u>tprevious<CR>zz
 noremap <C-s><C-[> :<C-u>tprevious<CR>zz
-" preview,quickfixウィンドウクローズ
-noremap <silent> <C-w><C-w> :<C-u>cclose<CR>:lclose<CR>:pclose<CR>
 "" マーク関連
 " 指定マークへ移動
 noremap <leader>e '

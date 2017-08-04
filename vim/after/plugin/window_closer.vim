@@ -10,5 +10,7 @@ noremap <silent> <leader>h :<C-u>CloseLeftWin<CR>
 noremap <silent> <leader><C-n> :<C-u>CloseDownWin<CR>
 noremap <silent> <leader><C-p> :<C-u>CloseUpWin<CR>
 
+noremap <silent> <C-w><C-w> :<C-u>CloseMisWin<CR>
+
 let &cpo = s:cpo_save
 unlet s:cpo_save
