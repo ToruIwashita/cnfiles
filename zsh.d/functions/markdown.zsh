@@ -44,7 +44,7 @@ text=${text//
 
   result=$(curl -X POST --silent https://api.github.com/markdown -d "{\"text\": \"$text\",\"mode\": \"gfm\",\"context\": \"\"}")
 
-  cat <<EOS
+  cat <<EOF
 <!DOCTYPE HTML>
 <html lang="en-US">
 <head>
@@ -56,5 +56,5 @@ text=${text//
   <div id="wrapper">$result</div>
 </body>
 </html>
-EOS
+EOF
 }
