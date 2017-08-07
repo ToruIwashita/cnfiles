@@ -45,8 +45,8 @@ autoload -Uz chpwd_recent_filehandler  # 最近使用したdirを保持するfil
 autoload -Uz cdr                       # 最近使用したディレクトリを補完
 autoload -Uz add-zsh-hook              # フック関数登録
 autoload -Uz edit-command-line         # コマンドライン編集
-zmodload -i zsh/complist               # 補完メニュー選択モードのキーマップ
-zmodload -i zsh/terminfo               # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
+zmodload zsh/complist                  # 補完メニュー選択モードのキーマップ
+zmodload zsh/terminfo                  # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
 
 # 重複パスを除去
 typeset -U path fpath ld_library_path include precmd_functions chpwd_functions
