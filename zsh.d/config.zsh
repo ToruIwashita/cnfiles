@@ -64,7 +64,6 @@ bindkey -v '^sg' immediate-hub-browse                   # Ctrl+s,hでhub browse
 bindkey -v '^sh' immediate-git-log-search               # Ctrl+s,hでgit log検索
 bindkey -v '^sj' vi-join                                # Ctrl+s,jでviのjoin
 bindkey -v '^sk' peco-cd-recent-dir                     # Ctrl+s,kで最近移動したディレクトリを絞り込んで移動
-bindkey -v '^sl' start-editor                           # Ctrl+s,lでstart-editor
 bindkey -v '^sn' immediate-git-fetch                    # Ctrl+s,nでgit fetch
 bindkey -v '^so' peco-cd-dir                            # Ctrl+s,oでディレクトリを絞り込んで移動
 bindkey -v '^sp' immediate-git-pull                     # Ctrl+s,pでgit pull
@@ -76,6 +75,7 @@ bindkey -v '^s^h' immediate-git-log-search-with-diff    # Ctrl+s,Ctrl+hでgit lo
 bindkey -v '^s^i' immediate-ls                          # Ctrl+s,Ctrl+iでls
 bindkey -v '^s^j' immediate-cat                         # Ctrl+s,Ctrl+jでBUFFERをcat
 bindkey -v '^s^k' menu-complete-recent-dirs             # Ctrl+s,Ctrl+kで最近移動したディレクトリへ移動
+bindkey -v '^s^l' start-editor                          # Ctrl+s,Ctrl+lでstart-editor
 bindkey -v '^s^o' cd-leaf-dir-and-insert-leaf-file      # Ctrl+s,Ctrl+oでバッファ残しリーフディレクトリ補完
 bindkey -v '^s^p' copy-prev-shell-word                  # Ctrl+s,Ctrl+pで1つ前の文字列をコピペ(空欄区切りで文字列判定)
 bindkey -v '^s^u' immediate-git-status                  # Ctrl+s,Ctrl+uでgit status
