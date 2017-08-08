@@ -64,6 +64,7 @@ bindkey -v '^sg' immediate-hub-browse                   # Ctrl+s,hでhub browse
 bindkey -v '^sh' immediate-git-log-search               # Ctrl+s,hでgit log検索
 bindkey -v '^sj' vi-join                                # Ctrl+s,jでviのjoin
 bindkey -v '^sk' peco-cd-recent-dir                     # Ctrl+s,kで最近移動したディレクトリを絞り込んで移動
+bindkey -v '^sl' edit-command-line                      # Ctrl+s,lでコマンドラインエディタ編集
 bindkey -v '^sn' immediate-git-fetch                    # Ctrl+s,nでgit fetch
 bindkey -v '^so' peco-cd-dir                            # Ctrl+s,oでディレクトリを絞り込んで移動
 bindkey -v '^sp' immediate-git-pull                     # Ctrl+s,pでgit pull
