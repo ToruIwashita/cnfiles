@@ -196,7 +196,7 @@ EOF`
     case "$1" in
       -c | --primary-condition)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         priority_condition=" $2"
@@ -204,7 +204,7 @@ EOF`
         ;;
       -g | --group-by)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         group_condition=" GROUP BY $2"
@@ -212,7 +212,7 @@ EOF`
         ;;
       -l | --limit)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         limit_condition=" LIMIT $2"
@@ -220,7 +220,7 @@ EOF`
         ;;
       -o | --order-by)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         order_condition=" ORDER BY $2"
@@ -228,7 +228,7 @@ EOF`
         ;;
       -s | --select)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         selected_field_list=" $2"
@@ -240,7 +240,7 @@ EOF`
         ;;
       -w | --where)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         where_condition=" WHERE $2"
@@ -256,7 +256,7 @@ EOF`
         break
         ;;
       -*)
-        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
         return 1
         ;;
       *)

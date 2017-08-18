@@ -27,7 +27,7 @@ EOF`
     case "$1" in
       -c | --changed-file)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         file_paths+=("$2")
@@ -39,7 +39,7 @@ EOF`
         ;;
       -m | --modified-file)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         file_paths+=("$2")
@@ -51,7 +51,7 @@ EOF`
         ;;
       -s | --seed)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         seed_option="--seed $2"
@@ -59,7 +59,7 @@ EOF`
         ;;
       -t | --tag)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         tag_option="--tag $2"
@@ -67,7 +67,7 @@ EOF`
         ;;
       -u | --untracked-file)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         file_paths+=("$2")
@@ -83,7 +83,7 @@ EOF`
         break
         ;;
       -*)
-        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
         return 1
         ;;
       *)

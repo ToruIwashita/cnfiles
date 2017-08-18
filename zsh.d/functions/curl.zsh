@@ -26,7 +26,7 @@ EOF`
         break
         ;;
       -*)
-        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
         return 1
         ;;
       *)

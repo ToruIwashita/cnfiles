@@ -64,7 +64,7 @@ EOF`
         return 1
         ;;
       -*)
-        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
         return 1
         ;;
       *)
@@ -131,7 +131,7 @@ EOF`
         return 1
         ;;
       -*)
-        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
         return 1
         ;;
       *)
@@ -183,7 +183,7 @@ EOF`
     case "$1" in
       -r | --remote-branch)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         remote_branch="$2"
@@ -199,7 +199,7 @@ EOF`
         break
         ;;
       -*)
-        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
         return 1
         ;;
       *)
@@ -278,7 +278,7 @@ EOF`
     case "$1" in
       -b | --rebase)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         base_branch="$2"
@@ -293,7 +293,7 @@ EOF`
         return 1
         ;;
       -*)
-        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
         return 1
         ;;
       *)
@@ -377,7 +377,7 @@ EOF`
         return 1
         ;;
       -*)
-        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
         return 1
         ;;
       *)
@@ -455,7 +455,7 @@ EOF`
     case "$1" in
       -b | --branch)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
-          print "$self_cmd: option requires an argument '$1'\n$help" 1>&2
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
           return 1
         fi
         branch_name="$2"
@@ -471,7 +471,7 @@ EOF`
         break
         ;;
       -*)
-        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
         return 1
         ;;
       *)
@@ -524,7 +524,7 @@ EOF`
         return 1
         ;;
       -*)
-        print "$self_cmd: unknown option '$1'\n$help" 1>&2
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
         return 1
         ;;
       *)
