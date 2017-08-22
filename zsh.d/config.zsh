@@ -147,8 +147,6 @@ alias rm='rm -i'
 alias c='cat'
 alias grep='grep --color'
 alias less='less -R'
-# ctags
-alias ct='ctags -f .tags --recurse --tag-relative --sort=yes --languages=sh,go,ruby'
 # memolist
 alias -g TT=">! $MEMOLIST_TMP_FILE_PATH"
 
