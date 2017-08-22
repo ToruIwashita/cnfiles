@@ -94,18 +94,7 @@ let g:wildfire_objects = [
 let g:auto_ctags = 0                                     " BufWritePostで自動実行しない
 let g:auto_ctags_bin_path = local_dir_path.'/bin/ctags'  " ctagsのbinパス
 let g:auto_ctags_tags_name = '.tags'                     " tagsファイル名
-" ctags実行オプション
-let g:auto_ctags_tags_args = '
-\ -R
-\ --input-encoding=utf-8
-\ --tag-relative=yes
-\ --sort=yes
-\
-\ --exclude=.git
-\ --exclude=log
-\
-\ --languages=ruby
-\ '
+let g:auto_ctags_tags_args = ''                          " ctags実行オプションは.ctagsで設定する
 
 "" yankround
 let g:yankround_dir = cache_dir_path.'/vim/yankround'
