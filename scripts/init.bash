@@ -165,6 +165,14 @@ else
   ln -isn $BASE_DIR_PATH/peco ~/.peco
 fi
 
+# ctags
+if [[ -L ~/.ctags ]]; then
+  printf "\e[32m$BASE_DIR_PATH/.ctags symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.ctags\e[0m\n"
+  ln -isn $BASE_DIR_PATH/ctags ~/.ctags
+fi
+
 # lint
 if [[ -L ~/.lint ]]; then
   printf "\e[32m$BASE_DIR_PATH/lint symlink already exists\e[0m\n"
