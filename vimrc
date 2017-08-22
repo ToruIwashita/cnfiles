@@ -48,6 +48,7 @@ Plug 'kana/vim-textobj-line'                           " lineのtext-object(vim-
 Plug 'kana/vim-textobj-indent'                         " カーゾル行と同じインデントのtext-object(vim-textobj-user依存)
 Plug 'kana/vim-niceblock'                              " ビジュアル選択時にI,Aで行頭,行末に文字挿入
 Plug 'vim-ruby/vim-ruby'                               " vim-ruby
+Plug 'derekwyatt/vim-scala'                            " vim-scala
 Plug 'ngmy/vim-rubocop'                                " vim-rubocop
 Plug 'kchmck/vim-coffee-script'                        " vim-coffee-script
 Plug 'ynkdir/vim-vimlparser'                           " vimlのパーサー(構文解析)
