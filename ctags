@@ -1,0 +1,9 @@
+-R
+--input-encoding=utf-8
+--tag-relative=yes
+--sort=yes
+
+--exclude=.git
+--exclude=log
+
+--languages=ruby
