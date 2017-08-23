@@ -56,6 +56,9 @@ ZSH_CONFIG_LOCAL_DIR_DEST_PATH=$BASE_DIR_PATH/zsh.d/local
 # ruby
 RUBY_PATH=${1:-$(which ruby)}
 
+# scala
+SBT_DIR=~/.sbt/$(sbtenv version | sed -e 's/^sbt-\([0-9]*.[0-9]*\).*/\1/g')
+
 # go
 GOROOT=$LOCAL_DIR_PATH/go
 GOPATH=~/.go
@@ -66,7 +69,7 @@ GOROOT_1_4=$LOCAL_DIR_PATH/go1.4
 HUB_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH/src/github.com/github
 PECO_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH/src/github.com/peco
 
-# etc
+# node
 NPM_HOME=~/.npm
 
 # memolist tmp file
