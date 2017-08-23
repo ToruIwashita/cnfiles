@@ -11,15 +11,16 @@ set background=dark
 let g:neocomplete#enable_at_startup = 1  " neocompleteを起動時に有効化
 
 "" syntastic
-let g:syntastic_auto_loc_list = 1                 " エラーがあったら自動でロケーションリストを開く
-let g:syntastic_error_symbol = '✗'                " syntax errorのマーカー
-let g:syntastic_warning_symbol = '⚠'              " syntax warningのマーカー
-let g:syntastic_style_error_symbol = '✗s'         " style errorのマーカー
-let g:syntastic_style_warning_symbol = '⚠s'       " style warningのマーカー
-let g:syntastic_javascript_checkers = ['jshint']  " jsをチェックするツール指定
-let g:syntastic_coffee_checkers = ['coffeelint']  " coffeeのチェックをするツール指定
-let g:syntastic_mode_map = { 'mode': 'passive' }
-let g:syntastic_coffee_coffeelint_args = '-f '.lint_dir_path.'/coffeelint.json'
+let g:syntastic_auto_loc_list = 1                                                " エラーがあったら自動でロケーションリストを開く
+let g:syntastic_error_symbol = '✗'                                               " syntax errorのマーカー
+let g:syntastic_warning_symbol = '⚠'                                             " syntax warningのマーカー
+let g:syntastic_style_error_symbol = '✗s'                                        " style errorのマーカー
+let g:syntastic_style_warning_symbol = '⚠s'                                      " style warningのマーカー
+let g:syntastic_mode_map = { 'mode': 'passive' }                                 " SyntasticCheckでsyntastic実行
+let g:syntastic_ruby_checkers = ['mri']                                          " rubyをチェックするツール指定
+let g:syntastic_javascript_checkers = ['jshint']                                 " jsをチェックするツール指定
+let g:syntastic_coffee_checkers = ['coffeelint']                                 " coffeeのチェックをするツール指定
+let g:syntastic_coffee_coffeelint_args = '-f '.lint_dir_path.'/coffeelint.json'  " coffeelintの引数
 
 "" ctrlp
 let g:ctrlp_map = '<C-k>'                            " Start CtrlP
