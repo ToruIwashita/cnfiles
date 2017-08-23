@@ -221,6 +221,14 @@ else
   ln -is $BASE_DIR_PATH/aprc ~/.aprc
 fi
 
+# sbtrc
+if [[ -L ~/.sbtrc ]]; then
+  printf "\e[32m$BASE_DIR_PATH/.sbtrc symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.sbtrc\e[0m\n"
+  ln -is $BASE_DIR_PATH/sbtrc ~/.sbtrc
+fi
+
 ## create initial file
 # memolist tmp file
 if [[ -f $MEMOLIST_TMP_FILE ]]; then
