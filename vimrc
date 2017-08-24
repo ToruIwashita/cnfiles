@@ -15,16 +15,16 @@ let g:memolist_tmp_file_path = $MEMOLIST_TMP_FILE_PATH
 
 " 起動時にvim-plugの存在チェック
 if has('vim_starting')
-  exec 'set runtimepath+='.expand(vim_dir_path.'/plugged/vim-plug')
-  if !isdirectory(expand(vim_dir_path.'/plugged/vim-plug'))
+  exec 'set runtimepath+='.expand(g:vim_dir_path.'/plugged/vim-plug')
+  if !isdirectory(expand(g:vim_dir_path.'/plugged/vim-plug'))
     echo 'install vim-plug'
-    call mkdir(expand(vim_dir_path.'/plugged/vim-plug'), 'p')
-    call system('git clone git@github.com:junegunn/vim-plug.git '.expand(vim_dir_path.'/plugged/vim-plug/autoload'))
+    call mkdir(expand(g:vim_dir_path.'/plugged/vim-plug'), 'p')
+    call system('git clone git@github.com:junegunn/vim-plug.git '.expand(g:vim_dir_path.'/plugged/vim-plug/autoload'))
   end
 endif
 
 let g:plug_url_format = 'git@github.com:%s.git'
-call plug#begin(expand(vim_dir_path.'/plugged'))
+call plug#begin(expand(g:vim_dir_path.'/plugged'))
 
 Plug 'junegunn/vim-plug', {'dir': expand(vim_dir_path.'/plugged/vim-plug/autoload')}
 Plug 'Shougo/vimproc',    {'do': 'make'}
@@ -103,6 +103,6 @@ Plug 'ToruIwashita/git-switcher.vim'                   " git管理プロジェ�
 call plug#end()
 
 "" 各種設定読込
-if filereadable(expand(vim_dir_path.'/config.vim')) | exec 'source' expand(vim_dir_path.'/config.vim') | en
-if filereadable(expand(vim_dir_path.'/config.plugin.vim')) | exec 'source' expand(vim_dir_path.'/config.plugin.vim') | en
-if filereadable(expand(vim_dir_path.'/config.local.vim')) | exec 'source' expand(vim_dir_path.'/config.local.vim') | en
+if filereadable(expand(g:vim_dir_path.'/config.vim')) | exec 'source' expand(g:vim_dir_path.'/config.vim') | en
+if filereadable(expand(g:vim_dir_path.'/config.plugin.vim')) | exec 'source' expand(g:vim_dir_path.'/config.plugin.vim') | en
+if filereadable(expand(g:vim_dir_path.'/config.local.vim')) | exec 'source' expand(g:vim_dir_path.'/config.local.vim') | en

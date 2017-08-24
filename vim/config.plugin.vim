@@ -28,20 +28,22 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'  " statusline メッセ
 " linter 設定
 let g:ale_linters = {
   \ 'ruby':       ['ruby'],
-  \ 'javascript': ['jshint']
+  \ 'vim':        ['vint'],
+  \ 'javascript': ['jshint'],
+  \ 'coffee':     ['coffeelint']
 \ }
 
 "" ctrlp(after/ にも設定あり)
-let g:ctrlp_map = '<C-k>'                            " Start CtrlP
-let g:ctrlp_match_window = 'min:10,max:'.&lines/3    " quickfixサイズ
-let g:ctrlp_mruf_max = 100                           " 開いたファイル履歴保持数
-let g:ctrlp_clear_cache_on_exit = 0                  " 終了時にキャッシュをクリアしない
-let g:ctrlp_max_depth = 15                           " ディレクトリ再帰検索深度
-let g:ctrlp_max_files = 25000                        " スキャンファイルの初期値
-let g:ctrlp_open_new_file = 'r'                      " 新しいファイルをカレントウィンドウに開く
-let g:ctrlp_open_multiple_files = 'jt'               " 複数ファイルを開く時新しいタブで開き,全て開き終わった後1つ目に移動する
-let g:ctrlp_cache_dir = cache_dir_path.'/vim/ctrlp'  " キャッシュディレクトリ
-let g:ctrlp_types = ['fil', 'buf']                   " 使用するモード指定(WIP)
+let g:ctrlp_map = '<C-k>'                              " Start CtrlP
+let g:ctrlp_match_window = 'min:10,max:'.&lines/3      " quickfixサイズ
+let g:ctrlp_mruf_max = 100                             " 開いたファイル履歴保持数
+let g:ctrlp_clear_cache_on_exit = 0                    " 終了時にキャッシュをクリアしない
+let g:ctrlp_max_depth = 15                             " ディレクトリ再帰検索深度
+let g:ctrlp_max_files = 25000                          " スキャンファイルの初期値
+let g:ctrlp_open_new_file = 'r'                        " 新しいファイルをカレントウィンドウに開く
+let g:ctrlp_open_multiple_files = 'jt'                 " 複数ファイルを開く時新しいタブで開き,全て開き終わった後1つ目に移動する
+let g:ctrlp_cache_dir = g:cache_dir_path.'/vim/ctrlp'  " キャッシュディレクトリ
+let g:ctrlp_types = ['fil', 'buf']                     " 使用するモード指定(WIP)
 " CtrlPキーマッピング
 let g:ctrlp_prompt_mappings = {
   \ 'ToggleRegex()':        ['<C-_>'],
@@ -101,13 +103,13 @@ let g:wildfire_objects = [
 \ ]
 
 "" auto-ctags(after/ にも設定あり)
-let g:auto_ctags = 0                                     " BufWritePostで自動実行しない
-let g:auto_ctags_bin_path = local_dir_path.'/bin/ctags'  " ctagsのbinパス
-let g:auto_ctags_tags_name = '.tags'                     " tagsファイル名
-let g:auto_ctags_tags_args = ''                          " ctags実行オプションは.ctagsで設定する
+let g:auto_ctags = 0                                       " BufWritePostで自動実行しない
+let g:auto_ctags_bin_path = g:local_dir_path.'/bin/ctags'  " ctagsのbinパス
+let g:auto_ctags_tags_name = '.tags'                       " tagsファイル名
+let g:auto_ctags_tags_args = ''                            " ctags実行オプションは.ctagsで設定する
 
 "" yankround(after/ にも設定あり)
-let g:yankround_dir = cache_dir_path.'/vim/yankround'
+let g:yankround_dir = g:cache_dir_path.'/vim/yankround'
 let g:yankround_max_history = 30
 
 "" terraform.vim
