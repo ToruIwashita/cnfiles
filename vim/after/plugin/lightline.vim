@@ -8,8 +8,8 @@ set cpo&vim
 let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
-  \   'left': [ [ 'mode','paste' ], [ 'fugitive','filename' ], ['ctrlpmark'] ],
-  \   'right': [ [ 'syntastic','lineinfo' ], ['percent'], [ 'getcharcode','fileencoding','filetype','fileformat' ] ]
+  \   'left': [ [ 'mode','paste' ], [ 'syntastic' ], [ 'fugitive','filename' ], ['ctrlpmark'] ],
+  \   'right': [ [ 'lineinfo' ], ['percent'], [ 'getcharcode','fileencoding','filetype','fileformat' ] ]
   \ },
   \ 'component_function': {
   \   'fugitive':     'LightLineFugitive',
