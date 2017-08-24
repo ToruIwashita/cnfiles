@@ -3,7 +3,7 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-sbt sbt-version
+sbtenv version
 
 echo
 which sbt
