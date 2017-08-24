@@ -240,7 +240,7 @@ augroup END
 " quickfixのサイズ調整
 augroup adjust_quickfix_window
   autocmd!
-  autocmd FileType qf exe max([min([line('$'),&lines/2]),10]).'wincmd _'
+  autocmd FileType qf exe max([min([line('$'),&lines/2]),5]).'wincmd _'
 augroup END
 
 " insertモード終了時自動でpasteモードを終了する
