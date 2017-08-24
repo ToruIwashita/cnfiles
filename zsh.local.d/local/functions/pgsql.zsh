@@ -74,8 +74,12 @@ pqexp() {
 }
 
 pgdesc() {
-  __pg-check-presence-of-args $*
+  __pg-check-args $*
   (( $? )) && return 1
 
-  eval "${PGSQL_CMD} '\d ${1}'"
+  pgq "\d ${1}"
+}
+
+pgshow() {
+  pgq '\dt'
 }
