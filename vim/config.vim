@@ -84,12 +84,6 @@ cnoremap <C-w>* <C-r>/
 " ,はleaderとして使用
 noremap , <NOP>
 noremap <leader>, ,
-" ファイル保存,閉じる
-noremap <C-o> :<C-u>w<CR>
-noremap <leader>o :<C-u>wa<CR>
-noremap <leader>x :<C-u>wa<CR>:<C-u>qa<CR>
-noremap <leader>f :<C-u>q<CR>
-noremap <leader>w :<C-u>wq<CR>
 " <ESC>
 noremap <C-j> <ESC>
 " ファイル再読込
@@ -109,9 +103,6 @@ noremap <C-w><C-n> <C-w>w
 " 前のウィンドウへ移動
 noremap <C-w>p <C-w>W
 noremap <C-w><C-p> <C-w>W
-" 現在のウィンドウを閉じる
-noremap <C-w>x <NOP>
-noremap <C-w>x :<C-u>close<CR>
 " ウィンドウ分割
 noremap <C-w>v <NOP>
 noremap <C-w>i <C-w>v
