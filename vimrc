@@ -60,7 +60,6 @@ Plug 'itchyny/lightline.vim'                           " ステータスライ�
 Plug 'thinca/vim-visualstar'                           " visualstar(選択範囲のテキストで検索)
 Plug 'thinca/vim-prettyprint'                          " vimのデバッグ用prettyprint
 Plug 'thinca/vim-quickrun'                             " バッファ上のソースコードを実行してvimへ出力
-Plug 'thinca/vim-qfreplace'                            " quickfixを使って文字列一括置換
 Plug 'thinca/vim-tabrecent'                            " 直前のタブに戻る
 Plug 'osyo-manga/shabadou.vim'                         " 汎用的なquickrun-hook
 Plug 'osyo-manga/vim-over'                             " 置換プレビュー
