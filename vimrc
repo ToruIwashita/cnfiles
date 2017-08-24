@@ -52,7 +52,6 @@ Plug 'derekwyatt/vim-scala'                            " vim-scala
 Plug 'ngmy/vim-rubocop'                                " vim-rubocop
 Plug 'kchmck/vim-coffee-script'                        " vim-coffee-script
 Plug 'ynkdir/vim-vimlparser'                           " vimlのパーサー(構文解析)
-Plug 'syngan/vim-vimlint'                              " syntasticのデフォルトvimlシンタックスチェッカー
 Plug 'scrooloose/nerdtree'                             " ディレクトリツリーエクスプローラー
 Plug 'w0rp/ale'                                        " 非同期シンタックスチェック
 Plug 'tomtom/tcomment_vim'                             " コメントアウト
