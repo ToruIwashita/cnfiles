@@ -10,19 +10,28 @@ set background=dark
 "" neocomplete
 let g:neocomplete#enable_at_startup = 1  " neocompleteを起動時に有効化
 
-"" syntastic
-let g:syntastic_auto_loc_list = 1                                                " エラーがあったら自動でロケーションリストを開く
-let g:syntastic_error_symbol = '✗'                                               " syntax errorのマーカー
-let g:syntastic_warning_symbol = '⚠'                                             " syntax warningのマーカー
-let g:syntastic_style_error_symbol = '✗s'                                        " style errorのマーカー
-let g:syntastic_style_warning_symbol = '⚠s'                                      " style warningのマーカー
-let g:syntastic_mode_map = { 'mode': 'passive' }                                 " SyntasticCheckでsyntastic実行(after/plugin/lightline.vimで自動実行の設定をしている)
-let g:syntastic_ruby_checkers = ['mri']                                          " rubyをチェックするツール指定
-let g:syntastic_javascript_checkers = ['jshint']                                 " jsをチェックするツール指定
-let g:syntastic_coffee_checkers = ['coffeelint']                                 " coffeeのチェックをするツール指定
-let g:syntastic_coffee_coffeelint_args = '-f '.lint_dir_path.'/coffeelint.json'  " coffeelintの引数
+"" ale(after/ にも設定あり)
+let g:ale_sign_column_always = 1                          " マーカー用のカラムを常に表示
+let g:ale_lint_on_save = 1                                " save 時にシンタックスチェック
+let g:ale_lint_on_enter = 1                               " ファイルオープン時にチェックする
+let g:ale_lint_on_text_changed = 'always'                 " 自動コードチェック
+let g:ale_set_loclist = 0                                 " loclist にエラー表示を無効
+let g:ale_set_quickfix = 1                                " quickfix にエラー表示を有効
+let g:ale_open_list = 1                                   " loclist / quickfix を常に表示
+let g:ale_keep_list_window_open = 1                       " loclist / quickfix を常に表示
+let g:ale_sign_error = '✗'                                " error マーカー
+let g:ale_sign_warning = '⚠'                              " warning マーカー
+let g:ale_statusline_format = ['✗ %d', '⚠ %d', '']        " statusline 表示フォーマット
+let g:ale_echo_msg_error_str = '✗'                        " statusline メッセージ error マーカー
+let g:ale_echo_msg_warning_str = '⚠'                      " statusline メッセージ warning マーカー
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'  " statusline メッセージフォーマット
+" linter 設定
+let g:ale_linters = {
+  \ 'ruby':       ['ruby'],
+  \ 'javascript': ['jshint']
+\ }
 
-"" ctrlp
+"" ctrlp(after/ にも設定あり)
 let g:ctrlp_map = '<C-k>'                            " Start CtrlP
 let g:ctrlp_match_window = 'min:10,max:'.&lines/3    " quickfixサイズ
 let g:ctrlp_mruf_max = 100                           " 開いたファイル履歴保持数
@@ -91,13 +100,13 @@ let g:wildfire_objects = [
   \ 'ip', 'ap'
 \ ]
 
-"" auto-ctags
+"" auto-ctags(after/ にも設定あり)
 let g:auto_ctags = 0                                     " BufWritePostで自動実行しない
 let g:auto_ctags_bin_path = local_dir_path.'/bin/ctags'  " ctagsのbinパス
 let g:auto_ctags_tags_name = '.tags'                     " tagsファイル名
 let g:auto_ctags_tags_args = ''                          " ctags実行オプションは.ctagsで設定する
 
-"" yankround
+"" yankround(after/ にも設定あり)
 let g:yankround_dir = cache_dir_path.'/vim/yankround'
 let g:yankround_max_history = 30
 

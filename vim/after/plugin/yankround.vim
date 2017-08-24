@@ -5,6 +5,8 @@ scriptencoding utf-8
 let s:cpo_save = &cpo
 set cpo&vim
 
+" (config.plugin.vim にも設定あり)
+
 nmap p <Plug>(yankround-p)
 nmap P <Plug>(yankround-P)
 nmap gp <Plug>(yankround-gp)

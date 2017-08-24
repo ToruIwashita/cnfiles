@@ -5,6 +5,8 @@ scriptencoding utf-8
 let s:cpo_save = &cpo
 set cpo&vim
 
+" (config.plugin.vim にも設定あり)
+
 nnoremap <leader>ct :<C-u>Ctags
 
 let &cpo = s:cpo_save

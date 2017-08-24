@@ -8,8 +8,8 @@ set cpo&vim
 let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
-  \   'left': [ [ 'mode','paste' ], [ 'syntastic' ], [ 'fugitive','filename' ], ['ctrlpmark'] ],
-  \   'right': [ [ 'lineinfo' ], ['percent'], [ 'getcharcode','fileencoding','filetype','fileformat' ] ]
+  \   'left': [ [ 'mode','paste' ], [ 'ale' ], [ 'fugitive', 'filename' ], [ 'ctrlpmark' ] ],
+  \   'right': [ [ 'lineinfo' ], [ 'percent' ], [ 'getcharcode','fileencoding','filetype','fileformat' ] ]
   \ },
   \ 'component_function': {
   \   'fugitive':     'LightLineFugitive',
@@ -22,10 +22,10 @@ let g:lightline = {
   \   'getcharcode':  'GetCharCode'
   \ },
   \ 'component_expand': {
-  \   'syntastic': 'SyntasticStatuslineFlag'
+  \   'ale': 'ALEGetStatusLine'
   \ },
   \ 'component_type': {
-  \   'syntastic': 'error'
+  \   'ale': 'error'
   \ }
 \ }
 
@@ -38,12 +38,28 @@ let g:lightline.component = {
   \ 'lineinfo': 'col: %v | row: %l/%L'
 \ }
 
+let g:unite_force_overwrite_statusline = 0
+let g:vimfiler_force_overwrite_statusline = 0
+let g:vimshell_force_overwrite_statusline = 0
+
 function! LightLineModified()
   return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
 function! LightLineReadonly()
   return &ft !~? 'help' && &readonly ? 'RO' : ''
+endfunction
+
+function! LightLineFugitive()
+  try
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
+      let mark = ''  " edit here for cool mark
+      let _ = fugitive#head()
+      return strlen(_) ? mark._ : ''
+    endif
+  catch
+  endtry
+  return ''
 endfunction
 
 function! LightLineFilename()
@@ -57,18 +73,6 @@ function! LightLineFilename()
          \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
          \ ('' != fname ? fname : '[No Name]') .
          \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
-endfunction
-
-function! LightLineFugitive()
-  try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &ft !~? 'vimfiler' && exists('*fugitive#head')
-      let mark = ''  " edit here for cool mark
-      let _ = fugitive#head()
-      return strlen(_) ? mark._ : ''
-    endif
-  catch
-  endtry
-  return ''
 endfunction
 
 function! LightLineFileformat()
@@ -106,11 +110,6 @@ function! CtrlPMark()
   endif
 endfunction
 
-let g:ctrlp_status_func = {
-  \ 'main': 'CtrlPStatusFunc_1',
-  \ 'prog': 'CtrlPStatusFunc_2',
-\ }
-
 function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
   let g:lightline.ctrlp_regex = a:regex
   let g:lightline.ctrlp_prev = a:prev
@@ -123,26 +122,17 @@ function! CtrlPStatusFunc_2(str)
   return lightline#statusline(0)
 endfunction
 
-let g:tagbar_status_func = 'TagbarStatusFunc'
+let g:ctrlp_status_func = {
+  \ 'main': 'CtrlPStatusFunc_1',
+  \ 'prog': 'CtrlPStatusFunc_2',
+\ }
 
 function! TagbarStatusFunc(current, sort, fname, ...) abort
     let g:lightline.fname = a:fname
   return lightline#statusline(0)
 endfunction
 
-augroup local_syntastic
-  autocmd!
-  autocmd BufWritePost * call s:syntastic()
-augroup END
-
-function! s:syntastic()
-  SyntasticCheck
-  call lightline#update()
-endfunction
-
-let g:unite_force_overwrite_statusline = 0
-let g:vimfiler_force_overwrite_statusline = 0
-let g:vimshell_force_overwrite_statusline = 0
+let g:tagbar_status_func = 'TagbarStatusFunc'
 
 function! GetCharCode()
   " Get the output of :ascii
