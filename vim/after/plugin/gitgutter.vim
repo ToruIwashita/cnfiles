@@ -6,10 +6,10 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 " 変更点へ移動
-nmap <C-a>] <Plug>GitGutterNextHunk
-nmap <C-a><C-]> <Plug>GitGutterNextHunk
-nmap <C-a>[ <Plug>GitGutterPrevHunk
-nmap <C-a><C-[> <Plug>GitGutterPrevHunk
+nmap <C-g>] <Plug>GitGutterNextHunk
+nmap <C-g><C-]> <Plug>GitGutterNextHunk
+nmap <C-g>[ <Plug>GitGutterPrevHunk
+nmap <C-g><C-[> <Plug>GitGutterPrevHunk
 
 " 変更を追加
 nmap <C-g>a <Plug>GitGutterStageHunk
