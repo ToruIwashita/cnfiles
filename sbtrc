@@ -1,3 +1,4 @@
+alias q=exit
 alias ls=projects
 alias r=run
 alias c=compile
