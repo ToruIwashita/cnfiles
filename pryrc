@@ -14,7 +14,7 @@ default_command_set =
       system 'clear'
     end
 
-    command 'q!' do
+    command 'q' do
       exit!
     end
 
@@ -41,7 +41,6 @@ default_command_set =
   end
 
 Pry.config.commands.import default_command_set
-Pry.config.commands.alias_command 'q', 'exit'
 Pry.config.commands.alias_command 'lg', 'ls --grep'
 Pry.config.commands.alias_command 'wa', 'whereami'
 
