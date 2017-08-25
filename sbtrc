@@ -1,6 +1,7 @@
 alias ls=projects
-alias c=compile
 alias r=run
+alias c=compile
+alias ct=;compile;test
 alias t=test
 alias tc=test:compile
 alias to=test-only
