@@ -3,8 +3,8 @@ __rbenv-ruby-versions() {
   compadd ${(R)${(R)${(@f)"$(rbenv versions)"}#?*[[:space:]]}%% *}
 }
 
-_rsw() {
+_rbsw() {
   _arguments '*: :__rbenv-ruby-versions'
 }
 
-compdef _rsw rsw
+compdef _rbsw rbsw

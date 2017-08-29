@@ -5,13 +5,13 @@ scriptencoding utf-8
 let s:cpo_save = &cpo
 set cpo&vim
 
-noremap <silent> <leader>l :<C-u>CloseRightWin<CR>
-noremap <silent> <leader>h :<C-u>CloseLeftWin<CR>
-noremap <silent> <leader><C-n> :<C-u>CloseDownWin<CR>
-noremap <silent> <leader><C-p> :<C-u>CloseUpWin<CR>
+noremap <leader>l :<C-u>CloseRightWin<CR>
+noremap <leader>h :<C-u>CloseLeftWin<CR>
+noremap <leader><C-n> :<C-u>CloseDownWin<CR>
+noremap <leader><C-p> :<C-u>CloseUpWin<CR>
 
 " quickfix,loclist,preview閉じる
-noremap <silent> <C-w><C-w> :<C-u>CloseMisWin<CR>
+noremap <C-w><C-w> :<C-u>CloseMisWin<CR>
 
 " ファイル保存,閉じる
 noremap <C-o> :<C-u>w<CR>

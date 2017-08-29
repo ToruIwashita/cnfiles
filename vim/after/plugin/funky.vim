@@ -28,7 +28,7 @@ endfunction
 command! -range CtrlPFunkyRange call s:ctrlp_funky_range()
 
 nnoremap <C-s><C-h> :<C-u>CtrlPFunky<CR>
-vnoremap <silent> <C-s><C-h> :<C-u>CtrlPFunkyRange<CR>
+vnoremap <C-s><C-h> :<C-u>CtrlPFunkyRange<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
