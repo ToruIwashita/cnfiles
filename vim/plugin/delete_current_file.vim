@@ -2,8 +2,8 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 fun! s:delete_current_file()
   if confirm("delete '".expand('%:t')."'?", "&Yes\n&No", 0) != 1
@@ -20,5 +20,5 @@ endf
 command! DeleteCurrentFile call s:delete_current_file()
 command! BufferDeleteCurrentFile call s:buffer_delete_current_file()
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
