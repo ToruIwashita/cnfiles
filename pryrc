@@ -41,6 +41,7 @@ default_command_set =
   end
 
 Pry.config.commands.import default_command_set
+Pry.config.commands.alias_command 'b', 'exit'
 Pry.config.commands.alias_command 'lg', 'ls --grep'
 Pry.config.commands.alias_command 'wa', 'whereami'
 
