@@ -131,7 +131,7 @@
 		<integer>1</integer>
 	</dict>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>513 187 567 77 0 0 1440 877 </string>
+	<string>513 187 567 77 0 0 1440 900 </string>
 	<key>NSWindow Frame Preferences</key>
 	<string>187 419 606 456 0 0 1440 877 </string>
 	<key>NSWindow Frame SUStatusFrame</key>
@@ -139,11 +139,11 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>2090 318 620 392 1440 -180 1920 1057 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>491 143 796 473 0 0 1440 877 </string>
+	<string>1710 48 796 473 1440 -180 1920 1080 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 293 592 584 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>246 370 490 352 0 0 1440 877 </string>
+	<string>1816 395 650 354 1440 -180 1920 1057 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
 	<string>50 4 1390 873 0 0 1440 877 </string>
 	<key>New Bookmarks</key>
@@ -697,7 +697,7 @@
 			<key>Non Ascii Font</key>
 			<string>Menlo-Regular 11</string>
 			<key>Non-ASCII Anti Aliased</key>
-			<false/>
+			<true/>
 			<key>Normal Font</key>
 			<string>Menlo-Regular 11</string>
 			<key>Option Key Sends</key>
