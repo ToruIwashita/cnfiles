@@ -5,8 +5,9 @@ scriptencoding utf-8
 let s:cpo_save = &cpo
 set cpo&vim
 
-cnorea %O :<C-u>OverCommandLine
-cnorea '<,'>O '<,'>OverCommandLine
+nnoremap <C-s>o :<C-u>OverCommandLine<CR>%s///g<LEFT><LEFT><LEFT>
+
+vnoremap <C-s>o :<C-u>'<,'>OverCommandLine<CR>%s///g<LEFT><LEFT><LEFT>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
