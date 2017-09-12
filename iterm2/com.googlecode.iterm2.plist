@@ -139,7 +139,7 @@
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>2090 318 620 392 1440 -180 1920 1057 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>1710 48 796 473 1440 -180 1920 1080 </string>
+	<string>1556 26 796 473 1440 -180 1920 1080 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 293 592 584 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
@@ -899,7 +899,7 @@
 	<key>NoSyncNeverRemindPrefsChangesLostForFile</key>
 	<true/>
 	<key>NoSyncNeverRemindPrefsChangesLostForFile_selection</key>
-	<integer>0</integer>
+	<integer>1</integer>
 	<key>NoSyncPermissionToShowTip</key>
 	<false/>
 	<key>NoSyncSuppressAnnyoingBellOffer</key>
