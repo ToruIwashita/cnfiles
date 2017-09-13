@@ -199,8 +199,8 @@ zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}                  # 補完�
 ## prompt
 # プロンプト表示
 PROMPT='%{[38;5;33m%}_%{[0m%}
-%{[38;5;33m%}│%{[0m%}[${vcs_info_msg_0_}]:%~/
-%{[38;5;33m%}╰─%{[0m%}(%?)%F{$PROMPT_VIM_MODE_COLOR}%#%f '
+%{[38;5;33m%}┃%{[0m%}[${vcs_info_msg_0_}]:%~/
+%{[38;5;33m%}┗━%{[0m%}(%?)%F{$PROMPT_VIM_MODE_COLOR}%#%f '
 RPROMPT='[%D{%T}|%n]'
 
 ## command-line
