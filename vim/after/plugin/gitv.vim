@@ -2,8 +2,8 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 " Gitvを水平分割
 let g:Gitv_OpenHorizontal = 1
@@ -28,7 +28,7 @@ fun! s:gitv_settiongs()
   nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
 
   " gitvはfugitiveに依存しているのでここでfugitiveのコマンドを使用することを許容する
-  nnoremap <buffer> <C-g>B :<C-u>Git rebase -i <C-r>=<SID>gitv_get_current_sha()<CR><CR>
+  nnoremap <buffer> <C-g>B :<C-u>Git rebase -i --autosquash <C-r>=<SID>gitv_get_current_sha()<CR><CR>
   nnoremap <buffer> <C-g>C :<C-u>Git cherry-pick <C-r>=<SID>gitv_get_current_sha()<CR><CR>
   nnoremap <buffer> <C-g>R :<C-u>Git revert <C-r>=<SID>gitv_get_current_sha()<CR><CR>
   nnoremap <buffer> <C-s><C-g> :<C-u>Gbrowse <C-r>=<SID>gitv_get_current_sha()<CR><CR>
@@ -42,5 +42,5 @@ augroup local_gitv
   autocmd FileType gitv call s:gitv_settiongs()
 augroup END
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save

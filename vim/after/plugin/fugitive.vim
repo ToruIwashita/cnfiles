@@ -2,8 +2,8 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 " <C-s>プレフィックス
 nnoremap <C-s><C-u> :<C-u>Gstatus<CR>
@@ -17,6 +17,9 @@ nnoremap <C-g>c :<C-u>Gcommit -v<CR>
 nnoremap <C-g><C-c> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -v<CR>
 nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
 nnoremap <C-g><C-t> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
+nnoremap <C-g>f :<C-u>Gcommit --fixup=HEAD<CR>
+nnoremap <C-g><C-f> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit --fixup=HEAD<CR>
+
 nnoremap <C-g><C-v> :<C-u>Gblame<CR>
 
 fun! s:fugitive_commit_setting()
@@ -42,5 +45,5 @@ augroup local_fugitive
   autocmd FileType fugitiveblame call s:fugitive_blame_setting()
 augroup END
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
