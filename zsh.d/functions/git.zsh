@@ -49,8 +49,9 @@ gclean() {
     return 1
   fi
 
+  git status --short && echo
+
   while :; do
-    git status --short && echo
     print -n 'clean the above files (y/n)? '
 
     read answer
