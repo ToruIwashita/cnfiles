@@ -7,7 +7,7 @@ set cpo&vim
 
 " (config.plugin.vim にも設定あり)
 
-nnoremap <leader>ct :<C-u>Ctags
+nnoremap <leader>ct :<C-u>Ctags<CR>
 
 let &cpo = s:cpo_save
 unlet s:cpo_save
