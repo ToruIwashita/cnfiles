@@ -3,6 +3,10 @@ gchanged-files() {
   __git-changed-list | tr ' ' '\n'
 }
 
+gaa() {
+  git diff && git add .
+}
+
 gam() {
   local usage
 
@@ -35,6 +39,35 @@ gab() {
 
 gad() {
   __ga $*
+}
+
+gclean() {
+  local answer
+
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    return 1
+  fi
+
+  git status --short && echo
+
+  while :; do
+    print -n 'clean the above files (y/n)? '
+
+    read answer
+    case "$answer" in
+      [yY])
+        git checkout . && git clean -f &>/dev/null
+        break
+        ;;
+      [nN])
+        break
+        ;;
+      *)
+        print -n 'Please enter y or n. '
+        ;;
+    esac
+  done
 }
 
 greset-latest() {
