@@ -120,7 +120,7 @@ noremap <C-w>[ <NOP>
 noremap <C-w><C-]> <NOP>
 noremap <C-w><C-[> <NOP>
 " 新しいタブを作成
-noremap <C-w><C-t> :<C-u>tabnew<CR>
+noremap <C-w>t :<C-u>tabnew<CR>
 " 次のタブへ移動
 noremap <C-w>] gt
 noremap <C-w><C-]> gt
