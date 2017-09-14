@@ -33,6 +33,8 @@ fun! s:fugitive_commit_setting()
   nmap <buffer> <leader>r r
   " 変更を取り消し
   nmap <buffer> ! U
+  " Gdiff
+  nmap <buffer> <C-g><C-d> D
 endf
 
 fun! s:fugitive_blame_setting()
