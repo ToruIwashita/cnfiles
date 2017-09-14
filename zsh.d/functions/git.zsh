@@ -4,7 +4,13 @@ gchanged-files() {
 }
 
 gaa() {
-  git diff && git add .
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    return 1
+  fi
+
+  git add .
+  git status --short 
 }
 
 gam() {
@@ -39,6 +45,64 @@ gab() {
 
 gad() {
   __ga $*
+}
+
+gclean-m() {
+  local answer
+
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    return 1
+  fi
+
+  git status --short -uno && echo
+
+  while :; do
+    print -n 'clean the above files (y/n)? '
+
+    read answer
+    case "$answer" in
+      [yY])
+        git checkout .
+        break
+        ;;
+      [nN])
+        break
+        ;;
+      *)
+        print -n 'Please enter y or n. '
+        ;;
+    esac
+  done
+}
+
+gclean-u() {
+  local answer
+
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    return 1
+  fi
+
+  git status --short | grep --color \?\? && echo
+
+  while :; do
+    print -n 'clean the above files (y/n)? '
+
+    read answer
+    case "$answer" in
+      [yY])
+        git clean -f &>/dev/null
+        break
+        ;;
+      [nN])
+        break
+        ;;
+      *)
+        print -n 'Please enter y or n. '
+        ;;
+    esac
+  done
 }
 
 gclean() {
