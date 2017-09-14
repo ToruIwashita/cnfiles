@@ -10,7 +10,7 @@ gaa() {
   fi
 
   git add .
-  git status --short 
+  git status --short
 }
 
 gam() {
