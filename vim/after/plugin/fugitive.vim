@@ -26,7 +26,8 @@ nnoremap <C-g>f :<C-u>Gcommit --amend --no-edit<CR>
 nnoremap <C-g><C-f> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit --amend --no-edit<CR>
 " add
 nnoremap <C-g><C-a> :<C-u>w<CR>:<C-u>Gwrite<CR>
-nnoremap<C-g>A :<C-u>wa<CR>:<C-u>silent! Git add .<CR>:<C-u>redraw!<CR>
+nnoremap<C-g>A :<C-u>wa<CR>:<C-u>call system('\git add .')<CR>:<C-u>redraw!<CR>
+
 " blame
 nnoremap <C-g><C-v> :<C-u>Gblame<CR>
 
