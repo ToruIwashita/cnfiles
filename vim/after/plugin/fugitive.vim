@@ -6,20 +6,28 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 " <C-s>プレフィックス
+" status
 nnoremap <C-s><C-u> :<C-u>Gstatus<CR>
 
 " <C-g>プレフィックス
+" diff
 nnoremap <C-g><C-d> :<C-u>Gdiff<CR>
+" stash
 nnoremap <C-g>ss :<C-u>Git stash save
 nnoremap <C-g>sp :<C-u>Git stash pop
-nnoremap <C-g><C-a> :<C-u>w<CR>:<C-u>Gwrite<CR>
+" commit
 nnoremap <C-g>c :<C-u>Gcommit -v<CR>
 nnoremap <C-g><C-c> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -v<CR>
+" temporary commit
 nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
 nnoremap <C-g><C-t> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
+" fixup commit
 nnoremap <C-g>f :<C-u>Gcommit --amend --no-edit<CR>
 nnoremap <C-g><C-f> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit --amend --no-edit<CR>
-
+" add
+nnoremap <C-g><C-a> :<C-u>w<CR>:<C-u>Gwrite<CR>
+nnoremap<C-g>A :<C-u>wa<CR>:<C-u>silent! Git add .<CR>:<C-u>redraw!<CR>
+" blame
 nnoremap <C-g><C-v> :<C-u>Gblame<CR>
 
 fun! s:fugitive_commit_setting()
