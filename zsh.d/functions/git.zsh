@@ -134,6 +134,16 @@ gclean() {
   done
 }
 
+gra() {
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    return 1
+  fi
+
+  git reset &>/dev/null
+  git status --short
+}
+
 greset-latest() {
   local self_cmd help usage answer
 
