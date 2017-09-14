@@ -197,14 +197,15 @@ EOF`
 }
 
 gc() {
-  integer temporary
+  integer amend temporary
   local self_cmd help usage
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [-t --temporary]
-           [-h --help]
+usage: $self_cmd [-a --amend]
+          [-t --temporary]
+          [-h --help]
 EOF`
 
   if ! __git-inside-work-tree; then
@@ -215,6 +216,10 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
+      -a | --amend)
+        (( amend++ ))
+        shift 1
+        ;;
       -t | --temporary)
         (( temporary++ ))
         shift 1
@@ -240,9 +245,15 @@ EOF`
 
   if (( temporary )); then
     git commit -m "[temporary commit]($(__git-ref-head)) $(LANG=C date)"
-  else
-    git commit
+    return 0
   fi
+
+  if (( amend )); then
+    git commit --amend --no-edit
+    return 0
+  fi
+
+  git commit
 }
 
 gd() {
