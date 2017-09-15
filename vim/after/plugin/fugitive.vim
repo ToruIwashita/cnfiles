@@ -45,7 +45,9 @@ fun! s:fugitive_commit_setting()
   " diff
   nmap <buffer> <C-g><C-d> D
   " add
-  nmap <buffer> <C-g>A :<C-u>wa<CR>:<C-u>call system('\git add .')<CR>r
+  nmap <silent><buffer> <C-g>A :<C-u>wa<CR>:<C-u>call system('\git add .')<CR>r
+  " reset
+  nmap <silent><buffer> <C-g>@ :<C-u>call system('\git reset')<CR>r
 endf
 
 fun! s:fugitive_blame_setting()
