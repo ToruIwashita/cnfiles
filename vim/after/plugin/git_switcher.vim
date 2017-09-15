@@ -2,8 +2,8 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 let g:gsw_autoload_session = 'confirm'
 let g:gsw_save_session_confirm = 'no'
@@ -30,5 +30,5 @@ nnoremap <C-g>_ :<C-u>GswPrev<CR>
 nnoremap <C-g>b :<C-u>GswBranch<CR>
 nnoremap <C-g><C-b> :<C-u>GswBranchRemote<CR>
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
