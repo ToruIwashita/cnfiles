@@ -84,7 +84,6 @@ bindkey -v '^s^k' menu-complete-recent-dirs             # Ctrl+s,Ctrl+kで最近
 bindkey -v '^s^l' start-editor                          # Ctrl+s,Ctrl+lでstart-editor
 bindkey -v '^s^o' cd-leaf-dir-and-insert-leaf-file      # Ctrl+s,Ctrl+oでバッファ残しリーフディレクトリ補完
 bindkey -v '^s^p' copy-prev-shell-word                  # Ctrl+s,Ctrl+pで1つ前の文字列をコピペ(空欄区切りで文字列判定)
-bindkey -v '^s^u' immediate-git-status                  # Ctrl+s,Ctrl+uでgit status
 bindkey -v '^s^s' vi-find-next-char                     # Ctrl+s,Ctrl+sでviのfind-char
 bindkey -v '^s^]' vi-backward-word                      # Ctrl+s,Ctrl+]で前の単語の先頭に移動
 bindkey -v '^s^@' kill-line                             # Ctrl+s,Ctrl+@でカーソル行以降削除
