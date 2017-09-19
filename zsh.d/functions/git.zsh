@@ -9,7 +9,7 @@ gaa() {
     return 1
   fi
 
-  git add .
+  git add $(git rev-parse --show-cdup).
   git status --short
 }
 
