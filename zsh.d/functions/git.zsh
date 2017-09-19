@@ -276,11 +276,6 @@ gd() {
     return 1
   fi
 
-  if (( ! $# )); then
-    print $usage 1>&2
-    return 1
-  fi
-
   git diff $*
 }
 
