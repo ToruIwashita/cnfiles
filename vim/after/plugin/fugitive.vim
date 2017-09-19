@@ -11,8 +11,8 @@ nnoremap <C-s><C-u> :<C-u>Gstatus<CR>
 " diff
 nnoremap <C-s><C-d> :<C-u>Git diff<CR>
 " commit
-nnoremap <C-s>c :<C-u>Gcommit -v<CR>
-nnoremap <C-s><C-c> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -v<CR>
+nnoremap <C-s>c :<C-u>Gcommit<CR>
+nnoremap <C-s><C-c> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit<CR>
 
 " <C-g>プレフィックス
 " diff
