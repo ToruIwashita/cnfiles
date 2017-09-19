@@ -60,6 +60,7 @@ bindkey -v '^s' self-insert                             # Ctrl+sでself-insert,P
 bindkey -v '^u' kill-word                               # Ctrl+uでkill-word
 bindkey -v '^w' backward-kill-word                      # Ctrl+wでbackward-kill-word
 bindkey -v '^y' push-input                              # Ctrl+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
+bindkey -v '^sc' immediate-git-commit                   # Ctrl+s,cでgit commit
 bindkey -v '^sf' peco-file-find-and-start-editor        # Ctrl+s,fでファイル検索してstart-editor
 bindkey -v '^sg' immediate-hub-browse                   # Ctrl+s,hでhub browse
 bindkey -v '^sh' immediate-git-log-search               # Ctrl+s,hでgit log検索
@@ -73,7 +74,6 @@ bindkey -v '^ss' peco-ag-and-start-editor               # Ctrl+s,sでagで検索
 bindkey -v '^s@' clear-screen                           # Ctrl+@でclear-screen
 bindkey -v '^s;' peco-simple-git-grep-and-start-editor  # Ctrl+s,hでgit grepしてstart-editor
 bindkey -v '^s^a' immediate-git-add-all                 # Ctrl+s,Ctrl+aでgit add .
-bindkey -v '^s^c' immediate-git-commit                  # Ctrl+s,Ctrl+cでgit commit
 bindkey -v '^s^d' immediate-git-diff                    # Ctrl+s,Ctrl+dでgit diff
 bindkey -v '^s^f' peco-file-finder                      # Ctrl+s,Ctrl+fでpeco-file-finder
 bindkey -v '^s^h' immediate-git-log-search-with-diff    # Ctrl+s,Ctrl+hでgit logをdiff出力付きで検索
