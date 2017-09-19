@@ -8,7 +8,8 @@ set cpoptions&vim
 nnoremap <C-g>p :<C-u>Gsh
 nnoremap <C-g><C-p> :<C-u>GshForce
 
-nnoremap <C-g>@ :<C-u>GResetAll<CR>
+nnoremap <C-g>A :<C-u>wa<CR>:<C-u>GAddAll<CR>:<C-u>e!<CR>:<C-U>checktime<CR>
+nnoremap <C-g>@ :<C-u>wa<CR>:<C-u>GResetAll<CR>:<C-u>e!<CR>:<C-U>checktime<CR>
 
 nnoremap <leader>ca :<C-u>GClean<CR>
 nnoremap <leader>cm :<C-u>GCleanM<CR>

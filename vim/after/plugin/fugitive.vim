@@ -26,7 +26,6 @@ nnoremap <C-g>f :<C-u>Gcommit --amend --no-edit<CR>
 nnoremap <C-g><C-f> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit --amend --no-edit<CR>
 " add
 nnoremap <C-g><C-a> :<C-u>w<CR>:<C-u>Gwrite<CR>
-nnoremap <C-g>A :<C-u>wa<CR>:<C-u>call system('\git add .')<CR>:<C-U>e!<CR>:<C-U>checktime<CR>
 
 " blame
 nnoremap <C-g><C-v> :<C-u>Gblame<CR>
@@ -45,9 +44,9 @@ fun! s:fugitive_commit_setting()
   " diff
   nmap <buffer> <C-g><C-d> D
   " add
-  nmap <silent><buffer> <C-g>A :<C-u>wa<CR>:<C-u>call system('\git add .')<CR>r
+  nmap <silent><buffer> <C-g>A :<C-u>wa<CR>:<C-u>call system('\git add $(\git rev-parse --show-cdup).')<CR>r
   " reset
-  nmap <silent><buffer> <C-g>@ :<C-u>call system('\git reset')<CR>r
+  nmap <silent><buffer> <C-g>@ :<C-u>wa<CR>:<C-u>call system('\git reset')<CR>r
 endf
 
 fun! s:fugitive_blame_setting()
