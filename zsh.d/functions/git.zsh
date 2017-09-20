@@ -140,7 +140,7 @@ gra() {
     return 1
   fi
 
-  git reset
+  git reset &>/dev/null
   git status --short
 }
 
