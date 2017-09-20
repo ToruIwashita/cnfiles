@@ -6,7 +6,7 @@ __precmd-vcs-info() {
 }
 # _chpwd-ls
 __chpwd-ls() {
-  [[ $dirstack[1]:h != $PWD ]] && ls
+  [[ $dirstack[1]:h != $PWD ]] && ls -F --color
 }
 
 # precmd_functions設定
