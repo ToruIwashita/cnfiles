@@ -190,9 +190,12 @@ zle -N edit-command-line                     # コマンドラインを$EDITOR�
 
 ## zstyle
 # vcs_info
-zstyle ':vcs_info:*' enable git hg                                     # git,hgを有効
-zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'                     # 通常時のフォーマット
-zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'  # コンフリクト時など,アクションがある場合のフォーマット
+zstyle ':vcs_info:*' enable git hg                                        # git,hgを有効
+zstyle ':vcs_info:*' formats '%s][* %F{cyan}%u%c%b%f'                     # 通常時のフォーマット
+zstyle ':vcs_info:*' actionformats '%s][* %F{cyan}%u%c%b%f(%F{red}%a%f)'  # コンフリクト時など,アクションがある場合のフォーマット
+zstyle ':vcs_info:git:*' check-for-changes true                           # %cと%uを有効にする
+zstyle ':vcs_info:git:*' stagedstr "%f%F{green}"                          # %cのフォーマット
+zstyle ':vcs_info:git:*' unstagedstr "%f%F{red}"                          # %uのフォーマット
 # chpwd
 zstyle ":chpwd:*" recent-dirs-max 100                                  # 最近利用したディレクトリ最大保存数
 zstyle ":chpwd:*" recent-dirs-default true                             # 2つ以上の引数または数値以外の引数が与えられた場合,cdと同じ動作をする
