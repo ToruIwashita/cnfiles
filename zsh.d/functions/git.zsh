@@ -121,7 +121,7 @@ gclean() {
     read answer
     case "$answer" in
       [yY])
-        gra && git checkout . && git clean -f &>/dev/null
+        git reset &>/dev/null && git checkout . && git clean -f &>/dev/null
         break
         ;;
       [nN])
