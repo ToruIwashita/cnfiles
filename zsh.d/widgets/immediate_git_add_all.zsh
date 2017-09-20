@@ -1,7 +1,7 @@
 ## immediate-git-add-all
 _immediate-git-add-all() {
   local cmd
-  cmd='git add $(git rev-parse --show-cdup). && git status --short'
+  cmd='git diff && git add $(git rev-parse --show-cdup).'
 
   ( ! $(git rev-parse 2>/dev/null) ) && return
 

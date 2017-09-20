@@ -9,8 +9,8 @@ gaa() {
     return 1
   fi
 
+  git diff
   git add $(git rev-parse --show-cdup).
-  git status --short
 }
 
 gam() {
