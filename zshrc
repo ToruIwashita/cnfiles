@@ -37,6 +37,7 @@ zsh_sub_dir_paths=(
 [[ -f $zsh_dir_path/env.local.zsh ]] && source $zsh_dir_path/env.local.zsh
 
 ## 関数ロード
+# 組み込み系
 autoload -Uz colors && colors          # 色の定義
 autoload -Uz compinit && compinit -u   # 自動補完
 autoload -Uz zmv                       # 複数のファイルを扱うようなmv
@@ -48,6 +49,8 @@ autoload -Uz add-zsh-hook              # フック関数登録
 autoload -Uz edit-command-line         # コマンドライン編集
 zmodload zsh/complist                  # 補完メニュー選択モードのキーマップ
 zmodload zsh/terminfo                  # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
+# 独自系
+autoload -Uz command-line-init && command-line-init -u  # プロンプト,コマンドライン関連の設定
 
 # 重複パスを除去
 typeset -U path fpath ld_library_path include precmd_functions chpwd_functions
