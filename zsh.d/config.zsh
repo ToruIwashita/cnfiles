@@ -152,6 +152,7 @@ alias rm='rm -i'
 alias c='cat'
 alias grep='grep --color'
 alias less='less -R'
+alias tailf='tail -f'
 # memolist
 alias -g TT=">! $MEMOLIST_TMP_FILE_PATH"
 
