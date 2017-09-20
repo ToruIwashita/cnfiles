@@ -23,3 +23,9 @@ export MARKDOWN_TEXTS_DIR_PATH=~/markdown_texts
 export MARKDOWN_TEXTS_MODELING_SESSION_FILE_PATH=$MARKDOWN_TEXTS_DIR_PATH/.modeling.session.vim
 export MEMOLIST_DIR_PATH=~/.memolist
 export MEMOLIST_TMP_FILE_PATH=$MEMOLIST_DIR_PATH/0000-00-00-tmp.md
+
+## fpath
+fpath=(
+  $fpath
+  $zsh_inits_dir_path
+)

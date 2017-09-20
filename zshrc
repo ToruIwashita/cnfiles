@@ -8,6 +8,7 @@ local dir_path file_path
 
 # グローバル変数
 typeset -g zsh_dir_path=~/.zsh.d
+typeset -g zsh_inits_dir_path=$zsh_dir_path/inits
 typeset -g zsh_local_dir_path=$zsh_dir_path/local
 typeset -g zsh_plugin_dir_path=$zsh_dir_path/plugin
 typeset -ga zsh_lib_dir_paths
