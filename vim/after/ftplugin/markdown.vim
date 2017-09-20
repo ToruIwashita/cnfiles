@@ -2,8 +2,8 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 function! s:add_md_space()
   silent! execute '%s/\(^[^$].*[^  ]$\)/\1  /'
@@ -17,12 +17,12 @@ endfunction
 
 augroup local_markdown
   autocmd!
-  autocmd BufWritePre * call s:add_md_space()
+  autocmd BufWritePre *.md call s:add_md_space()
 augroup END
 
 command! -range MdFormat call s:add_md_space_range(<line1>, <line2>)
 cnorea %M %MdFormat
 cnorea '<,'>M '<,'>MdFormat
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
