@@ -42,9 +42,9 @@ function +vi-git-hook-begin() {
   return 0
 }
 
-function +vi-git-status-check() {
-  # vcs_info_msg_1_を設定する場合のみ処理の対象とする
-  if [[ $1 != 1 ]]; then
+function +vi-git-vcs-info-msg-setting() {
+  # msgの数だけ実行されるが一度だけ実行させるため,vcs_info_msg_0_の場合のみ実行されるようにする(if文の0がmsgの数値に該当)
+  if [[ $1 != 0 ]]; then
     return 0
   fi
 
@@ -52,19 +52,28 @@ function +vi-git-status-check() {
   modified_count=${"$(git ls-files --modified | wc -l)"// /}
   untracked_count=${"$(git ls-files --exclude-standard --others | wc -l)"// /}
 
+  # hook_com[staged]が%cのフォーマット
+  # hook_com[unstaged]が%uのフォーマット
+  # hook_com[misc]が%mのフォーマット
   if [[ staged_count -gt 0 ]]; then
+    # stagedが存在する場合は元の色を打ち消してgreenにする(modified,untrackedよりも優先)
+    hook_com[staged]="%f%F{green}"
     hook_com[misc]+="%f%F{green}S: $staged_count%f "
   else
     hook_com[misc]+="S: $staged_count "
   fi
 
   if [[ modified_count -gt 0 ]]; then
+    # modifiedが存在する場合は元の色を打ち消してredにする
+    hook_com[unstaged]="%f%F{red}"
     hook_com[misc]+="%F{red}M: $modified_count%f "
   else
     hook_com[misc]+="M: $staged_count "
   fi
 
   if [[ untracked_count -gt 0 ]]; then
+    # untrackedが存在する場合は元の色を打ち消してredにする
+    hook_com[unstaged]="%f%F{red}"
     hook_com[misc]+="%F{red}U: $untracked_count%f"
   else
     hook_com[misc]+="U: $staged_count"
@@ -73,16 +82,13 @@ function +vi-git-status-check() {
 
 ## zstyle
 # vcs_info
-zstyle ':vcs_info:*' enable git hg                                                # git,hgを有効
-zstyle ':vcs_info:*' max-exports 2                                                # ${vcs_info_msg_0_},${vcs_info_msg_1_}にメッセージをエクスポート
-zstyle ':vcs_info:*' formats '%s][* %F{cyan}%b%f'                                 # 通常時のフォーマット
-zstyle ':vcs_info:*' actionformats '%s][* %F{cyan}%b%f(%F{red}%a%f)'              # コンフリクト時など,アクションがある場合のフォーマット
-zstyle ':vcs_info:git:*' formats '%s][* %F{cyan}%u%c%b%f' '%m'                    # gitの通常時のフォーマット
-zstyle ':vcs_info:git:*' actionformats '%s][* %F{cyan}%u%c%b%f(%F{red}%a%f)' '%m' # gitのコンフリクト時など,アクションがある場合のフォーマット
-zstyle ':vcs_info:git:*' check-for-changes true                                   # %cと%uを有効にする
-zstyle ':vcs_info:git:*' stagedstr "%f%F{green}"                                  # %cのフォーマット
-zstyle ':vcs_info:git:*' unstagedstr "%f%F{red}"                                  # %uのフォーマット
-zstyle ':vcs_info:git+set-message:*' hooks git-hook-begin git-status-check        # gitのファイル状態をhook_com[misc]に格納
+zstyle ':vcs_info:*' enable git hg                                                  # git,hgを有効
+zstyle ':vcs_info:*' max-exports 2                                                  # ${vcs_info_msg_0_},${vcs_info_msg_1_}にメッセージをエクスポート
+zstyle ':vcs_info:*' formats '%s][* %F{cyan}%b%f'                                   # 通常時のフォーマット
+zstyle ':vcs_info:*' actionformats '%s][* %F{cyan}%b%f(%F{red}%a%f)'                # コンフリクト時など,アクションがある場合のフォーマット
+zstyle ':vcs_info:git:*' formats '%s][* %F{cyan}%u%c%b%f' '%m'                      # gitの通常時のフォーマット(引数1つ目vcs_info_msg_0_,2つ目vcs_info_msg_1_)
+zstyle ':vcs_info:git:*' actionformats '%s][* %F{cyan}%u%c%b%f(%F{red}%a%f)' '%m'   # gitのコンフリクト時など,アクションがある場合のフォーマット(引数1つ目vcs_info_msg_0_,2つ目vcs_info_msg_1_)
+zstyle ':vcs_info:git+set-message:*' hooks git-hook-begin git-vcs-info-msg-setting  # gitのファイル状態をhook_comに格納
 # chpwd
 zstyle ":chpwd:*" recent-dirs-max 100                                  # 最近利用したディレクトリ最大保存数
 zstyle ":chpwd:*" recent-dirs-default true                             # 2つ以上の引数または数値以外の引数が与えられた場合,cdと同じ動作をする
