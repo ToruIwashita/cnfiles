@@ -55,7 +55,7 @@ gclean-m() {
     return 1
   fi
 
-  git status --short -uno && echo
+  git ls-files --modified && echo
 
   while :; do
     print -n 'clean the above files (y/n)? '
@@ -84,7 +84,7 @@ gclean-u() {
     return 1
   fi
 
-  git status --short | grep --color \?\? && echo
+  git ls-files --exclude-standard --others && echo
 
   while :; do
     print -n 'clean the above files (y/n)? '
@@ -121,7 +121,7 @@ gclean() {
     read answer
     case "$answer" in
       [yY])
-        git checkout . && git clean -f &>/dev/null
+        gra && git checkout . && git clean -f &>/dev/null
         break
         ;;
       [nN])
