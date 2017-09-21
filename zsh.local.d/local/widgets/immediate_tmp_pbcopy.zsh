@@ -2,7 +2,7 @@
 _immediate-tmp-pbcopy() {
   local cmd
 
-  cmd="cat $MEMOLIST_TMP_FILE | pbcopy"
+  cmd="cat $MEMOLIST_TMP_FILE_PATH | pbcopy"
 
   zle -I
   print -s $cmd && eval $cmd
