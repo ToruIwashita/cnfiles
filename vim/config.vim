@@ -91,7 +91,7 @@ noremap <leader>r :<C-u>e!<CR>:<C-u>checktime<CR>
 " カーソル行が画面の上端に来るようにスクロール(対の動きをする<C-b>は無効化)
 noremap <C-f> zt
 noremap <C-b> <NOP>
-" ウィンドウ関連
+"" ウィンドウ関連
 " ウィンドウのmapに関わるデフォルトのmapを無効化
 noremap <C-w>P <NOP>
 noremap <C-w>q <NOP>
@@ -106,7 +106,7 @@ noremap <C-w><C-p> <C-w>W
 " ウィンドウ分割
 noremap <C-w>v <NOP>
 noremap <C-w>i <C-w>v
-" タブ関連
+"" タブ関連
 " タブのmapに関わるデフォルトのmapを無効化
 noremap ] <NOP>
 noremap [ <NOP>
@@ -136,17 +136,17 @@ for s:i in range(1, 9)
 endfor
 " タブを閉じる
 noremap <C-w>X :<C-u>tabclose<CR>
-" タグ(ctags)関連
+"" タグ(ctags)関連
 " タグのmapに関わるデフォルトのmapを無効化
 noremap <C-t> <NOP>
 noremap g<C-]> <NOP>
 noremap <C-w>} <NOP>
 " カーソル位置の単語をタグとしてジャンプ
-noremap <C-t>t <C-]>
+noremap <C-s>t <C-]>
 " 複数候補がある時タグリスト表示
-noremap <C-t>T g<C-]>
+noremap <C-s>T g<C-]>
 " 直前のタグに戻る
-noremap <C-t><C-t> <C-t>
+noremap <C-s><C-t> <C-t>
 " 次のタグへ移動
 noremap <C-s>] :<C-u>tnext<CR>zz
 noremap <C-s><C-]> :<C-u>tnext<CR>zz
@@ -156,6 +156,10 @@ noremap <C-s><C-[> :<C-u>tprevious<CR>zz
 "" マーク関連
 " 指定マークへ移動
 noremap <leader>e '
+"" ペースト関連
+" 削除してから貼り付けを行う時に事前にヤンクした文字列をペースト
+noremap <leader>p "0p
+noremap <leader>P "0P
 
 "" nnoremap
 " recording
@@ -192,6 +196,8 @@ nnoremap qqq? <ESC>q?
 nnoremap <leader>v :<C-u>echo expand('%')<CR>
 " tag入力
 nnoremap <C-s>h :<C-u>tselect<SPACE>
+" カーソル以降の文字とヤンクした単語を置換
+nnoremap <silent> cp de"0Pb
 
 "" inoremap
 " ノーマルモードに切り替え<ESC>
