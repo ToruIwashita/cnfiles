@@ -2,38 +2,38 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 function! s:rubocop_check()
-  let config_file = g:lint_dir_path.'/rubocop.yml'
+  let l:config_file = g:lint_dir_path.'/rubocop.yml'
   if filereadable('.rubocop.yml')
-    let config_file = '.rubocop.yml'
+    let l:config_file = '.rubocop.yml'
   endif
 
   if filereadable('./config/environment.rb')
     let g:vimrubocop_rubocop_cmd = 'bundle exec rubocop '
-    let g:vimrubocop_extra_args = '--rails --config '.config_file
+    let g:vimrubocop_extra_args = '--rails --config '.l:config_file
   else
     let g:vimrubocop_rubocop_cmd = 'rbenv exec rubocop '
-    let g:vimrubocop_extra_args = '--config '.config_file
+    let g:vimrubocop_extra_args = '--config '.l:config_file
   endif
   RuboCop
   unlet g:vimrubocop_extra_args
 endfunction
 
 function! s:rubocop_auto_correct()
-  let config_file = g:lint_dir_path.'/rubocop.yml'
+  let l:config_file = g:lint_dir_path.'/rubocop.yml'
   if filereadable('.rubocop.yml')
-    let config_file = '.rubocop.yml'
+    let l:config_file = '.rubocop.yml'
   endif
 
   if filereadable('./config/environment.rb')
     let g:vimrubocop_rubocop_cmd = 'bundle exec rubocop '
-    let g:vimrubocop_extra_args = '--rails --auto-correct --config '.config_file
+    let g:vimrubocop_extra_args = '--rails --auto-correct --config '.l:config_file
   else
     let g:vimrubocop_rubocop_cmd = 'rbenv exec rubocop '
-    let g:vimrubocop_extra_args = '--auto-correct --config '.config_file
+    let g:vimrubocop_extra_args = '--auto-correct --config '.l:config_file
   endif
   RuboCop
   unlet g:vimrubocop_extra_args
@@ -46,5 +46,5 @@ command! RubocopAutoCorrect call s:rubocop_auto_correct()
 noremap <leader>a :<C-u>RubocopCheck<CR>
 noremap <leader>as :<C-u>:w<CR>:RubocopAutoCorrect<CR>
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
