@@ -10,9 +10,6 @@ set cpoptions&vim
 nnoremap <C-s><C-u> :<C-u>Gstatus<CR>
 " diff
 nnoremap <C-s><C-d> :<C-u>Git diff<CR>
-" commit
-nnoremap <C-s>c :<C-u>Gcommit -v<CR>
-nnoremap <C-s><C-c> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -v<CR>
 
 " <C-g>プレフィックス
 " diff
@@ -20,6 +17,9 @@ nnoremap <C-g><C-d> :<C-u>Gdiff<CR>
 " stash
 nnoremap <C-g>ss :<C-u>Git stash save
 nnoremap <C-g>sp :<C-u>Git stash pop
+" commit
+nnoremap <C-g>c :<C-u>Gcommit -v<CR>
+nnoremap <C-g><C-c> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -v<CR>
 " temporary commit
 nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
 nnoremap <C-g><C-t> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
