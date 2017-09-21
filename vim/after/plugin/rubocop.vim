@@ -13,10 +13,12 @@ function! s:rubocop_check()
 
   if filereadable('./config/environment.rb')
     let g:vimrubocop_rubocop_cmd = 'bundle exec rubocop '
-    let g:vimrubocop_extra_args = '--rails --config '.l:config_file
+    let g:vimrubocop_config = l:config_file
+    let g:vimrubocop_extra_args = '--rails --require rubocop-rspec'
   else
     let g:vimrubocop_rubocop_cmd = 'rbenv exec rubocop '
-    let g:vimrubocop_extra_args = '--config '.l:config_file
+    let g:vimrubocop_config = l:config_file
+    let g:vimrubocop_extra_args = '--require rubocop-rspec'
   endif
   RuboCop
   unlet g:vimrubocop_extra_args
@@ -30,10 +32,12 @@ function! s:rubocop_auto_correct()
 
   if filereadable('./config/environment.rb')
     let g:vimrubocop_rubocop_cmd = 'bundle exec rubocop '
-    let g:vimrubocop_extra_args = '--rails --auto-correct --config '.l:config_file
+    let g:vimrubocop_config = l:config_file
+    let g:vimrubocop_extra_args = '--rails --require rubocop-rspec --auto-correct'
   else
     let g:vimrubocop_rubocop_cmd = 'rbenv exec rubocop '
-    let g:vimrubocop_extra_args = '--auto-correct --config '.l:config_file
+    let g:vimrubocop_config = l:config_file
+    let g:vimrubocop_extra_args = '--require rubocop-rspec --auto-correct'
   endif
   RuboCop
   unlet g:vimrubocop_extra_args
