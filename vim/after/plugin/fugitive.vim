@@ -49,6 +49,12 @@ fun! s:fugitive_commit_setting()
   nmap <silent><buffer> <C-s><C-a> :<C-u>wa<CR>:<C-u>call system('\git add $(\git rev-parse --show-cdup).')<CR>r
   " reset
   nmap <silent><buffer> <C-s><C-r> :<C-u>wa<CR>:<C-u>call system('\git reset')<CR>r
+  " temporary commit
+  nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>r
+  nnoremap <C-g><C-t> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>r
+  " fixup commit
+  nnoremap <C-g>f :<C-u>Gcommit --amend --no-edit<CR>r
+  nnoremap <C-g><C-f> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit --amend --no-edit<CR>r
 endf
 
 fun! s:fugitive_blame_setting()
