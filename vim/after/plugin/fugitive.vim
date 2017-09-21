@@ -21,11 +21,11 @@ nnoremap <C-g>sp :<C-u>Git stash pop
 nnoremap <C-g>c :<C-u>Gcommit -v<CR>
 nnoremap <C-g><C-c> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -v<CR>
 " temporary commit
-nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
-nnoremap <C-g><C-t> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
+nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>:<C-u>e!<CR>:<C-U>checktime<CR>
+nnoremap <C-g><C-t> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>:<C-u>e!<CR>:<C-U>checktime<CR>
 " fixup commit
-nnoremap <C-g>f :<C-u>Gcommit --amend --no-edit<CR>
-nnoremap <C-g><C-f> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit --amend --no-edit<CR>
+nnoremap <C-g>f :<C-u>Gcommit --amend --no-edit<CR>:<C-u>e!<CR>:<C-U>checktime<CR>
+nnoremap <C-g><C-f> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit --amend --no-edit<CR>:<C-u>e!<CR>:<C-U>checktime<CR>
 " add
 nnoremap <C-g><C-a> :<C-u>w<CR>:<C-u>Gwrite<CR>
 
