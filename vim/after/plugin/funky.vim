@@ -2,8 +2,8 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 " 移動後の画面位置
 let g:ctrlp_funky_after_jump = 'zxzz'
@@ -13,16 +13,16 @@ let g:ctrlp_types = ['fil', 'buf']
 let g:ctrlp_builtins = len(g:ctrlp_types) - 1
 
 fun! s:ctrlp_funky_range() range
-  let unnamed_register = @@
-  silent normal gvy
-  let selected_range = @@
-  let @@ = unnamed_register
+  let l:unnamed_register = @@
+  silent normal! gvy
+  let l:selected_range = @@
+  let @@ = l:unnamed_register
 
-  if strlen(matchstr(selected_range,"^\\s*$"))
+  if strlen(matchstr(l:selected_range,"^\\s*$"))
     return 0
   endif
 
-  execute 'CtrlPFunky '.selected_range
+  execute 'CtrlPFunky '.l:selected_range
 endfunction
 
 command! -range CtrlPFunkyRange call s:ctrlp_funky_range()
@@ -30,5 +30,5 @@ command! -range CtrlPFunkyRange call s:ctrlp_funky_range()
 nnoremap <C-s><C-h> :<C-u>CtrlPFunky<CR>
 vnoremap <C-s><C-h> :<C-u>CtrlPFunkyRange<CR>
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
