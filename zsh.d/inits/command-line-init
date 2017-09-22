@@ -39,14 +39,22 @@ function +vi-git-hook-begin() {
 }
 
 function +vi-git-vcs-info-msg-setting() {
-  local not_pushed_count staged_count modified_count untracked_count
+  local current_head origin_head not_pushed_count staged_count modified_count untracked_count
 
   # vcs_info_msg_1_の場合のみ実行されるようにする(if文の1がmsgの数値に該当)
   if [[ $1 != 1 ]]; then
     return 0
   fi
 
-  not_pushed_count=${"$(git rev-list origin/HEAD..HEAD &>/dev/null | wc -l)"// /}
+  current_head=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+
+  if git rev-parse --abbrev-ref origin/$current_head &>/dev/null; then
+    origin_head="origin/$current_head"
+  else
+    origin_head='origin/HEAD'
+  fi
+
+  not_pushed_count=${"$(git rev-list $origin_head..$current_head &>/dev/null | wc -l)"// /}
   staged_count=${"$(git diff --cached --name-only &>/dev/null | wc -l)"// /}
   modified_count=${"$(git ls-files --modified &>/dev/null | wc -l)"// /}
   untracked_count=${"$(git ls-files --exclude-standard --others &>/dev/null | wc -l)"// /}
