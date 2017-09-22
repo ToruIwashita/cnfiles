@@ -43,6 +43,8 @@ function +vi-git-hook-begin() {
 }
 
 function +vi-git-vcs-info-msg-setting() {
+  local staged_count modified_count untracked_count
+
   # vcs_info_msg_1_の場合のみ実行されるようにする(if文の1がmsgの数値に該当)
   if [[ $1 != 1 ]]; then
     return 0
@@ -62,13 +64,13 @@ function +vi-git-vcs-info-msg-setting() {
   if [[ modified_count -gt 0 ]]; then
     hook_com[misc]+="%F{red}M: $modified_count%f "
   else
-    hook_com[misc]+="M: $staged_count "
+    hook_com[misc]+="M: $modified_count "
   fi
 
   if [[ untracked_count -gt 0 ]]; then
     hook_com[misc]+="%F{red}U: $untracked_count%f"
   else
-    hook_com[misc]+="U: $staged_count"
+    hook_com[misc]+="U: $untracked_count"
   fi
 }
 
