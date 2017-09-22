@@ -50,10 +50,7 @@ bindkey -v '^g' send-break                              # Ctrl+gで入力キャ�
 bindkey -v '^h' backward-delete-char                    # Ctrl+hでbackward-delete-char(menuselectのinteractive-modeでbackword)
 bindkey -v '^i' expand-or-complete                      # Ctrl+iで通常補完
 bindkey -v '^j' accept-line                             # Ctrl+jでaccept-line
-bindkey -v '^k' menu-complete-files                     # Ctrl+kでファイル補完
-bindkey -v '^l' edge-start-editor                       # Ctrl+lでedge-start-editor
 bindkey -v '^m' accept-line                             # Ctrl+mでaccept-line
-bindkey -v '^o' cd-leaf-dir                             # Ctrl+s,Ctrl+oでリーフディレクトリ移動
 bindkey -v '^q' self-insert                             # Ctrl+qでself-insert
 bindkey -v '^r' history-incremental-search-backward     # Ctrl+rでインクリメンタルサーチ
 bindkey -v '^s' self-insert                             # Ctrl+sでself-insert,Prefixとして使用
@@ -76,10 +73,7 @@ bindkey -v '^s^a' immediate-git-add-all                 # Ctrl+s,Ctrl+aでgit ad
 bindkey -v '^s^d' immediate-git-diff                    # Ctrl+s,Ctrl+dでgit diff
 bindkey -v '^s^f' peco-file-finder                      # Ctrl+s,Ctrl+fでpeco-file-finder
 bindkey -v '^s^h' immediate-git-log-search-with-diff    # Ctrl+s,Ctrl+hでgit logをdiff出力付きで検索
-bindkey -v '^s^i' immediate-ls                          # Ctrl+s,Ctrl+iでls
-bindkey -v '^s^j' immediate-cat                         # Ctrl+s,Ctrl+jでBUFFERをcat
 bindkey -v '^s^k' menu-complete-recent-dirs             # Ctrl+s,Ctrl+kで最近移動したディレクトリへ移動
-bindkey -v '^s^l' start-editor                          # Ctrl+s,Ctrl+lでstart-editor
 bindkey -v '^s^o' cd-leaf-dir-and-insert-leaf-file      # Ctrl+s,Ctrl+oでバッファ残しリーフディレクトリ補完
 bindkey -v '^s^p' copy-prev-shell-word                  # Ctrl+s,Ctrl+pで1つ前の文字列をコピペ(空欄区切りで文字列判定)
 bindkey -v '^s^r' immediate-git-reset-all               # Ctrl+s,Ctrl+rでgit reset
@@ -88,20 +82,7 @@ bindkey -v '^s^u' immediate-git-status                  # Ctrl+s,Ctrl+uでgit st
 bindkey -v '^s^]' vi-backward-word                      # Ctrl+s,Ctrl+]で前の単語の先頭に移動
 bindkey -v '^s^@' kill-line                             # Ctrl+s,Ctrl+@でカーソル行以降削除
 bindkey -v '^]' vi-forward-word                         # Ctrl+]で次の単語の先頭に移動
-bindkey -v '^_' cdup                                    # Ctrl+_でcdup
 bindkey -v '^?' backward-delete-char                    # BSでbackward-delete-char(menuselectのinteractive-modeでbackword)
-# 補完メニュー選択モードキーマップ
-bindkey -M menuselect '^g' .send-break                         # Ctrl+gでsend-break2回
-bindkey -M menuselect '^i' forward-char                        # tabかCtrl+iで補完候補1つ右へ
-bindkey -M menuselect '^j' .accept-line                        # Ctrl+jでaccept-line2回
-bindkey -M menuselect '^k' infer-next-history                  # Ctrl+kで次の補完メニュー
-bindkey -M menuselect '^m' accept-line                         # Ctrl+mでaccept-line
-bindkey -M menuselect '^n' down-line-or-history                # Ctrl+nで下へ
-bindkey -M menuselect '^p' up-line-or-history                  # Ctrl+pで上へ
-bindkey -M menuselect '^r' history-incremental-search-forward  # Ctrl+rでインクリメンタルサーチフォワード
-bindkey -M menuselect '^s' vi-insert                           # Ctrl+sでinteractive-modeをtoggle
-bindkey -M menuselect '^u' send-break                          # Ctrl+uでsend-break
-bindkey -M menuselect '^]' accept-and-hold                     # Ctrl+]で候補をバッファに入れる
 
 ## alias
 # cd
