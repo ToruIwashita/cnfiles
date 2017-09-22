@@ -2,8 +2,8 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 noremap <leader>l :<C-u>CloseRightWin<CR>
 noremap <leader>h :<C-u>CloseLeftWin<CR>
@@ -24,5 +24,5 @@ noremap <leader>x :<C-u>wa<CR>:<C-u>qa<CR>
 noremap <C-w>x <NOP>
 noremap <C-w>x :<C-u>CloseMisWin<CR>:<C-u>close<CR>
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
