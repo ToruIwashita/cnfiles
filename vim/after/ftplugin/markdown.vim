@@ -6,8 +6,13 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 function! s:add_md_space()
+  execute 'mark Z'
+
   silent! execute '%s/\(^[^$].*[^  ]$\)/\1  /'
   silent! execute '%s/\(^ \{4}.*[^ ] \{2}$\)/\1  /'
+
+  normal! `Z
+  execute 'delmarks Z'
 endfunction
 
 function! s:add_md_space_range(line1,line2)
