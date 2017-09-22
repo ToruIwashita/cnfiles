@@ -1,7 +1,7 @@
 ## git関連関数
 __git-ref-head() {
   local ref
-  ref=$(git symbolic-ref HEAD --short 2>/dev/null) || return 1
+  ref=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) || return 1
   print $ref
 }
 
