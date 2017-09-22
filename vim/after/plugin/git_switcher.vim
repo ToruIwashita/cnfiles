@@ -25,7 +25,7 @@ nnoremap <C-w>r :<C-u>GswLoad<SPACE>
 nnoremap <C-g>g :<C-u>Gsw<SPACE>
 nnoremap <C-g><C-g> :<C-u>GswRemote<SPACE>
 nnoremap <C-g>m :<C-u>GswMove<SPACE>
-nnoremap <C-g><C-m> :<C-u>GswMove<SPACE><C-r>=split(system('\git symbolic-ref --short HEAD 2>/dev/null'), "\n")[0]<CR>
+nnoremap <C-g><C-m> :<C-u>GswMove<SPACE><C-r>=split(system('\git rev-parse --abbrev-ref HEAD 2>/dev/null'), "\n")[0]<CR>
 nnoremap <C-g>r :<C-u>GswRemove<SPACE>
 nnoremap <C-g>_ :<C-u>GswPrev<CR>
 nnoremap <C-g>b :<C-u>GswBranch<CR>
