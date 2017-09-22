@@ -4,3 +4,7 @@ bindkey -v '^p' history-substring-search-up    # Ctrl+pで部分文字列検索,
 
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_FOUND='bg=magenta,fg=white'
 HISTORY_SUBSTRING_SEARCH_HIGHLIGHT_NOT_FOUND='bg=red,fg=white'
+
+## silent-diver-zsh
+sd-default-setting-for-jis '^s'
+sd-set-splash-dive on
