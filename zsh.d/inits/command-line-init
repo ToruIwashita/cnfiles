@@ -39,13 +39,14 @@ function +vi-git-hook-begin() {
 }
 
 function +vi-git-vcs-info-msg-setting() {
-  local current_head origin_head not_pushed_count staged_count modified_count untracked_count
+  local relative_root_dir_path current_head origin_head not_pushed_count staged_count modified_count untracked_count
 
   # vcs_info_msg_1_の場合のみ実行されるようにする(if文の1がmsgの数値に該当)
   if [[ $1 != 1 ]]; then
     return 0
   fi
 
+  relative_root_dir_path=$(git rev-parse --show-cdup 2>/dev/null)
   current_head=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
 
   if git rev-parse --abbrev-ref origin/$current_head &>/dev/null; then
@@ -56,8 +57,8 @@ function +vi-git-vcs-info-msg-setting() {
 
   not_pushed_count=${"$(git rev-list $origin_head..$current_head &>/dev/null | wc -l)"// /}
   staged_count=${"$(git diff --cached --name-only &>/dev/null | wc -l)"// /}
-  modified_count=${"$(git ls-files --modified &>/dev/null | wc -l)"// /}
-  untracked_count=${"$(git ls-files --exclude-standard --others &>/dev/null | wc -l)"// /}
+  modified_count=${"$(git ls-files --modified $relative_root_dir_path &>/dev/null | wc -l)"// /}
+  untracked_count=${"$(git ls-files --exclude-standard --others $relative_root_dir_path &>/dev/null | wc -l)"// /}
 
   # hook_com[misc]は%mのフォーマット
   if [[ not_pushed_count -gt 0 ]]; then
