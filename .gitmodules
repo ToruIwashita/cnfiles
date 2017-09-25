@@ -58,3 +58,6 @@
 [submodule "modules/sbtenv"]
 	path = modules/sbtenv
 	url = git@github.com:sbtenv/sbtenv.git
+[submodule "modules/graphviz"]
+	path = modules/graphviz
+	url = git@gitlab.com:graphviz/graphviz.git
