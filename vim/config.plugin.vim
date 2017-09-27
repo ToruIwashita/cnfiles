@@ -30,16 +30,17 @@ let g:ale_linters = {
 \ }
 
 "" ctrlp(after/ にも設定あり)
-let g:ctrlp_map = '<C-k>'                              " Start CtrlP
-let g:ctrlp_match_window = 'min:10,max:'.&lines/3      " quickfixサイズ
-let g:ctrlp_mruf_max = 100                             " 開いたファイル履歴保持数
-let g:ctrlp_clear_cache_on_exit = 0                    " 終了時にキャッシュをクリアしない
-let g:ctrlp_max_depth = 15                             " ディレクトリ再帰検索深度
-let g:ctrlp_max_files = 25000                          " スキャンファイルの初期値
-let g:ctrlp_open_new_file = 'r'                        " 新しいファイルをカレントウィンドウに開く
-let g:ctrlp_open_multiple_files = 'jt'                 " 複数ファイルを開く時新しいタブで開き,全て開き終わった後1つ目に移動する
-let g:ctrlp_cache_dir = g:cache_dir_path.'/vim/ctrlp'  " キャッシュディレクトリ
-let g:ctrlp_types = ['fil', 'buf']                     " 使用するモード指定(WIP)
+let g:ctrlp_map = '<C-k>'                                 " Start CtrlP
+let g:ctrlp_user_command = 'ag %s -l -i --nocolor -g ""'  " ctrlpでagを使用する
+let g:ctrlp_match_window = 'min:10,max:'.&lines/3         " quickfixサイズ
+let g:ctrlp_mruf_max = 100                                " 開いたファイル履歴保持数
+let g:ctrlp_clear_cache_on_exit = 0                       " 終了時にキャッシュをクリアしない
+let g:ctrlp_max_depth = 15                                " ディレクトリ再帰検索深度
+let g:ctrlp_max_files = 25000                             " スキャンファイルの初期値
+let g:ctrlp_open_new_file = 'r'                           " 新しいファイルをカレントウィンドウに開く
+let g:ctrlp_open_multiple_files = 'jt'                    " 複数ファイルを開く時新しいタブで開き,全て開き終わった後1つ目に移動する
+let g:ctrlp_cache_dir = g:cache_dir_path.'/vim/ctrlp'     " キャッシュディレクトリ
+let g:ctrlp_types = ['fil', 'buf']                        " 使用するモード指定(WIP)
 " CtrlPキーマッピング
 let g:ctrlp_prompt_mappings = {
   \ 'ToggleRegex()':        ['<C-_>'],
