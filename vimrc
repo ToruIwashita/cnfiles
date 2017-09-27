@@ -71,7 +71,7 @@ Plug 'ctrlpvim/ctrlp.vim'                              " 多機能finder
 Plug 'tacahiroy/ctrlp-funky'                           " ctrlpで関数を絞り込む
 Plug 'jasoncodes/ctrlp-modified.vim'                   " ctrlpでgitで変更があったファイルを絞り込む
 Plug 'dyng/ctrlsf.vim'                                 " 文字列検索
-Plug 'gcmt/wildfire.vim'                               " text-object選択
+Plug 'terryma/vim-expand-region'                       " text-objectビジュアル選択
 Plug 'godlygeek/tabular'                               " テキストフィルタリング
 Plug 'plasticboy/vim-markdown'                         " vim-markdown(vim-tabular依存)
 Plug 'fugalh/desert.vim'                               " カラースキーマ
