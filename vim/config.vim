@@ -75,8 +75,6 @@ cnoremap <C-d> <DEL>
 cnoremap <C-u> <S-RIGHT><C-w>
 " コマンドラインにカーソル上の文字を入力
 cnoremap <C-]> <C-r><C-w>
-" コマンドラインにヤンクした文字列をペースト
-cnoremap <C-w>p <C-r>"
 " コマンドラインに検索した文字列を入力
 cnoremap <C-w>* <C-r>/
 
@@ -153,13 +151,6 @@ noremap <C-s><C-]> :<C-u>tnext<CR>zz
 " 前のタグへ移動
 noremap <C-s>[ :<C-u>tprevious<CR>zz
 noremap <C-s><C-[> :<C-u>tprevious<CR>zz
-"" マーク関連
-" 指定マークへ移動
-noremap <leader>e '
-"" ペースト関連
-" 削除してから貼り付けを行う時に事前にヤンクした文字列をペースト
-noremap <leader>p "0p
-noremap <leader>P "0P
 
 "" nnoremap
 " recording
@@ -194,10 +185,6 @@ nnoremap qqq/ <ESC>q/
 nnoremap qqq? <ESC>q?
 " 現在のファイル名表示
 nnoremap <leader>v :<C-u>echo expand('%')<CR>
-" tag入力
-nnoremap <C-s>h :<C-u>tselect<SPACE>
-" カーソル以降の文字とヤンクした単語を置換
-nnoremap <silent> cp de"0Pb
 
 "" inoremap
 " ノーマルモードに切り替え<ESC>
