@@ -87,6 +87,7 @@ let g:wildfire_objects = [
   \ "i'", "a'",
   \ 'i"', 'a"',
   \ 'i`', 'a`',
+  \ 'ajb', 'ijb',
   \ 'i)', 'a)',
   \ 'i]', 'a]',
   \ 'i}', 'a}',
