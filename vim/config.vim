@@ -125,8 +125,6 @@ noremap <C-w><C-]> gt
 " 前のバッファへ移動
 noremap <C-w>[ gT
 noremap <C-w><C-[> gT
-" numberオプションの切り替え
-noremap <leader>_ :<C-u>set invnumber<CR>
 " <C-w>1..9で任意の番号のタブへ移動
 for s:i in range(1, 9)
   execute 'noremap <C-w>'.s:i.' <NOP>'
