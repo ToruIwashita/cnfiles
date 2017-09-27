@@ -78,26 +78,6 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtExit()':            ['<ESC>','<C-[>']
 \ }
 
-"" vim-expand-region
-map <C-l> <Plug>(expand_region_expand)
-map <C-h> <Plug>(expand_region_shrink)
-
-let g:expand_region_text_objects = {
-  \ 'iW' :0,
-  \ "i'" :0, "a'" :0,
-  \ 'i"' :0, 'a"' :0,
-  \ 'i`' :0, 'a`' :0,
-  \ 'i)' :1, 'a)' :1,
-  \ 'i]' :1, 'a]' :1,
-  \ 'i}' :1, 'a}' :1,
-  \ 'i>' :1, 'a>' :1,
-  \ 'it' :0, 'at' :0,
-  \ 'il' :0, 'al' :0,
-  \ 'ii' :0, 'ai' :0,
-  \ 'is' :0, 'as' :0,
-  \ 'ip' :0, 'ap' :0
-\ }
-
 "" auto-ctags(after/ にも設定あり)
 let g:auto_ctags = 0                                       " BufWritePostで自動実行しない
 let g:auto_ctags_bin_path = g:local_dir_path.'/bin/ctags'  " ctagsのbinパス
