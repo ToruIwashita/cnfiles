@@ -234,7 +234,7 @@ vnoremap <ESC> v_<ESC>
 " ファイルを開いたときに最後の変更点へ移動
 augroup previous_cursor_line
   autocmd!
-  autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line('$') | exe 'normal! g`"zz' | endif
+  autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line('$') | exe 'normal! g`"zz' | endif
 augroup END
 
 " ウィンドウ移動で外部でのファイル変更チェック
