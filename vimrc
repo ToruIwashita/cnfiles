@@ -45,7 +45,7 @@ Plug 'rhysd/committia.vim'                             " コミットログ入�
 Plug 'kana/vim-submode'                                " 連続入力などをサポートするサブモードを定義する
 Plug 'kana/vim-textobj-user'                           " 独自text-object定義
 Plug 'kana/vim-textobj-line'                           " lineのtext-object(vim-textobj-user依存)
-Plug 'kana/vim-textobj-indent'                         " カーゾル行と同じインデントのtext-object(vim-textobj-user依存)
+Plug 'kana/vim-textobj-indent'                         " カーソル行と同じインデントのtext-object(vim-textobj-user依存)
 Plug 'kana/vim-niceblock'                              " ビジュアル選択時にI,Aで行頭,行末に文字挿入
 Plug 'vim-ruby/vim-ruby'                               " vim-ruby
 Plug 'derekwyatt/vim-scala'                            " vim-scala
