@@ -43,9 +43,10 @@ Plug 'tyru/open-browser-github.vim'                    " githubをブラウザ�
 Plug 'kannokanno/previm'                               " markdownなどのプレビュー用(open-browser依存)
 Plug 'rhysd/committia.vim'                             " コミットログ入力サポート
 Plug 'kana/vim-submode'                                " 連続入力などをサポートするサブモードを定義する
-Plug 'kana/vim-textobj-user'                           " 独自text-object定義
+Plug 'kana/vim-textobj-user', { 'tag': '0.7.2' }       " 独自text-object定義(0.7.3以降wildfireが動かなくなったので暫定対処)
 Plug 'kana/vim-textobj-line'                           " lineのtext-object(vim-textobj-user依存)
 Plug 'kana/vim-textobj-indent'                         " カーソル行と同じインデントのtext-object(vim-textobj-user依存)
+Plug 'kana/vim-textobj-jabraces'                       " 日本語の「」や【】などのtext-object
 Plug 'kana/vim-niceblock'                              " ビジュアル選択時にI,Aで行頭,行末に文字挿入
 Plug 'vim-ruby/vim-ruby'                               " vim-ruby
 Plug 'derekwyatt/vim-scala'                            " vim-scala
