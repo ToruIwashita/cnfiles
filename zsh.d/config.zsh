@@ -57,6 +57,7 @@ bindkey -v '^s' self-insert                             # Ctrl+sでself-insert,P
 bindkey -v '^u' kill-word                               # Ctrl+uでkill-word
 bindkey -v '^w' backward-kill-word                      # Ctrl+wでbackward-kill-word
 bindkey -v '^y' push-input                              # Ctrl+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
+bindkey -v '^z' run-fg-last                             # Ctrl+zで最後にサスペンドしたjobに復帰する
 bindkey -v '^sf' peco-file-find-and-start-editor        # Ctrl+s,fでファイル検索してstart-editor
 bindkey -v '^sg' immediate-hub-browse                   # Ctrl+s,hでhub browse
 bindkey -v '^sh' immediate-git-log-search               # Ctrl+s,hでgit log検索
