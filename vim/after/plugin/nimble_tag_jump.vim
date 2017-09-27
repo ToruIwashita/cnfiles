@@ -31,10 +31,15 @@ endfunction
 command! NimbleTagToNewTab call s:nimble_tag_to_new_tab()
 command! NimbleTagRangeToNewTab call s:nimble_tag_range_to_new_tab()
 
+" tag直接入力
+nnoremap <C-s>h :<C-u>tselect<SPACE>
+
+" カーソル直下の文字列でtagジャンプ
 noremap <C-s>l :<C-u>NimbleTag<CR>
 noremap <C-s>L :<C-u>NimbleTagToNewTab<CR>
 noremap <C-s><C-l> :<C-u>NimbleTjump<CR>
 
+" 選択範囲の文字列でtagジャンプ
 vnoremap <C-s>l :<C-u>NimbleTagRange<CR>
 vnoremap <C-s>L :<C-u>NimbleTagRangeToNewTab<CR>
 vnoremap <C-s><C-l> :<C-u>NimbleTjumpRange<CR>
