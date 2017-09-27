@@ -11,7 +11,7 @@ function! s:add_md_space()
   silent! execute '%s/\(^[^$].*[^  ]$\)/\1  /'
   silent! execute '%s/\(^ \{4}.*[^ ] \{2}$\)/\1  /'
 
-  normal! `Z
+  silent! normal! `Z
   execute 'delmarks Z'
 endfunction
 
