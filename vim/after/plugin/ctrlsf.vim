@@ -2,8 +2,8 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 let g:ctrlsf_indent = 2           " 結果前方のインデント数
 let g:ctrlsf_context = '-C 2'     " ヒットした文字列の前後表示行数
@@ -11,9 +11,8 @@ let g:ctrlsf_position = 'bottom'  " 結果の出す位置
 let g:ctrlsf_winsize = &lines/3   " 結果ウィンドウサイズ
 " 検索結果画面のキーマップ
 let g:ctrlsf_mapping = {
-  \ 'open':  ['<CR>', 'o'],
-  \ 'openb': '<C-o>',
-  \ 'split': 's',
+  \ 'open':  'o',
+  \ 'openb': ['<CR>'],
   \ 'tab':   't',
   \ 'tabb':  '<C-t>',
   \ 'quit':  'q',
@@ -23,11 +22,12 @@ let g:ctrlsf_mapping = {
 
 fun! s:ctrlsf_setting()
   nnoremap <buffer> <C-s> :<C-u>call ctrlsf#JumpTo('split')<CR>:<C-u>CtrlSFOpen<CR>
+  nnoremap <buffer> <C-i> :<C-u>call ctrlsf#JumpTo('vsplit')<CR>:<C-u>CtrlSFOpen<CR>
 endf
 
 fun! s:buffer_ctrlsf(keyword)
-  let buflist = join(map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'), ' ')
-  exec 'CtrlSF '.a:keyword.' '.buflist
+  let l:buflist = join(map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'), ' ')
+  exec 'CtrlSF '.a:keyword.' '.l:buflist
 endf
 
 nmap <C-s>s <Plug>CtrlSFCwordPath<CR>
@@ -45,5 +45,5 @@ augroup local_ctrlsf
   autocmd FileType ctrlsf call s:ctrlsf_setting()
 augroup END
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
