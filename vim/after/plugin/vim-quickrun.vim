@@ -2,8 +2,8 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 " quickrunの実行モジュールをvimprocに設定
 let g:quickrun_config = {
@@ -87,5 +87,5 @@ augroup END
 
 nnoremap <expr> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
