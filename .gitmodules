@@ -58,3 +58,6 @@
 [submodule "modules/graphviz"]
 	path = modules/graphviz
 	url = git@gitlab.com:graphviz/graphviz.git
+[submodule "modules/LuaJIT"]
+	path = modules/LuaJIT
+	url = git@github.com:LuaJIT/LuaJIT.git
