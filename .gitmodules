@@ -1,9 +1,6 @@
 [submodule "modules/zsh"]
 	path = modules/zsh
 	url = git://github.com/zsh-users/zsh
-[submodule "modules/luajit-2.0"]
-	path = modules/luajit-2.0
-	url = http://luajit.org/git/luajit-2.0.git
 [submodule "modules/the_silver_searcher"]
 	path = modules/the_silver_searcher
 	url = git://github.com/ggreer/the_silver_searcher
