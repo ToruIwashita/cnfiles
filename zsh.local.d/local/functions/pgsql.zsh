@@ -83,3 +83,7 @@ pgdesc() {
 pgshow() {
   pgq '\dt'
 }
+
+pgschema() {
+  pgq '\dn'
+}
