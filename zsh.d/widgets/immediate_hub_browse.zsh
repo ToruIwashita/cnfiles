@@ -1,12 +1,14 @@
 ## immediate-hub-browse
 _immediate-hub-browse() {
-  local cmd
-  cmd='hub browse'
+  if ( ! $(git rev-parse 2>/dev/null) ); then
+    zle -I
+    return
+  fi
 
-  ( ! $(git rev-parse 2>/dev/null) ) && return
+  zle push-line
 
-  zle -I
-  print -s $cmd && eval $cmd
+  BUFFER='hub browse'
+  zle accept-line
 }
 
 zle -N immediate-hub-browse _immediate-hub-browse

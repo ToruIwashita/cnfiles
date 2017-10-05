@@ -1,12 +1,14 @@
 ## immediate-git-diff
 _immediate-git-diff() {
-  local cmd
-  cmd='git diff'
+  if ( ! $(git rev-parse 2>/dev/null) ); then
+    zle -I
+    return
+  fi
 
-  ( ! $(git rev-parse 2>/dev/null) ) && return
+  zle push-line
 
-  zle -I
-  print -s $cmd && eval $cmd
+  BUFFER='git diff'
+  zle accept-line
 }
 
 zle -N immediate-git-diff _immediate-git-diff

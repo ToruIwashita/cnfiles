@@ -1,12 +1,14 @@
 ## immediate-git-reset-all
 _immediate-git-reset-all() {
-  local cmd
-  cmd='git reset &>/dev/null && git status --short'
+  if ( ! $(git rev-parse 2>/dev/null) ); then
+    zle -I
+    return
+  fi
 
-  ( ! $(git rev-parse 2>/dev/null) ) && return
+  zle push-line
 
-  zle -I
-  print -s $cmd && eval $cmd
+  BUFFER='git reset &>/dev/null && git status --short'
+  zle accept-line
 }
 
 zle -N immediate-git-reset-all _immediate-git-reset-all

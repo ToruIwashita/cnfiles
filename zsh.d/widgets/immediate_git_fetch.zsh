@@ -1,12 +1,14 @@
 ## immediate-git-fetch
 _immediate-git-fetch() {
-  local cmd
-  cmd='git fetch --prune'
+  if ( ! $(git rev-parse 2>/dev/null) ); then
+    zle -I
+    return
+  fi
 
-  ( ! $(git rev-parse 2>/dev/null) ) && return
+  zle push-line
 
-  zle -I
-  print -s $cmd && eval $cmd
+  BUFFER='git fetch --prune'
+  zle accept-line
 }
 
 zle -N immediate-git-fetch _immediate-git-fetch

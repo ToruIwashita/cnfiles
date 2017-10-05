@@ -1,12 +1,14 @@
 ## immediate-git-add-all
 _immediate-git-add-all() {
-  local cmd
-  cmd='git diff && git add $(git rev-parse --show-cdup).'
+  if ( ! $(git rev-parse 2>/dev/null) ); then
+    zle -I
+    return
+  fi
 
-  ( ! $(git rev-parse 2>/dev/null) ) && return
+  zle push-line
 
-  zle -I
-  print -s $cmd && eval $cmd
+  BUFFER='git diff && git add $(git rev-parse --show-cdup).'
+  zle accept-line
 }
 
 zle -N immediate-git-add-all _immediate-git-add-all

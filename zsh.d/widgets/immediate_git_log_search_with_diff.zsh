@@ -1,8 +1,6 @@
 ## immediate-git-log-search-with-diff
 _immediate-git-log-search-with-diff() {
-  if (( $#BUFFER )); then
-    print -s "$BUFFER"
-  else
+  if (( ! $#BUFFER )); then
     zle beginning-of-line
     return
   fi
@@ -12,8 +10,10 @@ _immediate-git-log-search-with-diff() {
     return
   fi
 
-  zle -I
-  git log -p -S $BUFFER
+  zle push-line
+
+  BUFFER="git log -p -S $BUFFER"
+  zle accept-line
 }
 
 zle -N immediate-git-log-search-with-diff _immediate-git-log-search-with-diff

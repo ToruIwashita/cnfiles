@@ -4,8 +4,6 @@ _peco-simple-git-grep-and-start-editor() {
   local -a peco_resulting_line
   local -aU file_paths
 
-  (( $#BUFFER )) && print -s "$BUFFER"
-
   if ( ! $(git rev-parse 2>/dev/null) ); then
     zle beginning-of-line
     return

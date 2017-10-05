@@ -1,8 +1,6 @@
 ## immediate-git-log-search
 _immediate-git-log-search() {
-  if (( $#BUFFER )); then
-    print -s "$BUFFER"
-  else
+  if (( ! $#BUFFER )); then
     zle beginning-of-line
     return
   fi
@@ -12,8 +10,10 @@ _immediate-git-log-search() {
     return
   fi
 
-  zle -I
-  git log -S $BUFFER
+  zle push-line
+
+  BUFFER="git log -S $BUFFER"
+  zle accept-line
 }
 
 zle -N immediate-git-log-search _immediate-git-log-search
