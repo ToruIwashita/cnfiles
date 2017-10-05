@@ -62,7 +62,7 @@ function +vi-git-vcs-info-msg-setting() {
 
   # hook_com[misc]は%mのフォーマット
   if [[ not_pushed_count -gt 0 ]]; then
-    hook_com[misc]+="%f%F{cyan}P: $not_pushed_count%f|"
+    hook_com[misc]+="%f%F{magenta}P: $not_pushed_count%f|"
   else
     hook_com[misc]+="P: $not_pushed_count|"
   fi
