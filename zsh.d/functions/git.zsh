@@ -455,6 +455,7 @@ glls() {
 
   print "submodules update & pull master\n"
   git submodule update --init
+  echo
   git submodule foreach 'git checkout master && git pull origin master && echo'
 }
 
