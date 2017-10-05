@@ -88,21 +88,21 @@ function +vi-git-vcs-info-msg-setting() {
 
 ## zstyle
 # vcs_info
-zstyle ':vcs_info:*' enable git hg                                                     # git,hgを有効
-zstyle ':vcs_info:*' max-exports 2                                                     # ${vcs_info_msg_0_},${vcs_info_msg_1_}にメッセージをエクスポート
-zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'                                      # 通常時のフォーマット
+zstyle ':vcs_info:*' enable git hg                                                  # git,hgを有効
+zstyle ':vcs_info:*' max-exports 2                                                  # ${vcs_info_msg_0_},${vcs_info_msg_1_}にメッセージをエクスポート
+zstyle ':vcs_info:*' formats '%s][* %F{green}%b%f'                                  # 通常時のフォーマット
 zstyle ':vcs_info:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)'               # コンフリクト時など,アクションがある場合のフォーマット
 zstyle ':vcs_info:git:*' formats '%s][* %F{green}%b%f' '%m'                         # gitの通常時のフォーマット(引数1つ目vcs_info_msg_0_,2つ目vcs_info_msg_1_)
-zstyle ':vcs_info:git:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)' '%m'  # gitのコンフリクト時など,アクションがある場合のフォーマット(引数1つ目vcs_info_msg_0_,2つ目vcs_info_msg_1_)
+zstyle ':vcs_info:git:*' actionformats '%s][* %F{green}%b%f(%F{red}%a%f)' '%m'      # gitのコンフリクト時など,アクションがある場合のフォーマット(引数1つ目vcs_info_msg_0_,2つ目vcs_info_msg_1_)
 zstyle ':vcs_info:git+set-message:*' hooks git-hook-begin git-vcs-info-msg-setting  # gitのファイル状態をhook_comに格納
 # chpwd
-zstyle ":chpwd:*" recent-dirs-max 100                                  # 最近利用したディレクトリ最大保存数
-zstyle ":chpwd:*" recent-dirs-default true                             # 2つ以上の引数または数値以外の引数が与えられた場合,cdと同じ動作をする
-zstyle ":completion:*" recent-dirs-insert always                       # recent-dirs-default trueの場合に補完を開始するとディレクトリ名一覧になる
+zstyle ":chpwd:*" recent-dirs-max 100             # 最近利用したディレクトリ最大保存数
+zstyle ":chpwd:*" recent-dirs-default true        # 2つ以上の引数または数値以外の引数が与えられた場合,cdと同じ動作をする
+zstyle ":completion:*" recent-dirs-insert always  # recent-dirs-default trueの場合に補完を開始するとディレクトリ名一覧になる
 # completion
-zstyle ':completion:*' completer _complete _match _ignored _prefix     # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
-zstyle ':completion:*' menu select interactive                         # menuselect+interactive-mode(補完全般共通)
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}                  # 補完候補色付け
+zstyle ':completion:*' completer _complete _match _ignored _prefix  # コンプリータ指定(通常,パターンマッチ,除外パターン復活,単語途中の補完)
+zstyle ':completion:*' menu select interactive                      # menuselect+interactive-mode(補完全般共通)
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}               # 補完候補色付け
 
 ## prompt
 # プロンプト表示
