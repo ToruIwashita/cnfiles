@@ -30,6 +30,8 @@ fun! s:buffer_ctrlsf(keyword)
   exec 'CtrlSF '.a:keyword.' '.l:buflist
 endf
 
+command! -nargs=1 BCtrlSF call s:buffer_ctrlsf(<q-args>)
+
 nmap <C-s>s <Plug>CtrlSFCwordPath<CR>
 nmap <C-s>* <Plug>CtrlSFPwordPath<CR>
 vmap <C-s>s <Plug>CtrlSFVwordExec
@@ -37,8 +39,6 @@ nnoremap <C-s><C-s> :<C-u>execute 'BCtrlSF '.expand('<cword>')<CR>
 nnoremap <C-s>f :<C-u>CtrlSF<SPACE>
 nnoremap <C-s><C-f> :<C-u>BCtrlSF<SPACE>
 nnoremap <C-s>w :<C-u>CtrlSFToggle<CR>
-
-command! -nargs=1 BCtrlSF call s:buffer_ctrlsf(<q-args>)
 
 augroup local_ctrlsf
   autocmd!
