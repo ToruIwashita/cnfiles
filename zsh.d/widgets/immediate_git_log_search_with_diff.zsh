@@ -10,8 +10,6 @@ _immediate-git-log-search-with-diff() {
     return
   fi
 
-  zle push-line
-
   BUFFER="git log -p -S $BUFFER"
   zle accept-line
 }

@@ -10,8 +10,6 @@ _immediate-git-log-search() {
     return
   fi
 
-  zle push-line
-
   BUFFER="git log -S $BUFFER"
   zle accept-line
 }
