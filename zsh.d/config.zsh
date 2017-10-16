@@ -80,6 +80,7 @@ bindkey -v '^s^p' copy-prev-shell-word                  # Ctrl+s,Ctrl+pで1つ�
 bindkey -v '^s^r' immediate-git-reset-all               # Ctrl+s,Ctrl+rでgit reset
 bindkey -v '^s^s' vi-find-next-char                     # Ctrl+s,Ctrl+sでviのfind-char
 bindkey -v '^s^u' immediate-git-status                  # Ctrl+s,Ctrl+uでgit status
+bindkey -v '^s^z' run-fg-last-with-up-line-or-history   # Ctrl+s,Ctrl+zで履歴を逆上る+最後にサスペンドしたjobに復帰する
 bindkey -v '^s^]' vi-backward-word                      # Ctrl+s,Ctrl+]で前の単語の先頭に移動
 bindkey -v '^s^@' kill-line                             # Ctrl+s,Ctrl+@でカーソル行以降削除
 bindkey -v '^]' vi-forward-word                         # Ctrl+]で次の単語の先頭に移動
