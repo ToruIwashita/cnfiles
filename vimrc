@@ -54,6 +54,7 @@ Plug 'ngmy/vim-rubocop'                                " vim-rubocop
 Plug 'kchmck/vim-coffee-script'                        " vim-coffee-script
 Plug 'ynkdir/vim-vimlparser'                           " vimlのパーサー(構文解析)
 Plug 'scrooloose/nerdtree'                             " ディレクトリツリーエクスプローラー
+Plug 'Xuyuanp/nerdtree-git-plugin'                     " NERDTreeにgit statusの結果を反映
 Plug 'w0rp/ale'                                        " 非同期シンタックスチェック
 Plug 'tomtom/tcomment_vim'                             " コメントアウト
 Plug 'itchyny/lightline.vim'                           " ステータスライン
