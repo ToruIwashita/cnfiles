@@ -30,15 +30,32 @@ fun! s:buffer_ctrlsf(keyword)
   exec 'CtrlSF '.a:keyword.' '.l:buflist
 endf
 
-command! -nargs=1 BCtrlSF call s:buffer_ctrlsf(<q-args>)
+fun! s:buffer_ctrlsf_range() range
+  let l:unnamed_register = @@
+  silent! normal! gvy
+  let l:selected_range = @@
+  let @@ = l:unnamed_register
 
+  let l:buflist = join(map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'), ' ')
+  exec "CtrlSF '".l:selected_range."' ".l:buflist
+endf
+
+command! -nargs=1 BCtrlSF call s:buffer_ctrlsf(<q-args>)
+command! -range BCtrlSFRange call s:buffer_ctrlsf_range()
+
+" NORMALモード
 nmap <C-s>s <Plug>CtrlSFCwordPath<CR>
-nmap <C-s>* <Plug>CtrlSFPwordPath<CR>
-vmap <C-s>s <Plug>CtrlSFVwordExec
 nnoremap <C-s><C-s> :<C-u>execute 'BCtrlSF '.expand('<cword>')<CR>
+" VISUALモード
+vmap <C-s>s <Plug>CtrlSFVwordExec
+vnoremap <C-s><C-s> :<C-u>BCtrlSFRange<CR>
+" 検索ワードで検索
+nmap <C-s>* <Plug>CtrlSFPwordPath<CR>
+" 結果表示・非表示
+nnoremap <C-s>w :<C-u>CtrlSFToggle<CR>
+" 入力の省略
 nnoremap <C-s>f :<C-u>CtrlSF<SPACE>
 nnoremap <C-s><C-f> :<C-u>BCtrlSF<SPACE>
-nnoremap <C-s>w :<C-u>CtrlSFToggle<CR>
 
 augroup local_ctrlsf
   autocmd!
