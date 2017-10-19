@@ -30,6 +30,7 @@ fi
   --enable-fontset                  \
   --with-ruby-command=$RUBY_PATH    \
   --enable-rubyinterp=dynamic       \
+  --enable-pythoninterp=dynamic     \
   --enable-python3interp=dynamic    \
   --enable-luainterp=dynamic        \
   --with-lua-prefix=$LOCAL_DIR_PATH \
