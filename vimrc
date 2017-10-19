@@ -27,8 +27,8 @@ endif
 let g:plug_url_format = 'git@github.com:%s.git'
 call plug#begin(expand(g:vim_dir_path.'/plugged'))
 
-Plug 'junegunn/vim-plug', {'dir': expand(vim_dir_path.'/plugged/vim-plug/autoload')}
-Plug 'Shougo/vimproc',    {'do': 'make'}
+Plug 'junegunn/vim-plug', { 'dir': expand(vim_dir_path.'/plugged/vim-plug/autoload') }
+Plug 'Shougo/vimproc',    { 'do': 'make' }
 Plug 'Shougo/neocomplete'                              " 入力補完機能(luajit依存)
 Plug 'Shougo/neosnippet'                               " スニペット展開
 Plug 'honza/vim-snippets'                              " 各種snippet
