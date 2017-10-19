@@ -4,6 +4,9 @@ __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
+# OS info
+OS_INFO=darwin
+
 # local dir
 SRC_DIR_PATH=~/src
 LOCAL_DIR_PATH=~/local
@@ -55,6 +58,16 @@ ZSH_CONFIG_LOCAL_DIR_DEST_PATH=$BASE_DIR_PATH/zsh.d/local
 
 # ruby
 RUBY_PATH=${1:-$(which ruby)}
+
+# python
+PYTHON_VERSION_STDOUT=$(python --version 2>&1)
+PYTHON_VERSION=${PYTHON_VERSION_STDOUT#*[[:space:]]}
+PYTHON_MINOR_VERSION=${PYTHON_VERSION%.*}
+PYTHON_CONFIG_DIR=~/.pyenv/versions/$PYTHON_VERSION/lib/python$PYTHON_MINOR_VERSION/config
+PYTHON3_VERSION_STDOUT=$(python3 --version 2>&1)
+PYTHON3_VERSION=${PYTHON3_VERSION_STDOUT#*[[:space:]]}
+PYTHON3_MINOR_VERSION=${PYTHON3_VERSION%.*}
+PYTHON3_CONFIG_DIR=~/.pyenv/versions/$PYTHON3_VERSION/lib/python$PYTHON3_MINOR_VERSION/config-3.6m-$OS_INFO
 
 # scala
 SBT_DIR=~/.sbt/$(sbtenv version | sed -e 's/^sbt-\([0-9]*.[0-9]*\).*/\1/g')

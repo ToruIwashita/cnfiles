@@ -22,18 +22,20 @@ if [[ -f $LOCAL_BIN_DIR_PATH/vim ]]; then
   mv $LOCAL_BIN_DIR_PATH/{vim,vim.prev}
 fi
 
-./configure                         \
-  --prefix=$LOCAL_DIR_PATH          \
-  --with-features=huge              \
-  --enable-multibyte                \
-  --enable-xim                      \
-  --enable-fontset                  \
-  --with-ruby-command=$RUBY_PATH    \
-  --enable-rubyinterp=dynamic       \
-  --enable-pythoninterp=dynamic     \
-  --enable-python3interp=dynamic    \
-  --enable-luainterp=dynamic        \
-  --with-lua-prefix=$LOCAL_DIR_PATH \
+./configure \
+  --prefix=$LOCAL_DIR_PATH                      \
+  --with-features=huge                          \
+  --enable-multibyte                            \
+  --enable-xim                                  \
+  --enable-fontset                              \
+  --with-ruby-command=$RUBY_PATH                \
+  --enable-rubyinterp=dynamic                   \
+  --enable-pythoninterp=dynamic                 \
+  --with-python-config-dir=$PYTHON_CONFIG_DIR   \
+  --enable-python3interp=dynamic                \
+  --with-python3-config-dir=$PYTHON3_CONFIG_DIR \
+  --enable-luainterp=dynamic                    \
+  --with-lua-prefix=$LOCAL_DIR_PATH             \
   --with-luajit
 make && make install
 
