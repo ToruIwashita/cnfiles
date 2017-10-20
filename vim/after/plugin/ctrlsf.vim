@@ -36,8 +36,16 @@ fun! s:buffer_ctrlsf_range() range
   let l:selected_range = @@
   let @@ = l:unnamed_register
 
+  if l:selected_range =~# "'"
+    let l:escapted_selected_range = '"'.escape(l:selected_range, ' \"').'"'
+  elseif l:selected_range =~# '[ \"]'
+    let l:escapted_selected_range = string(l:selected_range)
+  else
+    let l:escapted_selected_range = l:selected_range
+  endif
+
   let l:buflist = join(map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'), ' ')
-  exec "CtrlSF '".l:selected_range."' ".l:buflist
+  exec 'CtrlSF '.l:escapted_selected_range.' '.l:buflist
 endf
 
 command! -nargs=1 BCtrlSF call s:buffer_ctrlsf(<q-args>)
