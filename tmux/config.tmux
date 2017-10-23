@@ -21,7 +21,8 @@ set -g base-index 1
 set -g buffer-limit 33
 set -g history-limit 5000
 # ウィンドウで動作があるとハイライト
-setw -g monitor-activity on
+setw -g monitor-activity off
+# monitor-activity onでウィンドウ動作があった時にステータスラインメッセージを表示
 set -g visual-activity off
 
 ## unbind
