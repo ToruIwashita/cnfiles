@@ -5,9 +5,9 @@ set -e
 
 cd $NEOVIM_SRC_DIR_PATH
 
-rm -rf build/ 
+rm -rf build/
 make distclean
-make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH=$LOCAL_DIR_PATH"
+make CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX=$LOCAL_DIR_PATH"
 make install
 
 git checkout .
