@@ -58,7 +58,7 @@ gclean-m() {
   git ls-files --modified && echo
 
   while :; do
-    print -n 'clean the above files (y/n)? '
+    print -n 'Clean the above files (y/n)? '
 
     read answer
     case "$answer" in
@@ -87,7 +87,7 @@ gclean-u() {
   git ls-files --exclude-standard --others && echo
 
   while :; do
-    print -n 'clean the above files (y/n)? '
+    print -n 'Clean the above files (y/n)? '
 
     read answer
     case "$answer" in
@@ -116,7 +116,7 @@ gclean() {
   git status --short && echo
 
   while :; do
-    print -n 'clean the above files (y/n)? '
+    print -n 'Clean the above files (y/n)? '
 
     read answer
     case "$answer" in
@@ -155,7 +155,7 @@ greset-hard() {
   current_branch=$(__git-ref-head)
 
   while :; do
-    print -n "reset --hard origin/$current_branch (y/n)? "
+    print -n "Reset hard $current_branch (y/n)? "
 
     read answer
     case "$answer" in
@@ -212,7 +212,7 @@ EOF`
 
   if (( ! $#args )); then
     while :; do
-      print -n "reset '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
+      print -n "Reset '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
 
       read answer
       case "$answer" in
@@ -372,7 +372,7 @@ EOF`
 
   if (( ! branch_already_exists )); then
     if (( $#remote_branch )); then
-      print 'fetching remote'
+      print 'Fetching remote'
       git fetch --prune && git branch $branch origin/$branch
     else
       git branch $branch
@@ -448,16 +448,16 @@ EOF`
   current_branch=$(__git-ref-head)
 
   if (( ! $#base_branch )); then
-    print "pull '$current_branch' branch"
+    print "Pull '$current_branch' branch"
     git pull origin $current_branch
   else
     while :; do
-      print -n "rebase '$current_branch' onto '$base_branch' (y/n)? "
+      print -n "Rebase '$current_branch' onto '$base_branch' (y/n)? "
 
       read answer
       case "$answer" in
         [yY])
-          print 'fetch & rebase'
+          print 'Fetch & rebase'
           git pull --rebase origin $base_branch
           break
           ;;
@@ -482,7 +482,7 @@ glls() {
     return 1
   fi
 
-  print "submodules update & pull master\n"
+  print "Submodules update & pull master\n"
   git submodule update --init
   echo
   git submodule foreach 'git checkout master && git pull origin master && echo'
@@ -532,7 +532,7 @@ EOF`
 
   current_branch=$(__git-ref-head)
 
-  print "push '$current_branch' branch"
+  print "Push '$current_branch' branch"
 
   if (( force )); then
     while :; do
@@ -572,7 +572,7 @@ grb() {
     rebase_target="HEAD~$1"
   fi
 
-  print "rebase $rebase_target"
+  print "Rebase $rebase_target"
   git rebase -i $rebase_target
 }
 
