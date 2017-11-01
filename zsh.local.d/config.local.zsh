@@ -19,6 +19,8 @@ if [[ -d $SBTENV_ROOT ]]; then
 fi
 
 ## alias
+# git
+alias gcs='git commit -m "- update submodules"'
 # sbt
 alias sbt-c='sbt ~console'
 alias sbt-c='sbt ~compile'
@@ -40,7 +42,3 @@ alias bspork='bundle exec spork'
 ## bindkey
 #bindkey -v '^sb' immediate-pbcopy     # Ctr+s,pでBUFFERをcatしてpbcopy
 #bindkey -v '^s^b' immediate-tmp-pbcopy # Ctr+s,Ctr+cでtmpファイルをcatしてpbcopy
-## alias
-#alias ls="gls -F --color"
-#alias find="gfind"
-#alias xargs="gxargs"
