@@ -144,6 +144,35 @@ gra() {
   git status --short
 }
 
+greset-hard() {
+  local current_branch answer
+
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    return 1
+  fi
+
+  current_branch=$(__git-ref-head)
+
+  while :; do
+    print -n "reset --hard origin/$current_branch (y/n)? "
+
+    read answer
+    case "$answer" in
+      [yY])
+        git reset --hard origin/$current_branch
+        break
+        ;;
+      [nN])
+        break
+        ;;
+      *)
+        print -n 'Please enter y or n. '
+        ;;
+    esac
+  done
+}
+
 greset-latest() {
   local self_cmd help usage answer
 
