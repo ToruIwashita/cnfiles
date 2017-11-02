@@ -30,6 +30,7 @@ alias brails-c='RAILS_ENV=development bundle exec rails c'
 alias brails-r='RAILS_ENV=development bundle exec rails r'
 # railsに付随するツール
 alias bspork='bundle exec spork'
+# alias localstack-s='SERVICES=sqs DEFAULT_REGION=ap-northeast-1 HOSTNAME=localstack localstack start'
 ## rails routing
 # alias output-routing='zsh -c "cd ~/works/${project}/; bundle exec rake routes >! ~/works/tmp/routing.txt"'
 # alias archive-routing='[[ -f ~/works/tmp/routing.txt ]] && cp ~/works/tmp/{routing.txt,routing.prev.txt}'
