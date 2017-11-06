@@ -20,6 +20,7 @@ nmap <leader>el <Plug>(easymotion-overwin-line)
 map  <leader>ew <Plug>(easymotion-bd-w)
 nmap <leader>ew <Plug>(easymotion-overwin-w)
 
+" incsearch.vim,incsearch-easymotion.vim依存のコード
 function! s:incsearch_config(...) abort
   return incsearch#util#deepextend(deepcopy({
   \   'modules': [incsearch#config#easymotion#module({'overwin': 1})],
@@ -33,6 +34,7 @@ endfunction
 noremap <silent><expr> /  incsearch#go(<SID>incsearch_config())
 noremap <silent><expr> ?  incsearch#go(<SID>incsearch_config({'command': '?'}))
 
+" incsearch.vim,incsearch-fuzzy.vim,incsearch-easymotion.vim依存のコード
 function! s:config_easyfuzzymotion(...) abort
   return extend(copy({
   \   'converters': [incsearch#config#fuzzyword#converter()],
