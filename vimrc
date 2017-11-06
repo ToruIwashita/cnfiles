@@ -58,7 +58,6 @@ Plug 'Xuyuanp/nerdtree-git-plugin'                     " NERDTreeにgit status�
 Plug 'w0rp/ale'                                        " 非同期シンタックスチェック
 Plug 'tomtom/tcomment_vim'                             " コメントアウト
 Plug 'itchyny/lightline.vim'                           " ステータスライン
-Plug 'thinca/vim-visualstar'                           " visualstar(選択範囲のテキストで検索)
 Plug 'thinca/vim-prettyprint'                          " vimのデバッグ用prettyprint
 Plug 'thinca/vim-quickrun'                             " バッファ上のソースコードを実行してvimへ出力
 Plug 'thinca/vim-tabrecent'                            " 直前のタブに戻る
