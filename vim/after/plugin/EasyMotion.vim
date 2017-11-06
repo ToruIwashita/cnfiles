@@ -1,4 +1,4 @@
-"" FILE: rename.vim
+"" FILE: EasyMotion.vim
 set encoding=utf-8
 scriptencoding utf-8
 
