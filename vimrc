@@ -68,6 +68,7 @@ Plug 'easymotion/vim-easymotion'                       " 移動を簡単な動�
 Plug 'haya14busa/incsearch.vim'                        " インクリメンタルサーチ(vim-easymotion用)
 Plug 'haya14busa/incsearch-fuzzy.vim'                  " インクリメンタルファジーサーチ(vim-easymotion用)
 Plug 'haya14busa/incsearch-easymotion.vim'             " vim-easymotionとincsearch.vimを統合
+Plug 'haya14busa/vim-asterisk'                         " *の動作を拡張
 Plug 'fuenor/qfixgrep'                                 " プレビュー&絞り込み検索付きgrep
 Plug 'glidenote/memolist.vim'                          " メモ管理
 Plug 'kaneshin/ctrlp-memolist'                         " memolistをctrlpで絞り込む

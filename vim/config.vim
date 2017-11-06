@@ -165,9 +165,6 @@ nnoremap <silent> k gk
 nnoremap <silent> gk k
 nnoremap <silent> $ g$
 nnoremap <silent> g$ $
-" *,#で検索した後に移動しない
-nnoremap * *N
-nnoremap # #N
 " 検索後にカーソルを上に移動
 nnoremap n nzz
 nnoremap N Nzz
