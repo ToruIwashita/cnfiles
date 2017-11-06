@@ -64,6 +64,10 @@ Plug 'thinca/vim-quickrun'                             " バッファ上のソ�
 Plug 'thinca/vim-tabrecent'                            " 直前のタブに戻る
 Plug 'osyo-manga/shabadou.vim'                         " 汎用的なquickrun-hook
 Plug 'osyo-manga/vim-over'                             " 置換プレビュー
+Plug 'easymotion/vim-easymotion'                       " 移動を簡単な動作で行う
+Plug 'haya14busa/incsearch.vim'                        " インクリメンタルサーチ(vim-easymotion用)
+Plug 'haya14busa/incsearch-fuzzy.vim'                  " インクリメンタルファジーサーチ(vim-easymotion用)
+Plug 'haya14busa/incsearch-easymotion.vim'             " vim-easymotionとincsearch.vimを統合
 Plug 'fuenor/qfixgrep'                                 " プレビュー&絞り込み検索付きgrep
 Plug 'glidenote/memolist.vim'                          " メモ管理
 Plug 'kaneshin/ctrlp-memolist'                         " memolistをctrlpで絞り込む
