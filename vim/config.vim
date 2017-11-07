@@ -134,6 +134,10 @@ for s:i in range(1, 9)
 endfor
 " タブを閉じる
 noremap <C-w>X :<C-u>tabclose<CR>
+"" バッファ関連
+" 直前のバッファに戻る
+noremap <C-s>_ <C-^>
+noremap <C-s><C-_> <C-^>
 "" タグ(ctags)関連
 " タグのmapに関わるデフォルトのmapを無効化
 noremap <C-t> <NOP>
