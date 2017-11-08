@@ -68,6 +68,7 @@ Plug 'haya14busa/incsearch.vim'                        " インクリメンタ�
 Plug 'haya14busa/incsearch-fuzzy.vim'                  " インクリメンタルファジーサーチ(vim-easymotion用)
 Plug 'haya14busa/incsearch-easymotion.vim'             " vim-easymotionとincsearch.vimを統合
 Plug 'haya14busa/vim-asterisk'                         " *の動作を拡張
+Plug 'haya14busa/vim-debugger'                         " vim script debugger
 Plug 'fuenor/qfixgrep'                                 " プレビュー&絞り込み検索付きgrep
 Plug 'glidenote/memolist.vim'                          " メモ管理
 Plug 'kaneshin/ctrlp-memolist'                         " memolistをctrlpで絞り込む
@@ -92,7 +93,6 @@ Plug 'kshenoy/vim-signature'                           " マーカー表示
 Plug 'adie/BlockDiff'                                  " BlockDiff(選択範囲の比較)
 Plug 'LeafCage/yankround.vim'                          " ヤンク履歴管理
 Plug 'Konfekt/FastFold'                                " 自動折畳
-Plug 'haya14busa/vim-debugger'                         " vim script debugger
 Plug 'hashivim/vim-terraform'                          " vim-terraform
 Plug 'chrisbra/vim-zsh'                                " vim-zsh
 Plug 'vim-scripts/AnsiEsc.vim'                         " ANSIカラー表示
