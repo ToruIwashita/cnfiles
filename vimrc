@@ -100,6 +100,7 @@ Plug 'yami-beta/vim-responsive-tabline'                " タブの横幅を調�
 Plug 'wannesm/wmgraphviz.vim'                          " graphviz
 Plug 'ToruIwashita/tab-relocator.vim'                  " タブ移動補助
 Plug 'ToruIwashita/nimble-tag-jump.vim'                " タグジャンプ補助
+Plug 'ToruIwashita/nimble-file-jump.vim'               " ファイル名の文字列でジャンプする補助
 Plug 'ToruIwashita/window-closer.vim'                  " ウィンドウを閉じる動作の制御
 Plug 'ToruIwashita/simple-git-commands.vim'            " git のシンプルなコマンド群
 Plug 'ToruIwashita/add-git-managed-file-to-buffer.vim' " untracked, modified, changedなファイルをバッファにのせる
