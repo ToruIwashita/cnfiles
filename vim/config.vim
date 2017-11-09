@@ -89,7 +89,8 @@ noremap <C-j> <ESC>
 " ファイル再読込
 noremap <leader>r :<C-u>e!<CR>:<C-u>checktime<CR>
 " カーソル行が画面の上端に来るようにスクロール(対の動きをする<C-b>は無効化)
-noremap <C-f> zt
+noremap <C-f> <NOP>
+noremap <C-f><C-f> zt
 noremap <C-b> <NOP>
 "" ウィンドウ関連
 " ウィンドウのmapに関わるデフォルトのmapを無効化
