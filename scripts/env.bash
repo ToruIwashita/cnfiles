@@ -56,6 +56,9 @@ ZSH_CONFIG_LOCAL_FILE_DEST_PATH=$BASE_DIR_PATH/zsh.d/config.local.zsh
 ZSH_ENV_LOCAL_FILE_DEST_PATH=$BASE_DIR_PATH/zsh.d/env.local.zsh
 ZSH_CONFIG_LOCAL_DIR_DEST_PATH=$BASE_DIR_PATH/zsh.d/local
 
+# git
+GIT_DIR_PATH=$BASE_DIR_PATH/git
+
 # ruby
 RUBY_PATH=${1:-$(which ruby)}
 

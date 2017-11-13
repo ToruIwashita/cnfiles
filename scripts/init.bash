@@ -114,14 +114,14 @@ fi
 ## create symlink
 # zsh
 if [[ -L ~/.zshrc ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.zshrc symlink already exists\e[0m\n"
+  printf "\e[32m~/.zshrc symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.zshrc\e[0m\n"
   ln -is $BASE_DIR_PATH/zshrc ~/.zshrc
 fi
 
 if [[ -L ~/.zsh.d ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.zsh.d dir symlink already exists\e[0m\n"
+  printf "\e[32m~/.zsh.d dir symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.zsh.d dir\e[0m\n"
   ln -isn $BASE_DIR_PATH/zsh.d ~/.zsh.d
@@ -129,14 +129,14 @@ fi
 
 # vim
 if [[ -L ~/.vimrc ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.vimrc symlink already exists\e[0m\n"
+  printf "\e[32m~/.vimrc symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.vimrc\e[0m\n"
   ln -is $BASE_DIR_PATH/vimrc ~/.vimrc
 fi
 
 if [[ -L ~/.vim ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.vim dir symlink already exists\e[0m\n"
+  printf "\e[32m~/.vim dir symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.vim dir\e[0m\n"
   ln -isn $BASE_DIR_PATH/vim ~/.vim
@@ -144,14 +144,14 @@ fi
 
 # tmux
 if [[ -L ~/.tmux.conf ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.tmux.conf symlink already exists\e[0m\n"
+  printf "\e[32m~/.tmux.conf symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.tmux.conf\e[0m\n"
   ln -is $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
 fi
 
 if [[ -L ~/.tmux ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.tmux dir symlink already exists\e[0m\n"
+  printf "\e[32m~/.tmux dir symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.tmux dir\e[0m\n"
   ln -isn $BASE_DIR_PATH/tmux   ~/.tmux
@@ -159,7 +159,7 @@ fi
 
 # peco
 if [[ -L ~/.peco ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.peco dir symlink already exists\e[0m\n"
+  printf "\e[32m~/.peco dir symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.peco dir\e[0m\n"
   ln -isn $BASE_DIR_PATH/peco ~/.peco
@@ -167,7 +167,7 @@ fi
 
 # ctags
 if [[ -L ~/.ctags ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.ctags symlink already exists\e[0m\n"
+  printf "\e[32m~/.ctags symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.ctags\e[0m\n"
   ln -isn $BASE_DIR_PATH/ctags ~/.ctags
@@ -175,7 +175,7 @@ fi
 
 # lint
 if [[ -L ~/.lint ]]; then
-  printf "\e[32m$BASE_DIR_PATH/lint symlink already exists\e[0m\n"
+  printf "\e[32m~/lint symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.lint dir\e[0m\n"
   ln -is $BASE_DIR_PATH/lint ~/.lint
@@ -183,23 +183,31 @@ fi
 
 # gitconfig
 if [[ -L ~/.gitconfig ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.gitconfig symlink already exists\e[0m\n"
+  printf "\e[32m~/.gitconfig symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.gitconfig\e[0m\n"
-  ln -is $BASE_DIR_PATH/gitconfig ~/.gitconfig
+  ln -is $GIT_DIR_PATH/gitconfig ~/.gitconfig
 fi
 
 # gitattributes
 if [[ -L ~/.gitattributes ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.gitattributes symlink already exists\e[0m\n"
+  printf "\e[32m~/.gitattributes symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.gitattributes\e[0m\n"
-  ln -is $BASE_DIR_PATH/gitattributes ~/.gitattributes
+  ln -is $GIT_DIR_PATH/gitattributes ~/.gitattributes
+fi
+
+# gitignore
+if [[ -L ~/.gitignore ]]; then
+  printf "\e[32m~/.gitignore  symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.gitignore \e[0m\n"
+  ln -is $GIT_DIR_PATH/gitignore  ~/.gitignore
 fi
 
 # pry
 if [[ -L ~/.pryrc ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.pryrc symlink already exists\e[0m\n"
+  printf "\e[32m~/.pryrc symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.pryrc\e[0m\n"
   ln -is $BASE_DIR_PATH/pryrc ~/.pryrc
@@ -207,7 +215,7 @@ fi
 
 # rspec
 if [[ -L ~/.rspec ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.rspec symlink already exists\e[0m\n"
+  printf "\e[32m~/.rspec symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.rspec\e[0m\n"
   ln -is $BASE_DIR_PATH/rspec ~/.rspec
@@ -215,7 +223,7 @@ fi
 
 # awesome_print
 if [[ -L ~/.aprc ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.aprc symlink already exists\e[0m\n"
+  printf "\e[32m~/.aprc symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.aprc\e[0m\n"
   ln -is $BASE_DIR_PATH/aprc ~/.aprc
@@ -223,7 +231,7 @@ fi
 
 # sbtrc
 if [[ -L ~/.sbtrc ]]; then
-  printf "\e[32m$BASE_DIR_PATH/.sbtrc symlink already exists\e[0m\n"
+  printf "\e[32m~/.sbtrc symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.sbtrc\e[0m\n"
   ln -is $BASE_DIR_PATH/sbtrc ~/.sbtrc
