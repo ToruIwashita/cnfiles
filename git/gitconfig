@@ -4,6 +4,7 @@
 [core]
   editor = ~/local/bin/vim
   attributesfile = ~/.gitattributes
+  excludesfile = ~/.gitignore
 [status]
   short = true
 [fetch]
