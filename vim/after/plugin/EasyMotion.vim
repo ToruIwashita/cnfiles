@@ -5,20 +5,25 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-" <leader>eF{char} to move to {char}
-map  <leader>ef <Plug>(easymotion-bd-f)
-nmap <leader>ef <Plug>(easymotion-overwin-f)
+" move to {char}
+map  <C-f>k <Plug>(easymotion-bd-f)
+nmap <C-f>k <Plug>(easymotion-overwin-f)
 
-" <leader>es{char}{char} to move to {char}{char}
-nmap <leader>es <Plug>(easymotion-overwin-f2)
+" move to {char}{char}
+map <C-f><C-k> <Plug>(easymotion-overwin-f2)
+nmap <C-f><C-k> <Plug>(easymotion-overwin-f2)
 
 " move to line
-map <leader>el <Plug>(easymotion-bd-jk)
-nmap <leader>el <Plug>(easymotion-overwin-line)
+map <C-f>l <Plug>(easymotion-bd-jk)
+map <C-f><C-l> <Plug>(easymotion-bd-jk)
+nmap <C-f>l <Plug>(easymotion-overwin-line)
+nmap <C-f><C-l> <Plug>(easymotion-overwin-line)
 
 " move to word
-map  <leader>ew <Plug>(easymotion-bd-w)
-nmap <leader>ew <Plug>(easymotion-overwin-w)
+map  <C-f>j <Plug>(easymotion-bd-w)
+map  <C-f><C-j> <Plug>(easymotion-bd-w)
+nmap <C-f>j <Plug>(easymotion-overwin-w)
+nmap <C-f><C-j> <Plug>(easymotion-overwin-w)
 
 " incsearch.vim,incsearch-easymotion.vim依存のコード
 function! s:incsearch_config(...) abort
