@@ -84,14 +84,16 @@ cnoremap <C-w>* <C-r>/
 " ,はleaderとして使用
 noremap , <NOP>
 noremap <leader>, ,
+" <C-f>と<C-b>を無効化
+noremap <C-f> <NOP>
+noremap <C-b> <NOP>
 " <ESC>
 noremap <C-j> <ESC>
 " ファイル再読込
 noremap <leader>r :<C-u>e!<CR>:<C-u>checktime<CR>
-" カーソル行が画面の上端に来るようにスクロール(対の動きをする<C-b>は無効化)
-noremap <C-f> <NOP>
-noremap <C-f><C-f> zt
-noremap <C-b> <NOP>
+" カーソル行が画面の上端に来るようにスクロール
+noremap <C-s>j zt
+noremap <C-s><C-j> zt
 "" ウィンドウ関連
 " ウィンドウのmapに関わるデフォルトのmapを無効化
 noremap <C-w>P <NOP>
