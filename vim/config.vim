@@ -1,6 +1,7 @@
 "" FILE: config.vim
 set encoding=utf-8
 scriptencoding utf-8
+
 "" Vimの基本的な設定を記述
 
 "" leader
@@ -18,7 +19,6 @@ let &wildcharm = &wildchar
 syntax sync minlines=500 maxlines=1000  " シンタックスハイライトの開始/終了タグ検索の閾値
 
 "" 通常オプション
-set encoding=utf8                     " エンコーディングUTF-8
 set t_Co=256                          " 256色モード
 set tabpagemax=100                    " タブページの最大値100
 set laststatus=2                      " ステータスライン常に表示
