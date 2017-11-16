@@ -22,8 +22,8 @@ endfunction
 command! NimbleFileToNewTab call s:nimble_file_to_new_tab()
 
 " カーソル直下のファイルパスジャンプ
-noremap <C-f>f :<C-u>NimbleFile<CR>
-noremap <C-f>F :<C-u>NimbleFileToNewTab<CR>
+" noremap <C-f>f :<C-u>NimbleFile<CR>
+" noremap <C-f>F :<C-u>NimbleFileToNewTab<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
