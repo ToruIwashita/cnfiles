@@ -16,7 +16,7 @@ noremap <C-w><C-w> :<C-u>CloseMisWin<CR>
 " ファイル保存,閉じる
 noremap <C-o> :<C-u>w<CR>
 noremap <leader>o :<C-u>wa<CR>
-noremap <leader>f :<C-u>CloseMisWin<CR>:<C-u>q<CR>
+noremap <leader>e :<C-u>CloseMisWin<CR>:<C-u>q<CR>
 noremap <leader>w :<C-u>w<CR>:<C-u>CloseMisWin<CR>:<C-u>q<CR>
 noremap <leader>x :<C-u>wa<CR>:<C-u>qa<CR>
 
