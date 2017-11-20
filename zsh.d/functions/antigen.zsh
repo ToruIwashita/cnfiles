@@ -19,3 +19,7 @@ ant-clean() {
   antigen cleanup --force
   ez
 }
+
+ant-selfupdate() {
+  antigen selfupdate
+}
