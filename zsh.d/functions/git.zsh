@@ -236,13 +236,14 @@ EOF`
 }
 
 gc() {
-  integer fixup temporary
+  integer empty fixup temporary
   local self_cmd help usage
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [-f --fixup]
+usage: $self_cmd [-e --empty]
+          [-f --fixup]
           [-t --temporary]
           [-h --help]
 EOF`
@@ -255,6 +256,10 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
+      -e | --empty)
+        (( empty++ ))
+        shift 1
+        ;;
       -f | --fixup)
         (( fixup++ ))
         shift 1
@@ -284,6 +289,11 @@ EOF`
 
   if (( temporary )); then
     git commit -m "[temporary commit]($(__git-ref-head)) $(LANG=C date)"
+    return 0
+  fi
+
+  if (( empty )); then
+    git commit --allow-empty -m "[temporary commit]($(__git-ref-head)) $(LANG=C date)"
     return 0
   fi
 

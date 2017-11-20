@@ -59,6 +59,7 @@ _grh() {
 
 _gc() {
   _arguments \
+    '(-e --empty)'{-e,--empty}'[Empty commit]' \
     '(-f --fixup)'{-f,--fixup}'[Fixup commit]' \
     '(-t --temporary)'{-t,--temporary}'[Temporary commit]' \
     '(-h --help)'{-h,--help}'[Show help text]'
