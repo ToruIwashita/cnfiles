@@ -49,7 +49,7 @@ fun! s:fugitive_commit_setting()
   " add
   nmap <silent><buffer> <C-s><C-a> :<C-u>wa<CR>:<C-u>call system('\git add $(\git rev-parse --show-cdup).')<CR>r
   " reset
-  nmap <silent><buffer> <C-s><C-r> :<C-u>wa<CR>:<C-u>call system('\git reset --soft')<CR>r
+  nmap <silent><buffer> <C-s><C-r> :<C-u>wa<CR>:<C-u>call system('\git reset')<CR>r
   " temporary commit
   nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
   " fixup commit
