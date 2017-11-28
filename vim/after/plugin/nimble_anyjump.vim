@@ -14,7 +14,7 @@ function! s:nimble_anyjump_to_new_tab()
   let s:current_output_style = g:nimble_anyjump_output_style
   let g:nimble_anyjump_output_style = 'tabnew'
 
-  NimbleTag
+  NimbleAnyjump
 
   let g:nimble_anyjump_output_style = s:current_output_style
 endfunction
@@ -23,7 +23,7 @@ function! s:nimble_anyjump_range_to_new_tab()
   let s:current_output_style = g:nimble_anyjump_output_style
   let g:nimble_anyjump_output_style = 'tabnew'
 
-  NimbleTagRange
+  NimbleAnyjumpRange
 
   let g:nimble_anyjump_output_style = s:current_output_style
 endfunction
