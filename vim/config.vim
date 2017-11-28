@@ -83,7 +83,8 @@ cnoremap <C-w>* <C-r>/
 "" noremap
 " ,はleaderとして使用
 noremap , <NOP>
-noremap <leader>, ,
+" 逆vi-forward-word
+noremap <C-s>; ,
 " <C-f>と<C-b>を無効化
 noremap <C-f> <NOP>
 noremap <C-b> <NOP>

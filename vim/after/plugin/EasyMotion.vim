@@ -5,6 +5,9 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
+" invalidate default easymotion-prefix
+map <leader>, <NOP>
+
 " move to {char}
 map <C-f> <Plug>(easymotion-bd-f)
 nmap <C-f> <Plug>(easymotion-overwin-f)
