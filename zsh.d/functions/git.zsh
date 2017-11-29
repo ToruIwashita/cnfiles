@@ -293,7 +293,7 @@ EOF`
   fi
 
   if (( empty )); then
-    git commit --allow-empty -m "[temporary commit]($(__git-ref-head)) $(LANG=C date)"
+    git commit --allow-empty -m "[empty commit]($(__git-ref-head)) $(LANG=C date)"
     return 0
   fi
 
