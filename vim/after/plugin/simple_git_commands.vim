@@ -19,5 +19,7 @@ nnoremap <C-g>B :GllRebase
 
 nnoremap <C-g>R :GResetLatest
 
+nnoremap <C-g>D :GDeleteAllMergedBranch
+
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
