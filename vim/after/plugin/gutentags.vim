@@ -7,7 +7,7 @@ set cpoptions&vim
 
 fun! s:gutentags_toggle()
   GutentagsToggleEnabled
-  echo g:gutentags_enabled
+  echo 'gutentags_enabled: '.g:gutentags_enabled
 endf
 
 command! GutentagsToggle call s:gutentags_toggle()
