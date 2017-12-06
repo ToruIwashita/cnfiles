@@ -79,11 +79,13 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtExit()':            ['<ESC>','<C-[>']
 \ }
 
-"" auto-ctags(after/ にも設定あり)
-let g:auto_ctags = 0                                       " BufWritePostで自動実行しない
-let g:auto_ctags_bin_path = g:local_dir_path.'/bin/ctags'  " ctagsのbinパス
-let g:auto_ctags_tags_name = '.tags'                       " tagsファイル名
-let g:auto_ctags_tags_args = ''                            " ctags実行オプションは.ctagsで設定する
+"" gutentags(after/ にも設定あり)
+" 起動時はgutentagsを無効化する
+let g:gutentags_enabled = 0
+" 高度なコマンドを有効化(GutentagsToggleEnabled,GutentagsUnlock)
+let g:gutentags_define_advanced_commands = 1
+" tagsファイル名
+let g:gutentags_ctags_tagfile = '.tags'
 
 "" yankround(after/ にも設定あり)
 let g:yankround_dir = g:cache_dir_path.'/vim/yankround'

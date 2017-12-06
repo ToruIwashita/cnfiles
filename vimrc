@@ -84,7 +84,7 @@ Plug 'plasticboy/vim-markdown'                         " vim-markdown(vim-tabula
 Plug 'fugalh/desert.vim'                               " カラースキーマ
 Plug 'junegunn/vim-easy-align'                         " テキスト整形
 Plug 'danro/rename.vim'                                " ファイルリネーム
-Plug 'soramugi/auto-ctags.vim'                         " ctags生成
+Plug 'ludovicchabant/vim-gutentags'                    " ctags自動生成
 Plug 'majutsushi/tagbar'                               " コード概要ビューア
 Plug 'vim-jp/vim-go-extra'                             " extra vim plugin for go
 Plug 'tmhedberg/matchit'                               " 対応する括弧などにジャンプする
