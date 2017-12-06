@@ -12,17 +12,17 @@ map <leader>, <NOP>
 map <C-f> <Plug>(easymotion-bd-f)
 nmap <C-f> <Plug>(easymotion-overwin-f)
 
+" move to {char}{char}
+map <leader>f <Plug>(easymotion-bd-f2)
+nmap <leader>f <Plug>(easymotion-overwin-f2)
+
 " move to word
-map <leader>f <Plug>(easymotion-bd-w)
-nmap <leader>f <Plug>(easymotion-overwin-w)
+map <leader>F <Plug>(easymotion-bd-w)
+nmap <leader>F <Plug>(easymotion-overwin-w)
 
 " move to line
 map <leader>g <Plug>(easymotion-bd-jk)
 nmap <leader>g <Plug>(easymotion-overwin-line)
-
-" move to {char}{char}
-map <C-t> <Plug>(easymotion-bd-f2)
-nmap <C-t> <Plug>(easymotion-overwin-f2)
 
 " incsearch.vim,incsearch-easymotion.vim依存のコード
 function! s:incsearch_config(...) abort
