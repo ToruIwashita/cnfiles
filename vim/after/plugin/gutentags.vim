@@ -10,10 +10,16 @@ fun! s:gutentags_toggle()
   echo 'gutentags_enabled: '.g:gutentags_enabled
 endf
 
+fun! s:create_tags()
+  GutentagsUpdate!
+  redraw!
+endf
+
 command! GutentagsToggle call s:gutentags_toggle()
+command! CreateTag call s:create_tags()
 
 nnoremap <C-t> :<C-u>GutentagsToggle<CR>
-nnoremap <leader>ct :<C-u>GutentagsUpdate!<CR>
+nnoremap <leader>ct :<C-u>CreateTag<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
