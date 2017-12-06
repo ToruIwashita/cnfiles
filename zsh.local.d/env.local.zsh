@@ -8,6 +8,8 @@ readonly PGHOST=
 readonly PGPORT=
 readonly PGUSER=
 readonly PGPASSWORD=
+# hubコマンド用
+readonly GITHUB_TOKEN=
 
 # programming language environment
 export RBENV_ROOT=~/.rbenv
@@ -26,6 +28,8 @@ export PGHOST
 export PGPORT
 export PGUSER
 export PGPASSWORD
+# hubコマンド
+export GITHUB_TOKEN
 
 # gitインストール時にbrewでインストールしたopensslを使用する
 # export CPATH=/usr/local/opt/openssl/include:$LD_LIBRARY_PATH
