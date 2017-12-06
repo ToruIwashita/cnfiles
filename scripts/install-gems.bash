@@ -41,7 +41,7 @@ rbenv exec gem update pry-remote
 rbenv exec gem update pry-stack_explorer
 rbenv exec gem update pry-rails
 rbenv exec gem update rubocop
-rbenv exec gem install rubocop-rspec
+rbenv exec gem update rubocop-rspec
 rbenv exec gem update awesome_print
 
 echo
