@@ -13,6 +13,7 @@ endf
 command! GutentagsToggle call s:gutentags_toggle()
 
 nnoremap <C-t> :<C-u>GutentagsToggle<CR>
+nnoremap <leader>ct :<C-u>GutentagsUpdate!<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
