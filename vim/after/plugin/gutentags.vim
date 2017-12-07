@@ -13,6 +13,7 @@ endf
 fun! s:create_tags()
   GutentagsUpdate!
   redraw!
+  echo 'CreateTag'
 endf
 
 command! GutentagsToggle call s:gutentags_toggle()
