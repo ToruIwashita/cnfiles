@@ -86,6 +86,8 @@ let g:gutentags_enabled = 0
 let g:gutentags_define_advanced_commands = 1
 " tagsファイル名
 let g:gutentags_ctags_tagfile = '.tags'
+" ctagsのパス
+let g:gutentags_ctags_executable = g:local_dir_path.'/bin/ctags'
 
 "" yankround(after/ にも設定あり)
 let g:yankround_dir = g:cache_dir_path.'/vim/yankround'
