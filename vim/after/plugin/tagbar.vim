@@ -2,10 +2,10 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
-let g:tagbar_ctags_bin = local_dir_path.'/bin/ctags'
+let g:tagbar_ctags_bin = g:local_dir_path.'/bin/ctags'
 let g:tagbar_autofocus = 1
 let g:tagbar_left = 1
 let g:tagbar_compact = 1
@@ -40,5 +40,5 @@ let g:tagbar_type_scala = {
 
 noremap <C-w>, :<C-u>TagbarToggle<CR>
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
