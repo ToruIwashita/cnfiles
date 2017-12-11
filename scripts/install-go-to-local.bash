@@ -3,7 +3,7 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-INSTALL_TARGET_BRANCH=release-branch.go1.8
+INSTALL_TARGET_BRANCH=release-branch.go1.9
 
 # ./all.bash は go1.4 がないと動かない
 # go1.4 のバイナリを配置し, GOROOT_BOOTSTRAP を設定する必要がある
