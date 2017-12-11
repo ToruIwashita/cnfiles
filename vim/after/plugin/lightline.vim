@@ -8,7 +8,7 @@ set cpoptions&vim
 let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
-  \   'left': [ [ 'mode','paste' ], [ 'ale' ], [ 'fugitive', 'filename' ], [ 'ctrlpmark' ] ],
+  \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'ale' ], [ 'ctrlpmark' ] ],
   \   'right': [ [ 'lineinfo' ], [ 'percent' ], [ 'getcharcode','fileencoding','filetype','fileformat' ] ]
   \ },
   \ 'component_function': {
