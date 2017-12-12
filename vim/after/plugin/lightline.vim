@@ -5,6 +5,7 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
+" 様々なpluginに依存している
 let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
