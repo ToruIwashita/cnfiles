@@ -7,20 +7,25 @@ set cpoptions&vim
 
 fun! s:gutentags_toggle()
   GutentagsToggleEnabled
-  echo 'gutentags_enabled: '.g:gutentags_enabled
+
+  if g:gutentags_enabled == 1
+    echo 'GutentagsEnabled: true'
+  else
+    echo 'GutentagsEnabled: false'
+  endif
 endf
 
 fun! s:create_tags()
   GutentagsUpdate!
   redraw!
-  echo 'CreateTag'
+  echo 'CreateTags'
 endf
 
 command! GutentagsToggle call s:gutentags_toggle()
-command! CreateTag call s:create_tags()
+command! CreateTags call s:create_tags()
 
 nnoremap <C-t> :<C-u>GutentagsToggle<CR>
-nnoremap <leader>ct :<C-u>CreateTag<CR>
+nnoremap <leader>ct :<C-u>CreateTags<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
