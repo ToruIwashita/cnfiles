@@ -9,8 +9,12 @@ fun! gutentags#gutentags_enabled()
   return g:gutentags_enabled
 endf
 
+"" 以下のpluginに依存している
+" lightline.vim
 fun! s:gutentags_toggle()
   GutentagsToggleEnabled
+
+  call lightline#update()
 
   if g:gutentags_enabled == 1
     echo 'GutentagsEnabled: true'
