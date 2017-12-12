@@ -5,6 +5,10 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
+fun! gutentags#gutentags_enabled()
+  return g:gutentags_enabled
+endf
+
 fun! s:gutentags_toggle()
   GutentagsToggleEnabled
 
