@@ -15,12 +15,6 @@ fun! s:gutentags_toggle()
   GutentagsToggleEnabled
 
   call lightline#update()
-
-  if g:gutentags_enabled == 1
-    echo 'GutentagsEnabled: true'
-  else
-    echo 'GutentagsEnabled: false'
-  endif
 endf
 
 fun! s:create_tags()
