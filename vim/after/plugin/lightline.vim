@@ -10,7 +10,7 @@ let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], [ 'ctrlpmark' ] ],
-  \   'right': [ [ 'lineinfo', 'gutentags' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
+  \   'right': [ [ 'gutentags', 'lineinfo' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
   \ },
   \ 'component_function': {
   \   'fugitive':     'LightLineFugitive',
