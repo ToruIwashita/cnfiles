@@ -38,6 +38,7 @@ Plug 'tpope/vim-surround'                              " text-object操作
 Plug 'tpope/vim-fugitive'                              " fugitive(ステータスラインのブランチ名と,Gblame用)
 Plug 'tpope/vim-rhubarb'                               " fugitiveのGbrowseでGithubを開く
 Plug 'gregsexton/gitv'                                 " gitv(コミットログ閲覧用,vim-fugitive依存)
+Plug 'hotwatermorning/auto-git-diff'                   " git-rebase-todoでコミットの内容を表示
 Plug 'airblade/vim-gitgutter'                          " gitの差分を左端に表示
 Plug 'tyru/open-browser.vim'                           " URIをブラウザで開く
 Plug 'tyru/open-browser-github.vim'                    " githubをブラウザで開く
