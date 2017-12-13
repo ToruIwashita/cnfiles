@@ -15,9 +15,9 @@ function! s:add_md_space()
   execute 'delmarks Z'
 endfunction
 
-function! s:add_md_space_range(line1,line2)
-  silent! execute a:line1.','.a:line2.'s/\(^[^$].*[^  ]$\)/\1  /'
-  silent! execute a:line1.','.a:line2.'s/\(^ \{4}.*[^ ] \{2}$\)/\1  /'
+function! s:add_md_space_range() range
+  silent! execute a:firstline.','.a:lastline.'s/\(^[^$].*[^  ]$\)/\1  /'
+  silent! execute a:firstline.','.a:lastline.'s/\(^ \{4}.*[^ ] \{2}$\)/\1  /'
 endfunction
 
 augroup local_markdown
@@ -25,7 +25,7 @@ augroup local_markdown
   autocmd BufWritePre *.md call s:add_md_space()
 augroup END
 
-command! -range MdFormat call s:add_md_space_range(<line1>, <line2>)
+command! -range MdFormat :<line1>,<line2>call s:add_md_space_range()
 cnorea %M %MdFormat
 cnorea '<,'>M '<,'>MdFormat
 
