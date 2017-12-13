@@ -173,6 +173,8 @@ nnoremap <silent> k gk
 nnoremap <silent> gk k
 nnoremap <silent> $ g$
 nnoremap <silent> g$ $
+nnoremap <silent> <leader>0 `<
+nnoremap <silent> <leader>$ `>
 " 検索後にカーソルを上に移動
 nnoremap n nzz
 nnoremap N Nzz
@@ -216,6 +218,8 @@ vnoremap <silent> k gk
 vnoremap <silent> gk k
 vnoremap <silent> $ g$
 vnoremap <silent> g$ $
+nnoremap <silent> <leader>0 `<
+nnoremap <silent> <leader>$ `>
 " ビジュアルモードのインデント後選択継続
 vnoremap < <gv
 vnoremap > >gv
