@@ -2,10 +2,10 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
-if !exists("g:surround_no_mappings") || ! g:surround_no_mappings
+if !exists('g:surround_no_mappings') || !g:surround_no_mappings
   " normal
   nmap <leader>( csw(
   nmap <leader>) csw)
@@ -28,5 +28,5 @@ if !exists("g:surround_no_mappings") || ! g:surround_no_mappings
   xmap <leader>` S`
 endif
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
