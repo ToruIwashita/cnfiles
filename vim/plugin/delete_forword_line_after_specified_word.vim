@@ -6,7 +6,9 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 fun! s:delete_forword_line_after_specified_word() range
+  echohl Question
   let l:input = input('deletion start position word: ')
+  echohl None
 
   redraw!
 
