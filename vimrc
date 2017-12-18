@@ -65,6 +65,7 @@ Plug 'thinca/vim-tabrecent'                            " 直前のタブに戻�
 Plug 'osyo-manga/shabadou.vim'                         " 汎用的なquickrun-hook
 Plug 'osyo-manga/vim-over'                             " 置換プレビュー
 Plug 'easymotion/vim-easymotion'                       " 移動を簡単な動作で行う
+Plug 'haya14busa/vim-edgemotion'                       " コードのエッジに移動する
 Plug 'haya14busa/incsearch.vim'                        " インクリメンタルサーチ(vim-easymotion用)
 Plug 'haya14busa/incsearch-fuzzy.vim'                  " インクリメンタルファジーサーチ(vim-easymotion用)
 Plug 'haya14busa/incsearch-easymotion.vim'             " vim-easymotionとincsearch.vimを統合
