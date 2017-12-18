@@ -15,11 +15,13 @@ nnoremap <leader>ca :<C-u>GClean<CR>
 nnoremap <leader>cm :<C-u>GCleanM<CR>
 nnoremap <leader>cu :<C-u>GCleanU<CR>
 
-nnoremap <C-g>B :GllRebase
+nnoremap <C-g>B :<C-u>GllRebase
 
-nnoremap <C-g>R :GResetLatest
+nnoremap <C-g>D :<C-u>GDeleteAllMergedBranch
 
-nnoremap <C-g>D :GDeleteAllMergedBranch
+nnoremap <C-g>H :<C-u>GResetHard
+
+nnoremap <C-g>L :<C-u>GResetLatest
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
