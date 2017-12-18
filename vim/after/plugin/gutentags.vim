@@ -26,7 +26,7 @@ endf
 command! GutentagsToggle call s:gutentags_toggle()
 command! CreateTags call s:create_tags()
 
-nnoremap <C-t> :<C-u>GutentagsToggle<CR>
+nnoremap <C-s>, :<C-u>GutentagsToggle<CR>
 nnoremap <leader>ct :<C-u>CreateTags<CR>
 
 let &cpoptions = s:cpoptions_save
