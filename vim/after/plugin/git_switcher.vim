@@ -13,7 +13,6 @@ let g:gsw_switch_prev_confirm = 'yes'
 " <C-s>プレフィックス
 nnoremap <C-s>p :<C-u>GswPull<CR>
 nnoremap <C-s>n :<C-u>GswFetch<CR>
-nnoremap <C-s>@ :<C-u>GswClearState
 
 " <C-w>プレフィックス
 nnoremap <C-w><C-o> :<C-u>GswSave<CR>
@@ -30,6 +29,7 @@ nnoremap <C-g>r :<C-u>GswRemove<SPACE>
 nnoremap <C-g>_ :<C-u>GswPrev<CR>
 nnoremap <C-g>b :<C-u>GswBranch<CR>
 nnoremap <C-g><C-b> :<C-u>GswBranchRemote<CR>
+nnoremap <C-g>@ :<C-u>GswClearState
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
