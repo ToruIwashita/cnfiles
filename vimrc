@@ -37,6 +37,7 @@ Plug 'tpope/vim-abolish'                               " 強化版置換コマ�
 Plug 'tpope/vim-surround'                              " text-object操作
 Plug 'tpope/vim-fugitive'                              " fugitive(ステータスラインのブランチ名と,Gblame用)
 Plug 'tpope/vim-rhubarb'                               " fugitiveのGbrowseでGithubを開く
+Plug 'tpope/vim-abolish'                               " snake,camel,pascalケースなどを切り替える為に使用(その他の機能は使っていない)
 Plug 'gregsexton/gitv'                                 " gitv(コミットログ閲覧用,vim-fugitive依存)
 Plug 'hotwatermorning/auto-git-diff'                   " git-rebase-todoでコミットの内容を表示
 Plug 'airblade/vim-gitgutter'                          " gitの差分を左端に表示
