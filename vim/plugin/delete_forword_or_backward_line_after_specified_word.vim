@@ -22,7 +22,7 @@ fun! s:delete_backward_line_after_specified_word() range
 
   redraw!
 
-  silent! execute a:firstline.','.a:lastline.'s/\(^\s*\)\S*'.l:input.'/\1/g'
+  silent! execute a:firstline.','.a:lastline.'s/^[^(]*'.l:input.'/\1/g'
 endf
 
 command! -range DeleteForwordLineAfterSpecifiedWord :<line1>,<line2>call s:delete_forword_line_after_specified_word()
