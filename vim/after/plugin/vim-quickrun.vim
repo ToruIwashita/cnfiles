@@ -1,4 +1,4 @@
-"" FILE: vim-quickrun.vim 
+"" FILE: vim-quickrun.vim
 set encoding=utf-8
 scriptencoding utf-8
 
