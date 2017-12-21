@@ -6,10 +6,10 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 " 変更点へ移動
-noremap <C-g>] :<C-u>GitGutterNextHunk<CR>zz
-noremap <C-g><C-]> :<C-u>GitGutterNextHunk<CR>zz
-noremap <C-g>[ :<C-u>GitGutterPrevHunk<CR>zz
-noremap <C-g><C-[> :<C-u>GitGutterPrevHunk<CR>zz
+noremap <C-g>n :<C-u>GitGutterNextHunk<CR>zz
+noremap <C-g><C-n> :<C-u>GitGutterNextHunk<CR>zz
+noremap <C-g>p :<C-u>GitGutterPrevHunk<CR>zz
+noremap <C-g><C-p> :<C-u>GitGutterPrevHunk<CR>zz
 
 " 変更を追加
 nmap <C-g>a <Plug>GitGutterStageHunk
