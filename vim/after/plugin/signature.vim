@@ -6,16 +6,16 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 " マーク関連の動作に使用するキーのデフォルトの動きを無効化
-nnoremap <C-t> <NOP>
+nnoremap <C-e> <NOP>
 " 指定マークへ移動
-noremap <C-t>t '
-noremap <C-t><C-t> '
+noremap <C-e>e '
+noremap <C-e><C-e> '
 " 次のマークへジャンプ
-nnoremap <C-t>] ]`zz
-nnoremap <C-t><C-]> ]`zz
+nnoremap <C-e>] ]`zz
+nnoremap <C-e><C-]> ]`zz
 " 前のマークへジャンプ
-nnoremap <C-t>[ [`zz
-nnoremap <C-t><C-[> [`zz
+nnoremap <C-e>[ [`zz
+nnoremap <C-e><C-[> [`zz
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
