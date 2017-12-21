@@ -91,5 +91,5 @@ __ga() {
     return 1
   fi
 
-  git add $*
+  (git add $* 2>/dev/null || git add $(git rev-parse --show-toplevel)/$*)
 }

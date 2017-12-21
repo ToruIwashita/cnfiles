@@ -28,7 +28,8 @@ gam() {
     return 1
   fi
 
-  git diff $* && git add $*
+  (git diff $* 2>/dev/null || git diff $(git rev-parse --show-toplevel)/$*) &&
+    (git add $* 2>/dev/null || git add $(git rev-parse --show-toplevel)/$*)
 }
 
 gau() {
