@@ -11,11 +11,11 @@ nnoremap <C-e> <NOP>
 noremap <C-e>e '
 noremap <C-e><C-e> '
 " 次のマークへジャンプ
-nnoremap <C-e>] ]`zz
-nnoremap <C-e><C-]> ]`zz
+nnoremap <C-e>n ]`zz
+nnoremap <C-e><C-n> ]`zz
 " 前のマークへジャンプ
-nnoremap <C-e>[ [`zz
-nnoremap <C-e><C-[> [`zz
+nnoremap <C-e>p [`zz
+nnoremap <C-e><C-p> [`zz
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
