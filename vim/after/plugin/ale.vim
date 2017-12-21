@@ -7,10 +7,10 @@ set cpoptions&vim
 
 " (config.plugin.vim にも設定あり)
 
-nmap <C-a>n <Plug>(ale_next_wrap)
-nmap <C-a><C-n> <Plug>(ale_next_wrap)
-nmap <C-a>p <Plug>(ale_previous_wrap)
-nmap <C-a><C-p> <Plug>(ale_previous_wrap)
+nmap <silent> <C-a>n <Plug>(ale_next_wrap)
+nmap <silent> <C-a><C-n> <Plug>(ale_next_wrap)
+nmap <silent> <C-a>p <Plug>(ale_previous_wrap)
+nmap <silent> <C-a><C-p> <Plug>(ale_previous_wrap)
 
 augroup local_ale
   autocmd!
