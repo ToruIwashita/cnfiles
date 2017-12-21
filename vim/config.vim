@@ -101,12 +101,6 @@ noremap <C-w>P <NOP>
 noremap <C-w>q <NOP>
 noremap <C-w><C-w> <NOP>
 noremap <C-w>W <NOP>
-" 次のウィンドウへ移動
-noremap <C-w>n <C-w>w
-noremap <C-w><C-n> <C-w>w
-" 前のウィンドウへ移動
-noremap <C-w>p <C-w>W
-noremap <C-w><C-p> <C-w>W
 " ウィンドウ分割
 noremap <C-w>v <NOP>
 noremap <C-w>i <C-w>v
