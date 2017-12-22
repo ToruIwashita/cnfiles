@@ -28,24 +28,23 @@ gam() {
     return 1
   fi
 
-  (git diff $* 2>/dev/null || git diff $(git rev-parse --show-toplevel)/$*) &&
-    (git add $* 2>/dev/null || git add $(git rev-parse --show-toplevel)/$*)
+  git diff $(git rev-parse --show-toplevel)/$^* && git add $(git rev-parse --show-toplevel)/$^*
 }
 
 gau() {
-  __ga $*
+  __ga $(git rev-parse --show-toplevel)/$^*
 }
 
 gac() {
-  __ga $*
+  __ga $(git rev-parse --show-toplevel)/$^*
 }
 
 gab() {
-  __ga $*
+  __ga $(git rev-parse --show-toplevel)/$^*
 }
 
 gad() {
-  __ga $*
+  __ga $(git rev-parse --show-toplevel)/$^*
 }
 
 gclean-m() {
@@ -211,7 +210,7 @@ EOF`
     esac
   done
 
-  if (( ! $#args )); then
+  if (( ! $# )); then
     while :; do
       print -n "Reset '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
 
@@ -233,7 +232,7 @@ EOF`
     return 1
   fi
 
-  git reset HEAD $*
+  git reset HEAD $(git rev-parse --show-toplevel)/$^*
 }
 
 gc() {
@@ -316,7 +315,7 @@ gd() {
     return 1
   fi
 
-  git diff $*
+  git diff $(git rev-parse --show-toplevel)/$^*
 }
 
 gsw() {
@@ -368,7 +367,7 @@ EOF`
     return 1
   fi
 
-  if (( ${#args} )); then
+  if (( $# )); then
     branch=${args[1]}
   else
     branch=$remote_branch
@@ -408,7 +407,7 @@ gud() {
     return 1
   fi
 
-  git checkout $*
+  git checkout $(git rev-parse --show-toplevel)/$^*
 }
 
 gll() {
@@ -637,7 +636,7 @@ EOF`
 
 
   file_name=${args[1]}
-  if (( ! ${#args} || ! $#branch_name )); then
+  if (( ! $# || ! $#branch_name )); then
     print "$self_cmd: requires arguments\n$help" 1>&2
     return 1
   fi
