@@ -1,7 +1,7 @@
 ## peco-kill-ps
 peco-kill-ps() {
   integer force
-  local -a args processes pids
+  local -a processes pids
   local self_cmd help usage process_list_header process pid answer
 
   self_cmd=$0
