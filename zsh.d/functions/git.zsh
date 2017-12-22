@@ -28,23 +28,24 @@ gam() {
     return 1
   fi
 
-  git diff $(git rev-parse --show-toplevel)/$^* && git add $(git rev-parse --show-toplevel)/$^*
+  (git diff $* 2>/dev/null || git diff $(git rev-parse --show-toplevel)/$^*) &&
+    (git add $* 2>/dev/null || git add $(git rev-parse --show-toplevel)/$^*)
 }
 
 gau() {
-  __ga $(git rev-parse --show-toplevel)/$^*
+  __ga $*
 }
 
 gac() {
-  __ga $(git rev-parse --show-toplevel)/$^*
+  __ga $*
 }
 
 gab() {
-  __ga $(git rev-parse --show-toplevel)/$^*
+  __ga $*
 }
 
 gad() {
-  __ga $(git rev-parse --show-toplevel)/$^*
+  __ga $*
 }
 
 gclean-m() {
@@ -232,7 +233,7 @@ EOF`
     return 1
   fi
 
-  git reset HEAD $(git rev-parse --show-toplevel)/$^*
+  (git reset HEAD $* 2>/dev/null || git reset HEAD $(git rev-parse --show-toplevel)/$^*)
 }
 
 gc() {
@@ -315,7 +316,7 @@ gd() {
     return 1
   fi
 
-  git diff $(git rev-parse --show-toplevel)/$^*
+  (git diff $* 2>/dev/null || git diff $(git rev-parse --show-toplevel)/$^*)
 }
 
 gsw() {
@@ -407,7 +408,7 @@ gud() {
     return 1
   fi
 
-  git checkout $(git rev-parse --show-toplevel)/$^*
+  (git checkout $* 2>/dev/null || git checkout $(git rev-parse --show-toplevel)/$^*)
 }
 
 gll() {
