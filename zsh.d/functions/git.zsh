@@ -368,7 +368,7 @@ EOF`
     return 1
   fi
 
-  if (( $# )); then
+  if (( ${#args} )); then
     branch=${args[1]}
   else
     branch=$remote_branch
@@ -637,7 +637,7 @@ EOF`
 
 
   file_name=${args[1]}
-  if (( ! $# || ! $#branch_name )); then
+  if (( ! ${#args} || ! $#branch_name )); then
     print "$self_cmd: requires arguments\n$help" 1>&2
     return 1
   fi
