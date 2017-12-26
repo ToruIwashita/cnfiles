@@ -46,7 +46,7 @@ mqout() {
   eval $my_cmd
   print "Query\n"
 
-  my_cmd=$my_cmd" | xargs -0 -i $(__my-cmd-self) '{}' -N | sed -e 's/\t/,/g' >! $MEMOLIST_TMP_FILE"
+  my_cmd=$my_cmd" | xargs -0 -i $(__my-cmd-self) '{}' -N | sed -e 's/\t/,/g' >! $MEMOLIST_TMP_FILE_PATH"
   print "command: ${my_cmd}\n"
   eval $my_cmd
 }
