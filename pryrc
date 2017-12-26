@@ -53,6 +53,10 @@ if defined?(PryByebug)
   Pry.commands.alias_command 'f', 'finish'
 end
 
+def rp(obj)
+  Pry::ColorPrinter.pp obj
+end
+
 ## awesome_print
 if defined?(AwesomePrint)
   def a(obj)
