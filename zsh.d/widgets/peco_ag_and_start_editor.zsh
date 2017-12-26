@@ -4,6 +4,8 @@ _peco-ag-and-start-editor() {
   local -a args peco_resulting_line
   local -aU file_paths
 
+  (( $#BUFFER )) && print -s "$BUFFER"
+
   args=("${(z)BUFFER}")
   if (( $#args >= 2 )) && [[ ${args[-1]} =~ '^[0-9]*$' ]]; then
     context="--context=${args[-1]}"
