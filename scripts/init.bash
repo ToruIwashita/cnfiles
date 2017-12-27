@@ -166,11 +166,11 @@ else
 fi
 
 # ctags
-if [[ -L ~/.ctags ]]; then
-  printf "\e[32m~/.ctags symlink already exists\e[0m\n"
+if [[ -L ~/.ctags.d ]]; then
+  printf "\e[32m~/.ctags.d dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.ctags\e[0m\n"
-  ln -isn $BASE_DIR_PATH/ctags ~/.ctags
+  printf "\e[31mcreate symlink ~/.ctags.d dir\e[0m\n"
+  ln -isn $BASE_DIR_PATH/ctags.d ~/.ctags.d
 fi
 
 # lint
