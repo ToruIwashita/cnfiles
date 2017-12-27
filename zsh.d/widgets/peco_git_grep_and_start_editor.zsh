@@ -1,5 +1,5 @@
-## peco-simple-git-grep-and-start-editor
-_peco-simple-git-grep-and-start-editor() {
+## peco-git-grep-and-start-editor
+_peco-git-grep-and-start-editor() {
   local specified_line
   local -a peco_resulting_line
   local -aU file_paths
@@ -30,4 +30,4 @@ _peco-simple-git-grep-and-start-editor() {
   zle accept-line
 }
 
-zle -N peco-simple-git-grep-and-start-editor _peco-simple-git-grep-and-start-editor
+zle -N peco-git-grep-and-start-editor _peco-git-grep-and-start-editor

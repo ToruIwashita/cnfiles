@@ -69,7 +69,7 @@ bindkey -v '^so' peco-cd-dir                            # Ctrl+s,oでディレ�
 bindkey -v '^sp' immediate-git-pull                     # Ctrl+s,pでgit pull
 bindkey -v '^ss' peco-ag-and-start-editor               # Ctrl+s,sでagで検索してstart-editorCtr+s
 bindkey -v '^s@' clear-screen                           # Ctrl+@でclear-screen
-bindkey -v '^s;' peco-simple-git-grep-and-start-editor  # Ctrl+s,hでgit grepしてstart-editor
+bindkey -v '^s;' peco-git-grep-and-start-editor         # Ctrl+s,hでgit grepしてstart-editor
 bindkey -v '^s^a' immediate-git-add-all                 # Ctrl+s,Ctrl+aでgit add .
 bindkey -v '^s^d' immediate-git-diff                    # Ctrl+s,Ctrl+dでgit diff
 bindkey -v '^s^f' peco-file-finder                      # Ctrl+s,Ctrl+fでpeco-file-finder
