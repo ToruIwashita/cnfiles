@@ -11,8 +11,8 @@ let g:gsw_load_session_confirm = 'yes'
 let g:gsw_switch_prev_confirm = 'yes'
 
 " <C-s>プレフィックス
-nnoremap <C-s>p :<C-u>GswPull<CR>
-nnoremap <C-s>n :<C-u>GswFetch<CR>
+nnoremap <C-s>p :<C-u>GswPull!<CR>
+nnoremap <C-s>n :<C-u>GswFetch!<CR>
 
 " <C-w>プレフィックス
 nnoremap <C-w><C-o> :<C-u>GswSave<CR>
