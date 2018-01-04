@@ -34,7 +34,7 @@ fun! s:gitv_settiongs()
   nnoremap <buffer> <C-g>B :<C-u>Git rebase -i --autosquash <C-r>=<SID>gitv_get_current_sha()<CR><CR>
   nnoremap <buffer> <C-g>C :<C-u>Git cherry-pick <C-r>=<SID>gitv_get_current_sha()<CR><CR>
   nnoremap <buffer> <C-g>R :<C-u>Git revert <C-r>=<SID>gitv_get_current_sha()<CR><CR>
-  nnoremap <buffer> <C-s><C-g> :<C-u>Gbrowse <C-r>=<SID>gitv_get_current_sha()<CR><CR>
+  nnoremap <buffer> <C-s>G :<C-u>Gbrowse <C-r>=<SID>gitv_get_current_sha()<CR><CR>
 endf
 
 augroup local_gitv
