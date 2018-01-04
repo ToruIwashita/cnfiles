@@ -27,14 +27,14 @@ fun! s:gitv_settiongs()
   " foldingをトグル
   nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
 
-  " gitvはfugitiveに依存している,以下はfugitive依存のコード
+  " リロード
+  nmap <buffer> <leader>r u
+
+  " gitvはfugitiveに依存している,以下はfugitive.vim依存のコード
   nnoremap <buffer> <C-g>B :<C-u>Git rebase -i --autosquash <C-r>=<SID>gitv_get_current_sha()<CR><CR>
   nnoremap <buffer> <C-g>C :<C-u>Git cherry-pick <C-r>=<SID>gitv_get_current_sha()<CR><CR>
   nnoremap <buffer> <C-g>R :<C-u>Git revert <C-r>=<SID>gitv_get_current_sha()<CR><CR>
   nnoremap <buffer> <C-s><C-g> :<C-u>Gbrowse <C-r>=<SID>gitv_get_current_sha()<CR><CR>
-
-  " リロード
-  nmap <buffer> <leader>r u
 endf
 
 augroup local_gitv

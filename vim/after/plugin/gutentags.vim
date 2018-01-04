@@ -9,8 +9,7 @@ fun! gutentags#gutentags_enabled()
   return g:gutentags_enabled
 endf
 
-"" 以下のpluginに依存している
-" lightline.vim
+" lightline.vim依存のコード
 fun! s:gutentags_toggle()
   GutentagsToggleEnabled
 

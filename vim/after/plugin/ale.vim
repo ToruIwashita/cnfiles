@@ -5,7 +5,7 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-" (config.plugin.vim にも設定あり)
+" (config.plugin.vimにも設定あり)
 
 nmap <silent> <C-a>n <Plug>(ale_next_wrap)
 nmap <silent> <C-a><C-n> <Plug>(ale_next_wrap)
@@ -14,8 +14,8 @@ nmap <silent> <C-a><C-p> <Plug>(ale_previous_wrap)
 
 augroup local_ale
   autocmd!
-  " lightline に依存している
-  " statusline を更新するために lightline の関数を呼び出す
+  " lightline.vimに依存している
+  " statuslineを更新するためにlightlineの関数を呼び出す
   autocmd User ALELint call lightline#update()
 augroup END
 

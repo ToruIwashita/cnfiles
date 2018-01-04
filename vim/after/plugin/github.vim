@@ -16,9 +16,21 @@ endf
 command! OpenPullRequestFromSha call s:open_pull_request_from_sha()
 
 nnoremap <C-s>g :<C-u>OpenGithubProject<CR>
-nnoremap <C-s><C-g> :<C-u>OpenPullRequestFromSha<CR>
 nnoremap <C-s>G :<C-u>OpenGithubFile<CR>y<CR>
 vnoremap <C-s>G :<C-u>'<,'>OpenGithubFile<CR>y<CR>
+
+fun! s:github_setting()
+  nnoremap <C-s><C-g> :<C-u>OpenPullRequestFromSha<CR>
+endf
+
+augroup local_github
+  autocmd!
+  " fugitive.vim依存のコード
+  autocmd FileType fugitiveblame call s:github_setting()
+  " gitv.vim依存のコード
+  autocmd FileType gitv call s:github_setting()
+augroup END
+
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
