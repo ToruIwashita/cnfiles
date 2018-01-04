@@ -12,10 +12,10 @@ if !exists('g:abolish_no_mappings') || !g:abolish_no_mappings
   nmap ccp crm
   " change camelCase
   nmap ccc crc
+  " change chain-case
+  nmap cc- cr-
   " change UPPER_CASE
   nmap ccu cru
-  " change dash-case
-  nmap cc- cr-
   " change dot.case
   nmap cc. cr.
   " change space case
