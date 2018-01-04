@@ -16,9 +16,9 @@ endf
 command! OpenPullRequestFromSha call s:open_pull_request_from_sha()
 
 nnoremap <C-s>g :<C-u>OpenGithubProject<CR>
-nnoremap <C-s>G :<C-u>OpenPullRequestFromSha<CR>
-nnoremap <C-s><C-g> :<C-u>OpenGithubFile<CR>y<CR>
-vnoremap <C-s><C-g> :<C-u>'<,'>OpenGithubFile<CR>y<CR>
+nnoremap <C-s><C-g> :<C-u>OpenPullRequestFromSha<CR>
+nnoremap <C-s>G :<C-u>OpenGithubFile<CR>y<CR>
+vnoremap <C-s>G :<C-u>'<,'>OpenGithubFile<CR>y<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
