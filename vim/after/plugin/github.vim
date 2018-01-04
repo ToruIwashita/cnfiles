@@ -20,7 +20,7 @@ nnoremap <C-s>G :<C-u>OpenGithubFile<CR>y<CR>
 vnoremap <C-s>G :<C-u>'<,'>OpenGithubFile<CR>y<CR>
 
 fun! s:github_setting()
-  nnoremap <C-s><C-g> :<C-u>OpenPullRequestFromSha<CR>
+  nnoremap <buffer> <C-s><C-g> :<C-u>OpenPullRequestFromSha<CR>
 endf
 
 augroup local_github
