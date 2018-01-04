@@ -20,6 +20,6 @@ ant-clean() {
   ez
 }
 
-ant-gradeup() {
+ant-upgrade() {
   antigen selfupdate
 }
