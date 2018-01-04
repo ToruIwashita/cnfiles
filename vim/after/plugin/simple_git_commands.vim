@@ -5,6 +5,8 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
+nnoremap <C-g>i :<C-u>InsertCurrentBranch<CR>
+
 nnoremap <C-g>h :<C-u>Gsh
 nnoremap <C-g><C-h> :<C-u>GshForce
 
