@@ -21,6 +21,7 @@ printf "add sbt plugins"
 
 cat <<EOF > $SBT_DIR/plugins/build.sbt
 addSbtPlugin("org.scala-debugger" %% "sbt-scala-debugger" % "1.1.0-M3")
+addSbtPlugin("net.ceedubs" %% "sbt-ctags" % "0.2.0")
 EOF
 
 echo
