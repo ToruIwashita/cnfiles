@@ -7,7 +7,7 @@ set cpoptions&vim
 
 let g:previm_enable_realtime = 1
 
-fun! s:previm_setting()
+fun! s:previm_setting() abort
   nnoremap <buffer> <C-s>v :<C-u>PrevimOpen<CR>
 endf
 

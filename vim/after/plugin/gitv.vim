@@ -13,17 +13,17 @@ let g:Gitv_TruncateCommitSubjects = 1
 nnoremap <C-g>v :<C-u>Gitv!<CR>
 nnoremap <C-g>l :<C-u>Gitv<CR>
 
-fun! s:gitv_get_current_sha()
+fun! s:gitv_get_current_sha() abort
   return matchstr(getline('.'), '\[\zs[0-9a-f]\{7,10\}\ze\]$')
-endfunction
+endf
 
-function! s:toggle_git_folding()
+fun! s:toggle_git_folding() abort
   if &filetype ==# 'git'
     setlocal foldenable!
   endif
-endfunction
+endf
 
-fun! s:gitv_settiongs()
+fun! s:gitv_settiongs() abort
   " foldingをトグル
   nnoremap <silent><buffer> t :<C-u>windo call <SID>toggle_git_folding()<CR>1<C-w>w
 

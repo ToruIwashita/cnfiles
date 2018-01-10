@@ -7,7 +7,7 @@ set cpo&vim
 
 noremap <C-w>w :<C-u>NERDTreeToggle<CR>
 
-fun! s:nerd_tree_setting()
+fun! s:nerd_tree_setting() abort
   " 水平・垂直分割でファイルを開くキーを入れ替える
   nnoremap <buffer> i :<C-u>call nerdtree#ui_glue#invokeKeyMap("s")<CR>
   nnoremap <buffer> gi :<C-u>call nerdtree#ui_glue#invokeKeyMap("gs")<CR>

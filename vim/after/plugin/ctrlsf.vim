@@ -20,12 +20,12 @@ let g:ctrlsf_mapping = {
   \ 'prev':  '<C-p>'
 \ }
 
-fun! s:ctrlsf_setting()
+fun! s:ctrlsf_setting() abort
   nnoremap <buffer> <C-s> :<C-u>call ctrlsf#JumpTo('split')<CR>:<C-u>CtrlSFOpen<CR><C-w><C-p>
   nnoremap <buffer> <C-i> :<C-u>call ctrlsf#JumpTo('vsplit')<CR>:<C-u>CtrlSFOpen<CR><C-w><C-p>
 endf
 
-fun! s:buffer_ctrlsf(keyword)
+fun! s:buffer_ctrlsf(keyword) abort
   let l:buflist = join(map(filter(range(1, bufnr('$')), 'buflisted(v:val)'), 'bufname(v:val)'), ' ')
   exec 'CtrlSF '.a:keyword.' '.l:buflist
 endf

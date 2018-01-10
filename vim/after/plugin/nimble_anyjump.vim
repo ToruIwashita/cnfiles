@@ -10,7 +10,7 @@ let g:nimble_anyjump_output_style = 'vertical'
 " ジャンプ後のカーソル画面位置
 let g:nimble_anyjump_after_jump = 'zz'
 
-function! s:nimble_anyjump_to_new_tab()
+function! s:nimble_anyjump_to_new_tab() abort
   let s:current_output_style = g:nimble_anyjump_output_style
   let g:nimble_anyjump_output_style = 'tabnew'
 
@@ -19,7 +19,7 @@ function! s:nimble_anyjump_to_new_tab()
   let g:nimble_anyjump_output_style = s:current_output_style
 endfunction
 
-function! s:nimble_anyjump_range_to_new_tab()
+function! s:nimble_anyjump_range_to_new_tab() abort
   let s:current_output_style = g:nimble_anyjump_output_style
   let g:nimble_anyjump_output_style = 'tabnew'
 

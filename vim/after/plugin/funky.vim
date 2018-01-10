@@ -23,7 +23,7 @@ fun! s:ctrlp_funky_range() range
   endif
 
   execute 'CtrlPFunky '.l:selected_range
-endfunction
+endf
 
 command! -range CtrlPFunkyRange call s:ctrlp_funky_range()
 

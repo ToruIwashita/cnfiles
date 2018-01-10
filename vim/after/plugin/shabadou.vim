@@ -5,7 +5,7 @@ scriptencoding utf-8
 let s:cpo_save = &cpo
 set cpo&vim
 
-function! s:running_quickrun()
+function! s:running_quickrun() abort
   return shabadou#make_quickrun_hook_anim(
     \ 'running',
     \ [

@@ -5,7 +5,7 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-function! s:rubocop_check()
+function! s:rubocop_check() abort
   let l:config_file = g:lint_dir_path.'/rubocop.yml'
   if filereadable('.rubocop.yml')
     let l:config_file = '.rubocop.yml'
@@ -24,7 +24,7 @@ function! s:rubocop_check()
   unlet g:vimrubocop_extra_args
 endfunction
 
-function! s:rubocop_auto_correct()
+function! s:rubocop_auto_correct() abort
   let l:config_file = g:lint_dir_path.'/rubocop.yml'
   if filereadable('.rubocop.yml')
     let l:config_file = '.rubocop.yml'

@@ -5,18 +5,18 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-fun! gutentags#gutentags_enabled()
+fun! gutentags#gutentags_enabled() abort
   return g:gutentags_enabled
 endf
 
 " lightline.vim依存のコード
-fun! s:gutentags_toggle()
+fun! s:gutentags_toggle() abort
   GutentagsToggleEnabled
 
   call lightline#update()
 endf
 
-fun! s:create_tags()
+fun! s:create_tags() abort
   GutentagsUpdate!
   redraw!
   echo 'CreateTags'

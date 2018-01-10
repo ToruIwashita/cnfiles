@@ -37,7 +37,7 @@ let g:quickrun_config['rspec/bin'] = extend(copy(s:rspec_quickrun_config), {
 
 " :QuickRunで実行されるrpsecコマンドを定義する
 " <leader>s,<leader>saをタイプした時に:QuickRun [-cmdopt '-l (カーソル行)']を実行するキーマップを定義する
-function! s:rspec_quickrun()
+function! s:rspec_quickrun() abort
   if filereadable('./bin/rspec')
     let b:quickrun_config = {'type': 'rspec/bin'}
   else
@@ -51,7 +51,7 @@ function! s:rspec_quickrun()
 endfunction
 
 " 設定変更用の関数
-function! s:switch_rspec_quickrun(arg)
+function! s:switch_rspec_quickrun(arg) abort
   if match(a:arg, 'bin') != -1
     let b:quickrun_config = {'type': 'rspec/bin'}
   elseif match(a:arg, 'bundle') != -1
@@ -69,7 +69,7 @@ function! s:switch_rspec_quickrun(arg)
 endfunction
 
 " 設定変更可能なrspecの種類補完
-fun! s:_types_of_rspec(...)
+fun! s:_types_of_rspec(...) abort
   return filter(['normal', 'bundle', 'bin'], 'v:val =~ "^'.fnameescape(a:1).'"')
 endf
 

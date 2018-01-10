@@ -34,7 +34,7 @@ nnoremap <C-g><C-a> :<C-u>w<CR>:<C-u>Gwrite<CR>
 " blame
 nnoremap <C-g><C-v> :<C-u>Gblame<CR>
 
-fun! s:fugitive_commit_setting()
+fun! s:fugitive_commit_setting() abort
   nnoremap <buffer> <C-g><C-c> <NOP>
   nnoremap <buffer> <C-g><C-t> <NOP>
   nnoremap <buffer> <C-g>d :<C-u>Git diff <C-r>=matchstr(getline('.'), 'modified:\s*\zs.*\ze')<CR><CR>
@@ -59,7 +59,7 @@ fun! s:fugitive_commit_setting()
   nnoremap <C-g>f :<C-u>Gcommit --amend --no-edit<CR>
 endf
 
-fun! s:fugitive_blame_setting()
+fun! s:fugitive_blame_setting() abort
   nnoremap <buffer> <C-s>G :<C-u>Gbrowse <C-r>=matchstr(getline('.'), '^\zs[0-9a-f]\{7,10\}\ze')<CR><CR>
 endf
 
