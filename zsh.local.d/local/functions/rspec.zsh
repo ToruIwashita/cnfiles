@@ -100,5 +100,6 @@ EOF`
   fi
 
   print $cmd
-  eval "$cmd $fail_fast_option $seed_option $tag_option $file_paths"
+  (ls $file_paths &>/dev/null && eval $cmd $fail_fast_option $seed_option $tag_option $file_paths) ||
+    (ls $(git rev-parse --show-toplevel)/${^file_paths[*]} &>/dev/null && eval $cmd $fail_fast_option $seed_option $tag_option $(git rev-parse --show-toplevel)/${^file_paths[*]})
 }
