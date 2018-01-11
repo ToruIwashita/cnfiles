@@ -1,5 +1,4 @@
 ## rspec
-
 brspec() {
   integer no_binstub
   local -a args file_paths

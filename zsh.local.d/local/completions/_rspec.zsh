@@ -1,4 +1,4 @@
-## rails test関連の補完
+## rspec関連の補完
 __word-of-current() {
   compadd 'current'
 }
