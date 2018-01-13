@@ -2,8 +2,8 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 nnoremap <leader>tb :<C-u>OpenAllBuffersInTab<CR>
 nnoremap <leader>bc :<C-u>AddCToBuffer<CR>
@@ -13,5 +13,5 @@ nnoremap <leader>tc :<C-u>AddCToTab<CR>
 nnoremap <leader>tm :<C-u>AddMToTab<CR>
 nnoremap <leader>tu :<C-u>AddUToTab<CR>
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
