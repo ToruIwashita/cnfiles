@@ -699,7 +699,7 @@ EOF`
       case "$answer" in
         [yY])
           for merged_branch in $merged_branches; do
-            git branch -D $merged_branch
+            git branch -d $merged_branch
           done
           break
           ;;
@@ -722,7 +722,7 @@ EOF`
       read answer
       case "$answer" in
         [yY])
-          git branch -D $merged_branch && echo
+          git branch -d $merged_branch && echo
           break
           ;;
         [nN])
