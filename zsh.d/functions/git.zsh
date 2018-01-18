@@ -28,7 +28,7 @@ gam() {
     return 1
   fi
 
-  (git diff --exit-code $* 2>/dev/null && git diff $(git rev-parse --show-toplevel)/$^*) &&
+  (git diff $* 2>/dev/null || git diff $(git rev-parse --show-toplevel)/$^*) &&
     (git add $* 2>/dev/null || git add $(git rev-parse --show-toplevel)/$^*)
 }
 
@@ -316,7 +316,7 @@ gd() {
     return 1
   fi
 
-  (git diff --exit-code $* 2>/dev/null && git diff $(git rev-parse --show-toplevel)/$^*)
+  (git diff $* 2>/dev/null || git diff $(git rev-parse --show-toplevel)/$^*)
 }
 
 gsw() {
