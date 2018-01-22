@@ -19,8 +19,6 @@ nnoremap <leader>cu :<C-u>GCleanU<CR>
 
 nnoremap <C-g>B :<C-u>GllRebase
 
-nnoremap <C-g>D :<C-u>GDeleteAllMergedBranch
-
 nnoremap <C-g>H :<C-u>GResetHard
 
 nnoremap <C-g>L :<C-u>GResetLatest
