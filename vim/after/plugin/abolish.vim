@@ -16,29 +16,29 @@ if !exists('g:abolish_no_mappings') || !g:abolish_no_mappings
   command! -range VisualReplaceSpaceWithChain call s:visual_replace_space_with_chain()
 
   " change snake_case
-  nmap ;s crs
-  vmap ;s :<C-u>VisualReplaceSpaceWithChain<CR>:normal crs<CR>
+  nmap <leader>.s crs
+  vmap <leader>.s :<C-u>VisualReplaceSpaceWithChain<CR>:normal crs<CR>
   " change PascalCase
-  nmap ;p crm
-  vmap ;p :<C-u>VisualReplaceSpaceWithChain<CR>:normal crm<CR>
+  nmap <leader>.p crm
+  vmap <leader>.p :<C-u>VisualReplaceSpaceWithChain<CR>:normal crm<CR>
   " change camelCase
-  nmap ;c crc
-  vmap ;c :<C-u>VisualReplaceSpaceWithChain<CR>:normal crc<CR>
+  nmap <leader>.c crc
+  vmap <leader>.c :<C-u>VisualReplaceSpaceWithChain<CR>:normal crc<CR>
   " change chain-case
-  nmap ;- cr-
-  vmap ;- :<C-u>VisualReplaceSpaceWithChain<CR>:normal cr-<CR>
+  nmap <leader>.- cr-
+  vmap <leader>.- :<C-u>VisualReplaceSpaceWithChain<CR>:normal cr-<CR>
   " change UPPER_CASE
-  nmap ;u cru
-  vmap ;u :<C-u>VisualReplaceSpaceWithChain<CR>:normal cru<CR>
+  nmap <leader>.u cru
+  vmap <leader>.u :<C-u>VisualReplaceSpaceWithChain<CR>:normal cru<CR>
   " change dot.case
-  nmap ;. cr.
-  vmap ;. :<C-u>VisualReplaceSpaceWithChain<CR>:normal cr.<CR>
+  nmap <leader>.. cr.
+  vmap <leader>.. :<C-u>VisualReplaceSpaceWithChain<CR>:normal cr.<CR>
   " change space case
-  nmap ;<SPACE> cr<SPACE>
-  vmap ;<SPACE> :<C-u>VisualReplaceSpaceWithChain<CR>:normal cr<SPACE><CR>
+  nmap <leader>.<SPACE> cr<SPACE>
+  vmap <leader>.<SPACE> :<C-u>VisualReplaceSpaceWithChain<CR>:normal cr<SPACE><CR>
   " change Title Case
-  nmap ;t crt
-  vmap ;t :<C-u>VisualReplaceSpaceWithChain<CR>:normal crt<CR>
+  nmap <leader>.t crt
+  vmap <leader>.t :<C-u>VisualReplaceSpaceWithChain<CR>:normal crt<CR>
 endif
 
 let &cpoptions = s:cpoptions_save
