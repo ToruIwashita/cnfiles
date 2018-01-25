@@ -11,7 +11,14 @@ fun! s:insert_current_file_name()
   call setpos('.', l:pos)
 endf
 
+fun! s:insert_current_file_name_with_ext()
+  let l:pos = getpos('.')
+  execute ':normal i' . expand('%:t')
+  call setpos('.', l:pos)
+endf
+
 command! InsertCurrentFileName call s:insert_current_file_name()
+command! InsertCurrentFileNameWithExt call s:insert_current_file_name_with_ext()
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
