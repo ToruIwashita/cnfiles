@@ -16,9 +16,15 @@ fun! s:gutentags_toggle() abort
   call lightline#update()
 endf
 
-fun! s:create_tags() abort
+fun! s:create_gutentags() abort
   GutentagsUpdate!
   redraw!
+  echo 'CreateGutentags'
+endf
+
+" gutentags非依存だがctagsの生成なのでここに関数を作成
+fun! s:create_tags() abort
+  call job_start('bash -c "ctags >/dev/null 2>&1"')
   echo 'CreateTags'
 endf
 
@@ -29,10 +35,12 @@ fun! s:create_sbt_tags() abort
 endf
 
 command! GutentagsToggle call s:gutentags_toggle()
+command! CreateGutentags call s:create_gutentags()
 command! CreateTags call s:create_tags()
 command! CreateSbtTags call s:create_sbt_tags()
 
 nnoremap <C-t> :<C-u>GutentagsToggle<CR>
+nnoremap <leader>cg :<C-u>CreateGutentags<CR>
 nnoremap <leader>ct :<C-u>CreateTags<CR>
 nnoremap <leader>cs :<C-u>CreateSbtTags<CR>
 
