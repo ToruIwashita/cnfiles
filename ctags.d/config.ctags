@@ -1,3 +1,5 @@
+-f .tags
+
 -R
 --input-encoding=utf-8
 --tag-relative=yes
