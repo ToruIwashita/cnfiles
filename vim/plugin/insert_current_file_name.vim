@@ -7,13 +7,13 @@ set cpoptions&vim
 
 fun! s:insert_current_file_name()
   let l:pos = getpos('.')
-  execute ':normal i' . expand('%:t:r')
+  execute ':normal a' . expand('%:t:r')
   call setpos('.', l:pos)
 endf
 
 fun! s:insert_current_file_name_with_ext()
   let l:pos = getpos('.')
-  execute ':normal i' . expand('%:t')
+  execute ':normal a' . expand('%:t')
   call setpos('.', l:pos)
 endf
 
