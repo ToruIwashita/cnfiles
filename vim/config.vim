@@ -92,9 +92,14 @@ noremap <C-b> <NOP>
 noremap <C-j> <ESC>
 " ファイル再読込
 noremap <leader>r :<C-u>e!<CR>:<C-u>checktime<CR>
+" 現在のファイル名表示
+noremap <leader>v :<C-u>echo expand('%')<CR>
 " カーソル行が画面の上端に来るようにスクロール
 noremap <C-s>j zt
 noremap <C-s><C-j> zt
+" 検索後にカーソルを上に移動
+noremap n nzz
+noremap N Nzz
 "" ウィンドウ関連
 " ウィンドウのmapに関わるデフォルトのmapを無効化
 noremap <C-w>P <NOP>
@@ -169,9 +174,6 @@ nnoremap <silent> $ g$
 nnoremap <silent> g$ $
 nnoremap <silent> <leader>0 `<
 nnoremap <silent> <leader>$ `>
-" 検索後にカーソルを上に移動
-nnoremap n nzz
-nnoremap N Nzz
 " <ESC>か<C-j>2回で再描画&検索ハイライト消し
 nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 nnoremap <C-j><C-j> :<C-u>nohlsearch<CR>
@@ -184,8 +186,6 @@ nnoremap qqq: <ESC>q:
 " qqq/,qqq?検索履歴表示
 nnoremap qqq/ <ESC>q/
 nnoremap qqq? <ESC>q?
-" 現在のファイル名表示
-nnoremap <leader>v :<C-u>echo expand('%')<CR>
 
 "" inoremap
 " ノーマルモードに切り替え<ESC>
