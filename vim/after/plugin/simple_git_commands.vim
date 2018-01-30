@@ -5,8 +5,8 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-cnoremap <C-g>i <C-r>=simple_git_commands#g_current_branch()<CR>
-nnoremap <C-g>i :<C-u>GInsertCurrentBranch<CR>
+cnoremap <C-g>i <RIGHT><C-r>=simple_git_commands#g_current_branch()<CR>
+nnoremap <C-g>i :<C-u>GAppendCurrentBranch<CR>
 
 nnoremap <C-g>h :<C-u>Gsh
 nnoremap <C-g><C-h> :<C-u>GshForce
