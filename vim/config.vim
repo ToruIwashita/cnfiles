@@ -127,7 +127,7 @@ noremap <C-w>t :<C-u>tabnew<CR>
 " 次のタブへ移動
 noremap <C-w>] gt
 noremap <C-w><C-]> gt
-" 前のバッファへ移動
+" 前のタブへ移動
 noremap <C-w>[ gT
 noremap <C-w><C-[> gT
 " <C-w>1..9で任意の番号のタブへ移動
@@ -141,6 +141,8 @@ noremap <C-w>X :<C-u>tabclose<CR>
 " 直前のバッファに戻る
 noremap <C-s>_ <C-^>
 noremap <C-s><C-_> <C-^>
+" 全てのバッファを1つのウィンドウで開く
+noremap <leader>bb :<C-u>vertical ball<CR>
 "" タグ(ctags)関連
 " タグのmapに関わるデフォルトのmapを無効化
 noremap <C-t> <NOP>
