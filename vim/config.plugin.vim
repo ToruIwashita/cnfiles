@@ -10,18 +10,18 @@ set background=dark
 "" neocomplete
 let g:neocomplete#enable_at_startup = 1  " neocompleteを起動時に有効化
 
-"" ale(after/ にも設定あり)
+"" ale(after/にも設定あり)
 let g:ale_sign_column_always = 1                         " マーカー用のカラムを常に表示
-let g:ale_lint_on_save = 1                               " save 時にシンタックスチェック
+let g:ale_lint_on_save = 1                               " save時にシンタックスチェック
 let g:ale_lint_on_enter = 1                              " ファイルオープン時にシンタックスチェック
 let g:ale_lint_on_text_changed = 'always'                " 自動コードチェック
-let g:ale_sign_error = '✗'                               " error マーカー
-let g:ale_sign_warning = '⚠'                             " warning マーカー
-let g:ale_statusline_format = ['✗ %d', '⚠ %d', '']       " statusline 表示フォーマット
-let g:ale_echo_msg_error_str = '✗'                       " statusline メッセージ error マーカー
-let g:ale_echo_msg_warning_str = '⚠'                     " statusline メッセージ warning マーカー
-let g:ale_echo_msg_format = '[%linter%][%severity%] %s'  " statusline メッセージフォーマット
-" linter 設定
+let g:ale_sign_error = '✗'                               " errorマーカー
+let g:ale_sign_warning = '⚠'                             " warningマーカー
+let g:ale_statusline_format = ['✗ %d', '⚠ %d', '']       " statusline表示フォーマット
+let g:ale_echo_msg_error_str = '✗'                       " statuslineメッセージerrorマーカー
+let g:ale_echo_msg_warning_str = '⚠'                     " statuslineメッセージwarningマーカー
+let g:ale_echo_msg_format = '[%linter%][%severity%] %s'  " statuslineメッセージフォーマット
+" linter設定
 let g:ale_linters = {
   \ 'ruby':       ['ruby'],
   \ 'scala':      ['scalac'],
@@ -29,6 +29,10 @@ let g:ale_linters = {
   \ 'vim':        ['vint'],
   \ 'javascript': ['jshint'],
   \ 'coffee':     ['coffeelint']
+\ }
+" fixer設定
+let g:ale_fixers = {
+  \ 'ruby': ['rubocop']
 \ }
 
 "" ctrlp(after/ にも設定あり)

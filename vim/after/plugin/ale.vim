@@ -12,6 +12,8 @@ nmap <silent> <C-a><C-n> <Plug>(ale_next_wrap)
 nmap <silent> <C-a>p <Plug>(ale_previous_wrap)
 nmap <silent> <C-a><C-p> <Plug>(ale_previous_wrap)
 
+noremap <leader>af :<C-u>ALEFix<CR>
+
 augroup local_ale
   autocmd!
   " lightline.vimに依存している
