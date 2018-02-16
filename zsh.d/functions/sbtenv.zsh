@@ -12,7 +12,7 @@ add-sbt-setting() {
     printf "\e[32m$dir_path dir already exists\e[0m\n"
   else
     printf "\e[31mmkdir $dir_path\e[0m\n"
-    mkdir $dir_path
+    mkdir -p $dir_path
   fi
 
   if [[ -L $dir_path/global.sbt ]]; then
