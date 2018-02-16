@@ -11,7 +11,7 @@ readonly PGPASSWORD=
 # hubコマンド用
 readonly GITHUB_TOKEN=
 
-# programming language environment
+# programming language env environment variable
 export RBENV_ROOT=~/.rbenv
 export PYENV_ROOT=~/.pyenv
 export SCALAENV_ROOT=~/.scalaenv
