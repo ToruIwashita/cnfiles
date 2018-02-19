@@ -13,10 +13,18 @@ fun! s:open_pull_request_from_sha() abort
   exec 'OpenGithubPullReq '.l:pull_request_id
 endf
 
+fun! s:open_pull_request_from_current_branch() abort
+  let l:current_branch = split(system('\git rev-parse --abbrev-ref HEAD 2>/dev/null'), "\n")[0]
+
+  exec 'OpenGithubPullReq #'.l:current_branch
+endf
+
 command! OpenPullRequestFromSha call s:open_pull_request_from_sha()
+command! OpenPullRequestFromCurrentBranch call s:open_pull_request_from_current_branch()
 
 nnoremap <C-s>g :<C-u>OpenGithubProject<CR>
 nnoremap <C-s>G :<C-u>OpenGithubFile<CR>y<CR>
+nnoremap <C-s><C-g> :<C-u>OpenPullRequestFromCurrentBranch<CR>
 vnoremap <C-s>G :<C-u>'<,'>OpenGithubFile<CR>y<CR>
 
 fun! s:github_setting() abort
