@@ -11,7 +11,7 @@ setw -g mode-key vi
 set -s escape-time 0
 # プレフィックスキーのリピート時間(デフォルト500ms)
 set -g repeat-time 500
-# desplay-panesの表示時間5000ms
+# display-panesの表示時間5000ms
 set -g display-panes-time 5000
 # ステータスリフレッシュ間隔(デフォルト15)
 set -g status-interval 2
