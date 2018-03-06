@@ -13,16 +13,18 @@ noremap <leader><C-p> :<C-u>CloseUpWin<CR>
 " quickfix,loclist,preview閉じる
 noremap <C-w><C-w> :<C-u>CloseMisWin<CR>
 
-" ファイル保存,閉じる
+" 現在のウィンドウで保存
 noremap <C-o> :<C-u>w<CR>
-noremap <leader>o :<C-u>wa<CR>
-noremap <leader>e :<C-u>CloseMisWin<CR>:<C-u>q<CR>
+" 現在のウィンドウで保存して閉じる(最後のウィンドウでも閉じる)
 noremap <leader>w :<C-u>w<CR>:<C-u>CloseMisWin<CR>:<C-u>q<CR>
-noremap <leader>x :<C-u>wa<CR>:<C-u>qa<CR>
-
-" 現在のウィンドウを閉じる
-noremap <C-w>x <NOP>
+" バッファ全てを保存
+noremap <leader>o :<C-u>wa<CR>
+" 現在のウィンドウを閉じる(最後のウィンドウでも閉じる)
+noremap <leader>e :<C-u>CloseMisWin<CR>:<C-u>q<CR>
+" 現在のウィンドウを閉じる(最後のウィンドウだった場合は閉じない)
 noremap <C-w>x :<C-u>CloseMisWin<CR>:<C-u>close<CR>
+" バッファ全てを保存して全て閉じる
+noremap <leader>x :<C-u>wa<CR>:<C-u>qa<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
