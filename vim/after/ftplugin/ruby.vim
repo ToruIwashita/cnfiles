@@ -2,8 +2,8 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 " !,?を区切り文字としない
 setlocal iskeyword+=!,?
@@ -15,10 +15,11 @@ silent! nunmap <buffer> <C-w><C-]>
 silent! nunmap <buffer> <C-]>
 
 ab <buffer> =a , :aggregate_failures
-ab <buffer> =t , current: true
-ab <buffer> =p binding.pry
 ab <buffer> =c context "current", current: true do
 ab <buffer> =f # frozen_string_literal: true
+ab <buffer> =p binding.pry
+ab <buffer> =r require 'pry'
+ab <buffer> =t , current: true
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
