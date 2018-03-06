@@ -24,7 +24,7 @@ let g:lightline = {
   \   'getcharcode':  'GetCharCode'
   \ },
   \ 'component_expand': {
-  \   'ale': 'ALEGetStatusLine',
+  \   'ale': 'ALELinterStatus',
   \   'gutentags': 'GutentagsStatusLine'
   \ },
   \ 'component_type': {
@@ -75,15 +75,16 @@ endfunction
 
 function! LightLineFilename()
   let fname = expand('%:t')
+
   return fname == 'ControlP' ? g:lightline.ctrlp_item :
-         \ fname == '__Tagbar__' ? g:lightline.fname :
-         \ fname =~ '__Gundo\|NERD_tree' ? '' :
-         \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
-         \ &ft == 'unite' ? unite#get_status_string() :
-         \ &ft == 'vimshell' ? vimshell#get_status_string() :
-         \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-         \ ('' != fname ? fname : '[No Name]') .
-         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+        \ fname == '__Tagbar__' ? g:lightline.fname :
+        \ fname =~ '__Gundo\|NERD_tree' ? '' :
+        \ &ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \ &ft == 'unite' ? unite#get_status_string() :
+        \ &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+        \ ('' != fname ? fname : '[No Name]') .
+        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
 function! LightLineFileformat()
@@ -100,15 +101,27 @@ endfunction
 
 function! LightLineMode()
   let fname = expand('%:t')
+
   return fname == '__Tagbar__' ? 'Tagbar' :
-         \ fname == 'ControlP' ? 'CtrlP' :
-         \ fname == '__Gundo__' ? 'Gundo' :
-         \ fname == '__Gundo_Preview' ? 'Gundo Preview' :
-         \ fname =~ 'NERD_tree' ? 'NERDTree' :
-         \ &ft == 'unite' ? 'Unite' :
-         \ &ft == 'vimfiler' ? 'VimFiler' :
-         \ &ft == 'vimshell' ? 'VimShell' :
-         \ winwidth(0) > 60 ? lightline#mode() : ''
+        \ fname == 'ControlP' ? 'CtrlP' :
+        \ fname == '__Gundo__' ? 'Gundo' :
+        \ fname == '__Gundo_Preview' ? 'Gundo Preview' :
+        \ fname =~ 'NERD_tree' ? 'NERDTree' :
+        \ &ft == 'unite' ? 'Unite' :
+        \ &ft == 'vimfiler' ? 'VimFiler' :
+        \ &ft == 'vimshell' ? 'VimShell' :
+        \ winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+
+function! ALELinterStatus() abort
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:non_error = l:counts.total - l:counts.error
+
+  return l:counts.total == 0 ? '' : printf(
+        \   '✗ %d ⚠ %d',
+        \   l:counts.error,
+        \   l:non_error
+        \ )
 endfunction
 
 function! CtrlPMark()
