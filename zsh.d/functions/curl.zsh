@@ -10,6 +10,9 @@ usage: $self_cmd <URL> [-j --json]
                 [-v --verbose]
 EOF`
 
+  # default options
+  options=(-kL -I)
+
   while (( $# > 0 )); do
     case "$1" in
       -j | --json)
@@ -17,7 +20,7 @@ EOF`
         shift 1
         ;;
       -v | --verbose)
-        options+=('-I')
+        options=(${options:#-I})
         shift 1
         ;;
       -h | --help)
@@ -45,5 +48,5 @@ EOF`
     return 1
   fi
 
-  curl -kL $options $args
+  eval curl $options $args
 }
