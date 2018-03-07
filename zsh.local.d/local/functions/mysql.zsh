@@ -113,11 +113,11 @@ mytable() {
   __check-presence-of-args $*
   (( $? )) && return 1
 
-  echo "> DESC $*;"
+  print "> DESC $*;"
   mydesc $*
-  echo "> SHOW INDEX FROM $*;"
+  print "> SHOW INDEX FROM $*;"
   myindex $*
-  echo "> SHOW CREATE TABLE $*\G"
+  print "> SHOW CREATE TABLE $*\G"
   myctable $*
 }
 
