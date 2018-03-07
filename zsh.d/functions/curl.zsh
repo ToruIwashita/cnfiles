@@ -1,19 +1,23 @@
 ## curl関連
 cl() {
-  integer verbose_mode
-  local -a args
+  local -a args options
   local self_cmd help usage
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd <URL> [-v --verbose]
+usage: $self_cmd <URL> [-j --json]
+                [-v --verbose]
 EOF`
 
   while (( $# > 0 )); do
     case "$1" in
+      -j | --json)
+        options+=('-H "Content-Type: application/json"')
+        shift 1
+        ;;
       -v | --verbose)
-        (( verbose_mode++ ))
+        options+=('-I')
         shift 1
         ;;
       -h | --help)
@@ -41,9 +45,5 @@ EOF`
     return 1
   fi
 
-  if (( verbose_mode )); then
-    curl -kL $args
-  else
-    curl -kL -I $args
-  fi
+  curl -kL $options $args
 }
