@@ -16,7 +16,7 @@ EOF`
   while (( $# > 0 )); do
     case "$1" in
       -j | --json)
-        options+=('-H "Content-Type: application/json"')
+        options+=('-H "Accept: application/json" -H "Content-Type: application/json"')
         shift 1
         ;;
       -v | --verbose)
@@ -48,5 +48,7 @@ EOF`
     return 1
   fi
 
+  print "curl $options $args"
+  echo
   eval curl $options $args
 }
