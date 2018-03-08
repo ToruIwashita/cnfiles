@@ -9,7 +9,7 @@ cl() {
 usage: $self_cmd <URL> [-c --cookie <key=value>]
                 [-j --json]
                 [-p --params <key=value>]
-                [--post]
+                [-r --request <http method>]
                 [-v --verbose]
                 [-h --help]
 EOF`
@@ -39,10 +39,13 @@ EOF`
         options+=("-d '$2'")
         shift 2
         ;;
-      --post)
-        options=(${options:#-I})
-        options+=('-X POST')
-        shift 1
+      -r | --request)
+        if (( ! $#2  )) || [[ "$2" =~ ^-+  ]]; then
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
+          return 1
+        fi
+        options+=("-X $2")
+        shift 2
         ;;
       -v | --verbose)
         options=(${options:#-I})
