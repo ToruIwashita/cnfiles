@@ -1,6 +1,6 @@
 ## ctags関連関数
 create-tags() {
-  ctags -f .tags
+  ctags
 }
 
 create-sbt-tags() {
