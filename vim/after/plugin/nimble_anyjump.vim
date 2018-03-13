@@ -35,14 +35,14 @@ command! NimbleAnyjumpRangeToNewTab call s:nimble_anyjump_range_to_new_tab()
 nnoremap <C-s>h :<C-u>tselect<SPACE>
 
 " カーソル直下の文字列でtagジャンプ
-nmap <C-s>l <Plug>NimbleAnyjump
+nmap <C-s>l <Plug>(nimble-anyjump)
 noremap <C-s>L :<C-u>NimbleAnyjumpToNewTab<CR>
-nmap <C-s><C-l> <Plug>NimbleTAnyjump
+nmap <C-s><C-l> <Plug>(nimble-t-anyjump)
 
 " 選択範囲の文字列でtagジャンプ
-vmap <C-s>l <Plug>NimbleAnyjumpRange
+vmap <C-s>l <Plug>(nimble-anyjump-range)
 vnoremap <C-s>L :<C-u>NimbleAnyjumpRangeToNewTab<CR>
-vmap <C-s><C-l> <Plug>NimbleTAnyjumpRange
+vmap <C-s><C-l> <Plug>(nimble-t-anyjump-range)
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
