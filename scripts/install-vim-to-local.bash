@@ -36,7 +36,8 @@ fi
   --with-python3-config-dir=$PYTHON3_CONFIG_DIR \
   --enable-luainterp=dynamic                    \
   --with-lua-prefix=$LOCAL_DIR_PATH             \
-  --with-luajit
+  --with-luajit                                 \
+  --enable-fail-if-missing
 make && make install
 
 git checkout .
