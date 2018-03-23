@@ -4,8 +4,8 @@ source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
 # install for global
-npm -g install jshint --prefix=$NPM_HOME
-npm -g install lice --prefix=$NPM_HOME
+npm -g install jshint
+npm -g install lice
 
 npm update jshint
 npm update lice
