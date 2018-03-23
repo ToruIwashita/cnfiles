@@ -61,3 +61,6 @@
 [submodule "modules/LuaJIT"]
 	path = modules/LuaJIT
 	url = git@github.com:LuaJIT/LuaJIT.git
+[submodule "modules/anyenv"]
+	path = modules/anyenv
+	url = git@github.com:riywo/anyenv.git
