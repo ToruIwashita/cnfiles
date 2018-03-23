@@ -70,30 +70,6 @@ else
   mkdir $MEMOLIST_DIR_PATH
 fi
 
-# go path dir
-if [[ -d $GOPATH ]]; then
-  printf "\e[32m$GOPATH dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir $GOPATH\e[0m\n"
-  mkdir $GOPATH
-fi
-
-# go/src dir
-if [[ -d $GOPATH/src ]]; then
-  printf "\e[32m$GOPATH/src dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir $GOPATH/src\e[0m\n"
-  mkdir $GOPATH/src
-fi
-
-# go/bin dir
-if [[ -d $GOPATH/bin ]]; then
-  printf "\e[32m$GOPATH/bin dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir $GOPATH/bin\e[0m\n"
-  mkdir $GOPATH/bin
-fi
-
 ## copy zsh config file
 # zsh.d/config.local.zsh file
 if [[ -f $ZSH_CONFIG_LOCAL_FILE_DEST_PATH ]]; then

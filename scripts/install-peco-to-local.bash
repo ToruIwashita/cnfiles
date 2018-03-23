@@ -3,6 +3,9 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
+# peco in go path
+PECO_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH/src/github.com/peco
+
 cd $PECO_SRC_DIR_PATH
 
 # github.com/peco dir

@@ -15,8 +15,6 @@ readonly GITHUB_API_TOKEN=
 export ANYENV_ROOT=~/.anyenv
 # programming language environment variable
 export SBT_HOME=~/.sbt
-export GOROOT=$LOCAL_DIR_PATH/go
-export GOPATH=~/.go
 # DB
 export MYSQL_DATABASE
 export PGDATABASE
@@ -39,8 +37,6 @@ export OWNED_GITHUB_REPOSITORIES=()
 path=(
   $LOCAL_DIR_PATH/bin
   $ANYENV_ROOT/bin
-  $GOROOT/bin
-  $GOPATH/bin
   # gitインストール時にbrewでインストールしたopensslを使用する
   # /usr/local/opt/openssl/bin
   /usr/local/bin

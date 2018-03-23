@@ -15,19 +15,6 @@ LOCAL_LIB_DIR_PATH=$LOCAL_DIR_PATH/lib
 LOCAL_INCLUDE_DIR_PATH=$LOCAL_DIR_PATH/include
 SUBMODULES_DIR_PATH=$BASE_DIR_PATH/modules
 
-# anyenv
-ANYENV_DIR_PATH=~/.anyenv
-
-# cache
-CACHE_DIR_PATH=~/.cache
-
-# works
-WORKS_DIR_PATH=~/works
-TMP_DIR_PATH=$WORKS_DIR_PATH/tmp
-
-# memolist
-MEMOLIST_DIR_PATH=~/.memolist
-
 # submodules src dir
 CTAGS_SRC_DIR_PATH=$SUBMODULES_DIR_PATH/ctags
 GIT_SRC_DIR_PATH=$SUBMODULES_DIR_PATH/git
@@ -44,6 +31,10 @@ VIM_SRC_DIR_PATH=$SUBMODULES_DIR_PATH/vim
 NEOVIM_SRC_DIR_PATH=$SUBMODULES_DIR_PATH/neovim
 ZSH_SRC_DIR_PATH=$SUBMODULES_DIR_PATH/zsh
 
+# anyenv
+ANYENV_DIR_PATH=~/.anyenv
+ANYENV_ENVS_DIR_PATH=$ANYENV_DIR_PATH/envs
+
 # zsh
 ZSH_DIR_PATH=$BASE_DIR_PATH/zsh.d
 ZSH_CONFIG_LOCAL_FILE_SOURCE_PATH=$BASE_DIR_PATH/zsh.local.d/config.local.zsh
@@ -56,37 +47,15 @@ ZSH_CONFIG_LOCAL_DIR_DEST_PATH=$BASE_DIR_PATH/zsh.d/local
 # git
 GIT_DIR_PATH=$BASE_DIR_PATH/git
 
-# ruby
-RUBY_PATH=${1:-$(which ruby)}
+# cache
+CACHE_DIR_PATH=~/.cache
 
-# python
-PYTHON2_PATH=${1:-$(which python2)}
-PYTHON2_VERSION_STDOUT=$(python2 --version 2>&1)
-PYTHON2_VERSION=${PYTHON2_VERSION_STDOUT#*[[:space:]]}
-PYTHON2_MINOR_VERSION=${PYTHON2_VERSION%.*}
-PYTHON2_CONFIG_DIR=$ANYENV_DIR_PATH/envs/pyenv/versions/$PYTHON2_VERSION/lib/python$PYTHON2_MINOR_VERSION/config
-PYTHON3_PATH=${1:-$(which python3)}
-PYTHON3_VERSION_STDOUT=$(python3 --version 2>&1)
-PYTHON3_VERSION=${PYTHON3_VERSION_STDOUT#*[[:space:]]}
-PYTHON3_MINOR_VERSION=${PYTHON3_VERSION%.*}
-PYTHON3_CONFIG_DIR=$ANYENV_DIR_PATH/envs/pyenv/versions/$PYTHON3_VERSION/lib/python$PYTHON3_MINOR_VERSION/config-3.6m-$OS_INFO
+# works
+WORKS_DIR_PATH=~/works
+TMP_DIR_PATH=$WORKS_DIR_PATH/tmp
 
-# luajit
-LUAJIT_PATH=${1:-$(which luajit)}
-LUAJIT_PREFIX_DIR=$ANYENV_DIR_PATH/envs/luaenv/versions/$(luaenv version | sed -e 's/ .*$//g')
-
-# scala
-SBT_DIR=~/.sbt/$(sbtenv version | sed -e 's/^sbt-\([0-9]*.[0-9]*\).*/\1/g')
-
-# go
-GOROOT=$LOCAL_DIR_PATH/go
-GOPATH=~/.go
-# go1.4
-GOROOT_1_4=$LOCAL_DIR_PATH/go1.4
-
-# go path
-HUB_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH/src/github.com/github
-PECO_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH/src/github.com/peco
+# memolist
+MEMOLIST_DIR_PATH=~/.memolist
 
 # memolist tmp file
 MEMOLIST_TMP_MARKDOWN_FILE=$MEMOLIST_DIR_PATH/0000-00-00-tmp.md

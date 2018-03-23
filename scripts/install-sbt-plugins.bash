@@ -3,6 +3,9 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
+# scala
+SBT_DIR=~/.sbt/$(sbtenv version | sed -e 's/^sbt-\([0-9]*.[0-9]*\).*/\1/g')
+
 sbtenv version
 
 echo

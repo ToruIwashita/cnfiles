@@ -3,6 +3,9 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
+# github in go path
+HUB_GITHUB_DIR_PATH_IN_GOPATH=$GOPATH/src/github.com/github
+
 cd $HUB_SRC_DIR_PATH
 
 # github.com/hub dir
