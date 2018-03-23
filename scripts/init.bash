@@ -151,7 +151,7 @@ fi
 
 # lint
 if [[ -L ~/.lint ]]; then
-  printf "\e[32m~/lint symlink already exists\e[0m\n"
+  printf "\e[32m~/.lint symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.lint dir\e[0m\n"
   ln -is $BASE_DIR_PATH/lint ~/.lint
