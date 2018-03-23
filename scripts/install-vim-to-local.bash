@@ -4,14 +4,14 @@ source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
 # check ruby
-if [[ -z $RUBY_PATH ]]; then
-  printf "ruby not found\n"
+if [[ $RUBY_PATH =~ anyenv  ]]; then
+  printf "there is no ruby installed with anyenv\n"
   exit 1
 fi
 
 # check luajit
-if [[ $(which luajit) != $LOCAL_BIN_DIR_PATH/luajit ]]; then
-  printf "luajit bin is required in $LOCAL_BIN_DIR_PATH\n"
+if [[ $LUAJIT_PATH != anyenv ]]; then
+  printf "there is no luajit installed with anyenv\n"
   exit 1
 fi
 
@@ -35,7 +35,7 @@ fi
   --enable-python3interp=dynamic                \
   --with-python3-config-dir=$PYTHON3_CONFIG_DIR \
   --enable-luainterp=dynamic                    \
-  --with-lua-prefix=$LOCAL_DIR_PATH             \
+  --with-lua-prefix=$LUAJIT_PATH:h              \
   --with-luajit                                 \
   --enable-fail-if-missing
 make && make install

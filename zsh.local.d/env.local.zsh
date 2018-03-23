@@ -17,7 +17,6 @@ export ANYENV_ROOT=~/.anyenv
 export SBT_HOME=~/.sbt
 export GOROOT=$LOCAL_DIR_PATH/go
 export GOPATH=~/.go
-export NPM_HOME=~/.npm
 # DB
 export MYSQL_DATABASE
 export PGDATABASE
@@ -42,7 +41,6 @@ path=(
   $ANYENV_ROOT/bin
   $GOROOT/bin
   $GOPATH/bin
-  $NPM_HOME/bin
   # gitインストール時にbrewでインストールしたopensslを使用する
   # /usr/local/opt/openssl/bin
   /usr/local/bin
