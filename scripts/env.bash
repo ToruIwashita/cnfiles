@@ -75,7 +75,7 @@ PYTHON3_MINOR_VERSION=${PYTHON3_VERSION%.*}
 PYTHON3_CONFIG_DIR=$ANYENV_DIR_PATH/envs/pyenv/versions/$PYTHON3_VERSION/lib/python$PYTHON3_MINOR_VERSION/config-3.6m-$OS_INFO
 
 # scala
-# SBT_DIR=~/.sbt/$(sbtenv version | sed -e 's/^sbt-\([0-9]*.[0-9]*\).*/\1/g')
+SBT_DIR=~/.sbt/$(sbtenv version | sed -e 's/^sbt-\([0-9]*.[0-9]*\).*/\1/g')
 
 # go
 GOROOT=$LOCAL_DIR_PATH/go
