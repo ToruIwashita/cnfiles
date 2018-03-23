@@ -12,10 +12,7 @@ readonly PGPASSWORD=
 readonly GITHUB_API_TOKEN=
 
 # programming language env environment variable
-export RBENV_ROOT=~/.rbenv
-export PYENV_ROOT=~/.pyenv
-export SCALAENV_ROOT=~/.scalaenv
-export SBTENV_ROOT=~/.sbtenv
+export ANYENV_ROOT=~/.anyenv
 # programming language environment variable
 export SBT_HOME=~/.sbt
 export GOROOT=$LOCAL_DIR_PATH/go
@@ -42,10 +39,7 @@ export OWNED_GITHUB_REPOSITORIES=()
 ## path
 path=(
   $LOCAL_DIR_PATH/bin
-  $RBENV_ROOT/bin
-  $PYENV_ROOT/bin
-  $SCALAENV_ROOT/bin
-  $SBTENV_ROOT/bin
+  $ANYENV_ROOT/bin
   $GOROOT/bin
   $GOPATH/bin
   $NPM_HOME/bin

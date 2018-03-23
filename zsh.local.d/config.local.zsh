@@ -1,21 +1,6 @@
-# rbenv設定
-if [[ -d $RBENV_ROOT ]]; then
-  eval "$(rbenv init -)"
-fi
-
-# pyenv設定
-if [[ -d $PYENV_ROOT ]]; then
-  eval "$(pyenv init -)"
-fi
-
-# scalaenv設定
-if [[ -d $SCALAENV_ROOT ]]; then
-  eval "$(scalaenv init -)"
-fi
-
-# sbtenv設定
-if [[ -d $SBTENV_ROOT ]]; then
-  eval "$(sbtenv init -)"
+# anyenv設定
+if [[ -d $ANYENV_ROOT ]]; then
+  eval "$(anyenv init -)"
 fi
 
 ## alias
