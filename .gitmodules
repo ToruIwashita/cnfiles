@@ -13,12 +13,6 @@
 [submodule "vim/bundle/neobundle.vim"]
 	path = vim/bundle/neobundle.vim
 	url = git://github.com/Shougo/neobundle.vim
-[submodule "modules/ruby-build"]
-	path = modules/ruby-build
-	url = git@github.com:sstephenson/ruby-build.git
-[submodule "modules/rbenv"]
-	path = modules/rbenv
-	url = git@github.com:sstephenson/rbenv.git
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = git@github.com:tmux-plugins/tpm.git
@@ -34,9 +28,6 @@
 [submodule "modules/vim"]
 	path = modules/vim
 	url = git@github.com:vim/vim.git
-[submodule "modules/node"]
-	path = modules/node
-	url = git@github.com:nodejs/node.git
 [submodule "modules/git"]
 	path = modules/git
 	url = git@github.com:git/git.git
@@ -46,15 +37,6 @@
 [submodule "modules/jq"]
 	path = modules/jq
 	url = git@github.com:stedolan/jq.git
-[submodule "modules/pyenv"]
-	path = modules/pyenv
-	url = git@github.com:pyenv/pyenv.git
-[submodule "modules/scalaenv"]
-	path = modules/scalaenv
-	url = git@github.com:scalaenv/scalaenv.git
-[submodule "modules/sbtenv"]
-	path = modules/sbtenv
-	url = git@github.com:sbtenv/sbtenv.git
 [submodule "modules/graphviz"]
 	path = modules/graphviz
 	url = git@gitlab.com:graphviz/graphviz.git
