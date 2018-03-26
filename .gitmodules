@@ -43,3 +43,6 @@
 [submodule "modules/anyenv"]
 	path = modules/anyenv
 	url = git@github.com:riywo/anyenv.git
+[submodule "modules/anyenv-update"]
+	path = modules/anyenv-update
+	url = git@github.com:znz/anyenv-update.git
