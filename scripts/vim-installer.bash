@@ -3,6 +3,10 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
+# anyenv
+ANYENV_DIR_PATH=~/.anyenv
+ANYENV_ENVS_DIR_PATH=$ANYENV_DIR_PATH/envs
+
 # ruby
 RUBY_PATH=${1:-$(which ruby)}
 

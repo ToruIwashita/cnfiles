@@ -47,11 +47,11 @@ else
 fi
 
 # zsh.d/local dir
-if [[ -d $ZSH_CONFIG_LOCAL_DIR_DEST_PATH ]]; then
-  printf "\e[32m$ZSH_CONFIG_LOCAL_DIR_DEST_PATH dir already exists\e[0m\n"
+if [[ -d $BASE_DIR_PATH/zsh.d/local ]]; then
+  printf "\e[32m$BASE_DIR_PATH/zsh.d/local dir already exists\e[0m\n"
 else
-  printf "\e[31mcopy dir $ZSH_CONFIG_LOCAL_DIR_SOURCE_PATH to $ZSH_CONFIG_LOCAL_DIR_DEST_PATH\e[0m\n"
-  cp -rp $ZSH_CONFIG_LOCAL_DIR_SOURCE_PATH $ZSH_DIR_PATH
+  printf "\e[31mcopy dir $BASE_DIR_PATH/zsh.local.d/local to $BASE_DIR_PATH/zsh.d/local\e[0m\n"
+  cp -rp $BASE_DIR_PATH/zsh.local.d/local $BASE_DIR_PATH/zsh.d
 fi
 
 # cache dir
@@ -72,19 +72,19 @@ fi
 
 ## copy zsh config file
 # zsh.d/config.local.zsh file
-if [[ -f $ZSH_CONFIG_LOCAL_FILE_DEST_PATH ]]; then
-  printf "\e[32m$ZSH_CONFIG_LOCAL_FILE_DEST_PATH file already exists\e[0m\n"
+if [[ -f $BASE_DIR_PATH/zsh.d/config.local.zsh ]]; then
+  printf "\e[32m$BASE_DIR_PATH/zsh.d/config.local.zsh file already exists\e[0m\n"
 else
-  printf "\e[31mcopy file $ZSH_CONFIG_LOCAL_FILE_SOURCE_PATH to $ZSH_CONFIG_LOCAL_FILE_DEST_PATH\e[0m\n"
-  cp -p $ZSH_CONFIG_LOCAL_FILE_SOURCE_PATH $ZSH_CONFIG_LOCAL_FILE_DEST_PATH
+  printf "\e[31mcopy file $BASE_DIR_PATH/zsh.local.d/config.local.zsh to $BASE_DIR_PATH/zsh.d/config.local.zsh\e[0m\n"
+  cp -p $BASE_DIR_PATH/zsh.local.d/config.local.zsh $BASE_DIR_PATH/zsh.d/config.local.zsh
 fi
 
 # zsh.d/env.local.zsh file
-if [[ -f $ZSH_ENV_LOCAL_FILE_DEST_PATH ]]; then
-  printf "\e[32m$ZSH_ENV_LOCAL_FILE_DEST_PATH file already exists\e[0m\n"
+if [[ -f $BASE_DIR_PATH/zsh.d/env.local.zsh ]]; then
+  printf "\e[32m$BASE_DIR_PATH/zsh.d/env.local.zsh file already exists\e[0m\n"
 else
-  printf "\e[31mcopy file $ZSH_ENV_LOCAL_FILE_SOURCE_PATH to $ZSH_ENV_LOCAL_FILE_DEST_PATH\e[0m\n"
-  cp -p $ZSH_ENV_LOCAL_FILE_SOURCE_PATH $ZSH_ENV_LOCAL_FILE_DEST_PATH
+  printf "\e[31mcopy file $BASE_DIR_PATH/zsh.local.d/env.local.zsh to $BASE_DIR_PATH/zsh.d/env.local.zsh\e[0m\n"
+  cp -p $BASE_DIR_PATH/zsh.local.d/env.local.zsh $BASE_DIR_PATH/zsh.d/env.local.zsh
 fi
 
 ## create symlink
