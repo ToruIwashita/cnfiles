@@ -1,8 +1,3 @@
-# anyenv設定
-if [[ -d $ANYENV_ROOT ]]; then
-  eval "$(anyenv init -)"
-fi
-
 ## alias
 # git
 alias gcs='git commit -m "- update submodules"'

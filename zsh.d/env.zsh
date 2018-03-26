@@ -16,6 +16,7 @@ export ZSH_DIR_PATH=$zsh_dir_path
 export ADOTDIR=$zsh_dir_path/antigen
 export VIM_DIR_PATH=~/.vim
 export TMUX_DIR_PATH=~/.tmux
+export ANYENV_ROOT=~/.anyenv
 export CACHE_DIR_PATH=~/.cache
 export LINT_DIR_PATH=~/.lint
 export CNFILES_DIR_PATH=~/.cnfiles
@@ -24,9 +25,3 @@ export MARKDOWN_TEXTS_MODELING_SESSION_FILE_PATH=$MARKDOWN_TEXTS_DIR_PATH/.model
 export MEMOLIST_DIR_PATH=~/.memolist
 export MEMOLIST_TMP_MARKDOWN_FILE_PATH=$MEMOLIST_DIR_PATH/0000-00-00-tmp.md
 export MEMOLIST_TMP_FILE_PATH=$MEMOLIST_DIR_PATH/0000-00-00-tmp.txt
-
-## fpath
-fpath=(
-  $fpath
-  $zsh_inits_dir_path
-)
