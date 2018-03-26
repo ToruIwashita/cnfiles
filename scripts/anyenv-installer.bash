@@ -12,11 +12,21 @@ NODE_VERSION=9.8.0
 SCALA_VERSION='scala-2.12.4'
 SBT_VERSION='sbt-0.13.9'
 
+NEW_RUBY_VERSION=${NEW_RUBY_VERSION:-$RUBY_VERSION}
+NEW_PYTHON3_VERSION=${NEW_PYTHON3_VERSION:-$PYTHON3_VERSION}
+NEW_PYTHON2_VERSION=${NEW_PYTHON2_VERSION:-$PYTHON2_VERSION}
+NEW_LUA_VERSION=${NEW_LUA_VERSION:-$LUA_VERSION}
+NEW_GO_VERSION=${NEW_GO_VERSION:-$GO_VERSION}
+NEW_NODE_VERSION=${NEW_NODE_VERSION:-$NODE_VERSION}
+NEW_SCALA_VERSION=${NEW_SCALA_VERSION:-$SCALA_VERSION}
+NEW_SBT_VERSION=${NEW_SBT_VERSION:-$SBT_VERSION}
+
 printf "before versions:\n"
 echo
 anyenv version
 echo
 anyenv versions
+echo
 
 if [[ ! $(which rbenv) ]]; then
   anyenv install rbenv
@@ -46,56 +56,66 @@ if [[ ! $(which sbtenv) ]]; then
   anyenv install sbtenv
 fi
 
-if [[ ! $(which ruby) =~ anyenv ]]; then
-  rbenv install $RUBY_VERSION
-  rbenv global $RUBY_VERSION
-  rbenv rehash
+if [[ ($NEW_RUBY_VERSION != $RUBY_VERSION) || (! $(which ruby) =~ anyenv) ]]; then
+  rbenv install $NEW_RUBY_VERSION
 fi
 
-if  [[ (! $(which python2) =~ anyenv) || ! $(which python3) =~ anyenv  ]]; then
-  pyenv install $PYTHON3_VERSION
-  pyenv install $PYTHON2_VERSION
-  pyenv global $PYTHON3_VERSION $PYTHON2_VERSION
-  pyenv rehash
+rbenv global $NEW_RUBY_VERSION
+rbenv rehash
+
+if  [[ ($NEW_PYTHON3_VERSION != $PYTHON3_VERSION) || ! $(which python3) =~ anyenv  ]]; then
+  pyenv install $NEW_PYTHON3_VERSION
 fi
 
-if [[ ! $(which lua) =~ anyenv ]]; then
-  luaenv install $LUA_VERSION
-  luaenv global $LUA_VERSION
-  luaenv rehash
+if  [[ ($NEW_PYTHON2_VERSION != $PYTHON2_VERSION) || ! $(which python2) =~ anyenv  ]]; then
+  pyenv install $NEW_PYTHON2_VERSION
 fi
 
-if [[ ! $(which go) =~ anyenv ]]; then
-  goenv install $GO_VERSION
-  goenv global $GO_VERSION
-  goenv rehash
+pyenv global $NEW_PYTHON3_VERSION $NEW_PYTHON2_VERSION
+pyenv rehash
+
+if [[ ($NEW_LUA_VERSION != $LUA_VERSION) || ! $(which lua) =~ anyenv ]]; then
+  luaenv install $NEW_LUA_VERSION
 fi
 
-if [[ ! $(which node) =~ anyenv ]]; then
-  nodenv install $NODE_VERSION
-  nodenv global $NODE_VERSION
-  nodenv rehash
+luaenv global $NEW_LUA_VERSION
+luaenv rehash
+
+if [[ ($NEW_GO_VERSION != $GO_VERSION) || ! $(which go) =~ anyenv ]]; then
+  goenv install $NEW_GO_VERSION
 fi
 
-if [[ ! $(which scala) =~ anyenv ]]; then
-  scalaenv install $SCALA_VERSION
-  scalaenv global $SCALA_VERSION
-  scalaenv rehash
+goenv global $NEW_GO_VERSION
+goenv rehash
+
+if [[ ($NEW_NODE_VERSION != $NODE_VERSION) || ! $(which node) =~ anyenv ]]; then
+  nodenv install $NEW_NODE_VERSION
 fi
 
-if [[ ! $(which sbt) =~ anyenv ]]; then
-  sbtenv install $SBT_VERSION
-  sbtenv global $SBT_VERSION
-  sbtenv rehash
+nodenv global $NEW_NODE_VERSION
+nodenv rehash
+
+if [[ ($NEW_SCALA_VERSION != $SCALA_VERSION) || ! $(which scala) =~ anyenv ]]; then
+  scalaenv install $NEW_SCALA_VERSION
 fi
+
+scalaenv global $NEW_SCALA_VERSION
+scalaenv rehash
+
+if [[ ($NEW_SBT_VERSION != $SBT_VERSION) || ! $(which sbt) =~ anyenv ]]; then
+  sbtenv install $NEW_SBT_VERSION
+fi
+
+sbtenv global $NEW_SBT_VERSION
+sbtenv rehash
 
 echo
 printf "after versions:\n"
 anyenv version
 echo
 anyenv versions
-
 echo
+
 printf "complete"
 
 exit 0
