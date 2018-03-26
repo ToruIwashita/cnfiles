@@ -3,7 +3,12 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-python --version
+if [[ ! $(which python3)} =~ anyenv ]]; then
+  printf "there is no python3 installed with anyenv\n"
+  exit 1
+fi
+
+printf "pip3: $(pip3 --version)\n"
 
 echo
 which pip3

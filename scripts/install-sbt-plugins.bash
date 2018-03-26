@@ -3,10 +3,16 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
+if [[ ! $(which sbt)} =~ anyenv ]]; then
+  printf "there is no sbt installed with anyenv\n"
+  exit 1
+fi
+
 # scala
 SBT_DIR=~/.sbt/$(sbtenv version | sed -e 's/^sbt-\([0-9]*.[0-9]*\).*/\1/g')
 
-sbtenv version
+printf "sbt version:\n"
+sbt sbt-version
 
 echo
 which sbt

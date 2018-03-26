@@ -3,7 +3,12 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-ruby -v
+if [[ ! $(which ruby)} =~ anyenv ]]; then
+  printf "there is no ruby installed with anyenv\n"
+  exit 1
+fi
+
+printf "gem: $(gem --version)\n"
 
 echo
 which gem
