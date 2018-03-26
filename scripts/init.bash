@@ -54,6 +54,14 @@ else
   cp -rp $BASE_DIR_PATH/zsh.local.d/local $BASE_DIR_PATH/zsh.d
 fi
 
+# anyenv plugins
+if [[ -d $ANYENV_SRC_DIR_PATH/plugins ]]; then
+  printf "\e[32m$ANYENV_SRC_DIR_PATH/plugins dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $ANYENV_SRC_DIR_PATH/plugins\e[0m\n"
+  mkdir $ANYENV_SRC_DIR_PATH/plugins
+fi
+
 # cache dir
 if [[ -d $CACHE_DIR_PATH ]]; then
   printf "\e[32m$CACHE_DIR_PATH dir already exists\e[0m\n"
@@ -139,6 +147,14 @@ if [[ -L ~/.anyenv ]]; then
 else
   printf "\e[31mcreate symlink ~/.anyenv dir\e[0m\n"
   ln -isn $ANYENV_SRC_DIR_PATH ~/.anyenv
+fi
+
+# anyenv-update
+if [[ -L ~/.anyenv/plugins/anyenv-update ]]; then
+  printf "\e[32m~/.anyenv/plugins/anyenv-update dir symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.anyenv/plugins/anyenv-update dir\e[0m\n"
+  ln -isn $ANYENV_UPDATE_SRC_DIR_PATH ~/.anyenv/plugins/anyenv-update
 fi
 
 # peco
