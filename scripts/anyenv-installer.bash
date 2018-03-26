@@ -56,53 +56,53 @@ if [[ ! $(which sbtenv) ]]; then
   anyenv install sbtenv
 fi
 
-if [[ ($NEW_RUBY_VERSION != $RUBY_VERSION) || (! $(which ruby) =~ anyenv) ]]; then
+if [[ ($NEW_RUBY_VERSION != $RUBY_VERSION && ! $(rbenv versions | grep "[- ]$NEW_RUBY_VERSION")) || ! $(which ruby) =~ anyenv ]]; then
   rbenv install $NEW_RUBY_VERSION
 fi
 
 rbenv global $NEW_RUBY_VERSION
 rbenv rehash
 
-if  [[ ($NEW_PYTHON3_VERSION != $PYTHON3_VERSION) || ! $(which python3) =~ anyenv  ]]; then
+if  [[ ($NEW_PYTHON3_VERSION != $PYTHON3_VERSION && ! $(pyenv versions | grep "[- ]$NEW_PYTHON3_VERSION")) || ! $(which python3) =~ anyenv  ]]; then
   pyenv install $NEW_PYTHON3_VERSION
 fi
 
-if  [[ ($NEW_PYTHON2_VERSION != $PYTHON2_VERSION) || ! $(which python2) =~ anyenv  ]]; then
+if  [[ ($NEW_PYTHON2_VERSION != $PYTHON2_VERSION && ! $(pyenv versions | grep "[- ]$NEW_PYTHON2_VERSION")) || ! $(which python2) =~ anyenv  ]]; then
   pyenv install $NEW_PYTHON2_VERSION
 fi
 
 pyenv global $NEW_PYTHON3_VERSION $NEW_PYTHON2_VERSION
 pyenv rehash
 
-if [[ ($NEW_LUA_VERSION != $LUA_VERSION) || ! $(which lua) =~ anyenv ]]; then
+if [[ ($NEW_LUA_VERSION != $LUA_VERSION && ! $(luaenv versions | grep "[- ]$NEW_LUA_VERSION")) || ! $(which lua) =~ anyenv ]]; then
   luaenv install $NEW_LUA_VERSION
 fi
 
 luaenv global $NEW_LUA_VERSION
 luaenv rehash
 
-if [[ ($NEW_GO_VERSION != $GO_VERSION) || ! $(which go) =~ anyenv ]]; then
+if [[ ($NEW_GO_VERSION != $GO_VERSION && ! $(goenv versions | grep "[- ]$NEW_GO_VERSION")) || ! $(which go) =~ anyenv ]]; then
   goenv install $NEW_GO_VERSION
 fi
 
 goenv global $NEW_GO_VERSION
 goenv rehash
 
-if [[ ($NEW_NODE_VERSION != $NODE_VERSION) || ! $(which node) =~ anyenv ]]; then
+if [[ ($NEW_NODE_VERSION != $NODE_VERSION && ! $(nodenv versions | grep "[- ]$NEW_NODE_VERSION")) || ! $(which node) =~ anyenv ]]; then
   nodenv install $NEW_NODE_VERSION
 fi
 
 nodenv global $NEW_NODE_VERSION
 nodenv rehash
 
-if [[ ($NEW_SCALA_VERSION != $SCALA_VERSION) || ! $(which scala) =~ anyenv ]]; then
+if [[ ($NEW_SCALA_VERSION != $SCALA_VERSION && ! $(scalaenv versions | grep "[- ]$NEW_SCALA_VERSION")) || ! $(which scala) =~ anyenv ]]; then
   scalaenv install $NEW_SCALA_VERSION
 fi
 
 scalaenv global $NEW_SCALA_VERSION
 scalaenv rehash
 
-if [[ ($NEW_SBT_VERSION != $SBT_VERSION) || ! $(which sbt) =~ anyenv ]]; then
+if [[ ($NEW_SBT_VERSION != $SBT_VERSION && ! $(sbtenv versions | grep "[- ]$NEW_SBT_VERSION")) || ! $(which sbt) =~ anyenv ]]; then
   sbtenv install $NEW_SBT_VERSION
 fi
 
