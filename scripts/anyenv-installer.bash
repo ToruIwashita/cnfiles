@@ -18,42 +18,76 @@ anyenv version
 echo
 anyenv versions
 
-anyenv install rbenv
-anyenv install pyenv
-anyenv install luaenv
-anyenv install goenv
-anyenv install nodenv
-anyenv install scalaenv
-anyenv install sbtenv
+if [[ ! $(which rbenv) ]]; then
+  anyenv install rbenv
+fi
 
-rbenv install $RUBY_VERSION
-rbenv global $RUBY_VERSION
-rbenv rehash
+if [[ ! $(which pyenv) ]]; then
+  anyenv install pyenv
+fi
 
-pyenv install $PYTHON3_VERSION
-pyenv install $PYTHON2_VERSION
-pyenv global $PYTHON3_VERSION $PYTHON2_VERSION
-pyenv rehash
+if [[ ! $(which luaenv) ]]; then
+  anyenv install luaenv
+fi
 
-luaenv install $LUA_VERSION
-luaenv global $LUA_VERSION
-luaenv rehash
+if [[ ! $(which goenv) ]]; then
+  anyenv install goenv
+fi
 
-goenv install $GO_VERSION
-goenv global $GO_VERSION
-goenv rehash
+if [[ ! $(which nodenv) ]]; then
+  anyenv install nodenv
+fi
 
-nodenv install $NODE_VERSION
-nodenv global $NODE_VERSION
-nodenv rehash
+if [[ ! $(which scalaenv) ]]; then
+  anyenv install scalaenv
+fi
 
-scalaenv install $SCALA_VERSION
-scalaenv global $SCALA_VERSION
-scalaenv rehash
+if [[ ! $(which sbtenv) ]]; then
+  anyenv install sbtenv
+fi
 
-sbtenv install $SBT_VERSION
-sbtenv global $SBT_VERSION
-sbtenv rehash
+if [[ ! $(which ruby) =~ anyenv ]]; then
+  rbenv install $RUBY_VERSION
+  rbenv global $RUBY_VERSION
+  rbenv rehash
+fi
+
+if  [[ (! $(which python2) =~ anyenv) || ! $(which python3) =~ anyenv  ]]; then
+  pyenv install $PYTHON3_VERSION
+  pyenv install $PYTHON2_VERSION
+  pyenv global $PYTHON3_VERSION $PYTHON2_VERSION
+  pyenv rehash
+fi
+
+if [[ ! $(which lua) =~ anyenv ]]; then
+  luaenv install $LUA_VERSION
+  luaenv global $LUA_VERSION
+  luaenv rehash
+fi
+
+if [[ ! $(which go) =~ anyenv ]]; then
+  goenv install $GO_VERSION
+  goenv global $GO_VERSION
+  goenv rehash
+fi
+
+if [[ ! $(which node) =~ anyenv ]]; then
+  nodenv install $NODE_VERSION
+  nodenv global $NODE_VERSION
+  nodenv rehash
+fi
+
+if [[ ! $(which scala) =~ anyenv ]]; then
+  scalaenv install $SCALA_VERSION
+  scalaenv global $SCALA_VERSION
+  scalaenv rehash
+fi
+
+if [[ ! $(which sbt) =~ anyenv ]]; then
+  sbtenv install $SBT_VERSION
+  sbtenv global $SBT_VERSION
+  sbtenv rehash
+fi
 
 echo
 printf "after versions:\n"
