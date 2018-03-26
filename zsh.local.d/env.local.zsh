@@ -1,8 +1,3 @@
-## anyenv設定
-if [[ -d $ANYENV_ROOT ]]; then
-  eval "$(anyenv init -)"
-fi
-
 ## 環境変数設定
 # mysql (その他の設定は ~/.my.cnf に書く)
 readonly MYSQL_DATABASE=
@@ -61,6 +56,11 @@ fpath=(
   $zsh_inits_dir_path
   $fpath
 )
+
+## anyenv設定
+if [[ -d $ANYENV_ROOT ]]; then
+  eval "$(anyenv init -)"
+fi
 
 if [[ $(which go) =~ anyenv ]]; then
   export GOROOT=$(go env GOROOT)
