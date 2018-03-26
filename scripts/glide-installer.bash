@@ -11,6 +11,14 @@ fi
 export GOROOT=$(go env GOROOT)
 export GOPATH=$(go env GOPATH)
 
+# create $GOPATH
+if [[ -d $GOPATH ]]; then
+  printf "\e[32m$GOPATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $GOPATH\e[0m\n"
+  mkdir $GOPATH
+fi
+
 # create $GOPATH/bin
 if [[ -d $GOPATH/bin ]]; then
   printf "\e[32m$GOPATH/bin dir already exists\e[0m\n"
