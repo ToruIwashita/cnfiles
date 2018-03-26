@@ -19,6 +19,8 @@ else
   mkdir $GOPATH/bin
 fi
 
+export PATH="$PATH:$GOPATH/bin"
+
 curl https://glide.sh/get | sh
 
 printf "\ncomplete\n"
