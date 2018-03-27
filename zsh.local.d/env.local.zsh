@@ -8,8 +8,6 @@ readonly PGHOST=
 readonly PGPORT=
 readonly PGUSER=
 readonly PGPASSWORD=
-# hubコマンド用
-readonly GITHUB_API_TOKEN=
 
 # programming language env environment variable
 export ANYENV_ROOT=~/.anyenv
@@ -24,9 +22,9 @@ export PGUSER
 export PGPASSWORD
 # github
 # api token (hubコマンド)
-export GITHUB_API_TOKEN
+export GITHUB_API_TOKEN=
 # user name
-export GITHUB_USER_NAME
+export GITHUB_USER_NAME=
 # repositories
 export OWNED_GITHUB_REPOSITORIES=()
 
