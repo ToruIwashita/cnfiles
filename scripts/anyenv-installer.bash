@@ -3,6 +3,10 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
+ANYENV_ROOT=~/.anyenv
+
+export PATH="$PATH:$ANYENV_ROOT/bin"
+
 RUBY_VERSION=2.5.0
 PYTHON3_VERSION=3.6.4
 PYTHON2_VERSION=2.7.14
@@ -20,6 +24,8 @@ NEW_GO_VERSION=${NEW_GO_VERSION:-$GO_VERSION}
 NEW_NODE_VERSION=${NEW_NODE_VERSION:-$NODE_VERSION}
 NEW_SCALA_VERSION=${NEW_SCALA_VERSION:-$SCALA_VERSION}
 NEW_SBT_VERSION=${NEW_SBT_VERSION:-$SBT_VERSION}
+
+eval "$(anyenv init -)"
 
 printf "before versions:\n"
 echo
