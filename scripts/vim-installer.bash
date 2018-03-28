@@ -52,6 +52,10 @@ fi
 
 cd $VIM_SRC_DIR_PATH
 
+if [[ -f $VIM_SRC_DIR_PATH/src/auto/config.cache ]]; then
+  rm -f src/auto/config.cache
+fi
+
 # backup
 if [[ -f $LOCAL_BIN_DIR_PATH/vim ]]; then
   mv $LOCAL_BIN_DIR_PATH/{vim,vim.prev}
