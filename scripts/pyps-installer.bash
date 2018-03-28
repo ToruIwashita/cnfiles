@@ -17,15 +17,19 @@ echo
 printf "install pyps using pyenv exec"
 
 echo
+pyenv exec pip3 install pipenv
 pyenv exec pip3 install awscli
 pyenv exec pip3 install vim-vint
+pyenv exec pip3 install ipython
 
 echo
 printf "update pyps using pyenv exec"
 
 echo
+pyenv exec pip3 install -U pipenv
 pyenv exec pip3 install -U awscli
 pyenv exec pip3 install -U vim-vint
+pyenv exec pip3 install -U ipython
 
 echo
 pyenv rehash
