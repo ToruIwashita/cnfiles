@@ -22,7 +22,7 @@ export PGUSER
 export PGPASSWORD
 # github
 # api token (hubコマンド)
-export GITHUB_API_TOKEN=
+export GITHUB_TOKEN=
 # user name
 export GITHUB_USER_NAME=
 # repositories
