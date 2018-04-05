@@ -83,13 +83,16 @@ cnoremap <C-w>* <C-r>/
 "" noremap
 " ,はleaderとして使用
 noremap , <NOP>
-" 逆vi-forward-word
-noremap <C-s>; ,
 " <C-f>と<C-b>を無効化
 noremap <C-f> <NOP>
 noremap <C-b> <NOP>
+noremap F <NOP>
 " <ESC>
 noremap <C-j> <ESC>
+" 逆vi-forward-word
+noremap <C-s>; ,
+" 逆f
+noremap <C-f> F
 " ファイル再読込
 noremap <leader>r :<C-u>e!<CR>:<C-u>checktime<CR>
 " 現在のファイル名表示
