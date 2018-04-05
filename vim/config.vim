@@ -93,6 +93,8 @@ noremap <C-j> <ESC>
 noremap <C-s>; ,
 " 逆f
 noremap <C-f> F
+" 直前のカーソル位置に戻る
+noremap <C-_> <C-o>
 " ファイル再読込
 noremap <leader>r :<C-u>e!<CR>:<C-u>checktime<CR>
 " 現在のファイル名表示
