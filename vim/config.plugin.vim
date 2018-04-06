@@ -96,7 +96,7 @@ let g:gutentags_ctags_tagfile = '.tags'
 let g:gutentags_ctags_executable = g:local_dir_path.'/bin/ctags'
 
 "" tcomment
-let g:tcommentMapLeader1 = '<leader>_'
+let g:tcomment_mapleader1 = '<leader>_'
 
 "" yankround(after/ にも設定あり)
 let g:yankround_dir = g:cache_dir_path.'/vim/yankround'
