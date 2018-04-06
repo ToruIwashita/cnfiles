@@ -11,11 +11,11 @@ fi
 printf "npm: $(npm --version)\n"
 
 # install for global
-npm -g install jshint
-npm -g install lice
+nodenv exec npm -g install jshint
+nodenv exec npm -g install lice
 
-npm update jshint
-npm update lice
+nodenv exec npm update jshint
+nodenv exec npm update lice
 
 printf "\ncomplete\n"
 exit 0

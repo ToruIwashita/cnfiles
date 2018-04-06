@@ -14,22 +14,13 @@ echo
 which pip3
 
 echo
-printf "install pyps using pyenv exec"
-
-echo
-pyenv exec pip3 install pipenv
-pyenv exec pip3 install awscli
-pyenv exec pip3 install vim-vint
-pyenv exec pip3 install ipython
-pyenv exec pip3 install git+https://github.com/Mic92/pry.py
-
-echo
-printf "update pyps using pyenv exec"
+printf "install or update pyps using pyenv exec\n"
 
 echo
 pyenv exec pip3 install -U pipenv
 pyenv exec pip3 install -U awscli
 pyenv exec pip3 install -U vim-vint
+pyenv exec pip3 install -U flake8
 pyenv exec pip3 install -U ipython
 pyenv exec pip3 install -U git+https://github.com/Mic92/pry.py
 
@@ -37,6 +28,6 @@ echo
 pyenv rehash
 
 echo
-printf "complete"
+printf "complete\n"
 
 exit 0

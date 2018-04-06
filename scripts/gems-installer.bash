@@ -14,7 +14,7 @@ echo
 which gem
 
 echo
-printf "install gems using rbenv exec"
+printf "install gems using rbenv exec\n"
 
 echo
 rbenv exec gem install bundler
@@ -32,7 +32,7 @@ rbenv exec gem install rubocop-rspec
 rbenv exec gem install awesome_print
 
 echo
-printf "update gems using rbenv exec"
+printf "update gems using rbenv exec\n"
 
 echo
 rbenv exec gem update bundler
@@ -53,6 +53,6 @@ echo
 rbenv rehash
 
 echo
-printf "complete"
+printf "complete\n"
 
 exit 0
