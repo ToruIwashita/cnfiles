@@ -24,6 +24,7 @@ let g:ale_echo_msg_format = '[%linter%][%severity%] %s'  " statuslineメッセ�
 " linter設定
 let g:ale_linters = {
   \ 'ruby':       ['ruby'],
+  \ 'python':     ['flake8'],
   \ 'scala':      ['scalac'],
   \ 'shell':      ['shell'],
   \ 'vim':        ['vint'],
@@ -32,7 +33,8 @@ let g:ale_linters = {
 \ }
 " fixer設定
 let g:ale_fixers = {
-  \ 'ruby': ['rubocop']
+  \ 'ruby':   ['rubocop'],
+  \ 'python': ['autopep8'],
 \ }
 
 "" ctrlp(after/ にも設定あり)
