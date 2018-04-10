@@ -181,6 +181,14 @@ else
   ln -is $BASE_DIR_PATH/lint ~/.lint
 fi
 
+# flake8
+if [[ -L $CONFIG_DIR_PATH/flake8 ]]; then
+  printf "\e[32m$CONFIG_DIR_PATH/flake8 symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/flake8\e[0m\n"
+  ln -is $BASE_DIR_PATH/config/flake8 $CONFIG_DIR_PATH/flake8
+fi
+
 # gitconfig
 if [[ -L ~/.gitconfig ]]; then
   printf "\e[32m~/.gitconfig symlink already exists\e[0m\n"
