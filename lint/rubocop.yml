@@ -9,3 +9,6 @@ Style/Encoding:
 
 Metrics/LineLength:
   Enabled: false
+
+LineLength:
+  Max: 120
