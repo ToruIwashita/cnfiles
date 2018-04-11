@@ -89,10 +89,6 @@ noremap <C-b> <NOP>
 noremap F <NOP>
 " <ESC>
 noremap <C-j> <ESC>
-" 逆vi-forward-word
-noremap <C-s>; ,
-" 逆f
-noremap <C-f> F
 " 直後のカーソル位置に戻る
 noremap <C-_>_ <C-i>
 " 直前のカーソル位置に戻る
@@ -167,6 +163,13 @@ noremap <C-s><C-]> :<C-u>tnext<CR>zz
 " 前のタグへ移動
 noremap <C-s>[ :<C-u>tprevious<CR>zz
 noremap <C-s><C-[> :<C-u>tprevious<CR>zz
+"" 列ジャンプ
+" 逆f
+noremap <C-f> F
+" 再列ジャンプ
+noremap <C-]> ;
+" 逆再列ジャンプ
+noremap ; ,
 
 "" nnoremap
 " recording
