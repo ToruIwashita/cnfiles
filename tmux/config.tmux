@@ -96,9 +96,12 @@ bind -r L resize-pane -R 2
 # ペインkill
 bind x kill-pane
 
-# コピーモード
+## コピーモード
 bind v copy-mode
 bind C-v copy-mode
+## unbind
+unbind -T copy-mode-vi \;
+## bind
 # コピー開始
 bind -T copy-mode-vi v send -X begin-selection
 # コピーキャンセル
@@ -109,6 +112,10 @@ bind -T copy-mode-vi y send -X copy-selection
 bind -T copy-mode-vi Y send -X copy-line
 # 逆f
 bind -T copy-mode-vi C-f command-prompt -1p '(jump backward)' 'send -X jump-backward "%%"'
+# 再jump
+bind -T copy-mode-vi C-] send-keys -X jump-again
+# 逆に再jump
+bind -T copy-mode-vi \; send-keys -X jump-reverse
 # 最新バッファペースト
 bind p paste-buffer
 # バッファ選択ペースト
