@@ -38,6 +38,7 @@ Plug 'tpope/vim-surround'                              " text-object操作
 Plug 'tpope/vim-fugitive'                              " fugitive(ステータスラインのブランチ名と,Gblame用)
 Plug 'tpope/vim-rhubarb'                               " fugitiveのGbrowseでGithubを開く
 Plug 'tpope/vim-abolish'                               " snake,camel,pascalケースなどを切り替える為に使用(その他の機能は使っていない)
+Plug 'tpope/vim-eunuch'                                " ファイル操作
 Plug 'gregsexton/gitv'                                 " gitv(コミットログ閲覧用,vim-fugitive依存)
 Plug 'hotwatermorning/auto-git-diff'                   " git-rebase-todoでコミットの内容を表示
 Plug 'airblade/vim-gitgutter'                          " gitの差分を左端に表示
@@ -86,7 +87,6 @@ Plug 'godlygeek/tabular'                               " テキストフィル�
 Plug 'plasticboy/vim-markdown'                         " vim-markdown(vim-tabular依存)
 Plug 'fugalh/desert.vim'                               " カラースキーマ
 Plug 'junegunn/vim-easy-align'                         " テキスト整形
-Plug 'danro/rename.vim'                                " ファイルリネーム
 Plug 'ludovicchabant/vim-gutentags'                    " ctags自動生成
 Plug 'majutsushi/tagbar'                               " コード概要ビューア
 Plug 'vim-jp/vim-go-extra'                             " extra vim plugin for go

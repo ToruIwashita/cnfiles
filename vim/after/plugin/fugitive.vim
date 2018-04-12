@@ -9,7 +9,7 @@ set cpoptions&vim
 " status
 nnoremap <C-s><C-u> :<C-u>Gstatus<CR>
 " diff
-nnoremap <C-s><C-d> :<C-u>Git diff<CR>
+nnoremap <C-s>u :<C-u>Git diff<CR>
 
 " <C-g>プレフィックス
 " diff
