@@ -93,8 +93,15 @@ bind -r H resize-pane -L 2
 bind -r J resize-pane -D 1
 bind -r K resize-pane -U 1
 bind -r L resize-pane -R 2
+# 等間隔分割に変更する
+bind | select-layout even-horizontal
+bind - select-layout even-vertical
+# ペイン等間隔4分割
+bind M split-window -h \; split-window -v \; select-pane -t :.+ \; split-window -v \; select-pane -t :.-
 # ペインkill
 bind x kill-pane
+# 等間隔4分割(Multi)
+bind M split-window -h \; split-window -v \; select-pane -t :.+ \; split-window -v \; select-pane -t :.-
 
 ## コピーモード
 bind v copy-mode
@@ -120,12 +127,3 @@ bind -T copy-mode-vi \; send-keys -X jump-reverse
 bind p paste-buffer
 # バッファ選択ペースト
 bind P choose-buffer
-
-# ウィンドウデフォルト表示s-v
-bind S split-window -v \; split-window -h
-# ウィンドウデフォルト表示v-s
-bind V split-window -h \; split-window -v
-# ウィンドウデフォルト表示Multi
-bind M split-window -h \; split-window -v \; select-pane -t :.+ \; split-window -v \; select-pane -t :.-
-# ウィンドウデフォルト表示Triple
-bind T split-window -v \; split-window -v \; select-layout even-horizontal
