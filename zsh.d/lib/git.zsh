@@ -17,7 +17,7 @@ __git-branch-list() {
 
 __git-remote-branch-list() {
   __git-inside-work-tree || return
-  typeset -A existing_branches
+  local -A existing_branches
   local -a remote_branches
   local existing_branch branch
 
