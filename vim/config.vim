@@ -166,10 +166,8 @@ noremap <C-s><C-[> :<C-u>tprevious<CR>zz
 "" 列ジャンプ
 " 逆f
 noremap <C-f> F
-" 再列ジャンプ
-noremap <C-]> ;
 " 逆再列ジャンプ
-noremap ; ,
+noremap <C-_> ,
 
 "" nnoremap
 " recording
