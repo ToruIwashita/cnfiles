@@ -231,6 +231,9 @@ vnoremap < <gv
 vnoremap > >gv
 " <ESC>でビジュアルモード終了
 vnoremap <ESC> v_<ESC>
+" インクリメント,デクリメント
+vnoremap + <C-a>gv
+vnoremap - <C-x>gv
 
 "" autocmd
 " ファイルを開いたときに最後の変更点へ移動
