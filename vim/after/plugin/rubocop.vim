@@ -27,6 +27,10 @@ endfunction
 " インターフェースの定義
 command! RubocopCheck call s:rubocop_check()
 
+" デフォルトのキーマップ無効化
+noremap <leader>rwp <NOP>
+noremap <leader>ru <NOP>
+
 noremap <leader>a :<C-u>RubocopCheck<CR>
 
 let &cpoptions = s:cpoptions_save
