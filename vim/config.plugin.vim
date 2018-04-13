@@ -87,6 +87,31 @@ let g:ctrlp_prompt_mappings = {
   \ 'PrtExit()':            ['<ESC>','<C-[>']
 \ }
 
+"" expand_region
+" afterで定義するとデフォルトのキーマップが+に割り当てられて他のキーマップと衝突する
+map <C-l> <Plug>(expand_region_expand)
+map <C-h> <Plug>(expand_region_shrink)
+
+"" 以下のpluginに依存している
+" vim-textobj-user
+" vim-textobj-line
+" vim-textobj-indent
+let g:expand_region_text_objects = {
+  \ 'iW' :0,
+  \ "i'" :0, "a'" :0,
+  \ 'i"' :0, 'a"' :0,
+  \ 'i`' :0, 'a`' :0,
+  \ 'i)' :1, 'a)' :1,
+  \ 'i]' :1, 'a]' :1,
+  \ 'i}' :1, 'a}' :1,
+  \ 'i>' :1, 'a>' :1,
+  \ 'it' :0, 'at' :0,
+  \ 'il' :0, 'al' :0,
+  \ 'ii' :0, 'ai' :0,
+  \ 'is' :0, 'as' :0,
+  \ 'ip' :0, 'ap' :0
+\ }
+
 "" gutentags(after/ にも設定あり)
 " 起動時はgutentagsを無効化する
 let g:gutentags_enabled = 0
