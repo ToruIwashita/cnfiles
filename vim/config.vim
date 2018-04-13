@@ -170,9 +170,12 @@ noremap <C-f> F
 noremap <C-_> ,
 
 "" nnoremap
-" recording
+" デフォルトのrecordingを無効化
 nnoremap q <NOP>
 nnoremap <leader>q q
+" デフォルトのインクリメント,デクリメントを無効化
+nnoremap <C-a> <NOP>
+nnoremap <C-x> <NOP>
 " <C-g>無効化
 nnoremap <C-g> <NOP>
 " j,kで表示単位移動
@@ -196,6 +199,9 @@ nnoremap qqq: <ESC>q:
 " qqq/,qqq?検索履歴表示
 nnoremap qqq/ <ESC>q/
 nnoremap qqq? <ESC>q?
+" インクリメント,デクリメント
+nnoremap + <C-a>
+nnoremap - <C-x>
 
 "" inoremap
 " ノーマルモードに切り替え<ESC>
