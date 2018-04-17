@@ -5,7 +5,7 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-let g:previm_enable_realtime = 1
+let g:previm_enable_realtime = 3
 
 fun! s:previm_setting() abort
   nnoremap <buffer> <C-s>v :<C-u>PrevimOpen<CR>
