@@ -70,11 +70,11 @@ rbenv global $USE_RUBY_VERSION
 rbenv rehash
 
 if  [[ ($USE_PYTHON3_VERSION != $PYTHON3_VERSION && ! $(pyenv versions | grep "[- ]$USE_PYTHON3_VERSION")) || ! $(which python3) =~ anyenv  ]]; then
-  pyenv install $USE_PYTHON3_VERSION
+  CONFIGURE_OPTS='--enable-shared' pyenv install $USE_PYTHON3_VERSION
 fi
 
 if  [[ ($USE_PYTHON2_VERSION != $PYTHON2_VERSION && ! $(pyenv versions | grep "[- ]$USE_PYTHON2_VERSION")) || ! $(which python2) =~ anyenv  ]]; then
-  pyenv install $USE_PYTHON2_VERSION
+  CONFIGURE_OPTS='--enable-shared' pyenv install $USE_PYTHON2_VERSION
 fi
 
 pyenv global $USE_PYTHON3_VERSION $USE_PYTHON2_VERSION
