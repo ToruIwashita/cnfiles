@@ -54,18 +54,19 @@ if [[ -f $LOCAL_BIN_DIR_PATH/vim ]]; then
 fi
 
 ./configure \
-  --prefix=$LOCAL_DIR_PATH                      \
-  --with-features=huge                          \
-  --enable-multibyte                            \
-  --enable-xim                                  \
-  --enable-fontset                              \
-  --enable-rubyinterp=dynamic                   \
-  --enable-pythoninterp=dynamic                 \
-  --enable-python3interp=dynamic                \
-  --enable-luainterp=dynamic                    \
-  --with-lua-prefix=$LUAJIT_PREFIX_DIR          \
-  --with-luajit                                 \
-  --enable-fail-if-missing
+  --prefix=$LOCAL_DIR_PATH             \
+  --with-features=huge                 \
+  --enable-multibyte                   \
+  --enable-xim                         \
+  --enable-fontset                     \
+  --enable-rubyinterp=dynamic          \
+  --enable-pythoninterp=dynamic        \
+  --enable-python3interp=dynamic       \
+  --enable-luainterp=dynamic           \
+  --with-lua-prefix=$LUAJIT_PREFIX_DIR \
+  --with-luajit                        \
+  --enable-fail-if-missing             \
+
 make && make install
 
 git checkout .
