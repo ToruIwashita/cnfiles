@@ -61,19 +61,15 @@ if [[ -f $LOCAL_BIN_DIR_PATH/vim ]]; then
   mv $LOCAL_BIN_DIR_PATH/{vim,vim.prev}
 fi
 
-# CC=clang LDFLAGS="-L$ANYENV_ENVS_DIR_PATH/pyenv/versions/$PYTHON2_VERSION/lib $ANYENV_ENVS_DIR_PATH/pyenv/versions/$PYTHON3_VERSION/lib" ./configure \
 ./configure \
   --prefix=$LOCAL_DIR_PATH                      \
   --with-features=huge                          \
   --enable-multibyte                            \
   --enable-xim                                  \
   --enable-fontset                              \
-  --with-ruby-command=$RUBY_PATH                \
   --enable-rubyinterp=dynamic                   \
   --enable-pythoninterp=dynamic                 \
-  --with-python-config-dir=$PYTHON2_CONFIG_DIR  \
   --enable-python3interp=dynamic                \
-  --with-python3-config-dir=$PYTHON3_CONFIG_DIR \
   --enable-luainterp=dynamic                    \
   --with-lua-prefix=$LUAJIT_PREFIX_DIR          \
   --with-luajit                                 \
