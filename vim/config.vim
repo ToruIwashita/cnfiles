@@ -79,6 +79,10 @@ cnoremap <C-u> <S-RIGHT><C-w>
 cnoremap <C-]> <C-r><C-w>
 " コマンドラインに検索した文字列を入力
 cnoremap <C-w>* <C-r>/
+" 次の単語の先頭に移動
+cnoremap <C-]> <C-RIGHT><RIGHT>
+" 前の単語の先頭に移動
+cnoremap <C-s><C-]> <S-LEFT>
 
 "" noremap
 " ,はleaderとして使用
@@ -234,6 +238,11 @@ vnoremap <ESC> v_<ESC>
 " インクリメント,デクリメント
 vnoremap + <C-a>gv
 vnoremap - <C-x>gv
+
+"" snoremap
+" <ESC>と<C-j>でノーマルモード
+snoremap <ESC> <C-g><ESC>
+snoremap <C-j> <C-g><ESC>
 
 "" autocmd
 " ファイルを開いたときに最後の変更点へ移動
