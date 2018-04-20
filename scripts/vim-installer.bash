@@ -9,10 +9,20 @@ ANYENV_ENVS_DIR_PATH=$ANYENV_DIR_PATH/envs
 
 # ruby
 RUBY_PATH=${1:-$(which ruby)}
+RUBY_VERSION_STDOUT=$(ruby -v 2>&1)
+PREFIX_REMOVED_RUBY_VERSION_STDOUT=${RUBY_VERSION_STDOUT#*[[:space:]]}
+RUBY_VERSION=${PREFIX_REMOVED_RUBY_VERSION_STDOUT%%p*}
+RUBY_LIB_DIR=$ANYENV_ENVS_DIR_PATH/rbenv/versions/$RUBY_VERSION/lib
 
 # python
 PYTHON2_PATH=${1:-$(which python2)}
+PYTHON2_VERSION_STDOUT=$(python2 --version 2>&1)
+PYTHON2_VERSION=${PYTHON2_VERSION_STDOUT#*[[:space:]]}
+PYTHON2_LIB_DIR=$ANYENV_ENVS_DIR_PATH/pyenv/versions/$PYTHON2_VERSION/lib
 PYTHON3_PATH=${1:-$(which python3)}
+PYTHON3_VERSION_STDOUT=$(python3 --version 2>&1)
+PYTHON3_VERSION=${PYTHON3_VERSION_STDOUT#*[[:space:]]}
+PYTHON3_LIB_DIR=$ANYENV_ENVS_DIR_PATH/pyenv/versions/$PYTHON3_VERSION/lib
 
 # luajit
 LUAJIT_PATH=${1:-$(which luajit)}
@@ -68,6 +78,7 @@ make clean
   --with-lua-prefix=$LUAJIT_PREFIX_DIR \
   --with-luajit                        \
   --enable-fail-if-missing             \
+  LDFLAGS=-Wl,-rpath,$RUBY_LIB_DIR,-rpath,$PYTHON3_LIB_DIR,-rpath,$PYTHON2_LIB_DIR
 
 make && make install
 
