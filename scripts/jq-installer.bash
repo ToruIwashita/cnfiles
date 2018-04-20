@@ -10,6 +10,7 @@ if [[ -f $LOCAL_BIN_DIR_PATH/jq ]]; then
   mv $LOCAL_BIN_DIR_PATH/{jq,jq.prev}
 fi
 
+make clean
 autoreconf -i
 ./configure                 \
   --prefix=$LOCAL_DIR_PATH  \

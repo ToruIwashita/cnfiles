@@ -10,6 +10,7 @@ if [[ -f $LOCAL_BIN_DIR_PATH/git ]]; then
   mv $LOCAL_BIN_DIR_PATH/{git,git.prev}
 fi
 
+make clean
 make configure
 ./configure --prefix=$LOCAL_DIR_PATH
 make && make install

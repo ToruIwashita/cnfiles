@@ -53,6 +53,8 @@ if [[ -f $LOCAL_BIN_DIR_PATH/vim ]]; then
   mv $LOCAL_BIN_DIR_PATH/{vim,vim.prev}
 fi
 
+make clean
+
 ./configure \
   --prefix=$LOCAL_DIR_PATH             \
   --with-features=huge                 \

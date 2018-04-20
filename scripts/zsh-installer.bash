@@ -10,6 +10,7 @@ if [[ -f $LOCAL_BIN_DIR_PATH/zsh ]]; then
   mv $LOCAL_BIN_DIR_PATH/{zsh,zsh.prev}
 fi
 
+make clean
 ./Util/preconfig
 ./configure                                     \
   --prefix=$LOCAL_DIR_PATH                      \
