@@ -5,7 +5,6 @@ set -e
 
 cd $GRAPHVIZ_SRC_DIR_PATH
 
-make clean
 ./autogen.sh
 ./configure --prefix=$LOCAL_DIR_PATH
 make && make install
