@@ -63,17 +63,17 @@ if [[ ! $(which sbtenv) ]]; then
 fi
 
 if [[ ($USE_RUBY_VERSION != $RUBY_VERSION && ! $(rbenv versions | grep "[- ]$USE_RUBY_VERSION")) || ! $(which ruby) =~ anyenv ]]; then
-  rbenv install $USE_RUBY_VERSION
+  CONFIGURE_OPTS='--enable-shared' rbenv install $USE_RUBY_VERSION
 fi
 
 rbenv global $USE_RUBY_VERSION
 rbenv rehash
 
-if  [[ ($USE_PYTHON3_VERSION != $PYTHON3_VERSION && ! $(pyenv versions | grep "[- ]$USE_PYTHON3_VERSION")) || ! $(which python3) =~ anyenv  ]]; then
+if [[ ($USE_PYTHON3_VERSION != $PYTHON3_VERSION && ! $(pyenv versions | grep "[- ]$USE_PYTHON3_VERSION")) || ! $(which python3) =~ anyenv ]]; then
   CONFIGURE_OPTS='--enable-shared' pyenv install $USE_PYTHON3_VERSION
 fi
 
-if  [[ ($USE_PYTHON2_VERSION != $PYTHON2_VERSION && ! $(pyenv versions | grep "[- ]$USE_PYTHON2_VERSION")) || ! $(which python2) =~ anyenv  ]]; then
+if [[ ($USE_PYTHON2_VERSION != $PYTHON2_VERSION && ! $(pyenv versions | grep "[- ]$USE_PYTHON2_VERSION")) || ! $(which python2) =~ anyenv ]]; then
   CONFIGURE_OPTS='--enable-shared' pyenv install $USE_PYTHON2_VERSION
 fi
 
@@ -81,14 +81,14 @@ pyenv global $USE_PYTHON3_VERSION $USE_PYTHON2_VERSION
 pyenv rehash
 
 if [[ ($USE_LUA_VERSION != $LUA_VERSION && ! $(luaenv versions | grep "[- ]$USE_LUA_VERSION")) || ! $(which lua) =~ anyenv ]]; then
-  luaenv install $USE_LUA_VERSION
+  CONFIGURE_OPTS='--enable-shared' luaenv install $USE_LUA_VERSION
 fi
 
 luaenv global $USE_LUA_VERSION
 luaenv rehash
 
 if [[ ($USE_GO_VERSION != $GO_VERSION && ! $(goenv versions | grep "[- ]$USE_GO_VERSION")) || ! $(which go) =~ anyenv ]]; then
-  goenv install $USE_GO_VERSION
+  CONFIGURE_OPTS='--enable-shared' goenv install $USE_GO_VERSION
 fi
 
 goenv global $USE_GO_VERSION
