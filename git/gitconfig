@@ -2,7 +2,7 @@
   name = ToruIwashita
   email = toru.iwashita@gmail.com
 [core]
-  editor = ~/local/bin/vim
+  editor = vim
   attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
 [status]
