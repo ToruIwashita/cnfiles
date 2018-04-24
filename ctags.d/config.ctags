@@ -1,6 +1,7 @@
 -f .tags
 
 -R
+--extra=+f
 --input-encoding=utf-8
 --tag-relative=yes
 --sort=yes
