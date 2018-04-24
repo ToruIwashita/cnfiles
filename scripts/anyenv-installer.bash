@@ -29,8 +29,6 @@ eval "$(anyenv init -)"
 
 printf "before versions:\n"
 echo
-anyenv version
-echo
 anyenv versions
 echo
 
@@ -117,8 +115,6 @@ sbtenv rehash
 
 echo
 printf "after versions:\n"
-anyenv version
-echo
 anyenv versions
 echo
 
