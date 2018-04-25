@@ -9,16 +9,16 @@ set cpoptions&vim
 map <leader>, <NOP>
 
 " move to {char}
-map <leader>f <Plug>(easymotion-bd-f)
-nmap <leader>f <Plug>(easymotion-overwin-f)
+map s <Plug>(easymotion-bd-f)
+nmap s <Plug>(easymotion-overwin-f)
 
 " move to {char}{char}
-map <leader>F <Plug>(easymotion-bd-f2)
-nmap <leader>F <Plug>(easymotion-overwin-f2)
+map <leader>f <Plug>(easymotion-bd-f2)
+nmap <leader>f <Plug>(easymotion-overwin-f2)
 
 " move to word
-map <leader>j <Plug>(easymotion-bd-w)
-nmap <leader>j <Plug>(easymotion-overwin-w)
+map <leader>F <Plug>(easymotion-bd-w)
+nmap <leader>F <Plug>(easymotion-overwin-w)
 
 " move to line
 map <leader>G <Plug>(easymotion-bd-jk)
