@@ -94,8 +94,6 @@ noremap <C-b> <NOP>
 noremap F <NOP>
 " sを無効化
 noremap s <NOP>
-" Sを無効化
-noremap S <NOP>
 " <ESC>
 noremap <C-j> <ESC>
 " ファイル再読込
