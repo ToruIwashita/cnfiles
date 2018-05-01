@@ -2,12 +2,12 @@
 set encoding=utf-8
 scriptencoding utf-8
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 let g:WMGraphviz_output = 'svg'
 
-nnoremap <leader>p :<C-u>w<CR>:<C-u>GraphvizCompile<CR>:<C-u>GraphvizShow<CR><CR>
+nnoremap <C-s>v :<C-u>w<CR>:<C-u>GraphvizCompile<CR>:<C-u>GraphvizShow<CR><CR>
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
