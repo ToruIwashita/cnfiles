@@ -212,6 +212,10 @@ inoremap <C-[> <ESC>
 inoremap <C-j> <ESC>
 " CTRL-@無効化
 inoremap <C-@> <NOP>
+" 行頭へ移動
+inoremap <C-a> <C-o>^
+" 行末へ移動
+inoremap <C-e> <C-o>$
 " 右へ移動
 inoremap <C-f> <RIGHT>
 " 左へ移動
