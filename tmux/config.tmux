@@ -93,6 +93,10 @@ bind -r H resize-pane -L 2
 bind -r J resize-pane -D 1
 bind -r K resize-pane -U 1
 bind -r L resize-pane -R 2
+# ペインを次に入れ替え
+bind -r < swap-pane -U
+# ペインを前に入れ替え
+bind -r > swap-pane -D
 # 等間隔分割に変更する
 bind | select-layout even-horizontal
 bind - select-layout even-vertical
