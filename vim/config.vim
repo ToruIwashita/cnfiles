@@ -188,6 +188,7 @@ nnoremap <silent> k gk
 nnoremap <silent> gk k
 nnoremap <silent> $ g$
 nnoremap <silent> g$ $
+" 現在のバッファで最後に選択されたビジュアルエリアの先頭,末尾にカーソルを移動
 nnoremap <silent> <leader>0 '<
 nnoremap <silent> <leader>$ '>
 " <ESC>か<C-j>2回で再描画&検索ハイライト消し
