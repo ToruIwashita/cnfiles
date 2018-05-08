@@ -188,8 +188,8 @@ nnoremap <silent> k gk
 nnoremap <silent> gk k
 nnoremap <silent> $ g$
 nnoremap <silent> g$ $
-nnoremap <silent> <leader>0 `<
-nnoremap <silent> <leader>$ `>
+nnoremap <silent> <leader>0 '<
+nnoremap <silent> <leader>$ '>
 " <ESC>か<C-j>2回で再描画&検索ハイライト消し
 nnoremap <ESC><ESC> :<C-u>nohlsearch<CR>
 nnoremap <C-j><C-j> :<C-u>nohlsearch<CR>
