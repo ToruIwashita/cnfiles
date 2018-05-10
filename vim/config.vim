@@ -77,6 +77,8 @@ cnoremap <C-d> <DEL>
 cnoremap <C-u> <S-RIGHT><C-w>
 " コマンドラインにカーソル上の文字を入力
 cnoremap <C-]> <C-r><C-w>
+" コマンドラインモードを終了する
+cnoremap <C-g> <C-c>
 " コマンドラインに検索した文字列を入力
 cnoremap <C-w>* <C-r>/
 " 次の単語の先頭に移動
