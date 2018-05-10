@@ -96,6 +96,8 @@ noremap <C-b> <NOP>
 noremap F <NOP>
 " sを無効化
 noremap s <NOP>
+" Sを無効化
+noremap S <NOP>
 " <ESC>
 noremap <C-j> <ESC>
 " ファイル再読込
@@ -108,8 +110,6 @@ noremap <C-s><C-j> zt
 " 検索後にカーソルを上に移動
 noremap n nzz
 noremap N Nzz
-" 行の中で空文字でない最初の文字に移動
-noremap <leader>0 ^
 "" ウィンドウ関連
 " ウィンドウのmapに関わるデフォルトのmapを無効化
 noremap <C-w>P <NOP>
@@ -193,6 +193,7 @@ nnoremap <silent> gk k
 nnoremap <silent> $ g$
 nnoremap <silent> g$ $
 " 現在のバッファで最後に選択されたビジュアルエリアの先頭,末尾にカーソルを移動
+nnoremap S ^
 nnoremap <silent> <leader>0 '<
 nnoremap <silent> <leader>$ '>
 " <ESC>か<C-j>2回で再描画&検索ハイライト消し
