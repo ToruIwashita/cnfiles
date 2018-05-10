@@ -108,6 +108,8 @@ noremap <C-s><C-j> zt
 " 検索後にカーソルを上に移動
 noremap n nzz
 noremap N Nzz
+" 行の中で空文字でない最初の文字に移動
+noremap <leader>0 ^
 "" ウィンドウ関連
 " ウィンドウのmapに関わるデフォルトのmapを無効化
 noremap <C-w>P <NOP>
