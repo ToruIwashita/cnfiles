@@ -247,19 +247,27 @@ fi
 
 ## create initial file
 # memolist tmp markdown file
-if [[ -f $MEMOLIST_TMP_MARKDOWN_FILE ]]; then
-  printf "\e[32m$MEMOLIST_TMP_MARKDOWN_FILE file already exists\e[0m\n"
+if [[ -f $MEMOLIST_TMP_MARKDOWN_FILE_PATH ]]; then
+  printf "\e[32m$MEMOLIST_TMP_MARKDOWN_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MEMOLIST_TMP_MARKDOWN_FILE\e[0m\n"
-  touch $MEMOLIST_TMP_MARKDOWN_FILE
+  printf "\e[31mcreate file $MEMOLIST_TMP_MARKDOWN_FILE_PATH\e[0m\n"
+  touch $MEMOLIST_TMP_MARKDOWN_FILE_PATH
+fi
+
+# memolist tmp sql file
+if [[ -f $MEMOLIST_TMP_SQL_FILE_PATH ]]; then
+  printf "\e[32m$MEMOLIST_TMP_SQL_FILE_PATH file already exists\e[0m\n"
+else
+  printf "\e[31mcreate file $MEMOLIST_TMP_SQL_FILE_PATH\e[0m\n"
+  touch $MEMOLIST_TMP_SQL_FILE_PATH
 fi
 
 # memolist tmp file
-if [[ -f $MEMOLIST_TMP_FILE ]]; then
-  printf "\e[32m$MEMOLIST_TMP_FILE file already exists\e[0m\n"
+if [[ -f $MEMOLIST_TMP_FILE_PATH ]]; then
+  printf "\e[32m$MEMOLIST_TMP_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MEMOLIST_TMP_FILE\e[0m\n"
-  touch $MEMOLIST_TMP_FILE
+  printf "\e[31mcreate file $MEMOLIST_TMP_FILE_PATH\e[0m\n"
+  touch $MEMOLIST_TMP_FILE_PATH
 fi
 
 printf "\ninit complete\n"
