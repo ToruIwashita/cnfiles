@@ -3,10 +3,11 @@ __my-table-names() {
   compadd $(__my-table-list)
 }
 
-_myfindg() {
+_mq() {
   _arguments \
-    -t'[Table name]:Input a part of table name or table name:__my-table-names' \
-    -f'[Field info]:A part of field info'
+    '(-t --tmp-sql)'{-t,--tmp-sql}'[Use temporary sql]' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '(:)*: :_files'
 }
 
 _mf() {
@@ -22,6 +23,12 @@ _mf() {
     '(:)*: :__my-table-names'
 }
 
+_myfindg() {
+  _arguments \
+    -t'[Table name]:Input a part of table name or table name:__my-table-names' \
+    -f'[Field info]:A part of field info'
+}
+
 _watch-myps() {
   _arguments \
     -g'[with \\G suffix]' \
@@ -32,8 +39,9 @@ _myst() {
   _arguments '(:)*: :__my-table-names'
 }
 
-compdef _myfindg myfindg
+compdef _mq mq
 compdef _mf mf
+compdef _myfindg myfindg
 compdef _myst mytable
 compdef _myst mydesc
 compdef _myst myindex
