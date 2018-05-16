@@ -145,23 +145,21 @@ gra() {
   git status --short
 }
 
-greset-hard() {
-  local current_branch answer
+greset-hard-latest() {
+  local answer
 
   if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     return 1
   fi
 
-  current_branch=$(__git-ref-head)
-
   while :; do
-    print -n "Reset hard $current_branch (y/n)? "
+    print -n "Reset hard latest '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
 
     read answer
     case "$answer" in
       [yY])
-        git reset --hard origin/$current_branch
+        git reset --hard HEAD^
         break
         ;;
       [nN])
@@ -174,66 +172,58 @@ greset-hard() {
   done
 }
 
-greset-latest() {
-  local self_cmd help usage answer
-
-  self_cmd=$0
-  help="Try \`$self_cmd --help' for more information."
-  usage=`cat <<EOF
-usage: $self_cmd [files]
-           [-h --help]
-EOF`
+greset-mixed-latest() {
+  local answer
 
   if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
-    print $usage 1>&2
     return 1
   fi
 
-  while (( $# > 0 )); do
-    case "$1" in
-      -h | --help)
-        print $usage
-        return 0
+  while :; do
+    print -n "Reset mixed latest '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
+
+    read answer
+    case "$answer" in
+      [yY])
+        git reset --mixed HEAD^
+        break
         ;;
-      -- | -) # Stop option processing
-        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
-        return 1
-        ;;
-      -*)
-        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
-        return 1
+      [nN])
+        break
         ;;
       *)
-        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
-        return 1
+        print -n 'Please enter y or n. '
         ;;
     esac
   done
+}
 
-  if (( ! $# )); then
-    while :; do
-      print -n "Reset '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
+greset-soft-latest() {
+  local answer
 
-      read answer
-      case "$answer" in
-        [yY])
-          git reset HEAD^
-          break
-          ;;
-        [nN])
-          break
-          ;;
-        *)
-          print -n 'Please enter y or n. '
-          ;;
-      esac
-    done
-
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
     return 1
   fi
 
-  (git reset HEAD $* 2>/dev/null || git reset HEAD $(git rev-parse --show-toplevel)/$^*)
+  while :; do
+    print -n "Reset mixed latest '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
+
+    read answer
+    case "$answer" in
+      [yY])
+        git reset --soft HEAD^
+        break
+        ;;
+      [nN])
+        break
+        ;;
+      *)
+        print -n 'Please enter y or n. '
+        ;;
+    esac
+  done
 }
 
 gc() {

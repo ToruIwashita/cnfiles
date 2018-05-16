@@ -51,12 +51,6 @@ _gad() {
   _arguments '*: :__git-deleted-files'
 }
 
-_grh() {
-  _arguments \
-    '(-h --help)'{-h,--help}'[Show help text]' \
-    '(:)*: :__git-staged-files'
-}
-
 _gc() {
   _arguments \
     '(-e --empty)'{-e,--empty}'[Empty commit]' \
@@ -110,7 +104,6 @@ compdef _gau gau
 compdef _gac gac
 compdef _gab gab
 compdef _gad gad
-compdef _grh grh
 compdef _gc gc
 compdef _gd gd
 compdef _gsw gsw
