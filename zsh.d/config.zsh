@@ -135,4 +135,4 @@ alias grep='grep --color'
 alias less='less -R'
 alias tailf='tail -f'
 # memolist
-alias -g TT=">! $MEMOLIST_TMP_FILE_PATH"
+alias -g TT=">! $MEMOLIST_TMP_TEXT_FILE_PATH"
