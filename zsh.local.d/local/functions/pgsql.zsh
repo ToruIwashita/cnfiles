@@ -186,13 +186,62 @@ pgfindg() {
 }
 
 pqexp() {
-  integer arg_num
-  local pg_cmd
+  integer arg_num tmp_sql
+  local -a args
+  local self_cmd help usage pg_cmd file_path
 
-  __pg-check-args $*
-  (( $? )) && return 1
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <sql file>
+             [-t --tmp-sql]
+             [-h --help]
+EOF`
 
-  pg_cmd="cat $1"
+  while (( $# > 0 )); do
+    case "$1" in
+      -t | --tmp-sql)
+        (( tmp_sql++ ))
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift;
+        args+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        args+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if (( tmp_sql )); then
+    file_path=$MEMOLIST_TMP_SQL_FILE_PATH
+  else
+    file_path=${args[1]}
+  fi
+
+  if (( ! $#file_path )); then
+    print $usage 1>&2
+    return 1
+  fi
+
+  if ! __check-arg-suffix 'sql' $file_path; then
+    print $usage 1>&2
+    return 1
+  fi
+
+  pg_cmd="cat $file_path"
+
   for ((i=1; i<$#; i++)); do
     arg_num=$(expr $i + 1)
     pg_cmd=$pg_cmd" | sed -e 's/\${$i}/${*[$arg_num]}/g'"
@@ -220,4 +269,22 @@ pgshow() {
 
 pgschema() {
   pgq '\dn'
+}
+
+pgfcsv() {
+  __check-presence-of-args $*
+  (( $? )) && return 1
+
+  pgq "\d ${1}" --tuples-only | sed s/$'|'.*//g | xargs echo | sed -e 's/ /,/g'
+}
+
+pgcnt() {
+  __check-presence-of-args $*
+  (( $? )) && return 1
+
+  pgq "SELECT COUNT(1) FROM ${1}"
+}
+
+watch-pgps() {
+  watch -n 3 "$(__pg-cmd-self) \"SELECT procpid, start, now() - start AS lap, current_query FROM (SELECT backendid, pg_stat_get_backend_pid(S.backendid) AS procpid, pg_stat_get_backend_activity_start(S.backendid) AS start, pg_stat_get_backend_activity(S.backendid) AS current_query FROM (SELECT pg_stat_get_backend_idset() AS backendid) AS S) AS S WHERE current_query <> '' ORDER BY lap DESC\""
 }

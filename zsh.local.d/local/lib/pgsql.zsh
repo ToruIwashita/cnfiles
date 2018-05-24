@@ -21,5 +21,5 @@ __pg-cmd-self() {
 }
 
 __pg-table-list() {
-  __pg-cmd 'select relname from pg_stat_user_tables' --tuples-only
+  __pg-cmd 'SELECT relname FROM pg_stat_user_tables' --tuples-only
 }

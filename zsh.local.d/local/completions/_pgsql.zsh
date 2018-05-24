@@ -28,6 +28,9 @@ _pg-tables() {
 }
 
 compdef _pq pq
-compdef _pqout pqout
+compdef _pq pqout
+compdef _pq pqexp
 compdef _pgfindg pgfindg
 compdef _pg-tables pgdesc
+compdef _pg-tables pgfcsv
+compdef _pg-tables pgcnt
