@@ -10,9 +10,24 @@ _pq() {
     '(:)*: :_files'
 }
 
+_pqout() {
+  _arguments \
+    '(-t --tmp-sql)'{-t,--tmp-sql}'[Use temporary sql]' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '(:)*: :_files'
+}
+
+_pgfindg() {
+  _arguments \
+    -t'[Table name]:Input a part of table name or table name:__pg-table-names' \
+    -f'[Field info]:A part of field info'
+}
+
 _pg-tables() {
   _arguments '(:)*: :__pg-table-names'
 }
 
 compdef _pq pq
+compdef _pqout pqout
+compdef _pgfindg pgfindg
 compdef _pg-tables pgdesc

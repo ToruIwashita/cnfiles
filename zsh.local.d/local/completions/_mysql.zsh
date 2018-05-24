@@ -10,6 +10,13 @@ _mq() {
     '(:)*: :_files'
 }
 
+_mqout() {
+  _arguments \
+    '(-t --tmp-sql)'{-t,--tmp-sql}'[Use temporary sql]' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '(:)*: :_files'
+}
+
 _mf() {
   _arguments \
     '(-c --primary-condition)'{-c,--primary-condition}'[Highest priority condition]' \
@@ -39,8 +46,9 @@ _my-tables() {
   _arguments '(:)*: :__my-table-names'
 }
 
-compdef _mq mq
 compdef _mf mf
+compdef _mq mq
+compdef _mqout mqout
 compdef _myfindg myfindg
 compdef _my-tables mytable
 compdef _my-tables mydesc
