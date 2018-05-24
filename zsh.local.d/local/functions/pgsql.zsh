@@ -286,12 +286,30 @@ pgcnt() {
 }
 
 watch-pgps() {
-  watch -n 3 "$(__pg-cmd-self) \"SELECT procpid, start, now() - start AS lap, current_query FROM (SELECT backendid, pg_stat_get_backend_pid(S.backendid) AS procpid, pg_stat_get_backend_activity_start(S.backendid) AS start, pg_stat_get_backend_activity(S.backendid) AS current_query FROM (SELECT pg_stat_get_backend_idset() AS backendid) AS S) AS S WHERE current_query <> '' ORDER BY lap DESC\""
+  integer g_opt
+  local opt usage query
+
+  usage="usage: $0 [-g]"
+  while getopts :gh opt; do
+    case ${opt} in
+      g) (( g_opt++ )) ;;
+      h|:|\?) print $usage; return 2 ;;
+    esac
+  done
+
+  query="SELECT procpid, start, now() - start AS lap, current_query FROM (SELECT backendid, pg_stat_get_backend_pid(S.backendid) AS procpid, pg_stat_get_backend_activity_start(S.backendid) AS start, pg_stat_get_backend_activity(S.backendid) AS current_query FROM (SELECT pg_stat_get_backend_idset() AS backendid) AS S) AS S WHERE current_query <> '' ORDER BY lap DESC"
+
+  if (( g_opt )); then
+    watch -n 3 "$(__pg-cmd-self) \"${query}\" -x"
+  else
+    watch -n 3 "$(__pg-cmd-self) \"${query}\""
+  fi
 }
 
 pf() {
+  integer vertical_option
   local -a args
-  local pg_cmd priority_condition group_condition limit_condition order_condition selected_field_list vertical_option where_condition table_name self_cmd help usage
+  local pg_cmd priority_condition group_condition limit_condition order_condition selected_field_list where_condition table_name self_cmd help usage
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -349,6 +367,10 @@ EOF`
         selected_field_list=" $2"
         shift 2
         ;;
+      -v | --vertical)
+        (( vertical_option++ ))
+        shift 1
+        ;;
       -w | --where)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
@@ -392,5 +414,10 @@ EOF`
   fi
 
   print "> $pg_cmd;"
-  pgq "$pg_cmd"
+
+  if (( vertical_option )); then
+    pgq "$pg_cmd" -x
+  else
+    pgq "$pg_cmd"
+  fi
 }
