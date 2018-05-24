@@ -3,13 +3,6 @@ __my-table-names() {
   compadd $(__my-table-list)
 }
 
-_mq() {
-  _arguments \
-    '(-t --tmp-sql)'{-t,--tmp-sql}'[Use temporary sql]' \
-    '(-h --help)'{-h,--help}'[Show help text]' \
-    '(:)*: :_files'
-}
-
 _mf() {
   _arguments \
     '(-c --primary-condition)'{-c,--primary-condition}'[Highest priority condition]' \
@@ -21,6 +14,13 @@ _mf() {
     '(-w --where)'{-w,--where}'[Where condition]' \
     '(-h --help)'{-h,--help}'[Show help text]' \
     '(:)*: :__my-table-names'
+}
+
+_mq() {
+  _arguments \
+    '(-t --tmp-sql)'{-t,--tmp-sql}'[Use temporary sql]' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '(:)*: :_files'
 }
 
 _myfindg() {

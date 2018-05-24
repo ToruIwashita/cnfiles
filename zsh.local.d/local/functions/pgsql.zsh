@@ -288,3 +288,113 @@ pgcnt() {
 watch-pgps() {
   watch -n 3 "$(__pg-cmd-self) \"SELECT procpid, start, now() - start AS lap, current_query FROM (SELECT backendid, pg_stat_get_backend_pid(S.backendid) AS procpid, pg_stat_get_backend_activity_start(S.backendid) AS start, pg_stat_get_backend_activity(S.backendid) AS current_query FROM (SELECT pg_stat_get_backend_idset() AS backendid) AS S) AS S WHERE current_query <> '' ORDER BY lap DESC\""
 }
+
+pf() {
+  local -a args
+  local pg_cmd priority_condition group_condition limit_condition order_condition selected_field_list vertical_option where_condition table_name self_cmd help usage
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <table name>
+          [-c --primary-condition <highest priority condition>]
+          [-g --group-by <group condition>]
+          [-h --help]
+          [-l --limit <limit value>]
+          [-o --order-by <order condition>]
+          [-s --select <select fields>]
+          [-v --vertical]
+          [-w --where <where condition>]
+EOF`
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -c | --primary-condition)
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
+          return 1
+        fi
+        priority_condition=" $2"
+        shift 2
+        ;;
+      -g | --group-by)
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
+          return 1
+        fi
+        group_condition=" GROUP BY $2"
+        shift 2
+        ;;
+      -l | --limit)
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
+          return 1
+        fi
+        limit_condition=" LIMIT $2"
+        shift 2
+        ;;
+      -o | --order-by)
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
+          return 1
+        fi
+        order_condition=" ORDER BY $2"
+        shift 2
+        ;;
+      -s | --select)
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
+          return 1
+        fi
+        selected_field_list=" $2"
+        shift 2
+        ;;
+      -v | --vertical)
+        vertical_option='\G'
+        shift 1
+        ;;
+      -w | --where)
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
+          return 1
+        fi
+        where_condition=" WHERE $2"
+        shift 2
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift;
+        args+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        args+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if (( ! $#args )); then
+    print $usage
+    return 1
+  fi
+  table_name=" ${args[1]}"
+
+  (( ! $#selected_field_list )) && selected_field_list=' *'
+
+  if (( $#priority_condition )); then
+    pg_cmd="SELECT${selected_field_list} FROM${table_name}${priority_condition}"
+  else
+    pg_cmd="SELECT${selected_field_list} FROM${table_name}${where_condition}${group_condition}${order_condition}${limit_condition}${vertical_option}"
+  fi
+
+  print "> $pg_cmd;"
+  pgq "$pg_cmd"
+}
