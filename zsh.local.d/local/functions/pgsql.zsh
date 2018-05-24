@@ -349,10 +349,6 @@ EOF`
         selected_field_list=" $2"
         shift 2
         ;;
-      -v | --vertical)
-        vertical_option='\G'
-        shift 1
-        ;;
       -w | --where)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
@@ -392,7 +388,7 @@ EOF`
   if (( $#priority_condition )); then
     pg_cmd="SELECT${selected_field_list} FROM${table_name}${priority_condition}"
   else
-    pg_cmd="SELECT${selected_field_list} FROM${table_name}${where_condition}${group_condition}${order_condition}${limit_condition}${vertical_option}"
+    pg_cmd="SELECT${selected_field_list} FROM${table_name}${where_condition}${group_condition}${order_condition}${limit_condition}"
   fi
 
   print "> $pg_cmd;"

@@ -10,7 +10,6 @@ _pf() {
     '(-l --limit)'{-l,--limit}'[Limit value]' \
     '(-o --order-by)'{-o,--order-by}'[Order condition]' \
     '(-s --select)'{-s,--select}'[Select fields]' \
-    '(-v --vertical)'{-v,--vertical}'[Vertical display]' \
     '(-w --where)'{-w,--where}'[Where condition]' \
     '(-h --help)'{-h,--help}'[Show help text]' \
     '(:)*: :__pg-table-names'
