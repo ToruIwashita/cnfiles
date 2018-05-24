@@ -19,3 +19,7 @@ __pg-cmd() {
 __pg-cmd-self() {
   echo "psql -c"
 }
+
+__pg-table-list() {
+  __pg-cmd 'select relname from pg_stat_user_tables' --tuples-only
+}

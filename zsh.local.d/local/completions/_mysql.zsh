@@ -35,17 +35,17 @@ _watch-myps() {
     -h'[Show help text]'
 }
 
-_myst() {
+_my-tables() {
   _arguments '(:)*: :__my-table-names'
 }
 
 compdef _mq mq
 compdef _mf mf
 compdef _myfindg myfindg
-compdef _myst mytable
-compdef _myst mydesc
-compdef _myst myindex
-compdef _myst myctable
-compdef _myst myfcsv
-compdef _myst mycnt
+compdef _my-tables mytable
+compdef _my-tables mydesc
+compdef _my-tables myindex
+compdef _my-tables myctable
+compdef _my-tables myfcsv
+compdef _my-tables mycnt
 compdef _watch-myps watch-myps

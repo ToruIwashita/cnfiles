@@ -91,7 +91,7 @@ pqout() {
   eval $pg_cmd
   print "Query\n"
 
-  pg_cmd=$pg_cmd" | xargs -0 -i $(__pg-cmd-self) '{}' -t | sed -e 's/\t/,/g' >! $MEMOLIST_TMP_FILE_PATH"
+  pg_cmd=$pg_cmd" | xargs -0 -i $(__pg-cmd-self) '{}' -t | sed -e 's/\t/,/g' >! $MEMOLIST_TMP_TEXT_FILE_PATH"
   print "command: ${pg_cmd}\n"
   eval $pg_cmd
 }
