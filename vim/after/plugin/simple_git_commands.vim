@@ -20,9 +20,9 @@ nnoremap <leader>cu :<C-u>GCleanU<CR>
 
 nnoremap <C-g>B :<C-u>GllRebase
 
-nnoremap <C-g>H :<C-u>GResetHard
-
-nnoremap <C-g>L :<C-u>GResetLatest
+nnoremap <C-g>H :<C-u>GResetHardLatest
+nnoremap <C-g>M :<C-u>GResetMixedLatest
+nnoremap <C-g>S :<C-u>GResetSoftLatest
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
