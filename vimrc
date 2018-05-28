@@ -34,7 +34,7 @@ Plug 'Shougo/neocomplete'                              " 入力補完機能(luaj
 Plug 'Shougo/neosnippet'                               " スニペット展開
 Plug 'honza/vim-snippets'                              " 各種snippet
 Plug 'tpope/vim-repeat'                                " vim-surroundの機能を.反復
-Plug 'tpope/vim-abolish'                               " 強化版置換コマンド
+Plug 'tpope/vim-abolish'                               " 単語の複数の変種(キャメル,スネークなど)を簡単に検索,置換,短縮
 Plug 'tpope/vim-surround'                              " text-object操作
 Plug 'tpope/vim-fugitive'                              " fugitive(ステータスラインのブランチ名と,Gblame用)
 Plug 'tpope/vim-rhubarb'                               " fugitiveのGbrowseでGithubを開く
