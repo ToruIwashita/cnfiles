@@ -7,7 +7,7 @@ scriptencoding utf-8
 colorscheme desert
 set background=dark
 
-"" neocomplete
+"" neocomplete(after/ にも設定あり)
 let g:neocomplete#enable_at_startup = 1  " neocompleteを起動時に有効化
 
 "" ale(after/にも設定あり)
@@ -91,7 +91,6 @@ let g:ctrlp_prompt_mappings = {
 " afterで定義するとデフォルトのキーマップが+に割り当てられて他のキーマップと衝突する
 map <C-l> <Plug>(expand_region_expand)
 map <C-h> <Plug>(expand_region_shrink)
-
 "" 以下のpluginに依存している
 " vim-textobj-user
 " vim-textobj-line
@@ -121,6 +120,9 @@ let g:gutentags_define_advanced_commands = 1
 let g:gutentags_ctags_tagfile = '.tags'
 " ctagsのパス
 let g:gutentags_ctags_executable = g:local_dir_path.'/bin/ctags'
+
+"" indent-guides(after/ にも設定あり)
+let g:indent_guides_enable_on_vim_startup = 1
 
 "" tcomment
 let g:tcomment_mapleader1 = '<leader>_'
