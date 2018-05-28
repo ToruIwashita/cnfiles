@@ -14,14 +14,11 @@ function! s:rubocop_check() abort
   if filereadable('./config/environment.rb')
     let g:vimrubocop_rubocop_cmd = 'bundle exec rubocop '
     let g:vimrubocop_config = l:config_file
-    let g:vimrubocop_extra_args = '--rails --require rubocop-rspec'
   else
     let g:vimrubocop_rubocop_cmd = 'rbenv exec rubocop '
     let g:vimrubocop_config = l:config_file
-    let g:vimrubocop_extra_args = '--require rubocop-rspec'
   endif
   RuboCop
-  unlet g:vimrubocop_extra_args
 endfunction
 
 " インターフェースの定義
