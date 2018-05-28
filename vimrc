@@ -52,10 +52,13 @@ Plug 'kana/vim-textobj-user'                           " 独自text-object定義
 Plug 'kana/vim-textobj-line'                           " lineのtext-object(vim-textobj-user依存)
 Plug 'kana/vim-textobj-indent'                         " カーソル行と同じインデントのtext-object(vim-textobj-user依存)
 Plug 'kana/vim-niceblock'                              " ビジュアル選択時にI,Aで行頭,行末に文字挿入
+Plug 'terryma/vim-expand-region'                       " text-objectビジュアル選択
 Plug 'vim-ruby/vim-ruby'                               " vim-ruby
 Plug 'derekwyatt/vim-scala'                            " vim-scala
 Plug 'ngmy/vim-rubocop'                                " vim-rubocop
 Plug 'kchmck/vim-coffee-script'                        " vim-coffee-script
+Plug 'hashivim/vim-terraform'                          " vim-terraform
+Plug 'chrisbra/vim-zsh'                                " vim-zsh
 Plug 'ynkdir/vim-vimlparser'                           " vimlのパーサー(構文解析)
 Plug 'scrooloose/nerdtree'                             " ディレクトリツリーエクスプローラー
 Plug 'Xuyuanp/nerdtree-git-plugin'                     " NERDTreeにgit statusの結果を反映
@@ -83,10 +86,10 @@ Plug 'ctrlpvim/ctrlp.vim'                              " 多機能finder
 Plug 'tacahiroy/ctrlp-funky'                           " ctrlpで関数を絞り込む
 Plug 'jasoncodes/ctrlp-modified.vim'                   " ctrlpでgitで変更があったファイルを絞り込む
 Plug 'dyng/ctrlsf.vim'                                 " 文字列検索
-Plug 'terryma/vim-expand-region'                       " text-objectビジュアル選択
 Plug 'godlygeek/tabular'                               " テキストフィルタリング
 Plug 'plasticboy/vim-markdown'                         " vim-markdown(vim-tabular依存)
 Plug 'fugalh/desert.vim'                               " カラースキーマ
+Plug 'nathanaelkane/vim-indent-guides'                 " インデントガイド
 Plug 'junegunn/vim-easy-align'                         " テキスト整形
 Plug 'ludovicchabant/vim-gutentags'                    " ctags自動生成
 Plug 'majutsushi/tagbar'                               " コード概要ビューア
@@ -97,8 +100,6 @@ Plug 'kshenoy/vim-signature'                           " マーカー表示
 Plug 'adie/BlockDiff'                                  " BlockDiff(選択範囲の比較)
 Plug 'LeafCage/yankround.vim'                          " ヤンク履歴管理
 Plug 'Konfekt/FastFold'                                " 自動折畳
-Plug 'hashivim/vim-terraform'                          " vim-terraform
-Plug 'chrisbra/vim-zsh'                                " vim-zsh
 Plug 'vim-scripts/AnsiEsc.vim'                         " ANSIカラー表示
 Plug 'yami-beta/vim-responsive-tabline'                " タブの横幅を調整
 Plug 'wannesm/wmgraphviz.vim'                          " graphviz
