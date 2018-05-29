@@ -9,6 +9,7 @@ _peco-cd-recent-dir() {
 
   recent_dirs=${(F)${${(f)"$(cdr -l)"}##<-> ##}}
   dir_paths=(${(f)"$(echo $recent_dirs | peco --select-1 2>/dev/null)"})
+
   if (( ! $#dir_paths )); then
     zle beginning-of-line
     return

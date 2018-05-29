@@ -7,6 +7,7 @@ _peco-ag-and-start-editor() {
   (( $#BUFFER )) && print -s "$BUFFER"
 
   args=("${(z)BUFFER}")
+
   if (( $#args >= 2 )) && [[ ${args[-1]} =~ '^[0-9]*$' ]]; then
     context="--context=${args[-1]}"
     pattern=${args:0:-1}
