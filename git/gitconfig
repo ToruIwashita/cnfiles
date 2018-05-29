@@ -1,23 +1,35 @@
 [user]
   name = ToruIwashita
   email = toru.iwashita@gmail.com
+
 [core]
   editor = vim
   attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
+
 [status]
   short = true
+
 [fetch]
   prune = true
+
 [rebase]
   autostash = true
+
 [push]
   default = simple
+
 [diff]
   compactionheuristic = true
+
 [interactive]
   diffFilter = diff-highlight
+
 [alias]
   log-all = log --graph --date-order -C -M --pretty=format:'<%h> %ad [%an] %Cgreen%d%Creset %s' --all --date=short
+
+[ghq]
+  root = ~/repos
+
 [include]
   path = ~/.gitconfig.local
