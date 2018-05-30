@@ -9,6 +9,7 @@ let g:mapleader = ','
 
 "" シンタックスハイライト
 syntax on
+
 "" 補完設定
 set wildmenu
 set wildmode=full
@@ -20,6 +21,8 @@ syntax sync minlines=500 maxlines=1000  " シンタックスハイライトの�
 
 "" 通常オプション
 set t_Co=256                          " 256色モード
+set textwidth=120                     " テキスト最大幅(colorcolumn用に設定)
+set colorcolumn=+1                    " テキスト最大幅の最右端+1列目を色付け
 set tabpagemax=100                    " タブページの最大値100
 set laststatus=2                      " ステータスライン常に表示
 set showtabline=2                     " タブライン常に表示
@@ -278,4 +281,10 @@ augroup END
 augroup delete_netrwhist
   autocmd!
   autocmd VimLeave * if filereadable(expand(vim_dir_path.'/.netrwhist')) | call delete(expand(vim_dir_path.'/.netrwhist')) | endif
+augroup END
+
+" colorcolumnの色設定
+augroup adjust_quickfix_window
+  autocmd!
+  autocmd BufEnter * hi ColorColumn ctermbg=236
 augroup END
