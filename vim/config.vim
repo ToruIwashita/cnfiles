@@ -52,12 +52,6 @@ set listchars=tab:»-,trail:_          " listモードでタブと行末の空�
 set grepprg=ag\ --nogroup\ --nocolor  " grepをagで行う
 set grepformat=%f:%l:%m               " grepのフォーマット(ag用)
 
-"" 補完ポップアップメニュー色設定
-hi Pmenu ctermbg=8 guibg=#606060
-hi PmenuSel ctermbg=12 guibg=SlateBlue
-hi PmenuSbar ctermbg=0 guibg=#404040
-hi PmenuThumb ctermbg=0 guibg=Red
-
 "" cnoremap
 " コマンドライン先頭へ移動
 cnoremap <C-a> <HOME>

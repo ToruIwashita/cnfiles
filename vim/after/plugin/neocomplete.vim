@@ -41,5 +41,15 @@ inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 " <TAB>で補完候補移動(上)
 inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
+"" 補完ポップアップメニュー色設定
+" 補完メニューの全てのアイテム
+hi Pmenu      ctermbg=75
+" 選択しているアイテム
+hi PmenuSel   ctermbg=45
+" スクロールバー
+hi PmenuSbar  ctermbg=25
+" スクロールバーのレバー
+hi PmenuThumb ctermbg=85
+
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
