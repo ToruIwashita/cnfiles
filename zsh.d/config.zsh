@@ -70,14 +70,14 @@ bindkey -v '^sp' immediate-git-pull                     # Ctrl+s,pでgit pull
 bindkey -v '^ss' peco-ag-and-start-editor               # Ctrl+s,sでagで検索してstart-editorCtr+s
 bindkey -v '^su' immediate-git-diff                     # Ctrl+s,Ctrl+dでgit diff
 bindkey -v '^s@' clear-screen                           # Ctrl+@でclear-screen
-bindkey -v '^s;' peco-git-grep-and-start-editor         # Ctrl+s,hでgit grepしてstart-editor
+bindkey -v '^s;' peco-cd-ghq-repo                       # Ctrl+s,;でghq管理下のリポジトリを絞り込んで移動
 bindkey -v '^s^a' immediate-git-add-all                 # Ctrl+s,Ctrl+aでgit add .
 bindkey -v '^s^f' peco-file-finder                      # Ctrl+s,Ctrl+fでpeco-file-finder
 bindkey -v '^s^g' immediate-hub-browse-pull-request     # Ctrl+s,hでブランチ名からpull requestを開く
 bindkey -v '^s^h' immediate-git-log-search-with-diff    # Ctrl+s,Ctrl+hでgit logをdiff出力付きで検索
 bindkey -v '^s^p' copy-prev-shell-word                  # Ctrl+s,Ctrl+pで1つ前の文字列をコピペ(空欄区切りで文字列判定)
 bindkey -v '^s^r' immediate-git-reset-all               # Ctrl+s,Ctrl+rでgit reset
-bindkey -v '^s^s' vi-find-next-char                     # Ctrl+s,Ctrl+sでviのfind-char
+bindkey -v '^s^s' peco-git-grep-and-start-editor        # Ctrl+s,Ctrl+sでgit grepしてstart-editor
 bindkey -v '^s^u' immediate-git-status                  # Ctrl+s,Ctrl+uでgit status
 bindkey -v '^s^z' run-fg-last-with-up-line-or-history   # Ctrl+s,Ctrl+zで履歴を逆上る+最後にサスペンドしたjobに復帰する
 bindkey -v '^s^]' vi-backward-word                      # Ctrl+s,Ctrl+]で前の単語の先頭に移動
