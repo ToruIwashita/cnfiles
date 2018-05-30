@@ -12,6 +12,8 @@ nnoremap <leader>bu :<C-u>AddUToBuffer<CR>
 nnoremap <leader>tc :<C-u>AddCToTab<CR>
 nnoremap <leader>tm :<C-u>AddMToTab<CR>
 nnoremap <leader>tu :<C-u>AddUToTab<CR>
+" 全てのバッファを1つのウィンドウで開く
+noremap <leader>bb :<C-u>vertical ball<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
