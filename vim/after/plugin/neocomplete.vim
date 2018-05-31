@@ -45,11 +45,11 @@ inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 " 補完メニューの全てのアイテム
 hi Pmenu      ctermbg=45
 " 選択しているアイテム
-hi PmenuSel   ctermbg=185
+hi PmenuSel   ctermbg=85
 " スクロールバー
 hi PmenuSbar  ctermbg=75
 " スクロールバーのレバー
-hi PmenuThumb ctermbg=85
+hi PmenuThumb ctermbg=115
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
