@@ -43,11 +43,11 @@ inoremap <expr> <S-TAB> pumvisible() ? "\<C-p>" : "\<S-TAB>"
 
 "" 補完ポップアップメニュー色設定
 " 補完メニューの全てのアイテム
-hi Pmenu      ctermbg=75
+hi Pmenu      ctermbg=45
 " 選択しているアイテム
-hi PmenuSel   ctermbg=45
+hi PmenuSel   ctermbg=185
 " スクロールバー
-hi PmenuSbar  ctermbg=25
+hi PmenuSbar  ctermbg=75
 " スクロールバーのレバー
 hi PmenuThumb ctermbg=85
 
