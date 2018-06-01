@@ -52,11 +52,6 @@ fi
 
 cd $GHQ_GITHUB_DIR_PATH_IN_GOPATH/ghq
 
-# backup
-if [[ -f ghq ]]; then
-  mv {ghq,ghq.prev}
-fi
-
 make install
 
 git checkout .
