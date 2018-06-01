@@ -84,6 +84,7 @@ source $ADOTDIR/antigen.zsh
 
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-history-substring-search
+antigen bundle agkozak/zhooks
 antigen bundle ToruIwashita/sys-diver-zsh
 
 # プラグインを適用
