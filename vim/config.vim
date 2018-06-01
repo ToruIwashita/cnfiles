@@ -286,5 +286,5 @@ augroup END
 " colorcolumnの色設定
 augroup adjust_quickfix_window
   autocmd!
-  autocmd BufEnter * hi ColorColumn ctermbg=236
+  autocmd BufEnter * hi ColorColumn ctermbg=235
 augroup END
