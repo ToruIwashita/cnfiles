@@ -58,9 +58,9 @@ bind . command-prompt -I '#W' 'rename-window "%%"'
 # ウィンドウkill
 bind X kill-window
 # ウィンドウ上下分割
-bind s split-window -v
+bind s split-window -v -c '#{pane_current_path}'
 # ウィンドウ左右分割
-bind i split-window -h
+bind i split-window -h -c '#{pane_current_path}'
 # ウィンドウindex変更
 bind m command-prompt 'move-window -t %%'
 # ウィンドウ選択select
