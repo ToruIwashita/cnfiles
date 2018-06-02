@@ -1,8 +1,3 @@
-# pipenv completion
-if (( $+commands[pipenv] )); then
-  eval "$(pipenv --completion)"
-fi
-
 ## alias
 # git
 alias gcs='git commit -m "- update submodules"'
