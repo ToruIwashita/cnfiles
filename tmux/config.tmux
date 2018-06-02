@@ -51,8 +51,8 @@ bind C-d detach
 bind r source-file ~/.tmux.conf
 
 # 新しいウィンドウを作る
-bind t new-window
-bind C-t new-window
+bind t new-window -c '#{pane_current_path}'
+bind C-t new-window -c '#{pane_current_path}'
 # ウィンドウのリネーム
 bind . command-prompt -I '#W' 'rename-window "%%"'
 # ウィンドウkill
