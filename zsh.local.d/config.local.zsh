@@ -9,6 +9,8 @@ alias sbt-r='sbt ~run'
 alias pip-r='pipenv run'
 # django
 alias pjango-m='pipenv run python manage.py'
+alias pjango-s='pipenv run python manage.py shell'
+alias pjango-r='pipenv run python manage.py runserver'
 # rails
 alias brails-s='RAILS_ENV=development bundle exec rails s -b 0.0.0.0 --port 3000'
 alias brails-c='RAILS_ENV=development bundle exec rails c'
