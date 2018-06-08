@@ -5,10 +5,10 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-nnoremap <C-s>@ :<C-u>DeleteForwordLineAfterSpecifiedWord<CR>
+nnoremap <C-s>@ :<C-u>%DeleteForwordLineAfterSpecifiedWord<CR>
 vnoremap <C-s>@ :<C-u>'<,'>DeleteForwordLineAfterSpecifiedWord<CR>
 
-nnoremap <C-s><C-@> :<C-u>DeleteBackwardLineAfterSpecifiedWord<CR>
+nnoremap <C-s><C-@> :<C-u>%DeleteBackwardLineAfterSpecifiedWord<CR>
 vnoremap <C-s><C-@> :<C-u>'<,'>DeleteBackwardLineAfterSpecifiedWord<CR>
 
 let &cpoptions = s:cpoptions_save
