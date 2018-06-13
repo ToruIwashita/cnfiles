@@ -113,7 +113,7 @@ function! LightLineMode()
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-function! ALELinterStatus() abort
+function! ALELinterStatus()
   let l:counts = ale#statusline#Count(bufnr(''))
   let l:non_error = l:counts.total - l:counts.error
 
@@ -151,7 +151,7 @@ function! CtrlPStatusFunc_2(str)
   return lightline#statusline(0)
 endfunction
 
-function! TagbarStatusFunc(current, sort, fname, ...) abort
+function! TagbarStatusFunc(current, sort, fname, ...)
     let g:lightline.fname = a:fname
   return lightline#statusline(0)
 endfunction
