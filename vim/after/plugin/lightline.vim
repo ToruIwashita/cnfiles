@@ -24,7 +24,7 @@ let g:lightline = {
   \   'getcharcode':  'GetCharCode'
   \ },
   \ 'component_expand': {
-  \   'ale': 'ALELinterStatus',
+  \   'ale':       'ALELinterStatus',
   \   'gutentags': 'GutentagsStatusLine'
   \ },
   \ 'component_type': {
