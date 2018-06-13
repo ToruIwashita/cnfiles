@@ -64,9 +64,9 @@ endfunction
 function! LightLineFugitive()
   try
     if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &filetype !~? 'vimfiler' && exists('*fugitive#head')
-      let mark = ''  " edit here for cool mark
-      let _ = fugitive#head()
-      return strlen(_) ? mark._ : ''
+      let l:mark = ''  " edit here for cool mark
+      let l:head = fugitive#head()
+      return strlen(l:head) ? l:mark.l:head : ''
     endif
   catch
   endtry
@@ -74,16 +74,16 @@ function! LightLineFugitive()
 endfunction
 
 function! LightLineFilename()
-  let fname = expand('%:t')
+  let l:fname = expand('%:t')
 
-  return fname == 'ControlP' ? g:lightline.ctrlp_item :
-        \ fname == '__Tagbar__' ? g:lightline.fname :
-        \ fname =~ '__Gundo\|NERD_tree' ? '' :
+  return l:fname == 'ControlP' ? g:lightline.ctrlp_item :
+        \ l:fname == '__Tagbar__' ? g:lightline.fname :
+        \ l:fname =~ '__Gundo\|NERD_tree' ? '' :
         \ &filetype == 'vimfiler' ? vimfiler#get_status_string() :
         \ &filetype == 'unite' ? unite#get_status_string() :
         \ &filetype == 'vimshell' ? vimshell#get_status_string() :
         \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-        \ ('' != fname ? fname : '[No Name]') .
+        \ ('' != l:fname ? l:fname : '[No Name]') .
         \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
@@ -100,13 +100,13 @@ function! LightLineFileencoding()
 endfunction
 
 function! LightLineMode()
-  let fname = expand('%:t')
+  let l:fname = expand('%:t')
 
-  return fname == '__Tagbar__' ? 'Tagbar' :
-        \ fname == 'ControlP' ? 'CtrlP' :
-        \ fname == '__Gundo__' ? 'Gundo' :
-        \ fname == '__Gundo_Preview' ? 'Gundo Preview' :
-        \ fname =~ 'NERD_tree' ? 'NERDTree' :
+  return l:fname == '__Tagbar__' ? 'Tagbar' :
+        \ l:fname == 'ControlP' ? 'CtrlP' :
+        \ l:fname == '__Gundo__' ? 'Gundo' :
+        \ l:fname == '__Gundo_Preview' ? 'Gundo Preview' :
+        \ l:fname =~ 'NERD_tree' ? 'NERDTree' :
         \ &filetype == 'unite' ? 'Unite' :
         \ &filetype == 'vimfiler' ? 'VimFiler' :
         \ &filetype == 'vimshell' ? 'VimShell' :
@@ -160,33 +160,33 @@ let g:tagbar_status_func = 'TagbarStatusFunc'
 
 function! GetCharCode()
   " Get the output of :ascii
-  redir => ascii
+  redir => l:ascii
   silent! ascii
   redir END
 
-  if match(ascii, 'NUL') != -1
+  if match(l:ascii, 'NUL') != -1
     return 'NUL'
   endif
 
   " Zero pad hex values
-  let nrformat = '0x%02x'
+  let l:nrformat = '0x%02x'
 
-  let encoding = (&fenc == '' ? &enc : &fenc)
+  let l:encoding = (&fenc == '' ? &enc : &fenc)
 
-  if encoding == 'utf-8'
+  if l:encoding == 'utf-8'
     " Zero pad with 4 zeroes in unicode files
-    let nrformat = '0x%04x'
+    let l:nrformat = '0x%04x'
   endif
 
   " Get the character and the numeric value from the return value of :ascii
   " This matches the two first pieces of the return value, e.g.
   " "<F>  70" => char: 'F', nr: '70'
-  let [str, char, nr; rest] = matchlist(ascii, '\v\<(.{-1,})\>\s*([0-9]+)')
+  let [l:str, l:char, l:nr; l:rest] = matchlist(l:ascii, '\v\<(.{-1,})\>\s*([0-9]+)')
 
   " Format the numeric value
-  let nr = printf(nrformat, nr)
+  let l:nr = printf(l:nrformat, l:nr)
 
-  return "'". char ."' ". nr
+  return "'". l:char ."' ". l:nr
 endfunction
 
 let &cpoptions = s:cpoptions_save
