@@ -10,25 +10,29 @@ set cpoptions&vim
 let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
-  \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'ale' ], [ 'ctrlpmark' ] ],
+  \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'readonly', 'linter_errors', 'linter_warnings' ], [ 'ctrlpmark' ] ],
   \   'right': [ [ 'gutentags', 'lineinfo' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
   \ },
   \ 'component_function': {
-  \   'fugitive':     'LightLineFugitive',
-  \   'filename':     'LightLineFilename',
-  \   'fileformat':   'LightLineFileformat',
-  \   'filetype':     'LightLineFiletype',
-  \   'fileencoding': 'LightLineFileencoding',
-  \   'mode':         'LightLineMode',
-  \   'ctrlpmark':    'CtrlPMark',
-  \   'getcharcode':  'GetCharCode'
+  \   'fugitive':     'LightlineFugitive',
+  \   'filename':     'LightlineFilename',
+  \   'fileformat':   'LightlineFileformat',
+  \   'filetype':     'LightlineFiletype',
+  \   'fileencoding': 'LightlineFileencoding',
+  \   'mode':         'LightlineMode',
+  \   'ctrlpmark':    'LightlineCtrlPMark',
+  \   'getcharcode':  'LightlineGetCharCode'
   \ },
   \ 'component_expand': {
-  \   'ale':       'ALELinterStatus',
-  \   'gutentags': 'GutentagsStatusLine'
+  \   'readonly':        'LightlineReadonly',
+  \   'linter_warnings': 'LightlineLinterWarnings',
+  \   'linter_errors':   'LightlineLinterErrors',
+  \   'gutentags':       'LightlineGutentagsStatusLine'
   \ },
   \ 'component_type': {
-  \   'ale': 'error'
+  \   'readonly':        'error',
+  \   'linter_warnings': 'warning',
+  \   'linter_errors':   'error'
   \ }
 \ }
 
@@ -45,7 +49,7 @@ let g:unite_force_overwrite_statusline = 0
 let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
 
-function! GutentagsStatusLine()
+function! LightlineGutentagsStatusLine()
   if gutentags#gutentags_enabled()
     return 'ctags[enabled]'
   else
@@ -53,15 +57,15 @@ function! GutentagsStatusLine()
   endif
 endfunction
 
-function! LightLineModified()
+function! LightlineModified()
   return &filetype =~# 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
-function! LightLineReadonly()
+function! LightlineReadonly()
   return &filetype !~? 'help' && &readonly ? 'RO' : ''
 endfunction
 
-function! LightLineFugitive()
+function! LightlineFugitive()
   try
     if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &filetype !~? 'vimfiler' && exists('*fugitive#head')
       let l:mark = ''  " edit here for cool mark
@@ -73,7 +77,7 @@ function! LightLineFugitive()
   return ''
 endfunction
 
-function! LightLineFilename()
+function! LightlineFilename()
   let l:fname = expand('%:t')
 
   return l:fname ==# 'ControlP' ? g:lightline.ctrlp_item :
@@ -82,24 +86,23 @@ function! LightLineFilename()
         \ &filetype ==# 'vimfiler' ? vimfiler#get_status_string() :
         \ &filetype ==# 'unite' ? unite#get_status_string() :
         \ &filetype ==# 'vimshell' ? vimshell#get_status_string() :
-        \ ('' !=# LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
         \ ('' !=# l:fname ? l:fname : '[No Name]') .
-        \ ('' !=# LightLineModified() ? ' ' . LightLineModified() : '')
+        \ ('' !=# LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
 
-function! LightLineFileformat()
+function! LightlineFileformat()
   return winwidth(0) > 70 ? &fileformat : ''
 endfunction
 
-function! LightLineFiletype()
+function! LightlineFiletype()
   return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no filetype') : ''
 endfunction
 
-function! LightLineFileencoding()
+function! LightlineFileencoding()
   return winwidth(0) > 70 ? (strlen(&fileencoding) ? &fileencoding : &encoding) : ''
 endfunction
 
-function! LightLineMode()
+function! LightlineMode()
   let l:fname = expand('%:t')
 
   return l:fname ==# '__Tagbar__' ? 'Tagbar' :
@@ -113,18 +116,23 @@ function! LightLineMode()
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-function! ALELinterStatus()
+function! LightlineLinterWarnings()
   let l:counts = ale#statusline#Count(bufnr(''))
-  let l:non_error = l:counts.total - l:counts.error
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
 
-  return l:counts.total == 0 ? '' : printf(
-        \   '✗ %d ⚠ %d',
-        \   l:counts.error,
-        \   l:non_error
-        \ )
+  return l:counts.total == 0 ? '' : printf('⚠ %d', l:all_non_errors)
 endfunction
 
-function! CtrlPMark()
+function! LightlineLinterErrors()
+  let l:counts = ale#statusline#Count(bufnr(''))
+  let l:all_errors = l:counts.error + l:counts.style_error
+  let l:all_non_errors = l:counts.total - l:all_errors
+
+  return l:counts.total == 0 ? '' : printf('✗ %d', l:all_errors)
+endfunction
+
+function! LightlineCtrlPMark()
   if expand('%:t') =~# 'ControlP' && has_key(g:lightline, 'ctrlp_item')
     call lightline#link('iR'[g:lightline.ctrlp_regex])
     return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
@@ -158,7 +166,7 @@ endfunction
 
 let g:tagbar_status_func = 'TagbarStatusFunc'
 
-function! GetCharCode()
+function! LightlineGetCharCode()
   " Get the output of :ascii
   redir => l:ascii
   silent! ascii
