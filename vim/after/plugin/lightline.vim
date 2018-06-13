@@ -96,7 +96,7 @@ function! LightLineFiletype()
 endfunction
 
 function! LightLineFileencoding()
-  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+  return winwidth(0) > 70 ? (strlen(&fileencoding) ? &fileencoding : &encoding) : ''
 endfunction
 
 function! LightLineMode()
@@ -171,7 +171,7 @@ function! GetCharCode()
   " Zero pad hex values
   let l:nrformat = '0x%02x'
 
-  let l:encoding = (&fenc ==# '' ? &enc : &fenc)
+  let l:encoding = (&fileencoding ==# '' ? &encoding : &fileencoding)
 
   if l:encoding ==# 'utf-8'
     " Zero pad with 4 zeroes in unicode files
