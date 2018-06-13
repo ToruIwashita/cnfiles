@@ -54,7 +54,7 @@ function! GutentagsStatusLine()
 endfunction
 
 function! LightLineModified()
-  return &filetype =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+  return &filetype =~# 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
 
 function! LightLineReadonly()
@@ -76,15 +76,15 @@ endfunction
 function! LightLineFilename()
   let l:fname = expand('%:t')
 
-  return l:fname == 'ControlP' ? g:lightline.ctrlp_item :
-        \ l:fname == '__Tagbar__' ? g:lightline.fname :
-        \ l:fname =~ '__Gundo\|NERD_tree' ? '' :
-        \ &filetype == 'vimfiler' ? vimfiler#get_status_string() :
-        \ &filetype == 'unite' ? unite#get_status_string() :
-        \ &filetype == 'vimshell' ? vimshell#get_status_string() :
-        \ ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-        \ ('' != l:fname ? l:fname : '[No Name]') .
-        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+  return l:fname ==# 'ControlP' ? g:lightline.ctrlp_item :
+        \ l:fname ==# '__Tagbar__' ? g:lightline.fname :
+        \ l:fname =~# '__Gundo\|NERD_tree' ? '' :
+        \ &filetype ==# 'vimfiler' ? vimfiler#get_status_string() :
+        \ &filetype ==# 'unite' ? unite#get_status_string() :
+        \ &filetype ==# 'vimshell' ? vimshell#get_status_string() :
+        \ ('' !=# LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+        \ ('' !=# l:fname ? l:fname : '[No Name]') .
+        \ ('' !=# LightLineModified() ? ' ' . LightLineModified() : '')
 endfunction
 
 function! LightLineFileformat()
@@ -102,14 +102,14 @@ endfunction
 function! LightLineMode()
   let l:fname = expand('%:t')
 
-  return l:fname == '__Tagbar__' ? 'Tagbar' :
-        \ l:fname == 'ControlP' ? 'CtrlP' :
-        \ l:fname == '__Gundo__' ? 'Gundo' :
-        \ l:fname == '__Gundo_Preview' ? 'Gundo Preview' :
-        \ l:fname =~ 'NERD_tree' ? 'NERDTree' :
-        \ &filetype == 'unite' ? 'Unite' :
-        \ &filetype == 'vimfiler' ? 'VimFiler' :
-        \ &filetype == 'vimshell' ? 'VimShell' :
+  return l:fname ==# '__Tagbar__' ? 'Tagbar' :
+        \ l:fname ==# 'ControlP' ? 'CtrlP' :
+        \ l:fname ==# '__Gundo__' ? 'Gundo' :
+        \ l:fname ==# '__Gundo_Preview' ? 'Gundo Preview' :
+        \ l:fname =~# 'NERD_tree' ? 'NERDTree' :
+        \ &filetype ==# 'unite' ? 'Unite' :
+        \ &filetype ==# 'vimfiler' ? 'VimFiler' :
+        \ &filetype ==# 'vimshell' ? 'VimShell' :
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
@@ -125,7 +125,7 @@ function! ALELinterStatus() abort
 endfunction
 
 function! CtrlPMark()
-  if expand('%:t') =~ 'ControlP' && has_key(g:lightline, 'ctrlp_item')
+  if expand('%:t') =~# 'ControlP' && has_key(g:lightline, 'ctrlp_item')
     call lightline#link('iR'[g:lightline.ctrlp_regex])
     return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
           \ , g:lightline.ctrlp_next], 0)
@@ -171,9 +171,9 @@ function! GetCharCode()
   " Zero pad hex values
   let l:nrformat = '0x%02x'
 
-  let l:encoding = (&fenc == '' ? &enc : &fenc)
+  let l:encoding = (&fenc ==# '' ? &enc : &fenc)
 
-  if l:encoding == 'utf-8'
+  if l:encoding ==# 'utf-8'
     " Zero pad with 4 zeroes in unicode files
     let l:nrformat = '0x%04x'
   endif
