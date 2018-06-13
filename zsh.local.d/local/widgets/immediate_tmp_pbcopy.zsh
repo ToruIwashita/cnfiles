@@ -2,7 +2,7 @@
 _immediate-tmp-pbcopy() {
   local cmd
 
-  cmd="cat $MEMOLIST_TMP_FILE_PATH | sed -e 's/ *$//g' |  pbcopy"
+  cmd="cat $MEMOLIST_TMP_TEXT_FILE_PATH | sed -e 's/ *$//g' |  pbcopy"
 
   zle -I
   print -s $cmd && eval $cmd
