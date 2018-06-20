@@ -31,9 +31,6 @@ endfunction
 command! NimbleAnyjumpToNewTab call s:nimble_anyjump_to_new_tab()
 command! NimbleAnyjumpRangeToNewTab call s:nimble_anyjump_range_to_new_tab()
 
-" tag直接入力
-nnoremap <C-s>h :<C-u>tselect<SPACE>
-
 " カーソル直下の文字列でtagジャンプ
 nmap <C-s>l <Plug>(nimble-anyjump)
 noremap <C-s>L :<C-u>NimbleAnyjumpToNewTab<CR>
