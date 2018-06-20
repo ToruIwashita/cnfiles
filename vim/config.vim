@@ -98,8 +98,6 @@ noremap s <NOP>
 noremap S <NOP>
 " <ESC>
 noremap <C-j> <ESC>
-" ファイル再読込
-noremap <leader>r :<C-u>e!<CR>:<C-u>checktime<CR>
 " 現在のファイル名表示
 noremap <leader>v :<C-u>echo expand('%')<CR>
 " カーソル行が画面の上端に来るようにスクロール
