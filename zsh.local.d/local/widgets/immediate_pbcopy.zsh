@@ -8,7 +8,7 @@ _immediate-pbcopy() {
     return 0
   fi
 
-  cmd="cat ${args[$#args]} | sed -e 's/ *$//g' pbcopy"
+  cmd="cat ${args[$#args]} | sed -e 's/ *$//g' | pbcopy"
 
   zle -I
   print -s $cmd && eval $cmd
