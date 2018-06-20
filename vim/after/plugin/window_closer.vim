@@ -14,7 +14,7 @@ noremap <leader><C-p> :<C-u>CloseUpWin<CR>
 noremap <C-w><C-w> :<C-u>CloseMisWin<CR>
 
 " 現在のウィンドウで保存
-noremap <C-o> :<C-u>w<CR>
+noremap <C-o> :<C-u>w<CR>:<C-u>e!<CR>
 " 現在のウィンドウで保存して閉じる(最後のウィンドウでも閉じる)
 noremap <leader>w :<C-u>w<CR>:<C-u>CloseMisWin<CR>:<C-u>q<CR>
 " バッファ全てを保存
