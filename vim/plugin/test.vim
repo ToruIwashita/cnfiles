@@ -5,10 +5,10 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-function! s:test()
+function! test#test()
 endfunction
 
-command! Test call s:test()
+command! Test call test#test()
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
