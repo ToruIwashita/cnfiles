@@ -4,11 +4,11 @@ if exists('b:did_ftplugin')
 endif
 let b:did_ftplugin = 1
 
-let s:cpo_save = &cpo
-set cpo&vim
+let s:cpoptions_save = &cpoptions
+set cpoptions&vim
 
 ab <buffer> =c COUNT(1) AS count
 map! <buffer> =sql SELECT<ENTER>FROM<ENTER>WHERE (<ENTER>)<ESC>4ko  *<ESC>jA<SPACE>
 
-let &cpo = s:cpo_save
-unlet s:cpo_save
+let &cpoptions = s:cpoptions_save
+unlet s:cpoptions_save
