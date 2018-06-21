@@ -59,6 +59,7 @@ Plug 'ngmy/vim-rubocop'                                " vim-rubocop
 Plug 'kchmck/vim-coffee-script'                        " vim-coffee-script
 Plug 'hashivim/vim-terraform'                          " vim-terraform
 Plug 'chrisbra/vim-zsh'                                " vim-zsh
+Plug 'vim-jp/vim-go-extra'                             " extra vim plugin for go
 Plug 'ynkdir/vim-vimlparser'                           " vimlのパーサー(構文解析)
 Plug 'scrooloose/nerdtree'                             " ディレクトリツリーエクスプローラー
 Plug 'Xuyuanp/nerdtree-git-plugin'                     " NERDTreeにgit statusの結果を反映
@@ -93,7 +94,6 @@ Plug 'nathanaelkane/vim-indent-guides'                 " インデントガイ�
 Plug 'junegunn/vim-easy-align'                         " テキスト整形
 Plug 'ludovicchabant/vim-gutentags'                    " ctags自動生成
 Plug 'majutsushi/tagbar'                               " コード概要ビューア
-Plug 'vim-jp/vim-go-extra'                             " extra vim plugin for go
 Plug 'tmhedberg/matchit'                               " 対応する括弧などにジャンプする
 Plug 'jiangmiao/auto-pairs'                            " 自動で閉じ記号を付与
 Plug 'kshenoy/vim-signature'                           " マーカー表示
