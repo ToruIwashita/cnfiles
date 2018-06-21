@@ -5,6 +5,9 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
+" mdはテキストの最大幅無し
+setlocal textwidth=0
+
 function! s:add_md_space()
   execute 'mark Z'
 
