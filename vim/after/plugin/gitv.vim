@@ -9,6 +9,8 @@ set cpoptions&vim
 let g:Gitv_OpenHorizontal = 1
 " コミットメッセージが長い場合は隠す
 let g:Gitv_TruncateCommitSubjects = 1
+" Ctrlキーにキーマップさせない
+let g:Gitv_DoNotMapCtrlKey = 1
 
 nnoremap <C-g>v :<C-u>Gitv!<CR>
 nnoremap <C-g>l :<C-u>Gitv<CR>
