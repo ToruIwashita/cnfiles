@@ -22,7 +22,7 @@ if has('vim_starting')
     echo 'install vim-plug'
     call mkdir(expand(g:vim_dir_path.'/plugged/vim-plug'), 'p')
     call system('git clone git@github.com:junegunn/vim-plug.git '.expand(g:vim_dir_path.'/plugged/vim-plug/autoload'))
-  end
+  endif
 endif
 
 let g:plug_url_format = 'git@github.com:%s.git'
