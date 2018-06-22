@@ -14,7 +14,6 @@ alias pjango-r='pipenv run python manage.py runserver'
 # django-extentions
 alias pjango-sp='pipenv run python manage.py shell_plus --print-sql'
 alias pjango-su='pipenv run python manage.py show_urls'
-alias pjango-rp='pipenv run python manage.py runserver'
 # rails
 alias brails-s='RAILS_ENV=development bundle exec rails s -b 0.0.0.0 --port 3000'
 alias brails-c='RAILS_ENV=development bundle exec rails c'
