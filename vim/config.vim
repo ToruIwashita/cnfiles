@@ -37,7 +37,6 @@ set shiftwidth=2                      " オートインデント時の空白文�
 set tabstop=2                         " <TAB>を含むファイルを開いた際,<TAB>を何文字の空白に変換するか
 set softtabstop=2                     " キーボードで<TAB>を入力した際,<TAB>を何文字の空白に変換するか
 set number                            " 行数表示
-set cursorline                        " カーソル行可視化
 set incsearch                         " インクリメンタルサーチ
 set hlsearch                          " サーチ結果ハイライト
 set autoread                          " 外部で変更のあったファイルを自動的に読み直す
