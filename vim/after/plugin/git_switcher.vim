@@ -31,6 +31,7 @@ nnoremap <C-g>b :<C-u>GswBranch<CR>
 nnoremap <C-g><C-b> :<C-u>GswBranchRemote<CR>
 nnoremap <C-g>@ :<C-u>GswClearState
 nnoremap <C-g>D :<C-u>GswRemoveMergedBranches
+nnoremap <C-g>; :<C-u>GswDeleteSessionsIfBranchNotExists
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
