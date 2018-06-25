@@ -59,7 +59,7 @@ gclean-m() {
   git ls-files --modified && echo
 
   while :; do
-    print -n 'Clean the above files (y/n)? '
+    print -n 'Clean above files (y/n)? '
 
     read answer
     case "$answer" in
@@ -88,7 +88,7 @@ gclean-u() {
   git ls-files --exclude-standard --others && echo
 
   while :; do
-    print -n 'Clean the above files (y/n)? '
+    print -n 'Clean above files (y/n)? '
 
     read answer
     case "$answer" in
@@ -117,7 +117,7 @@ gclean() {
   git status --short && echo
 
   while :; do
-    print -n 'Clean the above files (y/n)? '
+    print -n 'Clean above files (y/n)? '
 
     read answer
     case "$answer" in
@@ -156,7 +156,7 @@ grecover-latest-remote() {
   current_branch=$(__git-ref-head)
 
   while :; do
-    print -n "Recover the latest of remote '$current_branch' branch (y/n)? "
+    print -n "Recover latest of remote '$current_branch' branch (y/n)? "
 
     read answer
     case "$answer" in
@@ -183,7 +183,7 @@ greset-hard-latest() {
   fi
 
   while :; do
-    print -n "Reset hard the latest '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
+    print -n "Reset hard latest '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
 
     read answer
     case "$answer" in
@@ -210,7 +210,7 @@ greset-mixed-latest() {
   fi
 
   while :; do
-    print -n "Reset mixed the latest '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
+    print -n "Reset mixed latest '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
 
     read answer
     case "$answer" in
@@ -237,7 +237,7 @@ greset-soft-latest() {
   fi
 
   while :; do
-    print -n "Reset soft the latest '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
+    print -n "Reset soft latest '$(git log --pretty=format:'[%h]%s' --max-count=1)' commit (y/n)? "
 
     read answer
     case "$answer" in
@@ -482,7 +482,7 @@ EOF`
     git pull origin $current_branch
   else
     while :; do
-      print -n "Rebase the '$current_branch' onto '$base_branch' (y/n)? "
+      print -n "Rebase '$current_branch' onto '$base_branch' (y/n)? "
 
       read answer
       case "$answer" in
@@ -736,7 +736,7 @@ EOF`
 
   for merged_branch in $merged_branches; do
     while :; do
-      print -n "Delete the '$merged_branch' branch (y/n)? "
+      print -n "Delete '$merged_branch' branch (y/n)? "
 
       read answer
       case "$answer" in
