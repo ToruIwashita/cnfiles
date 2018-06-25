@@ -20,6 +20,8 @@ nnoremap <leader>cu :<C-u>GCleanU<CR>
 
 nnoremap <C-g>B :<C-u>GllRebase
 
+nnoremap <C-g>L :<C-u>GRecoverLatestRemote
+
 nnoremap <C-g>H :<C-u>GResetHardLatest
 nnoremap <C-g>M :<C-u>GResetMixedLatest
 nnoremap <C-g>S :<C-u>GResetSoftLatest
