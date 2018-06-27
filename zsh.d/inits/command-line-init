@@ -61,6 +61,9 @@ function +vi-git-vcs-info-msg-setting() {
   modified_count=${"$(git ls-files --modified $relative_root_dir_path &>/dev/null | wc -l)"// /}
   untracked_count=${"$(git ls-files --exclude-standard --others $relative_root_dir_path &>/dev/null | wc -l)"// /}
 
+  # hook_com[misc]にはコンフリクト時などデフォルトで格納される文字列があるので,この時点で空文字にする
+  hook_com[misc]=''
+
   # hook_com[misc]は%mのフォーマット
   if [[ piled_unpushed_count -gt 0 ]]; then
     hook_com[misc]+="%f%F{magenta}P: $piled_unpushed_count%f|"
