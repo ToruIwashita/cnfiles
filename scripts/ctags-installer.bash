@@ -10,7 +10,6 @@ if [[ -f $LOCAL_BIN_DIR_PATH/ctags ]]; then
   mv $LOCAL_BIN_DIR_PATH/{ctags,ctags.prev}
 fi
 
-make clean
 ./autogen.sh
 ./configure                \
   --prefix=$LOCAL_DIR_PATH \

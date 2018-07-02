@@ -10,7 +10,6 @@ if [[ -f $LOCAL_BIN_DIR_PATH/tmux ]]; then
   mv $LOCAL_BIN_DIR_PATH/{tmux,tmux.prev}
 fi
 
-make clean
 ./autogen.sh
 ./configure --prefix=$LOCAL_DIR_PATH
 make && make install
