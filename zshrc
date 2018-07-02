@@ -78,6 +78,7 @@ done
 # antigenの存在をチェック
 if [[ ! -d $ADOTDIR ]]; then
   git clone git@github.com:zsh-users/antigen.git $ADOTDIR
+  touch $ADOTDIR/debug.log
 fi
 
 source $ADOTDIR/antigen.zsh
