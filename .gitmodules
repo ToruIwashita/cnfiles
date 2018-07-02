@@ -37,9 +37,6 @@
 [submodule "modules/jq"]
 	path = modules/jq
 	url = git@github.com:stedolan/jq.git
-[submodule "modules/graphviz"]
-	path = modules/graphviz
-	url = git@gitlab.com:graphviz/graphviz.git
 [submodule "modules/anyenv"]
 	path = modules/anyenv
 	url = git@github.com:riywo/anyenv.git
