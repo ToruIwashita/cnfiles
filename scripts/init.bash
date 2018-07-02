@@ -62,6 +62,14 @@ else
   mkdir $ANYENV_SRC_DIR_PATH/plugins
 fi
 
+# config
+if [[ -d $CONFIG_DIR_PATH ]]; then
+  printf "\e[32m~/.lint symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink $CONFIG_DIR_PATH dir\e[0m\n"
+  mkdir $CONFIG_DIR_PATH
+fi
+
 # cache dir
 if [[ -d $CACHE_DIR_PATH ]]; then
   printf "\e[32m$CACHE_DIR_PATH dir already exists\e[0m\n"
