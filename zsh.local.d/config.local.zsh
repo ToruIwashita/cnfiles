@@ -1,3 +1,6 @@
+## `python3 -m venv .venv`
+#chpwd_functions+='source-venv'
+
 ## alias
 # git
 alias gcs='git commit -m "- update submodules"'
