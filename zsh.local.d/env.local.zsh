@@ -60,6 +60,7 @@ if [[ -d $ANYENV_ROOT ]]; then
   eval "$(anyenv init -)"
 fi
 
+## go
 if [[ $(which go) =~ anyenv ]]; then
   export GOROOT=$(go env GOROOT)
   export GOPATH=$(go env GOPATH)
@@ -67,5 +68,18 @@ if [[ $(which go) =~ anyenv ]]; then
   path=(
     $GOPATH/bin
     $path
+  )
+fi
+
+## lua
+if [[ $(which lua) =~ anyenv ]]; then
+  local luajit_path luajit_prefix_dir
+
+  luajit_path=${1:-$(which luajit)}
+  luajit_prefix_dir=$ANYENV_ROOT/envs/luaenv/versions/$(luaenv version | sed -e 's/ .*$//g')
+
+  ld_library_path=(
+    $luajit_prefix_dir/lib
+    $ld_library_path
   )
 fi
