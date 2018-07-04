@@ -64,7 +64,7 @@ fi
 
 # config
 if [[ -d $CONFIG_DIR_PATH ]]; then
-  printf "\e[32m~/.lint symlink already exists\e[0m\n"
+  printf "\e[32m$CONFIG_DIR_PATH symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink $CONFIG_DIR_PATH dir\e[0m\n"
   mkdir $CONFIG_DIR_PATH
@@ -197,6 +197,14 @@ else
   ln -is $BASE_DIR_PATH/config/flake8 $CONFIG_DIR_PATH/flake8
 fi
 
+# eslint
+if [[ -L ~/.eslintrc.js ]]; then
+  printf "\e[32m~/.eslintrc.js symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.eslintrc.js\e[0m\n"
+  ln -is $BASE_DIR_PATH/eslintrc.js ~/.eslintrc.js
+fi
+
 # gitconfig
 if [[ -L ~/.gitconfig ]]; then
   printf "\e[32m~/.gitconfig symlink already exists\e[0m\n"
@@ -272,7 +280,7 @@ fi
 
 # memolist tmp file
 if [[ -f $MEMOLIST_TMP_TEXT_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TEXT_TMP_FILE_PATH file already exists\e[0m\n"
+  printf "\e[32m$MEMOLIST_TMP_TEXT_FILE_PATH file already exists\e[0m\n"
 else
   printf "\e[31mcreate file $MEMOLIST_TEXT_TMP_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TMP_TEXT_FILE_PATH
