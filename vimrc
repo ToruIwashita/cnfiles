@@ -57,6 +57,7 @@ Plug 'vim-ruby/vim-ruby'                               " vim-ruby
 Plug 'derekwyatt/vim-scala'                            " vim-scala
 Plug 'ngmy/vim-rubocop'                                " vim-rubocop
 Plug 'kchmck/vim-coffee-script'                        " vim-coffee-script
+Plug 'posva/vim-vue'                                   " vim-vue
 Plug 'hashivim/vim-terraform'                          " vim-terraform
 Plug 'chrisbra/vim-zsh'                                " vim-zsh
 Plug 'vim-jp/vim-go-extra'                             " extra vim plugin for go
