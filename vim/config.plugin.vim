@@ -29,12 +29,8 @@ let g:ale_linters = {
   \ 'shell':      ['shell'],
   \ 'vim':        ['vint'],
   \ 'javascript': ['eslint'],
-  \ 'vue':        ['eslint'],
-  \ 'css':        ['stylelint'],
-  \ 'html':       []
+  \ 'vue':        ['eslint']
 \ }
-" linterのalias
-let g:ale_linter_aliases = {'vue': 'css'}
 " fixer設定
 let g:ale_fixers = {
   \ 'ruby':   ['rubocop'],
