@@ -11,9 +11,11 @@ fi
 printf "npm: $(npm --version)\n"
 
 # install for global
+nodenv exec npm -g install vue-cli
 nodenv exec npm -g install jshint
 nodenv exec npm -g install lice
 
+nodenv exec npm update vue-cli
 nodenv exec npm update jshint
 nodenv exec npm update lice
 
