@@ -28,13 +28,17 @@ let g:ale_linters = {
   \ 'scala':      ['scalac'],
   \ 'shell':      ['shell'],
   \ 'vim':        ['vint'],
-  \ 'javascript': ['jshint'],
-  \ 'coffee':     ['coffeelint']
+  \ 'javascript': ['eslint'],
+  \ 'vue':        ['eslint'],
+  \ 'css':        ['stylelint'],
+  \ 'html':       []
 \ }
+" linterのalias
+let g:ale_linter_aliases = {'vue': 'css'}
 " fixer設定
 let g:ale_fixers = {
   \ 'ruby':   ['rubocop'],
-  \ 'python': ['autopep8'],
+  \ 'python': ['autopep8']
 \ }
 
 "" ctrlp(after/ にも設定あり)
