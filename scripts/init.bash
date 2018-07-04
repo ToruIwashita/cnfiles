@@ -198,19 +198,11 @@ else
 fi
 
 # eslint
-if [[ -L ~/.eslintrc ]]; then
-  printf "\e[32m~/.eslintrc symlink already exists\e[0m\n"
+if [[ -L ~/.eslintrc.json ]]; then
+  printf "\e[32m~/.eslintrc.json symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.eslintrc\e[0m\n"
-  ln -is $BASE_DIR_PATH/eslintrc ~/.eslintrc
-fi
-
-# stylelint
-if [[ -L ~/.stylelint ]]; then
-  printf "\e[32m~/.stylelint symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink ~/.stylelint\e[0m\n"
-  ln -is $BASE_DIR_PATH/stylelint ~/.stylelint
+  printf "\e[31mcreate symlink ~/.eslintrc.json\e[0m\n"
+  ln -is $BASE_DIR_PATH/eslintrc.json ~/.eslintrc.json
 fi
 
 # gitconfig
