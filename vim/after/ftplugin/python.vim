@@ -6,6 +6,7 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 ab <buffer> =i from IPython import embed; embed()
+ab <buffer> =p import pdb; pdb.set_trace()
 ab <buffer> =t @tag('current')
 ab <buffer> =d """<CR>
 ab <buffer> =% {%%<LEFT><SPACE><LEFT>
