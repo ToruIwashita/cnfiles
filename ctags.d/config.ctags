@@ -9,7 +9,7 @@
 --exclude=.git
 --exclude=log
 
---languages=ruby
+--languages=vim,ruby,python,scala
 
 --langdef=scala
 --langmap=scala:.scala
