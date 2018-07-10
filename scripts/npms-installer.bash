@@ -11,17 +11,14 @@ fi
 printf "npm: $(npm --version)\n"
 
 # install for global
-nodenv exec npm -g install vue-cli
-nodenv exec npm -g install eslint
-nodenv exec npm -g install eslint-plugin-vue
-nodenv exec npm -g install babel-eslint
-nodenv exec npm -g install lice
+nodenv exec npm install -g npm
+nodenv exec npm install -g vue-cli
+nodenv exec npm install -g eslint
+nodenv exec npm install -g eslint-plugin-vue
+nodenv exec npm install -g babel-eslint
+nodenv exec npm install -g lice
 
-nodenv exec npm update vue-cli
-nodenv exec npm update eslint
-nodenv exec npm update eslint-plugin-vue
-nodenv exec npm update babel-eslint
-nodenv exec npm update lice
+nodenv exec npm update -g
 
 printf "\ncomplete\n"
 exit 0
