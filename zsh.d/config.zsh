@@ -24,7 +24,7 @@ setopt listpacked           # 補完候補を詰めて表示
 setopt markdirs             # ファイル名の展開でディレクトリにマッチした場合末尾に"/"を付加
 setopt interactivecomments  # コマンドラインでも"#"以降をコメントと見なす
 setopt noautoremoveslash    # 最後のスラッシュを自動的に削除しない
-setopt histignorealldups    # 重複コマンド記録しない(古い行を消して新しい行を追加)
+setopt histignoredups       # 重複コマンド記録しない(古い行を消して新しい行を追加)
 setopt sharehistory         # コマンド履歴・共有
 setopt incappendhistory     # コマンド履歴・シェル横断実行時間順ヒストリ保存
 setopt extendedhistory      # コマンド履歴・コマンド実行時間保存
