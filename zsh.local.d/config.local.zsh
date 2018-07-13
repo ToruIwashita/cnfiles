@@ -14,7 +14,7 @@ alias pip-r='pipenv run'
 alias pjango-m='pipenv run python manage.py'
 alias pjango-s='pipenv run python manage.py shell'
 alias pjango-r='pipenv run python manage.py runserver'
-alias pjango-t='pipenv run python manage.py test'
+alias pjango-t='pipenv run python manage.py test --debug-mode'
 # django-extentions
 alias pjango-sp='pipenv run python manage.py shell_plus --print-sql'
 alias pjango-su='pipenv run python manage.py show_urls'
