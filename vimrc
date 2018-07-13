@@ -55,8 +55,10 @@ Plug 'kana/vim-niceblock'                              " ビジュアル選択�
 Plug 'terryma/vim-expand-region'                       " text-objectビジュアル選択
 Plug 'vim-ruby/vim-ruby'                               " vim-ruby
 Plug 'derekwyatt/vim-scala'                            " vim-scala
-Plug 'ngmy/vim-rubocop'                                " vim-rubocop
 Plug 'posva/vim-vue'                                   " vim-vue
+Plug 'digitaltoad/vim-pug'                             " vim-pug
+Plug 'wavded/vim-stylus'                               " vim-stylus
+Plug 'ngmy/vim-rubocop'                                " vim-rubocop
 Plug 'hashivim/vim-terraform'                          " vim-terraform
 Plug 'chrisbra/vim-zsh'                                " vim-zsh
 Plug 'vim-jp/vim-go-extra'                             " extra vim plugin for go
