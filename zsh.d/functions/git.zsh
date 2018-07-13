@@ -502,6 +502,20 @@ EOF`
   fi
 }
 
+gll-tags() {
+  local usage
+
+  usage="usage: $0"
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  print "Pull all tags\n"
+  git pull origin --tags
+}
+
 glls() {
   local usage
 
@@ -584,6 +598,35 @@ EOF`
   else
     git push origin $current_branch
   fi
+}
+
+gsh-tags() {
+  local usage
+
+  usage="usage: $0"
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  while :; do
+    print -n "Push all tags (y/n)? "
+
+    read answer
+    case "$answer" in
+      [yY])
+        git push origin --tags
+        break
+        ;;
+      [nN])
+        break
+        ;;
+      *)
+        print -n 'Please enter y or n. '
+        ;;
+    esac
+  done
 }
 
 grb() {
