@@ -29,7 +29,7 @@ set laststatus=2                      " ステータスライン常に表示
 set showtabline=2                     " タブライン常に表示
 set fileencoding=utf-8                " カレントバッファ内のファイルの文字UTF-8
 set updatetime=1000                   " スワップファイルの自動保存時間
-set redrawtime=10000                  " 画面を再描画するのにかける時間(syntax highlightはこの時間以上かかると無効になる)
+set redrawtime=20000                  " 画面を再描画するのにかける時間(syntax highlightはこの時間以上かかると無効になる)
 set visualbell                        " ビープ音をすべて視覚表示に置き換える
 set noerrorbells                      " エラーメッセージの表示時にビープ音を鳴らさない
 set expandtab                         " タブ文字の代わりに半角スペース
