@@ -23,11 +23,11 @@ nnoremap <C-g><C-c> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -v<CR>
 " empty commit
 nnoremap <C-g>e :<C-u>Gcommit --allow-empty -m '[empty commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
 " temporary commit
-nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>:<C-u>e!<CR>
-nnoremap <C-g><C-t> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>:<C-u>e!<CR>
+nnoremap <C-g>t :<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>:<C-u>e!<CR>:<C-u>syntax sync fromstart<CR>
+nnoremap <C-g><C-t> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>:<C-u>e!<CR>:<C-u>syntax sync fromstart<CR>
 " fixup commit
-nnoremap <C-g>f :<C-u>Gcommit --amend --no-edit<CR>:<C-u>e!<CR>
-nnoremap <C-g><C-f> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit --amend --no-edit<CR>:<C-u>e!<CR>
+nnoremap <C-g>f :<C-u>Gcommit --amend --no-edit<CR>:<C-u>e!<CR>:<C-u>syntax sync fromstart<CR>
+nnoremap <C-g><C-f> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit --amend --no-edit<CR>:<C-u>e!<CR>:<C-u>syntax sync fromstart<CR>
 " add
 nnoremap <C-g><C-a> :<C-u>w<CR>:<C-u>Gwrite<CR>
 
