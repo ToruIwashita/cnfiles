@@ -24,9 +24,6 @@ alias brails-c='RAILS_ENV=development bundle exec rails c'
 alias brails-r='RAILS_ENV=development bundle exec rails r'
 # railsに付随するツール
 alias bspork='bundle exec spork'
-# k8s
-alias watch-kube-cn="watch -c \"echo '# context'; kubectx; echo; echo '# namespace'; kubens\""
-alias watch-kube-pods="watch -c \"echo 'context: $(kubectl config current-context)'; echo; kubectl get pods\""
 ## localstack
 # alias localstack-s='DEBUG=true SERVICES=sqs DEFAULT_REGION=ap-northeast-1 HOSTNAME=localstack localstack start'
 ## rails routing
