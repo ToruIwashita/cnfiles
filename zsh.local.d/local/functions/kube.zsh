@@ -3,5 +3,5 @@ watch-kube-cn() {
 }
 
 watch-kube-pods() {
-  watch -c "echo 'context: $(kubectl config current-context)'; echo; kubectl get pods"
+  watch -c "echo '# context'; kubectl config current-context; echo; kubectl get pods"
 }
