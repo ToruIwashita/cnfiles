@@ -5,7 +5,7 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-noremap <C-x> :<C-u>TmuxCallPrevCommand<CR>
+noremap <C-x> :<C-u>w<CR>:<C-u>TmuxCallPrevCommand<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
