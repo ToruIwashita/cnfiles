@@ -12,6 +12,7 @@ printf "npm: $(npm --version)\n"
 
 # install for global
 nodenv exec npm install -g npm
+nodenv exec npm install -g nuxt
 nodenv exec npm install -g vue-cli
 nodenv exec npm install -g eslint
 nodenv exec npm install -g eslint-plugin-vue
