@@ -278,12 +278,20 @@ else
   touch $MEMOLIST_TMP_SQL_FILE_PATH
 fi
 
-# memolist tmp file
+# memolist tmp text file
 if [[ -f $MEMOLIST_TMP_TEXT_FILE_PATH ]]; then
   printf "\e[32m$MEMOLIST_TMP_TEXT_FILE_PATH file already exists\e[0m\n"
 else
   printf "\e[31mcreate file $MEMOLIST_TEXT_TMP_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TMP_TEXT_FILE_PATH
+fi
+
+# memolist tmp task file
+if [[ -f $MEMOLIST_TMP_TASK_FILE_PATH ]]; then
+  printf "\e[32m$MEMOLIST_TMP_TASK_FILE_PATH file already exists\e[0m\n"
+else
+  printf "\e[31mcreate file $MEMOLIST_TMP_TASK_FILE_PATH\e[0m\n"
+  touch $MEMOLIST_TMP_TASK_FILE_PATH
 fi
 
 printf "\ninit complete\n"
