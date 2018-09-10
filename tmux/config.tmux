@@ -43,6 +43,7 @@ unbind C-p
 unbind C-z
 unbind C-[
 unbind C-]
+unbind Space
 
 ## bind
 # detach
