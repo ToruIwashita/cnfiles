@@ -103,6 +103,8 @@ noremap <C-j> <ESC>
 noremap <leader>v :<C-u>echo expand('%')<CR>
 " シェルコマンドを実行するためのプレフィックス
 noremap <leader>: :<C-u>%!
+" カーソル行をシェルコマンドとして実行
+noremap <leader>z :<C-u>V:!bash<CR>
 " カーソル行が画面の上端に来るようにスクロール
 noremap <C-s>j zt
 noremap <C-s><C-j> zt
@@ -248,6 +250,8 @@ vnoremap <ESC> v_<ESC>
 " インクリメント,デクリメント
 vnoremap + <C-a>gv
 vnoremap - <C-x>gv
+" 選択行をシェルコマンドとして実行
+vnoremap <leader>z :!bash<CR>
 
 "" snoremap
 " <ESC>と<C-j>でノーマルモード
