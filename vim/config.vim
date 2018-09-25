@@ -101,6 +101,8 @@ noremap S <NOP>
 noremap <C-j> <ESC>
 " 現在のファイル名表示
 noremap <leader>v :<C-u>echo expand('%')<CR>
+" シェルコマンドを実行するためのプレフィックス
+noremap <leader>: :<C-u>%!
 " カーソル行が画面の上端に来るようにスクロール
 noremap <C-s>j zt
 noremap <C-s><C-j> zt
