@@ -329,7 +329,9 @@ mf() {
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd <table name>
+          [-a --id-asc <order by id asc>]
           [-c --primary-condition <highest priority condition>]
+          [-d --id-desc <order by id desc>]
           [-g --group-by <group condition>]
           [-h --help]
           [-l --limit <limit value>]
@@ -341,6 +343,10 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
+      -a | --id-asc)
+        order_condition=" ORDER BY id ASC"
+        shift 1
+        ;;
       -c | --primary-condition)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
           print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
@@ -348,6 +354,10 @@ EOF`
         fi
         priority_condition=" $2"
         shift 2
+        ;;
+      -d | --id-desc)
+        order_condition=" ORDER BY id DESC"
+        shift 1
         ;;
       -g | --group-by)
         if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then

@@ -5,7 +5,9 @@ __pg-table-names() {
 
 _pf() {
   _arguments \
+    '(-a --id-asc)'{-a,--id-asc}'[Order by id asc]' \
     '(-c --primary-condition)'{-c,--primary-condition}'[Highest priority condition]' \
+    '(-d --id-desc)'{-d,--id-desc}'[Order by id desc]' \
     '(-g --group-by)'{-g,--group-by}'[Group condition]' \
     '(-l --limit)'{-l,--limit}'[Limit value]' \
     '(-o --order-by)'{-o,--order-by}'[Order condition]' \
