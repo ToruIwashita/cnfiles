@@ -3,13 +3,17 @@ __my-table-names() {
   compadd $(__my-table-list)
 }
 
+__my-limits() {
+  compadd 1
+}
+
 _mf() {
   _arguments \
     '(-a --id-asc)'{-a,--id-asc}'[Order by id asc]' \
     '(-c --primary-condition)'{-c,--primary-condition}'[Highest priority condition]' \
     '(-d --id-desc)'{-d,--id-desc}'[Order by id desc]' \
     '(-g --group-by)'{-g,--group-by}'[Group condition]' \
-    '(-l --limit)'{-l,--limit}'[Limit value]' \
+    '(-l --limit)'{-l,--limit}'[Limit value]: :__my-limits' \
     '(-o --order-by)'{-o,--order-by}'[Order condition]' \
     '(-s --select)'{-s,--select}'[Select fields]' \
     '(-v --vertical)'{-v,--vertical}'[Vertical display]' \

@@ -3,13 +3,17 @@ __pg-table-names() {
   compadd $(__pg-table-list)
 }
 
+__pg-limits() {
+  compadd 1
+}
+
 _pf() {
   _arguments \
     '(-a --id-asc)'{-a,--id-asc}'[Order by id asc]' \
     '(-c --primary-condition)'{-c,--primary-condition}'[Highest priority condition]' \
     '(-d --id-desc)'{-d,--id-desc}'[Order by id desc]' \
     '(-g --group-by)'{-g,--group-by}'[Group condition]' \
-    '(-l --limit)'{-l,--limit}'[Limit value]' \
+    '(-l --limit)'{-l,--limit}'[Limit value]: :__pg-limits' \
     '(-o --order-by)'{-o,--order-by}'[Order condition]' \
     '(-s --select)'{-s,--select}'[Select fields]' \
     '(-v --vertical)'{-v,--vertical}'[Vertical display]' \
