@@ -210,6 +210,9 @@ nnoremap qqq? <ESC>q?
 " インクリメント,デクリメント
 nnoremap + <C-a>
 nnoremap - <C-x>
+" 検索対象になっている範囲で先頭・末尾にカーソルを移動
+nnoremap <silent> <leader>0 `<
+nnoremap <silent> <leader>$ `>
 
 "" inoremap
 " ノーマルモードに切り替え<ESC>
@@ -240,8 +243,6 @@ vnoremap <silent> k gk
 vnoremap <silent> gk k
 vnoremap <silent> $ g$
 vnoremap <silent> g$ $
-nnoremap <silent> <leader>0 `<
-nnoremap <silent> <leader>$ `>
 " ビジュアルモードのインデント後選択継続
 vnoremap < <gv
 vnoremap > >gv
