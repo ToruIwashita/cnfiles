@@ -251,6 +251,8 @@ vnoremap <ESC> v_<ESC>
 " インクリメント,デクリメント
 vnoremap + <C-a>gv
 vnoremap - <C-x>gv
+" 選択行数を表示する
+vnoremap <leader>c :<C-u>echo line("'>") - line("'<") + 1<CR>gv
 " 選択行をシェルコマンドとして実行
 vnoremap <leader>z :!bash<CR>
 
