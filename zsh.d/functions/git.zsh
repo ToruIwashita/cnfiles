@@ -161,6 +161,7 @@ grecover-latest-remote() {
     read answer
     case "$answer" in
       [yY])
+        git fetch
         git reset --hard origin/$current_branch
         break
         ;;
