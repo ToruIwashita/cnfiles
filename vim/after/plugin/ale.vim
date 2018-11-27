@@ -18,7 +18,6 @@ augroup local_ale
   autocmd!
   " lightline.vimに依存している
   " statuslineを更新するためにlightlineの関数を呼び出す
-  autocmd BufWritePre * ALEFix
   autocmd User ALELintPost call lightline#update()
 augroup END
 
