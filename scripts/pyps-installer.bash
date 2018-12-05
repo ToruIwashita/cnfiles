@@ -24,6 +24,7 @@ pyenv exec pip3 install -U vim-vint
 pyenv exec pip3 install -U flake8
 pyenv exec pip3 install -U autopep8
 pyenv exec pip3 install -U ipython
+pyenv exec pip3 install -U wheel
 
 echo
 pyenv rehash
