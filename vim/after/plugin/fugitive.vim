@@ -37,7 +37,7 @@ nnoremap <C-g><C-v> :<C-u>Gblame<CR>
 fun! s:fugitive_commit_setting() abort
   nnoremap <buffer> <C-g><C-c> <NOP>
   nnoremap <buffer> <C-g><C-t> <NOP>
-  nnoremap <buffer> <C-g>d :<C-u>Git diff <C-r>=matchstr(getline('.'), 'modified:\s*\zs.*\ze')<CR><CR>
+  nnoremap <buffer> <C-g>d :<C-u>Git diff <C-r>=matchstr(getline('.'), 'M \s*\zs.*\ze')<CR><CR>
 
   " タブで開く
   nmap <buffer> t O
@@ -65,7 +65,7 @@ endf
 
 augroup local_fugitive
   autocmd!
-  autocmd FileType gitcommit call s:fugitive_commit_setting()
+  autocmd FileType fugitive call s:fugitive_commit_setting()
   autocmd FileType fugitiveblame call s:fugitive_blame_setting()
 augroup END
 
