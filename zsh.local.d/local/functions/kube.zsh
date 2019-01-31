@@ -21,8 +21,13 @@ kube-pod-login() {
   local answer
   local pod_name container_name
 
+  if (( $# )); then
+    kubectx $1
+  fi
+
   while :; do
-    print "context: $(kubectl config current-context)"
+    echo
+    print "selected context: $(kubectl config current-context)"
 
     read answer
     case "$answer" in
@@ -33,6 +38,11 @@ kube-pod-login() {
   done
 
   pod_name=(${(f)"$(kubectl get pods --server-print=false | peco --select-1 2>/dev/null | cut -f 1 -d ' ')"})
+
+  if (( ! $#pod_name )); then
+    return
+  fi
+
   container_name=${pod_name%-*-*}
 
   print "login container: $container_name"
