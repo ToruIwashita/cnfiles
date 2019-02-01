@@ -27,7 +27,8 @@ kube-pod-login() {
 
   while :; do
     echo
-    print "selected context: $(kubectl config current-context)"
+    print "Selected context: $(kubectl config current-context)"
+    print -n 'Please Enter '
 
     read answer
     case "$answer" in
