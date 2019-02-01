@@ -18,8 +18,7 @@ show-k8s-tool-versions() {
 }
 
 kube-pod-login() {
-  local answer
-  local pod_name container_name
+  local answer pod_name container_name
 
   if (( $# )); then
     kubectx $1 >/dev/null 2>&1
