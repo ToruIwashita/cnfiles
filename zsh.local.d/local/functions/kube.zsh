@@ -37,7 +37,7 @@ kube-pod-login() {
     esac
   done
 
-  pod_name=(${(f)"$(kubectl get pods --server-print=false | peco --select-1 2>/dev/null | cut -f 1 -d ' ')"})
+  pod_name=(${(f)"$(kubectl get pods --server-print=false | tail -n +2 | peco --select-1 2>/dev/null | cut -f 1 -d ' ')"})
 
   if (( ! $#pod_name )); then
     return
