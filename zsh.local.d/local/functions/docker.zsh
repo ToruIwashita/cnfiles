@@ -5,7 +5,7 @@ watch-docker-ps() {
 docker-container-login() {
   local container_id container_name peco_resulting_line
 
-  peco_resulting_line=(${(f)"$(docker container ls | peco --select-1 2>/dev/null)"})
+  peco_resulting_line=(${(f)"$(docker container ls | tail -n +2 | peco --select-1 2>/dev/null)"})
 
   if (( ! $#peco_resulting_line )); then
     return
