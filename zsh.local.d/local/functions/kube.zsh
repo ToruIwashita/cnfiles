@@ -37,7 +37,7 @@ kube-pod-login() {
     esac
   done
 
-  pod_name=(${(f)"$(kubectl get pods --server-print=false | tail -n +2 | peco --select-1 2>/dev/null | cut -f 1 -d ' ')"})
+  pod_name=(${(f)"$(kubectl get pods --server-print=false | tail -n +2  | cut -f 1 -d ' ' | peco --select-1 2>/dev/null)"})
 
   if (( ! $#pod_name )); then
     return
@@ -45,8 +45,8 @@ kube-pod-login() {
 
   container_name=${pod_name%-*-*}
 
-  print "Login container: $container_name"
   echo
 
+  print "kubectl exec -it $pod_name --container $container_name sh"
   kubectl exec -it $pod_name --container $container_name sh
 }
