@@ -46,7 +46,7 @@ kube-pod-login() {
 
   container_name=${pod_name%-*-*}
 
-  print "login container: $container_name"
+  print "Login container: $container_name"
   echo
 
   kubectl exec -it $pod_name --container $container_name sh
