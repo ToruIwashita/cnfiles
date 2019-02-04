@@ -7,6 +7,10 @@ watch-kube-pods() {
   watch -c "echo '# context'; kubectl config current-context; echo; kubectl get pods --server-print=false"
 }
 
+watch-kube-pods-top() {
+  watch -c "echo '# context'; kubectl config current-context; echo; kubectl top pod"
+}
+
 show-k8s-tool-versions() {
   print '# kubectl'
   kubectl version
