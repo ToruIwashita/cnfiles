@@ -14,9 +14,6 @@ echo
 which pip3
 
 echo
-printf "install or update pyps using pyenv exec\n"
-
-echo
 pyenv exec pip3 install -U pipenv
 pyenv exec pip3 install -U django
 pyenv exec pip3 install -U awscli
