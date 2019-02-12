@@ -14,6 +14,12 @@ echo
 which gem
 
 echo
+printf "update gem using rbenv exec\n"
+
+echo
+rbenv exec gem update --system
+
+echo
 printf "install gems using rbenv exec\n"
 
 echo
@@ -35,7 +41,6 @@ echo
 printf "update gems using rbenv exec\n"
 
 echo
-rbenv exec gem update --system
 rbenv exec gem update
 
 echo
