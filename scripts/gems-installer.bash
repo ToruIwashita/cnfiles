@@ -35,19 +35,8 @@ echo
 printf "update gems using rbenv exec\n"
 
 echo
-rbenv exec gem update bundler
-rbenv exec gem update aws-sdk
-rbenv exec gem update rails
-rbenv exec gem update rspec
-rbenv exec gem update pry
-rbenv exec gem update pry-doc
-rbenv exec gem update pry-byebug
-rbenv exec gem update pry-remote
-rbenv exec gem update pry-stack_explorer
-rbenv exec gem update pry-rails
-rbenv exec gem update rubocop
-rbenv exec gem update rubocop-rspec
-rbenv exec gem update awesome_print
+rbenv exec gem update --system
+rbenv exec gem update
 
 echo
 rbenv rehash
