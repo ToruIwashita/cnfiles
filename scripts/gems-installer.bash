@@ -14,13 +14,7 @@ echo
 which gem
 
 echo
-printf "update gem using rbenv exec\n"
-
-echo
 rbenv exec gem update --system
-
-echo
-printf "install gems using rbenv exec\n"
 
 echo
 rbenv exec gem install bundler
@@ -36,9 +30,6 @@ rbenv exec gem install pry-rails
 rbenv exec gem install rubocop
 rbenv exec gem install rubocop-rspec
 rbenv exec gem install awesome_print
-
-echo
-printf "update gems using rbenv exec\n"
 
 echo
 rbenv exec gem update
