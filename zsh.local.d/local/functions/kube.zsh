@@ -47,7 +47,7 @@ kube-pod-login() {
     return
   fi
 
-  container_name=${pod_name%-*-*}
+  container_name=$(kubectl get pods $pod_name --output=json | jq -r '.spec.containers[].name' | peco --select-1 2>/dev/null)
 
   echo
 
