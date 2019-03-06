@@ -44,7 +44,7 @@ fun! s:fugitive_commit_setting() abort
   " リロード
   nmap <buffer> <leader>r r
   " 変更を取り消し
-  nmap <buffer> ! U
+  nmap <buffer> ! X
   " diff
   nmap <buffer> <C-g><C-d> D
   " add
