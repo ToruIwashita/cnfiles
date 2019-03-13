@@ -35,3 +35,7 @@ docker-container-attach() {
   print "docker attach $container_id"
   docker attach $container_id
 }
+
+docker-stop-all() {
+  docker stop $(docker ps -q)
+}
