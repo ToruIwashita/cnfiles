@@ -25,8 +25,9 @@ fun! s:delete_backward_line_after_specified_word() range
   silent! execute a:firstline.','.a:lastline.'s/^[^(]*'.l:input.'/\1/g'
 endf
 
-command! -range DeleteForwordLineAfterSpecifiedWord :<line1>,<line2>call s:delete_forword_line_after_specified_word()
-command! -range DeleteBackwardLineAfterSpecifiedWord :<line1>,<line2>call s:delete_backward_line_after_specified_word()
+command! -range DeleteForwordLineAfterSpecifiedWord :let pos = getpos('.') | <line1>,<line2>call s:delete_forword_line_after_specified_word() | call setpos('.', pos) | unlet pos
+command! -range DeleteBackwardLineAfterSpecifiedWord :let pos = getpos('.') | <line1>,<line2>call s:delete_backward_line_after_specified_word() | call setpos('.', pos) | unlet pos
+
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
