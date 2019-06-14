@@ -9,7 +9,7 @@ function! s:remove_tailing_space_range() range
   silent! execute a:firstline.','.a:lastline.'s/ *$//'
 endfunction
 
-command! -range RemoveTailingSpace :<line1>,<line2>call s:remove_tailing_space_range()
+command! -range RemoveTailingSpace :let pos = getpos('.') | <line1>,<line2>call s:remove_tailing_space_range() | call setpos('.', pos) | unlet pos
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
