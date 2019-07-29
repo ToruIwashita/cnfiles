@@ -56,11 +56,11 @@
 	<key>NSTableView Supports v2 KeyBingingTable</key>
 	<true/>
 	<key>NSWindow Frame NSFontPanel</key>
-	<string>777 571 445 77 0 0 1440 877 </string>
+	<string>1227 1893 445 77 -774 900 3008 1669 </string>
 	<key>NSWindow Frame SUUpdateAlert</key>
 	<string>410 363 620 392 0 0 1440 877 </string>
 	<key>NSWindow Frame SharedPreferences</key>
-	<string>281 244 918 514 0 0 1440 877 </string>
+	<string>191 1560 796 486 -774 900 3008 1669 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
 	<string>-774 900 3008 1669 -774 900 3008 1669 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
@@ -596,11 +596,11 @@
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>Menlo-Regular 18</string>
+			<string>Menlo-Regular 24</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>Menlo-Regular 18</string>
+			<string>Menlo-Regular 24</string>
 			<key>Option Key Sends</key>
 			<integer>0</integer>
 			<key>Prompt Before Closing 2</key>
@@ -721,7 +721,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2019-07-26T16:12:10Z</date>
+	<date>2019-07-29T13:30:27Z</date>
 	<key>SUSendProfileInfo</key>
 	<false/>
 	<key>SavePasteHistory</key>
