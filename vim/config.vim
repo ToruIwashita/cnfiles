@@ -21,6 +21,7 @@ syntax sync minlines=500 maxlines=1000  " シンタックスハイライトの�
 
 "" 通常オプション
 set t_Co=256                          " 256色モード
+set cursorline                        " カレント行にアンダーラインを引く
 set noshowmode                        " '-- INSERT --'等のモード表示を消す
 set textwidth=120                     " テキスト最大幅(colorcolumn用に設定)
 set colorcolumn=+1                    " テキスト最大幅の最右端+1列目を色付け
