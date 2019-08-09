@@ -29,14 +29,16 @@ let g:ale_linters = {
   \ 'shell':      ['shell'],
   \ 'vim':        ['vint'],
   \ 'javascript': ['eslint'],
-  \ 'vue':        ['eslint']
+  \ 'vue':        ['eslint'],
+  \ 'terraform':  ['terraform']
 \ }
 " fixer設定
 let g:ale_fixers = {
   \ 'ruby':       ['rubocop'],
   \ 'python':     ['autopep8'],
   \ 'javascript': ['eslint'],
-  \ 'vue':        ['eslint']
+  \ 'vue':        ['eslint'],
+  \ 'terraform':  ['terraform']
 \ }
 
 "" ctrlp(after/ にも設定あり)
