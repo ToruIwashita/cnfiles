@@ -42,6 +42,8 @@ let g:ale_fixers = {
   \ 'sql':        ['sqlfmt'],
   \ 'terraform':  ['terraform']
 \ }
+" fixerオプション
+let g:ale_sql_sqlfmt_options = '-u'
 
 "" ctrlp(after/ にも設定あり)
 let g:ctrlp_map = '<C-k>'                                 " Start CtrlP
