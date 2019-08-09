@@ -30,6 +30,7 @@ rbenv exec gem install pry-rails
 rbenv exec gem install rubocop
 rbenv exec gem install rubocop-rspec
 rbenv exec gem install awesome_print
+rbenv exec gem install sqlint
 
 echo
 rbenv exec gem update
