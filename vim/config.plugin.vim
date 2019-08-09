@@ -30,6 +30,7 @@ let g:ale_linters = {
   \ 'vim':        ['vint'],
   \ 'javascript': ['eslint'],
   \ 'vue':        ['eslint'],
+  \ 'sql':        ['sqlint'],
   \ 'terraform':  ['terraform']
 \ }
 " fixer設定
