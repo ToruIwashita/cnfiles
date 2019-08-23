@@ -12,8 +12,8 @@ let g:memolist_qfixgrep = 1
 
 nnoremap <leader>mn :<C-u>MemoNew<CR>
 nnoremap <leader>mg :<C-u>MemoGrep<CR>
-execute 'nnoremap <leader>mm :<C-u>tabe '.g:memolist_tmp_markdown_file_path.'<CR>'
-execute 'nnoremap <leader>mt :<C-u>tabe '.g:memolist_tmp_text_file_path.'<CR>'
+execute 'nnoremap <leader>mm :<C-u>e '.g:memolist_tmp_markdown_file_path.'<CR>'
+execute 'nnoremap <leader>mt :<C-u>e '.g:memolist_tmp_text_file_path.'<CR>'
 
 augroup local_memolist
   autocmd!
