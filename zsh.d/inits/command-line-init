@@ -94,10 +94,10 @@ function +vi-git-vcs-info-msg-setting() {
 # vcs_info
 zstyle ':vcs_info:*' enable git hg                                                  # git,hgを有効
 zstyle ':vcs_info:*' max-exports 2                                                  # ${vcs_info_msg_0_},${vcs_info_msg_1_}にメッセージをエクスポート
-zstyle ':vcs_info:*' formats '%s|* %F{green}%b%f'                                  # 通常時のフォーマット
-zstyle ':vcs_info:*' actionformats '%s|* %F{green}%b%f(%F{red}%a%f)'               # コンフリクト時など,アクションがある場合のフォーマット
-zstyle ':vcs_info:git:*' formats '%s|* %F{green}%b%f' '%m'                         # gitの通常時のフォーマット(引数1つ目vcs_info_msg_0_,2つ目vcs_info_msg_1_)
-zstyle ':vcs_info:git:*' actionformats '%s|* %F{green}%b%f(%F{red}%a%f)' '%m'      # gitのコンフリクト時など,アクションがある場合のフォーマット(引数1つ目vcs_info_msg_0_,2つ目vcs_info_msg_1_)
+zstyle ':vcs_info:*' formats '%s|* %F{green}%b%f'                                   # 通常時のフォーマット
+zstyle ':vcs_info:*' actionformats '%s|* %F{green}%b%f(%F{red}%a%f)'                # コンフリクト時など,アクションがある場合のフォーマット
+zstyle ':vcs_info:git:*' formats '%s|* %F{green}%b%f' '%m'                          # gitの通常時のフォーマット(引数1つ目vcs_info_msg_0_,2つ目vcs_info_msg_1_)
+zstyle ':vcs_info:git:*' actionformats '%s|* %F{green}%b%f(%F{red}%a%f)' '%m'       # gitのコンフリクト時など,アクションがある場合のフォーマット(引数1つ目vcs_info_msg_0_,2つ目vcs_info_msg_1_)
 zstyle ':vcs_info:git+set-message:*' hooks git-hook-begin git-vcs-info-msg-setting  # gitのファイル状態をhook_comに格納
 # chpwd
 zstyle ":chpwd:*" recent-dirs-max 100             # 最近利用したディレクトリ最大保存数
