@@ -7,7 +7,7 @@ set cpoptions&vim
 
 let g:WMGraphviz_output = 'png'
 
-nnoremap <C-s>v :<C-u>w<CR>:<C-u>GraphvizCompile<CR>:<C-u>GraphvizShow<CR><CR>:<C-u>redraw!<CR><CR>
+nnoremap <C-s>v :<C-u>w<CR>:<C-u>GraphvizCompile<CR>:<C-u>GraphvizShow<CR>:<C-u>redraw!<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
