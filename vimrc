@@ -46,7 +46,8 @@ Plug 'hotwatermorning/auto-git-diff'                   " git-rebase-todoでコ�
 Plug 'airblade/vim-gitgutter'                          " gitの差分を左端に表示
 Plug 'tyru/open-browser.vim'                           " URIをブラウザで開く
 Plug 'tyru/open-browser-github.vim'                    " githubをブラウザで開く
-Plug 'kannokanno/previm'                               " markdownなどのプレビュー用(open-browser依存)
+Plug 'kannokanno/previm'                               " markdownなどのプレビュー(open-browser依存)
+Plug 'weirongxu/plantuml-previewer.vim'                " PlantUMLのプレビュー(open-browser,plantuml-syntax依存)
 Plug 'rhysd/committia.vim'                             " コミットログ入力サポート
 Plug 'kana/vim-submode'                                " 連続入力などをサポートするサブモードを定義する
 Plug 'kana/vim-textobj-user'                           " 独自text-object定義
@@ -63,6 +64,7 @@ Plug 'ngmy/vim-rubocop'                                " vim-rubocop
 Plug 'hashivim/vim-terraform'                          " vim-terraform
 Plug 'chrisbra/vim-zsh'                                " vim-zsh
 Plug 'vim-jp/vim-go-extra'                             " extra vim plugin for go
+Plug 'aklt/plantuml-syntax'                            " PlantUMLのシンタックス
 Plug 'ynkdir/vim-vimlparser'                           " vimlのパーサー(構文解析)
 Plug 'scrooloose/nerdtree'                             " ディレクトリツリーエクスプローラー
 Plug 'Xuyuanp/nerdtree-git-plugin'                     " NERDTreeにgit statusの結果を反映
