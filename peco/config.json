@@ -11,6 +11,13 @@
             "peco.Finish"
         ]
     },
+    "Style": {
+        "Basic": ["on_default", "default"],
+        "SavedSelection": ["on_cyan", "black"],
+        "Selected": ["bold", "on_white", "black"],
+        "Query": ["white", "bold"],
+        "Matched": ["red", "on_yellow"]
+    },
     "Keymap": {
         "C-a": "peco.BeginningOfLine",
         "C-b": "peco.BackwardChar",
