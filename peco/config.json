@@ -13,8 +13,8 @@
     },
     "Style": {
         "Basic": ["on_default", "default"],
-        "SavedSelection": ["on_cyan", "black"],
-        "Selected": ["bold", "on_white", "black"],
+        "SavedSelection": ["bold", "on_white", "black"],
+        "Selected": ["on_cyan", "black"],
         "Query": ["white", "bold"],
         "Matched": ["red", "on_yellow"]
     },
