@@ -31,6 +31,7 @@ rbenv exec gem install rubocop
 rbenv exec gem install rubocop-rspec
 rbenv exec gem install awesome_print
 rbenv exec gem install sqlint
+rbenv exec gem install git-gsub
 
 echo
 rbenv exec gem update
