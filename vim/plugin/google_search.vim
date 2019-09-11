@@ -5,13 +5,18 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-function! s:google_search()
-    let l:line = line('.')
-    let l:col  = col('.')
-    let l:search_word = expand('<cword>')
+function! s:google_search(...)
+  let l:line = line('.')
+  let l:col  = col('.')
 
-    execute 'read !open https://www.google.co.jp/search\?q\='.l:search_word
-    execute 'call cursor('.line.','.col.')'
+  if a:0 >= 1
+    let l:search_word = a:1
+  else
+    let l:search_word = expand('<cword>')
+  endif
+
+  execute 'read !open https://www.google.co.jp/search\?q\='.l:search_word
+  execute 'call cursor('.line.','.col.')'
 endfunction
 
 function! s:google_search_range() range
@@ -34,8 +39,8 @@ function! s:google_search_range() range
   execute 'call cursor('.line.','.col.')'
 endfunction
 
-command GoogleSearch call s:google_search()
-command! -range GoogleSearchRange call s:google_search_range()
+command -nargs=? GoogleSearch call s:google_search(<f-args>)
+command -range GoogleSearchRange call s:google_search_range()
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save

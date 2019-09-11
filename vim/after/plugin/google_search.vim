@@ -6,6 +6,7 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 nnoremap <C-s>, :<C-u>GoogleSearch<CR>
+nnoremap <C-s>. :<C-u>GoogleSearch<SPACE>
 vnoremap <C-s>, :<C-u>GoogleSearchRange<CR>
 
 let &cpoptions = s:cpoptions_save
