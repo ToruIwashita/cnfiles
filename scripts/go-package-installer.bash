@@ -34,6 +34,8 @@ printf "go: $(go version)\n"
 echo
 echo 'go get github.com/jackc/sqlfmt/...'
 go get github.com/jackc/sqlfmt/...
+echo 'go get github.com/mattn/longcat'
+go get github.com/mattn/longcat
 
 echo
 printf "complete\n"
