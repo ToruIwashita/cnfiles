@@ -12,11 +12,11 @@ noremap <silent> <C-g>p :<C-u>GitGutterPrevHunk<CR>zz
 noremap <silent> <C-g><C-p> :<C-u>GitGutterPrevHunk<CR>zz
 
 " 変更を追加
-nmap <C-g>a <Plug>GitGutterStageHunk
+nmap <C-g>a <Plug>(GitGutterStageHunk)
 " 変更を取り消し
-nmap <C-g>u <Plug>GitGutterUndoHunk
+nmap <C-g>u <Plug>(GitGutterUndoHunk)
 " 変更のプレビュー
-nmap <C-g>d <Plug>GitGutterPreviewHunk
+nmap <C-g>d <Plug>(GitGutterPreviewHunk)
 
 " ファイル再読込
 noremap <leader>r :<C-u>checktime<CR>:<C-u>e!<CR>:<C-u>call gitgutter#all(1)<CR>:<C-u>syntax sync fromstart<CR>
