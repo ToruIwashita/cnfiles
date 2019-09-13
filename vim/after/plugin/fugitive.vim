@@ -7,7 +7,7 @@ set cpoptions&vim
 
 " <C-s>プレフィックス
 " status
-nnoremap <C-s><C-u> :<C-u>Gstatus<CR>
+nnoremap <C-s><C-u> :<C-u>G<CR>
 " diff
 nnoremap <C-s>u :<C-u>Git diff<CR>
 
