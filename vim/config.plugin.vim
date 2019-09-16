@@ -24,7 +24,7 @@ let g:ale_echo_msg_format = '[%linter%][%severity%] %s'  " statuslineメッセ�
 " linter設定
 let g:ale_linters = {
   \ 'ruby':       ['ruby'],
-  \ 'python':     ['flake8'],
+  \ 'python':     ['flake8', 'mypy'],
   \ 'scala':      ['scalac'],
   \ 'shell':      ['shell'],
   \ 'vim':        ['vint'],
