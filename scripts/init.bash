@@ -197,6 +197,14 @@ else
   ln -is $BASE_DIR_PATH/config/flake8 $CONFIG_DIR_PATH/flake8
 fi
 
+# black
+if [[ -L $CONFIG_DIR_PATH/black ]]; then
+  printf "\e[32m$CONFIG_DIR_PATH/black symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/black\e[0m\n"
+  ln -is $BASE_DIR_PATH/config/black $CONFIG_DIR_PATH/black
+fi
+
 # mypy
 if [[ -L $CONFIG_DIR_PATH/mypy ]]; then
   printf "\e[32m$CONFIG_DIR_PATH/mypy dir symlink already exists\e[0m\n"
