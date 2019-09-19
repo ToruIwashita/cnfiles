@@ -14,7 +14,8 @@ let g:memolist_dir_path = $MEMOLIST_DIR_PATH
 let g:memolist_tmp_markdown_file_path = $MEMOLIST_TMP_MARKDOWN_FILE_PATH
 let g:memolist_tmp_sql_file_path = $MEMOLIST_TMP_SQL_FILE_PATH
 let g:memolist_tmp_text_file_path = $MEMOLIST_TMP_TEXT_FILE_PATH
-let g:memolist_tmp_task_file_path = $MEMOLIST_TMP_TASK_FILE_PATH
+let g:memolist_tmp_uml_file_path = $MEMOLIST_TMP_UML_FILE_PATH
+let g:memolist_tmp_dot_file_path = $MEMOLIST_TMP_DOT_FILE_PATH
 
 " 起動時にvim-plugの存在チェック
 if has('vim_starting')
