@@ -71,6 +71,7 @@ bindkey -v '^ss' peco-ag-and-start-editor               # Ctrl+s,sでagで検索
 bindkey -v '^su' immediate-git-diff                     # Ctrl+s,Ctrl+dでgit diff
 bindkey -v '^s@' clear-screen                           # Ctrl+@でclear-screen
 bindkey -v '^s;' peco-cd-ghq-repo                       # Ctrl+s,;でghq管理下のリポジトリを絞り込んで移動
+bindkey -v '^s,' google-search                          # Ctrl+s,,でコマンドラインの文字列を使ったGoogle検索
 bindkey -v '^s^a' immediate-git-add-all                 # Ctrl+s,Ctrl+aでgit add .
 bindkey -v '^s^f' peco-file-finder                      # Ctrl+s,Ctrl+fでpeco-file-finder
 bindkey -v '^s^g' immediate-hub-browse-pull-request     # Ctrl+s,Ctrl+gでブランチ名からpull requestを開く
