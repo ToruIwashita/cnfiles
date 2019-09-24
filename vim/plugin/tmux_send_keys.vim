@@ -5,11 +5,11 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-fun! s:tmux_call_prev_command() abort
+fun! s:call_prev_command_on_tmux() abort
   call job_start('tmux send-keys -t ! C-p C-j')
 endf
 
-command! TmuxCallPrevCommand call s:tmux_call_prev_command()
+command! CallPrevCommandOnTmux call s:call_prev_command_on_tmux()
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
