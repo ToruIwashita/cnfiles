@@ -36,7 +36,7 @@ let g:ale_linters = {
 " fixer設定
 let g:ale_fixers = {
   \ 'ruby':       ['rubocop'],
-  \ 'python':     ['black'],
+  \ 'python':     ['black', 'isort'],
   \ 'javascript': ['eslint'],
   \ 'vue':        ['eslint'],
   \ 'sql':        ['sqlfmt'],
