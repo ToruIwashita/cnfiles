@@ -6,8 +6,6 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 function! s:markdown_texts_search(...)
-  cexpr system("ag 辞書 ~/markdown_texts/")
-
   if a:0 >= 1
     let l:search_word = a:1
   else
