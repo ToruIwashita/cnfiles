@@ -14,7 +14,6 @@ function! s:markdown_texts_search(...)
     let l:search_word = expand('<cword>')
   endif
 
-  tabnew
   cexpr system('ag '.l:search_word.' '.g:markdown_texts_dir_path)
   cwindow
 endfunction
@@ -33,7 +32,6 @@ function! s:markdown_texts_search_range() range
     let l:escaped_selected_range = l:selected_range
   endif
 
-  tabnew
   cexpr system('ag '.l:escaped_selected_range.' '.g:markdown_texts_dir_path)
   cwindow
 endfunction
