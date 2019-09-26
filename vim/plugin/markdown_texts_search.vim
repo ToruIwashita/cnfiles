@@ -15,7 +15,7 @@ function! s:markdown_texts_search(...)
   endif
 
   tabnew
-  cexpr system('ag '.l:search_word.' ~/markdown_texts/')
+  cexpr system('ag '.l:search_word.' '.g:markdown_texts_dir_path)
   cwindow
 endfunction
 
@@ -34,7 +34,7 @@ function! s:markdown_texts_search_range() range
   endif
 
   tabnew
-  cexpr system('ag '.l:escaped_selected_range.' ~/markdown_texts/')
+  cexpr system('ag '.l:escaped_selected_range.' '.g:markdown_texts_dir_path)
   cwindow
 endfunction
 
