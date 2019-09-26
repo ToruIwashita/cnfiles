@@ -16,7 +16,7 @@
         "SavedSelection": ["bold", "on_white", "black"],
         "Selected": ["on_cyan", "black"],
         "Query": ["white", "bold"],
-        "Matched": ["red", "on_yellow"]
+        "Matched": ["blue", "on_yellow"]
     },
     "Keymap": {
         "C-a": "peco.BeginningOfLine",

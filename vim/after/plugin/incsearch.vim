@@ -7,7 +7,7 @@ set cpoptions&vim
 
 "" 検索単語ハイライト
 hi Search ctermbg=Yellow
-hi Search ctermfg=Red
+hi Search ctermfg=Blue
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
