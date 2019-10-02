@@ -20,6 +20,8 @@ nnoremap <C-g>sp :<C-u>Git stash pop
 " commit
 nnoremap <C-g>c :<C-u>Gcommit -v<CR>
 nnoremap <C-g><C-c> :<C-u>w<CR>:<C-u>Gwrite<CR>:<C-u>Gcommit -v<CR>
+" commit amend
+nnoremap <C-g>w :<C-u>Gcommit --amend<CR>
 " empty commit
 nnoremap <C-g>e :<C-u>Gcommit --allow-empty -m '[empty commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
 " temporary commit
