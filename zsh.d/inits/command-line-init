@@ -66,9 +66,9 @@ function +vi-git-vcs-info-msg-setting() {
 
   # hook_com[misc]は%mのフォーマット
   if [[ piled_unpushed_count -gt 0 ]]; then
-    hook_com[misc]+="%f%F{magenta}P: $piled_unpushed_count%f|"
+    hook_com[misc]+="%f%F{magenta}C: $piled_unpushed_count%f|"
   else
-    hook_com[misc]+="P: $piled_unpushed_count|"
+    hook_com[misc]+="C: $piled_unpushed_count|"
   fi
 
   if [[ staged_count -gt 0 ]]; then
