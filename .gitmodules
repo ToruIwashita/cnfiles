@@ -43,9 +43,6 @@
 [submodule "modules/anyenv-update"]
 	path = modules/anyenv-update
 	url = git@github.com:znz/anyenv-update.git
-[submodule "modules/ghq"]
-	path = modules/ghq
-	url = git@github.com:motemen/ghq.git
 [submodule "modules/graphviz"]
 	path = modules/graphviz
 	url = git@gitlab.com:graphviz/graphviz.git
