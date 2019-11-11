@@ -57,8 +57,12 @@ if [[ -f peco ]]; then
   mv {peco,peco.prev}
 fi
 
-glide install
-go build cmd/peco/peco.go
+make build
+
+PECO_RELEASE_TARGET=peco_darwin_amd64
+
+# copy peco to top dir
+cp $PECO_GITHUB_DIR_PATH_IN_GOPATH/peco/releases/$PECO_RELEASE_TARGET/peco $LOCAL_BIN_DIR_PATH/peco
 
 if [[ -L $LOCAL_BIN_DIR_PATH/peco ]]; then
   printf "\n$LOCAL_BIN_DIR_PATH/peco symlink already exists\n"
