@@ -4,7 +4,7 @@ watch-kube-cn() {
 }
 
 watch-kube-pods() {
-  watch -c "echo '# context'; kubectl config current-context; echo; kubectl get pods --server-print=false"
+  watch -c "echo '# context'; kubectl config current-context; echo; kubectl get pods"
 }
 
 watch-kube-pods-top() {
