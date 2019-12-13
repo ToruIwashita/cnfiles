@@ -109,6 +109,7 @@ Plug 'Konfekt/FastFold'                                " 自動折畳
 Plug 'vim-scripts/AnsiEsc.vim'                         " ANSIカラー表示
 Plug 'yami-beta/vim-responsive-tabline'                " タブの横幅を調整
 Plug 'wannesm/wmgraphviz.vim'                          " graphviz
+Plug 'vim/killersheep'                                 " killersheep
 Plug 'ToruIwashita/tab-relocator.vim'                  " タブ移動補助
 Plug 'ToruIwashita/nimble-anyjump.vim'                 " タグジャンプ,ファイル名ジャンプ,URLジャンプ補助
 Plug 'ToruIwashita/window-closer.vim'                  " ウィンドウを閉じる動作の制御
