@@ -174,6 +174,8 @@ noremap <C-s><C-[> :<C-u>tprevious<CR>zz
 noremap <C-f> F
 " 逆再列ジャンプ
 noremap <C-_> ,
+" カーソル位置(選択範囲)情報の表示
+vnoremap <leader>c g<C-g>
 
 "" nnoremap
 " デフォルトのrecordingを無効化
@@ -251,8 +253,6 @@ vnoremap <ESC> v_<ESC>
 " インクリメント,デクリメント
 vnoremap + <C-a>gv
 vnoremap - <C-x>gv
-" 選択行数を表示する
-vnoremap <leader>c :<C-u>echo line("'>") - line("'<") + 1<CR>gv
 " 選択行をシェルコマンドとして実行
 vnoremap <leader>z :!bash<CR>
 
