@@ -38,6 +38,8 @@ echo 'go get -u github.com/mattn/longcat'
 go get -u github.com/mattn/longcat
 echo 'go get -u github.com/motemen/ghq'
 go get -u github.com/motemen/ghq
+echo 'go get -u github.com/skanehira/gtran'
+go get -u github.com/skanehira/gtran
 
 echo
 printf "complete\n"
