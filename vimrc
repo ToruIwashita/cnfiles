@@ -50,6 +50,7 @@ Plug 'tyru/open-browser-github.vim'                    " githubをブラウザ�
 Plug 'kannokanno/previm'                               " markdownなどのプレビュー(open-browser依存)
 Plug 'weirongxu/plantuml-previewer.vim'                " PlantUMLのプレビュー(open-browser,plantuml-syntax依存)
 Plug 'rhysd/committia.vim'                             " コミットログ入力サポート
+Plug 'rhysd/git-messenger.vim'                         " カーソル下のコミットメッセージを表示
 Plug 'kana/vim-submode'                                " 連続入力などをサポートするサブモードを定義する
 Plug 'kana/vim-textobj-user'                           " 独自text-object定義
 Plug 'kana/vim-textobj-line'                           " lineのtext-object(vim-textobj-user依存)
