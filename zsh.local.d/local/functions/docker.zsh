@@ -15,8 +15,8 @@ docker-container-login() {
 
   echo
 
-  print "docker exec -it $container_id sh"
-  docker exec -it $container_id sh
+  print "docker exec -it $container_id bash"
+  docker exec -it $container_id bash
 }
 
 docker-container-attach() {

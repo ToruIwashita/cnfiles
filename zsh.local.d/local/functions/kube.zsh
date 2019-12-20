@@ -51,6 +51,6 @@ kube-pod-login() {
 
   echo
 
-  print "kubectl exec -it $pod_name --container $container_name sh"
-  kubectl exec -it $pod_name --container $container_name sh
+  print "kubectl exec -it $pod_name --container $container_name bash"
+  kubectl exec -it $pod_name --container $container_name bash
 }
