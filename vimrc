@@ -86,7 +86,7 @@ Plug 'haya14busa/incsearch-easymotion.vim'             " vim-easymotionとincsea
 Plug 'haya14busa/vim-asterisk'                         " *の動作を拡張
 Plug 'haya14busa/vim-debugger'                         " vim script debugger
 Plug 'fuenor/qfixgrep'                                 " プレビュー&絞り込み検索付きgrep
-Plug 'skanehira/translate.vim'
+Plug 'skanehira/translate.vim'                         " Google翻訳
 Plug 'glidenote/memolist.vim'                          " メモ管理
 Plug 'kaneshin/ctrlp-memolist'                         " memolistをctrlpで絞り込む
 Plug 'tmux-plugins/vim-tmux'                           " vim-tmux
