@@ -22,7 +22,7 @@ show-k8s-tool-versions() {
 }
 
 kube-pod-login() {
-  local answer pod_name container_name
+  local answer pod_name container_name login_shell
 
   if (( $# )); then
     kubectx $1 >/dev/null 2>&1
@@ -49,8 +49,14 @@ kube-pod-login() {
 
   container_name=$(kubectl get pods $pod_name --output=json | jq -r '.spec.containers[].name' | peco --select-1 2>/dev/null)
 
+  if [[ $(kubectl exec -it $pod_name --container $container_name which bash 2>/dev/null) ]]; then
+    login_shell=bash
+  else
+    login_shell=sh
+  fi
+
   echo
 
-  print "kubectl exec -it $pod_name --container $container_name bash"
-  kubectl exec -it $pod_name --container $container_name bash
+  print "kubectl exec -it $pod_name --container $container_name $login_shell"
+  kubectl exec -it $pod_name --container $container_name $login_shell
 }
