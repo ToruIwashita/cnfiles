@@ -34,6 +34,12 @@ fun! s:create_sbt_tags() abort
   echo 'CreateSbtTags'
 endf
 
+fun! s:confrim_to_enable_creating_gutentags() abort
+  if confirm("enable gutentags?", "&Yes\n&No", 0) == 1
+    call s:gutentags_toggle()
+  endif
+endf
+
 command! GutentagsToggle call s:gutentags_toggle()
 command! CreateGutentags call s:create_gutentags()
 command! CreateTags call s:create_tags()
@@ -43,6 +49,11 @@ nnoremap <C-t> :<C-u>GutentagsToggle<CR>
 nnoremap <leader>cg :<C-u>CreateGutentags<CR>
 nnoremap <leader>ct :<C-u>CreateTags<CR>
 nnoremap <leader>cs :<C-u>CreateSbtTags<CR>
+
+augroup local_gutentags
+  autocmd!
+  autocmd VimEnter * nested if @% ==# '' | call s:confrim_to_enable_creating_gutentags() | endif
+augroup END
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
