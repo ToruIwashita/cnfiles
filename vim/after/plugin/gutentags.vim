@@ -35,7 +35,13 @@ fun! s:create_sbt_tags() abort
 endf
 
 fun! s:confrim_to_enable_creating_gutentags() abort
-  if confirm("enable gutentags?", "&Yes\n&No", 0) == 1
+  call system('bash -c "git rev-parse >/dev/null 2>&1"')
+
+  if v:shell_error
+    return 0
+  endif
+
+  if confirm('enable gutentags?', "&Yes\n&No", 0) == 1
     call s:gutentags_toggle()
   endif
 endf
