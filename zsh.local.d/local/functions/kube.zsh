@@ -1,6 +1,6 @@
 # kube
 watch-kube-cn() {
-  watch -c "echo '# context'; kubectx; echo; echo '# namespace'; kubens"
+  watch -c "echo '# context'; kubectl config current-context; echo; echo '# namespace'; kubens"
 }
 
 watch-kube-pods() {
@@ -25,7 +25,7 @@ kube-pod-login() {
   local answer pod_name container_name login_shell
 
   if (( $# )); then
-    kubectx $1 >/dev/null 2>&1
+    kubectl config use-context $1 >/dev/null 2>&1
   fi
 
   while :; do

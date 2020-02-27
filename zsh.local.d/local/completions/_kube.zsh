@@ -1,6 +1,6 @@
 ## gcloud
 _kube-contexts() {
-  compadd $(kubectx)
+  compadd $(kubectl config get-contexts --output=name)
 }
 
 compdef _kube-contexts kube-pod-login
