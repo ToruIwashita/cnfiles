@@ -1,6 +1,6 @@
 # kube
-watch-kube-cn() {
-  watch -c "echo '# context'; kubectl config current-context; echo; echo '# namespace'; kubens"
+watch-kube-contexts() {
+  watch -c 'kubectl config get-contexts'
 }
 
 watch-kube-pods() {
