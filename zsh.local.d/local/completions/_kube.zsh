@@ -4,3 +4,4 @@ _kube-contexts() {
 }
 
 compdef _kube-contexts kube-pod-login
+compdef _kube-contexts kube-use-context

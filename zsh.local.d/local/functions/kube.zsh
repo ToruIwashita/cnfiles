@@ -21,6 +21,10 @@ show-k8s-tool-versions() {
   helm version
 }
 
+kube-use-context() {
+  kubectl config use-context $1
+}
+
 kube-pod-login() {
   local answer pod_name container_name login_shell
 
