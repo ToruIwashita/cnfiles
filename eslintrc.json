@@ -1,6 +1,9 @@
 {
   "extends": ["eslint:recommended", "plugin:vue/recommended"],
   "plugins": ["vue"],
+  "parserOptions": {
+    "parser": "babel-eslint"
+  },
   "rules": {
     "semi": ["error", "always"],
     "semi-spacing": ["error", {"after": true, "before": false}],
