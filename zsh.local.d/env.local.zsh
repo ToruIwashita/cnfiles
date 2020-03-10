@@ -71,6 +71,11 @@ if [[ $(which go) =~ anyenv ]]; then
   )
 fi
 
+## node
+if [[ $(which node) =~ anyenv ]]; then
+  export NODE_PATH=$(npm root -g)
+fi
+
 ## lua
 if [[ $(which lua) =~ anyenv ]]; then
   local luajit_path luajit_prefix_dir
