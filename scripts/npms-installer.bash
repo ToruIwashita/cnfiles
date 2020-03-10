@@ -22,8 +22,11 @@ nodenv exec npm install -g nuxt
 nodenv exec npm install -g electron
 nodenv exec npm install -g vue-cli
 nodenv exec npm install -g eslint
+nodenv exec npm install -g prettier
 nodenv exec npm install -g babel-eslint
 nodenv exec npm install -g eslint-plugin-vue
+nodenv exec npm install -g eslint-plugin-prettier
+nodenv exec npm install -g eslint-config-prettier
 nodenv exec npm install -g lice
 
 echo
