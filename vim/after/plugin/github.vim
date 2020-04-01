@@ -5,6 +5,8 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
+unlet g:openbrowser_github_select_current_line
+
 fun! s:open_pull_request_from_sha() abort
   let l:sha = matchstr(getline('.'), '\(^\zs[0-9a-f]\{7,10\}\ze\|\[\zs[0-9a-f]\{7,10\}\ze\]$\)')
   let l:commit_message = split(system('\git log '.l:sha.'...master --merges --oneline --reverse --ancestry-path | \grep "Merge pull request #" | \head -n 1'), "\n")[0]
