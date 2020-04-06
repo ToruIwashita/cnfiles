@@ -25,7 +25,7 @@ USE_NODE_VERSION=${USE_NODE_VERSION:-$DEFAULT_NODE_VERSION}
 USE_SCALA_VERSION=${USE_SCALA_VERSION:-$DEFAULT_SCALA_VERSION}
 USE_SBT_VERSION=${USE_SBT_VERSION:-$DEFAULT_SBT_VERSION}
 
-eval "$(anyenv init -)"
+eval "$(anyenv init -)" || true
 
 printf "before versions:\n"
 echo
