@@ -122,7 +122,7 @@ gclean() {
     read answer
     case "$answer" in
       [yY])
-        git reset &>/dev/null && git checkout . && git clean -d -f &>/dev/null
+        git checkout . && git clean -d -f &>/dev/null
         break
         ;;
       [nN])
@@ -135,7 +135,7 @@ gclean() {
   done
 }
 
-gra() {
+greset-all() {
   if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     return 1
