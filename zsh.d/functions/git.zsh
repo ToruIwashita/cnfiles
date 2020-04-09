@@ -122,7 +122,7 @@ gclean() {
     read answer
     case "$answer" in
       [yY])
-        git reset &>/dev/null && git checkout . && git clean -f &>/dev/null
+        git reset &>/dev/null && git checkout . && git clean -d -f &>/dev/null
         break
         ;;
       [nN])
