@@ -59,7 +59,7 @@ bindkey -v '^w' backward-kill-word                      # Ctrl+wでbackward-kill
 bindkey -v '^y' push-input                              # Ctrl+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
 bindkey -v '^z' run-fg-last                             # Ctrl+zで最後にサスペンドしたjobに復帰する
 bindkey -v '^sf' peco-file-find-and-start-editor        # Ctrl+s,fでファイル検索してstart-editor
-bindkey -v '^sg' immediate-hub-browse                   # Ctrl+s,hでhub browse
+bindkey -v '^sg' immediate-hub-browse                   # Ctrl+s,gでhub browse
 bindkey -v '^sh' immediate-git-log-search               # Ctrl+s,hでgit log検索
 bindkey -v '^sj' vi-join                                # Ctrl+s,jでviのjoin
 bindkey -v '^sk' peco-cd-recent-dir                     # Ctrl+s,kで最近移動したディレクトリを絞り込んで移動
@@ -68,7 +68,8 @@ bindkey -v '^sn' immediate-git-fetch                    # Ctrl+s,nでgit fetch
 bindkey -v '^so' peco-cd-dir                            # Ctrl+s,oでディレクトリを絞り込んで移動
 bindkey -v '^sp' immediate-git-pull                     # Ctrl+s,pでgit pull
 bindkey -v '^ss' peco-ag-and-start-editor               # Ctrl+s,sでagで検索してstart-editorCtr+s
-bindkey -v '^su' immediate-git-diff                     # Ctrl+s,Ctrl+dでgit diff
+bindkey -v '^su' immediate-git-diff                     # Ctrl+s,uでgit diff
+bindkey -v '^sw' stash-restore-rprompt                  # Ctrl+s,wで退避したRPROMPTを復元
 bindkey -v '^s@' clear-screen                           # Ctrl+@でclear-screen
 bindkey -v '^s;' peco-cd-ghq-repo                       # Ctrl+s,;でghq管理下のリポジトリを絞り込んで移動
 bindkey -v '^s,' google-search                          # Ctrl+s,,でコマンドラインの文字列を使ったGoogle検索
@@ -82,6 +83,7 @@ bindkey -v '^s^p' copy-prev-shell-word                  # Ctrl+s,Ctrl+pで1つ�
 bindkey -v '^s^r' immediate-git-reset-all               # Ctrl+s,Ctrl+rでgit reset
 bindkey -v '^s^s' peco-git-grep-and-start-editor        # Ctrl+s,Ctrl+sでgit grepしてstart-editor
 bindkey -v '^s^u' immediate-git-status                  # Ctrl+s,Ctrl+uでgit status
+bindkey -v '^s^w' stash-save-rprompt                    # Ctrl+s,Ctrl+wでRPROMPTを退避
 bindkey -v '^s^z' run-fg-last-with-up-line-or-history   # Ctrl+s,Ctrl+zで履歴を逆上る+最後にサスペンドしたjobに復帰する
 bindkey -v '^s^]' vi-backward-word                      # Ctrl+s,Ctrl+]で前の単語の先頭に移動
 bindkey -v '^s^@' kill-line                             # Ctrl+s,Ctrl+@でカーソル行以降削除
