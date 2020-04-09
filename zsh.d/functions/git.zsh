@@ -93,7 +93,7 @@ gclean-u() {
     read answer
     case "$answer" in
       [yY])
-        git clean -f &>/dev/null
+        git clean -d -f &>/dev/null
         break
         ;;
       [nN])
