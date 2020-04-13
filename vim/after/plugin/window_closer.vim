@@ -15,7 +15,7 @@ noremap <C-w><C-w> :<C-u>CloseMisWin<CR>
 
 " ウィンドウの操作(似た設定がgitgutter.vimにもある)
 " 現在のウィンドウを閉じる(最後のウィンドウでも閉じる)
-noremap <leader>w :<C-u>silent! w<CR>:<C-u>CloseMisWin<CR>:<C-u>q<CR>
+noremap <leader>w :<C-u>silent! w<CR>:CloseMisWin<CR>:q<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save

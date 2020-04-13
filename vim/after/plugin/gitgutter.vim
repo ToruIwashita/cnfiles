@@ -19,15 +19,15 @@ nmap <C-g>u <Plug>(GitGutterUndoHunk)
 nmap <C-g>d <Plug>(GitGutterPreviewHunk)
 
 " ファイル再読込
-noremap <leader>r :<C-u>checktime<CR>:<C-u>e!<CR>:<C-u>call gitgutter#all(1)<CR>:<C-u>syntax sync fromstart<CR>
+noremap <leader>r :<C-u>checktime<CR>:e!<CR>:call gitgutter#all(1)<CR>:syntax sync fromstart<CR>
 
 " 保存に関する操作(似た設定がwindow_closer.vimにもある)
 " 現在のウィンドウで保存
-noremap <C-o> :<C-u>w<CR>:<C-u>syntax sync fromstart<CR>
+noremap <C-o> :<C-u>w<CR>:syntax sync fromstart<CR>
 " バッファ全てを保存(gitgutterの関数で変更点のマーカーを消す)
-noremap <leader>o :<C-u>wa<CR>:<C-u>redraw!<CR>:<C-u>call gitgutter#all(1)<CR>:<C-u>syntax sync fromstart<CR>
+noremap <leader>o :<C-u>wa<CR>:redraw!<CR>:call gitgutter#all(1)<CR>:syntax sync fromstart<CR>
 " バッファ全てを保存して全て閉じる
-noremap <leader>x :<C-u>wa<CR>:<C-u>qa<CR>
+noremap <leader>x :<C-u>wa<CR>:qa<CR>
 " 現在のタブを閉じる
 noremap <leader>e :<C-u>tabclose<CR>
 

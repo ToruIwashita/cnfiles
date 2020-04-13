@@ -11,8 +11,8 @@ nnoremap <C-g>i :<C-u>GAppendCurrentBranch<CR>
 nnoremap <C-g>h :<C-u>Gsh
 nnoremap <C-g><C-h> :<C-u>GshForce
 
-nnoremap <C-s><C-a> :<C-u>wa<CR>:<C-u>GAddAll<CR>:<C-u>e!<CR>:<C-U>checktime<CR>
-nnoremap <C-s><C-r> :<C-u>wa<CR>:<C-u>GResetAll<CR>:<C-u>e!<CR>:<C-U>checktime<CR>
+nnoremap <C-s><C-a> :<C-u>wa<CR>:GAddAll<CR>:e!<CR>:<C-U>checktime<CR>
+nnoremap <C-s><C-r> :<C-u>wa<CR>:GResetAll<CR>:e!<CR>:<C-U>checktime<CR>
 
 nnoremap <leader>ca :<C-u>GClean<CR>
 nnoremap <leader>cm :<C-u>GCleanM<CR>

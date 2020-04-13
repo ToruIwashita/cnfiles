@@ -5,8 +5,8 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-noremap <C-s>b :<C-u>wa<CR>:<C-u>PbcopyBuffer<CR>
-noremap <C-s><C-b> :<C-u>wa<CR>:<C-u>PbcopyBuffer<CR>
+noremap <C-s>b :<C-u>wa<CR>:PbcopyBuffer<CR>
+noremap <C-s><C-b> :<C-u>wa<CR>:PbcopyBuffer<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save

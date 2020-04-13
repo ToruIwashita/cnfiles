@@ -21,8 +21,8 @@ let g:ctrlsf_mapping = {
 \ }
 
 fun! s:ctrlsf_setting() abort
-  nnoremap <buffer> <C-s> :<C-u>call ctrlsf#JumpTo('split')<CR>:<C-u>CtrlSFOpen<CR><C-w><C-p>
-  nnoremap <buffer> <C-i> :<C-u>call ctrlsf#JumpTo('vsplit')<CR>:<C-u>CtrlSFOpen<CR><C-w><C-p>
+  nnoremap <buffer> <C-s> :<C-u>call ctrlsf#JumpTo('split')<CR>:CtrlSFOpen<CR><C-w><C-p>
+  nnoremap <buffer> <C-i> :<C-u>call ctrlsf#JumpTo('vsplit')<CR>:CtrlSFOpen<CR><C-w><C-p>
 endf
 
 fun! s:buffer_ctrlsf(keyword) abort
