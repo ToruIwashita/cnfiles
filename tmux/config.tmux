@@ -118,8 +118,6 @@ bind -T copy-mode-vi v send -X begin-selection
 bind -T copy-mode-vi C-j send -X clear-selection
 # ヤンク
 bind -T copy-mode-vi y send -X copy-selection
-# 1行ヤンク
-bind -T copy-mode-vi Y send -X copy-line
 # 逆f
 bind -T copy-mode-vi C-f command-prompt -1p '(jump backward)' 'send -X jump-backward "%%"'
 # 逆再jump
