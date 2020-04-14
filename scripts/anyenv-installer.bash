@@ -49,7 +49,7 @@ echo
 [[ ! $(which sbtenv) ]] && anyenv install sbtenv
 
 if [[ ! $(which ruby) =~ anyenv || ! $(rbenv versions | grep "[- ]$USE_RUBY_VERSION") ]]; then
-  CONFIGURE_OPTS='--enable-shared' rbenv install $USE_RUBY_VERSION
+  RUBY_CONFIGURE_OPTS='--enable-shared' rbenv install $USE_RUBY_VERSION
 fi
 
 [[ -f $RBENV_SHIMS ]] && rm $RBENV_SHIMS
