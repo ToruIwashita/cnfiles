@@ -39,7 +39,6 @@ nnoremap <C-g><C-v> :<C-u>Gblame<CR>
 fun! s:fugitive_commit_setting() abort
   nnoremap <buffer> <C-g><C-c> <NOP>
   nnoremap <buffer> <C-g><C-t> <NOP>
-  nnoremap <buffer> <C-g>d :<C-u>Git diff <C-r>=matchstr(getline('.'), 'M \s*\zs.*\ze')<CR><CR>
 
   " タブで開く
   nmap <buffer> t O
@@ -47,11 +46,15 @@ fun! s:fugitive_commit_setting() abort
   nmap <buffer> <leader>r r
   " 変更を取り消し
   nmap <buffer> ! X
+  " short diff toggle
+  nmap <buffer> o =
   " diff
   nmap <buffer> <C-g><C-d> D
   " add
+  nmap <buffer> a -
+  " add all
   nmap <silent><buffer> <C-s><C-a> :<C-u>wa<CR>:call system('\git add $(\git rev-parse --show-cdup).')<CR>r
-  " reset
+  " reset all
   nmap <silent><buffer> <C-s><C-r> :<C-u>wa<CR>:call system('\git reset')<CR>r
   " empty commit
   nnoremap <C-g>e :<C-u>Gcommit --alow-empty -m '[empty commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
