@@ -40,6 +40,8 @@ fun! s:fugitive_commit_setting() abort
   nnoremap <buffer> <C-g><C-c> <NOP>
   nnoremap <buffer> <C-g><C-t> <NOP>
 
+  " git status close
+  nmap <buffer> q gq
   " タブで開く
   nmap <buffer> t O
   " リロード
