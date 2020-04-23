@@ -22,7 +22,11 @@ show-k8s-tool-versions() {
 }
 
 kube-use-context() {
-  kubectl config use-context $1
+  if (( $# )); then
+    kubectl config use-context $1
+  else
+    kubectl config current-context
+  fi
 }
 
 kube-pod-login() {
