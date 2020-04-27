@@ -40,6 +40,9 @@ fun! s:fugitive_commit_setting() abort
   nnoremap <buffer> <C-g><C-c> <NOP>
   nnoremap <buffer> <C-g><C-t> <NOP>
 
+  " add
+  map <buffer> a -
+
   " git status close
   nmap <buffer> q gq
   " タブで開く
@@ -52,12 +55,11 @@ fun! s:fugitive_commit_setting() abort
   nmap <buffer> o =
   " diff
   nmap <buffer> <C-g><C-d> D
-  " add
-  nmap <buffer> a -
   " add all
   nmap <silent><buffer> <C-s><C-a> :<C-u>wa<CR>:call system('\git add $(\git rev-parse --show-cdup).')<CR>r
   " reset all
   nmap <silent><buffer> <C-s><C-r> :<C-u>wa<CR>:call system('\git reset')<CR>r
+
   " empty commit
   nnoremap <C-g>e :<C-u>Gcommit --alow-empty -m '[empty commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
   " temporary commit
