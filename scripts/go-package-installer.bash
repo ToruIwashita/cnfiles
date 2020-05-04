@@ -16,7 +16,7 @@ if [[ -d $GOPATH ]]; then
   printf "\e[32m$GOPATH dir already exists\e[0m\n"
 else
   printf "\e[31mmkdir $GOPATH\e[0m\n"
-  mkdir $GOPATH
+  mkdir -p $GOPATH
 fi
 
 # create $GOPATH/bin
@@ -24,7 +24,7 @@ if [[ -d $GOPATH/bin ]]; then
   printf "\e[32m$GOPATH/bin dir already exists\e[0m\n"
 else
   printf "\e[31mmkdir $GOPATH/bin\e[0m\n"
-  mkdir $GOPATH/bin
+  mkdir -p $GOPATH/bin
 fi
 
 export PATH="$PATH:$GOPATH/bin"
