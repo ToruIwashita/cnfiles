@@ -71,7 +71,8 @@ pyenv global $USE_PYTHON3_VERSION $USE_PYTHON2_VERSION
 pyenv rehash
 
 if [[ ! $(which lua) =~ anyenv || ! $(luaenv versions | grep "[- ]$USE_LUA_VERSION") ]]; then
-  CONFIGURE_OPTS='--enable-shared' luaenv install $USE_LUA_VERSION
+  # LuaJITのインストールはMacの10.15以上で失敗するためMACOSX_DEPLOYMENT_TARGETを指定
+  MACOSX_DEPLOYMENT_TARGET=10.14 CONFIGURE_OPTS='--enable-shared' luaenv install $USE_LUA_VERSION
 fi
 
 [[ -f $LUAENV_SHIMS ]] && rm $LUAENV_SHIMS
