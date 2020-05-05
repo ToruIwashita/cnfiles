@@ -5,7 +5,7 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-let g:WMGraphviz_output = 'png'
+let g:WMGraphviz_output = 'svg'
 
 nnoremap <C-s>v :<C-u>w<CR>:GraphvizCompile<CR>:GraphvizShow<CR>:redraw!<CR>
 
