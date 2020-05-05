@@ -7,9 +7,10 @@ set cpoptions&vim
 
 fun! s:toggle_line_number()
   if &number
-    sign unplace *
+    set scl=no
     set nonumber
   else
+    set scl=auto
     set number
   endif
 endf
