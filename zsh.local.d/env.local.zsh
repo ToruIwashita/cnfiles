@@ -9,10 +9,13 @@ readonly PGPORT=
 readonly PGUSER=
 readonly PGPASSWORD=
 
-# programming language env environment variable
+# anyenv
 export ANYENV_ROOT=~/.anyenv
-# programming language environment variable
+# sbt
 export SBT_HOME=~/.sbt
+# yarn
+export YARN_ROOT=~/.yarn
+export YARN_GLOBAL_NODE_MODULES_BIN_PATH=~/.config/yarn/global/node_modules/.bin
 # DB
 export MYSQL_DATABASE
 export PGDATABASE
@@ -35,6 +38,8 @@ export OWNED_GITHUB_REPOSITORIES=()
 path=(
   $LOCAL_DIR_PATH/bin
   $ANYENV_ROOT/bin
+  $YARN_ROOT/bin
+  $YARN_GLOBAL_NODE_MODULES_BIN_PATH
   # gitインストール時にbrewでインストールしたopensslを使用する
   # /usr/local/opt/openssl/bin
   /usr/local/bin
