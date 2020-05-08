@@ -19,8 +19,8 @@ nodenv exec npm update
 echo
 nodenv exec npm install -g npm
 nodenv exec npm install -g nuxt
-nodenv exec npm install -g electron
 nodenv exec npm install -g vue-cli
+nodenv exec npm install -g electron
 nodenv exec npm install -g eslint
 nodenv exec npm install -g prettier
 nodenv exec npm install -g babel-eslint
