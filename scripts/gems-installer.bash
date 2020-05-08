@@ -34,7 +34,7 @@ rbenv exec gem install sqlint
 rbenv exec gem install git-gsub
 
 echo
-rbenv exec gem update
+rbenv exec gem update bundler
 
 echo
 rbenv rehash
