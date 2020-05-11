@@ -21,6 +21,7 @@ rbenv exec gem install bundler
 rbenv exec gem install rails
 rbenv exec gem install aws-sdk
 rbenv exec gem install rspec
+rbenv exec gem install foreman
 rbenv exec gem install pry
 rbenv exec gem install pry-doc
 rbenv exec gem install pry-byebug
