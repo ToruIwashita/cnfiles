@@ -19,15 +19,15 @@ alias pjango-t='pipenv run python manage.py test --debug-mode'
 alias pjango-sp='pipenv run python manage.py shell_plus --print-sql'
 alias pjango-su='pipenv run python manage.py show_urls'
 # rails
-alias brails-s='RAILS_ENV=development bundle exec rails s -b 0.0.0.0 --port 3000'
-alias brails-c='RAILS_ENV=development bundle exec rails c'
-alias brails-r='RAILS_ENV=development bundle exec rails r'
+alias brails-s='rbenv exec bundle exec rails s -e development -b 0.0.0.0 --port 3000'
+alias brails-c='rbenv exec bundle exec rails c -e development'
+alias brails-r='rbenv exec bundle exec rails r -e development'
 # railsに付随するツール
-alias bspork='bundle exec spork'
+alias bspork='rbenv exec bundle exec spork'
 ## localstack
 # alias localstack-s='DEBUG=true SERVICES=sqs DEFAULT_REGION=ap-northeast-1 HOSTNAME=localstack localstack start'
 ## rails routing
-# alias output-routing='zsh -c "cd ~/works/${project}/; bundle exec rake routes >! ~/works/tmp/routing.txt"'
+# alias output-routing='zsh -c "cd ~/works/${project}/; rbenv exec bundle exec rake routes >! ~/works/tmp/routing.txt"'
 # alias archive-routing='[[ -f ~/works/tmp/routing.txt ]] && cp ~/works/tmp/{routing.txt,routing.prev.txt}'
 # alias vrouting='vim ~/works/tmp/routing.txt'
 # alias drouting='diff ~/works/tmp/routing.txt ~/works/tmp/routing.prev.txt'
