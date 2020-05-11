@@ -96,7 +96,7 @@ EOF`
   if (( ! no_binstub )) && [[ -f './bin/rspec' ]]; then
     cmd='./bin/rspec'
   else
-    cmd='bundle exec rspec'
+    cmd='rbenv exec bundle exec rspec'
   fi
 
   print $cmd
