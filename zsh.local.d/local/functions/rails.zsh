@@ -1,4 +1,4 @@
 brake-clear-cache() {
-  bundle exec rake assets:clean
-  bundle exec rake tmp:cache:clear
+  rbenv exec bundle exec rake assets:clean
+  rbenv exec bundle exec rake tmp:cache:clear
 }
