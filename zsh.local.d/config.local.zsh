@@ -27,7 +27,7 @@ alias brails-r='rbenv exec bundle exec rails r -e development'
 # railsに付随するツール
 alias bspork='rbenv exec bundle exec spork'
 ## rails routing
-# alias output-routing='zsh -c "cd ~/works/${project}/; rbenv exec bundle exec rake routes >! ~/works/tmp/routing.txt"'
+# alias output-routing='rbenv exec bundle exec rake routes >! ~/works/tmp/routing.txt'
 # alias archive-routing='[[ -f ~/works/tmp/routing.txt ]] && cp ~/works/tmp/{routing.txt,routing.prev.txt}'
 # alias vrouting='vim ~/works/tmp/routing.txt'
 # alias drouting='diff ~/works/tmp/routing.txt ~/works/tmp/routing.prev.txt'
