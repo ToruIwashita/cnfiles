@@ -24,6 +24,8 @@ alias brails-c='rbenv exec bundle exec rails c -e development'
 alias brails-r='rbenv exec bundle exec rails r -e development'
 # railsに付随するツール
 alias bspork='rbenv exec bundle exec spork'
+# foreman
+alias foreman-s='rbenv exec foreman start'
 ## localstack
 # alias localstack-s='DEBUG=true SERVICES=sqs DEFAULT_REGION=ap-northeast-1 HOSTNAME=localstack localstack start'
 ## rails routing
