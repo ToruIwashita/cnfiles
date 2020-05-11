@@ -18,16 +18,14 @@ alias pjango-t='pipenv run python manage.py test --debug-mode'
 # django-extentions
 alias pjango-sp='pipenv run python manage.py shell_plus --print-sql'
 alias pjango-su='pipenv run python manage.py show_urls'
+# foreman
+alias foreman-s='rbenv exec foreman start'
 # rails
 alias brails-s='rbenv exec bundle exec rails s -e development -b 0.0.0.0 --port 3000'
 alias brails-c='rbenv exec bundle exec rails c -e development'
 alias brails-r='rbenv exec bundle exec rails r -e development'
 # railsに付随するツール
 alias bspork='rbenv exec bundle exec spork'
-# foreman
-alias foreman-s='rbenv exec foreman start'
-## localstack
-# alias localstack-s='DEBUG=true SERVICES=sqs DEFAULT_REGION=ap-northeast-1 HOSTNAME=localstack localstack start'
 ## rails routing
 # alias output-routing='zsh -c "cd ~/works/${project}/; rbenv exec bundle exec rake routes >! ~/works/tmp/routing.txt"'
 # alias archive-routing='[[ -f ~/works/tmp/routing.txt ]] && cp ~/works/tmp/{routing.txt,routing.prev.txt}'
@@ -35,6 +33,8 @@ alias foreman-s='rbenv exec foreman start'
 # alias drouting='diff ~/works/tmp/routing.txt ~/works/tmp/routing.prev.txt'
 # alias output-vrouting='output-routing && vrouting'
 # alias output-drouting='output-routing && drouting'
+## localstack
+# alias localstack-s='DEBUG=true SERVICES=sqs DEFAULT_REGION=ap-northeast-1 HOSTNAME=localstack localstack start'
 
 ## for Mac(GNU系のコマンドはシンボリックリンクを貼り直すことを推奨するので以下コメントアウト)
 # bindkey
