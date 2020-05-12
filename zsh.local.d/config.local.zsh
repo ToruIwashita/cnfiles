@@ -21,13 +21,13 @@ alias pjango-su='pipenv run python manage.py show_urls'
 # bundle
 alias rbundle='rbenv exec bundle'
 # foreman
-alias foreman-s='rbenv exec foreman start'
+alias rforeman-s='rbenv exec foreman start'
 # rails
-alias brails-s='rbenv exec bundle exec rails s -e development -b 0.0.0.0 --port 3000'
-alias brails-c='rbenv exec bundle exec rails c -e development'
-alias brails-r='rbenv exec bundle exec rails r -e development'
+alias rbrails-s='rbenv exec bundle exec rails s -e development -b 0.0.0.0 --port 3000'
+alias rbrails-c='rbenv exec bundle exec rails c -e development'
+alias rbrails-r='rbenv exec bundle exec rails r -e development'
 # railsに付随するツール
-alias bspork='rbenv exec bundle exec spork'
+alias rbspork='rbenv exec bundle exec spork'
 ## rails routing
 # alias output-routing='rbenv exec bundle exec rake routes >! ~/works/tmp/routing.txt'
 # alias archive-routing='[[ -f ~/works/tmp/routing.txt ]] && cp ~/works/tmp/{routing.txt,routing.prev.txt}'
