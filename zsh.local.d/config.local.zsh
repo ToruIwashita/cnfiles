@@ -18,6 +18,8 @@ alias pjango-t='pipenv run python manage.py test --debug-mode'
 # django-extentions
 alias pjango-sp='pipenv run python manage.py shell_plus --print-sql'
 alias pjango-su='pipenv run python manage.py show_urls'
+# bundle
+alias rbundle='rbenv exec bundle'
 # foreman
 alias foreman-s='rbenv exec foreman start'
 # rails
