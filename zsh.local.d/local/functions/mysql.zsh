@@ -440,3 +440,11 @@ EOF`
   print "> $my_cmd;"
   myq "$my_cmd"
 }
+
+tailf-my-query-log () {
+  tail -f $LOG_DIR_PATH/mysql/query.log
+}
+
+tailf-my-slow-query-log () {
+  tail -f $LOG_DIR_PATH/mysql/slow_query.log
+}
