@@ -27,7 +27,7 @@ let g:quickrun_config['rspec/normal'] = extend(copy(s:rspec_quickrun_config), {
 
 let g:quickrun_config['rspec/bundle'] = extend(copy(s:rspec_quickrun_config), {
   \ 'type': 'rspec/bundle',
-  \ 'exec': 'time bundle exec %c %s%o --color --tty'
+  \ 'exec': 'time rbenv exec bundle exec %c %s%o --color --tty'
 \ })
 
 let g:quickrun_config['rspec/bin'] = extend(copy(s:rspec_quickrun_config), {
