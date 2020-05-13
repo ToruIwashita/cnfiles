@@ -7,10 +7,14 @@ BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 # OS info
 OS_INFO=darwin
 
-# local dir
+# src
 SRC_DIR_PATH=~/src
-LOCAL_DIR_PATH=~/local
+
+# config
 CONFIG_DIR_PATH=~/.config
+
+# local dir
+LOCAL_DIR_PATH=~/local
 LOCAL_BIN_DIR_PATH=$LOCAL_DIR_PATH/bin
 LOCAL_LIB_DIR_PATH=$LOCAL_DIR_PATH/lib
 LOCAL_INCLUDE_DIR_PATH=$LOCAL_DIR_PATH/include
@@ -41,6 +45,12 @@ CACHE_DIR_PATH=~/.cache
 # works
 WORKS_DIR_PATH=~/works
 TMP_DIR_PATH=$WORKS_DIR_PATH/tmp
+
+# log
+LOG_DIR_PATH=~/log
+MYSQL_LOG_DIR_PATH=$LOG_DIR_PATH/mysql
+MYSQL_GENERAL_LOG_FILE_PATH=$MYSQL_LOG_DIR_PATH/query.log
+MYSQL_SLOW_QUERY_LOG_FILE_PATH=$MYSQL_LOG_DIR_PATH/slow_query.log
 
 # memolist
 MEMOLIST_DIR_PATH=~/.memolist

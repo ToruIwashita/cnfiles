@@ -46,6 +46,22 @@ else
   mkdir $TMP_DIR_PATH
 fi
 
+# log dir
+if [[ -d $LOG_DIR_PATH ]]; then
+  printf "\e[32m$LOG_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $LOG_DIR_PATH\e[0m\n"
+  mkdir $LOG_DIR_PATH
+fi
+
+# mysql log dir
+if [[ -d $MYSQL_LOG_DIR_PATH ]]; then
+  printf "\e[32m$MYSQL_LOG_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $MYSQL_LOG_DIR_PATH\e[0m\n"
+  mkdir $MYSQL_LOG_DIR_PATH
+fi
+
 # zsh.d/local dir
 if [[ -d $BASE_DIR_PATH/zsh.d/local ]]; then
   printf "\e[32m$BASE_DIR_PATH/zsh.d/local dir already exists\e[0m\n"
@@ -101,6 +117,14 @@ if [[ -f $BASE_DIR_PATH/zsh.d/env.local.zsh ]]; then
 else
   printf "\e[31mcopy file $BASE_DIR_PATH/zsh.local.d/env.local.zsh to $BASE_DIR_PATH/zsh.d/env.local.zsh\e[0m\n"
   cp -p $BASE_DIR_PATH/zsh.local.d/env.local.zsh $BASE_DIR_PATH/zsh.d/env.local.zsh
+fi
+
+## copy my.cnf file
+if [[ -f $BASE_DIR_PATH/my.local.cnf ]]; then
+  printf "\e[32m$BASE_DIR_PATH/my.local.cnf file already exists\e[0m\n"
+else
+  printf "\e[31mcopy file $BASE_DIR_PATH/my.cnf to $BASE_DIR_PATH/my.local.cnf\e[0m\n"
+  cp -p $BASE_DIR_PATH/my.cnf $BASE_DIR_PATH/my.local.cnf
 fi
 
 ## create symlink
@@ -277,7 +301,31 @@ else
   ln -is $BASE_DIR_PATH/sbtrc ~/.sbtrc
 fi
 
+# my.cnf
+if [[ -L ~/.my.cnf ]]; then
+  printf "\e[32m~/.my.cnf symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.my.cnf\e[0m\n"
+  ln -is $BASE_DIR_PATH/my.local.cnf ~/.my.cnf
+fi
+
 ## create initial file
+# mysql general_log
+if [[ -f $MYSQL_GENERAL_LOG_FILE_PATH ]]; then
+  printf "\e[32m$MYSQL_GENERAL_LOG_FILE_PATH file already exists\e[0m\n"
+else
+  printf "\e[31mcreate file $MYSQL_GENERAL_LOG_FILE_PATH\e[0m\n"
+  touch $MYSQL_GENERAL_LOG_FILE_PATH
+fi
+
+# mysql slow_query
+if [[ -f $MYSQL_SLOW_QUERY_LOG_FILE_PATH ]]; then
+  printf "\e[32m$MYSQL_SLOW_QUERY_LOG_FILE_PATH file already exists\e[0m\n"
+else
+  printf "\e[31mcreate file $MYSQL_SLOW_QUERY_LOG_FILE_PATH\e[0m\n"
+  touch $MYSQL_SLOW_QUERY_LOG_FILE_PATH
+fi
+
 # memolist tmp markdown file
 if [[ -f $MEMOLIST_TMP_MARKDOWN_FILE_PATH ]]; then
   printf "\e[32m$MEMOLIST_TMP_MARKDOWN_FILE_PATH file already exists\e[0m\n"
