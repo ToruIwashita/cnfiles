@@ -297,3 +297,9 @@ augroup adjust_quickfix_window
   autocmd!
   autocmd BufEnter * hi ColorColumn ctermbg=235
 augroup END
+
+" gitcommitのtextwidth
+augroup gitcommit_textwidth
+  autocmd!
+  autocmd FileType gitcommit setlocal textwidth=88
+augroup END
