@@ -95,7 +95,6 @@ bindkey -v '^?' backward-delete-char                    # BSでbackward-delete-c
 alias cdz="cd $ZSH_DIR_PATH"
 alias cdv="cd $VIM_DIR_PATH"
 alias cdl="cd $LOCAL_DIR_PATH"
-alias cds="cd $SRC_DIR_PATH"
 alias cdw="cd $WORKS_DIR_PATH"
 alias cdt="cd $TMP_DIR_PATH"
 alias cdc="cd $CNFILES_DIR_PATH"

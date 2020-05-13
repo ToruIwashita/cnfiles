@@ -7,9 +7,6 @@ BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 # OS info
 OS_INFO=darwin
 
-# src
-SRC_DIR_PATH=~/src
-
 # config
 CONFIG_DIR_PATH=~/.config
 

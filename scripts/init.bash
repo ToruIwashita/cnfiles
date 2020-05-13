@@ -6,14 +6,6 @@ set -e
 $(cd $BASE_DIR_PATH;git submodule update --init)
 
 ## create base dir
-# source dir
-if [[ -d $SRC_DIR_PATH ]]; then
-  printf "\e[32m$SRC_DIR_PATH dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir $SRC_DIR_PATH\e[0m\n"
-  mkdir $SRC_DIR_PATH
-fi
-
 # local dir
 if [[ -d $LOCAL_DIR_PATH ]]; then
   printf "\e[32m$LOCAL_DIR_PATH dir already exists\e[0m\n"
