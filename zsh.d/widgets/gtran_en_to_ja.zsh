@@ -1,5 +1,6 @@
 ## gtran_en_to_ja
 _gtran-en-to-ja() {
+  print -s $BUFFER
   BUFFER="gtran '$BUFFER'"
   zle accept-line
 }
