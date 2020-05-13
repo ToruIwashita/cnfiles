@@ -1,10 +1,11 @@
 *.swp
-/zsh.d/antigen
+/zsh.d/antigen/
 /zsh.d/config.local.zsh
 /zsh.d/env.local.zsh
 /zsh.d/local/
-/vim/plugged/*
+/vim/plugged/
 /vim/config.local.vim
-/tmux/plugins/*
+/tmux/plugins/
+/my.local.cnf
 /.bundle
 /.tags
