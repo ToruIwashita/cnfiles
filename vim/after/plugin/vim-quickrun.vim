@@ -5,11 +5,12 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-" quickrunの実行モジュールをvimprocに設定
+" hook/running/enableはshabadou.vim依存
+" quickrunの実行モジュールをjobに設定
 let g:quickrun_config = {
   \ '_': {
-  \   'runner': 'vimproc',
-  \   'runner/vimproc/updatetime': 300,
+  \   'runner': 'job',
+  \   'runner/job/interval': 500,
   \   'hook/running/enable': 1
   \ }
 \ }
