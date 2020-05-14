@@ -301,5 +301,5 @@ augroup END
 " gitcommitのtextwidth
 augroup gitcommit_textwidth
   autocmd!
-  autocmd FileType gitcommit setlocal textwidth=88
+  autocmd FileType gitcommit setlocal textwidth=176
 augroup END
