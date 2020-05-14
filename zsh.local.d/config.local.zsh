@@ -18,18 +18,16 @@ alias pjango-t='pipenv run python manage.py test --debug-mode'
 # django-extentions
 alias pjango-sp='pipenv run python manage.py shell_plus --print-sql'
 alias pjango-su='pipenv run python manage.py show_urls'
-# bundle
-alias rbundle='rbenv exec bundle'
 # foreman
-alias rforeman-s='rbenv exec foreman start'
+alias foreman-s='foreman start'
 # rails
-alias rbrails-s='rbenv exec bundle exec rails s -e development -b 0.0.0.0 --port 3000'
-alias rbrails-c='rbenv exec bundle exec rails c -e development'
-alias rbrails-r='rbenv exec bundle exec rails r -e development'
+alias brails-s='bundle exec rails s -e development -b 0.0.0.0 --port 3000'
+alias brails-c='bundle exec rails c -e development'
+alias brails-r='bundle exec rails r -e development'
 # railsに付随するツール
-alias rbspork='rbenv exec bundle exec spork'
+alias bspork='bundle exec spork'
 ## rails routing
-# alias output-routing='rbenv exec bundle exec rake routes >! ~/works/tmp/routing.txt'
+# alias output-routing='bundle exec rake routes >! ~/works/tmp/routing.txt'
 # alias archive-routing='[[ -f ~/works/tmp/routing.txt ]] && cp ~/works/tmp/{routing.txt,routing.prev.txt}'
 # alias vrouting='vim ~/works/tmp/routing.txt'
 # alias drouting='diff ~/works/tmp/routing.txt ~/works/tmp/routing.prev.txt'

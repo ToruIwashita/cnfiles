@@ -15,7 +15,7 @@ function! s:rubocop_check() abort
     let g:vimrubocop_rubocop_cmd = 'bundle exec rubocop '
     let g:vimrubocop_config = l:config_file
   else
-    let g:vimrubocop_rubocop_cmd = 'rbenv exec rubocop '
+    let g:vimrubocop_rubocop_cmd = 'rubocop '
     let g:vimrubocop_config = l:config_file
   endif
   RuboCop
