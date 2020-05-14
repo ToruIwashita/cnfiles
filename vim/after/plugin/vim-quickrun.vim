@@ -74,10 +74,16 @@ fun! s:_types_of_rspec(...) abort
   return filter(['normal', 'bundle', 'bin'], 'v:val =~ "^'.fnameescape(a:1).'"')
 endf
 
+fun! s:close_quickrun_output() abort
+  execute ':bw! \[quickrun\ output\]'
+endf
+
 " 設定変更の用インターフェース
 command! -nargs=? -complete=customlist,s:_types_of_rspec SwitchRspecQuickrun call s:switch_rspec_quickrun(<q-args>)
 " quickrunの中断用インターフェース
 command! StopQuickrun call quickrun#sweep_sessions()
+" quickrun outputを閉じる
+command! CloseQuickrunOutput call s:close_quickrun_output()
 
 " quickrunの出力結果にAnsiEscを実行して色付けする
 augroup local_vim_quickrun
