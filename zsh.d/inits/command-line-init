@@ -31,7 +31,7 @@ zle -N edit-command-line                     # コマンドラインを$EDITOR�
 ## git hooks
 # git管理下のディレクトリのみフック関数を呼び出すようにする
 function +vi-git-hook-begin() {
-  if [[ $(command git rev-parse --is-inside-work-tree 2> /dev/null) != 'true' ]]; then
+  if [[ $(command git rev-parse --is-inside-work-tree 2>/dev/null) != 'true' ]]; then
     # 0以外を返すとそれ以降のフック関数は呼び出されない
     return 1
   fi
