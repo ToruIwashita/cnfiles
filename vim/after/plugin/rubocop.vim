@@ -11,13 +11,9 @@ function! s:rubocop_check() abort
     let l:config_file = '.rubocop.yml'
   endif
 
-  if filereadable('./config/environment.rb')
-    let g:vimrubocop_rubocop_cmd = 'bundle exec rubocop '
-    let g:vimrubocop_config = l:config_file
-  else
-    let g:vimrubocop_rubocop_cmd = 'rubocop '
-    let g:vimrubocop_config = l:config_file
-  endif
+  let g:vimrubocop_rubocop_cmd = 'rubocop '
+  let g:vimrubocop_config = l:config_file
+
   RuboCop
 endfunction
 
