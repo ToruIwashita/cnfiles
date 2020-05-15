@@ -24,18 +24,18 @@ endf
 
 " gutentags非依存だがctagsの生成なのでここに関数を作成
 fun! s:create_tags() abort
-  call job_start('bash -c "ctags >/dev/null 2>&1"')
+  call job_start('bash -c "ctags &>/dev/null"')
   echo 'CreateTags'
 endf
 
 " gutentags非依存だがctagsの生成なのでここに関数を作成
 fun! s:create_sbt_tags() abort
-  call job_start('bash -c "sbt gen-ctags >/dev/null 2>&1"')
+  call job_start('bash -c "sbt gen-ctags &>/dev/null"')
   echo 'CreateSbtTags'
 endf
 
 fun! s:confrim_to_enable_creating_gutentags() abort
-  call system('bash -c "git rev-parse >/dev/null 2>&1"')
+  call system('bash -c "git rev-parse &>/dev/null"')
 
   if v:shell_error
     return 0
