@@ -214,7 +214,7 @@ nnoremap qqq? <ESC>q?
 nnoremap + <C-a>
 nnoremap - <C-x>
 " 全てのテキストを選択
-nnoremap <leader>s <ESC>ggVG
+nnoremap <leader>k <ESC>ggVG
 
 "" inoremap
 " ノーマルモードに切り替え<ESC>
