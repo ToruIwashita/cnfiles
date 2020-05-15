@@ -33,7 +33,7 @@ kube-pod-login() {
   local answer pod_name container_name login_shell
 
   if (( $# )); then
-    kubectl config use-context $1 >/dev/null 2>&1
+    kubectl config use-context $1 &>/dev/null
   fi
 
   while :; do
