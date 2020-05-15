@@ -44,7 +44,8 @@ let g:ale_fixers = {
 \ }
 " fixerオプション
 let g:ale_sql_sqlfmt_options = '-u'
-let g:ale_python_black_options = '--config ~/.config/black'
+let g:ale_ruby_rubocop_options = '--config '.g:lint_dir_path.'/rubocop.yml'
+let g:ale_python_black_options = '--config '.g:config_dir_path.'/black'
 
 "" ctrlp(after/ にも設定あり)
 let g:ctrlp_map = '<C-k>'                                 " Start CtrlP
