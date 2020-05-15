@@ -5,9 +5,10 @@ scriptencoding utf-8
 "" 初期設定
 let g:vim_dir_path = $VIM_DIR_PATH
 let g:home_dir_path = $HOME
-let g:cache_dir_path = $CACHE_DIR_PATH
-let g:lint_dir_path = $LINT_DIR_PATH
 let g:local_dir_path = $LOCAL_DIR_PATH
+let g:config_dir_path = $CONFIG_DIR_PATH
+let g:lint_dir_path = $LINT_DIR_PATH
+let g:cache_dir_path = $CACHE_DIR_PATH
 let g:markdown_texts_dir_path = $MARKDOWN_TEXTS_DIR_PATH
 let g:markdown_texts_modeling_session_file_path = $MARKDOWN_TEXTS_MODELING_SESSION_FILE_PATH
 let g:memolist_dir_path = $MEMOLIST_DIR_PATH
