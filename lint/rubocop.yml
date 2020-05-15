@@ -1,5 +1,5 @@
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.6
   Exclude:
     - 'vendor/**/*'
     - 'spec/fixtures/**/*'
@@ -7,8 +7,6 @@ AllCops:
 Style/Encoding:
   Enabled: false
 
-Metrics/LineLength:
+Layout/LineLength:
   Enabled: false
-
-LineLength:
-  Max: 120
+  Max: 176
