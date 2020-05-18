@@ -8,5 +8,4 @@ Style/Encoding:
   Enabled: false
 
 Layout/LineLength:
-  Enabled: false
-  Max: 176
+  Max: 160
