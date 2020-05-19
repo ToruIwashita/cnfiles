@@ -4,8 +4,5 @@ AllCops:
     - 'vendor/**/*'
     - 'spec/fixtures/**/*'
 
-Style/Encoding:
-  Enabled: false
-
 Layout/LineLength:
   Max: 160
