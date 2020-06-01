@@ -121,13 +121,6 @@ fi
 
 ## create symlink
 # zsh
-if [[ -L ~/.zlogin ]]; then
-  printf "\e[32m~/.zlogin symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink ~/.zlogin\e[0m\n"
-  ln -is $BASE_DIR_PATH/zlogin ~/.zlogin
-fi
-
 if [[ -L ~/.zshrc ]]; then
   printf "\e[32m~/.zshrc symlink already exists\e[0m\n"
 else
