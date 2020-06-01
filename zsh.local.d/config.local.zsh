@@ -1,3 +1,6 @@
+## ssh-agent
+# ssh-add ~/.ssh/id_rsa
+
 ## `python3 -m venv .venv`
 #chpwd_functions+='source-venv'
 
