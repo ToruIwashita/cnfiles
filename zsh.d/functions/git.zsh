@@ -519,6 +519,7 @@ gll-tags() {
 
 glls() {
   local usage
+  local remote_head_branch
 
   usage="usage: $0"
   if ! __git-inside-work-tree; then
@@ -527,10 +528,12 @@ glls() {
     return 1
   fi
 
-  print "Submodules update & pull master\n"
+  remote_head_branch=${(R)$(git symbolic-ref --short refs/remotes/origin/HEAD)#*/}
+
+  print "Submodules update & pull $remote_head_branch\n"
   git submodule update --init
   echo
-  git submodule foreach 'git checkout master && git pull origin master && echo'
+  git submodule foreach "git checkout $remote_head_branch && git pull origin $remote_head_branch && echo"
 }
 
 gsh() {
