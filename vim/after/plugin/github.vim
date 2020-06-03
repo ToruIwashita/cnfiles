@@ -8,8 +8,9 @@ set cpoptions&vim
 unlet g:openbrowser_github_select_current_line
 
 fun! s:open_pull_request_from_sha() abort
+  let l:default_branch = split(system('\git symbolic-ref --short refs/remotes/origin/HEAD'), "\n")[0]
   let l:sha = matchstr(getline('.'), '\(^\zs[0-9a-f]\{7,10\}\ze\|\[\zs[0-9a-f]\{7,10\}\ze\]$\)')
-  let l:commit_message = split(system('\git log '.l:sha.'...master --merges --oneline --reverse --ancestry-path | \grep "Merge pull request #" | \head -n 1'), "\n")[0]
+  let l:commit_message = split(system('\git log '.l:sha.'...'.l:default_branch.' --merges --oneline --reverse --ancestry-path | \grep "Merge pull request #" | \head -n 1'), "\n")[0]
   let l:pull_request_id = matchstr(split(l:commit_message, ' ')[4], '#\zs\(.*\)\ze', 0)
 
   exec 'OpenGithubPullReq '.l:pull_request_id
