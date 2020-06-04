@@ -1,4 +1,4 @@
-## find&grep関数
+## find&grep
 findg() {
   if (( $# < 2 )); then
     print 'lack of arguments.' 1>&2

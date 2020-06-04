@@ -1,4 +1,4 @@
-## ctags関連関数
+## ctags
 create-tags() {
   ctags
 }

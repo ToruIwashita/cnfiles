@@ -1,4 +1,4 @@
-## antigen関連
+## antigen
 ez() {
   antigen reset
   exec $SHELL -l

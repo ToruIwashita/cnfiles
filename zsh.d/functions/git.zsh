@@ -1,4 +1,4 @@
-## git関連関数
+## git
 gchanged-files() {
   __git-changed-list | tr ' ' '\n'
 }

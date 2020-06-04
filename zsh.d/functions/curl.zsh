@@ -1,4 +1,4 @@
-## curl関連
+## curl
 cl() {
   local -a args options
   local self_cmd help usage

@@ -1,4 +1,4 @@
-## markdown関連関数
+## markdown
 pm() {
   if (( ! $# )); then
     print 'lack of arguments.' 2>&1

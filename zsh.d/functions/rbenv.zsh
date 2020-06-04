@@ -1,4 +1,4 @@
-## rbenv関連関数
+## rbenv
 rbsw() {
   rbenv global $1
   rbenv rehash

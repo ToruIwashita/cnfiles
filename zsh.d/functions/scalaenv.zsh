@@ -1,4 +1,4 @@
-## scalaenv関連関数
+## scalaenv
 scalasw() {
   scalaenv global $1
   scalaenv rehash
