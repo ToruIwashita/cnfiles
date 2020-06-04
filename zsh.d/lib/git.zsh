@@ -1,4 +1,4 @@
-## git関連関数
+## git
 __git-ref-head() {
   local ref
   ref=$(git rev-parse --abbrev-ref HEAD 2>/dev/null) || return 1
