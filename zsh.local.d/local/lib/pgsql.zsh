@@ -1,4 +1,4 @@
-## pgsql関連関数
+## pgsql
 __pg-check-args() {
   if (( ! $# )); then
     print 'lack of arguments.' 2>&1

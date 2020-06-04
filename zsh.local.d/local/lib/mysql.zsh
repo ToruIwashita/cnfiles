@@ -1,4 +1,4 @@
-## mysql関連関数
+## mysql
 __my-check-args() {
   __check-presence-of-args $*
   (( $? )) && return 1
