@@ -1,4 +1,4 @@
-## pgsql関数用補完
+## pgsql
 __pg-table-names() {
   compadd $(__pg-table-list)
 }

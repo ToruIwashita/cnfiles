@@ -1,4 +1,4 @@
-## mysql関数用補完
+## mysql
 __my-table-names() {
   compadd $(__my-table-list)
 }

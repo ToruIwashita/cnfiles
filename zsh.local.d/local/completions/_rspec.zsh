@@ -1,4 +1,4 @@
-## rspec関連の補完
+## rspec
 __word-of-current() {
   compadd 'current'
 }
