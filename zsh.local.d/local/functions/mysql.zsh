@@ -1,4 +1,4 @@
-## mysql関連関数
+## mysql
 my() {
   __my-connect
 }

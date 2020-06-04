@@ -1,4 +1,4 @@
-# kube
+## kube
 watch-kube-contexts() {
   watch -c 'kubectl config get-contexts'
 }

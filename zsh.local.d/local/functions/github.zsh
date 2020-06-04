@@ -1,3 +1,4 @@
+## github
 github-traffic() {
   local repo
 

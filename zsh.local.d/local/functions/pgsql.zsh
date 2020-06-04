@@ -1,4 +1,4 @@
-## pgsql関連関数
+## pgsql
 pg() {
   __pg-connect
 }
