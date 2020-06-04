@@ -1,4 +1,4 @@
-## sbtenv関連補完
+## sbtenv
 __sbtenv-sbt-versions() {
   compadd ${(R)${(R)${(@f)"$(sbtenv versions)"}#?*[[:space:]]}%% *}
 }

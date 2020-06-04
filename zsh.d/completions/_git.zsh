@@ -1,4 +1,4 @@
-## git関数用補完
+## git
 __git-branches() {
   compadd $(__git-branch-list)
 }

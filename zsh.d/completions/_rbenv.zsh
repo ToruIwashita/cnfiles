@@ -1,4 +1,4 @@
-## rbenv関連補完
+## rbenv
 __rbenv-ruby-versions() {
   compadd ${(R)${(R)${(@f)"$(rbenv versions)"}#?*[[:space:]]}%% *}
 }

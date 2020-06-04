@@ -1,4 +1,4 @@
-## scalaenv関連補完
+## scalaenv
 __scalaenv-scala-versions() {
   compadd ${(R)${(R)${(@f)"$(scalaenv versions)"}#?*[[:space:]]}%% *}
 }

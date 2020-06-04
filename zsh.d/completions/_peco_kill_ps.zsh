@@ -1,4 +1,4 @@
-## peco-kill-ps補完
+## peco-kill-ps
 _peco-kill-ps() {
   _arguments \
     '(-f --force)'{-f,--force}'[Kill without confirmation]' \

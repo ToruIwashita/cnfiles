@@ -1,4 +1,4 @@
-## curl関数用補完
+## curl
 __http-methods() {
   compadd DELETE GET PATCH POST PUT
 }

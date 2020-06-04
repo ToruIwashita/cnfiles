@@ -1,4 +1,4 @@
-## pyenv関連補完
+## pyenv
 __pyenv-python-versions() {
   compadd ${(R)${(R)${(@f)"$(pyenv versions)"}#?*[[:space:]]}%% *}
 }
