@@ -17,7 +17,7 @@ noremap <leader>w :<C-u>silent! w<CR>:CloseMisWin<CR>:q<CR>
 " CtrlSFのwindowも閉じる,以下はctrlsf.vim依存のコード
 " quickrun outputも閉じる,以下はvim-quickrun.vim依存のコード
 " CtrlSF window,quickrun output,quickfix,loclist,previewを閉じる
-noremap <C-w><C-w> :<C-u>CtrlSFClose<CR>:CloseQuickrunOutput<CR>:CloseMisWin<CR>
+noremap <C-w><C-w> :<C-u>CloseMisWin<CR>:CloseQuickrunOutput<CR>:CtrlSFOpen<CR>:CtrlSFClose<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
