@@ -75,7 +75,7 @@ fun! s:_types_of_rspec(...) abort
 endf
 
 fun! s:close_quickrun_output() abort
-  execute ':silent! bw! \[quickrun\ output\]'
+  execute 'silent! bw! \[quickrun\ output\]'
 endf
 
 " 設定変更の用インターフェース
