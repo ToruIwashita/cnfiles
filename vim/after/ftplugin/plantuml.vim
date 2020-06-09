@@ -5,6 +5,8 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
+let g:plantuml_previewer#save_format = 'svg'
+
 augroup local_markdown
   autocmd!
   autocmd BufWritePost *.uml PlantumlSave

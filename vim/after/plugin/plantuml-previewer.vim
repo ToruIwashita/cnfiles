@@ -8,7 +8,7 @@ set cpoptions&vim
 " 0000-00-00-tmp.pngを削除する
 augroup local_plantuml_previewer
   autocmd!
-  autocmd VimLeave * if filereadable(expand('0000-00-00-tmp.png')) | call delete(expand('0000-00-00-tmp.png')) | endif
+  autocmd VimLeave * if filereadable(expand('0000-00-00-tmp.svg')) | call delete(expand('0000-00-00-tmp.svg')) | endif
 augroup END
 
 let &cpoptions = s:cpoptions_save
