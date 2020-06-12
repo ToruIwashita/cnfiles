@@ -49,7 +49,7 @@ autoload -Uz add-zsh-hook              # フック関数登録
 autoload -Uz edit-command-line         # コマンドライン編集
 zmodload zsh/complist                  # 補完メニュー選択モードのキーマップ
 zmodload zsh/terminfo                  # terminfoの配列データを扱う(zsh-history-substring-search用にロード)
-# 外部系
+# 自作系
 autoload -Uz command-line-init && command-line-init -u  # プロンプト,コマンドライン関連の設定
 
 # 重複パスを除去
