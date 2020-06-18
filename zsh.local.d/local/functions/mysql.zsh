@@ -297,7 +297,7 @@ myfcsv() {
   __check-presence-of-args $*
   (( $? )) && return 1
 
-  myq "DESC ${1}" -N | sed s/$'\t'.*//g | xargs echo | sed -e 's/ /,/g'
+  myq "DESC ${1}" -N | sed s/$'\t'.*//g | xargs -0 echo | sed -e 's/ /,/g'
 }
 
 mycnt() {

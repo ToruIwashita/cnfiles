@@ -275,7 +275,7 @@ pgfcsv() {
   __check-presence-of-args $*
   (( $? )) && return 1
 
-  pgq "\d ${1}" --tuples-only | sed s/$'|'.*//g | xargs echo | sed -e 's/ /,/g'
+  pgq "\d ${1}" --tuples-only | sed s/$'|'.*//g | xargs -0 echo | sed -e 's/ /,/g'
 }
 
 pgcnt() {
