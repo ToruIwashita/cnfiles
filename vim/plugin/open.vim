@@ -21,7 +21,7 @@ function! s:open_range() abort range
     let l:escaped_selected_range = l:selected_range
   endif
 
-  execute '!open '.l:escaped_selected_range
+  execute "!open '".l:escaped_selected_range."'"
   execute 'call cursor('.line.','.col.')'
 endfunction
 
