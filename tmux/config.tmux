@@ -51,6 +51,7 @@ bind C-d detach
 # reload config
 bind r source-file ~/.tmux.conf
 
+## ウィンドウ操作
 # 新しいウィンドウを作る
 bind t new-window -c '#{pane_current_path}'
 bind C-t new-window -c '#{pane_current_path}'
@@ -78,6 +79,7 @@ bind -r C-[ previous-window
 bind -r _ last-window
 bind -r C-_ last-window
 
+## ペイン操作
 # ペイン選択
 bind - display-panes
 # ペイン移動
@@ -122,6 +124,8 @@ bind -T copy-mode-vi y send -X copy-selection
 bind -T copy-mode-vi C-f command-prompt -1p '(jump backward)' 'send -X jump-backward "%%"'
 # 逆再jump
 bind -T copy-mode-vi C-_ send-keys -X jump-reverse
+
+## ペースト
 # 最新バッファペースト
 bind p paste-buffer
 # バッファ選択ペースト
