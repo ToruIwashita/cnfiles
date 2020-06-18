@@ -124,6 +124,8 @@ bind -T copy-mode-vi y send -X copy-selection
 bind -T copy-mode-vi C-f command-prompt -1p '(jump backward)' 'send -X jump-backward "%%"'
 # 逆再jump
 bind -T copy-mode-vi C-_ send-keys -X jump-reverse
+# 選択範囲open
+bind -T copy-mode-vi '-' send -X copy-pipe-and-cancel "cat > $CACHE_DIR_PATH/tmp.txt" \; run-shell 'cat $CACHE_DIR_PATH/tmp.txt | xargs -0 open && rm -f $CACHE_DIR_PATH/tmp.txt'
 
 ## ペースト
 # 最新バッファペースト
