@@ -65,10 +65,10 @@ bind s split-window -v -c '#{pane_current_path}'
 bind i split-window -h -c '#{pane_current_path}'
 # ウィンドウindex変更
 bind m command-prompt 'move-window -t %%'
+# ウィンドウ選択choose
+bind ; choose-window
 # ウィンドウ選択select
 bind w command-prompt 'select-window -t %%'
-# ウィンドウ選択choose
-bind W choose-window
 # 次のウィンドウへ
 bind -r ] next-window
 bind -r C-] next-window
