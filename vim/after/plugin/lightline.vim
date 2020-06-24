@@ -11,7 +11,7 @@ let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'readonly', 'linter_errors', 'linter_warnings' ], [ 'ctrlpmark' ] ],
-  \   'right': [ [ 'gutentags', 'lineinfo' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
+  \   'right': [ [ 'addmdspace', 'gutentags', 'lineinfo' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
   \ },
   \ 'component_function': {
   \   'fugitive':     'LightlineFugitive',
@@ -27,6 +27,7 @@ let g:lightline = {
   \   'readonly':        'LightlineReadonly',
   \   'linter_warnings': 'LightlineLinterWarnings',
   \   'linter_errors':   'LightlineLinterErrors',
+  \   'addmdspace':      'LightlineAddMdSpaceStatusLine',
   \   'gutentags':       'LightlineGutentagsStatusLine'
   \ },
   \ 'component_type': {
@@ -48,6 +49,16 @@ let g:lightline.component = {
 let g:unite_force_overwrite_statusline = 0
 let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
+
+function! LightlineAddMdSpaceStatusLine()
+  if !exists('*markdown#add_md_space_enabeld()')
+    return 'space[]'
+  elseif markdown#add_md_space_enabeld()
+    return 'space[auto]'
+  else
+    return 'space[off]'
+  endif
+endfunction
 
 function! LightlineGutentagsStatusLine()
   if gutentags#gutentags_enabled()
