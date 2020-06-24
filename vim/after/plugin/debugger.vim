@@ -5,12 +5,12 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-cnorea dh DebugHelp
-
 augroup local_debugger
   autocmd!
   autocmd VimEnter * DebuggerOn
 augroup END
+
+cnorea dh DebugHelp
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
