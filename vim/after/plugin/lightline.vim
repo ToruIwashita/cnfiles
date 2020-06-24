@@ -51,9 +51,9 @@ let g:vimshell_force_overwrite_statusline = 0
 
 function! LightlineGutentagsStatusLine()
   if gutentags#gutentags_enabled()
-    return 'ctags[enabled]'
+    return 'ctags[auto]'
   else
-    return 'ctags[disabled]'
+    return 'ctags[off]'
   endif
 endfunction
 
