@@ -66,7 +66,7 @@ bind i split-window -h -c '#{pane_current_path}'
 # ウィンドウindex変更
 bind m command-prompt 'move-window -t %%'
 # ウィンドウ選択choose
-bind ; choose-window
+bind ';' choose-window
 # ウィンドウ選択select
 bind w command-prompt 'select-window -t %%'
 # 次のウィンドウへ
@@ -125,7 +125,7 @@ bind -T copy-mode-vi C-f command-prompt -1p '(jump backward)' 'send -X jump-back
 # 逆再jump
 bind -T copy-mode-vi C-_ send-keys -X jump-reverse
 # 選択範囲open
-bind -T copy-mode-vi '-' send -X copy-pipe-and-cancel "cat >| $CACHE_DIR_PATH/tmp.txt" \; run-shell 'cat $CACHE_DIR_PATH/tmp.txt | xargs -0 open && rm -f $CACHE_DIR_PATH/tmp.txt'
+bind -T copy-mode-vi '-' send -X copy-pipe-and-cancel 'cat >| $CACHE_DIR_PATH/tmp.txt' \; run-shell 'cat $CACHE_DIR_PATH/tmp.txt | xargs -0 open && rm -f $CACHE_DIR_PATH/tmp.txt'
 
 ## ペースト
 # 最新バッファペースト
