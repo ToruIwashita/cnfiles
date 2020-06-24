@@ -11,7 +11,7 @@ let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'readonly', 'linter_errors', 'linter_warnings' ], [ 'ctrlpmark' ] ],
-  \   'right': [ [ 'addmdspace', 'gutentags', 'lineinfo' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
+  \   'right': [ [ 'mdspace', 'gutentags', 'lineinfo' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
   \ },
   \ 'component_function': {
   \   'fugitive':     'LightlineFugitive',
@@ -27,7 +27,7 @@ let g:lightline = {
   \   'readonly':        'LightlineReadonly',
   \   'linter_warnings': 'LightlineLinterWarnings',
   \   'linter_errors':   'LightlineLinterErrors',
-  \   'addmdspace':      'LightlineAddMdSpaceStatusLine',
+  \   'mdspace':         'LightlineMdSpaceStatusLine',
   \   'gutentags':       'LightlineGutentagsStatusLine'
   \ },
   \ 'component_type': {
@@ -50,13 +50,13 @@ let g:unite_force_overwrite_statusline = 0
 let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
 
-function! LightlineAddMdSpaceStatusLine()
+function! LightlineMdSpaceStatusLine()
   if !exists('*markdown#add_md_space_enabeld()')
-    return 'space[]'
+    return 'mdspace[]'
   elseif markdown#add_md_space_enabeld()
-    return 'space[auto]'
+    return 'mdspace[auto]'
   else
-    return 'space[off]'
+    return 'mdspace[off]'
   endif
 endfunction
 
