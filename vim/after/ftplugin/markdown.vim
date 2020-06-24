@@ -11,17 +11,20 @@ setlocal textwidth=0
 function! s:add_md_space()
   execute 'mark Z'
 
-  silent! execute '%s/\(^[^$].*[^  ]$\)/\1  /'
-  silent! execute '%s/\(^ \{4}.*[^ ] \{2}$\)/\1  /'
+  silent! execute '%s/\(^ \{4,}[^\ -].*[^    ]$\)/\1    /'
 
   silent! normal! `Z
   execute 'delmarks Z'
 endfunction
 
 function! s:add_md_space_range() range
-  silent! execute a:firstline.','.a:lastline.'s/\(^[^$].*[^  ]$\)/\1  /'
-  silent! execute a:firstline.','.a:lastline.'s/\(^ \{4}.*[^ ] \{2}$\)/\1  /'
+  silent! execute a:firstline.','.a:lastline.'s/\(^ \{4,}[^\ -].*[^    ]$\)/\1    /'
 endfunction
+
+augroup local_markdown
+  autocmd!
+  autocmd BufWritePre *.md call s:add_md_space()
+augroup END
 
 command! -range MdFormat :<line1>,<line2>call s:add_md_space_range()
 
