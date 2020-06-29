@@ -77,4 +77,11 @@ if File.exist?(rails_environment_file_path)
   def sql(query)
     ActiveRecord::Base.connection.execute(query)
   end
+
+  # show model associations
+  def show_relations(klass)
+    klass.reflect_on_all_associations.each do |association|
+      puts ":#{association.macro} => :#{association.name}"
+    end
+  end
 end
