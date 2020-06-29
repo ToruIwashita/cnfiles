@@ -79,7 +79,7 @@ if File.exist?(rails_environment_file_path)
   end
 
   # show model associations
-  def show_relations(klass)
+  def show_associations(klass)
     klass.reflect_on_all_associations.each do |association|
       puts ":#{association.macro} => :#{association.name}"
     end
