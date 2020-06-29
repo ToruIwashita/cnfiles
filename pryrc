@@ -85,8 +85,8 @@ if File.exist?(rails_environment_file_path)
       return
     end
 
-    instance.class.reflect_on_all_associations.each do |association|
-      p ":#{association.macro} => :#{association.name}"
+    instance.class.reflect_on_all_associations.map do |association|
+      ":#{association.macro} => :#{association.name}"
     end
   end
 end
