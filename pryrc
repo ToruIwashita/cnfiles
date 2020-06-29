@@ -89,6 +89,6 @@ if File.exist?(rails_environment_file_path)
       ":#{association.macro} => :#{association.name}"
     end
 
-    puts associations.joins("\n")
+    puts associations.join("\n")
   end
 end
