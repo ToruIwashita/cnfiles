@@ -79,13 +79,15 @@ if File.exist?(rails_environment_file_path)
   end
 
   # show model associations
-  def show_associations(instance)
-    if !instance.is_a? ActiveRecord::Base
-      p 'Not an instance of ActiveRecord::Base'
-      return
-    end
+  def show_associations(instance_or_klass)
+    klass =
+      if instance_or_klass.respond_to?(:reflect_on_all_associations)
+        instance_or_klass
+      else
+        instance_or_klass.class
+      end
 
-    associations = instance.class.reflect_on_all_associations.map do |association|
+    associations = klass.reflect_on_all_associations.map do |association|
       ":#{association.macro} => :#{association.name}"
     end
 
