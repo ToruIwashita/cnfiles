@@ -157,12 +157,10 @@ noremap <C-s><C-_> <C-^>
 noremap <C-t> <NOP>
 noremap g<C-]> <NOP>
 noremap <C-w>} <NOP>
-" カーソル位置の単語をタグとしてジャンプ
-noremap <C-s>t <C-]>
-" 複数候補がある時タグリスト表示
-noremap <C-s>T g<C-]>
-" 直前のタグに戻る
-noremap <C-s><C-t> <C-t>
+" tag入力
+noremap <C-s>t :<C-u>tag<SPACE>
+" tjump入力
+noremap <C-s><C-t> :<C-u>tjump<SPACE>
 " 次のタグへ移動
 noremap <C-s>] :<C-u>tnext<CR>zz
 noremap <C-s><C-]> :<C-u>tnext<CR>zz
