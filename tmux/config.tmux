@@ -126,6 +126,8 @@ bind -T copy-mode-vi C-f command-prompt -1p '(jump backward)' 'send -X jump-back
 bind -T copy-mode-vi C-_ send-keys -X jump-reverse
 # 選択範囲open
 bind -T copy-mode-vi '-' send -X copy-pipe-and-cancel 'cat >| $CACHE_DIR_PATH/tmp.txt' \; run-shell 'cat $CACHE_DIR_PATH/tmp.txt | xargs -0 open && rm -f $CACHE_DIR_PATH/tmp.txt'
+bind -T copy-mode-vi , send -X copy-pipe-and-cancel 'cat >| $CACHE_DIR_PATH/tmp.txt' \; run-shell 'cat $CACHE_DIR_PATH/tmp.txt | xargs -I {} gtran {} | xargs -I {} tmux-display-message {} && rm -f $CACHE_DIR_PATH/tmp.txt'
+bind -T copy-mode-vi . send -X copy-pipe-and-cancel 'cat >| $CACHE_DIR_PATH/tmp.txt' \; run-shell 'cat $CACHE_DIR_PATH/tmp.txt | xargs -I {} gtran -source "ja" -target "en" {} | xargs -I {} tmux-display-message {} && rm -f $CACHE_DIR_PATH/tmp.txt'
 
 ## ペースト
 # 最新バッファペースト
