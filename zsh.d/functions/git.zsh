@@ -634,7 +634,7 @@ gsh-tags() {
 }
 
 grebase() {
-  local usage rebase_target
+  local usage current_branch rebase_target
 
   usage="usage: $0 <number for rebase target>"
   if ! __git-inside-work-tree; then
@@ -643,14 +643,66 @@ grebase() {
     return 1
   fi
 
+  current_branch=$(__git-ref-head)
+
   if (( ! $# )); then
     rebase_target='origin/HEAD'
   else
     rebase_target="HEAD~$1"
   fi
 
-  print "Rebase $rebase_target"
-  git rebase -i $rebase_target
+  while :; do
+    print -n "Rebase '$current_branch' onto '$rebase_target' (y/n)? "
+    read answer
+    case "$answer" in
+      [yY])
+        git rebase -i $rebase_target
+        break
+        ;;
+      [nN])
+        break
+        ;;
+      *)
+        print -n 'Please enter y or n. '
+        ;;
+    esac
+  done
+}
+
+grebase-ignore-date() {
+  local usage current_branch rebase_target
+
+  usage="usage: $0 <number for rebase target>"
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  current_branch=$(__git-ref-head)
+
+  if (( ! $# )); then
+    rebase_target='origin/HEAD'
+  else
+    rebase_target="HEAD~$1"
+  fi
+
+  while :; do
+    print -n "Rebase ignoring dates '$current_branch' onto '$rebase_target' (y/n)? "
+    read answer
+    case "$answer" in
+      [yY])
+        git rebase --ignore-date $rebase_target
+        break
+        ;;
+      [nN])
+        break
+        ;;
+      *)
+        print -n 'Please enter y or n. '
+        ;;
+    esac
+  done
 }
 
 gpickfile() {
