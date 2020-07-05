@@ -633,7 +633,7 @@ gsh-tags() {
   done
 }
 
-grb() {
+grebase() {
   local usage rebase_target
 
   usage="usage: $0 <number for rebase target>"
