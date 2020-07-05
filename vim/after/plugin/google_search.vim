@@ -5,8 +5,8 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-nnoremap <C-s>, :<C-u>GoogleSearch<SPACE>''<LEFT>
-vnoremap <C-s>, :<C-u>GoogleSearchRange<CR>
+nnoremap <C-s><SPACE> :<C-u>GoogleSearch<SPACE>''<LEFT>
+vnoremap <C-s><SPACE> :<C-u>GoogleSearchRange<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
