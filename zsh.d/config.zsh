@@ -121,8 +121,7 @@ alias dr='cdr'
 alias totar='tar cvf'
 alias untar='tar xvf'
 # history
-alias his='history -f'
-alias his-all='history -E 1'
+alias his='history -f 1'
 # git
 alias ga='git add'
 alias gb='git branch'
