@@ -1,7 +1,7 @@
 ## rspec
 brspec() {
   integer no_binstub
-  local -a args file_paths
+  local -a file_paths
   local self_cmd help usage fail_fast_option seed_option tag_option
 
   self_cmd=$0
