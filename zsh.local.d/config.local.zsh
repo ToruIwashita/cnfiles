@@ -25,6 +25,7 @@ alias pjango-su='pipenv run python manage.py show_urls'
 # foreman
 alias foreman-s='foreman start'
 # rails
+alias brails='bundle exec rails'
 alias brails-s='bundle exec rails s -e development -b 0.0.0.0 --port 3000'
 alias brails-c='bundle exec rails c -e development'
 alias brails-r='bundle exec rails r -e development'
