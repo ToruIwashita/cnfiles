@@ -60,7 +60,7 @@ set grepformat=%f:%l:%m               " grepのフォーマット(ag用)
 
 "" map
 " matchitでdo〜end等対応するブロックジャンプ
-map @ %
+map <SPACE> %
 
 "" cnoremap
 " コマンドライン先頭へ移動
