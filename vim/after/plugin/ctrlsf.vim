@@ -30,6 +30,23 @@ fun! s:buffer_ctrlsf(keyword) abort
   exec 'CtrlSF '.a:keyword.' '.l:buflist
 endf
 
+fun! s:ctrlsf_range() range
+  let l:unnamed_register = @@
+  silent! normal! gvy
+  let l:selected_range = @@
+  let @@ = l:unnamed_register
+
+  if l:selected_range =~# "'"
+    let l:escapted_selected_range = '"'.escape(l:selected_range, ' \"').'"'
+  elseif l:selected_range =~# '[ \"]'
+    let l:escapted_selected_range = string(l:selected_range)
+  else
+    let l:escapted_selected_range = l:selected_range
+  endif
+
+  exec 'CtrlSF '.l:escapted_selected_range
+endf
+
 fun! s:buffer_ctrlsf_range() range
   let l:unnamed_register = @@
   silent! normal! gvy
@@ -49,13 +66,14 @@ fun! s:buffer_ctrlsf_range() range
 endf
 
 command! -nargs=1 BCtrlSF call s:buffer_ctrlsf(<q-args>)
+command! -range CtrlSFRange call s:ctrlsf_range()
 command! -range BCtrlSFRange call s:buffer_ctrlsf_range()
 
 " NORMALモード
 nmap <C-s>s <Plug>CtrlSFCwordPath<CR>
 nnoremap <C-s><C-s> :<C-u>execute 'BCtrlSF '.expand('<cword>')<CR>
 " VISUALモード
-vmap <C-s>s <Plug>CtrlSFVwordExec
+vmap <C-s>s :<C-u>CtrlSFRange<CR>
 vnoremap <C-s><C-s> :<C-u>BCtrlSFRange<CR>
 " 検索ワードで検索
 nmap <C-s>* <Plug>CtrlSFPwordPath<CR>
