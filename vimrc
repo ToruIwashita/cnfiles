@@ -18,7 +18,10 @@ let g:memolist_tmp_text_file_path = $MEMOLIST_TMP_TEXT_FILE_PATH
 let g:memolist_tmp_uml_file_path = $MEMOLIST_TMP_UML_FILE_PATH
 let g:memolist_tmp_dot_file_path = $MEMOLIST_TMP_DOT_FILE_PATH
 
-" 起動時にvim-plugの存在チェック
+"" 組込みプラグイン
+source $VIMRUNTIME/macros/matchit.vim  " 対応する括弧などにジャンプする
+
+"" 起動時にvim-plugの存在チェック
 if has('vim_starting')
   exec 'set runtimepath+='.expand(g:vim_dir_path.'/plugged/vim-plug')
   if !isdirectory(expand(g:vim_dir_path.'/plugged/vim-plug'))
@@ -103,7 +106,6 @@ Plug 'nathanaelkane/vim-indent-guides'                 " インデントガイ�
 Plug 'junegunn/vim-easy-align'                         " テキスト整形
 Plug 'ludovicchabant/vim-gutentags'                    " ctags自動生成
 Plug 'majutsushi/tagbar'                               " コード概要ビューア
-Plug 'tmhedberg/matchit'                               " 対応する括弧などにジャンプする
 Plug 'jiangmiao/auto-pairs'                            " 自動で閉じ記号を付与
 Plug 'kshenoy/vim-signature'                           " マーカー表示
 Plug 'adie/BlockDiff'                                  " BlockDiff(選択範囲の比較)
