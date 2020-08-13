@@ -32,7 +32,7 @@ alias brails-r='bundle exec rails r -e development'
 # railsに付随するツール
 alias bspork='bundle exec spork'
 ## rails routing
-# alias output-routing='bundle exec rake routes >! ~/works/tmp/routing.txt'
+# alias output-routing='bundle exec rails routes >! ~/works/tmp/routing.txt'
 # alias archive-routing='[[ -f ~/works/tmp/routing.txt ]] && cp ~/works/tmp/{routing.txt,routing.prev.txt}'
 # alias vrouting='vim ~/works/tmp/routing.txt'
 # alias drouting='diff ~/works/tmp/routing.txt ~/works/tmp/routing.prev.txt'

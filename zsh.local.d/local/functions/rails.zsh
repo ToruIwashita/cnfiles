@@ -1,5 +1,5 @@
 ## rails
-rbrake-clear-cache() {
-  bundle exec rake assets:clean
-  bundle exec rake tmp:cache:clear
+brails-clear-cache() {
+  bundle exec rails assets:clean
+  bundle exec rails tmp:cache:clear
 }
