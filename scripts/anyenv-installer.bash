@@ -118,6 +118,7 @@ sbtenv rehash
 
 echo
 printf "after versions:\n"
+echo
 anyenv versions
 echo
 
