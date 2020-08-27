@@ -7,6 +7,8 @@ set cpoptions&vim
 
 noremap <C-s>b :<C-u>wa<CR>:PbcopyBuffer<CR>
 noremap <C-s><C-b> :<C-u>wa<CR>:PbcopyBuffer<CR>
+noremap <C-s>v :<C-u>PbcopyFilePath<CR>
+noremap <C-s><C-v> :<C-u>PbcopyFilePath<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
