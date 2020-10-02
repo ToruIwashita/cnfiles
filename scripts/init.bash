@@ -366,13 +366,5 @@ else
   touch $MEMOLIST_TMP_DOT_FILE_PATH
 fi
 
-# cache tmp file
-if [[ -f $CACHE_TMP_FILE_PATH ]]; then
-  printf "\e[32m$CACHE_TMP_FILE_PATH file already exists\e[0m\n"
-else
-  printf "\e[31mcreate file $CACHE_TMP_FILE_PATH\e[0m\n"
-  touch $CACHE_TMP_FILE_PATH
-fi
-
 printf "\ninit complete\n"
 exit 0
