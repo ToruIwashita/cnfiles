@@ -16,10 +16,10 @@ call deoplete#custom#option('omni_patterns', {
 " ポップアップメニューで表示される候補の数
 call deoplete#custom#option({
   \ 'auto_complete_delay': 0,
-  \ 'camel_case': v:false,
-  \ 'ignore_case': v:false,
-  \ 'smart_case': v:false,
-  \ 'max_list': 30,
+  \ 'camel_case':          v:false,
+  \ 'ignore_case':         v:false,
+  \ 'smart_case':          v:false,
+  \ 'max_list':            30,
 \ })
 
 "" neocomplete key-mappings
