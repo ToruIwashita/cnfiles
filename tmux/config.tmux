@@ -109,6 +109,8 @@ bind M split-window -h \; split-window -v \; select-pane -t :.+ \; split-window 
 bind x kill-pane
 # 等間隔4分割(Multi)
 bind M split-window -h \; split-window -v \; select-pane -t :.+ \; split-window -v \; select-pane -t :.-
+# ペイン同時操作
+bind Space setw synchronize-panes \; display "synchronize-panes #{?pane_synchronized,on,off}"
 
 ## コピーモード
 bind v copy-mode
