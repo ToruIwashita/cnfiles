@@ -28,6 +28,7 @@ pyenv exec pip3 install -U black
 pyenv exec pip3 install -U isort
 pyenv exec pip3 install -U ipython
 pyenv exec pip3 install -U wheel
+pyenv exec pip3 install -U pynvim
 
 echo
 pyenv rehash
