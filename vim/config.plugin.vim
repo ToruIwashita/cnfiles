@@ -7,8 +7,8 @@ scriptencoding utf-8
 colorscheme desert
 set background=dark
 
-"" neocomplete(after/ にも設定あり)
-let g:neocomplete#enable_at_startup = 1  " neocompleteを起動時に有効化
+"" deoplete(after/ にも設定あり)
+let g:deoplete#enable_at_startup = 1  " deopleteを起動時に有効化
 
 "" ale(after/にも設定あり)
 let g:ale_sign_column_always = 1                         " マーカー用のカラムを常に表示

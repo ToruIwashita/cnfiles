@@ -36,7 +36,9 @@ call plug#begin(expand(g:vim_dir_path.'/plugged'))
 
 Plug 'junegunn/vim-plug', { 'dir': expand(vim_dir_path.'/plugged/vim-plug/autoload') }
 Plug 'Shougo/vimproc',    { 'do': 'make' }
-Plug 'Shougo/neocomplete'                              " 入力補完機能(luajit依存)
+Plug 'Shougo/deoplete.nvim'                            " 入力補完機能
+Plug 'roxma/nvim-yarp'                                 " Neovim用のリモートプラグインフレームワーク
+Plug 'roxma/vim-hug-neovim-rpc'                        " NeovimRPCクライアントの互換性レイヤー
 Plug 'Shougo/neosnippet'                               " スニペット展開
 Plug 'honza/vim-snippets'                              " 各種snippet
 Plug 'tpope/vim-repeat'                                " vim-surroundの機能を.反復
