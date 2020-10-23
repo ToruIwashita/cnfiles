@@ -262,8 +262,10 @@ mytable() {
 
   print "> DESC $*;"
   mydesc $*
+  echo
   print "> SHOW INDEX FROM $*;"
   myindex $*
+  echo
   print "> SHOW CREATE TABLE $*\G"
   myctable $*
 }
