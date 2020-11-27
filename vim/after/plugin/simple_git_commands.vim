@@ -5,7 +5,7 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-nnoremap <C-s><C-a> :<C-u>wa<CR>:GAddAll<CR>:e!<CR>:<C-U>checktime<CR>
+nnoremap <C-s>A :<C-u>wa<CR>:GAddAll<CR>:e!<CR>:<C-U>checktime<CR>
 nnoremap <C-s><C-r> :<C-u>wa<CR>:GResetAll<CR>:e!<CR>:<C-U>checktime<CR>
 
 nnoremap <C-s>P :<C-u>GllRebase
