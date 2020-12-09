@@ -5,6 +5,7 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
+let g:plantuml_previewer#plantuml_jar_path = g:local_dir_path.'/jar/plantuml.jar'
 let g:plantuml_previewer#save_format = 'svg'
 
 augroup local_markdown
