@@ -22,6 +22,14 @@ else
   mkdir $LOCAL_BIN_DIR_PATH
 fi
 
+# local jar dir
+if [[ -d $LOCAL_JAR_DIR_PATH ]]; then
+  printf "\e[32m$LOCAL_JAR_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $LOCAL_JAR_DIR_PATH\e[0m\n"
+  mkdir $LOCAL_JAR_DIR_PATH
+fi
+
 # works dir
 if [[ -d $WORKS_DIR_PATH ]]; then
   printf "\e[32m$WORKS_DIR_PATH dir already exists\e[0m\n"
@@ -324,6 +332,14 @@ if [[ -L $LOCAL_BIN_DIR_PATH/tmux-display-message ]]; then
 else
   printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/tmux-display-message\e[0m\n"
   ln -is $BASE_DIR_PATH/local/bin/tmux-display-message $LOCAL_BIN_DIR_PATH/tmux-display-message
+fi
+
+# plantuml.jar
+if [[ -L $LOCAL_JAR_DIR_PATH/plantuml.jar ]]; then
+  printf "\e[32m$LOCAL_JAR_DIR_PATH/plantuml.jar symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink $LOCAL_JAR_DIR_PATH/plantuml.jar\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/jar/plantuml.jar $LOCAL_JAR_DIR_PATH/plantuml.jar
 fi
 
 # memolist tmp markdown file
