@@ -27,6 +27,9 @@ nodenv exec npm install -g babel-eslint
 nodenv exec npm install -g eslint-plugin-vue
 nodenv exec npm install -g eslint-plugin-prettier
 nodenv exec npm install -g eslint-config-prettier
+nodenv exec npm install -g pem-jwk
+nodenv exec npm install -g jwk-to-pem
+nodenv exec npm install -g jsonwebtoken
 nodenv exec npm install -g lice
 
 echo
