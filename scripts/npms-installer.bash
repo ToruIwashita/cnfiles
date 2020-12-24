@@ -30,6 +30,7 @@ nodenv exec npm install -g eslint-config-prettier
 nodenv exec npm install -g pem-jwk
 nodenv exec npm install -g jwk-to-pem
 nodenv exec npm install -g jsonwebtoken
+nodenv exec npm install -g rsa-pem-from-mod-exp
 nodenv exec npm install -g lice
 
 echo
