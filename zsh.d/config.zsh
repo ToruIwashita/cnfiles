@@ -108,6 +108,7 @@ alias cdml="cd $MEMOLIST_DIR_PATH"
 alias zmv='noglob zmv -W'
 # vim
 alias v='vim'
+alias vi='vim'
 # tmux
 alias tm='tmux -2'
 # ls
