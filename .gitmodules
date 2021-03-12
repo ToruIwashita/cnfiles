@@ -31,9 +31,6 @@
 [submodule "modules/git"]
 	path = modules/git
 	url = git@github.com:git/git.git
-[submodule "modules/neovim"]
-	path = modules/neovim
-	url = git@github.com:neovim/neovim.git
 [submodule "modules/jq"]
 	path = modules/jq
 	url = git@github.com:stedolan/jq.git
