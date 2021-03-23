@@ -33,8 +33,8 @@ fun! s:gitv_settiongs() abort
   nmap <buffer> <leader>r u
 
   " gitvはfugitiveに依存している,以下はfugitive.vim依存のコード
-  nnoremap <buffer> <C-g>B :<C-u>Grebase --interactive <C-r>=<SID>gitv_get_current_sha()<CR><CR>
-  nnoremap <buffer> <C-s>B :<C-u>Grebase --ignore-date origin/HEAD
+  nnoremap <buffer> <C-g>B :<C-u>Git rebase --interactive <C-r>=<SID>gitv_get_current_sha()<CR><CR>
+  nnoremap <buffer> <C-s>B :<C-u>Git rebase --ignore-date origin/HEAD
   nnoremap <buffer> <C-g>C :<C-u>Git cherry-pick <C-r>=<SID>gitv_get_current_sha()<CR><CR>
   nnoremap <buffer> <C-g>R :<C-u>Git revert <C-r>=<SID>gitv_get_current_sha()<CR><CR>
   nnoremap <buffer> <C-s>G :<C-u>Gbrowse <C-r>=<SID>gitv_get_current_sha()<CR><CR>

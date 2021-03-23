@@ -37,8 +37,8 @@ nnoremap <C-g><C-a> :<C-u>w<CR>:Gwrite<CR>
 nnoremap <C-g><C-v> :<C-u>Gblame<CR>
 
 " rebase
-nnoremap <buffer> <C-g>B :<C-u>Grebase --interactive origin/HEAD
-nnoremap <buffer> <C-s>B :<C-u>Grebase --ignore-date origin/HEAD
+nnoremap <buffer> <C-g>B :<C-u>Git rebase --interactive origin/HEAD
+nnoremap <buffer> <C-s>B :<C-u>Git rebase --ignore-date origin/HEAD
 
 fun! s:fugitive_commit_setting() abort
   nnoremap <buffer> <C-g><C-c> <NOP>
