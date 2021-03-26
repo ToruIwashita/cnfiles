@@ -123,7 +123,7 @@ bind -T copy-mode-vi C-j send -X clear-selection
 # ヤンク
 bind -T copy-mode-vi y send -X copy-selection
 # 逆f
-bind -T copy-mode-vi C-f command-prompt -1p '(jump backward)' 'send -X jump-backward "%%"'
+bind -T copy-mode-vi C-f command-prompt -1p '(jump backward)' 'send -X jump-backward "%%%"'
 # 逆再jump
 bind -T copy-mode-vi C-_ send-keys -X jump-reverse
 # 選択範囲open
