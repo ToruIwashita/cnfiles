@@ -43,7 +43,7 @@ let g:lightline.tabline = {
 \ }
 
 let g:lightline.component = {
-  \ 'lineinfo': 'col: %v | row: %l/%L'
+  \ 'lineinfo': 'c: %v | r: %l/%L'
 \ }
 
 let g:unite_force_overwrite_statusline = 0
@@ -51,20 +51,26 @@ let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
 
 function! LightlineMdSpaceStatusLine()
-  if !exists('*markdown#add_md_space_enabeld()')
-    return 'mdspace[]'
-  elseif markdown#add_md_space_enabeld()
-    return 'mdspace[auto]'
+  if &filetype !=# 'markdown' || winwidth(0) <= 100
+    return ''
+  endif
+
+  if exists('*markdown#add_md_space_enabeld()') && markdown#add_md_space_enabeld()
+    return 'mdspace[*]'
   else
-    return 'mdspace[off]'
+    return 'mdspace[]'
   endif
 endfunction
 
 function! LightlineGutentagsStatusLine()
+  if &filetype ==# 'markdown' || &filetype ==# 'text' || winwidth(0) <= 100
+    return ''
+  endif
+
   if gutentags#gutentags_enabled()
-    return 'ctags[auto]'
+    return 'ctags[*]'
   else
-    return 'ctags[off]'
+    return 'ctags[]'
   endif
 endfunction
 
@@ -102,15 +108,15 @@ function! LightlineFilename()
 endfunction
 
 function! LightlineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
+  return winwidth(0) > 100 ? &fileformat : ''
 endfunction
 
 function! LightlineFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no filetype') : ''
+  return winwidth(0) > 100 ? (strlen(&filetype) ? &filetype : 'no filetype') : ''
 endfunction
 
 function! LightlineFileencoding()
-  return winwidth(0) > 70 ? (strlen(&fileencoding) ? &fileencoding : &encoding) : ''
+  return winwidth(0) > 100 ? (strlen(&fileencoding) ? &fileencoding : &encoding) : ''
 endfunction
 
 function! LightlineMode()
@@ -179,6 +185,10 @@ let g:tagbar_status_func = 'TagbarStatusFunc'
 
 function! LightlineGetCharCode()
   " Get the output of :ascii
+  if winwidth(0) <= 100
+    return ''
+  endif
+
   redir => l:ascii
   silent! ascii
   redir END
