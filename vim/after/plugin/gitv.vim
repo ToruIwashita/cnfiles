@@ -11,6 +11,8 @@ let g:Gitv_OpenHorizontal = 1
 let g:Gitv_TruncateCommitSubjects = 1
 " Ctrlキーにキーマップさせない
 let g:Gitv_DoNotMapCtrlKey = 1
+" Gitv起動時にプレビューウィンドウを非表示
+let g:Gitv_OpenPreviewOnLaunch = 0
 
 nnoremap <C-g>v :<C-u>Gitv!<CR>
 nnoremap <C-g>l :<C-u>Gitv<CR>
