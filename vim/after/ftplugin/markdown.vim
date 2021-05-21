@@ -5,7 +5,7 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-" mdはテキストの最大幅無し
+" markdownはテキストの最大幅無し
 setlocal textwidth=0
 
 let g:add_md_space_enabled = 1
