@@ -342,12 +342,12 @@ else
   ln -is $BASE_DIR_PATH/local/jar/plantuml.jar $LOCAL_JAR_DIR_PATH/plantuml.jar
 fi
 
-# memolist task text file
-if [[ -f $MEMOLIST_TASK_TEXT_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TASK_TEXT_FILE_PATH file already exists\e[0m\n"
+# memolist task markdown file
+if [[ -f $MEMOLIST_TASK_MARKDOWN_FILE_PATH ]]; then
+  printf "\e[32m$MEMOLIST_TASK_MARKDOWN_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MEMOLIST_TASK_TEXT_FILE_PATH\e[0m\n"
-  touch $MEMOLIST_TASK_TEXT_FILE_PATH
+  printf "\e[31mcreate file $MEMOLIST_TASK_MARKDOWN_FILE_PATH\e[0m\n"
+  touch $MEMOLIST_TASK_MARKDOWN_FILE_PATH
 fi
 
 # memolist tmp dot file
