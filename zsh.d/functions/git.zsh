@@ -362,7 +362,7 @@ EOF`
         remote_branch="$2"
         shift 2
         ;;
-      --help | -h)
+      -h | --help)
         print $usage
         return 0
         ;;
