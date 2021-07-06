@@ -531,8 +531,11 @@ glls() {
   remote_head_branch=${(R)$(git symbolic-ref --short refs/remotes/origin/HEAD)#*/}
 
   print "Submodules update & pull $remote_head_branch\n"
-  git submodule update --init
-  git submodule foreach "git checkout $remote_head_branch && git pull origin $remote_head_branch && echo"
+  git submodule foreach "
+    git checkout ${(R)${(M)${(@f)"$(git remote show origin)"}:#[[:space:]][[:space:]]HEAD[[:space:]]branch:*}#[[:space:]][[:space:]]HEAD[[:space:]]branch:[[:space:]]}
+    git pull origin ${(R)${(M)${(@f)"$(git remote show origin)"}:#[[:space:]][[:space:]]HEAD[[:space:]]branch:*}#[[:space:]][[:space:]]HEAD[[:space:]]branch:[[:space:]]}
+    echo
+  "
 }
 
 gsh() {
