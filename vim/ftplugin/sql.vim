@@ -8,7 +8,7 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 ab <buffer> =c COUNT(1) AS count
-map! <buffer> =sql SELECT<ENTER>  *<ENTER><BS>FROM<ENTER>WHERE<SPACE>(<ENTER>)<ESC>2kA<SPACE>
+map! <buffer> =sql SELECT<ENTER>  *<ENTER><BS>FROM<ENTER>WHERE<ESC>1kA<SPACE>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
