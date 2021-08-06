@@ -7,7 +7,7 @@ let b:did_ftplugin = 1
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-map! <buffer> =c <BS>COUNT(1) AS count
+map! <buffer> =c <BS><SPACE><SPACE>COUNT(1) AS count
 map! <buffer> =s SELECT<ENTER><SPACE><SPACE>*<ENTER><BS>FROM<ENTER><SPACE><SPACE>
 map! <buffer> =i <BS>INNER JOIN<ENTER><SPACE><SPACE>
 map! <buffer> =l <BS>LEFT JOIN<ENTER><SPACE><SPACE>
