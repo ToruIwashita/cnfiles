@@ -319,7 +319,7 @@ EOF`
   fi
 
   if (( fixup )); then
-    git commit --amend --no-edit
+    git commit --amend --no-edit --allow-empty
     return 0
   fi
 

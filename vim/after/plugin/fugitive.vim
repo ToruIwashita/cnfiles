@@ -25,11 +25,11 @@ nnoremap <C-g>w :<C-u>Git commit --amend<CR>
 " empty commit
 nnoremap <C-g>e :<C-u>Git commit --allow-empty -m '[empty commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
 " temporary commit
-nnoremap <C-g>t :<C-u>Git commit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>:e!<CR>:syntax sync fromstart<CR>
-nnoremap <C-g><C-t> :<C-u>w<CR>:Gwrite<CR>:Git commit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>:e!<CR>:syntax sync fromstart<CR>
+nnoremap <C-g>t :<C-u>Git commit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
+nnoremap <C-g><C-t> :<C-u>w<CR>:Gwrite<CR>:Git commit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
 " fixup commit
-nnoremap <C-g>f :<C-u>Git commit --amend --no-edit<CR>:e!<CR>:syntax sync fromstart<CR>
-nnoremap <C-g><C-f> :<C-u>w<CR>:Gwrite<CR>:Git commit --amend --no-edit<CR>:e!<CR>:syntax sync fromstart<CR>
+nnoremap <C-g>f :<C-u>Git commit --amend --no-edit --allow-empty<CR>
+nnoremap <C-g><C-f> :<C-u>w<CR>:Gwrite<CR>:Git commit --amend --no-edit --allow-empty<CR>
 " add
 nnoremap <C-g><C-a> :<C-u>w<CR>:Gwrite<CR>
 

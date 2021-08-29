@@ -1,35 +1,34 @@
 ## 環境変数設定
 # mysql (その他の設定は ~/.my.cnf に書く)
-readonly MYSQL_DATABASE=
+export MYSQL_DATABASE=
 
 # psql (全ての設定を環境変数に書く)
-readonly PGDATABASE=
 readonly PGHOST=
 readonly PGPORT=
 readonly PGUSER=
 readonly PGPASSWORD=
-
-# anyenv
-export ANYENV_ROOT=~/.anyenv
-# sbt
-export SBT_HOME=~/.sbt
-# yarn
-export YARN_ROOT=~/.yarn
-export YARN_GLOBAL_NODE_MODULES_BIN_PATH=~/.config/yarn/global/node_modules/.bin
-# DB
-export MYSQL_DATABASE
-export PGDATABASE
 export PGHOST
 export PGPORT
 export PGUSER
 export PGPASSWORD
-# github
-# api token (hubコマンド)
-export GITHUB_TOKEN=
-# user name
-export GITHUB_USER_NAME=
-# repositories
+export PGDATABASE=
+
+# github (hubコマンド)
+readonly GITHUB_TOKEN=
+readonly GITHUB_USER_NAME=
+export GITHUB_TOKEN
+export GITHUB_USER_NAME
 export OWNED_GITHUB_REPOSITORIES=()
+
+# anyenv
+export ANYENV_ROOT=~/.anyenv
+
+# sbt
+export SBT_HOME=~/.sbt
+
+# yarn
+export YARN_ROOT=~/.yarn
+export YARN_GLOBAL_NODE_MODULES_BIN_PATH=~/.config/yarn/global/node_modules/.bin
 
 # gitインストール時にbrewでインストールしたopensslを使用する
 # export CPATH=/usr/local/opt/openssl/include:$LD_LIBRARY_PATH
@@ -79,17 +78,4 @@ fi
 ## node
 if [[ $(which node) =~ anyenv ]]; then
   export NODE_PATH=$(npm root -g)
-fi
-
-## lua
-if [[ $(which lua) =~ anyenv ]]; then
-  local luajit_path luajit_prefix_dir
-
-  luajit_path=${1:-$(which luajit)}
-  luajit_prefix_dir=$ANYENV_ROOT/envs/luaenv/versions/$(luaenv version | sed -e 's/ .*$//g')
-
-  ld_library_path=(
-    $luajit_prefix_dir/lib
-    $ld_library_path
-  )
 fi
