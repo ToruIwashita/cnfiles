@@ -40,6 +40,8 @@ echo 'go install github.com/x-motemen/ghq@latest'
 go install github.com/x-motemen/ghq@latest
 echo 'go install github.com/skanehira/gtran@latest'
 go install github.com/skanehira/gtran@latest
+echo 'go install github.com/x-motemen/gore/cmd/gore@latest'
+go install github.com/x-motemen/gore/cmd/gore@latest
 
 echo
 printf "complete\n"
