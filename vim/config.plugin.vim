@@ -25,6 +25,7 @@ let g:ale_echo_msg_format = '[%linter%][%severity%] %s'  " statuslineメッセ�
 let g:ale_linters = {
   \ 'ruby':       ['ruby'],
   \ 'python':     ['flake8', 'mypy'],
+  \ 'go':         ['gopls'],
   \ 'scala':      ['scalac'],
   \ 'shell':      ['shell'],
   \ 'vim':        ['vint'],
@@ -37,6 +38,7 @@ let g:ale_linters = {
 let g:ale_fixers = {
   \ 'ruby':       ['rubocop'],
   \ 'python':     ['isort', 'black'],
+  \ 'go':         ['gofmt'],
   \ 'javascript': ['eslint'],
   \ 'vue':        ['eslint'],
   \ 'sql':        ['sqlfmt'],
