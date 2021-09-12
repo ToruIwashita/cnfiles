@@ -32,14 +32,14 @@ export PATH="$PATH:$GOPATH/bin"
 printf "go: $(go version)\n"
 
 echo
-echo 'go get -u github.com/jackc/sqlfmt/...'
-go get -u github.com/jackc/sqlfmt/...
-echo 'go get -u github.com/mattn/longcat'
-go get -u github.com/mattn/longcat
-echo 'go get -u github.com/x-motemen/ghq'
-go get -u github.com/x-motemen/ghq
-echo 'go get -u github.com/skanehira/gtran'
-go get -u github.com/skanehira/gtran
+echo 'go install github.com/jackc/sqlfmt/cmd/sqlfmt@latest'
+go install github.com/jackc/sqlfmt/cmd/sqlfmt@latest
+echo 'go install github.com/mattn/longcat@latest'
+go install github.com/mattn/longcat@latest
+echo 'go install github.com/x-motemen/ghq@latest'
+go install github.com/x-motemen/ghq@latest
+echo 'go install github.com/skanehira/gtran@latest'
+go install github.com/skanehira/gtran@latest
 
 echo
 printf "complete\n"
