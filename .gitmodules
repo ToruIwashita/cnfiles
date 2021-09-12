@@ -4,9 +4,6 @@
 [submodule "modules/the_silver_searcher"]
 	path = modules/the_silver_searcher
 	url = git://github.com/ggreer/the_silver_searcher
-[submodule "modules/peco"]
-	path = modules/peco
-	url = git://github.com/peco/peco
 [submodule "modules/tmux-mem-cpu-load"]
 	path = modules/tmux-mem-cpu-load
 	url = git://github.com/thewtex/tmux-mem-cpu-load
