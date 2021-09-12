@@ -36,7 +36,7 @@ let g:plug_url_format = 'git@github.com:%s.git'
 call plug#begin(expand(g:vim_dir_path.'/plugged'))
 
 Plug 'junegunn/vim-plug', { 'dir': expand(vim_dir_path.'/plugged/vim-plug/autoload') }
-Plug 'Shougo/vimproc',    { 'do': 'make' }
+Plug 'Shougo/vimproc',    { 'do': 'make' }             " 非同期実行ライブラリ
 Plug 'Shougo/deoplete.nvim'                            " 入力補完機能
 Plug 'roxma/nvim-yarp'                                 " Neovim用のリモートプラグインフレームワーク(deoplete用)
 Plug 'roxma/vim-hug-neovim-rpc'                        " NeovimRPCクライアントの互換性レイヤー(deoplete用)
@@ -65,6 +65,7 @@ Plug 'kana/vim-textobj-indent'                         " カーソル行と同�
 Plug 'kana/vim-niceblock'                              " ビジュアル選択時にI,Aで行頭,行末に文字挿入
 Plug 'terryma/vim-expand-region'                       " text-objectビジュアル選択
 Plug 'vim-ruby/vim-ruby'                               " vim-ruby
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }     " vim-go
 Plug 'derekwyatt/vim-scala'                            " vim-scala
 Plug 'posva/vim-vue'                                   " vim-vue
 Plug 'digitaltoad/vim-pug'                             " vim-pug
@@ -72,7 +73,6 @@ Plug 'wavded/vim-stylus'                               " vim-stylus
 Plug 'ngmy/vim-rubocop'                                " vim-rubocop
 Plug 'hashivim/vim-terraform'                          " vim-terraform
 Plug 'chrisbra/vim-zsh'                                " vim-zsh
-Plug 'vim-jp/vim-go-extra'                             " extra vim plugin for go
 Plug 'aklt/plantuml-syntax'                            " PlantUMLのシンタックス
 Plug 'ynkdir/vim-vimlparser'                           " vimlのパーサー(構文解析)
 Plug 'scrooloose/nerdtree'                             " ディレクトリツリーエクスプローラー
