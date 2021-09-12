@@ -42,6 +42,8 @@ echo 'go install github.com/skanehira/gtran@latest'
 go install github.com/skanehira/gtran@latest
 echo 'go install github.com/x-motemen/gore/cmd/gore@latest'
 go install github.com/x-motemen/gore/cmd/gore@latest
+echo 'go install github.com/peco/peco/cmd/peco@latest'
+go install github.com/peco/peco/cmd/peco@latest
 
 echo
 printf "complete\n"
