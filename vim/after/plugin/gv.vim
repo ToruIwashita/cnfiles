@@ -13,6 +13,9 @@ fun! s:gv_get_current_sha() abort
 endf
 
 fun! s:gv_settiongs() abort
+  " リロード
+  nnoremap <buffer> <leader>r :<C-u>q<CR>:GV<CR>
+
   " gvはfugitiveに依存している,以下はfugitive.vim依存のコード
   nnoremap <buffer> <C-g>B :<C-u>let g:_current_sha='<C-r>=<SID>gv_get_current_sha()<CR>'<CR>:G<CR>:execute 'Git rebase --interactive '.g:_current_sha<CR>
   nnoremap <buffer> <C-s>B :<C-u>Git rebase --ignore-date origin/HEAD
