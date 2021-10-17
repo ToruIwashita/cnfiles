@@ -49,7 +49,7 @@ Plug 'tpope/vim-fugitive'                              " fugitive(ステータ�
 Plug 'tpope/vim-rhubarb'                               " fugitiveのGbrowseでGithubを開く
 Plug 'tpope/vim-abolish'                               " snake,camel,pascalケースなどを切り替える為に使用(その他の機能は使っていない)
 Plug 'tpope/vim-eunuch'                                " ファイル操作
-Plug 'gregsexton/gitv'                                 " gitv(コミットログ閲覧用,vim-fugitive依存)
+Plug 'junegunn/gv.vim'                                 " gitv(コミットログ閲覧用,vim-fugitive依存)
 Plug 'hotwatermorning/auto-git-diff'                   " git-rebase-todoでコミットの内容を表示
 Plug 'airblade/vim-gitgutter'                          " gitの差分を左端に表示
 Plug 'tyru/open-browser.vim'                           " URIをブラウザで開く
