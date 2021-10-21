@@ -5,6 +5,11 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
+" tabを半角スペースとしない
+setlocal noexpandtab
+" tabと半角スペースの表示
+setlocal listchars=tab:\ \ ,space:\ ,trail:_
+
 "" 競合解消
 " go#def#Jumpとタブ移動のmap競合を解消
 silent! nunmap <buffer> <C-w>]
