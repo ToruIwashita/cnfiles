@@ -9,7 +9,7 @@ nnoremap <C-g>v :<C-u>GV!<CR>
 nnoremap <C-g>l :<C-u>GV<CR>
 
 fun! s:gv_get_current_sha() abort
-  return matchstr(getline('.'), '[*|] [0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} \zs[0-9a-f]\{7,10\}\ze')
+  return matchstr(getline('.'), '[*|_/\]+ +[0-9]\{4\}-[0-9]\{2\}-[0-9]\{2\} \zs[0-9a-f]\{7,10\}\ze')
 endf
 
 fun! s:gv_settiongs() abort
