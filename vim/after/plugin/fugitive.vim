@@ -73,7 +73,7 @@ fun! s:fugitive_commit_setting() abort
 endf
 
 fun! s:fugitive_blame_setting() abort
-  nnoremap <buffer> <C-s>G :<C-u>Gbrowse <C-r>=matchstr(getline('.'), '^\zs[0-9a-f]\{7,10\}\ze')<CR><CR>
+  nnoremap <buffer> <C-s>G :<C-u>GBrowse <C-r>=matchstr(getline('.'), '^\zs[0-9a-f]\{7,10\}\ze')<CR><CR>
 endf
 
 augroup local_fugitive
