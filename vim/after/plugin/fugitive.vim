@@ -34,7 +34,7 @@ nnoremap <C-g><C-f> :<C-u>w<CR>:Gwrite<CR>:Git commit --amend --no-edit --allow-
 nnoremap <C-g><C-a> :<C-u>w<CR>:Gwrite<CR>
 
 " blame
-nnoremap <C-g><C-v> :<C-u>Gblame<CR>
+nnoremap <C-g><C-v> :<C-u>Git blame<CR>
 
 " rebase
 nnoremap <buffer> <C-g>B :<C-u>Git rebase --interactive origin/HEAD
