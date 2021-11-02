@@ -5,6 +5,13 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
+"" 競合解消
+" go#def#Jumpとタブ移動のmap競合を解消
+silent! nunmap <buffer> <C-w>]
+silent! nunmap <buffer> <C-w><C-]>
+" タグ移動のmapを解除
+silent! nunmap <buffer> <C-]>
+
 " tabを半角スペースとしない
 setlocal noexpandtab
 " tabと半角スペースの表示
@@ -17,13 +24,6 @@ let g:go_fmt_command = 'goimports'
 let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
-
-"" 競合解消
-" go#def#Jumpとタブ移動のmap競合を解消
-silent! nunmap <buffer> <C-w>]
-silent! nunmap <buffer> <C-w><C-]>
-" タグ移動のmapを解除
-silent! nunmap <buffer> <C-]>
 
 "" 関数
 fun! s:godef_vsplit() abort
@@ -51,9 +51,14 @@ command! GodefVsplit call s:godef_vsplit()
 command! GodefTabnew call s:godef_tabnew()
 
 "" キーマップ
+" メソッド定義ジャンプ
 nmap <buffer> <C-s>l :<C-u>GodefVsplit<CR>
 nmap <buffer> <C-s><C-l> :<C-u>GodefVsplit<CR>
 noremap <buffer> <C-s>L :<C-u>GodefTabnew<CR>
+" インターフェース実装一覧
+nmap <buffer> <leader>i :<C-u>GoImplements<CR>
+" 定義参照一覧
+nmap <buffer> <leader>e :<C-u>GoReferrers<CR>
 
 " errという文字列のシンタクスハイライト
 augroup local_go_vim
