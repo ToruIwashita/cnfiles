@@ -5,6 +5,11 @@
 # }
 # init-ssh-agent
 
+## direnv
+# if type direnv > /dev/null; then
+#   eval "$(direnv hook zsh)"
+# fi
+
 ## alias
 # git
 alias gcs='git commit -m "- update submodules"'
