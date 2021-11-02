@@ -10,6 +10,14 @@ setlocal noexpandtab
 " tabと半角スペースの表示
 setlocal listchars=tab:\ \ ,space:\ ,trail:_
 
+"" 保存時に自動import
+let g:go_fmt_command = 'goimports'
+
+"" シンタクスハイライト
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+
 "" 競合解消
 " go#def#Jumpとタブ移動のmap競合を解消
 silent! nunmap <buffer> <C-w>]
@@ -46,11 +54,6 @@ command! GodefTabnew call s:godef_tabnew()
 nmap <buffer> <C-s>l :<C-u>GodefVsplit<CR>
 nmap <buffer> <C-s><C-l> :<C-u>GodefVsplit<CR>
 noremap <buffer> <C-s>L :<C-u>GodefTabnew<CR>
-
-"" シンタクスハイライト
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
 
 " errという文字列のシンタクスハイライト
 augroup local_go_vim
