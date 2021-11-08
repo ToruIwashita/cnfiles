@@ -6,7 +6,7 @@
 # init-ssh-agent
 
 ## direnv
-# if type direnv > /dev/null; then
+# if (( ${+commands[direnv]} )); then
 #   eval "$(direnv hook zsh)"
 # fi
 
