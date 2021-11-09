@@ -3,4 +3,5 @@ _directories() {
   _arguments '*: :_files -/'
 }
 
-compdef _directories dlv-debug
+compdef _directories ddlv
+compdef _directories tgo
