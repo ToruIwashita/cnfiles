@@ -197,6 +197,14 @@ else
   ln -isn $BASE_DIR_PATH/peco ~/.peco
 fi
 
+# delve
+if [[ -L ~/.dlv ]]; then
+  printf "\e[32m~/.dlv dir symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.dlv dir\e[0m\n"
+  ln -isn $BASE_DIR_PATH/dlv ~/.dlv
+fi
+
 # ctags
 if [[ -L ~/.ctags.d ]]; then
   printf "\e[32m~/.ctags.d dir symlink already exists\e[0m\n"
