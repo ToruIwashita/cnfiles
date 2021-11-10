@@ -9,10 +9,19 @@ ddlv() {
 }
 
 tgo() {
-  if (( $# != 2 )); then
+  if (( $# != 1 )); then
     print 'invalid arguments.' 1>&2
     return 1
   fi
 
-  go test -json ./$1 | jq 'select(.Test == "'$2'")'
+  go test ./$1
+}
+
+tgo-fail() {
+  if (( $# != 1 )); then
+    print 'invalid arguments.' 1>&2
+    return 1
+  fi
+
+  go test ./$1 | grep --color FAIL
 }

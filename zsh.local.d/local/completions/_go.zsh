@@ -5,3 +5,4 @@ _directories() {
 
 compdef _directories ddlv
 compdef _directories tgo
+compdef _directories tgo-fail
