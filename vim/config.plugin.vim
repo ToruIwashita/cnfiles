@@ -41,11 +41,11 @@ let g:ale_fixers = {
   \ 'go':         ['gofmt'],
   \ 'javascript': ['eslint'],
   \ 'vue':        ['eslint'],
-  \ 'sql':        ['sqlfmt'],
+  \ 'sql':        ['sqlformat'],
   \ 'terraform':  ['terraform']
 \ }
 " fixerオプション
-let g:ale_sql_sqlfmt_options = '-u'
+let g:ale_sql_sqlformat_options = '-r -k upper -i lower'
 let g:ale_python_black_options = '--config '.g:config_dir_path.'/black'
 let g:ale_ruby_rubocop_options = '--config '.g:lint_dir_path.'/rubocop.yml'
 let g:ale_ruby_rubocop_auto_correct_all = 1
