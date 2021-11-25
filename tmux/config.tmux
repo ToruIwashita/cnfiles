@@ -103,8 +103,6 @@ bind -r > swap-pane -D
 # 等間隔分割に変更する
 bind | select-layout even-horizontal
 bind - select-layout even-vertical
-# ペイン等間隔4分割
-bind M split-window -h \; split-window -v \; select-pane -t :.+ \; split-window -v \; select-pane -t :.-
 # ペインkill
 bind x kill-pane
 # 等間隔4分割(Multi)
