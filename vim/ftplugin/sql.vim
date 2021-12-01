@@ -7,12 +7,11 @@ let b:did_ftplugin = 1
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-map! <buffer> =c <BS><SPACE><SPACE>COUNT(1) AS count
-map! <buffer> =s SELECT<ENTER><SPACE><SPACE>*<ENTER><BS>FROM<ENTER><SPACE><SPACE>
-map! <buffer> =i <BS>INNER JOIN<ENTER><SPACE><SPACE>
-map! <buffer> =l <BS>LEFT JOIN<ENTER><SPACE><SPACE>
-map! <buffer> =o <BS>ON<ENTER><SPACE><SPACE>
-map! <buffer> =w <BS>WHERE<ENTER><SPACE><SPACE>
+map! <buffer> =c count(1) AS cnt
+map! <buffer> =s SELECT<SPACE>*<ENTER><BS>FROM<SPACE>
+map! <buffer> =i <ENTER>INNER JOIN<SPACE>
+map! <buffer> =l <ENTER>LEFT JOIN<SPACE>
+map! <buffer> =w <ENTER>WHERE<SPACE>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
