@@ -8,7 +8,7 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 map! <buffer> =c count(1) AS cnt
-map! <buffer> =s SELECT<SPACE>*<ENTER><BS>FROM<SPACE>
+map! <buffer> =s SELECT<SPACE>*<ENTER>FROM<SPACE>
 map! <buffer> =i <ENTER>INNER JOIN<SPACE>
 map! <buffer> =l <ENTER>LEFT JOIN<SPACE>
 map! <buffer> =w <ENTER>WHERE<SPACE>
