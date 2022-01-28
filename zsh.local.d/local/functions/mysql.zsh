@@ -450,3 +450,7 @@ tailf-my-query-log () {
 tailf-my-slow-query-log () {
   tail -f $LOG_DIR_PATH/mysql/slow_query.log
 }
+
+tailf-my-query-upsertd-log () {
+  tail -f $LOG_DIR_PATH/mysql/query.log | grep -e UPDATE -e INSERT -e DELETE
+}
