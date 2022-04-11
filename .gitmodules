@@ -28,3 +28,12 @@
 [submodule "modules/graphviz"]
 	path = modules/graphviz
 	url = git@gitlab.com:graphviz/graphviz.git
+[submodule "modules/zsh"]
+	path = modules/zsh
+	url = git@github.com:zsh-users/zsh.git
+[submodule "modules/the_silver_searcher"]
+	path = modules/the_silver_searcher
+	url = git@github.com:ggreer/the_silver_searcher.git
+[submodule "tmux-mem-cpu-load"]
+	path = tmux-mem-cpu-load
+	url = git@github.com:thewtex/tmux-mem-cpu-load.git
