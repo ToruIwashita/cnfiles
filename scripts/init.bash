@@ -398,5 +398,13 @@ else
   touch $MEMOLIST_TMP_UML_FILE_PATH
 fi
 
+# memolist tmp json file
+if [[ -f $MEMOLIST_TMP_JSON_FILE_PATH ]]; then
+  printf "\e[32m$MEMOLIST_TMP_JSON_FILE_PATH file already exists\e[0m\n"
+else
+  printf "\e[31mcreate file $MEMOLIST_TMP_JSON_FILE_PATH\e[0m\n"
+  touch $MEMOLIST_TMP_JSON_FILE_PATH
+fi
+
 printf "\ninit complete\n"
 exit 0
