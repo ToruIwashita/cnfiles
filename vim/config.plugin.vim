@@ -31,6 +31,7 @@ let g:ale_linters = {
   \ 'vim':        ['vint'],
   \ 'javascript': ['eslint'],
   \ 'vue':        ['eslint'],
+  \ 'json':       ['jq'],
   \ 'sql':        ['sqlint'],
   \ 'terraform':  ['terraform']
 \ }
@@ -41,6 +42,7 @@ let g:ale_fixers = {
   \ 'go':         ['gofmt'],
   \ 'javascript': ['eslint'],
   \ 'vue':        ['eslint'],
+  \ 'json':       ['fixjson'],
   \ 'sql':        ['sqlformat'],
   \ 'terraform':  ['terraform']
 \ }
