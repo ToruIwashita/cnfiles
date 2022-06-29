@@ -11,7 +11,7 @@ if [[ -f $LOCAL_BIN_DIR_PATH/tmux ]]; then
 fi
 
 ./autogen.sh
-./configure --prefix=$LOCAL_DIR_PATH
+./configure --prefix=$LOCAL_DIR_PATH --enable-utf8proc
 make && make install
 
 git checkout .
