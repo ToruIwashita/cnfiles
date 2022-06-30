@@ -6,6 +6,7 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 let g:previm_enable_realtime = 1
+let g:previm_show_header = 0
 
 fun! s:previm_setting() abort
   nnoremap <buffer> <C-s>v :<C-u>PrevimOpen<CR>
