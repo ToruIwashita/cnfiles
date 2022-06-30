@@ -7,7 +7,8 @@ set cpoptions&vim
 
 let g:previm_enable_realtime = 1
 let g:previm_show_header = 0
-
+let g:previm_disable_default_css = 1
+let g:previm_custom_css_path = g:config_dir_path.'/github-markdown-dark.css'
 fun! s:previm_setting() abort
   nnoremap <buffer> <C-s>v :<C-u>PrevimOpen<CR>
 endf
