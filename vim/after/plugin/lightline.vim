@@ -84,9 +84,9 @@ endfunction
 
 function! LightlineFugitive()
   try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &filetype !~? 'vimfiler' && exists('*fugitive#head')
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &filetype !~? 'vimfiler' && exists('*FugitiveHead')
       let l:mark = ''  " edit here for cool mark
-      let l:head = fugitive#head()
+      let l:head = FugitiveHead()
       return strlen(l:head) ? l:mark.l:head : ''
     endif
   catch

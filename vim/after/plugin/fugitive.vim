@@ -23,10 +23,10 @@ nnoremap <C-g><C-c> :<C-u>w<CR>:Gwrite<CR>:Git commit -v<CR>
 " commit amend
 nnoremap <C-g>w :<C-u>Git commit --amend<CR>
 " empty commit
-nnoremap <C-g>e :<C-u>Git commit --allow-empty -m '[empty commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
+nnoremap <C-g>e :<C-u>Git commit --allow-empty -m '[empty commit](<C-r>=FugitiveHead()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
 " temporary commit
-nnoremap <C-g>t :<C-u>Git commit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
-nnoremap <C-g><C-t> :<C-u>w<CR>:Gwrite<CR>:Git commit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
+nnoremap <C-g>t :<C-u>Git commit -m '[temporary commit](<C-r>=FugitiveHead()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
+nnoremap <C-g><C-t> :<C-u>w<CR>:Gwrite<CR>:Git commit -m '[temporary commit](<C-r>=FugitiveHead()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
 " fixup commit
 nnoremap <C-g>f :<C-u>Git commit --amend --no-edit --allow-empty<CR>
 nnoremap <C-g><C-f> :<C-u>w<CR>:Gwrite<CR>:Git commit --amend --no-edit --allow-empty<CR>
@@ -65,9 +65,9 @@ fun! s:fugitive_commit_setting() abort
   nmap <silent><buffer> <C-s><C-r> :<C-u>wa<CR>:call system('\git reset')<CR>r
 
   " empty commit
-  nnoremap <C-g>e :<C-u>Git commit --alow-empty -m '[empty commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
+  nnoremap <C-g>e :<C-u>Git commit --alow-empty -m '[empty commit](<C-r>=FugitiveHead()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
   " temporary commit
-  nnoremap <C-g>t :<C-u>Git commit -m '[temporary commit](<C-r>=fugitive#head()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
+  nnoremap <C-g>t :<C-u>Git commit -m '[temporary commit](<C-r>=FugitiveHead()<CR>) <C-r>=substitute(system("LANG=C date"), "\n$", "", "")<CR>'<CR>
   " fixup commit
   nnoremap <C-g>f :<C-u>Git commit --amend --no-edit<CR>
 endf
