@@ -7,6 +7,12 @@ set cpoptions&vim
 
 " markdownはテキストの最大幅無し
 setlocal textwidth=0
+" オートインデント時の空白文字数
+setlocal shiftwidth=2
+" <TAB>を含むファイルを開いた際,<TAB>を何文字の空白に変換するか
+setlocal tabstop=2
+" キーボードで<TAB>を入力した際,<TAB>を何文字の空白に変換するか
+setlocal softtabstop=2
 
 let g:add_md_space_enabled = 1
 
