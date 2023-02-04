@@ -11,7 +11,7 @@ let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'readonly', 'linter_errors', 'linter_warnings' ], [ 'ctrlpmark' ] ],
-  \   'right': [ [ 'mdspace', 'gutentags', 'lineinfo' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
+  \   'right': [ [ 'mdspace', 'deoplete', 'gutentags', 'lineinfo' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
   \ },
   \ 'component_function': {
   \   'fugitive':     'LightlineFugitive',
@@ -28,6 +28,7 @@ let g:lightline = {
   \   'linter_warnings': 'LightlineLinterWarnings',
   \   'linter_errors':   'LightlineLinterErrors',
   \   'mdspace':         'LightlineMdSpaceStatusLine',
+  \   'deoplete':       'LightlineDeopleteStatusLine',
   \   'gutentags':       'LightlineGutentagsStatusLine'
   \ },
   \ 'component_type': {
@@ -71,6 +72,14 @@ function! LightlineGutentagsStatusLine()
     return 'ctags[*]'
   else
     return 'ctags[]'
+  endif
+endfunction
+
+function! LightlineDeopleteStatusLine()
+  if deoplete#is_enabled()
+    return 'autoc[*]'
+  else
+    return 'autoc[]'
   endif
 endfunction
 
