@@ -7,6 +7,9 @@ BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 # OS info
 OS_INFO=darwin
 
+# Homebrew
+HOMEBREW_INSTALL_DIR_PATH=/opt/homebrew
+
 # config
 CONFIG_DIR_PATH=~/.config
 
