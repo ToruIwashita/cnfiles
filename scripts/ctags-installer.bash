@@ -10,7 +10,7 @@ if [[ -f $LOCAL_BIN_DIR_PATH/ctags ]]; then
   mv $LOCAL_BIN_DIR_PATH/{ctags,ctags.prev}
 fi
 
-LIBXML2_PATH=/usr/local/opt/libxml2
+LIBXML2_PATH=$HOMEBREW_INSTALL_DIR_PATH/opt/libxml2
 
 ./autogen.sh
 ./configure                                     \
