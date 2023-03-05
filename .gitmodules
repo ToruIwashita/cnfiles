@@ -34,9 +34,6 @@
 [submodule "modules/the_silver_searcher"]
 	path = modules/the_silver_searcher
 	url = git@github.com:ggreer/the_silver_searcher.git
-[submodule "tmux-mem-cpu-load"]
-	path = tmux-mem-cpu-load
-	url = git@github.com:thewtex/tmux-mem-cpu-load.git
 [submodule "modules/github-markdown-css"]
 	path = modules/github-markdown-css
 	url = git@github.com:sindresorhus/github-markdown-css.git
