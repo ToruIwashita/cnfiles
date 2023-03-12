@@ -10,8 +10,12 @@ if [[ -f $LOCAL_BIN_DIR_PATH/dot ]]; then
   mv $LOCAL_BIN_DIR_PATH/{dot,dot.prev}
 fi
 
+BISON_PATH=$HOMEBREW_INSTALL_DIR_PATH/opt/bison
+
 ./autogen.sh
-./configure --prefix=$LOCAL_DIR_PATH
+./configure                   \
+  --prefix=$LOCAL_DIR_PATH    \
+  LDFLAGS="-L$BISON_PATH/lib"
 
 make && make install
 
