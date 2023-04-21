@@ -28,6 +28,7 @@ nodenv exec npm install -g eslint-plugin-prettier
 nodenv exec npm install -g eslint-config-prettier
 nodenv exec npm install -g fixjson
 nodenv exec npm install -g lice
+nodenv exec npm install -g @mermaid-js/mermaid-cli
 
 echo
 nodenv exec npm update -g
