@@ -77,9 +77,9 @@ endfunction
 
 function! LightlineDeopleteStatusLine()
   if deoplete#is_enabled()
-    return 'autoc[*]'
+    return 'ctags[*]'
   else
-    return 'autoc[]'
+    return 'ctags[]'
   endif
 endfunction
 
