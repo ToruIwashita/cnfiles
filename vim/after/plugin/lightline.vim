@@ -11,7 +11,7 @@ let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'readonly', 'linter_errors', 'linter_warnings' ], [ 'ctrlpmark' ] ],
-  \   'right': [ [ 'mdspace', 'gutentags', 'lineinfo' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
+  \   'right': [ [ 'deoplete', 'mdspace', 'gutentags', 'lineinfo' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
   \ },
   \ 'component_function': {
   \   'fugitive':     'LightlineFugitive',
@@ -27,6 +27,7 @@ let g:lightline = {
   \   'readonly':        'LightlineReadonly',
   \   'linter_warnings': 'LightlineLinterWarnings',
   \   'linter_errors':   'LightlineLinterErrors',
+  \   'deoplete':        'LightlineDeopleteStatusLine',
   \   'mdspace':         'LightlineMdSpaceStatusLine',
   \   'gutentags':       'LightlineGutentagsStatusLine'
   \ },
@@ -74,6 +75,14 @@ function! LightlineGutentagsStatusLine()
   endif
 endfunction
 
+function! LightlineDeopleteStatusLine()
+  if deoplete#is_enabled()
+    return 'ctags[*]'
+  else
+    return 'ctags[]'
+  endif
+endfunction
+
 function! LightlineModified()
   return &filetype =~# 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
 endfunction
@@ -84,9 +93,9 @@ endfunction
 
 function! LightlineFugitive()
   try
-    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &filetype !~? 'vimfiler' && exists('*fugitive#head')
+    if expand('%:t') !~? 'Tagbar\|Gundo\|NERD' && &filetype !~? 'vimfiler' && exists('*FugitiveHead')
       let l:mark = ''  " edit here for cool mark
-      let l:head = fugitive#head()
+      let l:head = FugitiveHead()
       return strlen(l:head) ? l:mark.l:head : ''
     endif
   catch

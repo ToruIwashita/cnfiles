@@ -8,6 +8,9 @@
   attributesfile = ~/.gitattributes
   excludesfile = ~/.gitignore
 
+[init]
+  defaultBranch = main
+
 [status]
   short = true
 

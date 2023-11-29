@@ -80,7 +80,7 @@ fi
 
 # config
 if [[ -d $CONFIG_DIR_PATH ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH symlink already exists\e[0m\n"
+  printf "\e[32m$CONFIG_DIR_PATH dir already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink $CONFIG_DIR_PATH dir\e[0m\n"
   mkdir $CONFIG_DIR_PATH
@@ -125,6 +125,14 @@ if [[ -f $BASE_DIR_PATH/my.local.cnf ]]; then
 else
   printf "\e[31mcopy file $BASE_DIR_PATH/my.cnf to $BASE_DIR_PATH/my.local.cnf\e[0m\n"
   cp -p $BASE_DIR_PATH/my.cnf $BASE_DIR_PATH/my.local.cnf
+fi
+
+## copy github-markdown-css/github-markdown-dark.css file
+if [[ -f $CONFIG_DIR_PATH/github-markdown-dark.css ]]; then
+  printf "\e[32m$CONFIG_DIR_PATH/github-markdown-dark.css file already exists\e[0m\n"
+else
+  printf "\e[31mcopy file $BASE_DIR_PATH/modules/github-markdown-css/github-markdown-dark.css to $CONFIG_DIR_PATH/github-markdown-dark.css\e[0m\n"
+  cp -p $BASE_DIR_PATH/modules/github-markdown-css/github-markdown-dark.css $CONFIG_DIR_PATH/github-markdown-dark.css
 fi
 
 ## create symlink
@@ -197,6 +205,14 @@ else
   ln -isn $BASE_DIR_PATH/peco ~/.peco
 fi
 
+# delve
+if [[ -L ~/.dlv ]]; then
+  printf "\e[32m~/.dlv dir symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.dlv dir\e[0m\n"
+  ln -isn $BASE_DIR_PATH/dlv ~/.dlv
+fi
+
 # ctags
 if [[ -L ~/.ctags.d ]]; then
   printf "\e[32m~/.ctags.d dir symlink already exists\e[0m\n"
@@ -235,6 +251,14 @@ if [[ -L $CONFIG_DIR_PATH/mypy ]]; then
 else
   printf "\e[31mcreate symlink $CONFIG_DIR_PATH/mypy dir\e[0m\n"
   ln -is $BASE_DIR_PATH/config/mypy $CONFIG_DIR_PATH/mypy
+fi
+
+# karabiner
+if [[ -L $CONFIG_DIR_PATH/karabiner ]]; then
+  printf "\e[32m$CONFIG_DIR_PATH/karabiner dir symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/karabiner dir\e[0m\n"
+  ln -is $BASE_DIR_PATH/config/karabiner $CONFIG_DIR_PATH/karabiner
 fi
 
 # eslint
@@ -389,6 +413,26 @@ else
   printf "\e[31mcreate file $MEMOLIST_TMP_UML_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TMP_UML_FILE_PATH
 fi
+
+# memolist tmp json file
+if [[ -f $MEMOLIST_TMP_JSON_FILE_PATH ]]; then
+  printf "\e[32m$MEMOLIST_TMP_JSON_FILE_PATH file already exists\e[0m\n"
+else
+  printf "\e[31mcreate file $MEMOLIST_TMP_JSON_FILE_PATH\e[0m\n"
+  touch $MEMOLIST_TMP_JSON_FILE_PATH
+fi
+
+# memolist tmp ruby file
+if [[ -f $MEMOLIST_TMP_RUBY_FILE_PATH ]]; then
+  printf "\e[32m$MEMOLIST_TMP_RUBY_FILE_PATH file already exists\e[0m\n"
+else
+  printf "\e[31mcreate file $MEMOLIST_TMP_RUBY_FILE_PATH\e[0m\n"
+  touch $MEMOLIST_TMP_RUBY_FILE_PATH
+fi
+
+# text replacement
+sed -e 's/\.markdown-body/#body/g' $CONFIG_DIR_PATH/github-markdown-dark.css > $CONFIG_DIR_PATH/github-markdown-dark.css.tmp
+mv -f $CONFIG_DIR_PATH/github-markdown-dark.css.tmp $CONFIG_DIR_PATH/github-markdown-dark.css
 
 printf "\ninit complete\n"
 exit 0

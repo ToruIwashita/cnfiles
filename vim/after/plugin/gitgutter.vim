@@ -28,8 +28,6 @@ noremap <C-o> :<C-u>w<CR>:syntax sync fromstart<CR>
 noremap <leader>o :<C-u>wa<CR>:redraw!<CR>:call gitgutter#all(1)<CR>:syntax sync fromstart<CR>
 " バッファ全てを保存して全て閉じる
 noremap <leader>x :<C-u>wa<CR>:qa<CR>
-" 現在のタブを閉じる
-noremap <leader>e :<C-u>tabclose<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save

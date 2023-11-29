@@ -5,6 +5,14 @@
 # }
 # init-ssh-agent
 
+## homebrew
+# eval "$(/opt/homebrew/bin/brew shellenv)"
+
+## direnv
+# if (( ${+commands[direnv]} )); then
+#   eval "$(direnv hook zsh)"
+# fi
+
 ## alias
 # git
 alias gcs='git commit -m "- update submodules"'

@@ -31,7 +31,7 @@ export YARN_ROOT=~/.yarn
 export YARN_GLOBAL_NODE_MODULES_BIN_PATH=~/.config/yarn/global/node_modules/.bin
 
 # gitインストール時にbrewでインストールしたopensslを使用する
-# export CPATH=/usr/local/opt/openssl/include:$LD_LIBRARY_PATH
+# export CPATH=/opt/homebrew/opt/openssl@3/include:$LD_LIBRARY_PATH
 
 ## path
 path=(
@@ -40,7 +40,7 @@ path=(
   $YARN_ROOT/bin
   $YARN_GLOBAL_NODE_MODULES_BIN_PATH
   # gitインストール時にbrewでインストールしたopensslを使用する
-  # /usr/local/opt/openssl/bin
+  # /opt/homebrew/opt/openssl@3/bin
   /usr/local/bin
   $path
 )
@@ -49,7 +49,7 @@ path=(
 ld_library_path=(
   $LOCAL_DIR_PATH/lib
   # gitインストール時にbrewでインストールしたopensslを使用する
-  # /usr/local/opt/openssl/lib
+  # /opt/homebrew/opt/openssl@3/lib
   $ld_library_path
 )
 

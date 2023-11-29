@@ -10,7 +10,7 @@ fun! s:delete_current_file()
     return 1
   endif
 
-  Delete
+  Delete!
 endf
 
 fun! s:buffer_delete_current_file()

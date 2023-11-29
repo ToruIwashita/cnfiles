@@ -12,6 +12,19 @@ silent! nunmap <buffer> <C-w><C-]>
 " タグ移動のmapを解除
 silent! nunmap <buffer> <C-]>
 
+" tabを半角スペースとしない
+setlocal noexpandtab
+" tabと半角スペースの表示
+setlocal listchars=tab:\ \ ,space:\ ,trail:_
+
+"" 保存時に自動import
+let g:go_fmt_command = 'goimports'
+
+"" シンタクスハイライト
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_structs = 1
+
 "" 関数
 fun! s:godef_vsplit() abort
   execute 'vsplit'
@@ -38,14 +51,14 @@ command! GodefVsplit call s:godef_vsplit()
 command! GodefTabnew call s:godef_tabnew()
 
 "" キーマップ
+" メソッド定義ジャンプ
 nmap <buffer> <C-s>l :<C-u>GodefVsplit<CR>
 nmap <buffer> <C-s><C-l> :<C-u>GodefVsplit<CR>
 noremap <buffer> <C-s>L :<C-u>GodefTabnew<CR>
-
-"" シンタクスハイライト
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_structs = 1
+" インターフェース実装一覧
+nmap <buffer> <leader>i :<C-u>GoImplements<CR>
+" 定義参照一覧
+nmap <buffer> <leader>e :<C-u>GoReferrers<CR>
 
 " errという文字列のシンタクスハイライト
 augroup local_go_vim

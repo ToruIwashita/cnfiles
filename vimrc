@@ -18,6 +18,7 @@ let g:memolist_tmp_markdown_file_path = $MEMOLIST_TMP_MARKDOWN_FILE_PATH
 let g:memolist_tmp_sql_file_path = $MEMOLIST_TMP_SQL_FILE_PATH
 let g:memolist_tmp_text_file_path = $MEMOLIST_TMP_TEXT_FILE_PATH
 let g:memolist_tmp_uml_file_path = $MEMOLIST_TMP_UML_FILE_PATH
+let g:memolist_tmp_json_file_path = $MEMOLIST_TMP_JSON_FILE_PATH
 
 "" 組込みプラグイン
 source $VIMRUNTIME/macros/matchit.vim  " 対応する括弧などにジャンプする

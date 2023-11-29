@@ -31,6 +31,7 @@ rbenv exec gem install pry-stack_explorer
 rbenv exec gem install rails
 rbenv exec gem install rspec
 rbenv exec gem install rubocop
+rbenv exec gem install rubocop-rails
 rbenv exec gem install rubocop-rspec
 rbenv exec gem install sqlint
 rbenv exec gem install yard

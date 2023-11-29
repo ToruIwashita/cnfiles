@@ -32,8 +32,6 @@ export PATH="$PATH:$GOPATH/bin"
 printf "go: $(go version)\n"
 
 echo
-echo 'go install github.com/jackc/sqlfmt/cmd/sqlfmt@latest'
-go install github.com/jackc/sqlfmt/cmd/sqlfmt@latest
 echo 'go install github.com/mattn/longcat@latest'
 go install github.com/mattn/longcat@latest
 echo 'go install github.com/x-motemen/ghq@latest'
@@ -42,6 +40,10 @@ echo 'go install github.com/skanehira/gtran@latest'
 go install github.com/skanehira/gtran@latest
 echo 'go install github.com/x-motemen/gore/cmd/gore@latest'
 go install github.com/x-motemen/gore/cmd/gore@latest
+echo 'go install github.com/go-delve/delve/cmd/dlv@latest'
+go install github.com/go-delve/delve/cmd/dlv@latest
+echo 'go install github.com/direnv/direnv@latest'
+go install github.com/direnv/direnv@latest
 echo 'go install github.com/peco/peco/cmd/peco@latest'
 go install github.com/peco/peco/cmd/peco@latest
 
