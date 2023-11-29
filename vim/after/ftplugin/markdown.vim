@@ -61,5 +61,7 @@ nnoremap <C-@> :<C-u>AddMdSpaceToggle<CR>
 cnorea %M %MdFormat
 cnorea '<,'>M '<,'>MdFormat
 
+ab <buffer> =b <br/>
+
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
