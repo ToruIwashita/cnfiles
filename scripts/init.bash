@@ -254,11 +254,18 @@ else
 fi
 
 # karabiner
-if [[ -L $CONFIG_DIR_PATH/karabiner ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH/karabiner dir symlink already exists\e[0m\n"
+if [[ -d $CONFIG_DIR_PATH/karabiner ]]; then
+  printf "\e[32m$CONFIG_DIR_PATH/karabiner dir already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/karabiner dir\e[0m\n"
-  ln -is $BASE_DIR_PATH/config/karabiner $CONFIG_DIR_PATH/karabiner
+  printf "\e[31mmkdir $CONFIG_DIR_PATH/karabiner dir\e[0m\n"
+  mkdir $CONFIG_DIR_PATH/karabiner
+fi
+
+if [[ -L $CONFIG_DIR_PATH/karabiner/karabiner.json ]]; then
+  printf "\e[32m$CONFIG_DIR_PATH/karabiner/karabiner.json symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/karabiner/karabiner.json\e[0m\n"
+  ln -is $BASE_DIR_PATH/config/karabiner/karabiner.json $CONFIG_DIR_PATH/karabiner/karabiner.json
 fi
 
 # eslint
