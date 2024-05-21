@@ -17,7 +17,7 @@ silent! nunmap <buffer> <C-]>
 ab <buffer> =a , :aggregate_failures
 ab <buffer> =c context "current", current: true do
 ab <buffer> =f # frozen_string_literal: true
-ab <buffer> =d binding.pry
+ab <buffer> =d binding.irb
 ab <buffer> =r require 'pry'
 ab <buffer> =t , current: true
 
