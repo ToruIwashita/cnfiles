@@ -1,42 +1,42 @@
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
-	url = git@github.com:tmux-plugins/tpm.git
+	url = https://github.com/tmux-plugins/tpm.git
 [submodule "modules/hub"]
 	path = modules/hub
-	url = git@github.com:github/hub.git
+	url = https://github.com/github/hub.git
 [submodule "modules/tmux"]
 	path = modules/tmux
-	url = git@github.com:tmux/tmux.git
+	url = https://github.com/tmux/tmux.git
 [submodule "modules/ctags"]
 	path = modules/ctags
-	url = git@github.com:universal-ctags/ctags.git
+	url = https://github.com/universal-ctags/ctags.git
 [submodule "modules/vim"]
 	path = modules/vim
-	url = git@github.com:vim/vim.git
+	url = https://github.com/vim/vim.git
 [submodule "modules/git"]
 	path = modules/git
-	url = git@github.com:git/git.git
+	url = https://github.com/git/git.git
 [submodule "modules/jq"]
 	path = modules/jq
-	url = git@github.com:stedolan/jq.git
+	url = https://github.com/stedolan/jq.git
 [submodule "modules/anyenv"]
 	path = modules/anyenv
-	url = git@github.com:riywo/anyenv.git
+	url = https://github.com/riywo/anyenv.git
 [submodule "modules/anyenv-update"]
 	path = modules/anyenv-update
-	url = git@github.com:znz/anyenv-update.git
+	url = https://github.com/znz/anyenv-update.git
 [submodule "modules/graphviz"]
 	path = modules/graphviz
 	url = git@gitlab.com:graphviz/graphviz.git
 [submodule "modules/zsh"]
 	path = modules/zsh
-	url = git@github.com:zsh-users/zsh.git
+	url = https://github.com/zsh-users/zsh.git
 [submodule "modules/the_silver_searcher"]
 	path = modules/the_silver_searcher
-	url = git@github.com:ggreer/the_silver_searcher.git
+	url = https://github.com/ggreer/the_silver_searcher.git
 [submodule "modules/github-markdown-css"]
 	path = modules/github-markdown-css
-	url = git@github.com:sindresorhus/github-markdown-css.git
+	url = https://github.com/sindresorhus/github-markdown-css.git
 [submodule "modules/tmux-mem-cpu-load"]
 	path = modules/tmux-mem-cpu-load
-	url = git@github.com:thewtex/tmux-mem-cpu-load.git
+	url = https://github.com/thewtex/tmux-mem-cpu-load.git
