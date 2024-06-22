@@ -18,7 +18,7 @@ ab <buffer> =a , :aggregate_failures
 ab <buffer> =c context "current", current: true do
 ab <buffer> =f # frozen_string_literal: true
 ab <buffer> =d binding.break
-ab <buffer> =r require 'debug'
+ab <buffer> =r require 'pry'
 ab <buffer> =t , current: true
 
 let &cpoptions = s:cpoptions_save

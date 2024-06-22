@@ -300,6 +300,14 @@ else
   ln -is $GIT_DIR_PATH/gitignore  ~/.gitignore
 fi
 
+# pry
+if [[ -L ~/.pryrc ]]; then
+  printf "\e[32m~/.pryrc symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.pryrc\e[0m\n"
+  ln -is $BASE_DIR_PATH/pryrc ~/.pryrc
+fi
+
 # rspec
 if [[ -L ~/.rspec ]]; then
   printf "\e[32m~/.rspec symlink already exists\e[0m\n"
