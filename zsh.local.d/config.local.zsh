@@ -52,6 +52,4 @@ alias bspork='bundle exec spork'
 ## for Mac(GNU系のコマンドはシンボリックリンクを貼り直すことを推奨するので以下コメントアウト)
 # bindkey
 bindkey -v '^sb' immediate-tmp-text-pbcopy      # Ctr+s,pでBUFFERをcatしてpbcopy
-bindkey -v '^se' insert-pry                     # Ctr+s,eでpryをBUFFERに入れる
 bindkey -v '^s^b' immediate-tmp-markdown-pbcopy # Ctr+s,Ctr+cでtmpファイルをcatしてpbcopy
-bindkey -v '^s^e' insert-bundle-exec-pry        # Ctr+s,Ctr+eでbundle exec pryをBUFFERに入れる
