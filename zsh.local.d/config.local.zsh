@@ -6,7 +6,7 @@
 # init-ssh-agent
 
 ## homebrew
-# eval "$(/opt/homebrew/bin/brew shellenv)"
+# eval "$(/opt/homebrew/bin/brew shellenv | grep -v '^PATH=')"
 
 ## direnv
 # if (( ${+commands[direnv]} )); then
