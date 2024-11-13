@@ -41,7 +41,13 @@ path=(
   $YARN_GLOBAL_NODE_MODULES_BIN_PATH
   # gitインストール時にbrewでインストールしたopensslを使用する
   # /opt/homebrew/opt/openssl@3/bin
+
+  # brew
+  /opt/homebrew/bin
+  /opt/homebrew/sbin
+
   /usr/local/bin
+  /usr/local/sbin
   $path
 )
 
