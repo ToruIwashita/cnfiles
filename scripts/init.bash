@@ -42,7 +42,7 @@ fi
 if [[ -d $CONFIG_DIR_PATH ]]; then
   printf "\e[32m$CONFIG_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir  $CONFIG_DIR_PATH dir\e[0m\n"
+  printf "\e[31mmkdir $CONFIG_DIR_PATH dir\e[0m\n"
   mkdir $CONFIG_DIR_PATH
 fi
 
@@ -177,7 +177,47 @@ if [[ -L ~/.tmux ]]; then
   printf "\e[32m~/.tmux dir symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.tmux dir\e[0m\n"
-  ln -isn $BASE_DIR_PATH/tmux   ~/.tmux
+  ln -isn $BASE_DIR_PATH/tmux ~/.tmux
+fi
+
+# karabiner
+if [[ -L $CONFIG_DIR_PATH/karabiner/karabiner.json ]]; then
+  printf "\e[32m$CONFIG_DIR_PATH/karabiner/karabiner.json symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/karabiner/karabiner.json\e[0m\n"
+  ln -is $BASE_DIR_PATH/config/karabiner/karabiner.json $CONFIG_DIR_PATH/karabiner/karabiner.json
+fi
+
+# gitconfig
+if [[ -L ~/.gitconfig ]]; then
+  printf "\e[32m~/.gitconfig symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.gitconfig\e[0m\n"
+  ln -is $GIT_DIR_PATH/gitconfig ~/.gitconfig
+fi
+
+# gitattributes
+if [[ -L ~/.gitattributes ]]; then
+  printf "\e[32m~/.gitattributes symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.gitattributes\e[0m\n"
+  ln -is $GIT_DIR_PATH/gitattributes ~/.gitattributes
+fi
+
+# gitignore
+if [[ -L ~/.gitignore ]]; then
+  printf "\e[32m~/.gitignore symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.gitignore \e[0m\n"
+  ln -is $GIT_DIR_PATH/gitignore ~/.gitignore
+fi
+
+# asdf
+if [[ -L ~/.asdf ]]; then
+  printf "\e[32m~/.asdf symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.asdf \e[0m\n"
+  ln -is $ASDF_SRC_DIR_PATH ~/.asdf
 fi
 
 # peco
@@ -236,44 +276,12 @@ else
   ln -is $BASE_DIR_PATH/config/mypy $CONFIG_DIR_PATH/mypy
 fi
 
-# karabiner
-if [[ -L $CONFIG_DIR_PATH/karabiner/karabiner.json ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH/karabiner/karabiner.json symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/karabiner/karabiner.json\e[0m\n"
-  ln -is $BASE_DIR_PATH/config/karabiner/karabiner.json $CONFIG_DIR_PATH/karabiner/karabiner.json
-fi
-
 # eslint
 if [[ -L ~/.eslintrc.json ]]; then
   printf "\e[32m~/.eslintrc.json symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.eslintrc.json\e[0m\n"
   ln -is $BASE_DIR_PATH/eslintrc.json ~/.eslintrc.json
-fi
-
-# gitconfig
-if [[ -L ~/.gitconfig ]]; then
-  printf "\e[32m~/.gitconfig symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink ~/.gitconfig\e[0m\n"
-  ln -is $GIT_DIR_PATH/gitconfig ~/.gitconfig
-fi
-
-# gitattributes
-if [[ -L ~/.gitattributes ]]; then
-  printf "\e[32m~/.gitattributes symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink ~/.gitattributes\e[0m\n"
-  ln -is $GIT_DIR_PATH/gitattributes ~/.gitattributes
-fi
-
-# gitignore
-if [[ -L ~/.gitignore ]]; then
-  printf "\e[32m~/.gitignore  symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink ~/.gitignore \e[0m\n"
-  ln -is $GIT_DIR_PATH/gitignore  ~/.gitignore
 fi
 
 # pry
