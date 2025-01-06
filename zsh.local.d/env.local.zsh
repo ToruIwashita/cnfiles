@@ -20,9 +20,6 @@ export GITHUB_TOKEN
 export GITHUB_USER_NAME
 export OWNED_GITHUB_REPOSITORIES=()
 
-# anyenv
-export ANYENV_ROOT=~/.anyenv
-
 # yarn
 export YARN_ROOT=~/.yarn
 export YARN_GLOBAL_NODE_MODULES_BIN_PATH=~/.config/yarn/global/node_modules/.bin
@@ -33,7 +30,6 @@ export YARN_GLOBAL_NODE_MODULES_BIN_PATH=~/.config/yarn/global/node_modules/.bin
 ## path
 path=(
   $LOCAL_DIR_PATH/bin
-  $ANYENV_ROOT/bin
   $YARN_ROOT/bin
   $YARN_GLOBAL_NODE_MODULES_BIN_PATH
   # gitインストール時にbrewでインストールしたopensslを使用する
@@ -61,24 +57,3 @@ fpath=(
   $zsh_inits_dir_path
   $fpath
 )
-
-## anyenv設定
-if [[ -d $ANYENV_ROOT ]]; then
-  eval "$(anyenv init -)"
-fi
-
-## go
-if [[ $(which go) =~ anyenv ]]; then
-  export GOROOT=$(go env GOROOT)
-  export GOPATH=$(go env GOPATH)
-
-  path=(
-    $GOPATH/bin
-    $path
-  )
-fi
-
-## node
-if [[ $(which node) =~ anyenv ]]; then
-  export NODE_PATH=$(npm root -g)
-fi
