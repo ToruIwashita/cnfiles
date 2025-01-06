@@ -17,7 +17,6 @@ echo
 rbenv exec gem update --system
 
 echo
-rbenv exec gem install awesome_print
 rbenv exec gem install aws-sdk
 rbenv exec gem install bundler
 rbenv exec gem install foreman

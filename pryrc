@@ -2,12 +2,6 @@ require 'benchmark'
 require 'psych'
 require 'psych/y'
 
-begin
-  require 'awesome_print'
-  AwesomePrint.pry!
-rescue LoadError
-end
-
 default_command_set =
   Pry::CommandSet.new do
     command 'clear' do
@@ -55,13 +49,6 @@ end
 
 def rp(obj)
   Pry::ColorPrinter.pp obj
-end
-
-## awesome_print
-if defined?(AwesomePrint)
-  def a(obj)
-    ap obj
-  end
 end
 
 ## rails
