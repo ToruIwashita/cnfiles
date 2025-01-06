@@ -62,13 +62,6 @@ else
   mkdir $TMP_DIR_PATH
 fi
 
-if [[ -d $CONFIG_DIR_PATH/karabiner ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH/karabiner dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir $CONFIG_DIR_PATH/karabiner dir\e[0m\n"
-  mkdir $CONFIG_DIR_PATH/karabiner
-fi
-
 # log dir
 if [[ -d $LOG_DIR_PATH ]]; then
   printf "\e[32m$LOG_DIR_PATH dir already exists\e[0m\n"
@@ -180,14 +173,6 @@ else
   ln -isn $BASE_DIR_PATH/tmux ~/.tmux
 fi
 
-# karabiner
-if [[ -L $CONFIG_DIR_PATH/karabiner/karabiner.json ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH/karabiner/karabiner.json symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/karabiner/karabiner.json\e[0m\n"
-  ln -is $BASE_DIR_PATH/config/karabiner/karabiner.json $CONFIG_DIR_PATH/karabiner/karabiner.json
-fi
-
 # gitconfig
 if [[ -L ~/.gitconfig ]]; then
   printf "\e[32m~/.gitconfig symlink already exists\e[0m\n"
@@ -250,6 +235,14 @@ if [[ -L ~/.lint ]]; then
 else
   printf "\e[31mcreate symlink ~/.lint dir\e[0m\n"
   ln -is $BASE_DIR_PATH/lint ~/.lint
+fi
+
+# karabiner
+if [[ -L $CONFIG_DIR_PATH/karabiner ]]; then
+  printf "\e[32m$CONFIG_DIR_PATH/karabiner symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/karabiner\e[0m\n"
+  ln -is $BASE_DIR_PATH/config/karabiner $CONFIG_DIR_PATH/karabiner
 fi
 
 # flake8
