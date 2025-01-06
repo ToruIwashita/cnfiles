@@ -292,14 +292,6 @@ else
   ln -is $BASE_DIR_PATH/rspec ~/.rspec
 fi
 
-# awesome_print
-if [[ -L ~/.aprc ]]; then
-  printf "\e[32m~/.aprc symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink ~/.aprc\e[0m\n"
-  ln -is $BASE_DIR_PATH/aprc ~/.aprc
-fi
-
 # my.cnf
 if [[ -L ~/.my.cnf ]]; then
   printf "\e[32m~/.my.cnf symlink already exists\e[0m\n"
@@ -347,14 +339,6 @@ if [[ -f $MEMOLIST_TASK_MARKDOWN_FILE_PATH ]]; then
 else
   printf "\e[31mcreate file $MEMOLIST_TASK_MARKDOWN_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TASK_MARKDOWN_FILE_PATH
-fi
-
-# memolist tmp dot file
-if [[ -f $MEMOLIST_TMP_DOT_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TMP_DOT_FILE_PATH file already exists\e[0m\n"
-else
-  printf "\e[31mcreate file $MEMOLIST_TMP_DOT_FILE_PATH\e[0m\n"
-  touch $MEMOLIST_TMP_DOT_FILE_PATH
 fi
 
 # memolist tmp markdown file
