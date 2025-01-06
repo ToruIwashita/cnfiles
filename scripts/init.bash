@@ -324,14 +324,6 @@ else
   ln -is $BASE_DIR_PATH/aprc ~/.aprc
 fi
 
-# sbtrc
-if [[ -L ~/.sbtrc ]]; then
-  printf "\e[32m~/.sbtrc symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink ~/.sbtrc\e[0m\n"
-  ln -is $BASE_DIR_PATH/sbtrc ~/.sbtrc
-fi
-
 # my.cnf
 if [[ -L ~/.my.cnf ]]; then
   printf "\e[32m~/.my.cnf symlink already exists\e[0m\n"

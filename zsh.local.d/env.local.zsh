@@ -23,9 +23,6 @@ export OWNED_GITHUB_REPOSITORIES=()
 # anyenv
 export ANYENV_ROOT=~/.anyenv
 
-# sbt
-export SBT_HOME=~/.sbt
-
 # yarn
 export YARN_ROOT=~/.yarn
 export YARN_GLOBAL_NODE_MODULES_BIN_PATH=~/.config/yarn/global/node_modules/.bin
