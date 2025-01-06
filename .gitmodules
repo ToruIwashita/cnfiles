@@ -34,3 +34,4 @@
 [submodule "modules/asdf"]
 	path = modules/asdf
 	url = https://github.com/asdf-vm/asdf.git
+	ignore = dirty
