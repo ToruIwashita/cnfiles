@@ -1,9 +1,0 @@
-alias q=exit
-alias ls=projects
-alias r=run
-alias c=compile
-alias ct=;compile;test
-alias t=test
-alias tc=test:compile
-alias to=test-only
-alias tq=test-quick
