@@ -19,12 +19,6 @@
 [submodule "modules/jq"]
 	path = modules/jq
 	url = https://github.com/stedolan/jq.git
-[submodule "modules/anyenv"]
-	path = modules/anyenv
-	url = https://github.com/riywo/anyenv.git
-[submodule "modules/anyenv-update"]
-	path = modules/anyenv-update
-	url = https://github.com/znz/anyenv-update.git
 [submodule "modules/zsh"]
 	path = modules/zsh
 	url = https://github.com/zsh-users/zsh.git
