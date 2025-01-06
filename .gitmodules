@@ -25,9 +25,6 @@
 [submodule "modules/anyenv-update"]
 	path = modules/anyenv-update
 	url = https://github.com/znz/anyenv-update.git
-[submodule "modules/graphviz"]
-	path = modules/graphviz
-	url = git@gitlab.com:graphviz/graphviz.git
 [submodule "modules/zsh"]
 	path = modules/zsh
 	url = https://github.com/zsh-users/zsh.git
