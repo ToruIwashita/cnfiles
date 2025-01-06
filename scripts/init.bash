@@ -38,12 +38,35 @@ else
   mkdir $WORKS_DIR_PATH
 fi
 
+# config
+if [[ -d $CONFIG_DIR_PATH ]]; then
+  printf "\e[32m$CONFIG_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir  $CONFIG_DIR_PATH dir\e[0m\n"
+  mkdir $CONFIG_DIR_PATH
+fi
+
+# cache dir
+if [[ -d $CACHE_DIR_PATH ]]; then
+  printf "\e[32m$CACHE_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $CACHE_DIR_PATH\e[0m\n"
+  mkdir $CACHE_DIR_PATH
+fi
+
 # tmp dir
 if [[ -d $TMP_DIR_PATH ]]; then
   printf "\e[32m$TMP_DIR_PATH dir already exists\e[0m\n"
 else
   printf "\e[31mmkdir $TMP_DIR_PATH\e[0m\n"
   mkdir $TMP_DIR_PATH
+fi
+
+if [[ -d $CONFIG_DIR_PATH/karabiner ]]; then
+  printf "\e[32m$CONFIG_DIR_PATH/karabiner dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $CONFIG_DIR_PATH/karabiner dir\e[0m\n"
+  mkdir $CONFIG_DIR_PATH/karabiner
 fi
 
 # log dir
@@ -68,22 +91,6 @@ if [[ -d $BASE_DIR_PATH/zsh.d/local ]]; then
 else
   printf "\e[31mcopy dir $BASE_DIR_PATH/zsh.local.d/local to $BASE_DIR_PATH/zsh.d/local\e[0m\n"
   cp -rp $BASE_DIR_PATH/zsh.local.d/local $BASE_DIR_PATH/zsh.d
-fi
-
-# config
-if [[ -d $CONFIG_DIR_PATH ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH dir already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink $CONFIG_DIR_PATH dir\e[0m\n"
-  mkdir $CONFIG_DIR_PATH
-fi
-
-# cache dir
-if [[ -d $CACHE_DIR_PATH ]]; then
-  printf "\e[32m$CACHE_DIR_PATH dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir $CACHE_DIR_PATH\e[0m\n"
-  mkdir $CACHE_DIR_PATH
 fi
 
 # memolist dir
@@ -230,13 +237,6 @@ else
 fi
 
 # karabiner
-if [[ -d $CONFIG_DIR_PATH/karabiner ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH/karabiner dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir $CONFIG_DIR_PATH/karabiner dir\e[0m\n"
-  mkdir $CONFIG_DIR_PATH/karabiner
-fi
-
 if [[ -L $CONFIG_DIR_PATH/karabiner/karabiner.json ]]; then
   printf "\e[32m$CONFIG_DIR_PATH/karabiner/karabiner.json symlink already exists\e[0m\n"
 else
