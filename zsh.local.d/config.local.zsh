@@ -14,7 +14,7 @@
 # fi
 
 ## asdf
-# source ~/.asdf/asdf.sh
+# source $ASDF_ROOT/asdf.sh
 
 ## alias
 # git
