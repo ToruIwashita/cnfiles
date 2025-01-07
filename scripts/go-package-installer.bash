@@ -51,6 +51,9 @@ go install github.com/go-delve/delve/cmd/dlv@latest
 printf 'go install github.com/direnv/direnv@latest\n'
 go install github.com/direnv/direnv@latest
 
+printf 'go install github.com/mislav/hub@latest\n'
+go install github.com/mislav/hub@latest
+
 printf 'go install github.com/peco/peco/cmd/peco@latest\n'
 go install github.com/peco/peco/cmd/peco@latest
 
