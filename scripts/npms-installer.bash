@@ -3,8 +3,8 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-if [[ ! $(which npm)} =~ anyenv ]]; then
-  printf "there is no npm installed with anyenv\n"
+if [[ ! $(which npm) =~ asdf ]]; then
+  printf "there is no npm installed with asdf\n"
   exit 1
 fi
 
@@ -14,27 +14,20 @@ echo
 which npm
 
 echo
-nodenv exec npm update
+npm update
 
 echo
-nodenv exec npm install -g npm
-nodenv exec npm install -g nuxt
-nodenv exec npm install -g vue-cli
-nodenv exec npm install -g eslint
-nodenv exec npm install -g prettier
-nodenv exec npm install -g babel-eslint
-nodenv exec npm install -g eslint-plugin-vue
-nodenv exec npm install -g eslint-plugin-prettier
-nodenv exec npm install -g eslint-config-prettier
-nodenv exec npm install -g fixjson
-nodenv exec npm install -g lice
-nodenv exec npm install -g @mermaid-js/mermaid-cli
+npm install -g eslint
+npm install -g prettier
+npm install -g babel-eslint
+npm install -g eslint-plugin-prettier
+npm install -g eslint-config-prettier
+npm install -g fixjson
+npm install -g lice
+npm install -g @mermaid-js/mermaid-cli
 
 echo
-nodenv exec npm update -g
-
-echo
-nodenv rehash
+npm update -g
 
 echo
 printf "\ncomplete\n"
