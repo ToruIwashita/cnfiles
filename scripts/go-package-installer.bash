@@ -3,8 +3,8 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-if [[ ! $(which go)} =~ anyenv ]]; then
-  printf "there is no go installed with anyenv\n"
+if [[ ! $(which go) =~ asdf ]]; then
+  printf "there is no go installed with asdf\n"
   exit 1
 fi
 
@@ -29,22 +29,29 @@ fi
 
 export PATH="$PATH:$GOPATH/bin"
 
+echo
 printf "go: $(go version)\n"
 
 echo
-echo 'go install github.com/mattn/longcat@latest'
+printf 'go install github.com/mattn/longcat@latest\n'
 go install github.com/mattn/longcat@latest
-echo 'go install github.com/x-motemen/ghq@latest'
+
+printf 'go install github.com/x-motemen/ghq@latest\n'
 go install github.com/x-motemen/ghq@latest
-echo 'go install github.com/skanehira/gtran@latest'
+
+printf 'go install github.com/skanehira/gtran@latest\n'
 go install github.com/skanehira/gtran@latest
-echo 'go install github.com/x-motemen/gore/cmd/gore@latest'
+
+printf 'go install github.com/x-motemen/gore/cmd/gore@latest\n'
 go install github.com/x-motemen/gore/cmd/gore@latest
-echo 'go install github.com/go-delve/delve/cmd/dlv@latest'
+
+printf 'go install github.com/go-delve/delve/cmd/dlv@latest\n'
 go install github.com/go-delve/delve/cmd/dlv@latest
-echo 'go install github.com/direnv/direnv@latest'
+
+printf 'go install github.com/direnv/direnv@latest\n'
 go install github.com/direnv/direnv@latest
-echo 'go install github.com/peco/peco/cmd/peco@latest'
+
+printf 'go install github.com/peco/peco/cmd/peco@latest\n'
 go install github.com/peco/peco/cmd/peco@latest
 
 echo
