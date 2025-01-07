@@ -17,6 +17,7 @@ echo
 npm update
 
 echo
+npm install -g npm
 npm install -g eslint
 npm install -g prettier
 npm install -g babel-eslint
