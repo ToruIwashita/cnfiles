@@ -13,9 +13,6 @@
 #   eval "$(direnv hook zsh)"
 # fi
 
-## asdf
-# source $ASDF_ROOT/asdf.sh
-
 ## alias
 # git
 alias gcs='git commit -m "- update submodules"'

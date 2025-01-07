@@ -20,6 +20,9 @@ export GITHUB_TOKEN
 export GITHUB_USER_NAME
 export OWNED_GITHUB_REPOSITORIES=()
 
+# asdf
+export ASDF_ROOT=~/.asdf
+
 # yarn
 export YARN_ROOT=~/.yarn
 export YARN_GLOBAL_NODE_MODULES_BIN_PATH=~/.config/yarn/global/node_modules/.bin
@@ -57,3 +60,21 @@ fpath=(
   $zsh_inits_dir_path
   $fpath
 )
+
+## asdf設定
+source $ASDF_ROOT/asdf.sh
+
+## go
+if [[ $(which go) =~ asdf ]]; then
+  export GOROOT=$(go env GOROOT)
+  export GOPATH=$(go env GOPATH)
+  path=(
+    $GOPATH/bin
+    $path
+  )
+fi
+
+## node
+if [[ $(which node) =~ asdf ]]; then
+  export NODE_PATH=$(npm root -g)
+fi

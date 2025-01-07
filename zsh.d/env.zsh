@@ -19,7 +19,6 @@ export ZSH_DIR_PATH=$zsh_dir_path
 export ADOTDIR=$zsh_dir_path/antigen
 export VIM_DIR_PATH=~/.vim
 export TMUX_DIR_PATH=~/.tmux
-export ASDF_ROOT=~/.asdf
 export CNFILES_DIR_PATH=~/.cnfiles
 export MARKDOWN_TEXTS_DIR_PATH=~/markdown_texts
 export MARKDOWN_TEXTS_MODELING_SESSION_FILE_PATH=$MARKDOWN_TEXTS_DIR_PATH/.modeling.session.vim
