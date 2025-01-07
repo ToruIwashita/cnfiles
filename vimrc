@@ -132,3 +132,7 @@ call plug#end()
 if filereadable(expand(g:vim_dir_path.'/config.vim')) | exec 'source' expand(g:vim_dir_path.'/config.vim') | en
 if filereadable(expand(g:vim_dir_path.'/config.plugin.vim')) | exec 'source' expand(g:vim_dir_path.'/config.plugin.vim') | en
 if filereadable(expand(g:vim_dir_path.'/config.local.vim')) | exec 'source' expand(g:vim_dir_path.'/config.local.vim') | en
+
+"" 色設定
+" Visual Mode
+hi! Visual ctermfg=yellow ctermbg=black
