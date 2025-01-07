@@ -5,7 +5,7 @@ set -e
 
 DEFAULT_RUBY_VERSION=3.1.5
 DEFAULT_PYTHON2_VERSION=2.7.18
-DEFAULT_PYTHON3_VERSION=3.12.7
+DEFAULT_PYTHON3_VERSION=3.13.1
 DEFAULT_GO_VERSION=1.23.4
 DEFAULT_NODE_VERSION=18.20.3
 
@@ -47,6 +47,10 @@ printf "\nafter versions:\n"
 echo
 
 asdf list
+
+echo
+
+asdf current
 
 printf "\ncomplete\n"
 
