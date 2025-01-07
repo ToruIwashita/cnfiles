@@ -3,8 +3,8 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-if [[ ! $(which python3)} =~ anyenv ]]; then
-  printf "there is no python3 installed with anyenv\n"
+if [[ ! $(which python3) =~ asdf ]]; then
+  printf "there is no python3 installed with asdf\n"
   exit 1
 fi
 
@@ -14,24 +14,19 @@ echo
 which pip3
 
 echo
-pyenv exec pip3 install --upgrade pip
+pip3 install --upgrade pip
 
 echo
-pyenv exec pip3 install -U pipenv
-pyenv exec pip3 install -U django
-pyenv exec pip3 install -U pytest
-pyenv exec pip3 install -U vim-vint
-pyenv exec pip3 install -U sqlformat
-pyenv exec pip3 install -U flake8
-pyenv exec pip3 install -U mypy
-pyenv exec pip3 install -U black
-pyenv exec pip3 install -U isort
-pyenv exec pip3 install -U ipython
-pyenv exec pip3 install -U wheel
-pyenv exec pip3 install -U pynvim
-
-echo
-pyenv rehash
+pip3 install -U pipenv
+pip3 install -U vim-vint
+pip3 install -U sqlformat
+pip3 install -U flake8
+pip3 install -U mypy
+pip3 install -U black
+pip3 install -U isort
+pip3 install -U ipython
+pip3 install -U wheel
+pip3 install -U pynvim
 
 echo
 printf "complete\n"
