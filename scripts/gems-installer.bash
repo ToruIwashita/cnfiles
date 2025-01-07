@@ -3,8 +3,13 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
-if [[ ! $(which ruby)} =~ anyenv ]]; then
-  printf "there is no ruby installed with anyenv\n"
+if [[ ! $(which ruby) =~ asdf ]]; then
+  printf "there is no ruby installed with asdf\n"
+  exit 1
+fi
+
+if [[ ! $(which gem) =~ asdf ]]; then
+  printf "there is no gem installed with asdf\n"
   exit 1
 fi
 
@@ -14,32 +19,29 @@ echo
 which gem
 
 echo
-rbenv exec gem update --system
+gem update --system
 
 echo
-rbenv exec gem install aws-sdk
-rbenv exec gem install bundler
-rbenv exec gem install foreman
-rbenv exec gem install git-gsub
-rbenv exec gem install pry
-rbenv exec gem install pry-byebug
-rbenv exec gem install pry-doc
-rbenv exec gem install pry-rails
-rbenv exec gem install pry-remote
-rbenv exec gem install pry-stack_explorer
-rbenv exec gem install rails
-rbenv exec gem install rspec
-rbenv exec gem install rubocop
-rbenv exec gem install rubocop-rails
-rbenv exec gem install rubocop-rspec
-rbenv exec gem install sqlint
-rbenv exec gem install yard
+gem install aws-sdk
+gem install bundler
+gem install foreman
+gem install git-gsub
+gem install pry
+gem install pry-byebug
+gem install pry-doc
+gem install pry-rails
+gem install pry-remote
+gem install pry-stack_explorer
+gem install rails
+gem install rspec
+gem install rubocop
+gem install rubocop-rails
+gem install rubocop-rspec
+gem install sqlint
+gem install yard
 
 echo
-rbenv exec gem update bundler
-
-echo
-rbenv rehash
+gem update bundler
 
 echo
 printf "complete\n"
