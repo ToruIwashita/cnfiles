@@ -1,9 +1,6 @@
 [submodule "tmux/plugins/tpm"]
 	path = tmux/plugins/tpm
 	url = https://github.com/tmux-plugins/tpm.git
-[submodule "modules/hub"]
-	path = modules/hub
-	url = https://github.com/github/hub.git
 [submodule "modules/tmux"]
 	path = modules/tmux
 	url = https://github.com/tmux/tmux.git
