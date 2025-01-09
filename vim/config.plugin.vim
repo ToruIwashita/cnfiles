@@ -6,6 +6,8 @@ scriptencoding utf-8
 "" colorscheme
 colorscheme desert
 set background=dark
+" Visual Mode調整
+hi! Visual ctermfg=yellow ctermbg=black
 
 "" deoplete(after/ にも設定あり)
 let g:deoplete#enable_at_startup = 1  " deopleteを起動時に有効化
