@@ -26,7 +26,6 @@ let g:ale_linters = {
   \ 'ruby':       ['ruby'],
   \ 'python':     ['flake8', 'mypy'],
   \ 'go':         ['gopls', 'govet'],
-  \ 'scala':      ['scalac'],
   \ 'shell':      ['shell'],
   \ 'vim':        ['vint'],
   \ 'javascript': ['eslint'],

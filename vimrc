@@ -66,7 +66,6 @@ Plug 'kana/vim-niceblock'                              " ビジュアル選択�
 Plug 'terryma/vim-expand-region'                       " text-objectビジュアル選択
 Plug 'vim-ruby/vim-ruby'                               " vim-ruby
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }     " vim-go
-Plug 'derekwyatt/vim-scala'                            " vim-scala
 Plug 'posva/vim-vue'                                   " vim-vue
 Plug 'digitaltoad/vim-pug'                             " vim-pug
 Plug 'wavded/vim-stylus'                               " vim-stylus
@@ -116,7 +115,6 @@ Plug 'LeafCage/yankround.vim'                          " ヤンク履歴管理
 Plug 'Konfekt/FastFold'                                " 自動折畳
 Plug 'vim-scripts/AnsiEsc.vim'                         " ANSIカラー表示
 Plug 'yami-beta/vim-responsive-tabline'                " タブの横幅を調整
-Plug 'wannesm/wmgraphviz.vim'                          " graphviz
 Plug 'vim/killersheep'                                 " killersheep
 Plug 'ToruIwashita/tab-relocator.vim'                  " タブ移動補助
 Plug 'ToruIwashita/nimble-anyjump.vim'                 " タグジャンプ,ファイル名ジャンプ,URLジャンプ補助
