@@ -30,6 +30,8 @@ npm install -g @mermaid-js/mermaid-cli
 echo
 npm update -g
 
+asdf reshim nodejs
+
 echo
 printf "\ncomplete\n"
 

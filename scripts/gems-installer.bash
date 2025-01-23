@@ -43,6 +43,8 @@ gem install yard
 echo
 gem update bundler
 
+asdf reshim ruby
+
 echo
 printf "complete\n"
 

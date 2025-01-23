@@ -19,7 +19,7 @@ pip3 install --upgrade pip
 echo
 pip3 install -U pipenv
 pip3 install -U vim-vint
-pip3 install -U sqlformat
+pip3 install -U sqlparse
 pip3 install -U flake8
 pip3 install -U mypy
 pip3 install -U black
@@ -27,6 +27,8 @@ pip3 install -U isort
 pip3 install -U ipython
 pip3 install -U wheel
 pip3 install -U pynvim
+
+asdf reshim python
 
 echo
 printf "complete\n"

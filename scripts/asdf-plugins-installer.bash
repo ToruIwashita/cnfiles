@@ -45,7 +45,6 @@ asdf global nodejs $USE_NODE_VERSION
 
 if [[ $(which node) =~ asdf ]]; then
   corepack enable
-  asdf reshim nodejs
 fi
 
 printf "\nafter versions:\n"

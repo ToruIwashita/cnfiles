@@ -57,6 +57,8 @@ go install github.com/mislav/hub@latest
 printf 'go install github.com/peco/peco/cmd/peco@latest\n'
 go install github.com/peco/peco/cmd/peco@latest
 
+asdf reshim golang
+
 echo
 printf "complete\n"
 
