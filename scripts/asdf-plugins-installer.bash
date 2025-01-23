@@ -43,6 +43,11 @@ asdf global golang $USE_GO_VERSION
 asdf install nodejs $USE_NODE_VERSION
 asdf global nodejs $USE_NODE_VERSION
 
+if [[ $(which node) =~ asdf ]]; then
+  corepack enable
+  asdf reshim nodejs
+fi
+
 printf "\nafter versions:\n"
 echo
 
