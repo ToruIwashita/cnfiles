@@ -32,3 +32,6 @@
 	path = modules/asdf
 	url = https://github.com/asdf-vm/asdf.git
 	ignore = dirty
+[submodule "modules/gh-cli"]
+	path = modules/gh-cli
+	url = https://github.com/cli/cli.git
