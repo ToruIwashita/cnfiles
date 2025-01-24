@@ -59,7 +59,7 @@ bindkey -v '^w' backward-kill-word                    # Ctrl+wでbackward-kill-w
 bindkey -v '^y' push-input                            # Ctrl+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
 bindkey -v '^z' run-fg-last                           # Ctrl+zで最後にサスペンドしたjobに復帰する
 bindkey -v '^sf' peco-file-find-and-start-editor      # Ctrl+s,fでファイル検索してstart-editor
-bindkey -v '^sg' immediate-hub-browse                 # Ctrl+s,gでhub browse
+bindkey -v '^sg' immediate-gh-browse                  # Ctrl+s,gでghコマンドによるリポジトリ閲覧
 bindkey -v '^sh' immediate-git-log-search             # Ctrl+s,hでgit log検索
 bindkey -v '^sj' vi-join                              # Ctrl+s,jでviのjoin
 bindkey -v '^sk' peco-cd-recent-dir                   # Ctrl+s,kで最近移動したディレクトリを絞り込んで移動
@@ -77,7 +77,7 @@ bindkey -v '^s.' gtran-ja-to-en                       # Ctrl+s,.で日本語を�
 bindkey -v '^s ' google-search                        # Ctrl+s,<SPACE>でコマンドラインの文字列を使ったGoogle検索
 bindkey -v '^s^a' immediate-git-add-all               # Ctrl+s,Ctrl+aでgit add .
 bindkey -v '^s^f' peco-file-finder                    # Ctrl+s,Ctrl+fでpeco-file-finder
-bindkey -v '^s^g' immediate-hub-browse-pull-request   # Ctrl+s,Ctrl+gでブランチ名からpull requestを開く
+bindkey -v '^s^g' immediate-gh-browse-pull-request    # Ctrl+s,Ctrl+gでブランチ名からpull requestを開く
 bindkey -v '^s^h' immediate-git-log-search-with-diff  # Ctrl+s,Ctrl+hでgit logをdiff出力付きで検索
 bindkey -v '^s^p' copy-prev-shell-word                # Ctrl+s,Ctrl+pで1つ前の文字列をコピペ(空欄区切りで文字列判定)
 bindkey -v '^s^r' immediate-git-reset-all             # Ctrl+s,Ctrl+rでgit reset
