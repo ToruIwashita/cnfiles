@@ -125,13 +125,13 @@ bind -T copy-mode-vi C-f command-prompt -1p '(jump backward)' 'send -X jump-back
 # 逆再jump
 bind -T copy-mode-vi C-_ send-keys -X jump-reverse
 # 選択範囲open
-bind -T copy-mode-vi '-' send -X copy-pipe-and-cancel 'cat | xargs -0 open'
+bind -T copy-mode-vi '-' send -X copy-pipe-and-cancel 'xargs -0 open'
 # 選択範囲の英語を日本語に翻訳
-bind -T copy-mode-vi , send -X copy-pipe-and-cancel 'cat | xargs -I {} gtran {} | xargs -I {} tmux-display-message {}'
+bind -T copy-mode-vi , send -X copy-pipe-and-cancel 'xargs -I {} gtran {} | xargs -I {} tmux-display-message {}'
 # 選択範囲の日本語を英語に翻訳
-bind -T copy-mode-vi i send -X copy-pipe-and-cancel 'cat | xargs -I {} gtran -source "ja" -target "en" {} | xargs -I {} tmux-display-message {}'
+bind -T copy-mode-vi i send -X copy-pipe-and-cancel 'xargs -I {} gtran -source "ja" -target "en" {} | xargs -I {} tmux-display-message {}'
 # 選択範囲のGoogle検索
-bind -T copy-mode-vi Space send -X copy-pipe-and-cancel "cat | xargs -I {} open https://www.google.co.jp/search?q='{}'"
+bind -T copy-mode-vi Space send -X copy-pipe-and-cancel "xargs -I {} open https://www.google.co.jp/search?q='{}'"
 
 ## ペースト
 # 最新バッファペースト
