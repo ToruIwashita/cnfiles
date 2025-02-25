@@ -9,7 +9,7 @@ set -g status-left '#[fg=colour223,bg=colour166,nobold] #(whoami) '
 
 # status-right
 set -g status-right-length 150
-set -g status-right '#{prefix_highlight} #[fg=colour38,bg=colour234,nobold]#(tmux-mem-cpu-load) #[fg=colour223,bg=colour166,nobold] [%Y-%m-%d(%a) %H:%M] '
+set -g status-right '#{prefix_highlight} #[fg=colour38,bg=colour234,nobold]#($TMUX_PLUGIN_MANAGER_PATH/tmux-mem-cpu-load/tmux-mem-cpu-load) #[fg=colour223,bg=colour166,nobold] [%Y-%m-%d(%a) %H:%M] '
 
 # window-status
 setw -g window-status-format '#[fg=colour188,bg=colour234] #I #W '
