@@ -13,7 +13,7 @@ export PGUSER
 export PGPASSWORD
 export PGDATABASE=
 
-# github (hubコマンド)
+# github
 readonly GITHUB_TOKEN=
 readonly GITHUB_USER_NAME=
 export GITHUB_TOKEN
