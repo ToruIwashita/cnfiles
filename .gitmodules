@@ -25,9 +25,6 @@
 [submodule "modules/github-markdown-css"]
 	path = modules/github-markdown-css
 	url = https://github.com/sindresorhus/github-markdown-css.git
-[submodule "modules/tmux-mem-cpu-load"]
-	path = modules/tmux-mem-cpu-load
-	url = https://github.com/thewtex/tmux-mem-cpu-load.git
 [submodule "modules/asdf"]
 	path = modules/asdf
 	url = https://github.com/asdf-vm/asdf.git
