@@ -16,10 +16,6 @@
 ## alias
 # git
 alias gcs='git commit -m "- update submodules"'
-# sbt
-alias sbt-c='sbt ~console'
-alias sbt-p='sbt ~compile'
-alias sbt-r='sbt ~run'
 # python
 alias pip-r='pipenv run'
 # django
