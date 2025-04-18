@@ -32,19 +32,24 @@ asdf list
 echo
 
 asdf install golang $USE_GO_VERSION
-asdf global golang $USE_GO_VERSION
+asdf reshim golang $USE_GO_VERSION
+echo
 
 asdf install nodejs $USE_NODE_VERSION
-asdf global nodejs $USE_NODE_VERSION
+asdf reshim nodejs $USE_NODE_VERSION
+echo
 
 asdf install python $USE_PYTHON3_VERSION
-asdf global python $USE_PYTHON3_VERSION
+asdf reshim python $USE_PYTHON3_VERSION
+echo
 
 asdf install ruby $USE_RUBY_VERSION
-asdf global ruby $USE_RUBY_VERSION
+asdf reshim ruby $USE_RUBY_VERSION
+echo
 
 asdf install rust $USE_RUST_VERSION
-asdf global rust $USE_RUST_VERSION
+asdf reshim rust $USE_RUST_VERSION
+echo
 
 if [[ $(which node) =~ asdf ]]; then
   corepack enable
