@@ -3,21 +3,15 @@
 export MYSQL_DATABASE=
 
 # psql (全ての設定を環境変数に書く)
-readonly PGHOST=
-readonly PGPORT=
-readonly PGUSER=
-readonly PGPASSWORD=
-export PGHOST
-export PGPORT
-export PGUSER
-export PGPASSWORD
+export PGHOST=
+export PGPORT=
+export PGUSER=
+export PGPASSWORD=
 export PGDATABASE=
 
 # github
-readonly GITHUB_TOKEN=
-readonly GITHUB_USER_NAME=
-export GITHUB_TOKEN
-export GITHUB_USER_NAME
+export GITHUB_TOKEN=
+export GITHUB_USER_NAME=
 export OWNED_GITHUB_REPOSITORIES=()
 
 # asdf
