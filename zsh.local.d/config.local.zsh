@@ -4,6 +4,8 @@
 #   ssh-add ~/.ssh/id_rsa
 # }
 # init-ssh-agent
+#
+# ※ ssh-add --apple-use-keychainでkeychainに登録すれば不要
 
 ## homebrew
 # eval "$(/opt/homebrew/bin/brew shellenv | grep -v '^PATH=')"
