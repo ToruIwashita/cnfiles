@@ -22,8 +22,5 @@ make install
 git checkout .
 git clean -f -d
 
-cd modules/oniguruma
-git checkout .
-
 printf "\ncomplete\n"
 exit 0
