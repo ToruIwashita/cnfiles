@@ -11,6 +11,18 @@ fi
 export GOROOT=$(go env GOROOT)
 export GOPATH=$(go env GOPATH)
 
+# check GOROOT
+if [[ ! $GOROOT =~ asdf ]]; then
+  printf "$GOROOT does not contain .asdf/\n"
+  exit 1
+fi
+
+# check GOPATH
+if [[ ! $GOPATH =~ asdf ]]; then
+  printf "$GOPATH does not contain .asdf/\n"
+  exit 1
+fi
+
 # create $GOPATH
 if [[ -d $GOPATH ]]; then
   printf "\e[32m$GOPATH dir already exists\e[0m\n"
