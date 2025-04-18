@@ -33,6 +33,7 @@ export YARN_GLOBAL_NODE_MODULES_BIN_PATH=~/.config/yarn/global/node_modules/.bin
 ## path
 path=(
   $LOCAL_DIR_PATH/bin
+  $ASDF_ROOT/shims
   $YARN_ROOT/bin
   $YARN_GLOBAL_NODE_MODULES_BIN_PATH
   # gitインストール時にbrewでインストールしたopensslを使用する
@@ -60,9 +61,6 @@ fpath=(
   $zsh_inits_dir_path
   $fpath
 )
-
-## asdf設定
-source $ASDF_ROOT/asdf.sh
 
 ## go
 if [[ $(which go) =~ asdf ]]; then
