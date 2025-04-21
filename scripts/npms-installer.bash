@@ -14,10 +14,9 @@ echo
 which npm
 
 echo
-npm update
+npm update -g
 
 echo
-npm install -g npm
 npm install -g eslint
 npm install -g prettier
 npm install -g babel-eslint
@@ -26,9 +25,6 @@ npm install -g eslint-config-prettier
 npm install -g fixjson
 npm install -g lice
 npm install -g @mermaid-js/mermaid-cli
-
-echo
-npm update -g
 
 asdf reshim nodejs
 
