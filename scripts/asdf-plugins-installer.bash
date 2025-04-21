@@ -32,23 +32,23 @@ asdf list
 echo
 
 asdf install golang $USE_GO_VERSION
-asdf reshim golang $USE_GO_VERSION
+asdf set -u golang $USE_GO_VERSION
 echo
 
 asdf install nodejs $USE_NODE_VERSION
-asdf reshim nodejs $USE_NODE_VERSION
+asdf set -u nodejs $USE_NODE_VERSION
 echo
 
 asdf install python $USE_PYTHON3_VERSION
-asdf reshim python $USE_PYTHON3_VERSION
+asdf set -u python $USE_PYTHON3_VERSION
 echo
 
 asdf install ruby $USE_RUBY_VERSION
-asdf reshim ruby $USE_RUBY_VERSION
+asdf set -u ruby $USE_RUBY_VERSION
 echo
 
 asdf install rust $USE_RUST_VERSION
-asdf reshim rust $USE_RUST_VERSION
+asdf set -u rust $USE_RUST_VERSION
 echo
 
 if [[ $(which node) =~ asdf ]]; then
