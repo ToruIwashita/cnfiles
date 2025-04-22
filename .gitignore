@@ -1,4 +1,3 @@
-*.swp
 /zsh.d/antigen/
 /zsh.d/config.local.zsh
 /zsh.d/env.local.zsh
@@ -10,4 +9,3 @@
 /config/karabiner/automatic_backups
 /dlv/.dbg_history
 /.bundle
-/.tags
