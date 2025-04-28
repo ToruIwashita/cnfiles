@@ -25,29 +25,25 @@ let g:ale_echo_msg_warning_str = '⚠'                     " statuslineメッセ
 let g:ale_echo_msg_format = '[%linter%][%severity%] %s'  " statuslineメッセージフォーマット
 " linter設定
 let g:ale_linters = {
-  \ 'ruby':       ['ruby'],
-  \ 'python':     ['flake8', 'mypy'],
-  \ 'go':         ['gopls', 'govet'],
-  \ 'shell':      ['shell'],
-  \ 'vim':        ['vint'],
-  \ 'javascript': ['eslint'],
-  \ 'vue':        ['eslint'],
-  \ 'json':       ['jq'],
-  \ 'xml':        ['xmllint'],
-  \ 'sql':        ['sqlint'],
-  \ 'terraform':  ['terraform']
+  \ 'ruby':      ['ruby'],
+  \ 'python':    ['flake8', 'mypy'],
+  \ 'go':        ['gopls', 'govet'],
+  \ 'shell':     ['shell'],
+  \ 'vim':       ['vint'],
+  \ 'json':      ['jq'],
+  \ 'xml':       ['xmllint'],
+  \ 'sql':       ['sqlint'],
+  \ 'terraform': ['terraform']
 \ }
 " fixer設定
 let g:ale_fixers = {
-  \ 'ruby':       ['rubocop'],
-  \ 'python':     ['isort', 'black'],
-  \ 'go':         ['gofmt'],
-  \ 'javascript': ['eslint'],
-  \ 'vue':        ['eslint'],
-  \ 'json':       ['fixjson'],
-  \ 'xml':        ['xmllint'],
-  \ 'sql':        ['sqlformat'],
-  \ 'terraform':  ['terraform']
+  \ 'ruby':      ['rubocop'],
+  \ 'python':    ['isort', 'black'],
+  \ 'go':        ['gofmt'],
+  \ 'json':      ['fixjson'],
+  \ 'xml':       ['xmllint'],
+  \ 'sql':       ['sqlformat'],
+  \ 'terraform': ['terraform']
 \ }
 " fixerオプション
 let g:ale_sql_sqlformat_options = '-r -k upper -i lower'
