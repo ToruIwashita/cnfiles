@@ -5,5 +5,5 @@ brails-clear-cache() {
 }
 
 tailf-main-started-log() {
-  tail -f $* | grep --line-buffered -v "OPTIONS" | grep --line-buffered "INFO -- : Started"
+  tail -f $* | grep --line-buffered -v 'OPTIONS' | grep --line-buffered 'INFO -- : Started'
 }
