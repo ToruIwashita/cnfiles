@@ -24,6 +24,8 @@ npm install -g eslint-plugin-prettier
 npm install -g eslint-config-prettier
 npm install -g fixjson
 npm install -g lice
+npm install -g @redocly/cli
+npm instlal -g swagger-merger
 npm install -g @mermaid-js/mermaid-cli
 
 asdf reshim nodejs
