@@ -4,12 +4,14 @@ source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
 DEFAULT_GO_VERSION=1.23.4
+DEFAULT_JAVA_VERSION=temurin-24.0.1+9
 DEFAULT_NODE_VERSION=22.12.0
 DEFAULT_PYTHON3_VERSION=3.13.1
 DEFAULT_RUBY_VERSION=3.3.6
 DEFAULT_RUST_VERSION=1.86.0
 
 USE_GO_VERSION=${USE_GO_VERSION:-$DEFAULT_GO_VERSION}
+USE_JAVA_VERSION=${USE_JAVA_VERSION:-$DEFAULT_JAVA_VERSION}
 USE_NODE_VERSION=${USE_NODE_VERSION:-$DEFAULT_NODE_VERSION}
 USE_PYTHON3_VERSION=${USE_PYTHON3_VERSION:-$DEFAULT_PYTHON3_VERSION}
 USE_RUBY_VERSION=${USE_RUBY_VERSION:-$DEFAULT_RUBY_VERSION}
@@ -19,6 +21,7 @@ printf "install plugins\n"
 echo
 
 asdf plugin add golang
+asdf plugin add java
 asdf plugin add nodejs
 asdf plugin add python
 asdf plugin add ruby
@@ -33,6 +36,10 @@ echo
 
 asdf install golang $USE_GO_VERSION
 asdf set -u golang $USE_GO_VERSION
+echo
+
+asdf install java $USE_JAVA_VERSION
+asdf set -u java $USE_JAVA_VERSION
 echo
 
 asdf install nodejs $USE_NODE_VERSION
