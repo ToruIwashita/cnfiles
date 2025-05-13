@@ -1,3 +1,5 @@
 *.sw?
 .tags
+.tags.lock
+.tags.temp
 .tool-versions
