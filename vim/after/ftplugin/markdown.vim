@@ -38,7 +38,7 @@ fun! s:add_md_space() abort
 
   execute 'mark Z'
 
-  silent! execute '%s/\(^ \{4,}[^-]*[^ ]$\)/\1    /'
+  silent! execute '%s/^\( \{4,\}[^- \t\n\r].*[^ ]\)\zs$/    /'
   silent! execute '%s/\(^[^$].*[^ ]$\)/\1  /'
 
   silent! normal! `Z
