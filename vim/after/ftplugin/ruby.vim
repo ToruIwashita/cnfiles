@@ -15,11 +15,10 @@ silent! nunmap <buffer> <C-w><C-]>
 silent! nunmap <buffer> <C-]>
 
 ab <buffer> =a , :aggregate_failures
-ab <buffer> =c context "current", current: true do
+ab <buffer> =c context "current", :current do
 ab <buffer> =f # frozen_string_literal: true
 ab <buffer> =d binding.pry
-ab <buffer> =r require 'pry'
-ab <buffer> =t , current: true
+ab <buffer> =t , :current
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
