@@ -15,13 +15,13 @@ nmap s :<C-u>SaveSpecificCursorPos<CR><Plug>(easymotion-overwin-f)
 
 " move to {char}{char}
 " 以下はcursor-position-memento.vim依存のコード
-map <leader>f :<C-u>SaveSpecificCursorPos<CR><Plug>(easymotion-bd-f2)
-nmap <leader>f :<C-u>SaveSpecificCursorPos<CR><Plug>(easymotion-overwin-f2)
+map <leader>J :<C-u>SaveSpecificCursorPos<CR><Plug>(easymotion-bd-f2)
+nmap <leader>J :<C-u>SaveSpecificCursorPos<CR><Plug>(easymotion-overwin-f2)
 
 " move to word
 " 以下はcursor-position-memento.vim依存のコード
-map <leader>F :<C-u>SaveSpecificCursorPos<CR><Plug>(easymotion-bd-w)
-nmap <leader>F :<C-u>SaveSpecificCursorPos<CR><Plug>(easymotion-overwin-w)
+map <leader>H :<C-u>SaveSpecificCursorPos<CR><Plug>(easymotion-bd-w)
+nmap <leader>H :<C-u>SaveSpecificCursorPos<CR><Plug>(easymotion-overwin-w)
 
 " move to line
 " 以下はcursor-position-memento.vim依存のコード

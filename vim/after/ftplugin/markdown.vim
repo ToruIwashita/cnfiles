@@ -31,6 +31,21 @@ fun! s:add_md_space_toggle() abort
   call lightline#update()
 endf
 
+fun! s:wrap_with_fence(...) range
+  let l:opening_fence = a:0 ? '```' . a:1 : '```'
+  let l:closing_fence = '```'
+
+  " 選択範囲の開始行の1つ上の行の後に開始フェンスを挿入
+  call append(a:firstline - 1, l:opening_fence)
+
+  " 選択範囲の上に1行挿入されるため,元の最終行の位置は1つ下にずれる
+  " そのためa:lastline + 1の後に終了フェンスを挿入する
+  call append(a:lastline + 1, l:closing_fence)
+
+  " カーソルを開始フェンスの行の先頭に移動する
+  call cursor(a:firstline, 1)
+endfunction
+
 fun! s:add_md_space() abort
   if !g:add_md_space_enabled
     return 1
@@ -38,7 +53,6 @@ fun! s:add_md_space() abort
 
   execute 'mark Z'
 
-  silent! execute '%s/^\( \{4,\}[^- \t\n\r].*[^ ]\)\zs$/    /'
   silent! execute '%s/\(^[^$].*[^ ]$\)/\1  /'
 
   silent! normal! `Z
@@ -50,7 +64,6 @@ fun! s:add_md_space_range() abort range
     return 1
   endif
 
-  silent! execute a:firstline.','.a:lastline.'s/\(^ \{4,}[^-]*[^ ]$\)/\1    /'
   silent! execute a:firstline.','.a:lastline.'s/\(^[^$].*[^ ]$\)/\1  /'
 endfunction
 
@@ -60,9 +73,15 @@ augroup local_markdown
 augroup END
 
 command! AddMdSpaceToggle call s:add_md_space_toggle()
+command! -range -nargs=? WrapWithFence :<line1>,<line2>call s:wrap_with_fence(<f-args>)
 command! -range MdFormat :<line1>,<line2>call s:add_md_space_range()
 
 nnoremap <C-@> :<C-u>AddMdSpaceToggle<CR>
+
+vnoremap <Leader>fr :WrapWithFence ruby<CR>
+vnoremap <Leader>fb :WrapWithFence bash<CR>
+vnoremap <Leader>fs :WrapWithFence sql<CR>
+vnoremap <Leader>ff :WrapWithFence<CR>
 
 cnorea %M %MdFormat
 cnorea '<,'>M '<,'>MdFormat
