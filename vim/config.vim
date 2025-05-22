@@ -96,6 +96,8 @@ noremap , <NOP>
 " <C-f>と<C-b>を無効化
 noremap <C-f> <NOP>
 noremap <C-b> <NOP>
+" eを無効化
+noremap e <NOP>
 " 逆fを無効化
 noremap F <NOP>
 " sを無効化
