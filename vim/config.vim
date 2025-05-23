@@ -106,8 +106,6 @@ noremap S <NOP>
 noremap _ <NOP>
 " <ESC>
 noremap <C-j> <ESC>
-" 再度編集開始（ファイルリロード）
-noremap _ :<C-u>e!<CR>:echo 'reloaded'<CR>
 " 現在のファイル名表示
 noremap <leader>v :<C-u>echo expand('%')<CR>
 " シェルコマンドを実行するためのプレフィックス
