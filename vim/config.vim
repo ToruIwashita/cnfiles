@@ -96,18 +96,18 @@ noremap , <NOP>
 " <C-f>と<C-b>を無効化
 noremap <C-f> <NOP>
 noremap <C-b> <NOP>
-" eを無効化
-noremap e <NOP>
 " 逆fを無効化
 noremap F <NOP>
 " sを無効化
 noremap s <NOP>
 " Sを無効化
 noremap S <NOP>
+" _を無効化
+noremap _ <NOP>
 " <ESC>
 noremap <C-j> <ESC>
 " 再度編集開始（ファイルリロード）
-noremap e :<C-u>e!<CR>
+noremap _ :<C-u>e!<CR>:echo 'reloaded'<CR>
 " 現在のファイル名表示
 noremap <leader>v :<C-u>echo expand('%')<CR>
 " シェルコマンドを実行するためのプレフィックス
