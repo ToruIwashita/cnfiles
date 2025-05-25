@@ -15,7 +15,7 @@ export GITHUB_USER_NAME=
 export OWNED_GITHUB_REPOSITORIES=()
 
 # asdf
-export ASDF_ROOT=~/.asdf
+export ASDF_DATA_DIR=~/.asdf
 
 # yarn
 export YARN_ROOT=~/.yarn
@@ -27,7 +27,7 @@ export YARN_GLOBAL_NODE_MODULES_BIN_PATH=~/.config/yarn/global/node_modules/.bin
 ## path
 path=(
   $LOCAL_DIR_PATH/bin
-  $ASDF_ROOT/shims
+  $ASDF_DATA_DIR/shims
   $YARN_ROOT/bin
   $YARN_GLOBAL_NODE_MODULES_BIN_PATH
   # gitインストール時にbrewでインストールしたopensslを使用する
