@@ -55,7 +55,7 @@ let g:ale_ruby_rubocop_auto_correct_all = 1
 "" ctrlp(after/ にも設定あり)
 let g:ctrlp_map = '<C-k>'                                 " Start CtrlP
 let g:ctrlp_user_command = 'ag %s -l -i --nocolor -g ""'  " ctrlpでagを使用する
-let g:ctrlp_match_window = 'min:10,max:'.&lines/3         " quickfixサイズ
+let g:ctrlp_match_window = 'min:15,max:'.&lines/2         " quickfixサイズ
 let g:ctrlp_mruf_max = 100                                " 開いたファイル履歴保持数
 let g:ctrlp_clear_cache_on_exit = 0                       " 終了時にキャッシュをクリアしない
 let g:ctrlp_regexp = 0                                    " デフォルト曖昧絞込
