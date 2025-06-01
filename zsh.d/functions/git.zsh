@@ -341,8 +341,8 @@ gd() {
 
 gsw() {
   integer branch_already_exists
-  local -a args branch remote_branch
-  local self_cmd help usage
+  local -a args
+  local branch remote_branch self_cmd help usage
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
