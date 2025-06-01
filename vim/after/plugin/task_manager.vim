@@ -6,9 +6,9 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 " タスク管理のルートディレクトリ
-let g:task_manager_root_dir = '~/works/memolist/'
+let g:task_manager_root_dir = g:memolist_dir_path
 
-" 日付のフォーマット（年月日）
+" 作成するディレクトリのプレフィックス（日付）
 let g:task_manager_dir_prefix = '%Y%m%d'
 
 let &cpoptions = s:cpoptions_save
