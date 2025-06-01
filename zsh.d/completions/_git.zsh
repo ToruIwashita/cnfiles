@@ -1,10 +1,14 @@
 ## git
 __git-branches() {
-  compadd $(__git-branch-list)
+  local -a branches
+  branches=(${(f)"$(__git-branch-list)"})
+  compadd -Q -a branches
 }
 
 __git-remote-branches() {
-  compadd $(__git-remote-branch-list)
+  local -a remote_branches
+  remote_branches=(${(f)"$(__git-remote-branch-list)"})
+  compadd -Q -a remote_branches
 }
 
 __git-changed-files() {

@@ -12,24 +12,19 @@ __git-status() {
 
 __git-branch-list() {
   __git-inside-work-tree || return
-  print ${(R)$(git branch)#\*}
+  local branches
+  branches=(${${${(f)"$(git branch)"}:#\* \(HEAD*}#  })
+  printf '%s\n' "${branches[@]}"
 }
 
 __git-remote-branch-list() {
   __git-inside-work-tree || return
-  local -A existing_branches
-  local -a remote_branches
-  local existing_branch branch
+  local -a existing_branches remote_branches
 
-  for existing_branch in $(__git-branch-list); do
-    existing_branches[$existing_branch]='defined'
-  done
+  existing_branches=(${(f)"$(__git-branch-list)"})
+  remote_branches=(${${${${(f)"$(git branch --remote)"}:#*->*}#[[:space:]]*origin/}:|existing_branches})
 
-  for branch in ${${${(f)"$(git branch --remote)"}:#*->*}#[[:space:]]*origin/}; do
-    (( ! $+existing_branches[$branch] )) && remote_branches=($remote_branches $branch)
-  done
-
-  print $remote_branches
+  printf '%s\n' "${remote_branches[@]}"
 }
 
 __git-changed-list() {
