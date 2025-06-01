@@ -46,38 +46,6 @@ else
   mkdir $CACHE_DIR_PATH
 fi
 
-# works dir
-if [[ -d $WORKS_DIR_PATH ]]; then
-  printf "\e[32m$WORKS_DIR_PATH dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir $WORKS_DIR_PATH\e[0m\n"
-  mkdir $WORKS_DIR_PATH
-fi
-
-# works cursor workspaces dir
-if [[ -d $CURSOR_WORKSPACES_DIR_PATH ]]; then
-  printf "\e[32m$CURSOR_WORKSPACES_DIR_PATH dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir -p $CURSOR_WORKSPACES_DIR_PATH\e[0m\n"
-  mkdir -p $CURSOR_WORKSPACES_DIR_PATH
-fi
-
-# works tasks dir
-if [[ -d $TASKS_DIR_PATH ]]; then
-  printf "\e[32m$TASKS_DIR_PATH dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir $TASKS_DIR_PATH\e[0m\n"
-  mkdir $TASKS_DIR_PATH
-fi
-
-# works tmp dir
-if [[ -d $TMP_DIR_PATH ]]; then
-  printf "\e[32m$TMP_DIR_PATH dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir $TMP_DIR_PATH\e[0m\n"
-  mkdir $TMP_DIR_PATH
-fi
-
 # log dir
 if [[ -d $LOG_DIR_PATH ]]; then
   printf "\e[32m$LOG_DIR_PATH dir already exists\e[0m\n"
@@ -102,7 +70,31 @@ else
   cp -rp $BASE_DIR_PATH/zsh.local.d/local $BASE_DIR_PATH/zsh.d
 fi
 
-# memolist dir
+# works dir
+if [[ -d $WORKS_DIR_PATH ]]; then
+  printf "\e[32m$WORKS_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $WORKS_DIR_PATH\e[0m\n"
+  mkdir $WORKS_DIR_PATH
+fi
+
+# works cursor workspaces dir
+if [[ -d $CURSOR_WORKSPACES_DIR_PATH ]]; then
+  printf "\e[32m$CURSOR_WORKSPACES_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir -p $CURSOR_WORKSPACES_DIR_PATH\e[0m\n"
+  mkdir -p $CURSOR_WORKSPACES_DIR_PATH
+fi
+
+# works tmp dir
+if [[ -d $TMP_DIR_PATH ]]; then
+  printf "\e[32m$TMP_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $TMP_DIR_PATH\e[0m\n"
+  mkdir $TMP_DIR_PATH
+fi
+
+# works memolist dir
 if [[ -d $MEMOLIST_DIR_PATH ]]; then
   printf "\e[32m$MEMOLIST_DIR_PATH dir already exists\e[0m\n"
 else
