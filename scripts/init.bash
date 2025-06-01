@@ -30,14 +30,6 @@ else
   mkdir $LOCAL_JAR_DIR_PATH
 fi
 
-# works dir
-if [[ -d $WORKS_DIR_PATH ]]; then
-  printf "\e[32m$WORKS_DIR_PATH dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir $WORKS_DIR_PATH\e[0m\n"
-  mkdir $WORKS_DIR_PATH
-fi
-
 # config
 if [[ -d $CONFIG_DIR_PATH ]]; then
   printf "\e[32m$CONFIG_DIR_PATH dir already exists\e[0m\n"
@@ -54,7 +46,31 @@ else
   mkdir $CACHE_DIR_PATH
 fi
 
-# tmp dir
+# works dir
+if [[ -d $WORKS_DIR_PATH ]]; then
+  printf "\e[32m$WORKS_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $WORKS_DIR_PATH\e[0m\n"
+  mkdir $WORKS_DIR_PATH
+fi
+
+# works cursor workspaces dir
+if [[ -d $CURSOR_WORKSPACES_DIR_PATH ]]; then
+  printf "\e[32m$CURSOR_WORKSPACES_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir -p $CURSOR_WORKSPACES_DIR_PATH\e[0m\n"
+  mkdir -p $CURSOR_WORKSPACES_DIR_PATH
+fi
+
+# works tasks dir
+if [[ -d $TASKS_DIR_PATH ]]; then
+  printf "\e[32m$TASKS_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $TASKS_DIR_PATH\e[0m\n"
+  mkdir $TASKS_DIR_PATH
+fi
+
+# works tmp dir
 if [[ -d $TMP_DIR_PATH ]]; then
   printf "\e[32m$TMP_DIR_PATH dir already exists\e[0m\n"
 else
@@ -195,14 +211,6 @@ if [[ -L ~/.gitignore ]]; then
 else
   printf "\e[31mcreate symlink ~/.gitignore \e[0m\n"
   ln -is $GIT_DIR_PATH/gitignore ~/.gitignore
-fi
-
-# asdf
-if [[ -L ~/.asdf ]]; then
-  printf "\e[32m~/.asdf symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink ~/.asdf \e[0m\n"
-  ln -is $ASDF_SRC_DIR_PATH ~/.asdf
 fi
 
 # peco
