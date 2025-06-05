@@ -64,6 +64,30 @@ Individual tool installers are available in the `scripts/` directory:
 - **Terminal**: tmux with custom configurations and utilities
 - **Editor**: Vim/Neovim with language-specific plugins and configurations
 
+## Claude Code Configuration
+
+### Permission Management
+**CRITICAL**: When Claude Code requests permissions for tools or file access, always add the permissions to `claude/settings.json` (the global settings file), NOT to `.claude/settings.local.json`. This ensures permissions are saved to the repository and persist across sessions.
+
+**Process for adding permissions:**
+1. When prompted for permissions, grant them
+2. Immediately add the granted permissions to `claude/settings.json` in the `permissions.allow` array
+3. Remove any permissions that may have been automatically added to `.claude/settings.local.json`
+
+Example permission entries:
+```json
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "WebFetch(domain:docs.anthropic.com)"
+    ],
+    "deny": []
+  }
+}
+```
+
 ## Important Notes
 
 - All installation scripts source `scripts/env.bash` for environment variables
