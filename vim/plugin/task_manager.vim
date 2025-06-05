@@ -1,90 +1,118 @@
-"" FILE: task_manager.vim
-set encoding=utf-8
-scriptencoding utf-8
+vim9script
 
-let s:cpoptions_save = &cpoptions
+# FILE: task_manager.vim
+
+var cpoptions_save = &cpoptions
 set cpoptions&vim
 
-fun! s:show_popup_notification(message) abort
-  let l:msg_width = strdisplaywidth(a:message)
+class TaskManager
+  var config: dict<string>
 
-  " 現在のウィンドウの位置とサイズを取得
-  let l:win_pos = win_screenpos(0)
-  let l:win_height = winheight(0)
-  let l:win_width = winwidth(0)
+  def new()
+    # 設定は実行時に読み込むため,ここでは初期化のみ
+    this.config = {}
+  enddef
 
-  " 現在のウィンドウの中央に表示するための座標計算
-  let l:popup_line = l:win_pos[0] + (l:win_height / 2) - 2
-  let l:popup_col = l:win_pos[1] + (l:win_width / 2) - (l:msg_width / 2)
+  def CreateTask()
+    # 実行時に設定を読み込み
+    this._LoadConfig()
 
-  call popup_notification(a:message, {
-    \ 'time': 5000,
-    \ 'highlight': 'ModeMsg',
-    \ 'line': l:popup_line,
-    \ 'col': l:popup_col,
-    \ 'padding': [0, 1, 0, 1],
-    \ 'minwidth': l:msg_width,
-    \ 'maxwidth': l:msg_width
-  \ })
-endf
+    if !this._ValidateConfig()
+      return
+    endif
 
-fun! s:create_task() abort
-  if !exists('g:task_manager_root_dir')
-    echohl ErrorMsg
-    echo 'Error: g:task_manager_root_dir is not set. Please configure it in your vimrc.'
-    echohl None
-    return
-  endif
+    var dir_name = input('Enter dir name: ')
+    if empty(dir_name)
+      echo 'Dir name cannot be empty.'
+      return
+    endif
 
-  if !exists('g:task_manager_dir_prefix')
-    let g:task_manager_dir_prefix = '%Y-%m-%d'
-  endif
+    var full_dir_path = this._BuildDirPath(dir_name)
+    if !isdirectory(full_dir_path)
+      mkdir(full_dir_path, 'p')
+    endif
 
-  let l:dir_name = input('Enter dir name: ')
+    var file_name = input('Enter file name: ')
+    if empty(file_name)
+      echo 'File name cannot be empty.'
+      return
+    endif
 
-  if empty(l:dir_name)
-    echo 'Dir name cannot be empty.'
-    return
-  endif
+    var full_file_path = this._BuildFilePath(full_dir_path, file_name)
+    var file_exists = filereadable(full_file_path)
 
-  " 日付プレフィックスと組み合わせてディレクトリ名を作成
-  let l:full_dir_name = strftime(g:task_manager_dir_prefix) . '_' . l:dir_name
-  " ディレクトリのフルパス作成
-  let l:full_dir_path = substitute(expand(g:task_manager_root_dir), '/$', '', '') . '/' . l:full_dir_name
+    execute 'edit ' .. fnameescape(full_file_path)
 
-  if !isdirectory(l:full_dir_path)
-    call mkdir(l:full_dir_path, 'p')
-  endif
+    var display_name = fnamemodify(full_dir_path, ':t') .. '/' .. fnamemodify(full_file_path, ':t')
+    if file_exists
+      echo 'Opened existing file: ' .. display_name
+    else
+      this._ShowNotification('Created task: ' .. display_name)
+    endif
+  enddef
 
-  let l:file_name = input('Enter file name: ')
-  if empty(l:file_name)
-    echo 'File name cannot be empty.'
-    return
-  endif
+  def _LoadConfig()
+    this.config = {
+      'root_dir': exists('g:task_manager_root_dir') ? g:task_manager_root_dir : '',
+      'dir_prefix': exists('g:task_manager_dir_prefix') ? g:task_manager_dir_prefix : '%Y-%m-%d',
+      'default_extension': '.md'
+    }
+  enddef
 
-  " ファイルのフルパス作成（拡張子がない場合は.mdを追加）
-  if fnamemodify(l:file_name, ':e') ==# ''
-    let l:file_name_with_ext = l:file_name . '.md'
-  else
-    let l:file_name_with_ext = l:file_name
-  endif
+  def _ValidateConfig(): bool
+    if empty(this.config.root_dir)
+      echohl ErrorMsg
+      echo 'Error: g:task_manager_root_dir is not set. Please configure it in your vimrc.'
+      echohl None
+      return false
+    endif
+    return true
+  enddef
 
-  let l:full_file_path = l:full_dir_path . '/' . l:file_name_with_ext
+  def _BuildDirPath(dir_name: string): string
+    var full_dir_name = strftime(this.config.dir_prefix) .. '_' .. dir_name
+    return substitute(expand(this.config.root_dir), '/$', '', '') .. '/' .. full_dir_name
+  enddef
 
-  " ファイルが既に存在するかチェック
-  let l:file_exists = filereadable(l:full_file_path)
+  def _BuildFilePath(dir_path: string, file_name: string): string
+    var file_name_with_ext = file_name
+    if fnamemodify(file_name, ':e') ==# ''
+      file_name_with_ext = file_name .. this.config.default_extension
+    endif
+    return dir_path .. '/' .. file_name_with_ext
+  enddef
 
-  execute 'edit ' . fnameescape(l:full_file_path)
+  def _ShowNotification(message: string)
+    var msg_width = strdisplaywidth(message)
 
-  if l:file_exists
-    echo 'Opened existing file: ' . l:full_dir_name . '/' . l:file_name_with_ext
-  else
-    " 新規ファイルの場合はpopupで通知
-    call s:show_popup_notification('Created task: ' . l:full_dir_name . '/' . l:file_name_with_ext)
-  endif
-endf
+    # 現在のウィンドウの位置とサイズを取得
+    var win_pos = win_screenpos(0)
+    var win_height = winheight(0)
+    var win_width = winwidth(0)
 
-command! CreateTask call s:create_task()
+    # 現在のウィンドウの中央に表示するための座標計算
+    var popup_line = win_pos[0] + (win_height / 2) - 2
+    var popup_col = win_pos[1] + (win_width / 2) - (msg_width / 2)
 
-let &cpoptions = s:cpoptions_save
-unlet s:cpoptions_save
+    popup_notification(message, {
+      'time': 5000,
+      'highlight': 'ModeMsg',
+      'line': popup_line,
+      'col': popup_col,
+      'padding': [0, 1, 0, 1],
+      'minwidth': msg_width,
+      'maxwidth': msg_width
+    })
+  enddef
+endclass
+
+var task_manager = TaskManager.new()
+
+# 後方互換性のための関数ラッパー
+def CreateTaskCommand()
+  task_manager.CreateTask()
+enddef
+
+command! CreateTask call CreateTaskCommand()
+
+&cpoptions = cpoptions_save
