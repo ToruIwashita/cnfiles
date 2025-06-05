@@ -181,6 +181,14 @@ else
   ln -isn $BASE_DIR_PATH/tmux ~/.tmux
 fi
 
+# claude
+if [[ -L ~/.claude ]]; then
+  printf "\e[32m~/.claude symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.claude dir\e[0m\n"
+  ln -is $BASE_DIR_PATH/claude ~/.claude
+fi
+
 # gitconfig
 if [[ -L ~/.gitconfig ]]; then
   printf "\e[32m~/.gitconfig symlink already exists\e[0m\n"
