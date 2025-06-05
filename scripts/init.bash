@@ -182,11 +182,18 @@ else
 fi
 
 # claude
-if [[ -L ~/.claude ]]; then
-  printf "\e[32m~/.claude symlink already exists\e[0m\n"
+if [[ -d ~/.claude ]]; then
+  printf "\e[32m~/.claude dir already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.claude dir\e[0m\n"
-  ln -is $BASE_DIR_PATH/claude ~/.claude
+  printf "\e[31mmkdir ~/.claude\e[0m\n"
+  mkdir ~/.claude
+fi
+
+if [[ -L ~/.claude/settings.json ]]; then
+  printf "\e[32m~/.claude/settings.json symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.claude/settings.json\e[0m\n"
+  ln -is $BASE_DIR_PATH/claude/settings.json ~/.claude/settings.json
 fi
 
 # gitconfig
