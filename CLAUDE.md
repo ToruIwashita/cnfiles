@@ -66,15 +66,30 @@ Individual tool installers are available in the `scripts/` directory:
 
 ## Claude Code Configuration
 
+### Settings File Hierarchy
+Claude Code uses two levels of configuration:
+
+1. **Repository-specific settings**: `claude/settings.json` (tracked in git)
+   - Project-specific permissions and configurations
+   - Shared across all users of this repository
+
+2. **User-global settings**: `~/.claude/settings.json` (not tracked in git)
+   - Personal preferences like theme, global permissions
+   - User-specific environment variables and configurations
+
 ### Permission Management
-**CRITICAL**: When Claude Code requests permissions for tools or file access, always add the permissions to `claude/settings.json` (the global settings file), NOT to `.claude/settings.local.json`. This ensures permissions are saved to the repository and persist across sessions.
+**CRITICAL**: When Claude Code requests permissions for tools or file access, add them to the appropriate settings file:
+
+- **Project permissions** → `claude/settings.json` (repository-specific tools and workflows)
+- **Global permissions** → `~/.claude/settings.json` (personal preferences, system-wide tools)
 
 **Process for adding permissions:**
 1. When prompted for permissions, grant them
-2. Immediately add the granted permissions to `claude/settings.json` in the `permissions.allow` array
-3. Remove any permissions that may have been automatically added to `.claude/settings.local.json`
+2. Add project-related permissions to `claude/settings.json` in the `permissions.allow` array
+3. Add user-global permissions to `~/.claude/settings.json`
+4. Remove any permissions that may have been automatically added to `.claude/settings.local.json`
 
-Example permission entries:
+Example project permission entries (`claude/settings.json`):
 ```json
 {
   "permissions": {
@@ -84,6 +99,18 @@ Example permission entries:
       "WebFetch(domain:docs.anthropic.com)"
     ],
     "deny": []
+  }
+}
+```
+
+Example user-global settings (`~/.claude/settings.json`):
+```json
+{
+  "theme": "dark",
+  "permissions": {
+    "allow": [
+      "Bash(system-wide-command:*)"
+    ]
   }
 }
 ```
