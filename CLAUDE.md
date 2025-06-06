@@ -87,7 +87,7 @@ Claude Code uses two levels of configuration:
 1. When prompted for permissions, grant them
 2. Add project-related permissions to `claude/settings.json` in the `permissions.allow` array
 3. Add user-global permissions to `~/.claude/settings.json`
-4. Remove any permissions that may have been automatically added to `.claude/settings.local.json`
+4. **IMPORTANT**: Always remove any permissions that may have been automatically added to `.claude/settings.local.json` and move them to the appropriate global or project settings file
 
 Example project permission entries (`claude/settings.json`):
 ```json
