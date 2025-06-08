@@ -11,7 +11,17 @@ endf
 
 fun! s:pbcopy_file_path() abort
   write
-  silent! execute '!echo -n % | pbcopy'
+
+  let l:full_path = expand('%:p')
+  let l:home = expand('~')
+
+  if l:full_path =~# '^' . l:home
+    let l:display_path = substitute(l:full_path, '^' . l:home, '~', '')
+  else
+    let l:display_path = l:full_path
+  endif
+
+  silent! execute '!echo -n ' . shellescape(l:display_path) . ' | pbcopy'
   edit!
 endf
 
