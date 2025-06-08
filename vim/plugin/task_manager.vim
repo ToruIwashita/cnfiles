@@ -38,7 +38,7 @@ class TaskManager
     var full_file_path = this._BuildFilePath(full_dir_path, file_name)
     var file_exists = filereadable(full_file_path)
 
-    execute 'edit ' .. fnameescape(full_file_path)
+    this._OpenFileInAppropriateBuffer(full_file_path)
 
     var display_name = fnamemodify(full_dir_path, ':t') .. '/' .. fnamemodify(full_file_path, ':t')
     if file_exists
@@ -76,6 +76,18 @@ class TaskManager
       return dir_name .. '_instructions'
     else
       return input_name
+    endif
+  enddef
+
+  def _IsCurrentBufferEmpty(): bool
+    return bufname('%') ==# '' && !&modified
+  enddef
+
+  def _OpenFileInAppropriateBuffer(file_path: string)
+    if this._IsCurrentBufferEmpty()
+      execute 'edit ' .. fnameescape(file_path)
+    else
+      execute 'tabedit ' .. fnameescape(file_path)
     endif
   enddef
 
