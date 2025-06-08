@@ -40,6 +40,10 @@ class TaskManager
 
     this._OpenFileInAppropriateBuffer(full_file_path)
 
+    if !file_exists
+      this._ApplyTemplateIfAvailable(full_file_path)
+    endif
+
     var display_name = fnamemodify(full_dir_path, ':t') .. '/' .. fnamemodify(full_file_path, ':t')
     if file_exists
       echo 'Opened existing file: ' .. display_name
@@ -52,7 +56,8 @@ class TaskManager
     this.config = {
       'root_dir': exists('g:task_manager_root_dir') ? g:task_manager_root_dir : '',
       'dir_prefix': exists('g:task_manager_dir_prefix') ? g:task_manager_dir_prefix : '%Y-%m-%d',
-      'default_extension': '.md'
+      'default_extension': '.md',
+      'template_dir': exists('g:task_manager_instruction_file_template_dir') ? g:task_manager_instruction_file_template_dir : ''
     }
   enddef
 
@@ -99,6 +104,66 @@ class TaskManager
     return dir_path .. '/' .. file_name_with_ext
   enddef
 
+  def _ApplyTemplateIfAvailable(target_file_path: string)
+    if empty(this.config.template_dir)
+      return
+    endif
+
+    var expanded_template_dir = expand(this.config.template_dir)
+    if !isdirectory(expanded_template_dir)
+      return
+    endif
+
+    var template_files = this._GetTemplateFiles(expanded_template_dir)
+    if empty(template_files)
+      return
+    endif
+
+    var selected_template = this._SelectTemplate(template_files)
+    if !empty(selected_template)
+      this._ApplyTemplate(selected_template, target_file_path)
+    endif
+  enddef
+
+  def _GetTemplateFiles(template_dir: string): list<string>
+    var normalized_dir = substitute(template_dir, '/$', '', '')
+    var template_pattern = normalized_dir .. '/*'
+    return glob(template_pattern, false, true)
+  enddef
+
+  def _SelectTemplate(template_files: list<string>): string
+    # deopleteとの競合を完全に避けるため、シンプルなinput()ベースに変更
+    var choices = ['No template']
+    for template_file in template_files
+      add(choices, fnamemodify(template_file, ':t'))
+    endfor
+
+    echo 'Available templates:'
+    var index = 0
+    for choice in choices
+      echo index .. '. ' .. choice
+      index += 1
+    endfor
+    echo ''
+
+    var selection = input('Enter template number (0-' .. (len(choices) - 1) .. '): ')
+    var choice_num = str2nr(selection)
+
+    if choice_num > 0 && choice_num < len(choices)
+      return template_files[choice_num - 1]
+    else
+      return ''
+    endif
+  enddef
+
+  def _ApplyTemplate(template_path: string, target_path: string)
+    if filereadable(template_path)
+      var template_content = readfile(template_path)
+      writefile(template_content, target_path)
+      edit!
+    endif
+  enddef
+
   def _ShowNotification(message: string)
     var msg_width = strdisplaywidth(message)
 
@@ -129,6 +194,7 @@ var task_manager = TaskManager.new()
 def CreateTaskCommand()
   task_manager.CreateTask()
 enddef
+
 
 command! CreateTask call CreateTaskCommand()
 
