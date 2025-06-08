@@ -32,11 +32,8 @@ class TaskManager
       mkdir(full_dir_path, 'p')
     endif
 
-    var file_name = input('Enter file name: ')
-    if empty(file_name)
-      echo 'File name cannot be empty.'
-      return
-    endif
+    var input_file_name = input('Enter file name: ')
+    var file_name = this._DetermineFileName(input_file_name, dir_name)
 
     var full_file_path = this._BuildFilePath(full_dir_path, file_name)
     var file_exists = filereadable(full_file_path)
@@ -72,6 +69,14 @@ class TaskManager
   def _BuildDirPath(dir_name: string): string
     var full_dir_name = strftime(this.config.dir_prefix) .. '_' .. dir_name
     return substitute(expand(this.config.root_dir), '/$', '', '') .. '/' .. full_dir_name
+  enddef
+
+  def _DetermineFileName(input_name: string, dir_name: string): string
+    if empty(input_name)
+      return dir_name .. '_instructions'
+    else
+      return input_name
+    endif
   enddef
 
   def _BuildFilePath(dir_path: string, file_name: string): string
