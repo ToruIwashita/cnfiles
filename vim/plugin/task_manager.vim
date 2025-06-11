@@ -1,6 +1,6 @@
-vim9script
+" FILE: task_manager.vim
 
-# FILE: task_manager.vim
+vim9script
 
 var cpoptions_save = &cpoptions
 set cpoptions&vim
@@ -194,7 +194,6 @@ var task_manager = TaskManager.new()
 def CreateTaskCommand()
   task_manager.CreateTask()
 enddef
-
 
 command! CreateTask call CreateTaskCommand()
 
