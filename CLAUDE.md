@@ -115,6 +115,29 @@ Example user-global settings (`~/.claude/settings.json`):
 }
 ```
 
+## Additional Resources
+
+### Implementation Guides
+**CRITICAL**: When working on Vim or Zsh implementations, you MUST immediately read the relevant implementation guide files specified by these environment variables:
+
+- `$MARKDOWN_TEXTS_VIM_IMPLEMENTATION_GUIDE_FILE_PATH` - Vim implementation best practices and guidelines
+- `$MARKDOWN_TEXTS_ZSH_IMPLEMENTATION_GUIDE_FILE_PATH` - Zsh function implementation best practices and guidelines
+
+**Startup procedure for Vim work:**
+1. Get the value of `$MARKDOWN_TEXTS_VIM_IMPLEMENTATION_GUIDE_FILE_PATH` using the Bash tool
+2. Read the implementation guide file using the Read tool
+3. Follow the guidelines throughout your Vim-related work
+
+**Startup procedure for Zsh work:**
+1. Get the value of `$MARKDOWN_TEXTS_ZSH_IMPLEMENTATION_GUIDE_FILE_PATH` using the Bash tool
+2. Read the implementation guide file using the Read tool
+3. Follow the guidelines throughout your Zsh-related work
+
+**Usage instructions:**
+- These guides contain critical implementation patterns and best practices
+- Always reference these guides before implementing Vim plugins or Zsh functions
+- The content from these files should be considered as important as the CLAUDE.md instructions
+
 ## Important Notes
 
 - All installation scripts source `scripts/env.bash` for environment variables
