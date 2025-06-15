@@ -138,6 +138,32 @@ Example user-global settings (`~/.claude/settings.json`):
 - Always reference these guides before implementing Vim plugins or Zsh functions
 - The content from these files should be considered as important as the CLAUDE.md instructions
 
+## Rule Evolution Process
+
+**CRITICAL**: When users provide instructions that should become permanent standards:
+
+1. **Recognition Phase**: Identify when user instructions appear to be ongoing requirements rather than one-time requests
+   - Instructions that affect workflow patterns
+   - Preferences that should apply to all future interactions
+   - Standards that improve overall project consistency
+
+2. **Confirmation Phase**: Ask the user explicitly:
+   ```
+   "Should this become a permanent rule for all future interactions?"
+   ```
+
+3. **Implementation Phase**: Upon user confirmation (YES):
+   - Add the new rule to this CLAUDE.md file under the appropriate section
+   - Apply the rule immediately and for all subsequent interactions
+   - Ensure the rule is clearly documented with specific examples when applicable
+
+4. **Application Phase**:
+   - Treat all documented rules as mandatory requirements
+   - Reference rules consistently across all interactions
+   - Never ignore or override established rules without explicit user instruction
+
+**Purpose**: This process ensures continuous improvement of AI agent performance by systematically capturing user preferences and converting them into permanent project standards.
+
 ## Important Notes
 
 - All installation scripts source `scripts/env.bash` for environment variables
