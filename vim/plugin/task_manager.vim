@@ -119,10 +119,12 @@ class TaskManager
       return
     endif
 
-    var selected_template = this._SelectTemplate(template_files)
-    if !empty(selected_template)
-      this._ApplyTemplate(selected_template, target_file_path)
-    endif
+    # テンプレート選択後の処理をコールバックとして渡す
+    this._SelectTemplate(template_files, (selected_template) => {
+      if !empty(selected_template)
+        this._ApplyTemplate(selected_template, target_file_path)
+      endif
+    })
   enddef
 
   def _GetTemplateFiles(template_dir: string): list<string>
@@ -131,29 +133,39 @@ class TaskManager
     return glob(template_pattern, false, true)
   enddef
 
-  def _SelectTemplate(template_files: list<string>): string
-    # deopleteとの競合を完全に避けるため、シンプルなinput()ベースに変更
-    var choices = ['No template']
+  def _SelectTemplate(template_files: list<string>, OnSelect: func)
+    # ポップアップに表示する項目リストを作成
+    # fnamemodify(..., ':t') でファイル名のみを抽出
+    var display_items = ['[ No template ]']
     for template_file in template_files
-      add(choices, fnamemodify(template_file, ':t'))
+      add(display_items, fnamemodify(template_file, ':t'))
     endfor
 
-    echo 'Available templates:'
-    var index = 0
-    for choice in choices
-      echo index .. '. ' .. choice
-      index += 1
-    endfor
-    echo ''
+    # ポップアップが閉じたときに呼び出されるコールバック関数
+    var PopupCallback = (id, result) => {
+      # result <= 1 は [No template] を選択したか、キャンセル(ESC)した場合
+      if result <= 1
+        OnSelect('')
+      else
+        # resultは1-based index。display_itemsの先頭に 'No template' を追加したため、
+        # template_filesに対応するインデックスは result - 2 となる
+        var selected_path = template_files[result - 2]
+        OnSelect(selected_path)
+      endif
+    }
 
-    var selection = input('Enter template number (0-' .. (len(choices) - 1) .. '): ')
-    var choice_num = str2nr(selection)
-
-    if choice_num > 0 && choice_num < len(choices)
-      return template_files[choice_num - 1]
-    else
-      return ''
-    endif
+    # ポップアップメニューを表示
+    popup_menu(display_items, {
+      'title': 'Select a Template',
+      'callback': PopupCallback,
+      'mapping': true, # j, k, Enter, C-j などのキーマッピングを有効化
+      'line': 'cursor',
+      'col': 'cursor',
+      'border': [1, 1, 1, 1],
+      'borderchars': ['─', '│', '─', '│', '╭', '╮', '╯', '╰'],
+      'highlight': 'Pmenu',
+      'borderhighlight': ['PmenuSbar'],
+    })
   enddef
 
   def _ApplyTemplate(template_path: string, target_path: string)
