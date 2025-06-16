@@ -160,14 +160,26 @@ class TaskManager
       endif
     }
 
+    # カスタムフィルター関数でESCとqを処理
+    var PopupFilter = (id, key) => {
+      if key == "\<Esc>" || key == 'q'
+        # ポップアップを閉じてからコールバックを呼び出す
+        popup_close(id, -1)
+        return true
+      endif
+      # その他のキーはデフォルトのメニューフィルターに委譲
+      return popup_filter_menu(id, key)
+    }
+
     popup_menu(display_items, {
       'title': 'Select a Template',
       'callback': PopupCallback,
-      'mapping': true, # j, k, Enter, C-j などのキーマッピングを有効化
       'line': 'cursor',
       'col': 'cursor',
       'border': [1, 1, 1, 1],
-      'borderchars': ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
+      'borderchars': ['─', '│', '─', '│', '╭', '╮', '╯', '╰'],
+      'mapping': false, # mappingをfalseにしてPopupFilterに完全に委譲
+      'filter': PopupFilter
     })
   enddef
 
