@@ -13,7 +13,7 @@ __git-status() {
 __git-branch-list() {
   __git-inside-work-tree || return
   local branches
-  branches=(${${${(f)"$(git branch)"}:#\* \(HEAD*}#  })
+  branches=(${${${(f)"$(git branch)"}:#\* \(HEAD*}#??})
   printf '%s\n' "${branches[@]}"
 }
 
