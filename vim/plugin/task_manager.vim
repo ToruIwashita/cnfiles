@@ -167,9 +167,7 @@ class TaskManager
       'line': 'cursor',
       'col': 'cursor',
       'border': [1, 1, 1, 1],
-      'borderchars': ['─', '│', '─', '│', '╭', '╮', '╯', '╰'],
-      'highlight': 'Pmenu',
-      'borderhighlight': ['PmenuSbar'],
+      'borderchars': ['─', '│', '─', '│', '╭', '╮', '╯', '╰']
     })
   enddef
 
