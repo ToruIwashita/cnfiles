@@ -21,9 +21,8 @@ class TaskManager
       return
     endif
 
-    var dir_name = input('Enter dir name: ')
+    var dir_name = this._GetDirNameInput()
     if empty(dir_name)
-      echo 'Dir name cannot be empty.'
       return
     endif
 
@@ -189,6 +188,28 @@ class TaskManager
       writefile(template_content, target_path)
       edit!
     endif
+  enddef
+
+  def _GetDirNameInput(): string
+    var dir_name = input('Enter dir name: ')
+    if !empty(dir_name)
+      return dir_name
+    endif
+
+    while true
+      redraw
+
+      echohl ErrorMsg
+      echo 'Dir name cannot be empty.'
+      echohl None
+      echo ''
+
+      var retry_dir_name = input('Enter dir name: ')
+      if !empty(retry_dir_name)
+        return retry_dir_name
+      endif
+    endwhile
+    return ''
   enddef
 
   def _ShowNotification(message: string)
