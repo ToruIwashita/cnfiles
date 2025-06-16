@@ -40,16 +40,18 @@ class TaskManager
 
     this._OpenFileInAppropriateBuffer(full_file_path)
 
-    if !file_exists
-      this._ApplyTemplateIfAvailable(full_file_path)
-    endif
-
     var display_name = fnamemodify(full_dir_path, ':t') .. '/' .. fnamemodify(full_file_path, ':t')
+
     if file_exists
       echo 'Opened existing file: ' .. display_name
-    else
-      this._ShowNotification('Created task: ' .. display_name)
+      return
     endif
+
+    # 新規ファイル作成の場合,テンプレート適用後に作成完了の通知を出す
+    var OnFinish = () => {
+      this._ShowNotification('Created task: ' .. display_name)
+    }
+    this._ApplyTemplateIfAvailable(full_file_path, OnFinish)
   enddef
 
   def _LoadConfig()
@@ -104,18 +106,21 @@ class TaskManager
     return dir_path .. '/' .. file_name_with_ext
   enddef
 
-  def _ApplyTemplateIfAvailable(target_file_path: string)
+  def _ApplyTemplateIfAvailable(target_file_path: string, OnCompletion: func)
     if empty(this.config.template_dir)
+      OnCompletion()
       return
     endif
 
     var expanded_template_dir = expand(this.config.template_dir)
     if !isdirectory(expanded_template_dir)
+      OnCompletion()
       return
     endif
 
     var template_files = this._GetTemplateFiles(expanded_template_dir)
     if empty(template_files)
+      OnCompletion()
       return
     endif
 
@@ -124,6 +129,7 @@ class TaskManager
       if !empty(selected_template)
         this._ApplyTemplate(selected_template, target_file_path)
       endif
+      OnCompletion()
     })
   enddef
 
@@ -147,14 +153,13 @@ class TaskManager
       if result <= 1
         OnSelect('')
       else
-        # resultは1-based index。display_itemsの先頭に 'No template' を追加したため、
-        # template_filesに対応するインデックスは result - 2 となる
+        # resultは1 - based index
+        # display_itemsの先頭に'No template'を追加しているためtemplate_filesに対応するインデックスはresult - 2となる
         var selected_path = template_files[result - 2]
         OnSelect(selected_path)
       endif
     }
 
-    # ポップアップメニューを表示
     popup_menu(display_items, {
       'title': 'Select a Template',
       'callback': PopupCallback,
