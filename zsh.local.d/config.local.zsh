@@ -53,3 +53,8 @@ bindkey -v '^sb' immediate-tmp-text-pbcopy      # Ctr+s,pでBUFFERをcatしてpb
 bindkey -v '^se' insert-pry                     # Ctr+s,eでpryをBUFFERに入れる
 bindkey -v '^s^b' immediate-tmp-markdown-pbcopy # Ctr+s,Ctr+cでtmpファイルをcatしてpbcopy
 bindkey -v '^s^e' insert-bundle-exec-pry        # Ctr+s,Ctr+eでbundle exec pryをBUFFERに入れる
+
+## CursorのAI Agentがターミナルを実行する時にclear-screenするためvim起動との競合を回避
+# if [[ "$TERM_PROGRAM" == 'vscode' ]]; then
+#   bindkey '^L' clear-screen
+# fi
