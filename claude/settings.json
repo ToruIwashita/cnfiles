@@ -8,7 +8,9 @@
       "Bash(ls:*)",
       "Bash(find:*)",
       "WebFetch(domain:docs.anthropic.com)",
-      "Bash(echo $SHELL)"
+      "Bash(echo $SHELL)",
+      "Bash(echo:*)",
+      "Read(*)"
     ],
     "deny": []
   },
