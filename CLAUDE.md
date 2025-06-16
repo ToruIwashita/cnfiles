@@ -1,173 +1,167 @@
-# CLAUDE.md
+# CLAUDE.md  
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+このファイルは Claude Code (claude.ai/code) がこのリポジトリで作業する際のガイダンスを提供します  
 
-## Project Overview
+## 🚨 必須実行順序  
 
-This is a comprehensive personal dotfiles repository (.cnfiles) that manages a complete development environment setup for macOS. The repository uses git submodules to manage source code for various development tools and provides automated installation and configuration scripts.
+**重要 - 全ての会話で必ず従うこと**:  
 
-## Essential Commands
+### 1. 実装ガイド確認（最優先）  
+コード作業を開始する前に Claude は必ずタスクが Vim または Zsh に関連するかチェックする必要があります：  
 
-### Initial Setup
-```bash
-# Initialize the entire development environment
-./scripts/init.bash
+**Vim関連タスクの場合:**  
+1. 即座に実行: `echo $MARKDOWN_TEXTS_VIM_IMPLEMENTATION_GUIDE_FILE_PATH`  
+2. 即座にReadツールで返されたファイルパスを読み込み  
+3. 作業全体を通じて実装ガイドのガイドラインを適用  
 
-# Update all git submodules
-git submodule update --init
-```
+**Zsh関連タスクの場合:**  
+1. 即座に実行: `echo $MARKDOWN_TEXTS_ZSH_IMPLEMENTATION_GUIDE_FILE_PATH`  
+2. 即座にReadツールで返されたファイルパスを読み込み  
+3. 作業全体を通じて実装ガイドのガイドラインを適用  
 
-### Tool Installation
-Individual tool installers are available in the `scripts/` directory:
-- `./scripts/asdf-installer.bash` - Install asdf version manager
-- `./scripts/vim-installer.bash` - Compile and install Vim from source
-- `./scripts/git-installer.bash` - Compile and install Git from source
-- `./scripts/tmux-installer.bash` - Install tmux terminal multiplexer
-- `./scripts/zsh-installer.bash` - Install Zsh shell
-- Language package installers: `gems-installer.bash`, `npms-installer.bash`, `pypies-installer.bash`, `go-package-installer.bash`
+**Zsh作業の検出基準:**  
+- `zsh.d/` ディレクトリ内のファイル  
+- `.zsh` で終わるファイル  
+- シェル関数の実装  
+- Zsh補完関数  
+- 全てのシェルスクリプト作業  
 
-### Environment Management
-- Environment variables are configured in `scripts/env.bash`
-- Zsh environment setup in `zsh.d/env.zsh` and `zsh.d/env.local.zsh`
-- Local customizations supported via `.local` files
+**Vim作業の検出基準:**  
+- `vim/` ディレクトリ内のファイル  
+- `.vim` または `.vimrc` で終わるファイル  
+- Vimプラグイン設定  
+- Vimscript実装  
 
-## Architecture
+### 2. タスク計画（第二優先）  
+実装ガイドを読んだ後（該当する場合）複雑なタスクではTodoWriteツールを使用  
 
-### Directory Structure
-- **`/modules/`** - Git submodules containing source code for development tools (asdf, ctags, git, vim, tmux, zsh, etc.)
-- **`/scripts/`** - Installation and setup automation scripts
-- **`/zsh.d/`** - Comprehensive Zsh configuration with Antigen plugin management
-- **`/vim/`** - Extensive Vim/Neovim setup with 50+ plugins via vim-plug
-- **`/git/`** - Git configuration (gitconfig, gitattributes, gitignore)
-- **`/config/`** - Tool-specific configurations (black, flake8, karabiner, mypy)
-- **`/tmux/`** - Tmux terminal multiplexer configuration
-- **`/claude/`** - Claude Code IDE settings
-- **`/local/`** - Local customizations and binary overrides
+### 3. 実行（第三優先）  
+該当する全てのガイドラインに従って計画された作業を実行  
 
-### Configuration Management
-- **Symlink Strategy**: The init script creates symlinks from home directory to configuration files
-- **Local Overrides**: Uses `.local` suffixed files for machine-specific customizations
-- **Environment Variables**: Centralized environment configuration via `scripts/env.bash`
-- **Modular Design**: Each tool has dedicated configuration directories
+**強制実行**: この実行順序は必須でありいかなる状況でも回避や無視はできません この順序に従わないことは重大なエラーです  
 
-### Language Support
-- **Ruby**: Managed via asdf with gem configuration
-- **Python**: Python packages with flake8, black, mypy configurations
-- **JavaScript/TypeScript**: npm packages with ESLint configuration
-- **Go**: Go packages with delve debugger setup
-- **Shell**: Advanced Zsh configuration with custom functions and completions
+## 📋 プロジェクト概要  
 
-### Development Tools Integration
-- **Version Management**: asdf for managing multiple language versions
-- **Code Search**: The Silver Searcher (ag) for fast code searching
-- **Git Workflow**: Extensive git aliases and configurations
-- **Terminal**: tmux with custom configurations and utilities
-- **Editor**: Vim/Neovim with language-specific plugins and configurations
+これは macOS用の完全な開発環境セットアップを管理する包括的な個人dotfilesリポジトリ(.cnfiles)です gitサブモジュールを使用して様々な開発ツールのソースコードを管理し自動化されたインストールと設定スクリプトを提供します  
 
-## Claude Code Configuration
+## ⚡ 必須コマンド  
 
-### Settings File Hierarchy
-Claude Code uses two levels of configuration:
+### 初期セットアップ  
+```bash  
+# 開発環境全体を初期化  
+./scripts/init.bash  
 
-1. **Repository-specific settings**: `claude/settings.json` (tracked in git)
-   - Project-specific permissions and configurations
-   - Shared across all users of this repository
+# 全gitサブモジュールを更新  
+git submodule update --init  
+```  
 
-2. **User-global settings**: `~/.claude/settings.json` (not tracked in git)
-   - Personal preferences like theme, global permissions
-   - User-specific environment variables and configurations
+### ツールインストール  
+`scripts/` ディレクトリに個別のツールインストーラーが利用可能：  
+- `./scripts/asdf-installer.bash` - asdfバージョンマネージャーのインストール  
+- `./scripts/vim-installer.bash` - ソースからVimのコンパイルとインストール  
+- `./scripts/git-installer.bash` - ソースからGitのコンパイルとインストール  
+- `./scripts/tmux-installer.bash` - tmuxターミナルマルチプレクサーのインストール  
+- `./scripts/zsh-installer.bash` - Zshシェルのインストール  
+- 言語パッケージインストーラー: `gems-installer.bash`, `npms-installer.bash`, `pypies-installer.bash`, `go-package-installer.bash`  
 
-### Permission Management
-**CRITICAL**: When Claude Code requests permissions for tools or file access, add them to the appropriate settings file:
+## 🏗️ アーキテクチャ  
 
-- **Project permissions** → `claude/settings.json` (repository-specific tools and workflows)
-- **Global permissions** → `~/.claude/settings.json` (personal preferences, system-wide tools)
+### ディレクトリ構造  
+- **`/modules/`** - 開発ツールのソースコードを含むgitサブモジュール (asdf, ctags, git, vim, tmux, zsh等)  
+- **`/scripts/`** - インストールとセットアップの自動化スクリプト  
+- **`/zsh.d/`** - Antigenプラグイン管理による包括的なZsh設定  
+- **`/vim/`** - vim-plugによる50以上のプラグインを持つ広範なVim/Neovimセットアップ  
+- **`/git/`** - Git設定 (gitconfig, gitattributes, gitignore)  
+- **`/config/`** - ツール固有の設定 (black, flake8, karabiner, mypy)  
+- **`/tmux/`** - Tmuxターミナルマルチプレクサー設定  
+- **`/claude/`** - Claude Code IDE設定  
+- **`/local/`** - ローカルカスタマイゼーションとバイナリオーバーライド  
 
-**Process for adding permissions:**
-1. When prompted for permissions, grant them
-2. Add project-related permissions to `claude/settings.json` in the `permissions.allow` array
-3. Add user-global permissions to `~/.claude/settings.json`
-4. **IMPORTANT**: Always remove any permissions that may have been automatically added to `.claude/settings.local.json` and move them to the appropriate global or project settings file
+### 設定管理  
+- **シンボリックリンク戦略**: initスクリプトがホームディレクトリから設定ファイルへのシンボリックリンクを作成  
+- **ローカルオーバーライド**: マシン固有のカスタマイゼーションに `.local` サフィックスファイルを使用  
+- **環境変数**: `scripts/env.bash` による一元化された環境設定  
+- **モジュラー設計**: 各ツールが専用の設定ディレクトリを持つ  
 
-Example project permission entries (`claude/settings.json`):
-```json
-{
-  "permissions": {
-    "allow": [
-      "Bash(ls:*)",
-      "Bash(find:*)",
-      "WebFetch(domain:docs.anthropic.com)"
-    ],
-    "deny": []
-  }
-}
-```
+### 言語サポート  
+- **Ruby**: gem設定によるasdf管理  
+- **Python**: flake8, black, mypy設定によるPythonパッケージ  
+- **JavaScript/TypeScript**: ESLint設定によるnpmパッケージ  
+- **Go**: delveデバッガー設定によるGoパッケージ  
+- **Shell**: カスタム関数と補完による高度なZsh設定  
 
-Example user-global settings (`~/.claude/settings.json`):
-```json
-{
-  "theme": "dark",
-  "permissions": {
-    "allow": [
-      "Bash(system-wide-command:*)"
-    ]
-  }
-}
-```
+## ⚙️ Claude Code設定  
 
-## Additional Resources
+### 設定ファイル構造  
+この環境では Claude Codeの設定は以下のように構成されています：  
 
-### Implementation Guides
-**CRITICAL**: When working on Vim or Zsh implementations, you MUST immediately read the relevant implementation guide files specified by these environment variables:
+**統合設定**: `claude/settings.json` (gitで追跡)  
+- `~/.claude/settings.json` からこのファイルへシンボリックリンクが作成済み  
+- プロジェクト固有とグローバル設定の両方を含む  
+- このリポジトリで管理され全ての設定が一元化  
 
-- `$MARKDOWN_TEXTS_VIM_IMPLEMENTATION_GUIDE_FILE_PATH` - Vim implementation best practices and guidelines
-- `$MARKDOWN_TEXTS_ZSH_IMPLEMENTATION_GUIDE_FILE_PATH` - Zsh function implementation best practices and guidelines
+### 権限管理  
+**重要**: Claude Codeがツールやファイルアクセスの権限を要求する場合：  
 
-**Startup procedure for Vim work:**
-1. Get the value of `$MARKDOWN_TEXTS_VIM_IMPLEMENTATION_GUIDE_FILE_PATH` using the Bash tool
-2. Read the implementation guide file using the Read tool
-3. Follow the guidelines throughout your Vim-related work
+**権限追加プロセス:**  
+1. 権限を求められたら許可する  
+2. **全ての権限**を `claude/settings.json` の `permissions.allow` 配列に追加  
+   - プロジェクト関連権限（リポジトリ固有のツールとワークフロー）  
+   - グローバル権限（個人設定, システム全体のツール）  
+3. **重要**: `.claude/settings.local.json` に自動追加された権限は削除し `claude/settings.json` に移動  
 
-**Startup procedure for Zsh work:**
-1. Get the value of `$MARKDOWN_TEXTS_ZSH_IMPLEMENTATION_GUIDE_FILE_PATH` using the Bash tool
-2. Read the implementation guide file using the Read tool
-3. Follow the guidelines throughout your Zsh-related work
+**利点**: シンボリックリンク構造により一つのファイルで全ての設定を管理でき gitによるバージョン管理と同期が可能  
 
-**Usage instructions:**
-- These guides contain critical implementation patterns and best practices
-- Always reference these guides before implementing Vim plugins or Zsh functions
-- The content from these files should be considered as important as the CLAUDE.md instructions
+## 📚 追加リソース  
 
-## Rule Evolution Process
+### 実装ガイド  
+**重要**: VimまたはZsh実装作業時はこれらの環境変数で指定された関連実装ガイドファイルを必ず読んでください：  
 
-**CRITICAL**: When users provide instructions that should become permanent standards:
+- `$MARKDOWN_TEXTS_VIM_IMPLEMENTATION_GUIDE_FILE_PATH` - Vim実装のベストプラクティスとガイドライン  
+- `$MARKDOWN_TEXTS_ZSH_IMPLEMENTATION_GUIDE_FILE_PATH` - Zsh関数実装のベストプラクティスとガイドライン  
 
-1. **Recognition Phase**: Identify when user instructions appear to be ongoing requirements rather than one-time requests
-   - Instructions that affect workflow patterns
-   - Preferences that should apply to all future interactions
-   - Standards that improve overall project consistency
+**使用方法:**  
+- これらのガイドには重要な実装パターンとベストプラクティスが含まれています  
+- VimプラグインやZsh関数を実装する前に必ずこれらのガイドを参照してください  
+- これらのファイルの内容はCLAUDE.mdの指示と同じくらい重要です  
 
-2. **Confirmation Phase**: Ask the user explicitly:
-   ```
-   "Should this become a permanent rule for all future interactions?"
-   ```
+## 🔄 ルール進化プロセス  
 
-3. **Implementation Phase**: Upon user confirmation (YES):
-   - Add the new rule to this CLAUDE.md file under the appropriate section
-   - Apply the rule immediately and for all subsequent interactions
-   - Ensure the rule is clearly documented with specific examples when applicable
+**重要**: ユーザーが永続的な標準となるべき指示を提供した場合：  
 
-4. **Application Phase**:
-   - Treat all documented rules as mandatory requirements
-   - Reference rules consistently across all interactions
-   - Never ignore or override established rules without explicit user instruction
+1. **認識フェーズ**: ユーザーの指示が一回限りの要求ではなく継続的な要件である場合を特定  
+   - ワークフローパターンに影響する指示  
+   - 将来の全てのやり取りに適用すべき設定  
+   - プロジェクト全体の一貫性を向上させる標準  
 
-**Purpose**: This process ensures continuous improvement of AI agent performance by systematically capturing user preferences and converting them into permanent project standards.
+2. **確認フェーズ**: ユーザーに明示的に質問：  
+   ```  
+   "これを将来の全てのやり取りにおける永続的なルールにしますか？"  
+   ```  
 
-## Important Notes
+3. **実装フェーズ**: ユーザーの確認（YES）時：  
+   - 新しいルールをこのCLAUDE.mdファイルの適切なセクションに追加  
+   - ルールを即座に適用し以降の全てのやり取りで使用  
+   - 必要に応じて具体例を含めてルールを明確に文書化  
 
-- All installation scripts source `scripts/env.bash` for environment variables
-- The repository is designed for macOS (Darwin) with Homebrew integration
-- Local customizations should be placed in files ending with `.local`
-- The system creates working directories: `~/works/`, `~/log/`, `~/.cache/`, etc.
-- Memolist system for temporary files and task management in `~/works/memolist/`
+4. **適用フェーズ**:  
+   - 文書化された全てのルールを必須要件として扱う  
+   - 全てのやり取りでルールを一貫して参照  
+   - 明示的なユーザー指示なしに確立されたルールを無視または上書きしない  
+
+**目的**: このプロセスはユーザー設定を体系的に取得し永続的なプロジェクト標準に変換することで AIエージェントのパフォーマンスの継続的改善を保証します  
+
+## 📝 重要事項  
+
+- 全てのインストールスクリプトは環境変数用に `scripts/env.bash` をソース  
+- リポジトリはHomebrew統合でmacOS (Darwin) 用に設計  
+- ローカルカスタマイゼーションは `.local` で終わるファイルに配置  
+- システムは作業ディレクトリを作成: `~/works/`, `~/log/`, `~/.cache/` 等  
+- `~/works/memolist/` での一時ファイルとタスク管理用のMemolistシステム  
+
+## 📋 重要指示リマインダー  
+求められたことを実行する；それ以上でも以下でもない  
+絶対に必要でない限りファイルを作成しない  
+新しいファイルを作成するよりも既存ファイルの編集を常に優先する  
+ドキュメントファイル（*.md）やREADMEファイルを積極的に作成しない  
+ユーザーが明示的に要求した場合のみドキュメントファイルを作成する  
