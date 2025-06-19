@@ -17,5 +17,5 @@
   "bash": {
     "shell": "zsh"
   },
-  "preferredNotifChannel": "terminal_bell"
+  "preferredNotifChannel": "iterm2_with_bell"
 }
