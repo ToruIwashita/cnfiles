@@ -16,5 +16,6 @@
   },
   "bash": {
     "shell": "zsh"
-  }
+  },
+  "preferredNotifChannel": "terminal_bell"
 }
