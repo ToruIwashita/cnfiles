@@ -5,14 +5,35 @@
   },
   "permissions": {
     "allow": [
+      "Bash(echo:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
-      "WebFetch(domain:docs.anthropic.com)",
-      "Bash(echo $SHELL)",
-      "Bash(echo:*)",
-      "Read(*)"
+      "Bash(grep:*)",
+      "Bash(rg:*)",
+      "Bash(git pull:*)",
+      "Bash(git commit:*)",
+      "Bash(cat:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Read(*)",
+      "Edit(*)",
+      "MultiEdit(*)",
+      "Glob(*)",
+      "Grep(*)",
+      "LS(*)",
+      "Task(*)",
+      "TodoRead(*)",
+      "TodoWrite(*)",
+      "WebFetch(domain:docs.anthropic.com)"
     ],
-    "deny": []
+    "deny": [
+      "Bash(rm:*)",
+      "Bash(sudo:*)",
+      "Bash(curl:*)",
+      "Bash(wget:*)",
+      "WebFetch(*)",
+      "WebSearch(*)"
+    ]
   },
   "bash": {
     "shell": "zsh"
