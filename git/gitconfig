@@ -26,9 +26,6 @@
 [diff]
   compactionheuristic = true
 
-[interactive]
-  diffFilter = diff-highlight
-
 [ghq]
   root = ~/repos
 
