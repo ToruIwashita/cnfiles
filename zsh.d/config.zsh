@@ -54,7 +54,7 @@ bindkey -v '^m' accept-line                           # Ctrl+mでaccept-line
 bindkey -v '^q' self-insert                           # Ctrl+qでself-insert
 bindkey -v '^r' history-incremental-search-backward   # Ctrl+rでインクリメンタルサーチ
 bindkey -v '^s' self-insert                           # Ctrl+sでself-insert,Prefixとして使用
-bindkey -v '^u' kill-word                             # Ctrl+uでkill-word
+bindkey -v '^u' kill-whole-line                       # Ctrl+uでkill-whole-line
 bindkey -v '^w' backward-kill-word                    # Ctrl+wでbackward-kill-word
 bindkey -v '^y' push-input                            # Ctrl+yでコマンドラインスタック(複数行を考慮してpush-inputに設定)
 bindkey -v '^z' run-fg-last                           # Ctrl+zで最後にサスペンドしたjobに復帰する
