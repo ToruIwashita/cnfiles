@@ -43,7 +43,7 @@ setopt noflowcontrol        # フローコントロール無効(C-s,C-qのフロ
 # vimモードキーマップ
 bindkey -v '^a' beginning-of-line                     # Ctrl+aで行頭へ
 bindkey -v '^b' backward-char                         # Ctrl+bで1文字左へ(menuselectも同様)
-bindkey -v '^d' delete-char-or-list                   # Ctrl+dで1文字削除
+bindkey -v '^d' start-claude                          # Ctrl+dでClaude Code起動
 bindkey -v '^e' end-of-line                           # Ctrl+eで行末へ
 bindkey -v '^f' forward-char                          # Ctrl+fで1文字右へ(menuselectも同様)
 bindkey -v '^g' send-break                            # Ctrl+gで入力キャンセル
