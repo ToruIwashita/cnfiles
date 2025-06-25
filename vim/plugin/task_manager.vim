@@ -13,7 +13,7 @@ class TaskManager
     this.config = {}
   enddef
 
-  def CreateTask()
+  def CreateTask(dir_name: string = '')
     # 実行時に設定を読み込み
     this._LoadConfig()
 
@@ -21,18 +21,28 @@ class TaskManager
       return
     endif
 
-    var dir_name = this._GetDirNameInput()
+    var actual_dir_name: string
     if empty(dir_name)
-      return
+      actual_dir_name = this._GetDirNameInput()
+      if empty(actual_dir_name)
+        return
+      endif
+    else
+      actual_dir_name = dir_name
     endif
 
-    var full_dir_path = this._BuildDirPath(dir_name)
+    var full_dir_path = this._BuildDirPath(actual_dir_name)
     if !isdirectory(full_dir_path)
       mkdir(full_dir_path, 'p')
     endif
 
-    var input_file_name = input('Enter file name: ')
-    var file_name = this._DetermineFileName(input_file_name, dir_name)
+    var input_file_name: string
+    if empty(dir_name)
+      input_file_name = input('Enter file name: ')
+    else
+      input_file_name = ''
+    endif
+    var file_name = this._DetermineFileName(input_file_name, actual_dir_name)
 
     var full_file_path = this._BuildFilePath(full_dir_path, file_name)
     var file_exists = filereadable(full_file_path)
@@ -239,10 +249,14 @@ endclass
 var task_manager = TaskManager.new()
 
 # 後方互換性のための関数ラッパー
-def CreateTaskCommand()
-  task_manager.CreateTask()
+def CreateTaskCommand(...args: list<string>)
+  if len(args) > 0
+    task_manager.CreateTask(args[0])
+  else
+    task_manager.CreateTask()
+  endif
 enddef
 
-command! CreateTask call CreateTaskCommand()
+command! -nargs=? CreateTask call CreateTaskCommand(<f-args>)
 
 &cpoptions = cpoptions_save
