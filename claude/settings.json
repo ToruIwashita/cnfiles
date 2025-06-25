@@ -9,7 +9,6 @@
       "Bash(ls:*)",
       "Bash(find:*)",
       "Bash(grep:*)",
-      "Bash(rg:*)",
       "Bash(git pull:*)",
       "Bash(git commit:*)",
       "Bash(cat:*)",
@@ -27,12 +26,22 @@
       "WebFetch(domain:docs.anthropic.com)"
     ],
     "deny": [
-      "Bash(rm:*)",
       "Bash(sudo:*)",
+      "Bash(rm:*)",
+      "Bash(rm -rf:*)",
+      "Bash(git push:*)",
+      "Bash(git reset:*)",
+      "Bash(git rebase:*)",
       "Bash(curl:*)",
       "Bash(wget:*)",
-      "WebFetch(*)",
-      "WebSearch(*)"
+      "Bash(nc:*)",
+      "Read(.env.*)",
+      "Read(id_rsa)",
+      "Read(id_ed25519)",
+      "Read(**/*token*)",
+      "Read(**/*key*)",
+      "Write(.env*)",
+      "Write(**/secrets/**)"
     ]
   },
   "bash": {
