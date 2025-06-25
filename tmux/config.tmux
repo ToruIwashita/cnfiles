@@ -19,7 +19,7 @@ set -g status-interval 2
 set -g base-index 1
 # buffer
 set -g buffer-limit 33
-set -g history-limit 5000
+set -g history-limit 50000
 # ウィンドウで動作があるとハイライト
 setw -g monitor-activity on
 # monitor-activity onでウィンドウ動作があった時にステータスラインメッセージを表示
