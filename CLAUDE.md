@@ -10,18 +10,16 @@
 コード作業を開始する前に Claude は必ずタスクが Vim または Zsh に関連するかチェックする必要があります：
 
 **Vim関連タスクの場合:**
-1. 即座に実行: `echo $MARKDOWN_TEXTS_VIM_IMPLEMENTATION_GUIDE_FILE_PATH`
-2. 即座にReadツールで返されたファイルパスを読み込み
-3. 作業全体を通じて実装ガイドのガイドラインを適用
+1. 即座にReadツールで `./docs/code_implementation_guide/vim.md` を読み込み
+2. 作業全体を通じて実装ガイドのガイドラインを適用
 
 **Zsh関連タスクの場合:**
-1. 即座に実行: `echo $MARKDOWN_TEXTS_ZSH_IMPLEMENTATION_GUIDE_FILE_PATH`
-2. 即座にReadツールで返されたファイルパスを読み込み
-3. 作業全体を通じて実装ガイドのガイドラインを適用
+1. 即座にReadツールで `./docs/code_implementation_guide/zsh.md` を読み込み
+2. 作業全体を通じて実装ガイドのガイドラインを適用
 
 **実装ガイド使用方法:**
-- `$MARKDOWN_TEXTS_VIM_IMPLEMENTATION_GUIDE_FILE_PATH` - Vim実装のベストプラクティスとガイドライン
-- `$MARKDOWN_TEXTS_ZSH_IMPLEMENTATION_GUIDE_FILE_PATH` - Zsh関数実装のベストプラクティスとガイドライン
+- `./docs/code_implementation_guide/vim.md` - Vim実装のベストプラクティスとガイドライン
+- `./docs/code_implementation_guide/zsh.md` - Zsh関数実装のベストプラクティスとガイドライン
 
 **作業検出基準:**
 - **Zsh作業**: `zsh.d/` ディレクトリ内のファイル, `.zsh` で終わるファイル, シェル関数の実装, Zsh補完関数, 全てのシェルスクリプト作業
