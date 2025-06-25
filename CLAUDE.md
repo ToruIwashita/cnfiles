@@ -47,9 +47,18 @@
 - コード完成時に実装ガイドとの照合を必須実行
 - ルール違反は重大なエラーとして即座に修正
 
+## 🌏 言語設定ルール
+
+**必須言語設定:**
+- 全ての回答は日本語で行う
+- コード内のコメントも日本語で記述する
+- エラーメッセージや技術的な説明も日本語で提供する
+- 英語での回答は避け,常に日本語での対応を優先する
+- ユーザーとのやり取りは全て日本語で統一する
+
 ## 📋 プロジェクト概要
 
-これは macOS用の完全な開発環境セットアップを管理する包括的な個人dotfilesリポジトリ(.cnfiles)です gitサブモジュールを使用して様々な開発ツールのソースコードを管理し自動化されたインストールと設定スクリプトを提供します
+macOS開発環境の包括的dotfiles (.cnfiles) - gitサブモジュールによるツール管理と自動化インストールスクリプト
 
 ## ⚡ 必須コマンド
 
@@ -63,49 +72,32 @@ git submodule update --init
 ```
 
 ### ツールインストール
-`scripts/` ディレクトリに個別のツールインストーラーが利用可能：
-- `./scripts/asdf-installer.bash` - asdfバージョンマネージャーのインストール
-- `./scripts/vim-installer.bash` - ソースからVimのコンパイルとインストール
-- `./scripts/git-installer.bash` - ソースからGitのコンパイルとインストール
-- `./scripts/tmux-installer.bash` - tmuxターミナルマルチプレクサーのインストール
-- `./scripts/zsh-installer.bash` - Zshシェルのインストール
-- 言語パッケージインストーラー: `gems-installer.bash`, `npms-installer.bash`, `pypies-installer.bash`, `go-package-installer.bash`
+`scripts/` 内の個別インストーラー: vim, git, tmux, zsh, asdf等
 
 ## 🏗️ アーキテクチャ
 
-### ディレクトリ構造
-- **`/modules/`** - 開発ツールのソースコードを含むgitサブモジュール (asdf, ctags, git, vim, tmux, zsh等)
-- **`/scripts/`** - インストールとセットアップの自動化スクリプト
-- **`/zsh.d/`** - Antigenプラグイン管理による包括的なZsh設定
-- **`/vim/`** - vim-plugによる50以上のプラグインを持つ広範なVim/Neovimセットアップ
-- **`/git/`** - Git設定 (gitconfig, gitattributes, gitignore)
-- **`/config/`** - ツール固有の設定 (black, flake8, karabiner, mypy)
-- **`/tmux/`** - Tmuxターミナルマルチプレクサー設定
-- **`/claude/`** - Claude Code IDE設定
-- **`/local/`** - ローカルカスタマイゼーションとバイナリオーバーライド
+### 主要ディレクトリ
+- `/modules/` - gitサブモジュール
+- `/scripts/` - インストールスクリプト
+- `/zsh.d/` - Zsh設定
+- `/vim/` - Vim設定
+- `/git/` - Git設定
+- `/tmux/` - Tmux設定
+- `/claude/` - Claude Code設定
+- `/local/` - ローカルカスタマイゼーション
 
 ### 設定管理
-- **シンボリックリンク戦略**: initスクリプトがホームディレクトリから設定ファイルへのシンボリックリンクを作成
-- **ローカルオーバーライド**: マシン固有のカスタマイゼーションに `.local` サフィックスファイルを使用
-- **環境変数**: `scripts/env.bash` による一元化された環境設定
-- **モジュラー設計**: 各ツールが専用の設定ディレクトリを持つ
+- シンボリックリンク戦略
+- `.local` サフィックスによるローカルオーバーライド
+- `scripts/env.bash` による環境変数管理
 
 ### 言語サポート
-- **Ruby**: gem設定によるasdf管理
-- **Python**: flake8, black, mypy設定によるPythonパッケージ
-- **JavaScript/TypeScript**: ESLint設定によるnpmパッケージ
-- **Go**: delveデバッガー設定によるGoパッケージ
-- **Shell**: カスタム関数と補完による高度なZsh設定
+Ruby, Python, JavaScript/TypeScript, Go, Shell環境の設定管理
 
 ## ⚙️ Claude Code設定
 
 ### 設定ファイル構造
-この環境では Claude Codeの設定は以下のように構成されています：
-
-**統合設定**: `claude/settings.json` (gitで追跡)
-- `~/.claude/settings.json` からこのファイルへシンボリックリンクが作成済み
-- プロジェクト固有とグローバル設定の両方を含む
-- このリポジトリで管理され全ての設定が一元化
+**統合設定**: `claude/settings.json` - シンボリックリンクによる一元管理
 
 ### 権限管理
 **重要**: Claude Codeがツールやファイルアクセスの権限を要求する場合：
@@ -117,7 +109,7 @@ git submodule update --init
    - グローバル権限（個人設定, システム全体のツール）
 3. **重要**: `.claude/settings.local.json` に自動追加された権限は削除し `claude/settings.json` に移動
 
-**利点**: シンボリックリンク構造により一つのファイルで全ての設定を管理でき gitによるバージョン管理と同期が可能
+**利点**: 一元管理とgitバージョン管理
 
 ## 📚 追加リソース
 
@@ -127,10 +119,7 @@ git submodule update --init
 - `$MARKDOWN_TEXTS_VIM_IMPLEMENTATION_GUIDE_FILE_PATH` - Vim実装のベストプラクティスとガイドライン
 - `$MARKDOWN_TEXTS_ZSH_IMPLEMENTATION_GUIDE_FILE_PATH` - Zsh関数実装のベストプラクティスとガイドライン
 
-**使用方法:**
-- これらのガイドには重要な実装パターンとベストプラクティスが含まれています
-- VimプラグインやZsh関数を実装する前に必ずこれらのガイドを参照してください
-- これらのファイルの内容はCLAUDE.mdの指示と同じくらい重要です
+**使用方法:** 実装前に必ず該当ガイドを参照
 
 ## 🔄 ルール進化プロセス
 
@@ -160,11 +149,9 @@ git submodule update --init
 
 ## 📝 重要事項
 
-- 全てのインストールスクリプトは環境変数用に `scripts/env.bash` をソース
-- リポジトリはHomebrew統合でmacOS (Darwin) 用に設計
-- ローカルカスタマイゼーションは `.local` で終わるファイルに配置
-- システムは作業ディレクトリを作成: `~/works/`, `~/log/`, `~/.cache/` 等
-- `~/works/memolist/` での一時ファイルとタスク管理用のMemolistシステム
+- macOS (Darwin) 専用設計
+- `.local` ファイルによるローカルカスタマイゼーション
+- `~/works/memolist/` でのタスク管理
 
 ## 📋 重要指示リマインダー
 求められたことを実行する；それ以上でも以下でもない
