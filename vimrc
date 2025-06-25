@@ -10,6 +10,7 @@ let g:config_dir_path = $CONFIG_DIR_PATH
 let g:lint_dir_path = $LINT_DIR_PATH
 let g:cache_dir_path = $CACHE_DIR_PATH
 let g:markdown_texts_dir_path = $MARKDOWN_TEXTS_DIR_PATH
+let g:markdown_texts_ai_instruction_template_dir_path = $MARKDOWN_TEXTS_AI_INSTRUCTION_TEMPLATE_DIR_PATH
 let g:markdown_texts_modeling_session_file_path = $MARKDOWN_TEXTS_MODELING_SESSION_FILE_PATH
 let g:memolist_dir_path = $MEMOLIST_DIR_PATH
 let g:memolist_task_markdown_file_path = $MEMOLIST_TASK_MARKDOWN_FILE_PATH
