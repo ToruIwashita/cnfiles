@@ -85,6 +85,7 @@ bindkey -v '^s^s' peco-git-grep-and-start-editor      # Ctrl+s,Ctrl+sでgit grep
 bindkey -v '^s^u' immediate-git-status                # Ctrl+s,Ctrl+uでgit status
 bindkey -v '^s^w' hide-rprompt                        # Ctrl+s,Ctrl+wでRPROMPTを退避
 bindkey -v '^s^z' run-fg-last-with-up-line-or-history # Ctrl+s,Ctrl+zで履歴を逆上る+最後にサスペンドしたjobに復帰する
+bindkey -v '^ ' ai-agent-search                       # Ctrl+<SPACE>でAIエージェント検索
 bindkey -v '^s^]' vi-backward-word                    # Ctrl+s,Ctrl+]で前の単語の先頭に移動
 bindkey -v '^s^@' kill-line                           # Ctrl+s,Ctrl+@でカーソル行以降削除
 bindkey -v '^]' vi-forward-word                       # Ctrl+]で次の単語の先頭に移動
