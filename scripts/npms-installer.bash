@@ -17,51 +17,51 @@ echo
 npm update -g
 
 echo
-printf 'npm install -g eslint\n'
+printf "\e[32mnpm install -g eslint\e[0m\n"
 npm install -g eslint
 
 echo
-printf 'npm install -g prettier\n'
+printf "\e[32mnpm install -g prettier\e[0m\n"
 npm install -g prettier
 
 echo
-printf 'npm install -g babel-eslint\n'
+printf "\e[32mnpm install -g babel-eslint\e[0m\n"
 npm install -g babel-eslint
 
 echo
-printf 'npm install -g eslint-plugin-prettier\n'
+printf "\e[32mnpm install -g eslint-plugin-prettier\e[0m\n"
 npm install -g eslint-plugin-prettier
 
 echo
-printf 'npm install -g eslint-config-prettier\n'
+printf "\e[32mnpm install -g eslint-config-prettier\e[0m\n"
 npm install -g eslint-config-prettier
 
 echo
-printf 'npm install -g fixjson\n'
+printf "\e[32mnpm install -g fixjson\e[0m\n"
 npm install -g fixjson
 
 echo
-printf 'npm install -g lice\n'
+printf "\e[32mnpm install -g lice\e[0m\n"
 npm install -g lice
 
 echo
-printf 'npm install -g @redocly/cli\n'
+printf "\e[32mnpm install -g @redocly/cli\e[0m\n"
 npm install -g @redocly/cli
 
 echo
-printf 'npm install -g swagger-merger\n'
+printf "\e[32mnpm install -g swagger-merger\e[0m\n"
 npm install -g swagger-merger
 
 echo
-printf 'npm install -g @mermaid-js/mermaid-cli\n'
+printf "\e[32mnpm install -g @mermaid-js/mermaid-cli\e[0m\n"
 npm install -g @mermaid-js/mermaid-cli
 
 echo
-printf 'npm install -g @anthropic-ai/claude-code\n'
+printf "\e[32mnpm install -g @anthropic-ai/claude-code\e[0m\n"
 npm install -g @anthropic-ai/claude-code
 
 echo
-printf 'npm install -g @google/gemini-cli\n'
+printf "\e[32mnpm install -g @google/gemini-cli\e[0m\n"
 npm install -g @google/gemini-cli
 
 asdf reshim nodejs
