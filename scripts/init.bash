@@ -195,6 +195,13 @@ else
   ln -is $BASE_DIR_PATH/claude/settings.json ~/.claude/settings.json
 fi
 
+if [[ -L ~/.claude/commands ]]; then
+  printf "\e[32m~/.claude/commands dir symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.claude/commands dir\e[0m\n"
+  ln -is $BASE_DIR_PATH/claude/commands ~/.claude/commands
+fi
+
 # gemini
 if [[ -d ~/.gemini ]]; then
   printf "\e[32m~/.gemini dir already exists\e[0m\n"
