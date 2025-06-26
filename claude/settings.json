@@ -23,7 +23,8 @@
       "Task(*)",
       "TodoRead(*)",
       "TodoWrite(*)",
-      "WebFetch(domain:docs.anthropic.com)"
+      "WebFetch(domain:docs.anthropic.com)",
+      "Bash($AI_SEARCH_AGENT:*)"
     ],
     "deny": [
       "Bash(sudo:*)",
