@@ -7,6 +7,8 @@ set cpoptions&vim
 
 fun! s:pbcopy_buffer() abort
   execute ':w !pbcopy'
+  redraw!
+  echo 'Buffer copied to clipboard'
 endf
 
 fun! s:pbcopy_file_path() abort
@@ -22,7 +24,8 @@ fun! s:pbcopy_file_path() abort
   endif
 
   silent! execute '!echo -n ' . shellescape(l:display_path) . ' | pbcopy'
-  edit!
+  redraw!
+  echo 'Copied: ' . l:display_path
 endf
 
 command! PbcopyBuffer call s:pbcopy_buffer()
