@@ -1,5 +1,9 @@
 {
   "theme": "dark",
+  "preferredNotifChannel": "iterm2_with_bell",
+  "bash": {
+    "shell": "zsh"
+  },
   "env": {
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
   },
@@ -44,9 +48,5 @@
       "Write(.env*)",
       "Write(**/secrets/**)"
     ]
-  },
-  "bash": {
-    "shell": "zsh"
-  },
-  "preferredNotifChannel": "iterm2_with_bell"
+  }
 }
