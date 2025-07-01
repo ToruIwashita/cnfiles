@@ -67,6 +67,13 @@ __git-deleted-list() {
   print ${(R)${(M)${(@f)"$(__git-status)"}:#?D*}#?D[[:space:]]}
 }
 
+__git-commit-list() {
+  __git-inside-work-tree || return
+  local commit_format
+  commit_format='%h - [%ad] %s @%an'
+  git log --pretty=format:"$commit_format" --date=format:'%Y-%m-%d %H:%M' -n 50
+}
+
 __git-inside-work-tree() {
   [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true ]]
 }
