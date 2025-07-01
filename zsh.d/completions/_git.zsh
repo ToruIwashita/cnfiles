@@ -31,6 +31,18 @@ __git-staged-files() {
   compadd $(__git-staged-list)
 }
 
+__git-commits() {
+  local -a commits commit_hashes commit_descriptions
+  commits=(${(f)"$(__git-commit-list)"})
+
+  for commit in $commits; do
+    commit_hashes+=(${commit%% *})
+    commit_descriptions+=($commit)
+  done
+
+  compadd -Q -V commits -d commit_descriptions -a commit_hashes
+}
+
 __git-both-modified-files() {
   compadd $(__git-both-modified-list)
 }
@@ -64,7 +76,10 @@ _gc() {
 }
 
 _gd() {
-  _arguments '*: :__git-modified-files'
+  _arguments \
+    '(-c --commit)'{-c,--commit}'[Show commit diff]: :__git-commits' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '(:)*: :__git-modified-files'
 }
 
 _gsw() {

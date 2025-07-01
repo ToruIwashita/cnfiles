@@ -71,7 +71,7 @@ __git-commit-list() {
   __git-inside-work-tree || return
   local commit_format
   commit_format='%h - [%ad] %s @%an'
-  git log --pretty=format:"$commit_format" --date=format:'%Y-%m-%d %H:%M' -n 50
+  git log --pretty=format:"$commit_format" --date=format:'%Y-%m-%d %H:%M' -n 30
 }
 
 __git-inside-work-tree() {

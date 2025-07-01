@@ -327,16 +327,77 @@ EOF`
 }
 
 gd() {
-  local usage
+  local -a file_paths
+  local self_cmd help usage commit_option
 
-  usage="usage: $0 <file>"
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd [files]
+          [-c --commit [commit_id]]
+          [-h --help]
+EOF`
+
   if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
   fi
 
-  (git diff $* 2>/dev/null || git diff $(git rev-parse --show-toplevel)/$^*)
+  while (( $# > 0 )); do
+    case "$1" in
+      -c | --commit)
+        if (( $#2 )) && [[ "$2" != -* ]]; then
+          commit_option="$2"
+          shift 2
+        else
+          commit_option="origin/HEAD...HEAD"
+          shift 1
+        fi
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift
+        file_paths+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        file_paths+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if (( $#commit_option )); then
+    # -cのみの場合（デフォルト）
+    if [[ "$commit_option" == "origin/HEAD...HEAD" ]]; then
+      print "\033[36mgit diff $commit_option\033[0m\n"
+      git diff "$commit_option"
+      return 0
+    fi
+
+    # -c $commit_idの場合
+    print "\033[36mgit diff $commit_option^..$commit_option\033[0m\n"
+    git diff "$commit_option"^.."$commit_option"
+    return 0
+  fi
+
+  if (( ${#file_paths} )); then
+    print "\033[36mgit diff ${file_paths[*]}\033[0m\n"
+    (git diff "${file_paths[@]}" 2>/dev/null || git diff $(git rev-parse --show-toplevel)/"${^file_paths[@]}")
+    return 0
+  fi
+
+  # デフォルト（引数なし）
+  print "\033[36mgit diff\033[0m\n"
+  git diff
 }
 
 gsw() {
