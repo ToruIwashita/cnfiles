@@ -2,33 +2,43 @@
 __git-branches() {
   local -a branches
   branches=(${(f)"$(__git-branch-list)"})
-  compadd -Q -a branches
+  compadd -a branches
 }
 
 __git-remote-branches() {
   local -a remote_branches
   remote_branches=(${(f)"$(__git-remote-branch-list)"})
-  compadd -Q -a remote_branches
+  compadd -a remote_branches
 }
 
 __git-changed-files() {
-  compadd $(__git-changed-list)
+  local -a changed_files
+  changed_files=(${(f)"$(__git-changed-list)"})
+  compadd -f -a changed_files
 }
 
 __git-modified-files() {
-  compadd $(__git-modified-list)
+  local -a modified_files
+  modified_files=(${(f)"$(__git-modified-list)"})
+  compadd -f -a modified_files
 }
 
 __git-deleted-files() {
-  compadd $(__git-deleted-list)
+  local -a deleted_files
+  deleted_files=(${(f)"$(__git-deleted-list)"})
+  compadd -f -a deleted_files
 }
 
 __git-untracked-files() {
-  compadd $(__git-untracked-list)
+  local -a untracked_files
+  untracked_files=(${(f)"$(__git-untracked-list)"})
+  compadd -f -a untracked_files
 }
 
 __git-staged-files() {
-  compadd $(__git-staged-list)
+  local -a staged_files
+  staged_files=(${(f)"$(__git-staged-list)"})
+  compadd -f -a staged_files
 }
 
 __git-commits() {
@@ -40,11 +50,13 @@ __git-commits() {
     commit_descriptions+=($commit)
   done
 
-  compadd -Q -V commits -d commit_descriptions -a commit_hashes
+  compadd -V commits -d commit_descriptions -a commit_hashes
 }
 
 __git-both-modified-files() {
-  compadd $(__git-both-modified-list)
+  local -a both_modified_files
+  both_modified_files=(${(f)"$(__git-both-modified-list)"})
+  compadd -f -a both_modified_files
 }
 
 _gam() {

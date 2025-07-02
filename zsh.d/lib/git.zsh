@@ -12,7 +12,7 @@ __git-status() {
 
 __git-branch-list() {
   __git-inside-work-tree || return
-  local branches
+  local -a branches
   branches=(${${${(f)"$(git branch)"}:#\* \(HEAD*}#??})
   printf '%s\n' "${branches[@]}"
 }
@@ -20,58 +20,54 @@ __git-branch-list() {
 __git-remote-branch-list() {
   __git-inside-work-tree || return
   local -a existing_branches remote_branches
-
   existing_branches=(${(f)"$(__git-branch-list)"})
   remote_branches=(${${${${(f)"$(git branch --remote)"}:#*->*}#[[:space:]]*origin/}:|existing_branches})
-
   printf '%s\n' "${remote_branches[@]}"
 }
 
 __git-changed-list() {
   __git-inside-work-tree || return
-  print $(git diff --name-only origin/HEAD...HEAD)
+  git diff --name-only origin/HEAD...HEAD
 }
 
 __git-modified-list() {
   __git-inside-work-tree || return
-  local -a git_status_res
-
-  print ${(R)${(M)${(@f)"$(__git-status)"}:#?M*}#?M[[:space:]]}
+  local -a modified_files
+  modified_files=(${${${(M)${(0)"$(git status --porcelain -z 2>/dev/null)"}:#?M*}#??}# })
+  printf '%s\n' "${modified_files[@]}"
 }
 
 __git-untracked-list() {
   __git-inside-work-tree || return
-  local -a git_status_res
-
-  print ${(R)${(M)${(@f)"$(__git-status)"}:#\?\?*}#\?\?[[:space:]]}
+  local -a untracked_files
+  untracked_files=(${${${(M)${(0)"$(git status --porcelain -z 2>/dev/null)"}:#\?\?*}#??}# })
+  printf '%s\n' "${untracked_files[@]}"
 }
 
 __git-staged-list() {
   __git-inside-work-tree || return
-  local -a git_status_res
-
-  print ${(R)${(M)${(@f)"$(__git-status)"}:#M?*}#M?[[:space:]]}
+  local -a staged_files
+  staged_files=(${${${(M)${(0)"$(git status --porcelain -z 2>/dev/null)"}:#M?*}#??}# })
+  printf '%s\n' "${staged_files[@]}"
 }
 
 __git-both-modified-list() {
   __git-inside-work-tree || return
-  local -a git_status_res
-
-  print ${(R)${(M)${(@f)"$(__git-status)"}:#UU*}#UU[[:space:]]}
+  local -a both_modified_files
+  both_modified_files=(${${${(M)${(0)"$(git status --porcelain -z 2>/dev/null)"}:#UU*}#??}# })
+  printf '%s\n' "${both_modified_files[@]}"
 }
 
 __git-deleted-list() {
   __git-inside-work-tree || return
-  local -a git_status_res
-
-  print ${(R)${(M)${(@f)"$(__git-status)"}:#?D*}#?D[[:space:]]}
+  local -a deleted_files
+  deleted_files=(${${${(M)${(0)"$(git status --porcelain -z 2>/dev/null)"}:#?D*}#??}# })
+  printf '%s\n' "${deleted_files[@]}"
 }
 
 __git-commit-list() {
   __git-inside-work-tree || return
-  local commit_format
-  commit_format='%h - [%ad] %s @%an%d'
-  git log --pretty=format:"$commit_format" --date=format:'%Y-%m-%d %H:%M' --decorate=short -n 30
+  git log --pretty=format:'%h - [%ad] %s @%an%d' --date=format:'%Y-%m-%d %H:%M' --decorate=short -n 30
 }
 
 __git-inside-work-tree() {
@@ -93,5 +89,5 @@ __ga() {
     return 1
   fi
 
-  (git add $* 2>/dev/null || git add $(git rev-parse --show-toplevel)/$^*)
+  git add "$@"
 }
