@@ -126,7 +126,6 @@ alias untar='tar xvf'
 # history
 alias his='history -f 1'
 # git
-alias ga='git add'
 alias gb='git branch'
 alias gf='git fetch --prune'
 alias gp='git prune'

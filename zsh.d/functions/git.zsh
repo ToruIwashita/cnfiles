@@ -3,14 +3,70 @@ gchanged-files() {
   __git-changed-list | tr ' ' '\n'
 }
 
-gaa() {
+ga() {
+  integer unstage
+  local -a file_paths
+  local self_cmd help usage
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd [files]
+              [-u --unstage]
+              [-h --help]
+EOF`
+
   if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
+    print $usage 1>&2
     return 1
   fi
 
-  git diff
-  git add $(git rev-parse --show-cdup).
+  while (( $# > 0 )); do
+    case "$1" in
+      -u | --unstage)
+        (( unstage++ ))
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift
+        file_paths+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        file_paths+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if (( unstage )); then
+    if (( ${#file_paths} )); then
+      git restore --staged $(git rev-parse --show-toplevel)/"${^file_paths[@]}"
+    else
+      git restore --staged "$(git rev-parse --show-toplevel)" &>/dev/null
+    fi
+
+    git status --short
+
+    return 0
+  fi
+
+  if (( ${#file_paths} )); then
+    git add $(git rev-parse --show-toplevel)/"${^file_paths[@]}"
+  else
+    git add "$(git rev-parse --show-toplevel)"
+  fi
+
+  git status --short
 }
 
 gam() {
@@ -28,8 +84,8 @@ gam() {
     return 1
   fi
 
-  (git diff $* 2>/dev/null || git diff $(git rev-parse --show-toplevel)/$^*) &&
-    (git add $* 2>/dev/null || git add $(git rev-parse --show-toplevel)/$^*)
+  (git diff $(git rev-parse --show-toplevel)/$^*) &&
+    (git add $(git rev-parse --show-toplevel)/$^*)
 }
 
 gau() {

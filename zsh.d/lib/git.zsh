@@ -44,10 +44,17 @@ __git-untracked-list() {
   printf '%s\n' "${untracked_files[@]}"
 }
 
+__git-unstaged-list() {
+  __git-inside-work-tree || return
+  local -a all_files
+  all_files=(${${${(M)${(0)"$(git status --porcelain -z 2>/dev/null)"}:#(?[MD\?]|[UAD][UAD])*}#??}# })
+  printf '%s\n' "${all_files[@]}"
+}
+
 __git-staged-list() {
   __git-inside-work-tree || return
   local -a staged_files
-  staged_files=(${${${(M)${(0)"$(git status --porcelain -z 2>/dev/null)"}:#M?*}#??}# })
+  staged_files=(${${${(M)${(0)"$(git status --porcelain -z 2>/dev/null)"}:#([MAD][^UAD]|[MAD] )*}#??}# })
   printf '%s\n' "${staged_files[@]}"
 }
 
@@ -89,5 +96,5 @@ __ga() {
     return 1
   fi
 
-  git add "$@"
+  git add $(git rev-parse --show-toplevel)/"$^@"
 }

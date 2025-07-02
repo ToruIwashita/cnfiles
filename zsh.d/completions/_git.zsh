@@ -59,6 +59,12 @@ __git-both-modified-files() {
   compadd -f -a both_modified_files
 }
 
+__git-unstaged-files() {
+  local -a all_files
+  all_files=(${(f)"$(__git-unstaged-list)"})
+  compadd -f -a all_files
+}
+
 _gam() {
   _arguments '*: :__git-modified-files'
 }
@@ -130,6 +136,14 @@ _gdeleteb() {
     '(-h --help)'{-h,--help}'[Show help text]'
 }
 
+_ga() {
+  _arguments \
+    '(-u --unstage)'{-u,--unstage}'[Unstage files]: :__git-staged-files' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '*: :__git-unstaged-files'
+}
+
+compdef _ga ga
 compdef _gam gam
 compdef _gau gau
 compdef _gac gac
