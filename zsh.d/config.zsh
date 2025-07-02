@@ -151,3 +151,5 @@ alias tailf='tail -f'
 ## global alias
 # memolist
 alias -g TT=">! $MEMOLIST_TMP_TEXT_FILE_PATH"
+# other
+alias -g EE='2>/dev/null'
