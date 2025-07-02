@@ -136,6 +136,12 @@ _gdeleteb() {
     '(-h --help)'{-h,--help}'[Show help text]'
 }
 
+_gl() {
+  _arguments \
+    '(-g --graph)'{-g,--graph}'[Show graph display]' \
+    '(-h --help)'{-h,--help}'[Show help text]'
+}
+
 _ga() {
   _arguments \
     '(-u --unstage)'{-u,--unstage}'[Unstage files]: :__git-staged-files' \
@@ -157,3 +163,4 @@ compdef _gll gll
 compdef _gsh gsh
 compdef _gpickfile gpickfile
 compdef _gdeleteb gdeleteb
+compdef _gl gl

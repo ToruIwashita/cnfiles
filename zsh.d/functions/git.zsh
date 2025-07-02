@@ -972,3 +972,52 @@ EOF`
     done
   done
 }
+
+gl() {
+  integer graph
+  local self_cmd help usage
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd [-g --graph]
+                [-h --help]
+EOF`
+
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -g | --graph)
+        (( graph++ ))
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
+        return 1
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
+        return 1
+        ;;
+    esac
+  done
+
+  if (( graph )); then
+    git log --graph --date-order -C -M --pretty=format:"<%h> %ad [%an] %Cgreen%d%Creset %s" --all --date=short
+  else
+    git log --pretty=fuller
+  fi
+}
