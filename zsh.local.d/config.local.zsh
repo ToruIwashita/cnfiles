@@ -15,6 +15,12 @@
 #   eval "$(direnv hook zsh)"
 # fi
 
+## bindkey
+bindkey -v '^sb' immediate-tmp-text-pbcopy      # Ctr+s,pでBUFFERをcatしてpbcopy
+bindkey -v '^se' insert-pry                     # Ctr+s,eでpryをBUFFERに入れる
+bindkey -v '^s^b' immediate-tmp-markdown-pbcopy # Ctr+s,Ctr+cでtmpファイルをcatしてpbcopy
+bindkey -v '^s^e' insert-bundle-exec-pry        # Ctr+s,Ctr+eでbundle exec pryをBUFFERに入れる
+
 ## alias
 # git
 alias gcs='git commit -m "- update submodules"'
@@ -47,12 +53,8 @@ alias bspork='bundle exec spork'
 ## localstack
 # alias localstack-s='DEBUG=true SERVICES=sqs DEFAULT_REGION=ap-northeast-1 HOSTNAME=localstack localstack start'
 
-## for Mac(GNU系のコマンドはシンボリックリンクを貼り直すことを推奨するので以下コメントアウト)
-# bindkey
-bindkey -v '^sb' immediate-tmp-text-pbcopy      # Ctr+s,pでBUFFERをcatしてpbcopy
-bindkey -v '^se' insert-pry                     # Ctr+s,eでpryをBUFFERに入れる
-bindkey -v '^s^b' immediate-tmp-markdown-pbcopy # Ctr+s,Ctr+cでtmpファイルをcatしてpbcopy
-bindkey -v '^s^e' insert-bundle-exec-pry        # Ctr+s,Ctr+eでbundle exec pryをBUFFERに入れる
+## global alisas
+alias -g PP="| pbcopy"
 
 ## CursorのAI Agentがターミナルを実行する時にclear-screenするためvim起動との競合を回避
 # if [[ "$TERM_PROGRAM" == 'vscode' ]]; then

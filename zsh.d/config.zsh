@@ -147,5 +147,7 @@ alias so='source'
 alias grep='grep --color'
 alias less='less -R'
 alias tailf='tail -f'
+
+## global alias
 # memolist
 alias -g TT=">! $MEMOLIST_TMP_TEXT_FILE_PATH"
