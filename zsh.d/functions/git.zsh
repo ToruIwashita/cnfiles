@@ -383,14 +383,16 @@ EOF`
 }
 
 gd() {
-  local -a file_paths
+  integer id_only
   local self_cmd help usage commit_option
+  local -a file_paths
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [files]
           [-l --log [commit_id]]
+          [-i --id-only]
           [-h --help]
 EOF`
 
@@ -411,6 +413,10 @@ EOF`
           shift 1
         fi
         ;;
+      -i | --id-only)
+        id_only=1
+        shift 1
+        ;;
       -h | --help)
         print $usage
         return 0
@@ -430,6 +436,14 @@ EOF`
         ;;
     esac
   done
+
+  # -iオプションの処理
+  if (( $#id_only )); then
+    if (( $#commit_option )) && [[ "$commit_option" != "origin/HEAD...HEAD" ]]; then
+      git rev-parse --short "$commit_option"
+    fi
+    return 0
+  fi
 
   if (( $#commit_option )); then
     # -lのみの場合
