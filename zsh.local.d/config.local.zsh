@@ -54,7 +54,7 @@ alias bspork='bundle exec spork'
 # alias localstack-s='DEBUG=true SERVICES=sqs DEFAULT_REGION=ap-northeast-1 HOSTNAME=localstack localstack start'
 
 ## global alisas
-alias -g PP="| pbcopy"
+alias -g PP='| pbcopy'
 
 ## CursorのAI Agentがターミナルを実行する時にclear-screenするためvim起動との競合を回避
 # if [[ "$TERM_PROGRAM" == 'vscode' ]]; then
