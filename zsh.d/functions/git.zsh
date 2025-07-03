@@ -390,7 +390,7 @@ gd() {
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [files]
-          [-c --commit [commit_id]]
+          [-l --log [commit_id]]
           [-h --help]
 EOF`
 
@@ -402,7 +402,7 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
-      -c | --commit)
+      -l | --log)
         if (( $#2 )) && [[ "$2" != -* ]]; then
           commit_option="$2"
           shift 2

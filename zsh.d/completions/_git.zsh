@@ -95,7 +95,7 @@ _gc() {
 
 _gd() {
   _arguments \
-    '(-c --commit)'{-c,--commit}'[Show commit diff]: :__git-commits' \
+    '(-l --log)'{-l,--log}'[Show commit diff]: :__git-commits' \
     '(-h --help)'{-h,--help}'[Show help text]' \
     '(:)*: :__git-modified-files'
 }
