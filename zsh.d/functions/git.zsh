@@ -432,27 +432,26 @@ EOF`
   done
 
   if (( $#commit_option )); then
-    # -cのみの場合（デフォルト）
+    # -lのみの場合
     if [[ "$commit_option" == "origin/HEAD...HEAD" ]]; then
-      print "\033[36mgit diff $commit_option\033[0m\n"
+      [[ -t 1 ]] && print "\033[36mgit diff $commit_option\033[0m\n"
       git diff "$commit_option"
       return 0
     fi
 
-    # -c $commit_idの場合
-    print "\033[36mgit diff $commit_option^..$commit_option\033[0m\n"
+    # -l $commit_idの場合
+    [[ -t 1 ]] && print "\033[36mgit diff $commit_option^..$commit_option\033[0m\n"
     git diff "$commit_option"^.."$commit_option"
     return 0
   fi
 
   if (( ${#file_paths} )); then
-    print "\033[36mgit diff ${file_paths[*]}\033[0m\n"
+    [[ -t 1 ]] && print "\033[36mgit diff ${file_paths[*]}\033[0m\n"
     (git diff "${file_paths[@]}" 2>/dev/null || git diff $(git rev-parse --show-toplevel)/"${^file_paths[@]}")
     return 0
   fi
 
-  # デフォルト（引数なし）
-  print "\033[36mgit diff\033[0m\n"
+  [[ -t 1 ]] && print "\033[36mgit diff\033[0m\n"
   git diff
 }
 
