@@ -414,7 +414,7 @@ EOF`
         fi
         ;;
       -i | --id-only)
-        id_only=1
+        (( id_only++ ))
         shift 1
         ;;
       -h | --help)
@@ -438,7 +438,7 @@ EOF`
   done
 
   # -iオプションの処理
-  if (( $#id_only )); then
+  if (( id_only )); then
     if (( $#commit_option )) && [[ "$commit_option" != "origin/HEAD...HEAD" ]]; then
       git rev-parse --short "$commit_option"
     fi
