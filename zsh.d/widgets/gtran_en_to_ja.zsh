@@ -1,4 +1,4 @@
-## gtran_en_to_ja
+## gtran-en-to-ja
 _gtran-en-to-ja() {
   print -s $BUFFER
   BUFFER="gtran '$BUFFER'"

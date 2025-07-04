@@ -1,4 +1,4 @@
-## google_search
+## google-search
 _google-search() {
   BUFFER="open https://www.google.co.jp/search?q='$BUFFER'"
   zle accept-line
