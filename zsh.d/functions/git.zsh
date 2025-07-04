@@ -383,7 +383,7 @@ EOF`
 }
 
 gd() {
-  integer id_only
+  integer id_only name_only
   local self_cmd help usage commit_option
   local -a file_paths
 
@@ -393,6 +393,7 @@ gd() {
 usage: $self_cmd [files]
           [-l --log [commit_id]]
           [-i --id-only]
+          [-n --name-only]
           [-h --help]
 EOF`
 
@@ -415,6 +416,10 @@ EOF`
         ;;
       -i | --id-only)
         (( id_only++ ))
+        shift 1
+        ;;
+      -n | --name-only)
+        (( name_only++ ))
         shift 1
         ;;
       -h | --help)
@@ -448,25 +453,45 @@ EOF`
   if (( $#commit_option )); then
     # -lのみの場合
     if [[ "$commit_option" == "origin/HEAD...HEAD" ]]; then
-      [[ -t 1 ]] && print "\033[36mgit diff $commit_option\033[0m\n"
-      git diff "$commit_option"
+      if (( name_only )); then
+        [[ -t 1 ]] && print "\033[36mgit diff --name-only $commit_option\033[0m\n"
+        git diff --name-only "$commit_option"
+      else
+        [[ -t 1 ]] && print "\033[36mgit diff $commit_option\033[0m\n"
+        git diff "$commit_option"
+      fi
       return 0
     fi
 
     # -l $commit_idの場合
-    [[ -t 1 ]] && print "\033[36mgit diff $commit_option^..$commit_option\033[0m\n"
-    git diff "$commit_option"^.."$commit_option"
+    if (( name_only )); then
+      [[ -t 1 ]] && print "\033[36mgit diff --name-only $commit_option^..$commit_option\033[0m\n"
+      git diff --name-only "$commit_option"^.."$commit_option"
+    else
+      [[ -t 1 ]] && print "\033[36mgit diff $commit_option^..$commit_option\033[0m\n"
+      git diff "$commit_option"^.."$commit_option"
+    fi
     return 0
   fi
 
   if (( ${#file_paths} )); then
-    [[ -t 1 ]] && print "\033[36mgit diff ${file_paths[*]}\033[0m\n"
-    (git diff "${file_paths[@]}" 2>/dev/null || git diff $(git rev-parse --show-toplevel)/"${^file_paths[@]}")
+    if (( name_only )); then
+      [[ -t 1 ]] && print "\033[36mgit diff --name-only ${file_paths[*]}\033[0m\n"
+      (git diff --name-only "${file_paths[@]}" 2>/dev/null || git diff --name-only $(git rev-parse --show-toplevel)/"${^file_paths[@]}")
+    else
+      [[ -t 1 ]] && print "\033[36mgit diff ${file_paths[*]}\033[0m\n"
+      (git diff "${file_paths[@]}" 2>/dev/null || git diff $(git rev-parse --show-toplevel)/"${^file_paths[@]}")
+    fi
     return 0
   fi
 
-  [[ -t 1 ]] && print "\033[36mgit diff\033[0m\n"
-  git diff
+  if (( name_only )); then
+    [[ -t 1 ]] && print "\033[36mgit diff --name-only\033[0m\n"
+    git diff --name-only
+  else
+    [[ -t 1 ]] && print "\033[36mgit diff\033[0m\n"
+    git diff
+  fi
 }
 
 gsw() {
