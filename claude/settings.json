@@ -33,7 +33,6 @@
     "deny": [
       "Bash(sudo:*)",
       "Bash(rm:*)",
-      "Bash(rm -rf:*)",
       "Bash(git push:*)",
       "Bash(git reset:*)",
       "Bash(git rebase:*)",
