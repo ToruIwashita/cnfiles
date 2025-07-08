@@ -1,23 +1,40 @@
 ## Git Local Diff  
 
-ローカルブランチとorigin/HEADの差分を読み込んで分析するコマンド  
+Command to read and analyze the diff between local branch and origin/HEAD  
 
-### 使用法  
+### Usage  
 
 ```  
 /git-local-diff  
 ```  
 
-### 実装  
+### Implementation  
 
-このコマンドが呼ばれた時は、以下を実行：  
+When this command is called, execute the following:  
 
-1. `git diff origin/HEAD...HEAD` を実行  
-2. 差分の内容をClaudeに読み込ませる  
-3. 変更内容の概要と分析を提供  
+1. Run `git diff origin/HEAD...HEAD` using the Bash tool  
+2. Read and analyze the diff output  
+3. Provide structured summary and analysis of the changes  
 
-### コマンド実行例  
+### Output Format  
+
+The command should provide:  
+- **Summary**: Brief overview of changes (files modified, lines added/removed)  
+- **Analysis**: Description of what was changed and potential impact  
+- **Files Changed**: List of modified files with change types  
+- **Key Changes**: Highlights of significant modifications  
+
+### Examples  
 
 ```bash  
 git diff origin/HEAD...HEAD  
+git diff origin/HEAD...HEAD --stat  
+git diff origin/HEAD...HEAD --name-only  
 ```  
+
+### Error Handling  
+
+- If `origin/HEAD` does not exist, try `git diff origin/main...HEAD` or `git diff origin/master...HEAD`  
+- If no remote origin is configured, use `git diff HEAD~1...HEAD` to show recent changes  
+- If no commits exist, inform the user that there are no changes to analyze  
+- If git command fails, provide the error message and suggest troubleshooting steps  
