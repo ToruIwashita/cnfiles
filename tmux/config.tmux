@@ -105,8 +105,8 @@ bind | select-layout even-horizontal
 bind - select-layout even-vertical
 # ペインkill
 bind x kill-pane
-# 3ウィンドウ作成
-bind T new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}'
+# 4ウィンドウ作成
+bind T new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}'
 # 等間隔4分割(Multi)
 bind M split-window -h \; split-window -v \; select-pane -t :.+ \; split-window -v \; select-pane -t :.-
 # ペイン同時操作
