@@ -142,6 +142,7 @@ alias c='cat'
 alias e='echo'
 alias so='source'
 alias grep='grep --color'
+alias diff='diff --color'
 alias less='less -R'
 alias tailf='tail -f'
 
