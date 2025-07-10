@@ -14,7 +14,7 @@ _immediate-tmp-markdown-pbcopy() {
 
   zle -I
   print -s $cmd && eval $cmd
-  print "$file_path copied to clipboard"
+  print "copied to clipboard: '$file_path'"
 }
 
 zle -N immediate-tmp-markdown-pbcopy _immediate-tmp-markdown-pbcopy
