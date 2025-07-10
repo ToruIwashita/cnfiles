@@ -7,7 +7,7 @@ _ai-agent-search() {
     return
   fi
 
-  BUFFER="${AI_SEARCH_AGENT:-gemini} -p 'WebSearch: $BUFFER'"
+  BUFFER="${AI_SEARCH_AGENT:-gemini} -p 'WebSearch: $BUFFER' | glow"
 
   zle accept-line
 }
