@@ -20,6 +20,7 @@ bindkey -v '^sb' immediate-tmp-text-pbcopy      # Ctr+s,pでBUFFERをcatしてpb
 bindkey -v '^se' insert-pry                     # Ctr+s,eでpryをBUFFERに入れる
 bindkey -v '^s^b' immediate-tmp-markdown-pbcopy # Ctr+s,Ctr+cでtmpファイルをcatしてpbcopy
 bindkey -v '^s^e' insert-bundle-exec-pry        # Ctr+s,Ctr+eでbundle exec pryをBUFFERに入れる
+bindkey -v '^s^j' immediate-markdown-glow       # Ctr+s,Ctr+jでBUFFERの末尾が.mdだった場合にglow
 
 ## alias
 # git
