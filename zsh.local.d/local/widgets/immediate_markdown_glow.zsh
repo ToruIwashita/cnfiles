@@ -14,5 +14,3 @@ _immediate-markdown-glow() {
 }
 
 zle -N immediate-markdown-glow _immediate-markdown-glow
-
-# vim: ft=zsh
