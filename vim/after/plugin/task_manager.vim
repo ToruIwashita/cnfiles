@@ -14,5 +14,7 @@ let g:task_manager_dir_prefix = '%Y%m%d'
 " テンプレートディレクトリの指定
 let g:task_manager_instruction_file_template_dir = g:markdown_texts_ai_instruction_template_dir_path
 
+nnoremap <leader>T :<C-u>CreateTask<SPACE>
+
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
