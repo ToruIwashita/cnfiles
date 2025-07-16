@@ -185,6 +185,74 @@ myfindg() {
   fi
 }
 
+myg() {
+  local self_cmd help usage field_name table_name vertical_option query
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd [-f 'Part of field info']
+           [-h --help]
+           [-t 'Part of table name']
+           [-v --vertical]
+EOF`
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -f)
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
+          return 1
+        fi
+        field_name="$2"
+        shift 2
+        ;;
+      -t)
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
+          return 1
+        fi
+        table_name="$2"
+        shift 2
+        ;;
+      -v)
+        vertical_option='\G'
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift;
+        args+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        print "$self_cmd: unknown argument -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+    esac
+  done
+
+  if (( $#field_name && $#table_name )); then
+    query="SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_KEY, COLUMN_DEFAULT, EXTRA FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '$MYSQL_DATABASE' AND COLUMN_NAME LIKE '%$field_name%' AND TABLE_NAME LIKE '%$table_name%' ORDER BY TABLE_NAME${vertical_option}"
+    myq "$query"
+  elif (( $#field_name )); then
+    query="SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_KEY, COLUMN_DEFAULT, EXTRA FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '$MYSQL_DATABASE' AND COLUMN_NAME LIKE '%$field_name%' ORDER BY TABLE_NAME${vertical_option}"
+    myq "$query"
+  elif (( $#table_name )); then
+    query="SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = '$MYSQL_DATABASE' AND TABLE_NAME LIKE '%$table_name%'${vertical_option}"
+    myq "$query"
+  else
+    print $usage
+  fi
+}
+
 mqexp() {
   integer arg_num tmp_sql
   local -a args
