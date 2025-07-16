@@ -17,12 +17,6 @@ __git-changed-files() {
   compadd -f -a changed_files
 }
 
-__git-modified-files() {
-  local -a modified_files
-  modified_files=(${(f)"$(__git-modified-list)"})
-  compadd -f -a modified_files
-}
-
 __git-deleted-files() {
   local -a deleted_files
   deleted_files=(${(f)"$(__git-deleted-list)"})
@@ -65,8 +59,16 @@ __git-unstaged-files() {
   compadd -f -a all_files
 }
 
+__git-diff-files() {
+  local -a modified_files both_modified_files
+  modified_files=(${(f)"$(__git-modified-list)"})
+  both_modified_files=(${(f)"$(__git-both-modified-list)"})
+  compadd -f -a modified_files
+  compadd -f -a both_modified_files
+}
+
 _gam() {
-  _arguments '*: :__git-modified-files'
+  _arguments '*: :__git-diff-files'
 }
 
 _gau() {
@@ -99,7 +101,7 @@ _gd() {
     '(-i --id-only)'{-i,--id-only}'[Show commit ID only]' \
     '(-n --name-only)'{-n,--name-only}'[Show only file names]' \
     '(-h --help)'{-h,--help}'[Show help text]' \
-    '(:)*: :__git-modified-files'
+    '(:)*: :__git-diff-files'
 }
 
 _gsw() {
@@ -110,7 +112,7 @@ _gsw() {
 }
 
 _gud() {
-  _arguments '*: :__git-modified-files'
+  _arguments '*: :__git-diff-files'
 }
 
 _gll() {
