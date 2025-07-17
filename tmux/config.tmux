@@ -9,7 +9,7 @@ set -g default-terminal 'screen-256color'
 setw -g mode-key vi
 # キーストロークのディレイ0sec
 set -s escape-time 0
-# プレフィックスキーのリピート時間(デフォルト500ms)
+# プレフィックスキーのリピート時間（デフォルト500ms）
 set -g repeat-time 500
 # display-panesの表示時間5000ms
 set -g display-panes-time 5000
@@ -24,6 +24,8 @@ set -g history-limit 50000
 setw -g monitor-activity on
 # monitor-activity onでウィンドウ動作があった時にステータスラインメッセージを表示
 set -g visual-activity off
+# フォーカスイベントを有効にする（Vimの自動ファイルリロード用）
+set -g focus-events on
 
 ## unbind
 # デフォルトprefixを解除
