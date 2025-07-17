@@ -149,42 +149,6 @@ EOF`
   eval $my_cmd
 }
 
-myfindg() {
-  local cmd_res_field_list cmd_res_field_name table_name field_name tmp_line usage opt
-
-  usage="usage: $0 [-f 'Part of field info'] [-t 'Part of table name']"
-  while getopts :f:t: opt; do
-    case ${opt} in
-      f) field_name=${OPTARG} ;;
-      t) table_name=${OPTARG} ;;
-      :|\?) print $usage; return 1 ;;
-    esac
-  done
-
-  tmp_line="-------------------------------------------------------"
-  if (( ${#table_name} && ${#field_name} )); then
-    print "Field\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
-    myq "DESC ${table_name}" -N | grep --color ${field_name}
-  elif (( ${#table_name} )); then
-    print "Tables\n${tmp_line}"
-    __my-table-list | grep --color ${table_name}
-  elif (( ${#field_name} )); then
-    print "Table: 'name'\nField\tType\tNull\tKey\tDefault\tExtra\n${tmp_line}"
-    for table_name in $(__my-table-list); do
-      cmd_res_field_list=$(myq "DESC ${table_name}" -N | grep --color ${field_name})
-      if (( ${#cmd_res_field_list} )); then
-        print "Table: ${table_name}"
-        for cmd_res_field_name in ${(f)cmd_res_field_list}; do
-          print $cmd_res_field_name | grep --color "${field_name}"
-        done
-        print
-      fi
-    done
-  else
-    print $usage
-  fi
-}
-
 myg() {
   local self_cmd help usage field_name table_name vertical_option query
 
@@ -241,13 +205,13 @@ EOF`
 
   if (( $#field_name && $#table_name )); then
     query="SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_KEY, COLUMN_DEFAULT, EXTRA FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '$MYSQL_DATABASE' AND COLUMN_NAME LIKE '%$field_name%' AND TABLE_NAME LIKE '%$table_name%' ORDER BY TABLE_NAME${vertical_option}"
-    myq "$query"
+    myq "$query" --table | sed -e "s/${field_name}/$(echo -e '\033[1;31m')&$(echo -e '\033[0m')/g" -e "s/${table_name}/$(echo -e '\033[1;31m')&$(echo -e '\033[0m')/g"
   elif (( $#field_name )); then
     query="SELECT TABLE_NAME, COLUMN_NAME, COLUMN_TYPE, IS_NULLABLE, COLUMN_KEY, COLUMN_DEFAULT, EXTRA FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '$MYSQL_DATABASE' AND COLUMN_NAME LIKE '%$field_name%' ORDER BY TABLE_NAME${vertical_option}"
-    myq "$query"
+    myq "$query" --table | sed "s/${field_name}/$(echo -e '\033[1;31m')&$(echo -e '\033[0m')/g"
   elif (( $#table_name )); then
     query="SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = '$MYSQL_DATABASE' AND TABLE_NAME LIKE '%$table_name%'${vertical_option}"
-    myq "$query"
+    myq "$query" --table | sed "s/${table_name}/$(echo -e '\033[1;31m')&$(echo -e '\033[0m')/g"
   else
     print $usage
   fi
