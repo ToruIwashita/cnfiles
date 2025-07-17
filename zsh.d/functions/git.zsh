@@ -1,6 +1,20 @@
 ## git
 gchanged-files() {
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    return 1
+  fi
+
   __git-changed-list | tr ' ' '\n'
+}
+
+gbranch-default() {
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    return 1
+  fi
+
+  __git-default-branch
 }
 
 ga() {

@@ -10,6 +10,11 @@ __git-status() {
   print "$(git status --short --porcelain)"
 }
 
+__git-default-branch() {
+  __git-inside-work-tree || return
+  git symbolic-ref --short refs/remotes/origin/HEAD | cut -d'/' -f2
+}
+
 __git-branch-list() {
   __git-inside-work-tree || return
   local -a branches
