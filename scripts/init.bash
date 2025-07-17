@@ -431,7 +431,7 @@ if [[ -L $DOCS_DIR_PATH/code_implementation_guide ]]; then
   printf "\e[32m$DOCS_DIR_PATH/code_implementation_guide dir symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink $DOCS_DIR_PATH/code_implementation_guide dir\e[0m\n"
-  ln -isn $MARKDOWN_TEXTS_DIR_PATH/ai/code_implementation_guide $DOCS_DIR_PATH/code_implementation_guide
+  ln -isn $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/code_implementation_guide $DOCS_DIR_PATH/code_implementation_guide
 fi
 
 # text replacement
