@@ -1,4 +1,4 @@
-"" FILE: file_reload.vim
+"" FILE: file_reload_manager.vim
 set encoding=utf-8
 scriptencoding utf-8
 
