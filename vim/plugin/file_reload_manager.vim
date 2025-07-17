@@ -7,7 +7,7 @@ set cpoptions&vim
 
 class FileReloadManager
   def new()
-    # 設定は実行時に読み込むため、ここでは初期化のみ
+    # 設定は実行時に読み込むため,ここでは初期化のみ
   enddef
 
   def ReloadAndNotify(message: string)
