@@ -56,6 +56,7 @@ EOF`
 
   jq_filter='{number: .number, title: .title, state: .state, author: .user.login, created_at: .created_at, updated_at: .updated_at, labels: [.labels[].name], body: .body}'
 
+  [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/pulls/$pr_number\" | jq '$jq_filter'\033[0m\n"
   gh api "repos/$owner_repo/pulls/$pr_number" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'PR Not Found')
 }
 
@@ -116,6 +117,7 @@ EOF`
 
   jq_filter='{number: .number, title: .title, state: .state, author: .user.login, created_at: .created_at, labels: [.labels[].name], body: .body}'
 
+  [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/issues/$issue_number\" | jq '$jq_filter'\033[0m\n"
   gh api "repos/$owner_repo/issues/$issue_number" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'Issue Not Found')
 }
 
@@ -186,6 +188,7 @@ EOF`
     jq_filter='.[] | {diff_hunk: .diff_hunk, body: .body}'
   fi
 
+  [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/pulls/$pr_number/comments\" | jq '$jq_filter'\033[0m\n"
   gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'PR Not Found')
 }
 
