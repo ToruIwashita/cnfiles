@@ -63,7 +63,7 @@ EOF`
   body_content=$(gh api "repos/$owner_repo/pulls/$pr_number" 2>/dev/null | jq -r '.body // empty' 2>/dev/null)
   if [[ -n "$body_content" && "$body_content" != "null" ]]; then
     print "\n\033[36mbody (rendered with glow):\033[0m"
-    print "$body_content" | glow
+    echo "$body_content" | glow
   fi
 }
 
@@ -131,13 +131,13 @@ EOF`
   body_content=$(gh api "repos/$owner_repo/issues/$issue_number" 2>/dev/null | jq -r '.body // empty' 2>/dev/null)
   if [[ -n "$body_content" && "$body_content" != "null" ]]; then
     print "\n\033[36mbody (rendered with glow):\033[0m"
-    print "$body_content" | glow
+    echo "$body_content" | glow
   fi
 }
 
 gpr-comments() {
   integer ignore_outdated
-  local self_cmd help usage pr_number owner_repo jq_filter comments_data
+  local self_cmd help usage pr_number owner_repo comments_data
   local -a args
 
   self_cmd=$0
@@ -219,7 +219,7 @@ EOF`
     local body_content=$(echo "$comment" | jq -r '.body // empty' 2>/dev/null)
     if [[ -n "$body_content" && "$body_content" != "null" ]]; then
       print "\033[36mbody (rendered with glow):\033[0m"
-      print "$body_content" | glow
+      echo "$body_content" | glow
       print "\n---\n"
     fi
   done
@@ -299,7 +299,7 @@ EOF`
     local body_content=$(echo "$comment" | jq -r '.body // empty' 2>/dev/null)
     if [[ -n "$body_content" && "$body_content" != "null" ]]; then
       print "\033[36mbody (rendered with glow):\033[0m"
-      print "$body_content" | glow
+      echo "$body_content" | glow
       print "\n---\n"
     fi
   done
