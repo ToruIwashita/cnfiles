@@ -45,7 +45,7 @@ _gis() {
     '1: :__github-issue-numbers'
 }
 
-_gpr-comments() {
+_gpr-code-comments() {
   _arguments \
     '(-i --ignore-outdated)'{-i,--ignore-outdated}'[Ignore outdated comments]' \
     '(-h --help)'{-h,--help}'[Show help text]' \
@@ -60,5 +60,5 @@ _gis-comments() {
 
 compdef _gpr gpr
 compdef _gis gis
-compdef _gpr-comments gpr-comments
+compdef _gpr-code-comments gpr-code-comments
 compdef _gis-comments gis-comments

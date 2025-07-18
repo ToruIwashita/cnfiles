@@ -69,7 +69,7 @@ EOF`
   # bodyを取得してglowで表示
   body_content=$(gh api "repos/$owner_repo/pulls/$pr_number" 2>/dev/null | jq -r '.body // empty' 2>/dev/null)
   if [[ -t 1 ]]; then
-    print "\n\033[36mbody (rendered with glow):\033[0m"
+    print "\n\033[36m=== body (rendered with glow) === \033[0m"
   else
     print "\n=== body ==="
   fi
@@ -149,7 +149,7 @@ EOF`
   # bodyを取得してglowで表示
   body_content=$(gh api "repos/$owner_repo/issues/$issue_number" 2>/dev/null | jq -r '.body // empty' 2>/dev/null)
   if [[ -t 1 ]]; then
-    print "\n\033[36mbody (rendered with glow):\033[0m"
+    print "\n\033[36m=== body (rendered with glow) ===:\033[0m"
   else
     print "\n=== body ==="
   fi
@@ -159,9 +159,9 @@ EOF`
   fi
 }
 
-gpr-comments() {
+gpr-code-comments() {
   integer ignore_outdated
-  local self_cmd help usage pr_number owner_repo comments_data
+  local self_cmd help usage pr_number owner_repo json_comments comment_body
   local -a args
 
   self_cmd=$0
@@ -229,35 +229,41 @@ EOF`
 
   [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/pulls/$pr_number/comments\"\033[0m\n"
 
-  # コメントデータを取得
   if (( ignore_outdated )); then
-    comments_data=$(gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null | jq 'map(select(.position != null or .original_position == null))' 2>/dev/null)
+    json_comments=$(gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null | jq 'map(select(.position != null or .original_position == null))' 2>/dev/null)
   else
-    comments_data=$(gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null)
+    json_comments=$(gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null)
   fi
 
-  if [[ -z "$comments_data" || "$comments_data" == "null" ]]; then
-    print 'PR Not Found'
+  if [[ -z "$json_comments" ]] || [[ "$json_comments" =~ "message.*Not Found" ]]; then
+    print 'PR Not Found or No Comments'
     return 1
   fi
 
   # 各コメントを処理
-  echo "$comments_data" | jq -c '.[]' 2>/dev/null | while read -r comment; do
+  echo -E "$json_comments" | jq -r '.[] | @base64' | while read -r comment_encoded; do
+    comment=$(echo "$comment_encoded" | base64 -d)
+
     # 基本情報（bodyを除く）を表示
-    echo "$comment" | jq '{author: .user.login, created_at: .created_at, diff_hunk: .diff_hunk}'
+    echo -E "$comment" | jq '{author: .user.login, commit_id: .commit_id, created_at: .created_at, updated_at: .updated_at, diff_hunk: .diff_hunk}'
 
     # bodyを取得してglowで表示
-    local body_content=$(echo "$comment" | jq -r '.body // empty' 2>/dev/null)
-    if [[ -n "$body_content" && "$body_content" != "null" ]]; then
-      print "\033[36mbody (rendered with glow):\033[0m"
-      echo "$body_content" | glow
-      print "\n---\n"
+    comment_body=$(echo -E "$comment" | jq -r '.body // empty' 2>/dev/null)
+
+    if [[ -t 1 ]]; then
+      print "\n\033[36m=== body (rendered with glow) ===\033[0m"
+    else
+      print "\n=== body ==="
     fi
+
+    [[ -n "$comment_body" ]] && echo "$comment_body" | glow
+
+    print "---\n"
   done
 }
 
 gis-comments() {
-  local self_cmd help usage issue_number owner_repo comments_data
+  local self_cmd help usage issue_number owner_repo json_comments comment_body
   local -a args
 
   self_cmd=$0
@@ -321,25 +327,32 @@ EOF`
   [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/issues/$issue_number/comments\"\033[0m\n"
 
   # コメントデータを取得
-  comments_data=$(gh api "repos/$owner_repo/issues/$issue_number/comments" 2>/dev/null)
+  json_comments=$(gh api "repos/$owner_repo/issues/$issue_number/comments" 2>/dev/null)
 
-  if [[ -z "$comments_data" || "$comments_data" == "null" ]]; then
-    print 'Issue Comments Not Found'
+  if [[ -z "$json_comments" ]] || [[ "$json_comments" =~ "message.*Not Found" ]]; then
+    print 'Issue Comments Not Found or No Comments'
     return 1
   fi
 
   # 各コメントを処理
-  echo "$comments_data" | jq -c '.[]' 2>/dev/null | while read -r comment; do
+  echo -E "$json_comments" | jq -r '.[] | @base64' | while read -r comment_encoded; do
+    comment=$(echo "$comment_encoded" | base64 -d)
+
     # 基本情報（bodyを除く）を表示
-    echo "$comment" | jq '{author: .user.login, created_at: .created_at}'
+    echo -E "$comment" | jq '{author: .user.login, created_at: .created_at, updated_at: .updated_at}'
 
     # bodyを取得してglowで表示
-    local body_content=$(echo "$comment" | jq -r '.body // empty' 2>/dev/null)
-    if [[ -n "$body_content" && "$body_content" != "null" ]]; then
-      print "\033[36mbody (rendered with glow):\033[0m"
-      echo "$body_content" | glow
-      print "\n---\n"
+    comment_body=$(echo -E "$comment" | jq -r '.body // empty' 2>/dev/null)
+
+    if [[ -t 1 ]]; then
+      print "\n\033[36m=== body (rendered with glow) ===\033[0m"
+    else
+      print "\n=== body ==="
     fi
+
+    [[ -n "$comment_body" ]] && print "\n\033[36m=== body (rendered with glow) ===\033[0m"
+
+    print "---\n"
   done
 }
 
