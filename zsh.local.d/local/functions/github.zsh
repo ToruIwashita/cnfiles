@@ -142,7 +142,7 @@ EOF`
   fi
 
   # 基本情報（bodyを除く）を表示
-  jq_filter='{number: .number, title: .title, state: .state, author: .user.login, created_at: .created_at, labels: [.labels[].name]}'
+  jq_filter='{number: .number, title: .title, state: .state, author: .user.login, created_at: .created_at, updated_at: .updated_at, labels: [.labels[].name]}'
   [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/issues/$issue_number\" | jq '$jq_filter'\033[0m\n"
   gh api "repos/$owner_repo/issues/$issue_number" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'Issue Not Found')
 
