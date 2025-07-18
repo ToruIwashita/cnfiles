@@ -68,8 +68,13 @@ EOF`
 
   # bodyを取得してglowで表示
   body_content=$(gh api "repos/$owner_repo/pulls/$pr_number" 2>/dev/null | jq -r '.body // empty' 2>/dev/null)
-  if [[ -n "$body_content" && "$body_content" != "null" ]]; then
+  if [[ -t 1 ]]; then
     print "\n\033[36mbody (rendered with glow):\033[0m"
+  else
+    print "\n=== body ==="
+  fi
+
+  if [[ -n "$body_content" && "$body_content" != "null" ]]; then
     echo "$body_content" | glow
   fi
 }
@@ -143,8 +148,13 @@ EOF`
 
   # bodyを取得してglowで表示
   body_content=$(gh api "repos/$owner_repo/issues/$issue_number" 2>/dev/null | jq -r '.body // empty' 2>/dev/null)
-  if [[ -n "$body_content" && "$body_content" != "null" ]]; then
+  if [[ -t 1 ]]; then
     print "\n\033[36mbody (rendered with glow):\033[0m"
+  else
+    print "\n=== body ==="
+  fi
+
+  if [[ -n "$body_content" && "$body_content" != "null" ]]; then
     echo "$body_content" | glow
   fi
 }
