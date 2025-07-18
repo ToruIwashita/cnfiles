@@ -19,8 +19,8 @@ gbranch-default() {
 
 ga() {
   integer unstage
-  local -a file_paths
   local self_cmd help usage
+  local -a file_paths
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -495,8 +495,8 @@ EOF`
 
 gsw() {
   integer branch_already_exists
-  local -a args
   local branch remote_branch self_cmd help usage
+  local -a args
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -921,8 +921,8 @@ EOF`
 
 gdeleteb() {
   integer all
-  local -a merged_branches
   local self_cmd help usage merged_branch answer
+  local -a merged_branches
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."

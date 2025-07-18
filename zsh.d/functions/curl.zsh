@@ -1,7 +1,7 @@
 ## curl
 cl() {
-  local -a args options
   local self_cmd help usage
+  local -a args options
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
