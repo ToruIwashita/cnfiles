@@ -2,6 +2,7 @@
 _immediate-tmp-markdown-pbcopy() {
   local cmd file_path
   local -a args
+
   args=("${(z)BUFFER}")
 
   if (( ! ${#args[$#args]} )); then

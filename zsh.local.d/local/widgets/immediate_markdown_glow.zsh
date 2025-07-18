@@ -1,6 +1,7 @@
 ## immediate-markdown-glow
 _immediate-markdown-glow() {
   local -a args
+
   args=("${(z)BUFFER}")
 
   if (( ${#args[$#args]} )); then
