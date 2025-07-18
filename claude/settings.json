@@ -4,6 +4,7 @@
   },
   "permissions": {
     "allow": [
+      "Bash(zsh:*)",
       "Bash(echo:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
