@@ -33,6 +33,12 @@ __github-issue-numbers() {
   compadd -V issue-numbers -d issue_descriptions -a issue_numbers
 }
 
+_gpr() {
+  _arguments \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '1: :__github-pr-numbers'
+}
+
 _gis() {
   _arguments \
     '(-h --help)'{-h,--help}'[Show help text]' \
@@ -46,5 +52,6 @@ _gpr-comments() {
     '1: :__github-pr-numbers'
 }
 
+compdef _gpr gpr
 compdef _gis gis
 compdef _gpr-comments gpr-comments

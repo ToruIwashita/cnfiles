@@ -1,4 +1,64 @@
 ## github
+gpr() {
+  local self_cmd help usage pr_number owner_repo jq_filter
+  local -a args
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <pr_number|pr_url>
+           [-h --help]
+EOF`
+
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift
+        args+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        args+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if (( ! ${#args} )); then
+    print $usage 1>&2
+    return 1
+  fi
+
+  if [[ "${args[1]}" =~ ^https://github\.com/([^/]+)/([^/]+)/pull/([0-9]+)(/.*)?/?$ ]]; then
+    owner_repo="${match[1]}/${match[2]}"
+    pr_number="${match[3]}"
+  elif [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
+    owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}')
+    pr_number=${args[1]}
+  else
+    print "$self_cmd: invalid argument -- '${args[1]}' must be a PR number or GitHub PR URL\n$help" 1>&2
+    return 1
+  fi
+
+  jq_filter='{number: .number, title: .title, state: .state, author: .user.login, created_at: .created_at, updated_at: .updated_at, labels: [.labels[].name], body: .body}'
+
+  gh api "repos/$owner_repo/pulls/$pr_number" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'PR Not Found')
+}
+
 gis() {
   local self_cmd help usage issue_number owner_repo jq_filter
   local -a args
