@@ -52,6 +52,13 @@ _gpr-comments() {
     '(:)*: :__github-pr-numbers'
 }
 
+_gis-comments() {
+  _arguments \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '1: :__github-issue-numbers'
+}
+
 compdef _gpr gpr
 compdef _gis gis
 compdef _gpr-comments gpr-comments
+compdef _gis-comments gis-comments

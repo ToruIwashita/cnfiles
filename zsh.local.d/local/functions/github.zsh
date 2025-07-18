@@ -6,7 +6,7 @@ gpr() {
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd <pr_number|pr_url>
+usage: $self_cmd <pr number|pr url>
            [-h --help]
 EOF`
 
@@ -67,7 +67,7 @@ gis() {
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd <issue_number|issue_url>
+usage: $self_cmd <issue number|issue url>
            [-h --help]
 EOF`
 
@@ -129,7 +129,7 @@ gpr-comments() {
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd <pr_number|pr_url>
+usage: $self_cmd <pr number|pr url>
                     [-i --ignore-outdated]
                     [-h --help]
 EOF`
@@ -190,6 +190,67 @@ EOF`
 
   [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/pulls/$pr_number/comments\" | jq '$jq_filter'\033[0m\n"
   gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'PR Not Found')
+}
+
+gis-comments() {
+  local self_cmd help usage issue_number owner_repo jq_filter
+  local -a args
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <issue number|issue url>
+                    [-h --help]
+EOF`
+
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift
+        args+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        args+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if (( ! ${#args} )); then
+    print $usage 1>&2
+    return 1
+  fi
+
+  if [[ "${args[1]}" =~ ^https://github\.com/([^/]+)/([^/]+)/issues/([0-9]+)(/.*)?/?$ ]]; then
+    owner_repo="${match[1]}/${match[2]}"
+    issue_number="${match[3]}"
+  elif [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
+    owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}')
+    issue_number=${args[1]}
+  else
+    print "$self_cmd: invalid argument -- '${args[1]}' must be an issue number or GitHub issue URL\n$help" 1>&2
+    return 1
+  fi
+
+  jq_filter='.[] | {author: .user.login, created_at: .created_at, body: .body}'
+
+  [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/issues/$issue_number/comments\" | jq '$jq_filter'\033[0m\n"
+  gh api "repos/$owner_repo/issues/$issue_number/comments" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'Issue Not Found')
 }
 
 github-traffic() {
