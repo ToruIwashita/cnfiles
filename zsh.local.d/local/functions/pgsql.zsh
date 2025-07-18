@@ -9,8 +9,8 @@ pgq() {
 
 pq() {
   integer arg_num tmp_sql
-  local -a args
   local self_cmd help usage my_cmd file_path
+  local -a args
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -80,8 +80,8 @@ EOF`
 
 pqout() {
   integer arg_num tmp_sql
-  local -a args
   local self_cmd help usage pg_cmd file_path
+  local -a args
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -187,8 +187,8 @@ pgfindg() {
 
 pqexp() {
   integer arg_num tmp_sql
-  local -a args
   local self_cmd help usage pg_cmd file_path
+  local -a args
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -308,8 +308,8 @@ watch-pgps() {
 
 pf() {
   integer vertical_option
-  local -a args
   local pg_cmd priority_condition group_condition limit_condition order_condition selected_field_list where_condition table_name self_cmd help usage
+  local -a args
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."

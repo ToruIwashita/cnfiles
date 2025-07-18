@@ -9,8 +9,8 @@ myq() {
 
 mq() {
   integer arg_num tmp_sql
-  local -a args
   local self_cmd help usage my_cmd file_path
+  local -a args
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -80,8 +80,8 @@ EOF`
 
 mqout() {
   integer arg_num tmp_sql
-  local -a args
   local self_cmd help usage my_cmd file_path
+  local -a args
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -219,8 +219,8 @@ EOF`
 
 mqexp() {
   integer arg_num tmp_sql
-  local -a args
   local self_cmd help usage my_cmd file_path
+  local -a args
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -356,8 +356,8 @@ watch-myps() {
 }
 
 mf() {
-  local -a args
   local my_cmd priority_condition group_condition limit_condition order_condition selected_field_list vertical_option where_condition table_name self_cmd help usage
+  local -a args
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
