@@ -100,6 +100,7 @@ _gd() {
     '(-l --log)'{-l,--log}'[Show commit diff]: :__git-commits' \
     '(-i --id-only)'{-i,--id-only}'[Show commit ID only]' \
     '(-n --name-only)'{-n,--name-only}'[Show only file names]' \
+    '(-s --staged)'{-s,--staged}'[Show staged changes]: :__git-staged-files' \
     '(-h --help)'{-h,--help}'[Show help text]' \
     '(:)*: :__git-diff-files'
 }

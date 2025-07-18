@@ -397,17 +397,18 @@ EOF`
 }
 
 gd() {
-  integer id_only name_only
-  local self_cmd help usage commit_option
+  integer id_only
+  local self_cmd help usage name_only_option staged_option commit_option
   local -a file_paths
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [files]
-          [-l --log [commit_id]]
           [-i --id-only]
+          [-l --log [commit_id]]
           [-n --name-only]
+          [-s --staged]
           [-h --help]
 EOF`
 
@@ -433,7 +434,11 @@ EOF`
         shift 1
         ;;
       -n | --name-only)
-        (( name_only++ ))
+        name_only_option=" --name-only"
+        shift 1
+        ;;
+      -s | --staged)
+        staged_option=" --staged"
         shift 1
         ;;
       -h | --help)
@@ -467,45 +472,25 @@ EOF`
   if (( $#commit_option )); then
     # -lのみの場合
     if [[ "$commit_option" == "origin/HEAD...HEAD" ]]; then
-      if (( name_only )); then
-        [[ -t 1 ]] && print "\033[36mgit diff --name-only $commit_option\033[0m\n"
-        git diff --name-only "$commit_option"
-      else
-        [[ -t 1 ]] && print "\033[36mgit diff $commit_option\033[0m\n"
-        git diff "$commit_option"
-      fi
+      [[ -t 1 ]] && print "\033[36mgit diff${name_only_option} $commit_option\033[0m\n"
+      git diff ${(z)name_only_option} "$commit_option"
       return 0
     fi
 
     # -l $commit_idの場合
-    if (( name_only )); then
-      [[ -t 1 ]] && print "\033[36mgit diff --name-only $commit_option^..$commit_option\033[0m\n"
-      git diff --name-only "$commit_option"^.."$commit_option"
-    else
-      [[ -t 1 ]] && print "\033[36mgit diff $commit_option^..$commit_option\033[0m\n"
-      git diff "$commit_option"^.."$commit_option"
-    fi
+    [[ -t 1 ]] && print "\033[36mgit diff${name_only_option} $commit_option^..$commit_option\033[0m\n"
+    git diff ${(z)name_only_option} "$commit_option"^.."$commit_option"
     return 0
   fi
 
   if (( ${#file_paths} )); then
-    if (( name_only )); then
-      [[ -t 1 ]] && print "\033[36mgit diff --name-only ${file_paths[*]}\033[0m\n"
-      (git diff --name-only "${file_paths[@]}" 2>/dev/null || git diff --name-only $(git rev-parse --show-toplevel)/"${^file_paths[@]}")
-    else
-      [[ -t 1 ]] && print "\033[36mgit diff ${file_paths[*]}\033[0m\n"
-      (git diff "${file_paths[@]}" 2>/dev/null || git diff $(git rev-parse --show-toplevel)/"${^file_paths[@]}")
-    fi
+    [[ -t 1 ]] && print "\033[36mgit diff${staged_option}${name_only_option} ${file_paths[*]}\033[0m\n"
+    (git diff ${(z)staged_option} ${(z)name_only_option} "${file_paths[@]}" 2>/dev/null || git diff ${(z)staged_option} ${(z)name_only_option} $(git rev-parse --show-toplevel)/"${^file_paths[@]}")
     return 0
   fi
 
-  if (( name_only )); then
-    [[ -t 1 ]] && print "\033[36mgit diff --name-only\033[0m\n"
-    git diff --name-only
-  else
-    [[ -t 1 ]] && print "\033[36mgit diff\033[0m\n"
-    git diff
-  fi
+  [[ -t 1 ]] && print "\033[36mgit diff${staged_option}${name_only_option}\033[0m\n"
+  git diff ${(z)staged_option} ${(z)name_only_option}
 }
 
 gsw() {
