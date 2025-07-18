@@ -183,9 +183,9 @@ EOF`
   fi
 
   if (( ignore_outdated )); then
-    jq_filter='map(select(.position != null or .original_position == null)) | .[] | {diff_hunk: .diff_hunk, body: .body}'
+    jq_filter='map(select(.position != null or .original_position == null)) | .[] | {author: .user.login, created_at: .created_at, diff_hunk: .diff_hunk, body: .body}'
   else
-    jq_filter='.[] | {diff_hunk: .diff_hunk, body: .body}'
+    jq_filter='.[] | {author: .user.login, created_at: .created_at, diff_hunk: .diff_hunk, body: .body}'
   fi
 
   [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/pulls/$pr_number/comments\" | jq '$jq_filter'\033[0m\n"
