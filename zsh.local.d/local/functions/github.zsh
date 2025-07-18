@@ -6,7 +6,7 @@ gpr-comments() {
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd <pr_number>
+usage: $self_cmd <pr number|pr url>
                     [-h --help]
 EOF`
 
@@ -43,8 +43,17 @@ EOF`
     return 1
   fi
 
-  pr_number=${args[1]}
-  owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}')
+  if [[ "${args[1]}" =~ ^https://github\.com/([^/]+)/([^/]+)/pull/([0-9]+)(/.*)?/?$ ]]; then
+    owner_repo="${match[1]}/${match[2]}"
+    pr_number="${match[3]}"
+  elif [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
+    owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}')
+    pr_number=${args[1]}
+  else
+    print "$self_cmd: invalid argument -- '${args[1]}' must be a PR number or GitHub PR URL\n$help" 1>&2
+    return 1
+  fi
+
   gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null | (jq '.[] | {diff_hunk: .diff_hunk, body: .body}' 2>/dev/null || print 'PR Not Found')
 }
 
