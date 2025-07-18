@@ -1,12 +1,14 @@
 ## github
 gpr-comments() {
-  local self_cmd help usage pr_number owner_repo
+  integer ignore_outdated
+  local self_cmd help usage pr_number owner_repo jq_filter
   local -a args
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd <pr number|pr url>
+usage: $self_cmd <pr_number|pr_url>
+                    [-i --ignore-outdated]
                     [-h --help]
 EOF`
 
@@ -21,6 +23,10 @@ EOF`
       -h | --help)
         print $usage
         return 0
+        ;;
+      -i | --ignore-outdated)
+        (( ignore_outdated++ ))
+        shift
         ;;
       -- | -) # Stop option processing
         shift
@@ -54,7 +60,13 @@ EOF`
     return 1
   fi
 
-  gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null | (jq '.[] | {diff_hunk: .diff_hunk, body: .body}' 2>/dev/null || print 'PR Not Found')
+  if (( ignore_outdated )); then
+    jq_filter='map(select(.position != null or .original_position == null)) | .[] | {diff_hunk: .diff_hunk, body: .body}'
+  else
+    jq_filter='.[] | {diff_hunk: .diff_hunk, body: .body}'
+  fi
+
+  gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'PR Not Found')
 }
 
 github-traffic() {
