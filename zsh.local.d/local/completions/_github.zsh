@@ -49,7 +49,7 @@ _gpr-comments() {
   _arguments \
     '(-i --ignore-outdated)'{-i,--ignore-outdated}'[Ignore outdated comments]' \
     '(-h --help)'{-h,--help}'[Show help text]' \
-    '1: :__github-pr-numbers'
+    '(:)*: :__github-pr-numbers'
 }
 
 compdef _gpr gpr
