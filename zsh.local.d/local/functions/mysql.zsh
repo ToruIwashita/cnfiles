@@ -156,9 +156,9 @@ myg() {
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [-f 'Part of field info']
-           [-h --help]
            [-t 'Part of table name']
            [-v --vertical]
+           [-h --help]
 EOF`
 
   while (( $# > 0 )); do
@@ -367,12 +367,12 @@ usage: $self_cmd <table name>
           [-c --primary-condition <highest priority condition>]
           [-d --id-desc <order by id desc>]
           [-g --group-by <group condition>]
-          [-h --help]
           [-l --limit <limit value>]
           [-o --order-by <order condition>]
           [-s --select <select fields>]
           [-v --vertical]
           [-w --where <where condition>]
+          [-h --help]
 EOF`
 
   while (( $# > 0 )); do
