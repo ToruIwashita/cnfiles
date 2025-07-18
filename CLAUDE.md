@@ -1,6 +1,6 @@
 # CLAUDE.md
 
-このファイルは Claude Code (claude.ai/code) がこのリポジトリで作業する際のガイダンスを提供します
+このファイルはClaude Code（claude.ai/code）がこのリポジトリで作業する際のガイダンスを提供します
 
 ## 🌏 言語設定（必須）
 
@@ -11,14 +11,14 @@
 **全ての会話で必ず従うこと**
 
 ### 1. 実装ガイド確認（最優先）
-コード作業開始前に必ずタスクの種類をチェック：
+コード作業開始前に必ずタスクの種類をチェック:
 
-**Vim関連タスク**: `./docs/code_implementation_guide/vim.md` を即座に読み込み
-**Zsh関連タスク**: `./docs/code_implementation_guide/zsh.md` を即座に読み込み
+**Vim関連タスク**: `./docs/code_implementation_guide/vim.md`を即座に読み込み
+**Zsh関連タスク**: `./docs/code_implementation_guide/zsh.md`を即座に読み込み
 
 **作業検出基準:**
-- **Zsh作業**: `zsh.d/` 内ファイル、`.zsh` ファイル、シェル関数・補完関数実装
-- **Vim作業**: `vim/` 内ファイル、`.vim/.vimrc` ファイル、Vimプラグイン・Vimscript実装
+- **Zsh作業**: `zsh.d/`内ファイル,`.zsh`ファイル,シェル関数・補完関数実装
+- **Vim作業**: `vim/`内ファイル,`.vim/.vimrc`ファイル,Vimプラグイン・Vimscript実装
 
 ### 2. タスク計画（第二優先）
 複雑なタスクではTodoWriteツール使用
@@ -29,14 +29,14 @@
 ## 📋 基本方針
 
 **必須指示:**
-- 求められたことを実行する；それ以上でも以下でもない
+- 求められたことを実行する（それ以上でも以下でもない）
 - 既存ファイル編集を新規作成より優先
 - 必要最小限のファイル作成のみ
 - ドキュメント（*.md）の積極的作成禁止（明示的要求時のみ）
 
 ## 📋 プロジェクト概要
 
-macOS開発環境の包括的dotfiles (.cnfiles) - gitサブモジュールによるツール管理と自動化インストール
+macOS開発環境の包括的dotfiles（.cnfiles） - gitサブモジュールによるツール管理と自動化インストール
 
 ### 主要構成
 - `/modules/` - gitサブモジュール
@@ -47,7 +47,7 @@ macOS開発環境の包括的dotfiles (.cnfiles) - gitサブモジュールに�
 
 ### 設定管理
 - シンボリックリンク戦略
-- `.local` サフィックスによるローカルオーバーライド
+- `.local`サフィックスによるローカルオーバーライド
 
 ## ⚙️ Claude Code設定
 
@@ -55,8 +55,8 @@ macOS開発環境の包括的dotfiles (.cnfiles) - gitサブモジュールに�
 
 Claude Codeが権限要求時:
 1. 権限許可
-2. `claude/settings.json` の `permissions.allow` に追加
-3. `.claude/settings.local.json` の権限は削除し `claude/settings.json` に移動
+2. `claude/settings.json`の`permissions.allow`に追加
+3. `.claude/settings.local.json`の権限は削除し`claude/settings.json`に移動
 
 ## 🔄 ルール進化プロセス
 
