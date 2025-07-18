@@ -258,7 +258,7 @@ EOF`
 
     [[ -n "$comment_body" ]] && echo "$comment_body" | glow
 
-    print "---\n"
+    print -- "---\n"
   done
 }
 
@@ -352,7 +352,7 @@ EOF`
 
     [[ -n "$comment_body" ]] && print "\n\033[36m=== body (rendered with glow) ===\033[0m"
 
-    print "---\n"
+    print -- "---\n"
   done
 }
 
