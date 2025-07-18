@@ -1,6 +1,6 @@
 ## github
 gpr() {
-  local self_cmd help usage pr_number owner_repo jq_filter
+  local self_cmd help usage pr_number owner_repo jq_filter body_content
   local -a args
 
   self_cmd=$0
@@ -54,14 +54,21 @@ EOF`
     return 1
   fi
 
-  jq_filter='{number: .number, title: .title, state: .state, author: .user.login, created_at: .created_at, updated_at: .updated_at, labels: [.labels[].name], body: .body}'
-
+  # 基本情報（bodyを除く）を表示
+  jq_filter='{number: .number, title: .title, state: .state, author: .user.login, created_at: .created_at, updated_at: .updated_at, labels: [.labels[].name]}'
   [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/pulls/$pr_number\" | jq '$jq_filter'\033[0m\n"
   gh api "repos/$owner_repo/pulls/$pr_number" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'PR Not Found')
+
+  # bodyを取得してglowで表示
+  body_content=$(gh api "repos/$owner_repo/pulls/$pr_number" 2>/dev/null | jq -r '.body // empty' 2>/dev/null)
+  if [[ -n "$body_content" && "$body_content" != "null" ]]; then
+    print "\n\033[36mbody (rendered with glow):\033[0m"
+    print "$body_content" | glow
+  fi
 }
 
 gis() {
-  local self_cmd help usage issue_number owner_repo jq_filter
+  local self_cmd help usage issue_number owner_repo jq_filter body_content
   local -a args
 
   self_cmd=$0
@@ -115,15 +122,22 @@ EOF`
     return 1
   fi
 
-  jq_filter='{number: .number, title: .title, state: .state, author: .user.login, created_at: .created_at, labels: [.labels[].name], body: .body}'
-
+  # 基本情報（bodyを除く）を表示
+  jq_filter='{number: .number, title: .title, state: .state, author: .user.login, created_at: .created_at, labels: [.labels[].name]}'
   [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/issues/$issue_number\" | jq '$jq_filter'\033[0m\n"
   gh api "repos/$owner_repo/issues/$issue_number" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'Issue Not Found')
+
+  # bodyを取得してglowで表示
+  body_content=$(gh api "repos/$owner_repo/issues/$issue_number" 2>/dev/null | jq -r '.body // empty' 2>/dev/null)
+  if [[ -n "$body_content" && "$body_content" != "null" ]]; then
+    print "\n\033[36mbody (rendered with glow):\033[0m"
+    print "$body_content" | glow
+  fi
 }
 
 gpr-comments() {
   integer ignore_outdated
-  local self_cmd help usage pr_number owner_repo jq_filter
+  local self_cmd help usage pr_number owner_repo jq_filter comments_data
   local -a args
 
   self_cmd=$0
@@ -182,18 +196,37 @@ EOF`
     return 1
   fi
 
+  [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/pulls/$pr_number/comments\"\033[0m\n"
+
+  # コメントデータを取得
   if (( ignore_outdated )); then
-    jq_filter='map(select(.position != null or .original_position == null)) | .[] | {author: .user.login, created_at: .created_at, diff_hunk: .diff_hunk, body: .body}'
+    comments_data=$(gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null | jq 'map(select(.position != null or .original_position == null))' 2>/dev/null)
   else
-    jq_filter='.[] | {author: .user.login, created_at: .created_at, diff_hunk: .diff_hunk, body: .body}'
+    comments_data=$(gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null)
   fi
 
-  [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/pulls/$pr_number/comments\" | jq '$jq_filter'\033[0m\n"
-  gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'PR Not Found')
+  if [[ -z "$comments_data" || "$comments_data" == "null" ]]; then
+    print 'PR Not Found'
+    return 1
+  fi
+
+  # 各コメントを処理
+  echo "$comments_data" | jq -c '.[]' 2>/dev/null | while read -r comment; do
+    # 基本情報（bodyを除く）を表示
+    echo "$comment" | jq '{author: .user.login, created_at: .created_at, diff_hunk: .diff_hunk}'
+
+    # bodyを取得してglowで表示
+    local body_content=$(echo "$comment" | jq -r '.body // empty' 2>/dev/null)
+    if [[ -n "$body_content" && "$body_content" != "null" ]]; then
+      print "\033[36mbody (rendered with glow):\033[0m"
+      print "$body_content" | glow
+      print "\n---\n"
+    fi
+  done
 }
 
 gis-comments() {
-  local self_cmd help usage issue_number owner_repo jq_filter
+  local self_cmd help usage issue_number owner_repo comments_data
   local -a args
 
   self_cmd=$0
@@ -247,10 +280,29 @@ EOF`
     return 1
   fi
 
-  jq_filter='.[] | {author: .user.login, created_at: .created_at, body: .body}'
+  [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/issues/$issue_number/comments\"\033[0m\n"
 
-  [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/issues/$issue_number/comments\" | jq '$jq_filter'\033[0m\n"
-  gh api "repos/$owner_repo/issues/$issue_number/comments" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'Issue Not Found')
+  # コメントデータを取得
+  comments_data=$(gh api "repos/$owner_repo/issues/$issue_number/comments" 2>/dev/null)
+
+  if [[ -z "$comments_data" || "$comments_data" == "null" ]]; then
+    print 'Issue Comments Not Found'
+    return 1
+  fi
+
+  # 各コメントを処理
+  echo "$comments_data" | jq -c '.[]' 2>/dev/null | while read -r comment; do
+    # 基本情報（bodyを除く）を表示
+    echo "$comment" | jq '{author: .user.login, created_at: .created_at}'
+
+    # bodyを取得してglowで表示
+    local body_content=$(echo "$comment" | jq -r '.body // empty' 2>/dev/null)
+    if [[ -n "$body_content" && "$body_content" != "null" ]]; then
+      print "\033[36mbody (rendered with glow):\033[0m"
+      print "$body_content" | glow
+      print "\n---\n"
+    fi
+  done
 }
 
 github-traffic() {
