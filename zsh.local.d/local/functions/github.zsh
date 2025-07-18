@@ -43,14 +43,21 @@ EOF`
     return 1
   fi
 
-  if [[ "${args[1]}" =~ ^https://github\.com/([^/]+)/([^/]+)/pull/([0-9]+)(/.*)?/?$ ]]; then
-    owner_repo="${match[1]}/${match[2]}"
-    pr_number="${match[3]}"
-  elif [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
-    owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}')
-    pr_number=${args[1]}
-  else
+  if ! __gh_is_pull_url "${args[1]}" && ! [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
     print "$self_cmd: invalid argument -- '${args[1]}' must be a PR number or GitHub PR URL\n$help" 1>&2
+    return 1
+  fi
+
+  if __gh_is_pull_url "${args[1]}"; then
+    owner_repo=$(__gh_get_owner_repo "${args[1]}")
+    pr_number=$(__gh_get_number "${args[1]}")
+  else
+    owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}' 2>/dev/null)
+    pr_number="${args[1]}"
+  fi
+
+  if [[ -z "$owner_repo" || -z "$pr_number" ]]; then
+    print "$self_cmd: failed to parse argument -- '${args[1]}'\n$help" 1>&2
     return 1
   fi
 
@@ -111,14 +118,21 @@ EOF`
     return 1
   fi
 
-  if [[ "${args[1]}" =~ ^https://github\.com/([^/]+)/([^/]+)/issues/([0-9]+)(/.*)?/?$ ]]; then
-    owner_repo="${match[1]}/${match[2]}"
-    issue_number="${match[3]}"
-  elif [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
-    owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}')
-    issue_number=${args[1]}
-  else
+  if ! __gh_is_issue_url "${args[1]}" && ! [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
     print "$self_cmd: invalid argument -- '${args[1]}' must be an issue number or GitHub issue URL\n$help" 1>&2
+    return 1
+  fi
+
+  if __gh_is_issue_url "${args[1]}"; then
+    owner_repo=$(__gh_get_owner_repo "${args[1]}")
+    issue_number=$(__gh_get_number "${args[1]}")
+  else
+    owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}' 2>/dev/null)
+    issue_number="${args[1]}"
+  fi
+
+  if [[ -z "$owner_repo" || -z "$issue_number" ]]; then
+    print "$self_cmd: failed to parse argument -- '${args[1]}'\n$help" 1>&2
     return 1
   fi
 
@@ -185,14 +199,21 @@ EOF`
     return 1
   fi
 
-  if [[ "${args[1]}" =~ ^https://github\.com/([^/]+)/([^/]+)/pull/([0-9]+)(/.*)?/?$ ]]; then
-    owner_repo="${match[1]}/${match[2]}"
-    pr_number="${match[3]}"
-  elif [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
-    owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}')
-    pr_number=${args[1]}
-  else
+  if ! __gh_is_pull_url "${args[1]}" && ! [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
     print "$self_cmd: invalid argument -- '${args[1]}' must be a PR number or GitHub PR URL\n$help" 1>&2
+    return 1
+  fi
+
+  if __gh_is_pull_url "${args[1]}"; then
+    owner_repo=$(__gh_get_owner_repo "${args[1]}")
+    pr_number=$(__gh_get_number "${args[1]}")
+  else
+    owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}' 2>/dev/null)
+    pr_number="${args[1]}"
+  fi
+
+  if [[ -z "$owner_repo" || -z "$pr_number" ]]; then
+    print "$self_cmd: failed to parse argument -- '${args[1]}'\n$help" 1>&2
     return 1
   fi
 
@@ -269,14 +290,21 @@ EOF`
     return 1
   fi
 
-  if [[ "${args[1]}" =~ ^https://github\.com/([^/]+)/([^/]+)/issues/([0-9]+)(/.*)?/?$ ]]; then
-    owner_repo="${match[1]}/${match[2]}"
-    issue_number="${match[3]}"
-  elif [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
-    owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}')
-    issue_number=${args[1]}
-  else
+  if ! __gh_is_issue_url "${args[1]}" && ! [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
     print "$self_cmd: invalid argument -- '${args[1]}' must be an issue number or GitHub issue URL\n$help" 1>&2
+    return 1
+  fi
+
+  if __gh_is_issue_url "${args[1]}"; then
+    owner_repo=$(__gh_get_owner_repo "${args[1]}")
+    issue_number=$(__gh_get_number "${args[1]}")
+  else
+    owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}' 2>/dev/null)
+    issue_number="${args[1]}"
+  fi
+
+  if [[ -z "$owner_repo" || -z "$issue_number" ]]; then
+    print "$self_cmd: failed to parse argument -- '${args[1]}'\n$help" 1>&2
     return 1
   fi
 
