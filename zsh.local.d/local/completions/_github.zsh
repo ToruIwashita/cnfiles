@@ -33,6 +33,12 @@ __github-issue-numbers() {
   compadd -V issue-numbers -d issue_descriptions -a issue_numbers
 }
 
+_gis() {
+  _arguments \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '1: :__github-issue-numbers'
+}
+
 _gpr-comments() {
   _arguments \
     '(-i --ignore-outdated)'{-i,--ignore-outdated}'[Ignore outdated comments]' \
@@ -40,11 +46,5 @@ _gpr-comments() {
     '1: :__github-pr-numbers'
 }
 
-_gis() {
-  _arguments \
-    '(-h --help)'{-h,--help}'[Show help text]' \
-    '1: :__github-issue-numbers'
-}
-
-compdef _gpr-comments gpr-comments
 compdef _gis gis
+compdef _gpr-comments gpr-comments
