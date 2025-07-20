@@ -161,7 +161,7 @@ EOF`
 
 gpr-code-comments() {
   integer ignore_outdated
-  local self_cmd help usage pr_number owner_repo json_comments comment_body comment
+  local self_cmd help usage pr_number owner_repo json_comments comment
   local -a args
 
   self_cmd=$0
@@ -241,22 +241,18 @@ EOF`
   fi
 
   # 各コメントを処理
-  echo -E "$json_comments" | jq -r '.[] | @base64' | while read -r comment_encoded; do
-    comment=$(echo "$comment_encoded" | base64 -d)
-
+  echo -E "$json_comments" | jq -c '.[]' | while read -r comment; do
     # 基本情報（bodyを除く）を表示
     echo -E "$comment" | jq '{author: .user.login, commit_id: .commit_id, original_commit_id: .original_commit_id, created_at: .created_at, updated_at: .updated_at, path: .path, diff_hunk: .diff_hunk, line: .line, position: .position, side: .side}'
 
     # bodyを取得してglowで表示
-    comment_body=$(echo -E "$comment" | jq -r '.body // empty' 2>/dev/null)
-
     if [[ -t 1 ]]; then
       print "\n\033[36m=== body (rendered with glow) ===\033[0m"
     else
       print "\n=== body ==="
     fi
 
-    [[ -n "$comment_body" ]] && echo "$comment_body" | glow
+    echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | glow
 
     if [[ -t 1 ]]; then
       print "\033[36m===\033[0m\n"
@@ -267,7 +263,7 @@ EOF`
 }
 
 gis-comments() {
-  local self_cmd help usage issue_number owner_repo json_comments comment_body comment
+  local self_cmd help usage issue_number owner_repo json_comments comment
   local -a args
 
   self_cmd=$0
@@ -339,22 +335,18 @@ EOF`
   fi
 
   # 各コメントを処理
-  echo -E "$json_comments" | jq -r '.[] | @base64' | while read -r comment_encoded; do
-    comment=$(echo "$comment_encoded" | base64 -d)
-
+  echo -E "$json_comments" | jq -c '.[]' | while read -r comment; do
     # 基本情報（bodyを除く）を表示
     echo -E "$comment" | jq '{author: .user.login, created_at: .created_at, updated_at: .updated_at}'
 
     # bodyを取得してglowで表示
-    comment_body=$(echo -E "$comment" | jq -r '.body // empty' 2>/dev/null)
-
     if [[ -t 1 ]]; then
       print "\n\033[36m=== body (rendered with glow) ===\033[0m"
     else
       print "\n=== body ==="
     fi
 
-    [[ -n "$comment_body" ]] && echo "$comment_body" | glow
+    echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | glow
 
     if [[ -t 1 ]]; then
       print "\033[36m===\033[0m\n"
