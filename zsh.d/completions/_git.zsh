@@ -44,7 +44,7 @@ __git-commits() {
     commit_descriptions+=($commit)
   done
 
-  compadd -V commits -d commit_descriptions -a commit_hashes
+  compadd -l -V commits -d commit_descriptions -a commit_hashes
 }
 
 __git-both-modified-files() {
