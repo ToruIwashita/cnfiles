@@ -258,7 +258,11 @@ EOF`
 
     [[ -n "$comment_body" ]] && echo "$comment_body" | glow
 
-    print -- "---\n"
+    if [[ -t 1 ]]; then
+      print "\033[36m===\033[0m\n"
+    else
+      print "===\n"
+    fi
   done
 }
 
@@ -352,7 +356,11 @@ EOF`
 
     [[ -n "$comment_body" ]] && echo "$comment_body" | glow
 
-    print -- "---\n"
+    if [[ -t 1 ]]; then
+      print "\033[36m===\033[0m\n"
+    else
+      print "===\n"
+    fi
   done
 }
 
