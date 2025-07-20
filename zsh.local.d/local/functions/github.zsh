@@ -245,7 +245,7 @@ EOF`
     comment=$(echo "$comment_encoded" | base64 -d)
 
     # 基本情報（bodyを除く）を表示
-    echo -E "$comment" | jq '{author: .user.login, commit_id: .commit_id, created_at: .created_at, updated_at: .updated_at, diff_hunk: .diff_hunk}'
+    echo -E "$comment" | jq '{author: .user.login, commit_id: .commit_id, original_commit_id: .original_commit_id, created_at: .created_at, updated_at: .updated_at, path: .path, diff_hunk: .diff_hunk, line: .line, position: .position, side: .side}'
 
     # bodyを取得してglowで表示
     comment_body=$(echo -E "$comment" | jq -r '.body // empty' 2>/dev/null)
