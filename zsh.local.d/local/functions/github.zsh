@@ -161,7 +161,7 @@ EOF`
 
 gpr-code-comments() {
   integer ignore_outdated
-  local self_cmd help usage pr_number owner_repo json_comments comment_body
+  local self_cmd help usage pr_number owner_repo json_comments comment_body comment
   local -a args
 
   self_cmd=$0
@@ -263,7 +263,7 @@ EOF`
 }
 
 gis-comments() {
-  local self_cmd help usage issue_number owner_repo json_comments comment_body
+  local self_cmd help usage issue_number owner_repo json_comments comment_body comment
   local -a args
 
   self_cmd=$0
@@ -350,7 +350,7 @@ EOF`
       print "\n=== body ==="
     fi
 
-    [[ -n "$comment_body" ]] && print "\n\033[36m=== body (rendered with glow) ===\033[0m"
+    [[ -n "$comment_body" ]] && echo "$comment_body" | glow
 
     print -- "---\n"
   done
