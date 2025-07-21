@@ -10,10 +10,10 @@ __github-pr-numbers() {
 
   for pr in $pr_data; do
     pr_numbers+=(${pr%% *})
-    pr_descriptions+=($pr)
+    pr_descriptions+=("${pr%% *} - [Pull Request] ${pr#* }")
   done
 
-  compadd -V pr-numbers -d pr_descriptions -a pr_numbers
+  compadd -l -V pr-numbers -d pr_descriptions -a pr_numbers
 }
 
 __github-issue-numbers() {
@@ -27,10 +27,10 @@ __github-issue-numbers() {
 
   for issue in $issue_data; do
     issue_numbers+=(${issue%% *})
-    issue_descriptions+=($issue)
+    issue_descriptions+=("${issue%% *} - [Issue] ${issue#* }")
   done
 
-  compadd -V issue-numbers -d issue_descriptions -a issue_numbers
+  compadd -l -V issue-numbers -d issue_descriptions -a issue_numbers
 }
 
 _gpr() {
