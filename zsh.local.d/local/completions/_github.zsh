@@ -35,6 +35,7 @@ __github-issue-numbers() {
 
 _gpr() {
   _arguments \
+    '(-c --comment)'{-c,--comment}'[Show PR comments]' \
     '(-h --help)'{-h,--help}'[Show help text]' \
     '1: :__github-pr-numbers'
 }

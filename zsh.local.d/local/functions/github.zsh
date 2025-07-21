@@ -1,12 +1,14 @@
 ## github
 gpr() {
-  local self_cmd help usage pr_number owner_repo jq_filter body_content
+  integer show_comment
+  local self_cmd help usage pr_number owner_repo jq_filter body_content json_comments comment
   local -a args
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd <pr number|pr url>
+           [-c --comment]
            [-h --help]
 EOF`
 
@@ -21,6 +23,10 @@ EOF`
       -h | --help)
         print $usage
         return 0
+        ;;
+      -c | --comment)
+        (( show_comment++ ))
+        shift
         ;;
       -- | -) # Stop option processing
         shift
@@ -61,12 +67,41 @@ EOF`
     return 1
   fi
 
-  # 基本情報（bodyを除く）を表示
+  if (( show_comment )); then
+    [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/issues/$pr_number/comments\"\033[0m\n"
+
+    json_comments=$(gh api "repos/$owner_repo/issues/$pr_number/comments" 2>/dev/null)
+
+    if [[ -z "$json_comments" ]] || [[ "$json_comments" =~ "message.*Not Found" ]]; then
+      print 'PR Comments Not Found or No Comments'
+      return 1
+    fi
+
+    echo -E "$json_comments" | jq -c '.[]' | while read -r comment; do
+      echo -E "$comment" | jq '{author: .user.login, created_at: .created_at, updated_at: .updated_at}'
+
+      if [[ -t 1 ]]; then
+        print "\n\033[36m=== body (rendered with glow) ===\033[0m"
+      else
+        print "\n=== body ==="
+      fi
+
+      echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | glow
+
+      if [[ -t 1 ]]; then
+        print "\033[36m===\033[0m\n"
+      else
+        print "===\n"
+      fi
+    done
+
+    return
+  fi
+
   jq_filter='{number: .number, title: .title, state: .state, author: .user.login, created_at: .created_at, updated_at: .updated_at, closed_at: .closed_at, merged_at: .merged_at, mergeable_state: .mergeable_state, labels: [.labels[].name]}'
   [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/pulls/$pr_number\" | jq '$jq_filter'\033[0m\n"
   gh api "repos/$owner_repo/pulls/$pr_number" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'PR Not Found')
 
-  # bodyを取得してglowで表示
   body_content=$(gh api "repos/$owner_repo/pulls/$pr_number" 2>/dev/null | jq -r '.body // empty' 2>/dev/null)
   if [[ -t 1 ]]; then
     print "\n\033[36m=== body (rendered with glow) === \033[0m"
