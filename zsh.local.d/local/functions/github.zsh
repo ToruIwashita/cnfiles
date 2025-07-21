@@ -1,7 +1,7 @@
 ## github
 gpr() {
-  integer show_comment show_review_comment ignore_outdated
-  local self_cmd help usage pr_number owner_repo jq_filter body_content json_comments json_review_comments comment
+  integer show_comment show_review_comment ignore_outdated pr_count
+  local self_cmd help usage current_branch pr_list default_pr_number pr_number owner_repo jq_filter body_content json_comments json_review_comments comment
   local -a args
 
   self_cmd=$0
@@ -55,8 +55,25 @@ EOF`
   done
 
   if (( ! ${#args} )); then
-    print $usage 1>&2
-    return 1
+    current_branch=$(git branch --show-current)
+    pr_list=$(gh pr list --head "$current_branch" | cat)
+
+    if [[ -z "$pr_list" ]]; then
+      print "$self_cmd: No PR found for current branch '$current_branch'"
+      print $usage 1>&2
+      return 1
+    fi
+
+    pr_count=$(echo "$pr_list" | wc -l)
+
+    if (( pr_count > 1 )); then
+      print "$self_cmd: Multiple PRs found for current branch '$current_branch', cannot determine which to use"
+      print $usage 1>&2
+      return 1
+    fi
+
+    auto_pr_number=$(echo "$pr_list" | awk '{print $1}')
+    args+=("$auto_pr_number")
   fi
 
   if ! __gh_is_pull_url "${args[1]}" && ! [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
