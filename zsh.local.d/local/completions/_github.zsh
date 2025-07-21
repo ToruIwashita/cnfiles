@@ -36,6 +36,8 @@ __github-issue-numbers() {
 _gpr() {
   _arguments \
     '(-c --comment)'{-c,--comment}'[Show PR comments]' \
+    '(-r --review-comment)'{-r,--review-comment}'[Show PR review comments]' \
+    '(-i --ignore-outdated)'{-i,--ignore-outdated}'[Ignore outdated review comments]' \
     '(-h --help)'{-h,--help}'[Show help text]' \
     '1: :__github-pr-numbers'
 }
@@ -47,13 +49,5 @@ _gis() {
     '1: :__github-issue-numbers'
 }
 
-_gpr-code-comments() {
-  _arguments \
-    '(-i --ignore-outdated)'{-i,--ignore-outdated}'[Ignore outdated comments]' \
-    '(-h --help)'{-h,--help}'[Show help text]' \
-    '(:)*: :__github-pr-numbers'
-}
-
 compdef _gpr gpr
 compdef _gis gis
-compdef _gpr-code-comments gpr-code-comments

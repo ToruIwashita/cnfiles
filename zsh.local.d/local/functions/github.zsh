@@ -1,7 +1,7 @@
 ## github
 gpr() {
-  integer show_comment
-  local self_cmd help usage pr_number owner_repo jq_filter body_content json_comments comment
+  integer show_comment show_review_comment ignore_outdated
+  local self_cmd help usage pr_number owner_repo jq_filter body_content json_comments json_review_comments comment
   local -a args
 
   self_cmd=$0
@@ -9,6 +9,8 @@ gpr() {
   usage=`cat <<EOF
 usage: $self_cmd <pr number|pr url>
            [-c --comment]
+           [-i --ignore-outdated]
+           [-r --review-comment]
            [-h --help]
 EOF`
 
@@ -26,6 +28,14 @@ EOF`
         ;;
       -c | --comment)
         (( show_comment++ ))
+        shift
+        ;;
+      -i | --ignore-outdated)
+        (( ignore_outdated++ ))
+        shift
+        ;;
+      -r | --review-comment)
+        (( show_review_comment++ ))
         shift
         ;;
       -- | -) # Stop option processing
@@ -62,11 +72,6 @@ EOF`
     pr_number="${args[1]}"
   fi
 
-  if [[ -z "$owner_repo" || -z "$pr_number" ]]; then
-    print "$self_cmd: failed to parse argument -- '${args[1]}'\n$help" 1>&2
-    return 1
-  fi
-
   if (( show_comment )); then
     [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/issues/$pr_number/comments\"\033[0m\n"
 
@@ -74,27 +79,60 @@ EOF`
 
     if [[ -z "$json_comments" ]] || [[ "$json_comments" =~ "message.*Not Found" ]]; then
       print 'PR Comments Not Found or No Comments'
-      return 1
+    else
+      echo -E "$json_comments" | jq -c '.[]' | while read -r comment; do
+        echo -E "$comment" | jq '{author: .user.login, created_at: .created_at, updated_at: .updated_at}'
+
+        if [[ -t 1 ]]; then
+          print "\n\033[36m=== body (rendered with glow) ===\033[0m"
+        else
+          print "\n=== body ==="
+        fi
+
+        echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | glow
+
+        if [[ -t 1 ]]; then
+          print "\033[36m===\033[0m\n"
+        else
+          print "===\n"
+        fi
+      done
+    fi
+  fi
+
+  if (( show_review_comment )); then
+    [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/pulls/$pr_number/comments\"\033[0m\n"
+
+    if (( ignore_outdated )); then
+      json_review_comments=$(gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null | jq 'map(select(.position != null or .original_position == null))' 2>/dev/null)
+    else
+      json_review_comments=$(gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null)
     fi
 
-    echo -E "$json_comments" | jq -c '.[]' | while read -r comment; do
-      echo -E "$comment" | jq '{author: .user.login, created_at: .created_at, updated_at: .updated_at}'
+    if [[ -z "$json_review_comments" ]] || [[ "$json_review_comments" =~ "message.*Not Found" ]]; then
+      print 'PR Review Comments Not Found or No Comments'
+    else
+      echo -E "$json_review_comments" | jq -c '.[]' | while read -r comment; do
+        echo -E "$comment" | jq '{author: .user.login, commit_id: .commit_id, original_commit_id: .original_commit_id, created_at: .created_at, updated_at: .updated_at, path: .path, diff_hunk: .diff_hunk, line: .line, position: .position, side: .side}'
 
-      if [[ -t 1 ]]; then
-        print "\n\033[36m=== body (rendered with glow) ===\033[0m"
-      else
-        print "\n=== body ==="
-      fi
+        if [[ -t 1 ]]; then
+          print "\n\033[36m=== body (rendered with glow) ===\033[0m"
+        else
+          print "\n=== body ==="
+        fi
 
-      echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | glow
+        echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | glow
 
-      if [[ -t 1 ]]; then
-        print "\033[36m===\033[0m\n"
-      else
-        print "===\n"
-      fi
-    done
+        if [[ -t 1 ]]; then
+          print "\033[36m===\033[0m\n"
+        else
+          print "===\n"
+        fi
+      done
+    fi
+  fi
 
+  if (( show_comment || show_review_comment )); then
     return
   fi
 
@@ -217,109 +255,6 @@ EOF`
   if [[ -n "$body_content" && "$body_content" != "null" ]]; then
     echo "$body_content" | glow
   fi
-}
-
-gpr-code-comments() {
-  integer ignore_outdated
-  local self_cmd help usage pr_number owner_repo json_comments comment
-  local -a args
-
-  self_cmd=$0
-  help="Try \`$self_cmd --help' for more information."
-  usage=`cat <<EOF
-usage: $self_cmd <pr number|pr url>
-                    [-i --ignore-outdated]
-                    [-h --help]
-EOF`
-
-  if ! __git-inside-work-tree; then
-    print 'Not a git repository: .git'
-    print $usage 1>&2
-    return 1
-  fi
-
-  while (( $# > 0 )); do
-    case "$1" in
-      -h | --help)
-        print $usage
-        return 0
-        ;;
-      -i | --ignore-outdated)
-        (( ignore_outdated++ ))
-        shift
-        ;;
-      -- | -) # Stop option processing
-        shift
-        args+=("$@")
-        break
-        ;;
-      -*)
-        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
-        return 1
-        ;;
-      *)
-        args+=("$1")
-        shift 1
-        ;;
-    esac
-  done
-
-  if (( ! ${#args} )); then
-    print $usage 1>&2
-    return 1
-  fi
-
-  if ! __gh_is_pull_url "${args[1]}" && ! [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
-    print "$self_cmd: invalid argument -- '${args[1]}' must be a PR number or GitHub PR URL\n$help" 1>&2
-    return 1
-  fi
-
-  if __gh_is_pull_url "${args[1]}"; then
-    owner_repo=$(__gh_get_owner_repo "${args[1]}")
-    pr_number=$(__gh_get_number "${args[1]}")
-  else
-    owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}' 2>/dev/null)
-    pr_number="${args[1]}"
-  fi
-
-  if [[ -z "$owner_repo" || -z "$pr_number" ]]; then
-    print "$self_cmd: failed to parse argument -- '${args[1]}'\n$help" 1>&2
-    return 1
-  fi
-
-  [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/pulls/$pr_number/comments\"\033[0m\n"
-
-  if (( ignore_outdated )); then
-    json_comments=$(gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null | jq 'map(select(.position != null or .original_position == null))' 2>/dev/null)
-  else
-    json_comments=$(gh api "repos/$owner_repo/pulls/$pr_number/comments" 2>/dev/null)
-  fi
-
-  if [[ -z "$json_comments" ]] || [[ "$json_comments" =~ "message.*Not Found" ]]; then
-    print 'PR Not Found or No Comments'
-    return 1
-  fi
-
-  # 各コメントを処理
-  echo -E "$json_comments" | jq -c '.[]' | while read -r comment; do
-    # 基本情報（bodyを除く）を表示
-    echo -E "$comment" | jq '{author: .user.login, commit_id: .commit_id, original_commit_id: .original_commit_id, created_at: .created_at, updated_at: .updated_at, path: .path, diff_hunk: .diff_hunk, line: .line, position: .position, side: .side}'
-
-    # bodyを取得してglowで表示
-    if [[ -t 1 ]]; then
-      print "\n\033[36m=== body (rendered with glow) ===\033[0m"
-    else
-      print "\n=== body ==="
-    fi
-
-    echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | glow
-
-    if [[ -t 1 ]]; then
-      print "\033[36m===\033[0m\n"
-    else
-      print "===\n"
-    fi
-  done
 }
 
 github-traffic() {
