@@ -80,13 +80,15 @@ EOF`
 }
 
 gis() {
-  local self_cmd help usage issue_number owner_repo jq_filter body_content
+  integer show_comments
+  local self_cmd help usage issue_number owner_repo jq_filter body_content json_comments comment
   local -a args
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd <issue number|issue url>
+           [-c --comment]
            [-h --help]
 EOF`
 
@@ -101,6 +103,10 @@ EOF`
       -h | --help)
         print $usage
         return 0
+        ;;
+      -c | --comment)
+        (( show_comments++ ))
+        shift
         ;;
       -- | -) # Stop option processing
         shift
@@ -141,12 +147,41 @@ EOF`
     return 1
   fi
 
-  # 基本情報（bodyを除く）を表示
+  if (( show_comments )); then
+    [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/issues/$issue_number/comments\"\033[0m\n"
+
+    json_comments=$(gh api "repos/$owner_repo/issues/$issue_number/comments" 2>/dev/null)
+
+    if [[ -z "$json_comments" ]] || [[ "$json_comments" =~ "message.*Not Found" ]]; then
+      print 'Issue Comments Not Found or No Comments'
+      return 1
+    fi
+
+    echo -E "$json_comments" | jq -c '.[]' | while read -r comment; do
+      echo -E "$comment" | jq '{author: .user.login, created_at: .created_at, updated_at: .updated_at}'
+
+      if [[ -t 1 ]]; then
+        print "\n\033[36m=== body (rendered with glow) ===\033[0m"
+      else
+        print "\n=== body ==="
+      fi
+
+      echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | glow
+
+      if [[ -t 1 ]]; then
+        print "\033[36m===\033[0m\n"
+      else
+        print "===\n"
+      fi
+    done
+
+    return
+  fi
+
   jq_filter='{number: .number, title: .title, state: .state, author: .user.login, created_at: .created_at, updated_at: .updated_at, closed_at: .closed_at, labels: [.labels[].name]}'
   [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/issues/$issue_number\" | jq '$jq_filter'\033[0m\n"
   gh api "repos/$owner_repo/issues/$issue_number" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'Issue Not Found')
 
-  # bodyを取得してglowで表示
   body_content=$(gh api "repos/$owner_repo/issues/$issue_number" 2>/dev/null | jq -r '.body // empty' 2>/dev/null)
   if [[ -t 1 ]]; then
     print "\n\033[36m=== body (rendered with glow) ===:\033[0m"
@@ -244,100 +279,6 @@ EOF`
   echo -E "$json_comments" | jq -c '.[]' | while read -r comment; do
     # 基本情報（bodyを除く）を表示
     echo -E "$comment" | jq '{author: .user.login, commit_id: .commit_id, original_commit_id: .original_commit_id, created_at: .created_at, updated_at: .updated_at, path: .path, diff_hunk: .diff_hunk, line: .line, position: .position, side: .side}'
-
-    # bodyを取得してglowで表示
-    if [[ -t 1 ]]; then
-      print "\n\033[36m=== body (rendered with glow) ===\033[0m"
-    else
-      print "\n=== body ==="
-    fi
-
-    echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | glow
-
-    if [[ -t 1 ]]; then
-      print "\033[36m===\033[0m\n"
-    else
-      print "===\n"
-    fi
-  done
-}
-
-gis-comments() {
-  local self_cmd help usage issue_number owner_repo json_comments comment
-  local -a args
-
-  self_cmd=$0
-  help="Try \`$self_cmd --help' for more information."
-  usage=`cat <<EOF
-usage: $self_cmd <issue number|issue url>
-                    [-h --help]
-EOF`
-
-  if ! __git-inside-work-tree; then
-    print 'Not a git repository: .git'
-    print $usage 1>&2
-    return 1
-  fi
-
-  while (( $# > 0 )); do
-    case "$1" in
-      -h | --help)
-        print $usage
-        return 0
-        ;;
-      -- | -) # Stop option processing
-        shift
-        args+=("$@")
-        break
-        ;;
-      -*)
-        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
-        return 1
-        ;;
-      *)
-        args+=("$1")
-        shift 1
-        ;;
-    esac
-  done
-
-  if (( ! ${#args} )); then
-    print $usage 1>&2
-    return 1
-  fi
-
-  if ! __gh_is_issue_url "${args[1]}" && ! [[ "${args[1]}" =~ ^[0-9]+$ ]]; then
-    print "$self_cmd: invalid argument -- '${args[1]}' must be an issue number or GitHub issue URL\n$help" 1>&2
-    return 1
-  fi
-
-  if __gh_is_issue_url "${args[1]}"; then
-    owner_repo=$(__gh_get_owner_repo "${args[1]}")
-    issue_number=$(__gh_get_number "${args[1]}")
-  else
-    owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}' 2>/dev/null)
-    issue_number="${args[1]}"
-  fi
-
-  if [[ -z "$owner_repo" || -z "$issue_number" ]]; then
-    print "$self_cmd: failed to parse argument -- '${args[1]}'\n$help" 1>&2
-    return 1
-  fi
-
-  [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/issues/$issue_number/comments\"\033[0m\n"
-
-  # コメントデータを取得
-  json_comments=$(gh api "repos/$owner_repo/issues/$issue_number/comments" 2>/dev/null)
-
-  if [[ -z "$json_comments" ]] || [[ "$json_comments" =~ "message.*Not Found" ]]; then
-    print 'Issue Comments Not Found or No Comments'
-    return 1
-  fi
-
-  # 各コメントを処理
-  echo -E "$json_comments" | jq -c '.[]' | while read -r comment; do
-    # 基本情報（bodyを除く）を表示
-    echo -E "$comment" | jq '{author: .user.login, created_at: .created_at, updated_at: .updated_at}'
 
     # bodyを取得してglowで表示
     if [[ -t 1 ]]; then
