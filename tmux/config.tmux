@@ -59,6 +59,8 @@ bind t new-window -c '#{pane_current_path}'
 bind C-t new-window -c '#{pane_current_path}'
 # ウィンドウのリネーム
 bind . command-prompt -I '#W' 'rename-window "%%"'
+# カレントディレクトリ名をウィンドウ名に設定
+bind , rename-window "#{b:pane_current_path}"
 # ウィンドウkill
 bind X kill-window
 # ウィンドウ上下分割
