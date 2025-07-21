@@ -177,20 +177,10 @@ EOF`
     issue_number="${args[1]}"
   fi
 
-  if [[ -z "$owner_repo" || -z "$issue_number" ]]; then
-    print "$self_cmd: failed to parse argument -- '${args[1]}'\n$help" 1>&2
-    return 1
-  fi
-
   if (( show_comments )); then
     [[ -t 1 ]] && print "\033[36mgh api \"repos/$owner_repo/issues/$issue_number/comments\"\033[0m\n"
 
     json_comments=$(gh api "repos/$owner_repo/issues/$issue_number/comments" 2>/dev/null)
-
-    if [[ -z "$json_comments" ]] || [[ "$json_comments" =~ "message.*Not Found" ]]; then
-      print 'Issue Comments Not Found or No Comments'
-      return 1
-    fi
 
     echo -E "$json_comments" | jq -c '.[]' | while read -r comment; do
       echo -E "$comment" | jq '{author: .user.login, created_at: .created_at, updated_at: .updated_at}'
