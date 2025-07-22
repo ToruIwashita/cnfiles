@@ -106,7 +106,7 @@ EOF`
           print "\n=== body ==="
         fi
 
-        echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | glow
+        echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | __smart_glow
 
         if [[ -t 1 ]]; then
           print "\033[36m===\033[0m\n"
@@ -138,7 +138,7 @@ EOF`
           print "\n=== body ==="
         fi
 
-        echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | glow
+        echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | __smart_glow
 
         if [[ -t 1 ]]; then
           print "\033[36m===\033[0m\n"
@@ -165,7 +165,7 @@ EOF`
   fi
 
   if [[ -n "$body_content" && "$body_content" != "null" ]]; then
-    echo "$body_content" | glow
+    echo "$body_content" | __smart_glow
   fi
 }
 
@@ -246,7 +246,7 @@ EOF`
         print "\n=== body ==="
       fi
 
-      echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | glow
+      echo -E "$comment" | jq -r '.body // empty' 2>/dev/null | __smart_glow
 
       if [[ -t 1 ]]; then
         print "\033[36m===\033[0m\n"
@@ -270,7 +270,7 @@ EOF`
   fi
 
   if [[ -n "$body_content" && "$body_content" != "null" ]]; then
-    echo "$body_content" | glow
+    echo "$body_content" | __smart_glow
   fi
 }
 
