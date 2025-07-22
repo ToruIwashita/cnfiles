@@ -76,7 +76,7 @@ command! AddMdSpaceToggle call s:add_md_space_toggle()
 command! -range -nargs=? WrapWithFence :<line1>,<line2>call s:wrap_with_fence(<f-args>)
 command! -range MdFormat :<line1>,<line2>call s:add_md_space_range()
 
-nnoremap <C-@> :<C-u>AddMdSpaceToggle<CR>
+nnoremap <C-_> :<C-u>AddMdSpaceToggle<CR>
 
 vnoremap <Leader>fr :WrapWithFence ruby<CR>
 vnoremap <Leader>fb :WrapWithFence bash<CR>
