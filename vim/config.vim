@@ -222,7 +222,7 @@ nnoremap <leader>j <ESC>ggVG
 " ノーマルモードに切り替え<ESC>
 inoremap <C-[> <ESC>
 inoremap <C-j> <ESC>
-" CTRL-@無効化
+" <C-@>を無効化（<C-@>は<C-Space>も表す）
 inoremap <C-@> <NOP>
 " 行頭へ移動
 inoremap <C-a> <C-o>^
