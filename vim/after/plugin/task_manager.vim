@@ -9,7 +9,7 @@ set cpoptions&vim
 let g:task_manager_root_dir = g:memolist_dir_path
 
 " 作成するディレクトリのプレフィックス（日付）
-let g:task_manager_dir_prefix = '%Y%m%d'
+let g:task_manager_dir_prefix = '%Y-%m-%d'
 
 " テンプレートディレクトリの指定
 let g:task_manager_instruction_file_template_dir = g:markdown_texts_ai_instruction_template_dir_path
