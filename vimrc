@@ -10,7 +10,6 @@ let g:config_dir_path = $CONFIG_DIR_PATH
 let g:lint_dir_path = $LINT_DIR_PATH
 let g:cache_dir_path = $CACHE_DIR_PATH
 let g:markdown_texts_dir_path = $MARKDOWN_TEXTS_DIR_PATH
-let g:markdown_texts_ai_instruction_template_dir_path = $MARKDOWN_TEXTS_AI_INSTRUCTION_TEMPLATE_DIR_PATH
 let g:markdown_texts_modeling_session_file_path = $MARKDOWN_TEXTS_MODELING_SESSION_FILE_PATH
 let g:memolist_dir_path = $MEMOLIST_DIR_PATH
 let g:memolist_task_markdown_file_path = $MEMOLIST_TASK_MARKDOWN_FILE_PATH
@@ -19,6 +18,7 @@ let g:memolist_tmp_sql_file_path = $MEMOLIST_TMP_SQL_FILE_PATH
 let g:memolist_tmp_text_file_path = $MEMOLIST_TMP_TEXT_FILE_PATH
 let g:memolist_tmp_uml_file_path = $MEMOLIST_TMP_UML_FILE_PATH
 let g:memolist_tmp_json_file_path = $MEMOLIST_TMP_JSON_FILE_PATH
+let g:agentic_coding_task_template_dir_path = $AGENTIC_CODING_TASK_TEMPLATE_DIR_PATH
 
 "" 組込みプラグイン
 source $VIMRUNTIME/macros/matchit.vim  " 対応する括弧などにジャンプする
