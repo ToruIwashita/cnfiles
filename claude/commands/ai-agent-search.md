@@ -1,27 +1,28 @@
-## AI Agent Search  
+## AI Agent Search（AI エージェント検索）
 
-`$AI_SEARCH_AGENT` is a Google search agent. When this command is called, use this for web search instead of builtin `WebSearch` tool.  
+`$AI_SEARCH_AGENT`はGoogle検索エージェントです
+このコマンドが呼び出された時は,組み込みの`WebSearch`ツールの代わりにこれを使用してウェブ検索を行います
 
-### Usage  
+### 使用方法
 
-```  
-$AI_SEARCH_AGENT -p "WebSearch: <query>"
-```  
+```
+$AI_SEARCH_AGENT -p "WebSearch: <クエリ>"
+```
 
-### Implementation  
+### 実装方法
 
-When web search is needed, use `$AI_SEARCH_AGENT -p` via Task Tool.  
+ウェブ検索が必要な場合は,Taskツール経由で`$AI_SEARCH_AGENT -p`を使用する
 
-### Examples  
+### 使用例
 
-```bash  
-$AI_SEARCH_AGENT -p "WebSearch: What are the latest TypeScript features in 2024?"
-$AI_SEARCH_AGENT -p "WebSearch: How to implement authentication in Next.js?"
-$AI_SEARCH_AGENT -p "WebSearch: Best practices for naming conventions in software development"
-```  
+```bash
+$AI_SEARCH_AGENT -p "WebSearch: 2024年の最新TypeScript機能は何ですか？"
+$AI_SEARCH_AGENT -p "WebSearch: Next.jsで認証を実装する方法は？"
+$AI_SEARCH_AGENT -p "WebSearch: ソフトウェア開発における命名規則のベストプラクティス"
+```
 
-### Error Handling  
+### エラーハンドリング
 
-- If `$AI_SEARCH_AGENT` is not available, fall back to standard web search methods  
-- If the query returns no results, inform the user and suggest alternative search terms  
-- If the agent encounters an error, provide the error message to the user  
+- `$AI_SEARCH_AGENT`が利用できない場合は,標準のウェブ検索方法にフォールバックする
+- クエリが結果を返さない場合は,ユーザーに通知し代替検索語を提案する
+- エージェントがエラーに遭遇した場合は,エラーメッセージをユーザーに提供する
