@@ -36,6 +36,7 @@ __github-issue-numbers() {
 _gpr() {
   _arguments \
     '(-c --comment)'{-c,--comment}'[Show PR comments]' \
+    '(-d --diff)'{-d,--diff}'[Show PR diff]' \
     '(-r --review-comment)'{-r,--review-comment}'[Show PR review comments]' \
     '(-i --ignore-outdated)'{-i,--ignore-outdated}'[Ignore outdated review comments]' \
     '(-h --help)'{-h,--help}'[Show help text]' \

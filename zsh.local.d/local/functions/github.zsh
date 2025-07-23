@@ -1,6 +1,6 @@
 ## github
 gpr() {
-  integer show_comment show_review_comment ignore_outdated pr_count
+  integer show_comment show_review_comment ignore_outdated show_diff pr_count
   local self_cmd help usage current_branch pr_list default_pr_number pr_number owner_repo jq_filter body_content json_comments json_review_comments comment
   local -a args
 
@@ -9,6 +9,7 @@ gpr() {
   usage=`cat <<EOF
 usage: $self_cmd <pr number|pr url>
            [-c --comment]
+           [-d --diff]
            [-i --ignore-outdated]
            [-r --review-comment]
            [-h --help]
@@ -28,6 +29,10 @@ EOF`
         ;;
       -c | --comment)
         (( show_comment++ ))
+        shift
+        ;;
+      -d | --diff)
+        (( show_diff++ ))
         shift
         ;;
       -i | --ignore-outdated)
@@ -87,6 +92,11 @@ EOF`
   else
     owner_repo=$(gh repo view --json nameWithOwner --template '{{.nameWithOwner}}' 2>/dev/null)
     pr_number="${args[1]}"
+  fi
+
+  if (( show_diff )); then
+    gh pr diff "$pr_number"
+    return
   fi
 
   if (( show_comment )); then
