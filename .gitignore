@@ -6,6 +6,7 @@
 /vim/plugged/
 /vim/config.local.vim
 /tmux/plugins/
+/claude/commands
 /my.local.cnf
 /config/karabiner/automatic_backups
 /dlv/.dbg_history
