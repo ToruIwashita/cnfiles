@@ -1,4 +1,7 @@
 ## 環境変数設定
+# agentic coding
+export PULL_REQUEST_TEMPLATE_FILE_PATH=
+
 # mysql (その他の設定は ~/.my.cnf に書く)
 export MYSQL_DATABASE=
 
@@ -13,7 +16,6 @@ export PGDATABASE=
 export GITHUB_TOKEN=
 export GITHUB_USER_NAME=
 export OWNED_GITHUB_REPOSITORIES=()
-export PULL_REQUEST_TEMPLATE_FILE_PATH=
 
 # asdf
 export ASDF_DATA_DIR=~/.asdf
