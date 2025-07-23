@@ -434,6 +434,14 @@ else
   ln -isn $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/code_implementation_guide $DOCS_DIR_PATH/code_implementation_guide
 fi
 
+# markdown_texts commands dir
+if [[ -L $CLAUDE_DIR_PATH/commands  ]]; then
+  printf "\e[32m$CLAUDE_DIR_PATH/commands dir symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink $CLAUDE_DIR_PATH/commands dir\e[0m\n"
+  ln -isn $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/commands $CLAUDE_DIR_PATH/commands
+fi
+
 # text replacement
 sed -e 's/\.markdown-body/#body/g' $CONFIG_DIR_PATH/github-markdown-dark.css > $CONFIG_DIR_PATH/github-markdown-dark.css.tmp
 mv -f $CONFIG_DIR_PATH/github-markdown-dark.css.tmp $CONFIG_DIR_PATH/github-markdown-dark.css
