@@ -15,12 +15,6 @@ usage: $self_cmd <pr number|pr url>
            [-h --help]
 EOF`
 
-  if ! __git-inside-work-tree; then
-    print 'Not a git repository: .git'
-    print $usage 1>&2
-    return 1
-  fi
-
   while (( $# > 0 )); do
     case "$1" in
       -h | --help)
@@ -60,6 +54,12 @@ EOF`
   done
 
   if (( ! ${#args} )); then
+    if ! __git-inside-work-tree; then
+      print 'Not a git repository: .git'
+      print $usage 1>&2
+      return 1
+    fi
+
     current_branch=$(git branch --show-current)
     pr_list=$(gh pr list --head "$current_branch" | cat)
 
@@ -168,6 +168,7 @@ EOF`
   gh api "repos/$owner_repo/pulls/$pr_number" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'PR Not Found')
 
   body_content=$(gh api "repos/$owner_repo/pulls/$pr_number" 2>/dev/null | jq -r '.body // empty' 2>/dev/null)
+
   if [[ -t 1 ]]; then
     print "\n\033[36m=== body (rendered with glow) === \033[0m"
   else
@@ -191,12 +192,6 @@ usage: $self_cmd <issue number|issue url>
            [-c --comment]
            [-h --help]
 EOF`
-
-  if ! __git-inside-work-tree; then
-    print 'Not a git repository: .git'
-    print $usage 1>&2
-    return 1
-  fi
 
   while (( $# > 0 )); do
     case "$1" in
@@ -273,8 +268,9 @@ EOF`
   gh api "repos/$owner_repo/issues/$issue_number" 2>/dev/null | (jq "$jq_filter" 2>/dev/null || print 'Issue Not Found')
 
   body_content=$(gh api "repos/$owner_repo/issues/$issue_number" 2>/dev/null | jq -r '.body // empty' 2>/dev/null)
+
   if [[ -t 1 ]]; then
-    print "\n\033[36m=== body (rendered with glow) ===:\033[0m"
+    print "\n\033[36m=== body (rendered with glow) ===\033[0m"
   else
     print "\n=== body ==="
   fi
