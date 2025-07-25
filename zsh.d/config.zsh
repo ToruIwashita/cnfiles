@@ -1,5 +1,8 @@
-stty stop undef  # <C-s>入力での画面への出力停止を無効化
-stty eof undef   # <C-d>でのeof入力を無効化
+# 標準入力がterminalに接続されているかつインタラクティブシェルの場合（AIエージェント対応）
+if [[ -t 0 && -o interactive ]]; then
+  stty stop undef  # <C-s>入力での画面への出力停止を無効化
+  stty eof undef   # <C-d>でのeof入力を無効化
+fi
 
 ## built-inコマンドのrを無効化
 disable r
