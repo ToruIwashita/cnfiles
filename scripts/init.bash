@@ -195,13 +195,6 @@ else
   ln -is $BASE_DIR_PATH/claude/settings.json ~/.claude/settings.json
 fi
 
-if [[ -L ~/.claude/agents ]]; then
-  printf "\e[32m~/.claude/agents dir symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink ~/.claude/agents dir\e[0m\n"
-  ln -is $BASE_DIR_PATH/claude/agents ~/.claude/agents
-fi
-
 # gemini
 if [[ -d ~/.gemini ]]; then
   printf "\e[32m~/.gemini dir already exists\e[0m\n"
@@ -432,6 +425,14 @@ if [[ -L $DOCS_DIR_PATH/code_implementation_guide ]]; then
 else
   printf "\e[31mcreate symlink $DOCS_DIR_PATH/code_implementation_guide dir\e[0m\n"
   ln -isn $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/code_implementation_guide $DOCS_DIR_PATH/code_implementation_guide
+fi
+
+# markdown_texts agents dir
+if [[ -L ~/.claude/agents ]]; then
+  printf "\e[32m~/.claude/agents dir symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.claude/agents dir\e[0m\n"
+  ln -is $MARKDOWN_TEXTS_DIR_PATH/claude/agents ~/.claude/agents
 fi
 
 # markdown_texts commands dir
