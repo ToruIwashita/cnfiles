@@ -16,6 +16,7 @@
 # fi
 
 ## bindkey
+bindkey -v '^y' push-input-with-pbcopy          # Ctrl+yでコマンドラインスタック+クリップボードコピー
 bindkey -v '^sb' immediate-tmp-text-pbcopy      # Ctr+s,pでBUFFERをcatしてpbcopy
 bindkey -v '^se' insert-pry                     # Ctr+s,eでpryをBUFFERに入れる
 bindkey -v '^s^b' immediate-tmp-markdown-pbcopy # Ctr+s,Ctr+cでtmpファイルをcatしてpbcopy
