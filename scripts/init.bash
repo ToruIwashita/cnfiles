@@ -136,6 +136,13 @@ else
 fi
 
 # zsh
+if [[ -L ~/.zprofile ]]; then
+  printf "\e[32m~/.zprofile  symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.zprofile \e[0m\n"
+  ln -is $BASE_DIR_PATH/zprofile  ~/.zprofile
+fi
+
 if [[ -L ~/.zshrc ]]; then
   printf "\e[32m~/.zshrc symlink already exists\e[0m\n"
 else
