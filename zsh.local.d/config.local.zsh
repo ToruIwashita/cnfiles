@@ -24,6 +24,9 @@ bindkey -v '^s^e' insert-bundle-exec-pry        # Ctr+s,Ctr+eでbundle exec pry�
 bindkey -v '^s^j' immediate-markdown-glow       # Ctr+s,Ctr+jでBUFFERの末尾が.mdだった場合にglow
 
 ## alias
+# clipboard（Linux環境でpbcopyがない場合）
+# alias pbcopy='xclip -selection clipboard'
+# alias pbpaste='xclip -selection clipboard -o'
 # git
 alias gcs='git commit -m "- update submodules"'
 # python
@@ -57,6 +60,7 @@ alias bspork='bundle exec spork'
 
 ## global alisas
 alias -g PP='| pbcopy'
+alias -g SS='| tr "\n" " "'
 
 ## CursorのAI Agentがターミナルを実行する時にclear-screenするためvim起動との競合を回避
 # if [[ "$TERM_PROGRAM" == 'vscode' ]]; then
