@@ -35,7 +35,7 @@ zsh_sub_dir_paths=(
 [[ -f $zsh_dir_path/env.zsh ]] && source $zsh_dir_path/env.zsh
 [[ -f $zsh_dir_path/env.local.zsh ]] && source $zsh_dir_path/env.local.zsh
 
-## 関数ロード
+## ライブラリロード
 # 組み込み系
 autoload -Uz colors && colors          # 色の定義
 autoload -Uz compinit && compinit -u   # 自動補完
@@ -62,7 +62,7 @@ for dir_path in ${zsh_lib_dir_paths[@]}; do
   done
 done
 
-# 関数読込
+# 関数・ウィジェット読込
 for dir_path in ${zsh_sub_dir_paths[@]}; do
   for file_path in ${dir_path}/*(N-.); do
     source $file_path
