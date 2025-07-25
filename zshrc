@@ -26,7 +26,6 @@ zsh_sub_dir_paths=(
   $zsh_dir_path/functions
   $zsh_dir_path/completions
   $zsh_dir_path/widgets
-  $zsh_dir_path/completion_widgets
   $zsh_local_dir_path/functions
   $zsh_local_dir_path/completions
   $zsh_local_dir_path/widgets
