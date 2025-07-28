@@ -29,11 +29,10 @@ setopt interactivecomments  # コマンドラインでも"#"以降をコメン�
 setopt noautoremoveslash    # 最後のスラッシュを自動的に削除しない
 setopt histignoredups       # 重複コマンド記録しない(古い行を消して新しい行を追加)
 setopt sharehistory         # コマンド履歴・共有
-setopt incappendhistory     # コマンド履歴・シェル横断実行時間順ヒストリ保存
+setopt incappendhistory     # 履歴をインクリメンタルに追加(履歴が即書き込まれる)
 setopt extendedhistory      # コマンド履歴・コマンド実行時間保存
 setopt histnostore          # historyコマンドを記録しない
 setopt histreduceblanks     # 余分なスペースは保存しない
-setopt incappendhistory     # 履歴をインクリメンタルに追加(履歴が即書き込まれる)
 setopt histignorespace      # 行頭がスペースで始まるコマンドを記録しない
 setopt extendedglob         # 拡張ファイルグロブを有効にする
 setopt numericglobsort      # ファイル名を数値としてソート
