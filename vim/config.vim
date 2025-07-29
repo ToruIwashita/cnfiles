@@ -102,8 +102,6 @@ noremap F <NOP>
 noremap s <NOP>
 " Sを無効化
 noremap S <NOP>
-" _を無効化
-noremap _ <NOP>
 " <ESC>
 noremap <C-j> <ESC>
 " 現在のファイル名表示
@@ -112,9 +110,8 @@ noremap <leader>v :<C-u>echo expand('%')<CR>
 noremap <leader>: :<C-u>%!
 " カーソル行をシェルコマンドとして実行
 noremap <leader>z V:!bash<CR>
-" カーソル行が画面の上端に来るようにスクロール
-noremap <C-s>j zt
-noremap <C-s><C-j> zt
+" _でカーソル行が画面の上端に来るようにスクロール
+noremap _ zt
 " 検索後にカーソルを上に移動
 noremap n nzz
 noremap N Nzz
