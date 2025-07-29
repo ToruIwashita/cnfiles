@@ -63,7 +63,6 @@ bindkey -v '^z' run-fg-last                           # Ctrl+zで最後にサス
 bindkey -v '^sf' peco-file-find-and-start-editor      # Ctrl+s,fでファイル検索してstart-editor
 bindkey -v '^sg' immediate-gh-browse                  # Ctrl+s,gでghコマンドによるリポジトリ閲覧
 bindkey -v '^sh' immediate-git-log-search             # Ctrl+s,hでgit log検索
-bindkey -v '^sj' vi-join                              # Ctrl+s,jでviのjoin
 bindkey -v '^sk' peco-cd-recent-dir                   # Ctrl+s,kで最近移動したディレクトリを絞り込んで移動
 bindkey -v '^sl' edit-command-line                    # Ctrl+s,lでコマンドラインエディタ編集
 bindkey -v '^sn' immediate-git-fetch                  # Ctrl+s,nでgit fetch

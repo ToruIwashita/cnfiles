@@ -19,6 +19,7 @@
 bindkey -v '^y' push-input-with-pbcopy          # Ctrl+yでコマンドラインスタック+クリップボードコピー
 bindkey -v '^sb' immediate-tmp-text-pbcopy      # Ctr+s,pでBUFFERをcatしてpbcopy
 bindkey -v '^se' insert-pry                     # Ctr+s,eでpryをBUFFERに入れる
+bindkey -v '^sj' immediate-markdown-glow        # Ctr+s,jでBUFFERの末尾が.mdだった場合にglow
 bindkey -v '^s^b' immediate-tmp-markdown-pbcopy # Ctr+s,Ctr+cでtmpファイルをcatしてpbcopy
 bindkey -v '^s^e' insert-bundle-exec-pry        # Ctr+s,Ctr+eでbundle exec pryをBUFFERに入れる
 bindkey -v '^s^j' immediate-markdown-glow       # Ctr+s,Ctr+jでBUFFERの末尾が.mdだった場合にglow
