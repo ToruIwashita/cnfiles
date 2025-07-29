@@ -20,7 +20,7 @@ class PbcopyManager
       return
     endif
 
-    execute ':w !pbcopy'
+    execute ':w !' .. this.config.pbcopy_command
     redraw!
     echo 'Buffer copied to clipboard'
   enddef
