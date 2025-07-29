@@ -6,7 +6,7 @@ _immediate-markdown-glow() {
 
   if (( ${#args[$#args]} )); then
     if [[ ${args[$#args]} =~ \.md$ ]]; then
-      BUFFER="cat ${args[$#args]} | glow"
+      BUFFER="cat ${args[$#args]} | glow --pager"
     else
       BUFFER="cat ${args[$#args]}"
     fi
