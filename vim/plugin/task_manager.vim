@@ -89,9 +89,9 @@ class TaskManager
 
   def _DetermineFileName(input_name: string, dir_name: string): string
     if empty(input_name)
-      return dir_name .. '_instructions'
+      return 'latest_' .. dir_name .. '_instructions'
     else
-      return input_name
+      return 'latest_' .. input_name
     endif
   enddef
 
