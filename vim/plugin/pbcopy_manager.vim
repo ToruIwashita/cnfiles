@@ -40,6 +40,28 @@ class PbcopyManager
     this._ExecutePbcopy(display_path, 'Copied to clipboard: ' .. display_path)
   enddef
 
+  def CopySelectionToClipboard()
+    this._LoadConfig()
+
+    if !this._ValidateConfig()
+      return
+    endif
+
+    var selection_info = this._GetSelectionInfo()
+    if empty(selection_info.content)
+      echohl ErrorMsg
+      echo 'No selection found'
+      echohl None
+      return
+    endif
+
+    # ヤンクレジスタにも保存
+    setreg('"', selection_info.content)
+
+    # pbcopyでクリップボードにもコピー
+    this._ExecutePbcopy(selection_info.content, 'Copied selection to clipboard')
+  enddef
+
   def CopySelectionWithPathToClipboard()
     this._LoadConfig()
 
@@ -173,12 +195,17 @@ def CopyFilePathToClipboardCommand()
   pbcopy_manager.CopyFilePathToClipboard()
 enddef
 
+def CopySelectionToClipboardCommand()
+  pbcopy_manager.CopySelectionToClipboard()
+enddef
+
 def CopySelectionWithPathToClipboardCommand()
   pbcopy_manager.CopySelectionWithPathToClipboard()
 enddef
 
 command! CopyBufferToClipboard call CopyBufferToClipboardCommand()
 command! CopyFilePathToClipboard call CopyFilePathToClipboardCommand()
+command! -range CopySelectionToClipboard call CopySelectionToClipboardCommand()
 command! -range CopySelectionWithPathToClipboard call CopySelectionWithPathToClipboardCommand()
 
 &cpoptions = cpoptions_save
