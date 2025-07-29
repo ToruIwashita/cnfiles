@@ -57,10 +57,103 @@ class TaskManager
     endif
 
     # 新規ファイル作成の場合,テンプレート適用後に作成完了の通知を出す
-    var OnFinish = () => {
-      this._ShowNotification('Created task: ' .. display_name)
+    var OnFinish = (file_was_created: bool = true) => {
+      if file_was_created
+        this._ShowNotification('Created task: ' .. display_name)
+      else
+        this._ShowNotification('Created directory: ' .. fnamemodify(full_dir_path, ':t') .. '/')
+      endif
     }
     this._ApplyTemplateIfAvailable(full_file_path, OnFinish)
+  enddef
+
+  def AppendTask(dir_name: string)
+    # 引数チェック
+    if empty(dir_name)
+      echohl ErrorMsg
+      echo 'Error: AppendTask requires a directory name'
+      echohl None
+      return
+    endif
+
+    # 設定読み込みと検証
+    this._LoadConfig()
+    if !this._ValidateConfig()
+      return
+    endif
+
+    # ディレクトリ存在確認
+    if !this._ValidateDirectoryExists(dir_name)
+      return
+    endif
+
+    # latest_ファイル検索
+    var root_dir = substitute(expand(this.config.root_dir), '/$', '', '')
+    var dir_path = root_dir .. '/' .. dir_name
+    var latest_file = this._FindLatestFile(dir_path)
+
+    if empty(latest_file)
+      echohl ErrorMsg
+      echo 'Error: No latest_ file found in directory "' .. dir_name .. '"'
+      echohl None
+      return
+    endif
+
+    # テンプレート選択とファイル処理のコールバック
+    var OnTemplateSelected = (selected_template) => {
+      # リネーム前にファイル名を保存
+      var original_file_name = fnamemodify(latest_file, ':t')
+
+      # latest_ファイルをバージョン名にリネーム
+      var renamed_path = this._RenameLatestFile(dir_path, latest_file)
+      if empty(renamed_path)
+        return
+      endif
+
+      # テンプレートが選択されなかった場合（キャンセル時）
+      if empty(selected_template)
+        var renamed_display = fnamemodify(dir_path, ':t') .. '/' .. fnamemodify(renamed_path, ':t')
+        this._ShowNotification('Renamed: ' .. renamed_display)
+        return
+      endif
+
+      # 新しいlatest_ファイルを作成（元のファイル名を使用）
+      var new_latest_path = dir_path .. '/' .. original_file_name
+
+      if selected_template == 'NO_TEMPLATE'
+        # [No template]選択時は空ファイルを作成
+        writefile([], new_latest_path)
+      else
+        # テンプレート適用
+        this._ApplyTemplate(selected_template, new_latest_path)
+      endif
+
+      this._OpenFileInAppropriateBuffer(new_latest_path)
+
+      var display_name = fnamemodify(dir_path, ':t') .. '/' .. original_file_name
+      var renamed_display = fnamemodify(dir_path, ':t') .. '/' .. fnamemodify(renamed_path, ':t')
+      this._ShowNotification('Renamed: ' .. renamed_display .. ', Created: ' .. display_name)
+    }
+
+    # テンプレート選択
+    if empty(this.config.template_dir)
+      OnTemplateSelected('')
+      return
+    endif
+
+    var expanded_template_dir = expand(this.config.template_dir)
+    if !isdirectory(expanded_template_dir)
+      OnTemplateSelected('')
+      return
+    endif
+
+    var template_files = this._GetTemplateFiles(expanded_template_dir)
+    if empty(template_files)
+      OnTemplateSelected('')
+      return
+    endif
+
+    this._SelectTemplate(template_files, OnTemplateSelected)
   enddef
 
   def _LoadConfig()
@@ -117,28 +210,35 @@ class TaskManager
 
   def _ApplyTemplateIfAvailable(target_file_path: string, OnCompletion: func)
     if empty(this.config.template_dir)
-      OnCompletion()
+      OnCompletion(false)
       return
     endif
 
     var expanded_template_dir = expand(this.config.template_dir)
     if !isdirectory(expanded_template_dir)
-      OnCompletion()
+      OnCompletion(false)
       return
     endif
 
     var template_files = this._GetTemplateFiles(expanded_template_dir)
     if empty(template_files)
-      OnCompletion()
+      OnCompletion(false)
       return
     endif
 
     # テンプレート選択後の処理をコールバックとして渡す
     this._SelectTemplate(template_files, (selected_template) => {
-      if !empty(selected_template)
+      if selected_template == 'NO_TEMPLATE'
+        # [No template]選択時は空ファイルを作成
+        writefile([], target_file_path)
+        OnCompletion(true)
+      elseif !empty(selected_template)
         this._ApplyTemplate(selected_template, target_file_path)
+        OnCompletion(true)
+      else
+        # キャンセル時
+        OnCompletion(false)
       endif
-      OnCompletion()
     })
   enddef
 
@@ -158,8 +258,11 @@ class TaskManager
 
     # ポップアップが閉じたときに呼び出されるコールバック関数
     var PopupCallback = (id, result) => {
-      # result <= 1 は [No template] を選択したか、キャンセル(ESC)した場合
-      if result <= 1
+      if result == 1
+        # [No template] を選択
+        OnSelect('NO_TEMPLATE')
+      elseif result <= 0
+        # キャンセル(ESC)した場合
         OnSelect('')
       else
         # resultは1 - based index
@@ -196,7 +299,9 @@ class TaskManager
     if filereadable(template_path)
       var template_content = readfile(template_path)
       writefile(template_content, target_path)
-      edit!
+      if !empty(target_path)
+        execute 'edit! ' .. fnameescape(target_path)
+      endif
     endif
   enddef
 
@@ -244,6 +349,67 @@ class TaskManager
       'maxwidth': msg_width
     })
   enddef
+
+  def _ValidateDirectoryExists(dir_name: string): bool
+    var root_dir = substitute(expand(this.config.root_dir), '/$', '', '')
+    var dir_path = root_dir .. '/' .. dir_name
+    if !isdirectory(dir_path)
+      echohl ErrorMsg
+      echo 'Error: Directory "' .. dir_name .. '" not found in task_manager_root_dir'
+      echohl None
+      return false
+    endif
+    return true
+  enddef
+
+  def _FindLatestFile(dir_path: string): string
+    var pattern = dir_path .. '/latest_*'
+    var files = glob(pattern, false, true)
+    if empty(files)
+      return ''
+    endif
+    return files[0]
+  enddef
+
+  def _GenerateVersionedFileName(original_name: string): string
+    var timestamp = strftime('%Y%m%d-%H%M')
+    return substitute(original_name, '^latest_', 'v' .. timestamp .. '_', '')
+  enddef
+
+  def _RenameLatestFile(dir_path: string, latest_file: string): string
+    var versioned_name = this._GenerateVersionedFileName(fnamemodify(latest_file, ':t'))
+    var versioned_path = dir_path .. '/' .. versioned_name
+
+    if rename(latest_file, versioned_path) == 0
+      return versioned_path
+    else
+      echohl ErrorMsg
+      echo 'Error: Failed to rename file'
+      echohl None
+      return ''
+    endif
+  enddef
+
+  def GetDirectoryList(filter_text: string): list<string>
+    this._LoadConfig()
+    if !this._ValidateConfig()
+      return []
+    endif
+
+    var root_dir = substitute(expand(this.config.root_dir), '/$', '', '')
+    var pattern = root_dir .. '/*'
+    var all_paths = glob(pattern, false, true)
+    var directories = filter(all_paths, 'isdirectory(v:val)')
+    var dir_names = map(directories, 'fnamemodify(v:val, ":t")')
+
+    if empty(filter_text)
+      return dir_names
+    endif
+
+    var escaped_filter = escape(filter_text, '.*[]^$\\')
+    var pattern_regex = '^' .. escaped_filter .. '.*'
+    return filter(dir_names, (_, v) => v =~# pattern_regex)
+  enddef
 endclass
 
 var task_manager = TaskManager.new()
@@ -257,6 +423,15 @@ def CreateTaskCommand(...args: list<string>)
   endif
 enddef
 
+def AppendTaskCommand(dir_name: string)
+  task_manager.AppendTask(dir_name)
+enddef
+
+def AppendTaskComplete(ArgLead: string, CmdLine: string, CursorPos: number): list<string>
+  return task_manager.GetDirectoryList(ArgLead)
+enddef
+
 command! -nargs=? CreateTask call CreateTaskCommand(<f-args>)
+command! -nargs=1 -complete=customlist,AppendTaskComplete AppendTask call AppendTaskCommand(<f-args>)
 
 &cpoptions = cpoptions_save
