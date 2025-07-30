@@ -32,8 +32,14 @@ hi PmenuSbar  ctermbg=75
 " スクロールバーのレバー
 hi PmenuThumb ctermbg=115
 
+" lightline.vim依存のコード
+fun! s:deoplete_toggle() abort
+  call deoplete#toggle()
+  call lightline#update()
+endf
+
 "" コマンド
-command! DeopleteToggle call deoplete#toggle()
+command! DeopleteToggle call s:deoplete_toggle()
 
 "" ノーマルモードキーマップ
 nnoremap t :<C-u>DeopleteToggle<CR>
