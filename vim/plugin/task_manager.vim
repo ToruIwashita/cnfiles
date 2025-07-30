@@ -16,7 +16,6 @@ class TaskManager
   def CreateTask(dir_name: string = '')
     # 実行時に設定を読み込み
     this._LoadConfig()
-
     if !this._ValidateConfig()
       return
     endif
@@ -68,7 +67,6 @@ class TaskManager
   enddef
 
   def AppendTask(dir_name: string)
-    # 引数チェック
     if empty(dir_name)
       echohl ErrorMsg
       echo 'Error: AppendTask requires a directory name'
@@ -76,7 +74,7 @@ class TaskManager
       return
     endif
 
-    # 設定読み込みと検証
+    # 実行時に設定を読み込み
     this._LoadConfig()
     if !this._ValidateConfig()
       return
@@ -110,6 +108,9 @@ class TaskManager
         return
       endif
 
+      # 既にlatest_ファイルを表示しているウィンドウをリネーム後のパスに切り替える
+      this._SwitchWindowsToFile(latest_file, renamed_path)
+
       # テンプレートが選択されなかった場合（キャンセル時）
       if empty(selected_template)
         var renamed_display = fnamemodify(dir_path, ':t') .. '/' .. fnamemodify(renamed_path, ':t')
@@ -125,7 +126,7 @@ class TaskManager
         writefile([], new_latest_path)
       else
         # テンプレート適用
-        this._ApplyTemplate(selected_template, new_latest_path)
+        this._ApplyTemplate(selected_template, new_latest_path, false)
       endif
 
       this._OpenFileInAppropriateBuffer(new_latest_path)
@@ -295,14 +296,24 @@ class TaskManager
     })
   enddef
 
-  def _ApplyTemplate(template_path: string, target_path: string)
+  def _ApplyTemplate(template_path: string, target_path: string, open_in_current_buffer: bool = true)
     if filereadable(template_path)
       var template_content = readfile(template_path)
       writefile(template_content, target_path)
-      if !empty(target_path)
+      if open_in_current_buffer && !empty(target_path)
         execute 'edit! ' .. fnameescape(target_path)
       endif
     endif
+  enddef
+
+  def _SwitchWindowsToFile(old_path: string, new_path: string)
+    var buf = bufnr(old_path)
+    if buf <= 0
+      return
+    endif
+    for winid in win_findbuf(buf)
+      win_execute(winid, 'edit! ' .. fnameescape(new_path))
+    endfor
   enddef
 
   def _GetDirNameInput(): string
