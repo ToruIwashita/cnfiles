@@ -132,7 +132,7 @@ class TaskManager
 
       var display_name = fnamemodify(dir_path, ':t') .. '/' .. original_file_name
       var renamed_display = fnamemodify(dir_path, ':t') .. '/' .. fnamemodify(renamed_path, ':t')
-      this._ShowNotification('Revised: ' .. display_name)
+      this._ShowNotification('Superseded: ' .. display_name)
     }
 
     # テンプレート選択
@@ -340,7 +340,7 @@ class TaskManager
     var popup_col = win_pos[1] + (win_width / 2) - (msg_width / 2)
 
     popup_notification(message, {
-      'time': 5000,
+      'time': 1000,
       'highlight': 'ModeMsg',
       'line': popup_line,
       'col': popup_col,
