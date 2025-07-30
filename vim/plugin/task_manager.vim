@@ -132,7 +132,7 @@ class TaskManager
 
       var display_name = fnamemodify(dir_path, ':t') .. '/' .. original_file_name
       var renamed_display = fnamemodify(dir_path, ':t') .. '/' .. fnamemodify(renamed_path, ':t')
-      this._ShowNotification('Renamed: ' .. renamed_display .. ', Created: ' .. display_name)
+      this._ShowNotification('Revised: ' .. display_name)
     }
 
     # テンプレート選択
