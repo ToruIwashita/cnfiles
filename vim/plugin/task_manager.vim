@@ -102,6 +102,9 @@ class TaskManager
       # リネーム前にファイル名を保存
       var original_file_name = fnamemodify(latest_file, ':t')
 
+      # latest_ファイルの未保存変更をディスクに保存
+      this._SaveBufferIfModified(latest_file)
+
       # latest_ファイルをバージョン名にリネーム
       var renamed_path = this._RenameLatestFile(dir_path, latest_file)
       if empty(renamed_path)
@@ -306,6 +309,14 @@ class TaskManager
     endif
   enddef
 
+  def _SaveBufferIfModified(file_path: string)
+    var buf = bufnr(file_path)
+    if buf > 0 && getbufvar(buf, '&modified')
+      var lines = getbufline(buf, 1, '$')
+      writefile(lines, file_path)
+    endif
+  enddef
+
   def _SwitchWindowsToFile(old_path: string, new_path: string)
     var buf = bufnr(old_path)
     if buf <= 0
@@ -383,7 +394,7 @@ class TaskManager
   enddef
 
   def _GenerateVersionedFileName(original_name: string): string
-    var timestamp = strftime('%Y%m%d-%H%M')
+    var timestamp = strftime('%Y%m%d-%H%M%S')
     return substitute(original_name, '^latest_', 'v' .. timestamp .. '_', '')
   enddef
 
