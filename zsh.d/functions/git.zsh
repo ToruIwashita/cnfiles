@@ -327,13 +327,14 @@ greset-soft-latest() {
 }
 
 gc() {
-  integer empty fixup temporary
+  integer amend empty fixup temporary option_count
   local self_cmd help usage
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [-e --empty]
+usage: $self_cmd [-a --amend]
+          [-e --empty]
           [-f --fixup]
           [-t --temporary]
           [-h --help]
@@ -347,6 +348,10 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
+      -a | --amend)
+        (( amend++ ))
+        shift 1
+        ;;
       -e | --empty)
         (( empty++ ))
         shift 1
@@ -378,8 +383,16 @@ EOF`
     esac
   done
 
-  if (( temporary )); then
-    git commit -m "[temporary commit]($(__git-ref-head)) $(LANG=C date)"
+  # 排他制御: 複数オプションが指定された場合はエラー
+  option_count=$((empty + fixup + temporary + amend))
+
+  if (( option_count > 1 )); then
+    print "$self_cmd: only one option may be specified" 1>&2
+    return 1
+  fi
+
+  if (( amend )); then
+    git commit --amend
     return 0
   fi
 
@@ -390,6 +403,11 @@ EOF`
 
   if (( fixup )); then
     git commit --amend --no-edit --allow-empty
+    return 0
+  fi
+
+  if (( temporary )); then
+    git commit -m "[temporary commit]($(__git-ref-head)) $(LANG=C date)"
     return 0
   fi
 
