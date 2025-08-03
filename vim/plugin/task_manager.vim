@@ -139,9 +139,17 @@ class TaskManager
       else
         # テンプレート適用
         this._ApplyTemplate(selected_template, new_latest_path, false)
+        # AppendTaskでは既存ファイルの最大番号をベースにプレースホルダ置換
+        var max_number = this._GetNextSequenceNumber(dir_path) - 1
+        this._ProcessPlaceholders(new_latest_path, max_number)
       endif
 
       this._OpenFileInAppropriateBuffer(new_latest_path)
+
+      # カーソルをファイル先頭に移動
+      if bufname('%') ==# fnameescape(new_latest_path)
+        normal! gg
+      endif
 
       var display_name = fnamemodify(dir_path, ':t') .. '/' .. new_file_name
       var renamed_display = fnamemodify(dir_path, ':t') .. '/' .. fnamemodify(renamed_path, ':t')
@@ -247,6 +255,13 @@ class TaskManager
         OnCompletion(true)
       elseif !empty(selected_template)
         this._ApplyTemplate(selected_template, target_file_path)
+        # CreateTaskではプレースホルダをデフォルト値で置換（base_number = 0）
+        this._ProcessPlaceholders(target_file_path, 0)
+        # ファイルが既にバッファに読み込まれている場合は再読み込み
+        if bufname('%') ==# fnameescape(target_file_path)
+          execute 'edit! ' .. fnameescape(target_file_path)
+          normal! gg
+        endif
         OnCompletion(true)
       else
         # キャンセル時
@@ -453,6 +468,35 @@ class TaskManager
 
   def _GenerateNumberedFileName(number: number, base_name: string): string
     return printf('%02d_%s', number, base_name)
+  enddef
+
+  def _ProcessPlaceholders(file_path: string, base_number: number)
+    if !filereadable(file_path)
+      return
+    endif
+
+    var lines = readfile(file_path)
+    var modified = false
+
+    for i in range(len(lines))
+      var original_line = lines[i]
+      # パターンを`<数字:数字>`に修正（バッククォートを含む）
+      var new_line = substitute(original_line, '<`\(\d\+\):\(0\d\)`>', '\=this._CalculatePlaceholderValue(submatch(2), base_number)', 'g')
+      if new_line !=# original_line
+        lines[i] = new_line
+        modified = true
+      endif
+    endfor
+
+    if modified
+      writefile(lines, file_path)
+    endif
+  enddef
+
+  def _CalculatePlaceholderValue(default_value: string, base_number: number): string
+    var default_num = str2nr(default_value)
+    var result_num = base_number + default_num
+    return printf('%02d', result_num)
   enddef
 
   def GetDirectoryList(filter_text: string): list<string>
