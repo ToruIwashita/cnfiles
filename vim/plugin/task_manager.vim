@@ -121,8 +121,17 @@ class TaskManager
         return
       endif
 
-      # 新しいlatest_ファイルを作成（元のファイル名を使用）
-      var new_latest_path = dir_path .. '/' .. original_file_name
+      # 新しいlatest_ファイルを作成（連番を付与）
+      var next_number = this._GetNextSequenceNumber(dir_path)
+      if next_number > 99
+        echohl ErrorMsg
+        echo 'Error: Task sequence number cannot exceed 99'
+        echohl None
+        return
+      endif
+      var base_name = substitute(original_file_name, '^\d\{2\}_', '', '')
+      var new_file_name = this._GenerateNumberedFileName(next_number, base_name)
+      var new_latest_path = dir_path .. '/' .. new_file_name
 
       if selected_template == 'NO_TEMPLATE'
         # [No template]選択時は空ファイルを作成
@@ -134,7 +143,7 @@ class TaskManager
 
       this._OpenFileInAppropriateBuffer(new_latest_path)
 
-      var display_name = fnamemodify(dir_path, ':t') .. '/' .. original_file_name
+      var display_name = fnamemodify(dir_path, ':t') .. '/' .. new_file_name
       var renamed_display = fnamemodify(dir_path, ':t') .. '/' .. fnamemodify(renamed_path, ':t')
       this._ShowNotification('Superseded: ' .. display_name)
     }
@@ -186,9 +195,9 @@ class TaskManager
 
   def _DetermineFileName(input_name: string, dir_name: string): string
     if empty(input_name)
-      return 'latest_' .. dir_name .. '_instructions'
+      return '00_latest_' .. dir_name .. '_instructions'
     else
-      return 'latest_' .. input_name
+      return '00_latest_' .. input_name
     endif
   enddef
 
@@ -385,7 +394,7 @@ class TaskManager
   enddef
 
   def _FindLatestFile(dir_path: string): string
-    var pattern = dir_path .. '/latest_*'
+    var pattern = dir_path .. '/*_latest_*'
     var files = glob(pattern, false, true)
     if empty(files)
       return ''
@@ -395,7 +404,13 @@ class TaskManager
 
   def _GenerateVersionedFileName(original_name: string): string
     var timestamp = strftime('%Y%m%d-%H%M%S')
-    return substitute(original_name, '^latest_', 'v' .. timestamp .. '_', '')
+    var prefix_number = this._ExtractPrefixNumber(original_name)
+    if prefix_number >= 0
+      var base_name = substitute(original_name, '^\d\{2\}_latest_', '', '')
+      return printf('%02d_v%s_%s', prefix_number, timestamp, base_name)
+    else
+      return substitute(original_name, '^latest_', 'v' .. timestamp .. '_', '')
+    endif
   enddef
 
   def _RenameLatestFile(dir_path: string, latest_file: string): string
@@ -410,6 +425,34 @@ class TaskManager
       echohl None
       return ''
     endif
+  enddef
+
+  def _ExtractPrefixNumber(filename: string): number
+    var match_result = matchlist(filename, '^\(\d\{2\}\)_.*')
+    if empty(match_result)
+      return -1
+    endif
+    return str2nr(match_result[1])
+  enddef
+
+  def _GetNextSequenceNumber(dir_path: string): number
+    var pattern = dir_path .. '/*_*'
+    var files = glob(pattern, false, true)
+    var max_number = -1
+
+    for file_path in files
+      var filename = fnamemodify(file_path, ':t')
+      var prefix_number = this._ExtractPrefixNumber(filename)
+      if prefix_number >= 0 && prefix_number > max_number
+        max_number = prefix_number
+      endif
+    endfor
+
+    return max_number + 1
+  enddef
+
+  def _GenerateNumberedFileName(number: number, base_name: string): string
+    return printf('%02d_%s', number, base_name)
   enddef
 
   def GetDirectoryList(filter_text: string): list<string>
