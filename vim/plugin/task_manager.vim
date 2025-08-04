@@ -702,7 +702,7 @@ class TaskManager
   enddef
 
   def _GetArchivesDir(): string
-    return this._GetCleanRootDir() .. '/archives'
+    return this._GetCleanRootDir() .. '/archived_tasks'
   enddef
 endclass
 
