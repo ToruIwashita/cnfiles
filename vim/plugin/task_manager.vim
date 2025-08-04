@@ -177,6 +177,148 @@ class TaskManager
     this._SelectTemplate(template_files, OnTemplateSelected)
   enddef
 
+  def ArchiveTask(dir_name: string)
+    if empty(dir_name)
+      echohl ErrorMsg
+      echo 'Error: ArchiveTask requires a directory name'
+      echohl None
+      return
+    endif
+
+    this._LoadConfig()
+    if !this._ValidateConfig()
+      return
+    endif
+
+    if !this._ValidateDirectoryExists(dir_name)
+      return
+    endif
+
+    var archives_dir = this._GetArchivesDir()
+    if !isdirectory(archives_dir)
+      try
+        mkdir(archives_dir, 'p')
+      catch
+        echohl ErrorMsg
+        echo 'Error: Failed to create archives directory: ' .. v:exception
+        echohl None
+        return
+      endtry
+      if !isdirectory(archives_dir)
+        echohl ErrorMsg
+        echo 'Error: Failed to create archives directory'
+        echohl None
+        return
+      endif
+    endif
+
+    var root_dir = this._GetCleanRootDir()
+    var source_path = root_dir .. '/' .. dir_name
+    var target_path = archives_dir .. '/' .. dir_name
+    if isdirectory(target_path)
+      echohl ErrorMsg
+      echo 'Error: Directory "' .. dir_name .. '" already exists in archives'
+      echohl None
+      return
+    endif
+
+    if rename(source_path, target_path) == 0
+      this._UpdateBuffersForMovedDirectory(source_path, target_path)
+      this._ShowNotification('Archived: ' .. dir_name)
+    else
+      echohl ErrorMsg
+      echo 'Error: Failed to archive directory'
+      echohl None
+    endif
+  enddef
+
+  def RestoreTask(dir_name: string)
+    if empty(dir_name)
+      echohl ErrorMsg
+      echo 'Error: RestoreTask requires a directory name'
+      echohl None
+      return
+    endif
+
+    this._LoadConfig()
+    if !this._ValidateConfig()
+      return
+    endif
+
+    var archives_dir = this._GetArchivesDir()
+    var source_path = archives_dir .. '/' .. dir_name
+    if !isdirectory(source_path)
+      echohl ErrorMsg
+      echo 'Error: Directory "' .. dir_name .. '" not found in archives'
+      echohl None
+      return
+    endif
+
+    var root_dir = this._GetCleanRootDir()
+    var target_path = root_dir .. '/' .. dir_name
+    if isdirectory(target_path)
+      echohl ErrorMsg
+      echo 'Error: Directory "' .. dir_name .. '" already exists in task directory'
+      echohl None
+      return
+    endif
+
+    if rename(source_path, target_path) == 0
+      this._UpdateBuffersForMovedDirectory(source_path, target_path)
+      this._ShowNotification('Restored: ' .. dir_name)
+    else
+      echohl ErrorMsg
+      echo 'Error: Failed to restore directory'
+      echohl None
+    endif
+  enddef
+
+  def GetDirectoryList(filter_text: string): list<string>
+    this._LoadConfig()
+    if !this._ValidateConfig()
+      return []
+    endif
+
+    var root_dir = this._GetCleanRootDir()
+    var pattern = root_dir .. '/*'
+    var all_paths = glob(pattern, false, true)
+    var directories = filter(all_paths, 'isdirectory(v:val)')
+    var dir_names = map(directories, 'fnamemodify(v:val, ":t")')
+
+    if empty(filter_text)
+      return dir_names
+    endif
+
+    var escaped_filter = escape(filter_text, '.*[]^$\\')
+    var pattern_regex = '^' .. escaped_filter .. '.*'
+    return filter(dir_names, (_, v) => v =~# pattern_regex)
+  enddef
+
+  def GetArchiveDirectoryList(filter_text: string): list<string>
+    this._LoadConfig()
+    if !this._ValidateConfig()
+      return []
+    endif
+
+    var archives_dir = this._GetArchivesDir()
+    if !isdirectory(archives_dir)
+      return []
+    endif
+
+    var pattern = archives_dir .. '/*'
+    var all_paths = glob(pattern, false, true)
+    var directories = filter(all_paths, 'isdirectory(v:val)')
+    var dir_names = map(directories, 'fnamemodify(v:val, ":t")')
+
+    if empty(filter_text)
+      return dir_names
+    endif
+
+    var escaped_filter = escape(filter_text, '.*[]^$\\')
+    var pattern_regex = '^' .. escaped_filter .. '.*'
+    return filter(dir_names, (_, v) => v =~# pattern_regex)
+  enddef
+
   def _LoadConfig()
     this.config = {
       'root_dir': exists('g:task_manager_root_dir') ? g:task_manager_root_dir : '',
@@ -198,7 +340,7 @@ class TaskManager
 
   def _BuildDirPath(dir_name: string): string
     var full_dir_name = strftime(this.config.dir_prefix) .. '_' .. dir_name
-    return substitute(expand(this.config.root_dir), '/$', '', '') .. '/' .. full_dir_name
+    return this._GetCleanRootDir() .. '/' .. full_dir_name
   enddef
 
   def _DetermineFileName(input_name: string, dir_name: string): string
@@ -351,6 +493,42 @@ class TaskManager
     endfor
   enddef
 
+  def _UpdateBuffersForMovedDirectory(old_dir_path: string, new_dir_path: string)
+    # old_dir_path 配下のファイルを編集中のバッファについて
+    #   1) 変更があれば :update で保存
+    #   2) swap ファイルが残っていれば削除
+    #   3) bwipeout! でバッファとウィンドウを閉じる
+    # これにより rename 後に残バッファ／残 .swp がなくなり E13 を防げる。
+
+    var abs_old = fnamemodify(old_dir_path, ':p')
+    var pat     = '^' .. escape(abs_old, '.*[]^$\\') .. '/'
+
+    for buf in range(1, bufnr('$'))
+      if !bufexists(buf) || empty(bufname(buf))
+        continue
+      endif
+
+      var bpath = fnamemodify(bufname(buf), ':p')
+      if bpath !~# pat
+        continue
+      endif
+
+      # 1. 保存（変更がある場合のみ）
+      if getbufvar(buf, '&modified')
+        execute(buf .. 'bufdo silent! update')
+      endif
+
+      # 2. swap ファイルを削除
+      var swp = swapname(buf)
+      if !empty(swp) && filereadable(swp)
+        call delete(swp)
+      endif
+
+      # 3. バッファを閉じる（表示中ウィンドウも閉じる）
+      execute 'silent! bwipeout! ' .. buf
+    endfor
+  enddef
+
   def _GetDirNameInput(): string
     var dir_name = input('Enter dir name: ')
     if !empty(dir_name)
@@ -397,7 +575,7 @@ class TaskManager
   enddef
 
   def _ValidateDirectoryExists(dir_name: string): bool
-    var root_dir = substitute(expand(this.config.root_dir), '/$', '', '')
+    var root_dir = this._GetCleanRootDir()
     var dir_path = root_dir .. '/' .. dir_name
     if !isdirectory(dir_path)
       echohl ErrorMsg
@@ -499,29 +677,29 @@ class TaskManager
     return printf('%02d', result_num)
   enddef
 
-  def GetDirectoryList(filter_text: string): list<string>
-    this._LoadConfig()
-    if !this._ValidateConfig()
-      return []
-    endif
-
+  def _GetCleanRootDir(): string
     var root_dir = substitute(expand(this.config.root_dir), '/$', '', '')
-    var pattern = root_dir .. '/*'
-    var all_paths = glob(pattern, false, true)
-    var directories = filter(all_paths, 'isdirectory(v:val)')
-    var dir_names = map(directories, 'fnamemodify(v:val, ":t")')
+    return substitute(root_dir, '\n\|\r', '', 'g')
+  enddef
 
-    if empty(filter_text)
-      return dir_names
-    endif
-
-    var escaped_filter = escape(filter_text, '.*[]^$\\')
-    var pattern_regex = '^' .. escaped_filter .. '.*'
-    return filter(dir_names, (_, v) => v =~# pattern_regex)
+  def _GetArchivesDir(): string
+    return this._GetCleanRootDir() .. '/archives'
   enddef
 endclass
 
 var task_manager = TaskManager.new()
+
+def AppendTaskComplete(ArgLead: string, CmdLine: string, CursorPos: number): list<string>
+  return task_manager.GetDirectoryList(ArgLead)
+enddef
+
+def ArchiveTaskComplete(ArgLead: string, CmdLine: string, CursorPos: number): list<string>
+  return task_manager.GetDirectoryList(ArgLead)
+enddef
+
+def RestoreTaskComplete(ArgLead: string, CmdLine: string, CursorPos: number): list<string>
+  return task_manager.GetArchiveDirectoryList(ArgLead)
+enddef
 
 # 後方互換性のための関数ラッパー
 def CreateTaskCommand(...args: list<string>)
@@ -536,11 +714,17 @@ def AppendTaskCommand(dir_name: string)
   task_manager.AppendTask(dir_name)
 enddef
 
-def AppendTaskComplete(ArgLead: string, CmdLine: string, CursorPos: number): list<string>
-  return task_manager.GetDirectoryList(ArgLead)
+def ArchiveTaskCommand(dir_name: string)
+  task_manager.ArchiveTask(dir_name)
+enddef
+
+def RestoreTaskCommand(dir_name: string)
+  task_manager.RestoreTask(dir_name)
 enddef
 
 command! -nargs=? CreateTask call CreateTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,AppendTaskComplete AppendTask call AppendTaskCommand(<f-args>)
+command! -nargs=1 -complete=customlist,ArchiveTaskComplete ArchiveTask call ArchiveTaskCommand(<f-args>)
+command! -nargs=1 -complete=customlist,RestoreTaskComplete RestoreTask call RestoreTaskCommand(<f-args>)
 
 &cpoptions = cpoptions_save
