@@ -222,8 +222,9 @@ class TaskManager
       return
     endif
 
+    this._CleanupBuffersBeforeMove(source_path)
     if rename(source_path, target_path) == 0
-      this._UpdateBuffersForMovedDirectory(source_path, target_path)
+      this._CleanupBuffersAfterMove(source_path, target_path)
       this._ShowNotification('Archived: ' .. dir_name)
     else
       echohl ErrorMsg
@@ -263,8 +264,9 @@ class TaskManager
       return
     endif
 
+    this._CleanupBuffersBeforeMove(source_path)
     if rename(source_path, target_path) == 0
-      this._UpdateBuffersForMovedDirectory(source_path, target_path)
+      this._CleanupBuffersAfterMove(source_path, target_path)
       this._ShowNotification('Restored: ' .. dir_name)
     else
       echohl ErrorMsg
@@ -493,39 +495,52 @@ class TaskManager
     endfor
   enddef
 
-  def _UpdateBuffersForMovedDirectory(old_dir_path: string, new_dir_path: string)
-    # old_dir_path 配下のファイルを編集中のバッファについて
-    #   1) 変更があれば :update で保存
-    #   2) swap ファイルが残っていれば削除
-    #   3) bwipeout! でバッファとウィンドウを閉じる
-    # これにより rename 後に残バッファ／残 .swp がなくなり E13 を防げる。
+  def _CleanupBuffersBeforeMove(dir_path: string)
+    var absolute_dir_path = fnamemodify(dir_path, ':p')
+    var buffer_path_pattern = '^' .. escape(absolute_dir_path, '.*[]^$\\') .. '/'
 
-    var abs_old = fnamemodify(old_dir_path, ':p')
-    var pat     = '^' .. escape(abs_old, '.*[]^$\\') .. '/'
-
-    for buf in range(1, bufnr('$'))
-      if !bufexists(buf) || empty(bufname(buf))
+    for buffer_number in range(1, bufnr('$'))
+      if !bufexists(buffer_number) || empty(bufname(buffer_number))
         continue
       endif
 
-      var bpath = fnamemodify(bufname(buf), ':p')
-      if bpath !~# pat
+      var buffer_absolute_path = fnamemodify(bufname(buffer_number), ':p')
+      if buffer_absolute_path !~# buffer_path_pattern
         continue
       endif
 
-      # 1. 保存（変更がある場合のみ）
-      if getbufvar(buf, '&modified')
-        execute(buf .. 'bufdo silent! update')
+      # 変更があるファイルを保存
+      if getbufvar(buffer_number, '&modified')
+        execute(buffer_number .. 'bufdo silent! update')
+      endif
+    endfor
+  enddef
+
+  def _CleanupBuffersAfterMove(old_dir_path: string, new_dir_path: string)
+    var absolute_old_dir_path = fnamemodify(old_dir_path, ':p')
+    var buffer_path_pattern = '^' .. escape(absolute_old_dir_path, '.*[]^$\\') .. '/'
+
+    for buffer_number in range(1, bufnr('$'))
+      if !bufexists(buffer_number) || empty(bufname(buffer_number))
+        continue
       endif
 
-      # 2. swap ファイルを削除
-      var swp = swapname(buf)
-      if !empty(swp) && filereadable(swp)
-        call delete(swp)
+      var buffer_absolute_path = fnamemodify(bufname(buffer_number), ':p')
+      if buffer_absolute_path !~# buffer_path_pattern
+        continue
       endif
 
-      # 3. バッファを閉じる（表示中ウィンドウも閉じる）
-      execute 'silent! bwipeout! ' .. buf
+      execute 'silent! bwipeout! ' .. buffer_number
+    endfor
+
+    # archives/以下に移動したディレクトリ内のswpファイルを一括削除
+    var absolute_new_dir_path = fnamemodify(new_dir_path, ':p')
+    var hidden_swp_pattern = absolute_new_dir_path .. '**/.*.swp'
+    var swp_files_to_delete = glob(hidden_swp_pattern, false, true)
+    for swp_file_path in swp_files_to_delete
+      if filereadable(swp_file_path)
+        call delete(swp_file_path)
+      endif
     endfor
   enddef
 
