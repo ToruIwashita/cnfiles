@@ -517,8 +517,22 @@ class TaskManager
   enddef
 
   def _CleanupBuffersAfterMove(old_dir_path: string, new_dir_path: string)
-    var absolute_old_dir_path = fnamemodify(old_dir_path, ':p')
-    var buffer_path_pattern = '^' .. escape(absolute_old_dir_path, '.*[]^$\\') .. '/'
+    this._CleanupBuffersForPath(old_dir_path)
+    this._CleanupBuffersForPath(new_dir_path)
+
+    var absolute_new_dir_path = fnamemodify(new_dir_path, ':p')
+    var hidden_swp_pattern = absolute_new_dir_path .. '**/.*.swp'
+    var swp_files_to_delete = glob(hidden_swp_pattern, false, true)
+    for swp_file_path in swp_files_to_delete
+      if filereadable(swp_file_path)
+        call delete(swp_file_path)
+      endif
+    endfor
+  enddef
+
+  def _CleanupBuffersForPath(dir_path: string)
+    var absolute_dir_path = fnamemodify(dir_path, ':p')
+    var buffer_path_pattern = '^' .. escape(absolute_dir_path, '.*[]^$\\') .. '/'
 
     for buffer_number in range(1, bufnr('$'))
       if !bufexists(buffer_number) || empty(bufname(buffer_number))
@@ -531,16 +545,6 @@ class TaskManager
       endif
 
       execute 'silent! bwipeout! ' .. buffer_number
-    endfor
-
-    # archives/以下に移動したディレクトリ内のswpファイルを一括削除
-    var absolute_new_dir_path = fnamemodify(new_dir_path, ':p')
-    var hidden_swp_pattern = absolute_new_dir_path .. '**/.*.swp'
-    var swp_files_to_delete = glob(hidden_swp_pattern, false, true)
-    for swp_file_path in swp_files_to_delete
-      if filereadable(swp_file_path)
-        call delete(swp_file_path)
-      endif
     endfor
   enddef
 
