@@ -1,5 +1,5 @@
-## peco-gh-pr-url-pbcopy
-_peco-gh-pr-url-pbcopy() {
+## peco-gh-pull-request-url-pbcopy
+_peco-gh-pull-request-url-pbcopy() {
   local cmd selected_pr pr_number
 
   selected_pr=$(gh pr list --json number,title | jq -r '.[] | "\(.number) - [Pull Request] \(.title)"' | peco --select-1 2>/dev/null)
@@ -18,4 +18,4 @@ _peco-gh-pr-url-pbcopy() {
   print "copied to clipboard: $(pbpaste)"
 }
 
-zle -N peco-gh-pr-url-pbcopy _peco-gh-pr-url-pbcopy
+zle -N peco-gh-pull-request-url-pbcopy _peco-gh-pull-request-url-pbcopy
