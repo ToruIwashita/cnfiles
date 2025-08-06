@@ -50,15 +50,17 @@ class GitDiffViewer
   enddef
 
   def _ExecuteGitDiff()
-    var command = this.config.git_command .. ' diff'
-
-    execute 'silent! !' .. command
-    if v:shell_error != 0
+    var current_file = expand('%:p')
+    if empty(current_file)
       echohl ErrorMsg
-      echo 'Error: Failed to execute git diff'
+      echo 'Error: No file in current buffer'
       echohl None
       return
     endif
+
+    var command = this.config.git_command .. ' diff --color=always ' .. shellescape(current_file) .. ' | less -R'
+
+    execute 'silent! !' .. command
     redraw!
   enddef
 endclass
