@@ -68,7 +68,7 @@ bindkey -v '^sl' edit-command-line                    # Ctrl+s,lでコマンド�
 bindkey -v '^sn' immediate-git-fetch                  # Ctrl+s,nでgit fetch
 bindkey -v '^so' peco-cd-dir                          # Ctrl+s,oでディレクトリを絞り込んで移動
 bindkey -v '^sp' immediate-git-pull                   # Ctrl+s,pでgit pull
-bindkey -v '^ss' peco-ag-and-start-editor             # Ctrl+s,sでagで検索してstart-editorCtr+s
+bindkey -v '^ss' peco-ag-and-start-editor             # Ctrl+s,sでagで検索してstart-editor
 bindkey -v '^su' immediate-git-diff                   # Ctrl+s,uでgit diff
 bindkey -v '^sw' show-rprompt                         # Ctrl+s,wで退避したRPROMPTを復元
 bindkey -v '^s@' clear-screen                         # Ctrl+@でclear-screen
