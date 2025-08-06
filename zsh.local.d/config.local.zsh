@@ -17,10 +17,11 @@
 
 ## bindkey
 bindkey -v '^y' push-input-with-pbcopy          # Ctrl+yでコマンドラインスタック+クリップボードコピー
-bindkey -v '^sb' immediate-tmp-text-pbcopy      # Ctr+s,pでBUFFERをcatしてpbcopy
+bindkey -v '^sb' immediate-tmp-text-pbcopy      # Ctr+s,bでBUFFERをcatしてpbcopy
 bindkey -v '^se' insert-pry                     # Ctr+s,eでpryをBUFFERに入れる
 bindkey -v '^sj' immediate-markdown-glow        # Ctr+s,jでBUFFERの末尾が.mdだった場合にglow
-bindkey -v '^s^b' immediate-tmp-markdown-pbcopy # Ctr+s,Ctr+cでtmpファイルをcatしてpbcopy
+bindkey -v '^st' peco-memolist-dir-path-pbcopy  # Ctr+s,tで$MEMOLIST_DIR_PATHのディレクトリパスをpbcopy
+bindkey -v '^s^b' immediate-tmp-markdown-pbcopy # Ctr+s,Ctr+bでtmpファイルをcatしてpbcopy
 bindkey -v '^s^e' insert-bundle-exec-pry        # Ctr+s,Ctr+eでbundle exec pryをBUFFERに入れる
 bindkey -v '^s^j' immediate-markdown-glow       # Ctr+s,Ctr+jでBUFFERの末尾が.mdだった場合にglow
 
