@@ -1,6 +1,6 @@
 ## peco-memolist-dir-path-pbcopy
 _peco-memolist-dir-path-pbcopy() {
-  local selected_dir
+  local cmd selected_dir
 
   selected_dir=$(find $MEMOLIST_DIR_PATH -maxdepth 1 -type d | sort | peco --select-1 2>/dev/null)
 
@@ -9,10 +9,10 @@ _peco-memolist-dir-path-pbcopy() {
     return
   fi
 
-  print -s "echo '$selected_dir' | pbcopy"
-  print "$selected_dir" | pbcopy
+  cmd="echo '$selected_dir' | pbcopy"
 
   zle -I
+  print -s $cmd && eval $cmd
   print "copied to clipboard: '$selected_dir'"
 }
 
