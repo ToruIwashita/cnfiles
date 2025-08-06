@@ -2,7 +2,7 @@
 __github-pr-numbers() {
   local -a prs pr_numbers pr_descriptions
 
-  prs=(${(f)"$(gh pr list --limit 100 --json number,title -q '.[] | "\(.number) \(.title)"' 2>/dev/null)"})
+  prs=(${(f)"$(gh pr list --limit 50 --json number,title -q '.[] | "\(.number) \(.title)"' 2>/dev/null)"})
 
   if (( ! $#prs )); then
     return 1
@@ -19,7 +19,7 @@ __github-pr-numbers() {
 __github-issue-numbers() {
   local -a issues issue_numbers issue_descriptions
 
-  issues=(${(f)"$(gh issue list --limit 100 --json number,title -q '.[] | "\(.number) \(.title)"' 2>/dev/null)"})
+  issues=(${(f)"$(gh issue list --limit 50 --json number,title -q '.[] | "\(.number) \(.title)"' 2>/dev/null)"})
 
   if (( ! $#issues )); then
     return 1
