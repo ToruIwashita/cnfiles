@@ -3,6 +3,10 @@
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
   },
   "permissions": {
+    "additionalDirectories": [
+      "~/markdown_texts",
+      "~/works/memolist"
+    ],
     "allow": [
       "Bash(zsh:*)",
       "Bash(echo:*)",
