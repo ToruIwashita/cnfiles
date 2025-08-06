@@ -22,6 +22,8 @@ bindkey -v '^se' insert-pry                      # Ctr+s,eでpryをBUFFERに入�
 bindkey -v '^sj' immediate-markdown-glow         # Ctr+s,jでBUFFERの末尾が.mdだった場合にglow
 bindkey -v '^st' peco-memolist-dir-path-pbcopy   # Ctr+s,tで$MEMOLIST_DIR_PATHのディレクトリパスをpbcopy
 bindkey -v '^s;' peco-gh-pull-request-url-pbcopy # Ctr+s,;でPRのURLをpbcopy
+bindkey -v '^s:' peco-gh-issue-url-pbcopy        # Ctr+s,:でissueのURLをpbcopy
+bindkey -v "^s'" peco-gh-issue-url-pbcopy        # Ctr+s,'(Ctr+:)でissueのURLをpbcopy
 bindkey -v '^s^b' immediate-tmp-markdown-pbcopy  # Ctr+s,Ctr+bでtmpファイルをcatしてpbcopy
 bindkey -v '^s^e' insert-bundle-exec-pry         # Ctr+s,Ctr+eでbundle exec pryをBUFFERに入れる
 bindkey -v '^s^j' immediate-markdown-glow        # Ctr+s,Ctr+jでBUFFERの末尾が.mdだった場合にglow
