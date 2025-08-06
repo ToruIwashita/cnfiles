@@ -18,6 +18,7 @@ nnoremap <C-s>c :<C-u>ChangeWordToCurrentFileName<CR>
 nnoremap <C-s><C-c> :<C-u>ChangeWordToCurrentFileNameWithExt<CR>
 
 nnoremap <C-s>y :<C-u>YankCurrentFilePath<CR>
+nnoremap <leader>y :<C-u>YankCurrentDirPath<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
