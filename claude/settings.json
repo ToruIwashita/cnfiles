@@ -45,5 +45,6 @@
       "Write(.env*)",
       "Write(**/secrets/**)"
     ]
-  }
+  },
+  "model": "opus"
 }
