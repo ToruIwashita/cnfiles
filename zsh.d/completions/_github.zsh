@@ -1,14 +1,14 @@
 ## github
 __github-pr-numbers() {
-  local -a pr_data pr_numbers pr_descriptions
+  local -a prs pr_numbers pr_descriptions
 
-  pr_data=(${(f)"$(gh pr list --json number,title -q '.[] | "\(.number) \(.title)"' 2>/dev/null)"})
+  prs=(${(f)"$(gh pr list --limit 100 --json number,title -q '.[] | "\(.number) \(.title)"' 2>/dev/null)"})
 
-  if (( ! $#pr_data )); then
+  if (( ! $#prs )); then
     return 1
   fi
 
-  for pr in $pr_data; do
+  for pr in $prs; do
     pr_numbers+=(${pr%% *})
     pr_descriptions+=("${pr%% *} - [Pull Request] ${pr#* }")
   done
@@ -17,15 +17,15 @@ __github-pr-numbers() {
 }
 
 __github-issue-numbers() {
-  local -a issue_data issue_numbers issue_descriptions
+  local -a issues issue_numbers issue_descriptions
 
-  issue_data=(${(f)"$(gh issue list --json number,title -q '.[] | "\(.number) \(.title)"' 2>/dev/null)"})
+  issues=(${(f)"$(gh issue list --limit 100 --json number,title -q '.[] | "\(.number) \(.title)"' 2>/dev/null)"})
 
-  if (( ! $#issue_data )); then
+  if (( ! $#issues )); then
     return 1
   fi
 
-  for issue in $issue_data; do
+  for issue in $issues; do
     issue_numbers+=(${issue%% *})
     issue_descriptions+=("${issue%% *} - [Issue] ${issue#* }")
   done
