@@ -2,7 +2,7 @@
 _peco-gh-issue-url-pbcopy() {
   local cmd selected_issue issue_number
 
-  selected_issue=$(gh issue list --json number,title | jq -r '.[] | "\(.number) - [Issue] \(.title)"' | peco --select-1 2>/dev/null)
+  selected_issue=$(gh issue list --limit 100 --json number,title | jq -r '.[] | "\(.number) - [Issue] \(.title)"' | peco --select-1 2>/dev/null)
 
   if (( ! $#selected_issue )); then
     zle beginning-of-line

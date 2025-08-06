@@ -2,7 +2,7 @@
 _peco-gh-pull-request-url-pbcopy() {
   local cmd selected_pr pr_number
 
-  selected_pr=$(gh pr list --json number,title | jq -r '.[] | "\(.number) - [Pull Request] \(.title)"' | peco --select-1 2>/dev/null)
+  selected_pr=$(gh pr list --limit 100 --json number,title | jq -r '.[] | "\(.number) - [Pull Request] \(.title)"' | peco --select-1 2>/dev/null)
 
   if (( ! $#selected_pr )); then
     zle beginning-of-line
