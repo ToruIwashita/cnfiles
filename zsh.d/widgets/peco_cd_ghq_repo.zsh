@@ -1,16 +1,16 @@
 ## peco-cd-ghq-repo
 _peco-cd-ghq-repo() {
-  local -aU dir_paths
+  local selected_dir
 
-  dir_paths=(${(f)"$(ghq list -p | peco --select-1 2>/dev/null)"})
+  selected_dir=$(ghq list -p | peco --select-1 2>/dev/null)
 
-  if (( ! $#dir_paths )); then
+  if (( ! $#selected_dir )); then
     zle beginning-of-line
     return
   fi
 
   zle kill-whole-line
-  BUFFER="cd $dir_paths"
+  BUFFER="cd $selected_dir"
   zle accept-line
 }
 zle -N peco-cd-ghq-repo _peco-cd-ghq-repo
