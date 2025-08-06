@@ -9,7 +9,8 @@ set cpoptions&vim
 " status
 nnoremap <C-s><C-u> :<C-u>G<CR>
 " diff
-nnoremap <C-s>u :<C-u>Git diff<CR>
+nnoremap <C-s>U :<C-u>Git diff<CR>
+nnoremap <C-s>u :<C-u>Git diff %<CR>
 
 " <C-g>プレフィックス
 " diff
