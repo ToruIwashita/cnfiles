@@ -72,9 +72,9 @@ bindkey -v '^ss' peco-ag-and-start-editor             # Ctrl+s,sでagで検索�
 bindkey -v '^su' immediate-git-diff                   # Ctrl+s,uでgit diff
 bindkey -v '^sw' show-rprompt                         # Ctrl+s,wで退避したRPROMPTを復元
 bindkey -v '^s@' clear-screen                         # Ctrl+@でclear-screen
-bindkey -v '^s;' peco-cd-ghq-repo                     # Ctrl+s,;でghq管理下のリポジトリを絞り込んで移動
 bindkey -v '^s,' gtran-en-to-ja                       # Ctrl+s,/で英語を日本語に翻訳
 bindkey -v '^s.' gtran-ja-to-en                       # Ctrl+s,.で日本語を英語に翻訳
+bindkey -v '^s_' peco-cd-ghq-repo                     # Ctrl+s,_でghq管理下のリポジトリを絞り込んで移動
 bindkey -v '^s ' google-search                        # Ctrl+s,<SPACE>でBUFFERの文字列を使ったGoogle検索
 bindkey -v '^s^a' immediate-git-add-all               # Ctrl+s,Ctrl+aでgit add .
 bindkey -v '^s^f' peco-file-finder                    # Ctrl+s,Ctrl+fでpeco-file-finder
