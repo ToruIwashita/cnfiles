@@ -16,11 +16,13 @@ class TaskManager
   def CreateTask(dir_name: string = '')
     # 実行時に設定を読み込み
     this._LoadConfig()
+
     if !this._ValidateConfig()
       return
     endif
 
     var actual_dir_name: string
+
     if empty(dir_name)
       actual_dir_name = this._GetDirNameInput()
       if empty(actual_dir_name)
@@ -36,11 +38,13 @@ class TaskManager
     endif
 
     var input_file_name: string
+
     if empty(dir_name)
       input_file_name = input('Enter file name: ')
     else
       input_file_name = ''
     endif
+
     var file_name = this._DetermineFileName(input_file_name, actual_dir_name)
 
     var full_file_path = this._BuildFilePath(full_dir_path, file_name)
@@ -76,6 +80,7 @@ class TaskManager
 
     # 実行時に設定を読み込み
     this._LoadConfig()
+
     if !this._ValidateConfig()
       return
     endif
@@ -123,12 +128,14 @@ class TaskManager
 
       # 新しいlatest_ファイルを作成（連番を付与）
       var next_number = this._GetNextSequenceNumber(dir_path)
+
       if next_number > 99
         echohl ErrorMsg
         echo 'Error: Task sequence number cannot exceed 99'
         echohl None
         return
       endif
+
       var base_name = substitute(original_file_name, '^\d\{2\}_', '', '')
       var new_file_name = this._GenerateNumberedFileName(next_number, base_name)
       var new_latest_path = dir_path .. '/' .. new_file_name
@@ -153,6 +160,7 @@ class TaskManager
 
       var display_name = fnamemodify(dir_path, ':t') .. '/' .. new_file_name
       var renamed_display = fnamemodify(dir_path, ':t') .. '/' .. fnamemodify(renamed_path, ':t')
+
       this._ShowNotification('Superseded: ' .. display_name)
     }
 
@@ -163,12 +171,14 @@ class TaskManager
     endif
 
     var expanded_template_dir = expand(this.config.template_dir)
+
     if !isdirectory(expanded_template_dir)
       OnTemplateSelected('')
       return
     endif
 
     var template_files = this._GetTemplateFiles(expanded_template_dir)
+
     if empty(template_files)
       OnTemplateSelected('')
       return
@@ -186,6 +196,7 @@ class TaskManager
     endif
 
     this._LoadConfig()
+
     if !this._ValidateConfig()
       return
     endif
@@ -195,6 +206,7 @@ class TaskManager
     endif
 
     var archives_dir = this._GetArchivesDir()
+
     if !isdirectory(archives_dir)
       try
         mkdir(archives_dir, 'p')
@@ -215,6 +227,7 @@ class TaskManager
     var root_dir = this._GetCleanRootDir()
     var source_path = root_dir .. '/' .. dir_name
     var target_path = archives_dir .. '/' .. dir_name
+
     if isdirectory(target_path)
       echohl ErrorMsg
       echo 'Error: Directory "' .. dir_name .. '" already exists in archives'
@@ -223,6 +236,7 @@ class TaskManager
     endif
 
     this._CleanupBuffersBeforeMove(source_path)
+
     if rename(source_path, target_path) == 0
       this._CleanupBuffersAfterMove(source_path, target_path)
       this._ShowNotification('Archived: ' .. dir_name)
@@ -242,12 +256,14 @@ class TaskManager
     endif
 
     this._LoadConfig()
+
     if !this._ValidateConfig()
       return
     endif
 
     var archives_dir = this._GetArchivesDir()
     var source_path = archives_dir .. '/' .. dir_name
+
     if !isdirectory(source_path)
       echohl ErrorMsg
       echo 'Error: Directory "' .. dir_name .. '" not found in archives'
@@ -257,6 +273,7 @@ class TaskManager
 
     var root_dir = this._GetCleanRootDir()
     var target_path = root_dir .. '/' .. dir_name
+
     if isdirectory(target_path)
       echohl ErrorMsg
       echo 'Error: Directory "' .. dir_name .. '" already exists in task directory'
@@ -265,12 +282,48 @@ class TaskManager
     endif
 
     this._CleanupBuffersBeforeMove(source_path)
+
     if rename(source_path, target_path) == 0
       this._CleanupBuffersAfterMove(source_path, target_path)
       this._ShowNotification('Restored: ' .. dir_name)
     else
       echohl ErrorMsg
       echo 'Error: Failed to restore directory'
+      echohl None
+    endif
+  enddef
+
+  def DeleteTask(dir_name: string)
+    if empty(dir_name)
+      echohl ErrorMsg
+      echo 'Error: DeleteTask requires a directory name'
+      echohl None
+      return
+    endif
+
+    this._LoadConfig()
+
+    if !this._ValidateConfig()
+      return
+    endif
+
+    var archives_dir = this._GetArchivesDir()
+    var target_path = archives_dir .. '/' .. dir_name
+
+    if !isdirectory(target_path)
+      echohl ErrorMsg
+      echo 'Error: Directory "' .. dir_name .. '" not found in archives'
+      echohl None
+      return
+    endif
+
+    this._CleanupBuffersBeforeMove(target_path)
+
+    if delete(target_path, 'rf') == 0
+      this._ShowNotification('Deleted: ' .. dir_name)
+    else
+      echohl ErrorMsg
+      echo 'Error: Failed to delete directory'
       echohl None
     endif
   enddef
@@ -716,7 +769,7 @@ def ArchiveTaskComplete(ArgLead: string, CmdLine: string, CursorPos: number): li
   return task_manager.GetDirectoryList(ArgLead)
 enddef
 
-def RestoreTaskComplete(ArgLead: string, CmdLine: string, CursorPos: number): list<string>
+def ArchivedTasksComplete(ArgLead: string, CmdLine: string, CursorPos: number): list<string>
   return task_manager.GetArchiveDirectoryList(ArgLead)
 enddef
 
@@ -741,9 +794,14 @@ def RestoreTaskCommand(dir_name: string)
   task_manager.RestoreTask(dir_name)
 enddef
 
+def DeleteTaskCommand(dir_name: string)
+  task_manager.DeleteTask(dir_name)
+enddef
+
 command! -nargs=? CreateTask call CreateTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,AppendTaskComplete AppendTask call AppendTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,ArchiveTaskComplete ArchiveTask call ArchiveTaskCommand(<f-args>)
-command! -nargs=1 -complete=customlist,RestoreTaskComplete RestoreTask call RestoreTaskCommand(<f-args>)
+command! -nargs=1 -complete=customlist,ArchivedTasksComplete RestoreTask call RestoreTaskCommand(<f-args>)
+command! -nargs=1 -complete=customlist,ArchivedTasksComplete DeleteTask call DeleteTaskCommand(<f-args>)
 
 &cpoptions = cpoptions_save

@@ -18,6 +18,7 @@ nnoremap <leader>T :<C-u>CreateTask<SPACE>
 nnoremap <leader>A :<C-u>AppendTask<SPACE><C-R>=strftime('%Y-%m-%d')<CR>
 nnoremap <leader>K :<C-u>ArchiveTask<SPACE><C-R>=strftime('%Y-%m-%d')<CR>
 nnoremap <leader>R :<C-u>RestoreTask<SPACE><C-R>=strftime('%Y-%m-%d')<CR>
+nnoremap <leader>C :<C-u>DeleteTask<SPACE><C-R>=strftime('%Y-%m-%d')<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
