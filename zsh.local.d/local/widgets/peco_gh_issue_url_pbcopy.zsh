@@ -2,6 +2,11 @@
 _peco-gh-issue-url-pbcopy() {
   local cmd selected_issue issue_number
 
+  if ( ! $(git rev-parse 2>/dev/null) ); then
+    zle -I
+    return
+  fi
+
   selected_issue=$(gh issue list --limit 300 --json number,title,author | jq -r '.[] | "\(.number) - [Issue] \(.title) @\(.author.login)"' | peco --select-1 2>/dev/null)
 
   if (( ! $#selected_issue )); then

@@ -2,6 +2,11 @@
 _peco-gh-pull-request-url-pbcopy() {
   local cmd selected_pr pr_number
 
+  if ( ! $(git rev-parse 2>/dev/null) ); then
+    zle -I
+    return
+  fi
+
   selected_pr=$(gh pr list --limit 300 --json number,title,author | jq -r '.[] | "\(.number) - [Pull Request] \(.title) @\(.author.login)"' | peco --select-1 2>/dev/null)
 
   if (( ! $#selected_pr )); then
