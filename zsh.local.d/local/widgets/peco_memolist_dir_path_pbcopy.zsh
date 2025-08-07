@@ -9,7 +9,7 @@ _peco-memolist-dir-path-pbcopy() {
     return
   fi
 
-  cmd="echo '$selected_dir' | pbcopy"
+  cmd="echo -n '$selected_dir' | pbcopy"
 
   zle -I
   print -s $cmd && eval $cmd
