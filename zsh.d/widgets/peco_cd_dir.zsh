@@ -2,8 +2,6 @@
 _peco-cd-dir() {
   local selected_dir
 
-  (( $#BUFFER )) && print -s "$BUFFER"
-
   selected_dir=$(find -type d -name "*$BUFFER*" 2>/dev/null | peco --select-1 2>/dev/null)
 
   if (( ! $#selected_dir )); then
