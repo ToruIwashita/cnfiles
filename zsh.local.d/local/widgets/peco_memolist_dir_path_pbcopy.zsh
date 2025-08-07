@@ -12,7 +12,7 @@ _peco-memolist-dir-path-pbcopy() {
   cmd="echo -n '$selected_dir' | pbcopy"
 
   zle -I
-  print -s $cmd && eval $cmd
+  print -s ${(q)cmd} && eval $cmd
   print "copied to clipboard: '$selected_dir'"
 }
 

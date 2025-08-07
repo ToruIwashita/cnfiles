@@ -19,7 +19,7 @@ _peco-gh-pull-request-url-pbcopy() {
   cmd="gh pr view $pr_number --json url -q .url | tr -d '\n' | pbcopy"
 
   zle -I
-  print -s $cmd && eval $cmd
+  print -s ${(q)cmd} && eval $cmd
   print "copied to clipboard: $(pbpaste)"
 }
 

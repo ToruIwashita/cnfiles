@@ -19,7 +19,7 @@ _peco-gh-issue-url-pbcopy() {
   cmd="gh issue view $issue_number --json url -q .url | tr -d '\n' | pbcopy"
 
   zle -I
-  print -s $cmd && eval $cmd
+  print -s ${(q)cmd} && eval $cmd
   print "copied to clipboard: $(pbpaste)"
 }
 

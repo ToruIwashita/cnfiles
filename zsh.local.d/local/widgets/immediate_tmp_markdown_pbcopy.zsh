@@ -14,7 +14,7 @@ _immediate-tmp-markdown-pbcopy() {
   cmd="cat $file_path | sed -e 's/ *$//g' | pbcopy"
 
   zle -I
-  print -s $cmd && eval $cmd
+  print -s ${(q)cmd} && eval $cmd
   print "copied to clipboard: '$file_path'"
 }
 
