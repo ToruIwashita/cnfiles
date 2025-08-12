@@ -195,6 +195,13 @@ else
   mkdir ~/.claude
 fi
 
+if [[ -L ~/.claude/CLAUDE.md ]]; then
+  printf "\e[32m~/.claude/CLAUDE.md symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.claude/CLAUDE.md\e[0m\n"
+  ln -is $BASE_DIR_PATH/claude/CLAUDE.md ~/.claude/CLAUDE.md
+fi
+
 if [[ -L ~/.claude/settings.json ]]; then
   printf "\e[32m~/.claude/settings.json symlink already exists\e[0m\n"
 else
