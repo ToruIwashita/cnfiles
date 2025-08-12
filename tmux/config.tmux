@@ -24,8 +24,6 @@ set -g history-limit 50000
 setw -g monitor-activity on
 # monitor-activity onでウィンドウ動作があった時にステータスラインメッセージを表示
 set -g visual-activity off
-# フォーカスイベントを有効にする（Vimの自動ファイルリロード用）
-set -g focus-events on
 
 ## unbind
 # デフォルトprefixを解除
