@@ -3,10 +3,6 @@
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
   },
   "permissions": {
-    "additionalDirectories": [
-      "~/markdown_texts",
-      "~/works/memolist"
-    ],
     "allow": [
       "Bash(zsh:*)",
       "Bash(echo:*)",
@@ -48,7 +44,11 @@
       "Read(**/*key*)",
       "Write(.env*)",
       "Write(**/secrets/**)"
+    ],
+    "additionalDirectories": [
+      "~/markdown_texts",
+      "~/works/memolist"
     ]
   },
-  "model": "opus"
+  "model": "opusplan"
 }
