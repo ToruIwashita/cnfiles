@@ -39,5 +39,5 @@ EOF`
 
   plan="${args[1]}"
 
-  claude-monitor --plan $plan --timezone Asia/Tokyo
+  claude-monitor --plan $plan --timezone Asia/Tokyo --refresh-per-second 0.5
 }
