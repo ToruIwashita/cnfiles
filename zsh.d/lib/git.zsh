@@ -52,7 +52,7 @@ __git-untracked-list() {
 __git-unstaged-list() {
   __git-inside-work-tree || return
   local -a all_files
-  all_files=(${${${(M)${(0)"$(git status --porcelain -z 2>/dev/null)"}:#(?[MD\?]|[UAD][UAD])*}#??}# })
+  all_files=(${${${(M)${(0)"$(git status --porcelain -z 2>/dev/null)"}:#(?[MAD\?]|[UAD][UAD])*}#??}# })
   printf '%s\n' "${all_files[@]}"
 }
 
