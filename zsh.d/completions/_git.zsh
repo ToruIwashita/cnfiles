@@ -17,10 +17,10 @@ __git-changed-files() {
   compadd -f -a changed_files
 }
 
-__git-deleted-files() {
-  local -a deleted_files
-  deleted_files=(${(f)"$(__git-deleted-list)"})
-  compadd -f -a deleted_files
+__git-new-files() {
+  local -a new_files
+  new_files=(${(f)"$(__git-new-file-list)"})
+  compadd -f -a new_files
 }
 
 __git-untracked-files() {
@@ -35,6 +35,24 @@ __git-staged-files() {
   compadd -f -a staged_files
 }
 
+__git-both-modified-files() {
+  local -a both_modified_files
+  both_modified_files=(${(f)"$(__git-both-modified-list)"})
+  compadd -f -a both_modified_files
+}
+
+__git-deleted-files() {
+  local -a deleted_files
+  deleted_files=(${(f)"$(__git-deleted-list)"})
+  compadd -f -a deleted_files
+}
+
+__git-unstaged-files() {
+  local -a all_files
+  all_files=(${(f)"$(__git-unstaged-list)"})
+  compadd -f -a all_files
+}
+
 __git-commits() {
   local -a commits commit_hashes commit_descriptions
   commits=(${(f)"$(__git-commit-list)"})
@@ -47,24 +65,26 @@ __git-commits() {
   compadd -l -V commits -d commit_descriptions -a commit_hashes
 }
 
-__git-both-modified-files() {
-  local -a both_modified_files
-  both_modified_files=(${(f)"$(__git-both-modified-list)"})
-  compadd -f -a both_modified_files
-}
-
-__git-unstaged-files() {
-  local -a all_files
-  all_files=(${(f)"$(__git-unstaged-list)"})
-  compadd -f -a all_files
-}
-
 __git-diff-files() {
   local -a modified_files both_modified_files
   modified_files=(${(f)"$(__git-modified-list)"})
   both_modified_files=(${(f)"$(__git-both-modified-list)"})
   compadd -f -a modified_files
   compadd -f -a both_modified_files
+}
+
+_ga() {
+  _arguments \
+    '(-u --unstage)'{-u,--unstage}'[Unstage files]: :__git-staged-files' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '*: :__git-unstaged-files'
+}
+
+_gaint() {
+  _arguments \
+    '(-r --restore)'{-r,--restore}'[Restore intent-to-add files]: :__git-new-files' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '*: :__git-untracked-files'
 }
 
 _gam() {
@@ -147,14 +167,8 @@ _gl() {
     '(-h --help)'{-h,--help}'[Show help text]'
 }
 
-_ga() {
-  _arguments \
-    '(-u --unstage)'{-u,--unstage}'[Unstage files]: :__git-staged-files' \
-    '(-h --help)'{-h,--help}'[Show help text]' \
-    '*: :__git-unstaged-files'
-}
-
 compdef _ga ga
+compdef _gaint gaint
 compdef _gam gam
 compdef _gau gau
 compdef _gac gac

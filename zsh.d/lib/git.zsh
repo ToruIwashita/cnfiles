@@ -35,6 +35,13 @@ __git-changed-list() {
   git diff --name-only origin/HEAD...HEAD
 }
 
+__git-new-file-list() {
+  __git-inside-work-tree || return
+  local -a new_files
+  new_files=(${${${(M)${(0)"$(git status --porcelain -z 2>/dev/null)"}:#?A*}#??}# })
+  printf '%s\n' "${new_files[@]}"
+}
+
 __git-modified-list() {
   __git-inside-work-tree || return
   local -a modified_files

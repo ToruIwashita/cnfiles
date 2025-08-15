@@ -83,6 +83,76 @@ EOF`
   git status --short
 }
 
+gaint() {
+  integer restore
+  local self_cmd help usage
+  local -a file_paths intent_added_files
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd [files]
+              [-r --restore]
+              [-h --help]
+EOF`
+
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -r | --restore)
+        (( restore++ ))
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift
+        file_paths+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        file_paths+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if (( restore )); then
+    if (( ${#file_paths} )); then
+      git restore --staged $(git rev-parse --show-toplevel)/"${^file_paths[@]}"
+    else
+      intent_added_files=(${(f)"$(git diff --name-only --diff-filter=A)"})
+
+      if (( ${#intent_added_files} )); then
+        git restore --staged $(git rev-parse --show-toplevel)/"${^intent_added_files[@]}"
+      fi
+    fi
+
+    git status --short
+
+    return 0
+  fi
+
+  if (( ${#file_paths} )); then
+    git add --intent-to-add $(git rev-parse --show-toplevel)/"${^file_paths[@]}"
+  else
+    git add --intent-to-add "$(git rev-parse --show-toplevel)"
+  fi
+
+  git status --short
+}
+
 gam() {
   local usage
 
