@@ -107,6 +107,8 @@ bind | select-layout even-horizontal
 bind - select-layout even-vertical
 # ペインkill
 bind x kill-pane
+# 上35%・下65%に設定
+bind - resize-pane -t 0 -y 35%
 # 上75%・下25%に設定
 bind = resize-pane -t 0 -y 75%
 # 6ウィンドウ作成
