@@ -137,7 +137,7 @@ bind -T copy-mode-vi '-' send -X copy-pipe-and-cancel 'xargs -0 open'
 # 選択範囲の英語を日本語に翻訳
 bind -T copy-mode-vi , send -X copy-pipe-and-cancel 'xargs -I {} gtran {} | xargs -I {} tmux-display-message {}'
 # 選択範囲の日本語を英語に翻訳
-bind -T copy-mode-vi i send -X copy-pipe-and-cancel 'xargs -I {} gtran -source "ja" -target "en" {} | xargs -I {} tmux-display-message {}'
+bind -T copy-mode-vi . send -X copy-pipe-and-cancel 'xargs -I {} gtran -source "ja" -target "en" {} | xargs -I {} tmux-display-message {}'
 # 選択範囲のGoogle検索
 bind -T copy-mode-vi Space send -X copy-pipe-and-cancel "xargs -I {} open https://www.google.co.jp/search?q='{}'"
 
