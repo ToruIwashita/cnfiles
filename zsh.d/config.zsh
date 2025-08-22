@@ -81,7 +81,7 @@ bindkey -v '^s^f' peco-file-finder                    # Ctrl+s,Ctrl+fでpeco-fil
 bindkey -v '^s^g' immediate-gh-browse-pull-request    # Ctrl+s,Ctrl+gでブランチ名からpull requestを開く
 bindkey -v '^s^h' immediate-git-log-search-with-diff  # Ctrl+s,Ctrl+hでgit logをdiff出力付きで検索
 bindkey -v '^s^p' copy-prev-shell-word                # Ctrl+s,Ctrl+pで1つ前の文字列をコピペ(空欄区切りで文字列判定)
-bindkey -v '^s^r' immediate-git-reset-all             # Ctrl+s,Ctrl+rでgit reset
+bindkey -v '^s^r' immediate-git-soft-reset-latest     # Ctrl+s,Ctrl+rで最新のcommitをgit reset --soft
 bindkey -v '^s^s' peco-git-grep-and-start-editor      # Ctrl+s,Ctrl+sでgit grepしてstart-editor
 bindkey -v '^s^u' immediate-git-status                # Ctrl+s,Ctrl+uでgit status
 bindkey -v '^s^w' hide-rprompt                        # Ctrl+s,Ctrl+wでRPROMPTを退避
