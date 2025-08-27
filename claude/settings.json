@@ -50,5 +50,6 @@
       "~/works/memolist"
     ]
   },
-  "model": "opus"
+  "model": "opus",
+  "outputStyle": "Explanatory"
 }
