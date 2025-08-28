@@ -45,6 +45,7 @@ command! -range -nargs=? WrapWithFence :<line1>,<line2>call s:wrap_with_fence(<f
 vnoremap <Leader>fr :WrapWithFence ruby<CR>
 vnoremap <Leader>fb :WrapWithFence bash<CR>
 vnoremap <Leader>fs :WrapWithFence sql<CR>
+vnoremap <Leader>fp :WrapWithFence plantuml<CR>
 vnoremap <Leader>ff :WrapWithFence<CR>
 
 ab <buffer> =b <br/>
