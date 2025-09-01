@@ -209,6 +209,21 @@ else
   ln -is $BASE_DIR_PATH/claude/settings.json ~/.claude/settings.json
 fi
 
+# codex cli
+if [[ -d ~/.codex  ]]; then
+  printf "\e[32m~/.codex  dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir ~/.codex \e[0m\n"
+  mkdir ~/.codex 
+fi
+
+if [[ -L ~/.codex/AGENTS.md ]]; then
+  printf "\e[32m~/.codex/AGENTS.md symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.codex/AGENTS.md\e[0m\n"
+  ln -is $BASE_DIR_PATH/codex/AGENTS.md ~/.codex/AGENTS.md
+fi
+
 # gemini
 if [[ -d ~/.gemini ]]; then
   printf "\e[32m~/.gemini dir already exists\e[0m\n"
