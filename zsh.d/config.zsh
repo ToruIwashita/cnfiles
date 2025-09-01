@@ -30,6 +30,7 @@ setopt noautoremoveslash    # 最後のスラッシュを自動的に削除し�
 setopt histignoredups       # 重複コマンド記録しない(古い行を消して新しい行を追加)
 setopt sharehistory         # コマンド履歴・共有
 setopt incappendhistory     # 履歴をインクリメンタルに追加(履歴が即書き込まれる)
+setopt histfcntllock        # 書き込み中の履歴ファイルをロックする際にfcntlを使用する
 setopt extendedhistory      # コマンド履歴・コマンド実行時間保存
 setopt histnostore          # historyコマンドを記録しない
 setopt histreduceblanks     # 余分なスペースは保存しない
