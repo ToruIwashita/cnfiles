@@ -13,7 +13,8 @@ cd $ASDF_SRC_DIR_PATH
 
 # backup
 if [[ -f $LOCAL_BIN_DIR_PATH/asdf ]]; then
-  mv $LOCAL_BIN_DIR_PATH/{asdf,asdf.prev}
+  # asdfでインストールしたgoが必要なのでmvではなくcpを行う
+  cp $LOCAL_BIN_DIR_PATH/{asdf,asdf.prev}
 fi
 
 make
