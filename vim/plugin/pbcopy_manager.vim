@@ -40,6 +40,20 @@ class PbcopyManager
     this._ExecutePbcopy(display_path, 'Copied to clipboard: ' .. display_path)
   enddef
 
+  def CopyFileNameToClipboard()
+    this._LoadConfig()
+
+    if !this._ValidateConfig()
+      return
+    endif
+
+    write
+
+    var file_name = expand('%:t')
+
+    this._ExecutePbcopy(file_name, 'Copied to clipboard: ' .. file_name)
+  enddef
+
   def CopyDirPathToClipboard()
     this._LoadConfig()
 
@@ -210,6 +224,10 @@ def CopyFilePathToClipboardCommand()
   pbcopy_manager.CopyFilePathToClipboard()
 enddef
 
+def CopyFileNameToClipboardCommand()
+  pbcopy_manager.CopyFileNameToClipboard()
+enddef
+
 def CopyDirPathToClipboardCommand()
   pbcopy_manager.CopyDirPathToClipboard()
 enddef
@@ -224,6 +242,7 @@ enddef
 
 command! CopyBufferToClipboard call CopyBufferToClipboardCommand()
 command! CopyFilePathToClipboard call CopyFilePathToClipboardCommand()
+command! CopyFileNameToClipboard call CopyFileNameToClipboardCommand()
 command! CopyDirPathToClipboard call CopyDirPathToClipboardCommand()
 command! -range CopySelectionToClipboard call CopySelectionToClipboardCommand()
 command! -range CopySelectionWithPathToClipboard call CopySelectionWithPathToClipboardCommand()

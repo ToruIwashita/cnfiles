@@ -8,6 +8,7 @@ set cpoptions&vim
 noremap <C-s>b :<C-u>wa<CR>:CopyBufferToClipboard<CR>
 noremap <C-s><C-b> :<C-u>wa<CR>:CopyBufferToClipboard<CR>
 noremap <C-s>y :<C-u>CopyFilePathToClipboard <CR>
+noremap <C-s>Y :<C-u>CopyFileNameToClipboard <CR>
 noremap <C-s><C-y> :<C-u>CopyDirPathToClipboard <CR>
 
 vnoremap <C-y> :<C-u>CopySelectionWithPathToClipboard<CR>
