@@ -11,7 +11,8 @@ noremap <C-s>y :<C-u>CopyFilePathToClipboard <CR>
 noremap <C-s>Y :<C-u>CopyFileNameToClipboard <CR>
 noremap <C-s><C-y> :<C-u>CopyDirPathToClipboard <CR>
 
-vnoremap <C-y> :<C-u>CopySelectionWithPathToClipboard<CR>
+vnoremap <C-y> :<C-u>CopyWrappedSelectionWithPathToClipboard<CR>
+vnoremap Y :<C-u>CopySelectionWithPathToClipboard<CR>
 vnoremap <leader>y :<C-u>CopySelectionToClipboard<CR>
 
 let &cpoptions = s:cpoptions_save

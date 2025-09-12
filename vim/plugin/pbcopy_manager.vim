@@ -123,6 +123,38 @@ class PbcopyManager
     this._ExecutePbcopy(formatted_content, 'Copied selection with path to clipboard: ' .. display_path .. ':' .. line_range)
   enddef
 
+  def CopyWrappedSelectionWithPathToClipboard()
+    this._LoadConfig()
+
+    if !this._ValidateConfig()
+      return
+    endif
+
+    var selection_info = this._GetSelectionInfo()
+    if empty(selection_info.content)
+      echohl ErrorMsg
+      echo 'No selection found'
+      echohl None
+      return
+    endif
+
+    var full_path = expand('%:p')
+    var display_path = this._GetDisplayPath(full_path)
+    var formatted_content = this._FormatSelectionWithPathWrapped(
+      selection_info.content,
+      display_path,
+      selection_info.start_line,
+      selection_info.end_line
+    )
+
+    # ヤンクレジスタにも保存
+    setreg('"', formatted_content)
+
+    # pbcopyでクリップボードにもコピー
+    var line_range = selection_info.start_line == selection_info.end_line ? string(selection_info.start_line) : selection_info.start_line .. '-' .. selection_info.end_line
+    this._ExecutePbcopy(formatted_content, 'Copied wrapped selection with path to clipboard: ' .. display_path .. ':' .. line_range)
+  enddef
+
   def _LoadConfig()
     this.config = {
       'pbcopy_command': 'pbcopy'
@@ -200,6 +232,11 @@ class PbcopyManager
     return '@' .. file_path .. ':' .. line_range .. "\n\n" .. content
   enddef
 
+  def _FormatSelectionWithPathWrapped(content: string, file_path: string, start_line: number, end_line: number): string
+    var line_range = start_line == end_line ? string(start_line) : start_line .. '-' .. end_line
+    return "---\n" .. '@' .. file_path .. ':' .. line_range .. "\n\n" .. content .. "\n---"
+  enddef
+
   def _ExecutePbcopy(content: string, message: string)
     var result = system(this.config.pbcopy_command, content)
     if v:shell_error != 0
@@ -240,11 +277,16 @@ def CopySelectionWithPathToClipboardCommand()
   pbcopy_manager.CopySelectionWithPathToClipboard()
 enddef
 
+def CopyWrappedSelectionWithPathToClipboardCommand()
+  pbcopy_manager.CopyWrappedSelectionWithPathToClipboard()
+enddef
+
 command! CopyBufferToClipboard call CopyBufferToClipboardCommand()
 command! CopyFilePathToClipboard call CopyFilePathToClipboardCommand()
 command! CopyFileNameToClipboard call CopyFileNameToClipboardCommand()
 command! CopyDirPathToClipboard call CopyDirPathToClipboardCommand()
 command! -range CopySelectionToClipboard call CopySelectionToClipboardCommand()
 command! -range CopySelectionWithPathToClipboard call CopySelectionWithPathToClipboardCommand()
+command! -range CopyWrappedSelectionWithPathToClipboard call CopyWrappedSelectionWithPathToClipboardCommand()
 
 &cpoptions = cpoptions_save
