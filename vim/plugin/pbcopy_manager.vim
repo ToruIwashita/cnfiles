@@ -181,12 +181,10 @@ class PbcopyManager
   enddef
 
   def _GetSelectionInfo(): dict<any>
-    var start_line = line("'<")
-    var end_line = line("'>")
-    var start_col = col("'<")
-    var end_col = col("'>")
+    var start_pos = getpos("'<")
+    var end_pos = getpos("'>")
 
-    if start_line == 0 || end_line == 0
+    if start_pos[1] == 0 || end_pos[1] == 0
       return {
         'content': '',
         'start_line': 0,
@@ -194,36 +192,33 @@ class PbcopyManager
       }
     endif
 
-    var lines = getline(start_line, end_line)
-    if empty(lines)
+    # visualmode()は直前のビジュアルモード種別を返す（v/V/Ctrl-V）
+    # mode()だとコマンド実行時には'n'になってしまうためvisualmode()を使用
+    var raw_vis_mode = visualmode()
+
+    # visualmode()が空の場合は文字選択モードをデフォルトとする
+    var vis_mode: string
+    if raw_vis_mode == ''
+      vis_mode = 'v'
+    else
+      vis_mode = raw_vis_mode
+    endif
+
+    # getregion()で選択範囲を直接取得
+    var selected_lines = getregion(start_pos, end_pos, {'type': vis_mode})
+
+    if empty(selected_lines)
       return {
         'content': '',
-        'start_line': start_line,
-        'end_line': end_line
+        'start_line': start_pos[1],
+        'end_line': end_pos[1]
       }
     endif
 
-    # 選択範囲の調整
-    if len(lines) == 1
-      # 単一行の場合
-      var line_content = lines[0]
-      if start_col <= end_col
-        lines[0] = line_content[start_col - 1 : end_col - 1]
-      endif
-    else
-      # 複数行の場合
-      if start_col > 1
-        lines[0] = lines[0][start_col - 1 :]
-      endif
-      if end_col < len(lines[-1])
-        lines[-1] = lines[-1][: end_col - 1]
-      endif
-    endif
-
     return {
-      'content': join(lines, "\n"),
-      'start_line': start_line,
-      'end_line': end_line
+      'content': join(selected_lines, "\n"),
+      'start_line': start_pos[1],
+      'end_line': end_pos[1]
     }
   enddef
 
