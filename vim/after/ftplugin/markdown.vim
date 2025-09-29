@@ -7,12 +7,18 @@ set cpoptions&vim
 
 " markdownはテキストの最大幅無し
 setlocal textwidth=0
-" オートインデント時の空白文字数(pluginで書き換えられてしまうため再設定)
+" オートインデント時の空白文字数
 setlocal shiftwidth=2
-" <TAB>を含むファイルを開いた際,<TAB>を何文字の空白に変換するか(pluginで書き換えられてしまうため再設定)
+" <TAB>を含むファイルを開いた際,<TAB>を何文字の空白に変換するか
 setlocal tabstop=2
-" キーボードで<TAB>を入力した際,<TAB>を何文字の空白に変換するか(pluginで書き換えられてしまうため再設定)
+" キーボードで<TAB>を入力した際,<TAB>を何文字の空白に変換するか
 setlocal softtabstop=2
+
+let g:add_md_space_enabled = 1
+
+fun! markdown#add_md_space_enabeld() abort
+  return g:add_md_space_enabled
+endf
 
 " lightline.vim依存のコード
 fun! s:add_md_space_toggle() abort
@@ -40,13 +46,46 @@ fun! s:wrap_with_fence(...) range
   call cursor(a:firstline, 1)
 endfunction
 
+fun! s:add_md_space() abort
+  if !g:add_md_space_enabled
+    return 1
+  endif
+
+  execute 'mark Z'
+
+  silent! execute '%s/\(^[^$].*[^ ]$\)/\1  /'
+
+  silent! normal! `Z
+  execute 'delmarks Z'
+endfunction
+
+fun! s:add_md_space_range() abort range
+  if !g:add_md_space_enabled
+    return 1
+  endif
+
+  silent! execute a:firstline.','.a:lastline.'s/\(^[^$].*[^ ]$\)/\1  /'
+endfunction
+
+augroup local_markdown
+  autocmd!
+  autocmd BufWritePre *.md call s:add_md_space()
+augroup END
+
+command! AddMdSpaceToggle call s:add_md_space_toggle()
 command! -range -nargs=? WrapWithFence :<line1>,<line2>call s:wrap_with_fence(<f-args>)
+command! -range MdFormat :<line1>,<line2>call s:add_md_space_range()
+
+nnoremap <C-_> :<C-u>AddMdSpaceToggle<CR>
 
 vnoremap <Leader>fr :WrapWithFence ruby<CR>
 vnoremap <Leader>fb :WrapWithFence bash<CR>
 vnoremap <Leader>fs :WrapWithFence sql<CR>
 vnoremap <Leader>fp :WrapWithFence plantuml<CR>
 vnoremap <Leader>ff :WrapWithFence<CR>
+
+cnorea %M %MdFormat
+cnorea '<,'>M '<,'>MdFormat
 
 ab <buffer> =b <br/>
 
