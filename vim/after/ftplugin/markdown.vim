@@ -14,7 +14,8 @@ setlocal tabstop=2
 " キーボードで<TAB>を入力した際,<TAB>を何文字の空白に変換するか(pluginで書き換えられてしまうため再設定)
 setlocal softtabstop=2
 
-let g:add_md_space_enabled = 1
+" 末尾に半角スペース追加はデフォルトOFF
+let g:add_md_space_enabled = 0
 
 fun! markdown#add_md_space_enabeld() abort
   return g:add_md_space_enabled
