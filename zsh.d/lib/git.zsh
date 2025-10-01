@@ -86,7 +86,7 @@ __git-deleted-list() {
 
 __git-commit-list() {
   __git-inside-work-tree || return
-  git log --pretty=format:'%h - [%ad] %s @%an%d' --date=format:'%Y-%m-%d %H:%M' --decorate=short -n 30
+  git log --pretty=format:'%h - [%ad] @%an %s%d' --date=format:'%Y-%m-%d %H:%M' --decorate=short -n 30
 }
 
 __git-inside-work-tree() {
