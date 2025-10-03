@@ -449,6 +449,11 @@ class TaskManager
       if selected_template == 'NO_TEMPLATE'
         # [No template]選択時は空ファイルを作成
         writefile([], target_file_path)
+        # ファイルが既にバッファに読み込まれている場合は再読み込み
+        if bufname('%') ==# fnameescape(target_file_path)
+          execute 'edit! ' .. fnameescape(target_file_path)
+          normal! gg
+        endif
         OnCompletion(true)
       elseif !empty(selected_template)
         this._ApplyTemplate(selected_template, target_file_path)
