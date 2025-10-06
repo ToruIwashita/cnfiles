@@ -29,12 +29,12 @@ __git-added-describe-context() {
   # 各spec fileの作業ディレクトリ差分から追加されたdescribe/contextを抽出
   working_diff_examples=(${(f)"$(git diff "${spec_files[@]}" 2>/dev/null | \
     grep -E '^\+\s*\b(describe|context)\b' | \
-    sed -E 's/^.*(describe|context)[[:space:]]+([^[:space:]]+.*[^[:space:]]+)[[:space:]]+do$/\2/')"})
+    sed -E 's/^.*(describe|context)[[:space:]]+([^,[:space:]]([^,]*[^,[:space:]])?)(,.*)?[[:space:]]+do$/\2/')"})
 
   # 各spec fileのorigin/HEAD...HEAD差分から追加されたdescribe/contextを抽出
   head_diff_examples=(${(f)"$(git diff origin/HEAD...HEAD -- "${spec_files[@]}" 2>/dev/null | \
     grep -E '^\+\s*\b(describe|context)\b' | \
-    sed -E 's/^.*(describe|context)[[:space:]]+([^[:space:]]+.*[^[:space:]]+)[[:space:]]+do$/\2/')"})
+    sed -E 's/^.*(describe|context)[[:space:]]+([^,[:space:]]([^,]*[^,[:space:]])?)(,.*)?[[:space:]]+do$/\2/')"})
 
   # 両方の結果を結合し、空の要素を除去
   examples=(${working_diff_examples[@]:#} ${head_diff_examples[@]:#})
