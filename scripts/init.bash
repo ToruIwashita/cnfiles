@@ -224,6 +224,13 @@ else
   ln -is $BASE_DIR_PATH/codex/AGENTS.md ~/.codex/AGENTS.md
 fi
 
+if [[ -L ~/.codex/config.toml ]]; then
+  printf "\e[32m~/.codex/config.toml symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.codex/config.toml\e[0m\n"
+  ln -is $BASE_DIR_PATH/codex/config.toml ~/.codex/config.toml
+fi
+
 # gemini
 if [[ -d ~/.gemini ]]; then
   printf "\e[32m~/.gemini dir already exists\e[0m\n"
