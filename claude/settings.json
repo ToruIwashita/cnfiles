@@ -50,8 +50,8 @@
       "Write(**/secrets/**)"
     ],
     "additionalDirectories": [
-      "~/markdown_texts",
-      "~/works/memolist"
+      "~/markdown_texts/",
+      "~/works/memolist/"
     ]
   },
   "statusLine": {
