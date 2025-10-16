@@ -1,8 +1,17 @@
 model = "gpt-5-codex"
-model_reasoning_effort = "high"
+model_reasoning_effort = "medium"
+model_reasoning_summary = "detailed"
+hide_agent_reasoning = true
+
 sandbox_mode = "workspace-write"
 approval_policy = "untrusted"
 writable_roots = [
   "~/markdown_texts/",
   "~/works/memolist/"
 ]
+
+[tools]
+web_search = true
+
+[sandbox_workspace_write]
+network_access = true
