@@ -64,10 +64,6 @@ echo
 printf "\e[32mnpm install -g @openai/codex\e[0m\n"
 npm install -g @openai/codex
 
-echo
-printf "\e[32mnpm install -g @google/gemini-cli\e[0m\n"
-npm install -g @google/gemini-cli
-
 asdf reshim nodejs
 
 echo

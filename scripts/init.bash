@@ -231,21 +231,6 @@ else
   ln -is $BASE_DIR_PATH/codex/config.toml ~/.codex/config.toml
 fi
 
-# gemini
-if [[ -d ~/.gemini ]]; then
-  printf "\e[32m~/.gemini dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir ~/.gemini\e[0m\n"
-  mkdir ~/.gemini
-fi
-
-if [[ -L ~/.gemini/settings.json ]]; then
-  printf "\e[32m~/.gemini/settings.json symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink ~/.gemini/settings.json\e[0m\n"
-  ln -is $BASE_DIR_PATH/gemini/settings.json ~/.gemini/settings.json
-fi
-
 # gitconfig
 if [[ -L ~/.gitconfig ]]; then
   printf "\e[32m~/.gitconfig symlink already exists\e[0m\n"
