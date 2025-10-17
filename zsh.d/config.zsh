@@ -62,6 +62,7 @@ bindkey -v '^u' kill-whole-line                       # Ctrl+uでkill-whole-line
 bindkey -v '^w' backward-kill-word                    # Ctrl+wでbackward-kill-word
 bindkey -v '^x' kill-word                             # Ctrl+xでkill-word
 bindkey -v '^z' run-fg-last                           # Ctrl+zで最後にサスペンドしたjobに復帰する
+bindkey -v '^sd' start-ai-sub-agent                   # Ctrl+s,dでAIサブエージェント起動
 bindkey -v '^sf' peco-file-find-and-start-editor      # Ctrl+s,fでファイル検索してstart-editor
 bindkey -v '^sg' immediate-gh-browse                  # Ctrl+s,gでghコマンドによるリポジトリ閲覧
 bindkey -v '^sh' immediate-git-log-search             # Ctrl+s,hでgit log検索
@@ -80,6 +81,7 @@ bindkey -v '^s.' gtran-ja-to-en                       # Ctrl+s,.で日本語を�
 bindkey -v '^s_' peco-cd-ghq-repo                     # Ctrl+s,_でghq管理下のリポジトリを絞り込んで移動
 bindkey -v '^s ' google-search                        # Ctrl+s,<SPACE>でBUFFERの文字列を使ったGoogle検索
 bindkey -v '^s^a' immediate-git-add-all               # Ctrl+s,Ctrl+aでgit add .
+bindkey -v '^s^d' start-ai-sub-agent                  # Ctrl+s,Ctrl+dでAIサブエージェント起動
 bindkey -v '^s^f' peco-file-finder                    # Ctrl+s,Ctrl+fでpeco-file-finder
 bindkey -v '^s^g' immediate-gh-browse-pull-request    # Ctrl+s,Ctrl+gでブランチ名からpull requestを開く
 bindkey -v '^s^h' immediate-git-log-search-with-diff  # Ctrl+s,Ctrl+hでgit logをdiff出力付きで検索
