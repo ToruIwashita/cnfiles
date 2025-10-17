@@ -65,6 +65,7 @@ bindkey -v '^z' run-fg-last                           # Ctrl+zで最後にサス
 bindkey -v '^sf' peco-file-find-and-start-editor      # Ctrl+s,fでファイル検索してstart-editor
 bindkey -v '^sg' immediate-gh-browse                  # Ctrl+s,gでghコマンドによるリポジトリ閲覧
 bindkey -v '^sh' immediate-git-log-search             # Ctrl+s,hでgit log検索
+bindkey -v '^sj' immediate-markdown-glow              # Ctr+s,jでBUFFERの末尾が.mdだった場合にglow
 bindkey -v '^sk' peco-cd-recent-dir                   # Ctrl+s,kで最近移動したディレクトリを絞り込んで移動
 bindkey -v '^sl' edit-command-line                    # Ctrl+s,lでコマンドラインエディタ編集
 bindkey -v '^sn' immediate-git-fetch                  # Ctrl+s,nでgit fetch
@@ -82,6 +83,7 @@ bindkey -v '^s^a' immediate-git-add-all               # Ctrl+s,Ctrl+aでgit add 
 bindkey -v '^s^f' peco-file-finder                    # Ctrl+s,Ctrl+fでpeco-file-finder
 bindkey -v '^s^g' immediate-gh-browse-pull-request    # Ctrl+s,Ctrl+gでブランチ名からpull requestを開く
 bindkey -v '^s^h' immediate-git-log-search-with-diff  # Ctrl+s,Ctrl+hでgit logをdiff出力付きで検索
+bindkey -v '^s^j' immediate-markdown-glow             # Ctr+s,Ctr+jでBUFFERの末尾が.mdだった場合にglow
 bindkey -v '^s^p' copy-prev-shell-word                # Ctrl+s,Ctrl+pで1つ前の文字列をコピペ(空欄区切りで文字列判定)
 bindkey -v '^s^r' immediate-git-soft-reset-latest     # Ctrl+s,Ctrl+rで最新のcommitをgit reset --soft
 bindkey -v '^s^s' peco-git-grep-and-start-editor      # Ctrl+s,Ctrl+sでgit grepしてstart-editor
