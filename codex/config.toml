@@ -4,7 +4,7 @@ model_reasoning_summary = "detailed"
 hide_agent_reasoning = true
 
 sandbox_mode = "workspace-write"
-approval_policy = "untrusted"
+approval_policy = "on-request"
 writable_roots = [
   "~/markdown_texts/",
   "~/works/memolist/"
