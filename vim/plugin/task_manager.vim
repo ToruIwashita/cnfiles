@@ -187,6 +187,50 @@ class TaskManager
     this._SelectTemplate(template_files, OnTemplateSelected)
   enddef
 
+  def CopyTask(dir_name: string)
+    if empty(dir_name)
+      echohl ErrorMsg
+      echo 'Error: CopyTask requires a directory name'
+      echohl None
+      return
+    endif
+
+    this._LoadConfig()
+
+    if !this._ValidateConfig()
+      return
+    endif
+
+    if !this._ValidateDirectoryExists(dir_name)
+      return
+    endif
+
+    var new_dir_name = this._GetCopyTargetDirName(dir_name)
+    if empty(new_dir_name)
+      return
+    endif
+
+    var root_dir = this._GetCleanRootDir()
+    var source_path = root_dir .. '/' .. dir_name
+    var target_path = root_dir .. '/' .. new_dir_name
+
+    # コピー先が既に存在する場合はエラー
+    if isdirectory(target_path)
+      echohl ErrorMsg
+      echo 'Error: Directory "' .. new_dir_name .. '" already exists'
+      echohl None
+      return
+    endif
+
+    if this._CopyDirectoryExcludingSwap(source_path, target_path)
+      this._ShowNotification('Copied: ' .. dir_name .. ' -> ' .. new_dir_name)
+    else
+      echohl ErrorMsg
+      echo 'Error: Failed to copy directory'
+      echohl None
+    endif
+  enddef
+
   def ArchiveTask(dir_name: string)
     if empty(dir_name)
       echohl ErrorMsg
@@ -762,15 +806,83 @@ class TaskManager
   def _GetArchivesDir(): string
     return this._GetCleanRootDir() .. '/archived_tasks'
   enddef
+
+  def _GetCopyTargetDirName(default_name: string): string
+    var new_name = input('Enter new directory name: ', default_name)
+    if !empty(new_name)
+      return new_name
+    endif
+
+    while true
+      redraw
+
+      echohl ErrorMsg
+      echo 'Directory name cannot be empty.'
+      echohl None
+      echo ''
+
+      var retry_name = input('Enter new directory name: ', default_name)
+      if !empty(retry_name)
+        return retry_name
+      endif
+    endwhile
+    return ''
+  enddef
+
+  def _CopyDirectoryExcludingSwap(source_path: string, target_path: string): bool
+    try
+      # ターゲットディレクトリを作成
+      if !isdirectory(target_path)
+        mkdir(target_path, 'p')
+      endif
+
+      # ソースディレクトリ内の全アイテムを取得（再帰的）
+      var all_items = glob(source_path .. '/**', false, true)
+
+      # ディレクトリとファイルを分離
+      var directories = []
+      var files = []
+
+      for item in all_items
+        # .swpファイルをスキップ
+        if item =~# '\.sw[a-p]$'
+          continue
+        endif
+
+        if isdirectory(item)
+          add(directories, item)
+        else
+          add(files, item)
+        endif
+      endfor
+
+      # まずディレクトリを作成
+      for dir_item in directories
+        var relative_path = substitute(dir_item, '^' .. escape(source_path, '.*[]^$\\') .. '/', '', '')
+        var target_dir = target_path .. '/' .. relative_path
+        if !isdirectory(target_dir)
+          mkdir(target_dir, 'p')
+        endif
+      endfor
+
+      # 次にファイルをコピー
+      for file_item in files
+        var relative_path = substitute(file_item, '^' .. escape(source_path, '.*[]^$\\') .. '/', '', '')
+        var target_file = target_path .. '/' .. relative_path
+        var content = readfile(file_item, 'b')
+        writefile(content, target_file, 'b')
+      endfor
+
+      return true
+    catch
+      return false
+    endtry
+  enddef
 endclass
 
 var task_manager = TaskManager.new()
 
-def AppendTaskComplete(ArgLead: string, CmdLine: string, CursorPos: number): list<string>
-  return task_manager.GetDirectoryList(ArgLead)
-enddef
-
-def ArchiveTaskComplete(ArgLead: string, CmdLine: string, CursorPos: number): list<string>
+def ActiveTasksComplete(ArgLead: string, CmdLine: string, CursorPos: number): list<string>
   return task_manager.GetDirectoryList(ArgLead)
 enddef
 
@@ -791,6 +903,10 @@ def AppendTaskCommand(dir_name: string)
   task_manager.AppendTask(dir_name)
 enddef
 
+def CopyTaskCommand(dir_name: string)
+  task_manager.CopyTask(dir_name)
+enddef
+
 def ArchiveTaskCommand(dir_name: string)
   task_manager.ArchiveTask(dir_name)
 enddef
@@ -804,8 +920,9 @@ def DeleteTaskCommand(dir_name: string)
 enddef
 
 command! -nargs=? CreateTask call CreateTaskCommand(<f-args>)
-command! -nargs=1 -complete=customlist,AppendTaskComplete AppendTask call AppendTaskCommand(<f-args>)
-command! -nargs=1 -complete=customlist,ArchiveTaskComplete ArchiveTask call ArchiveTaskCommand(<f-args>)
+command! -nargs=1 -complete=customlist,ActiveTasksComplete AppendTask call AppendTaskCommand(<f-args>)
+command! -nargs=1 -complete=customlist,ActiveTasksComplete CopyTask call CopyTaskCommand(<f-args>)
+command! -nargs=1 -complete=customlist,ActiveTasksComplete ArchiveTask call ArchiveTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,ArchivedTasksComplete RestoreTask call RestoreTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,ArchivedTasksComplete DeleteTask call DeleteTaskCommand(<f-args>)
 
