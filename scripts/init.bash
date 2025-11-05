@@ -78,12 +78,12 @@ else
   mkdir $WORKS_DIR_PATH
 fi
 
-# works cursor workspaces dir
-if [[ -d $CURSOR_WORKSPACES_DIR_PATH ]]; then
-  printf "\e[32m$CURSOR_WORKSPACES_DIR_PATH dir already exists\e[0m\n"
+# works memolist dir
+if [[ -d $MEMOLIST_DIR_PATH ]]; then
+  printf "\e[32m$MEMOLIST_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir -p $CURSOR_WORKSPACES_DIR_PATH\e[0m\n"
-  mkdir -p $CURSOR_WORKSPACES_DIR_PATH
+  printf "\e[31mmkdir $MEMOLIST_DIR_PATH\e[0m\n"
+  mkdir $MEMOLIST_DIR_PATH
 fi
 
 # works tmp dir
@@ -94,12 +94,28 @@ else
   mkdir $TMP_DIR_PATH
 fi
 
-# works memolist dir
-if [[ -d $MEMOLIST_DIR_PATH ]]; then
-  printf "\e[32m$MEMOLIST_DIR_PATH dir already exists\e[0m\n"
+# works cursor workspaces dir
+if [[ -d $CURSOR_WORKSPACES_DIR_PATH ]]; then
+  printf "\e[32m$CURSOR_WORKSPACES_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $MEMOLIST_DIR_PATH\e[0m\n"
-  mkdir $MEMOLIST_DIR_PATH
+  printf "\e[31mmkdir -p $CURSOR_WORKSPACES_DIR_PATH\e[0m\n"
+  mkdir -p $CURSOR_WORKSPACES_DIR_PATH
+fi
+
+# works docker dir
+if [[ -d $DOCKER_DIR_PATH ]]; then
+  printf "\e[32m$DOCKER_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $DOCKER_DIR_PATH\e[0m\n"
+  mkdir $DOCKER_DIR_PATH
+fi
+
+# works docker mysql dir
+if [[ -d $DOCKER_MYSQL_DIR_PATH ]]; then
+  printf "\e[32m$DOCKER_MYSQL_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $DOCKER_MYSQL_DIR_PATH\e[0m\n"
+  mkdir $DOCKER_MYSQL_DIR_PATH
 fi
 
 ## copy zsh config file
