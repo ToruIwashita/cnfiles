@@ -50,7 +50,8 @@
     ],
     "additionalDirectories": [
       "~/markdown_texts/",
-      "~/works/memolist/"
+      "~/works/memolist/",
+      "~/works/git_worktrees"
     ]
   },
   "statusLine": {
