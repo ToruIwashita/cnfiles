@@ -78,20 +78,20 @@ else
   mkdir $WORKS_DIR_PATH
 fi
 
-# works memolist dir
-if [[ -d $MEMOLIST_DIR_PATH ]]; then
-  printf "\e[32m$MEMOLIST_DIR_PATH dir already exists\e[0m\n"
-else
-  printf "\e[31mmkdir $MEMOLIST_DIR_PATH\e[0m\n"
-  mkdir $MEMOLIST_DIR_PATH
-fi
-
 # works tmp dir
 if [[ -d $TMP_DIR_PATH ]]; then
   printf "\e[32m$TMP_DIR_PATH dir already exists\e[0m\n"
 else
   printf "\e[31mmkdir $TMP_DIR_PATH\e[0m\n"
   mkdir $TMP_DIR_PATH
+fi
+
+# works memolist dir
+if [[ -d $MEMOLIST_DIR_PATH ]]; then
+  printf "\e[32m$MEMOLIST_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir $MEMOLIST_DIR_PATH\e[0m\n"
+  mkdir $MEMOLIST_DIR_PATH
 fi
 
 # works git worktrees dir
