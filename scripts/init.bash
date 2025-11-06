@@ -94,6 +94,14 @@ else
   mkdir $TMP_DIR_PATH
 fi
 
+# works git worktrees dir
+if [[ -d $GIT_WORKTREES_DIR_PATH ]]; then
+  printf "\e[32m$GIT_WORKTREES_DIR_PATH dir already exists\e[0m\n"
+else
+  printf "\e[31mmkdir -p $GIT_WORKTREES_DIR_PATH\e[0m\n"
+  mkdir -p $GIT_WORKTREES_DIR_PATH
+fi
+
 # works cursor workspaces dir
 if [[ -d $CURSOR_WORKSPACES_DIR_PATH ]]; then
   printf "\e[32m$CURSOR_WORKSPACES_DIR_PATH dir already exists\e[0m\n"
