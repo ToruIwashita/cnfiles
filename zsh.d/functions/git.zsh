@@ -656,7 +656,7 @@ EOF`
 }
 
 gw() {
-  integer remove list
+  integer remove remove_with_branch list
   local worktree_base_dir dir_name branch self_cmd help usage
   local -a args
 
@@ -665,6 +665,7 @@ gw() {
   usage=`cat <<EOF
 usage: $self_cmd [branch]
           [-r --remove]
+          [-R --remove-with-branch]
           [-l --list]
           [-h --help]
 EOF`
@@ -673,6 +674,10 @@ EOF`
     case "$1" in
       -r | --remove)
         (( remove++ ))
+        shift 1
+        ;;
+      -R | --remove-with-branch)
+        (( remove_with_branch++ ))
         shift 1
         ;;
       -l | --list)
@@ -719,8 +724,13 @@ EOF`
     branch=$(__git-ref-head)
   fi
 
-  if (( remove )); then
+  if (( remove || remove_with_branch )); then
     git worktree remove $worktree_base_dir/$branch
+
+    if (( remove_with_branch )); then
+      git branch -D $branch
+    fi
+
     return 0
   fi
 

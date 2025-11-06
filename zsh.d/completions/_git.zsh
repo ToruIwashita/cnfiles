@@ -140,7 +140,8 @@ _gsw() {
 
 _gw() {
   _arguments \
-    '(-r --remove)'{-r,--remove}'[Remove worktree]: :__git-worktrees' \
+    '(-r --remove -R --remove-with-branch)'{-r,--remove}'[Remove worktree]: :__git-worktrees' \
+    '(-r --remove -R --remove-with-branch)'{-R,--remove-with-branch}'[Remove worktree and branch]: :__git-worktrees' \
     '(-l --list)'{-l,--list}'[List worktrees]' \
     '(-h --help)'{-h,--help}'[Show help text]' \
     '(:)*: :__git-branches'
