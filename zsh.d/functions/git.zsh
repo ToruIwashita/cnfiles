@@ -655,6 +655,86 @@ EOF`
   git checkout $branch
 }
 
+gw() {
+  integer remove list
+  local worktree_base_dir dir_name branch self_cmd help usage
+  local -a args
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd [branch]
+          [-r --remove]
+          [-l --list]
+          [-h --help]
+EOF`
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -r | --remove)
+        (( remove++ ))
+        shift 1
+        ;;
+      -l | --list)
+        (( list++ ))
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift
+        args+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        args+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  if (( list )); then
+    git worktree list
+    return 0
+  fi
+
+  dir_name=${$(git rev-parse --show-toplevel):t}
+  worktree_base_dir=$GIT_WORKTREES_DIR_PATH/$dir_name
+
+  if (( ${#args} )); then
+    branch=${args[1]}
+  else
+    branch=$(__git-ref-head)
+  fi
+
+  if (( remove )); then
+    git worktree remove $worktree_base_dir/$branch
+    return 0
+  fi
+
+  if [[ ! -d $worktree_base_dir ]]; then
+    mkdir -p $worktree_base_dir
+  fi
+
+  if git show-ref --verify --quiet "refs/heads/$branch"; then
+    git worktree add $worktree_base_dir/$branch $branch
+  else
+    git worktree add $worktree_base_dir/$branch -b $branch
+  fi
+}
+
 gud() {
   local usage
 
@@ -1106,7 +1186,7 @@ gl() {
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [-g --graph]
-                [-h --help]
+          [-h --help]
 EOF`
 
   if ! __git-inside-work-tree; then

@@ -11,6 +11,12 @@ __git-remote-branches() {
   compadd -a remote_branches
 }
 
+__git-worktrees() {
+  local -a worktree_branches
+  worktree_branches=(${(f)"$(__git-worktree-list)"})
+  compadd -a worktree_branches
+}
+
 __git-changed-files() {
   local -a changed_files
   changed_files=(${(f)"$(__git-changed-list)"})
@@ -132,6 +138,14 @@ _gsw() {
     '(:)*: :__git-branches'
 }
 
+_gw() {
+  _arguments \
+    '(-r --remove)'{-r,--remove}'[Remove worktree]: :__git-worktrees' \
+    '(-l --list)'{-l,--list}'[List worktrees]' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '(:)*: :__git-branches'
+}
+
 _gud() {
   _arguments '*: :__git-diff-files'
 }
@@ -177,6 +191,7 @@ compdef _gad gad
 compdef _gc gc
 compdef _gd gd
 compdef _gsw gsw
+compdef _gw gw
 compdef _gud gud
 compdef _gll gll
 compdef _gsh gsh

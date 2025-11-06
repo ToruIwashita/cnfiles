@@ -30,6 +30,13 @@ __git-remote-branch-list() {
   printf '%s\n' "${remote_branches[@]}"
 }
 
+__git-worktree-list() {
+  __git-inside-work-tree || return
+  local -a worktree_branches
+  worktree_branches=(${${(M)${(f)"$(git branch)"}:#\+[[:space:]]*}#\+[[:space:]]})
+  printf '%s\n' "${worktree_branches[@]}"
+}
+
 __git-changed-list() {
   __git-inside-work-tree || return
   git diff --name-only origin/HEAD...HEAD
