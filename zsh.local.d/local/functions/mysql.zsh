@@ -471,7 +471,7 @@ EOF`
     my_cmd="SELECT${selected_field_list} FROM${table_name}${where_condition}${group_condition}${order_condition}${limit_condition}${vertical_option}"
   fi
 
-  print "> $my_cmd;"
+  print "> $my_cmd"
   myq "$my_cmd"
 }
 
