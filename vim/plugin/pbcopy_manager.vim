@@ -69,6 +69,28 @@ class PbcopyManager
     this._ExecutePbcopy(display_path, 'Copied to clipboard: ' .. display_path)
   enddef
 
+  def CopyWordToClipboard()
+    this._LoadConfig()
+
+    if !this._ValidateConfig()
+      return
+    endif
+
+    var word = expand('<cword>')
+    if empty(word)
+      echohl ErrorMsg
+      echo 'No word under cursor'
+      echohl None
+      return
+    endif
+
+    # ヤンクレジスタにも保存
+    setreg('"', word)
+
+    # pbcopyでクリップボードにもコピー
+    this._ExecutePbcopy(word, 'Copied word to clipboard')
+  enddef
+
   def CopySelectionToClipboard()
     this._LoadConfig()
 
@@ -264,6 +286,10 @@ def CopyDirPathToClipboardCommand()
   pbcopy_manager.CopyDirPathToClipboard()
 enddef
 
+def CopyWordToClipboardCommand()
+  pbcopy_manager.CopyWordToClipboard()
+enddef
+
 def CopySelectionToClipboardCommand()
   pbcopy_manager.CopySelectionToClipboard()
 enddef
@@ -280,6 +306,7 @@ command! CopyBufferToClipboard call CopyBufferToClipboardCommand()
 command! CopyFilePathToClipboard call CopyFilePathToClipboardCommand()
 command! CopyFileNameToClipboard call CopyFileNameToClipboardCommand()
 command! CopyDirPathToClipboard call CopyDirPathToClipboardCommand()
+command! CopyWordToClipboard call CopyWordToClipboardCommand()
 command! -range CopySelectionToClipboard call CopySelectionToClipboardCommand()
 command! -range CopySelectionWithPathToClipboard call CopySelectionWithPathToClipboardCommand()
 command! -range CopyWrappedSelectionWithPathToClipboard call CopyWrappedSelectionWithPathToClipboardCommand()
