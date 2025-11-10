@@ -11,6 +11,8 @@ noremap <C-s>y :<C-u>CopyFilePathToClipboard <CR>
 noremap <C-s>Y :<C-u>CopyFileNameToClipboard <CR>
 noremap <C-s><C-y> :<C-u>CopyDirPathToClipboard <CR>
 
+noremap ye :<C-u>CopyWordToClipboard<CR>
+
 vnoremap <C-y> :<C-u>CopyWrappedSelectionWithPathToClipboard<CR>
 vnoremap Y :<C-u>CopySelectionWithPathToClipboard<CR>
 vnoremap <leader>y :<C-u>CopySelectionToClipboard<CR>
