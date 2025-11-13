@@ -141,6 +141,8 @@ alias gss='git stash save'
 alias gsp='git stash pop'
 # ping
 alias ping-one='ping -v -c 1'
+# ai
+alias codex-update='npm install -g @openai/codex'
 # other
 alias cp='cp -ip'
 alias mv='mv -i'
