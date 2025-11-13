@@ -102,8 +102,8 @@ noremap F <NOP>
 noremap s <NOP>
 " Sを無効化
 noremap S <NOP>
-" yeを無効化
-noremap ye <NOP>
+" Yを無効化
+noremap Y <NOP>
 " <ESC>
 noremap <C-j> <ESC>
 " 現在のファイル名表示
