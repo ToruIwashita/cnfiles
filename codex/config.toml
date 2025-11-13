@@ -5,13 +5,14 @@ hide_agent_reasoning = true
 
 sandbox_mode = "workspace-write"
 approval_policy = "on-request"
-writable_roots = [
-  "~/markdown_texts/",
-  "~/works/memolist/"
-]
 
 [features]
 web_search_request = true
 
 [sandbox_workspace_write]
+writable_roots = [
+  "~/markdown_texts/",
+  "~/works/memolist/"
+]
+
 network_access = true
