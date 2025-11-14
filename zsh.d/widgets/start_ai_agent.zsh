@@ -1,10 +1,6 @@
 ## start-ai-agent
 _start-ai-agent() {
-  if (( ! $#BUFFER )); then
-    BUFFER="${AI_AGENT:-claude}"
-  else
-    BUFFER="${AI_AGENT:-claude} -p '$BUFFER'"
-  fi
+  BUFFER="${AI_AGENT:-claude}"
 
   zle accept-line
 }

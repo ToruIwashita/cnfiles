@@ -1,10 +1,6 @@
 ## start-ai-sub-agent
 _start-ai-sub-agent() {
-  if (( ! $#BUFFER )); then
-    BUFFER="${AI_SUB_AGENT:-codex}"
-  else
-    BUFFER="${AI_SUB_AGENT:-codex} --search '$BUFFER'"
-  fi
+  BUFFER="${AI_SUB_AGENT:-codex}"
 
   zle accept-line
 }
