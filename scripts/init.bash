@@ -248,11 +248,11 @@ else
   ln -is $BASE_DIR_PATH/codex/AGENTS.md ~/.codex/AGENTS.md
 fi
 
-if [[ -L ~/.codex/config.toml ]]; then
+if [[ -f ~/.codex/config.toml ]]; then
   printf "\e[32m~/.codex/config.toml symlink already exists\e[0m\n"
 else
   printf "\e[31mcreate symlink ~/.codex/config.toml\e[0m\n"
-  ln -is $BASE_DIR_PATH/codex/config.toml ~/.codex/config.toml
+  cp -p $BASE_DIR_PATH/codex/config.toml ~/.codex/config.toml
 fi
 
 # gitconfig
