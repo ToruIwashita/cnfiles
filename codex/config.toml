@@ -16,3 +16,6 @@ writable_roots = [
 ]
 
 network_access = true
+
+[notice]
+hide_gpt5_1_migration_prompt = true
