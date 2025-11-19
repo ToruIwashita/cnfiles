@@ -173,7 +173,23 @@ gam() {
 }
 
 gau() {
-  __ga $*
+  local usage
+
+  usage="usage: $0 <files>"
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  if (( ! $# )); then
+    print $usage 1>&2
+    return 1
+  fi
+
+  (git add --intent-to-add $(git rev-parse --show-toplevel)/$^*) &&
+    (git diff $(git rev-parse --show-toplevel)/$^*) &&
+    (git add $(git rev-parse --show-toplevel)/$^*)
 }
 
 gac() {
