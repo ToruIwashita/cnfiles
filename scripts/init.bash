@@ -464,14 +464,6 @@ else
   touch $MEMOLIST_TMP_JSON_FILE_PATH
 fi
 
-# memolist tmp ruby file
-if [[ -f $MEMOLIST_TMP_RUBY_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TMP_RUBY_FILE_PATH file already exists\e[0m\n"
-else
-  printf "\e[31mcreate file $MEMOLIST_TMP_RUBY_FILE_PATH\e[0m\n"
-  touch $MEMOLIST_TMP_RUBY_FILE_PATH
-fi
-
 # memolist tmp diff file
 if [[ -f $MEMOLIST_TMP_DIFF_FILE_PATH ]]; then
   printf "\e[32m$MEMOLIST_TMP_DIFF_FILE_PATH file already exists\e[0m\n"
