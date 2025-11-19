@@ -60,8 +60,11 @@ CURSOR_WORKSPACES_DIR_PATH=$WORKS_DIR_PATH/cursor_workspaces
 DOCKER_DIR_PATH=$WORKS_DIR_PATH/docker
 DOCKER_MYSQL_DIR_PATH=$DOCKER_DIR_PATH/mysql/
 
-# memolist task file
+# memolist task markdown file
 MEMOLIST_TASK_MARKDOWN_FILE_PATH=$MEMOLIST_DIR_PATH/00-task.md
+
+# memolist prompt markdown file
+MEMOLIST_TMP_PROMPT_FILE_PATH=$MEMOLIST_DIR_PATH/00-prompt.md
 
 # memolist tmp file
 MEMOLIST_TMP_MARKDOWN_FILE_PATH=$MEMOLIST_DIR_PATH/00-tmp.md
