@@ -1,6 +1,4 @@
 ## 環境変数設定
-# agentic coding
-export PULL_REQUEST_TEMPLATE_FILE_PATH=
 
 # mysql (その他の設定は ~/.my.cnf に書く)
 export MYSQL_DATABASE=
