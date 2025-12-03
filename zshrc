@@ -86,6 +86,6 @@ antigen bundle ToruIwashita/sys-diver-zsh
 antigen apply
 
 ## 設定読込
-[[ -f $zsh_dir_path/config.zsh ]] && source $zsh_dir_path/config.zsh
 [[ -f $zsh_dir_path/config.plugin.zsh ]] && source $zsh_dir_path/config.plugin.zsh
+[[ -f $zsh_dir_path/config.zsh ]] && source $zsh_dir_path/config.zsh
 [[ -f $zsh_dir_path/config.local.zsh ]] && source $zsh_dir_path/config.local.zsh
