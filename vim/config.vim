@@ -106,14 +106,14 @@ noremap S <NOP>
 noremap Y <NOP>
 " <ESC>
 noremap <C-j> <ESC>
+" _でカーソル行が画面の上端に来るようにスクロール
+noremap <CR> zt
 " 現在のファイル名表示
 noremap <leader>v :<C-u>echo expand('%')<CR>
 " シェルコマンドを実行するためのプレフィックス
 noremap <leader>: :<C-u>%!
 " カーソル行をシェルコマンドとして実行
 noremap <leader>z V:!bash<CR>
-" _でカーソル行が画面の上端に来るようにスクロール
-noremap _ zt
 " 検索後にカーソルを上に移動
 noremap n nzz
 noremap N Nzz
