@@ -205,7 +205,8 @@ class TaskManager
       return
     endif
 
-    var new_dir_name = this._GetCopyTargetDirName(dir_name)
+    var default_new_name = this._RebuildDirNameWithTodayPrefix(dir_name)
+    var new_dir_name = this._GetCopyTargetDirName(default_new_name)
     if empty(new_dir_name)
       return
     endif
@@ -434,12 +435,27 @@ class TaskManager
       echohl None
       return false
     endif
+
+    if stridx(this.config.dir_prefix, '_') >= 0
+      echohl ErrorMsg
+      echo 'Error: g:task_manager_dir_prefix must not contain "_". It is used as a delimiter.'
+      echohl None
+      return false
+    endif
+
     return true
   enddef
 
   def _BuildDirPath(dir_name: string): string
     var full_dir_name = strftime(this.config.dir_prefix) .. '_' .. dir_name
     return this._GetCleanRootDir() .. '/' .. full_dir_name
+  enddef
+
+  def _RebuildDirNameWithTodayPrefix(dir_name: string): string
+    var parts = split(dir_name, '_', true)
+    var dir_body = join(parts[1 :], '_')
+    var today_prefix = strftime(this.config.dir_prefix)
+    return today_prefix .. '_' .. dir_body
   enddef
 
   def _DetermineFileName(input_name: string, dir_name: string): string
