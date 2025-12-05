@@ -1205,14 +1205,15 @@ EOF`
 }
 
 gl() {
-  integer graph patch
-  local self_cmd help usage commit_option patch_option
+  integer graph oneline patch
+  local self_cmd help usage commit_option oneline_option patch_option
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [-c --commit [commit_id]]
           [-g --graph]
+          [-o --oneline]
           [-p --patch]
           [-h --help]
 EOF`
@@ -1236,6 +1237,11 @@ EOF`
         ;;
       -g | --graph)
         (( graph++ ))
+        shift 1
+        ;;
+      -o | --oneline)
+        (( oneline++ ))
+        oneline_option=" --oneline --decorate=no"
         shift 1
         ;;
       -p | --patch)
@@ -1269,13 +1275,18 @@ EOF`
 
   if (( $#commit_option )); then
     if [[ "$commit_option" == "origin/HEAD...HEAD" ]]; then
-      [[ -t 1 ]] && print "\033[36mgit log${patch_option} $commit_option\033[0m\n"
-      git log ${(z)patch_option} "$commit_option"
+      [[ -t 1 ]] && print "\033[36mgit log${oneline_option}${patch_option} $commit_option\033[0m\n"
+      git log ${(z)oneline_option} ${(z)patch_option} "$commit_option"
       return 0
     fi
 
-    [[ -t 1 ]] && print "\033[36mgit log${patch_option} $commit_option^..$commit_option\033[0m\n"
-    git log ${(z)patch_option} "$commit_option"^.."$commit_option"
+    [[ -t 1 ]] && print "\033[36mgit log${oneline_option}${patch_option} $commit_option^..$commit_option\033[0m\n"
+    git log ${(z)oneline_option} ${(z)patch_option} "$commit_option"^.."$commit_option"
+    return 0
+  fi
+
+  if (( oneline )); then
+    git log ${(z)oneline_option} ${(z)patch_option}
     return 0
   fi
 
