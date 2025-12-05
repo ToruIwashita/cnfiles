@@ -1211,8 +1211,8 @@ gl() {
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [-g --graph]
-          [-l --log [commit_id]]
+usage: $self_cmd [-c --commit [commit_id]]
+          [-g --graph]
           [-p --patch]
           [-h --help]
 EOF`
@@ -1225,11 +1225,7 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
-      -g | --graph)
-        (( graph++ ))
-        shift 1
-        ;;
-      -l | --log)
+      -c | --commit)
         if (( $#2 )) && [[ "$2" != -* ]]; then
           commit_option="$2"
           shift 2
@@ -1237,6 +1233,10 @@ EOF`
           commit_option="origin/HEAD...HEAD"
           shift 1
         fi
+        ;;
+      -g | --graph)
+        (( graph++ ))
+        shift 1
         ;;
       -p | --patch)
         (( patch++ ))
