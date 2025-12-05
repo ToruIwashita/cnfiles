@@ -177,6 +177,25 @@ class PbcopyManager
     this._ExecutePbcopy(formatted_content, 'Copied wrapped selection with path to clipboard: ' .. display_path .. ':' .. line_range)
   enddef
 
+  def CopyFilePathWithLineToClipboard()
+    this._LoadConfig()
+
+    if !this._ValidateConfig()
+      return
+    endif
+
+    var current_line = line('.')
+    var full_path = expand('%:p')
+    var display_path = this._GetDisplayPath(full_path)
+    var path_ref = '@' .. display_path .. ':' .. current_line
+
+    # ヤンクレジスタにも保存
+    setreg('"', path_ref)
+
+    # pbcopyでクリップボードにもコピー
+    this._ExecutePbcopy(path_ref, 'Copied path reference to clipboard: ' .. path_ref)
+  enddef
+
   def _LoadConfig()
     this.config = {
       'pbcopy_command': 'pbcopy'
@@ -302,6 +321,10 @@ def CopyWrappedSelectionWithPathToClipboardCommand()
   pbcopy_manager.CopyWrappedSelectionWithPathToClipboard()
 enddef
 
+def CopyFilePathWithLineToClipboardCommand()
+  pbcopy_manager.CopyFilePathWithLineToClipboard()
+enddef
+
 command! CopyBufferToClipboard call CopyBufferToClipboardCommand()
 command! CopyFilePathToClipboard call CopyFilePathToClipboardCommand()
 command! CopyFileNameToClipboard call CopyFileNameToClipboardCommand()
@@ -310,5 +333,6 @@ command! CopyWordToClipboard call CopyWordToClipboardCommand()
 command! -range CopySelectionToClipboard call CopySelectionToClipboardCommand()
 command! -range CopySelectionWithPathToClipboard call CopySelectionWithPathToClipboardCommand()
 command! -range CopyWrappedSelectionWithPathToClipboard call CopyWrappedSelectionWithPathToClipboardCommand()
+command! CopyFilePathWithLineToClipboard call CopyFilePathWithLineToClipboardCommand()
 
 &cpoptions = cpoptions_save
