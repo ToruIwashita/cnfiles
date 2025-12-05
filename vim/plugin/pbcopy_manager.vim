@@ -187,7 +187,7 @@ class PbcopyManager
     var current_line = line('.')
     var full_path = expand('%:p')
     var display_path = this._GetDisplayPath(full_path)
-    var path_ref = '@' .. display_path .. ':' .. current_line
+    var path_ref = display_path .. ':' .. current_line
 
     # ヤンクレジスタにも保存
     setreg('"', path_ref)
