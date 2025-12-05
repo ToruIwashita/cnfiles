@@ -1206,12 +1206,13 @@ EOF`
 
 gl() {
   integer graph
-  local self_cmd help usage
+  local self_cmd help usage commit_option
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [-g --graph]
+          [-l --log [commit_id]]
           [-h --help]
 EOF`
 
@@ -1226,6 +1227,15 @@ EOF`
       -g | --graph)
         (( graph++ ))
         shift 1
+        ;;
+      -l | --log)
+        if (( $#2 )) && [[ "$2" != -* ]]; then
+          commit_option="$2"
+          shift 2
+        else
+          commit_option="origin/HEAD...HEAD"
+          shift 1
+        fi
         ;;
       -h | --help)
         print $usage
@@ -1248,7 +1258,20 @@ EOF`
 
   if (( graph )); then
     git log --graph --date-order -C -M --pretty=format:"<%h> %ad [%an] %Cgreen%d%Creset %s" --all --date=short
-  else
-    git log --pretty=fuller
+    return 0
   fi
+
+  if (( $#commit_option )); then
+    if [[ "$commit_option" == "origin/HEAD...HEAD" ]]; then
+      [[ -t 1 ]] && print "\033[36mgit log $commit_option\033[0m\n"
+      git log "$commit_option"
+      return 0
+    fi
+
+    [[ -t 1 ]] && print "\033[36mgit log $commit_option^..$commit_option\033[0m\n"
+    git log "$commit_option"^.."$commit_option"
+    return 0
+  fi
+
+  git log --pretty=fuller
 }

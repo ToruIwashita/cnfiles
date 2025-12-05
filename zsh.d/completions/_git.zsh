@@ -179,6 +179,7 @@ _gdeleteb() {
 _gl() {
   _arguments \
     '(-g --graph)'{-g,--graph}'[Show graph display]' \
+    '(-l --log)'{-l,--log}'[Show commit log]: :__git-commits' \
     '(-h --help)'{-h,--help}'[Show help text]'
 }
 
