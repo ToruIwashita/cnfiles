@@ -12,9 +12,10 @@ nnoremap <C-s>Y :<C-u>CopyFileNameToClipboard <CR>
 nnoremap <C-s><C-y> :<C-u>CopyDirPathToClipboard <CR>
 
 nnoremap Yw :<C-u>CopyWordToClipboard<CR>
+nnoremap <C-y> :<C-u>CopyFilePathWithLineToClipboard<CR>
 
-vnoremap <C-y> :<C-u>CopyWrappedSelectionWithPathToClipboard<CR>
-vnoremap Y :<C-u>CopySelectionWithPathToClipboard<CR>
+vnoremap Y :<C-u>CopyWrappedSelectionWithPathToClipboard<CR>
+vnoremap <C-y> :<C-u>CopySelectionWithPathToClipboard<CR>
 vnoremap <leader>y :<C-u>CopySelectionToClipboard<CR>
 
 let &cpoptions = s:cpoptions_save
