@@ -1205,14 +1205,15 @@ EOF`
 }
 
 gl() {
-  integer graph
-  local self_cmd help usage commit_option
+  integer graph patch
+  local self_cmd help usage commit_option patch_option
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [-g --graph]
           [-l --log [commit_id]]
+          [-p --patch]
           [-h --help]
 EOF`
 
@@ -1237,6 +1238,11 @@ EOF`
           shift 1
         fi
         ;;
+      -p | --patch)
+        (( patch++ ))
+        patch_option=" -p"
+        shift 1
+        ;;
       -h | --help)
         print $usage
         return 0
@@ -1257,21 +1263,21 @@ EOF`
   done
 
   if (( graph )); then
-    git log --graph --date-order -C -M --pretty=format:"<%h> %ad [%an] %Cgreen%d%Creset %s" --all --date=short
+    git log ${(z)patch_option} --graph --date-order -C -M --pretty=format:"<%h> %ad [%an] %Cgreen%d%Creset %s" --all --date=short
     return 0
   fi
 
   if (( $#commit_option )); then
     if [[ "$commit_option" == "origin/HEAD...HEAD" ]]; then
-      [[ -t 1 ]] && print "\033[36mgit log $commit_option\033[0m\n"
-      git log "$commit_option"
+      [[ -t 1 ]] && print "\033[36mgit log${patch_option} $commit_option\033[0m\n"
+      git log ${(z)patch_option} "$commit_option"
       return 0
     fi
 
-    [[ -t 1 ]] && print "\033[36mgit log $commit_option^..$commit_option\033[0m\n"
-    git log "$commit_option"^.."$commit_option"
+    [[ -t 1 ]] && print "\033[36mgit log${patch_option} $commit_option^..$commit_option\033[0m\n"
+    git log ${(z)patch_option} "$commit_option"^.."$commit_option"
     return 0
   fi
 
-  git log --pretty=fuller
+  git log ${(z)patch_option} --pretty=fuller
 }
