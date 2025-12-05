@@ -5,13 +5,13 @@ scriptencoding utf-8
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-noremap <C-s>b :<C-u>wa<CR>:CopyBufferToClipboard<CR>
-noremap <C-s><C-b> :<C-u>wa<CR>:CopyBufferToClipboard<CR>
-noremap <C-s>y :<C-u>CopyFilePathToClipboard <CR>
-noremap <C-s>Y :<C-u>CopyFileNameToClipboard <CR>
-noremap <C-s><C-y> :<C-u>CopyDirPathToClipboard <CR>
+nnoremap <C-s>b :<C-u>wa<CR>:CopyBufferToClipboard<CR>
+nnoremap <C-s><C-b> :<C-u>wa<CR>:CopyBufferToClipboard<CR>
+nnoremap <C-s>y :<C-u>CopyFilePathToClipboard <CR>
+nnoremap <C-s>Y :<C-u>CopyFileNameToClipboard <CR>
+nnoremap <C-s><C-y> :<C-u>CopyDirPathToClipboard <CR>
 
-noremap Yw :<C-u>CopyWordToClipboard<CR>
+nnoremap Yw :<C-u>CopyWordToClipboard<CR>
 
 vnoremap <C-y> :<C-u>CopyWrappedSelectionWithPathToClipboard<CR>
 vnoremap Y :<C-u>CopySelectionWithPathToClipboard<CR>
