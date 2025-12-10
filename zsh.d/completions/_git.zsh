@@ -123,7 +123,7 @@ _gc() {
 
 _gd() {
   _arguments \
-    '(-l --log)'{-l,--log}'[Show commit diff]: :__git-commits' \
+    '(-l --log)'{-l,--log}'[Show commit diff (default: origin/HEAD...HEAD)]: :__git-commits' \
     '(-i --id-only)'{-i,--id-only}'[Show commit ID only]' \
     '(-n --name-only)'{-n,--name-only}'[Show only file names]' \
     '(-s --staged)'{-s,--staged}'[Show staged changes]: :__git-staged-files' \
@@ -178,7 +178,7 @@ _gdeleteb() {
 
 _gl() {
   _arguments \
-    '(-c --commit)'{-c,--commit}'[Show commit log]: :__git-commits' \
+    '(-c --commit)'{-c,--commit}'[Show commit log (default: origin/HEAD...HEAD)]: :__git-commits' \
     '(-g --graph)'{-g,--graph}'[Show graph display]' \
     '(-o --oneline)'{-o,--oneline}'[Show oneline format]' \
     '(-p --patch)'{-p,--patch}'[Show patch diff]' \

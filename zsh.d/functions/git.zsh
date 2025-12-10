@@ -510,7 +510,7 @@ gd() {
   usage=`cat <<EOF
 usage: $self_cmd [files]
           [-i --id-only]
-          [-l --log [commit_id]]
+          [-l --log [commit_id]] (default: origin/HEAD...HEAD)
           [-n --name-only]
           [-s --staged]
           [-h --help]
@@ -1211,7 +1211,7 @@ gl() {
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [-c --commit [commit_id]]
+usage: $self_cmd [-c --commit [commit_id]] (default: origin/HEAD...HEAD)
           [-g --graph]
           [-o --oneline]
           [-p --patch]
