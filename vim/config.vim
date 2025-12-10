@@ -58,6 +58,9 @@ set listchars=tab:»-,trail:_          " listモードでタブと行末の空�
 set grepprg=ag\ --nogroup\ --nocolor  " grepをagで行う
 set grepformat=%f:%l:%m               " grepのフォーマット(ag用)
 
+"" abbreviation
+iabbrev <buffer> =f #<SPACE>TODO:<SPACE>
+
 "" map
 " matchitでdo〜end等対応するブロックジャンプ
 map <SPACE> %

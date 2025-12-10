@@ -54,11 +54,10 @@ command! RemoveCurrentMarker call s:remove_current_marker()
 nnoremap <buffer> =d :<C-u>RemoveBindingPry<CR>
 nnoremap <buffer> =t :<C-u>RemoveCurrentMarker<CR>
 
-ab <buffer> =a , :aggregate_failures
-ab <buffer> =c context "current", :current do
-ab <buffer> =d binding.pry
-ab <buffer> =f # frozen_string_literal: true
-ab <buffer> =t , :current
+iabbrev <buffer> =a , :aggregate_failures
+iabbrev <buffer> =c context "current", :current do
+iabbrev <buffer> =d binding.pry
+iabbrev <buffer> =t , :current
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save

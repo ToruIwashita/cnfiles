@@ -89,7 +89,7 @@ vnoremap <Leader>ff :WrapWithFence<CR>
 cnorea %M %MdFormat
 cnorea '<,'>M '<,'>MdFormat
 
-ab <buffer> =b <br/>
+iabbrev <buffer> =b <br/>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
