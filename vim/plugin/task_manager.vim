@@ -868,15 +868,27 @@ class TaskManager
         if isdirectory(item)
           add(directories, item)
         else
-          add(files, item)
+          # _instructionsを含むファイルのみを対象とする
+          var filename = fnamemodify(item, ':t')
+          if filename =~# '_instructions'
+            add(files, item)
+          endif
         endif
       endfor
 
-      # まずディレクトリを作成
+      # まずディレクトリを作成（ファイルがコピーされるディレクトリのみ）
       for dir_item in directories
         var relative_path = substitute(dir_item, '^' .. escape(source_path, '.*[]^$\\') .. '/', '', '')
         var target_dir = target_path .. '/' .. relative_path
-        if !isdirectory(target_dir)
+        # このディレクトリ内にコピー対象のファイルがあるかチェック
+        var has_target_files = false
+        for file_item in files
+          if file_item =~# '^' .. escape(dir_item, '.*[]^$\\') .. '/'
+            has_target_files = true
+            break
+          endif
+        endfor
+        if has_target_files && !isdirectory(target_dir)
           mkdir(target_dir, 'p')
         endif
       endfor
