@@ -59,7 +59,7 @@ set grepprg=ag\ --nogroup\ --nocolor  " grepをagで行う
 set grepformat=%f:%l:%m               " grepのフォーマット(ag用)
 
 "" abbreviation
-iabbrev <buffer> =f #<SPACE>TODO:
+iabbrev =f #<SPACE>TODO:
 
 "" map
 " matchitでdo〜end等対応するブロックジャンプ
