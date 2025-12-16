@@ -30,6 +30,7 @@
       "Task(*)",
       "TodoRead(*)",
       "TodoWrite(*)",
+      "WebSearch",
       "WebFetch(domain:docs.anthropic.com)"
     ],
     "deny": [
