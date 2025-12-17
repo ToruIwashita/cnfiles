@@ -1205,15 +1205,15 @@ EOF`
 }
 
 gl() {
-  integer graph oneline patch
-  local self_cmd help usage commit_option oneline_option patch_option
+  integer graph long_format patch
+  local self_cmd help usage commit_option long_option patch_option
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
 usage: $self_cmd [-c --commit [commit_id]] (default: origin/HEAD...HEAD)
           [-g --graph]
-          [-o --oneline]
+          [-l --long]
           [-p --patch]
           [-h --help]
 EOF`
@@ -1239,9 +1239,9 @@ EOF`
         (( graph++ ))
         shift 1
         ;;
-      -o | --oneline)
-        (( oneline++ ))
-        oneline_option=" --oneline --decorate=no"
+      -l | --long)
+        (( long_format++ ))
+        long_option=" --pretty=fuller"
         shift 1
         ;;
       -p | --patch)
@@ -1275,20 +1275,30 @@ EOF`
 
   if (( $#commit_option )); then
     if [[ "$commit_option" == "origin/HEAD...HEAD" ]]; then
-      [[ -t 1 ]] && print "\033[36mgit log${oneline_option}${patch_option} $commit_option\033[0m\n"
-      git log ${(z)oneline_option} ${(z)patch_option} "$commit_option"
+      if (( long_format )); then
+        [[ -t 1 ]] && print "\033[36mgit log${long_option}${patch_option} $commit_option\033[0m\n"
+        git log ${(z)long_option} ${(z)patch_option} "$commit_option"
+      else
+        [[ -t 1 ]] && print "\033[36mgit log${patch_option} $commit_option\033[0m\n"
+        git log --pretty=format:'%C(yellow)%h%Creset - [%C(cyan)%ad%Creset] %C(green)@%an%Creset %s%C(auto)%d%Creset' --date=format:'%Y-%m-%d %H:%M' --decorate=short ${(z)patch_option} "$commit_option"
+      fi
       return 0
     fi
 
-    [[ -t 1 ]] && print "\033[36mgit log${oneline_option}${patch_option} $commit_option^..$commit_option\033[0m\n"
-    git log ${(z)oneline_option} ${(z)patch_option} "$commit_option"^.."$commit_option"
+    if (( long_format )); then
+      [[ -t 1 ]] && print "\033[36mgit log${long_option}${patch_option} $commit_option^..$commit_option\033[0m\n"
+      git log ${(z)long_option} ${(z)patch_option} "$commit_option"^.."$commit_option"
+    else
+      [[ -t 1 ]] && print "\033[36mgit log${patch_option} $commit_option^..$commit_option\033[0m\n"
+      git log --pretty=format:'%C(yellow)%h%Creset - [%C(cyan)%ad%Creset] %C(green)@%an%Creset %s%C(auto)%d%Creset' --date=format:'%Y-%m-%d %H:%M' --decorate=short ${(z)patch_option} "$commit_option"^.."$commit_option"
+    fi
     return 0
   fi
 
-  if (( oneline )); then
-    git log ${(z)oneline_option} ${(z)patch_option}
+  if (( long_format )); then
+    git log ${(z)long_option} ${(z)patch_option}
     return 0
   fi
 
-  git log ${(z)patch_option} --pretty=fuller
+  git log --pretty=format:'%C(yellow)%h%Creset - [%C(cyan)%ad%Creset] %C(green)@%an%Creset %s%C(auto)%d%Creset' --date=format:'%Y-%m-%d %H:%M' --decorate=short ${(z)patch_option}
 }

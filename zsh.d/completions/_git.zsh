@@ -180,7 +180,7 @@ _gl() {
   _arguments \
     '(-c --commit)'{-c,--commit}'[Show commit log (default: origin/HEAD...HEAD)]: :__git-commits' \
     '(-g --graph)'{-g,--graph}'[Show graph display]' \
-    '(-o --oneline)'{-o,--oneline}'[Show oneline format]' \
+    '(-l --long)'{-l,--long}'[Show long format (pretty=fuller)]' \
     '(-p --patch)'{-p,--patch}'[Show patch diff]' \
     '(-h --help)'{-h,--help}'[Show help text]'
 }
