@@ -178,11 +178,12 @@ _gdeleteb() {
 
 _gl() {
   _arguments \
-    '(-c --commit)'{-c,--commit}'[Show commit log (default: origin/HEAD...HEAD)]: :__git-commits' \
+    '(-f --full-history)'{-f,--full-history}'[Show full history]' \
     '(-g --graph)'{-g,--graph}'[Show graph display]' \
     '(-l --long)'{-l,--long}'[Show long format (pretty=fuller)]' \
     '(-p --patch)'{-p,--patch}'[Show patch diff]' \
-    '(-h --help)'{-h,--help}'[Show help text]'
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    ': :__git-commits'
 }
 
 compdef _ga ga

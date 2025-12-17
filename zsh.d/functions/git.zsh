@@ -1205,13 +1205,14 @@ EOF`
 }
 
 gl() {
-  integer graph long_format patch
+  integer graph long_format full_history patch
   local self_cmd help usage commit_option long_option patch_option
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [-c --commit [commit_id]] (default: origin/HEAD...HEAD)
+usage: $self_cmd [commit_id] (default: origin/HEAD...HEAD)
+          [-f --full-history]
           [-g --graph]
           [-l --long]
           [-p --patch]
@@ -1226,14 +1227,9 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
-      -c | --commit)
-        if (( $#2 )) && [[ "$2" != -* ]]; then
-          commit_option="$2"
-          shift 2
-        else
-          commit_option="origin/HEAD...HEAD"
-          shift 1
-        fi
+      -f | --full-history)
+        (( full_history++ ))
+        shift 1
         ;;
       -g | --graph)
         (( graph++ ))
@@ -1254,16 +1250,16 @@ EOF`
         return 0
         ;;
       -- | -) # Stop option processing
-        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
-        return 1
+        shift
+        break
         ;;
       -*)
         print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
         return 1
         ;;
       *)
-        print "$self_cmd: requires no argument '$1'\n$help" 1>&2
-        return 1
+        commit_option="$1"
+        shift 1
         ;;
     esac
   done
@@ -1273,18 +1269,16 @@ EOF`
     return 0
   fi
 
-  if (( $#commit_option )); then
-    if [[ "$commit_option" == "origin/HEAD...HEAD" ]]; then
-      if (( long_format )); then
-        [[ -t 1 ]] && print "\033[36mgit log${long_option}${patch_option} $commit_option\033[0m\n"
-        git log ${(z)long_option} ${(z)patch_option} "$commit_option"
-      else
-        [[ -t 1 ]] && print "\033[36mgit log${patch_option} $commit_option\033[0m\n"
-        git log --pretty=format:'%C(yellow)%h%Creset - [%C(cyan)%ad%Creset] %C(green)@%an%Creset %s%C(auto)%d%Creset' --date=format:'%Y-%m-%d %H:%M' --decorate=short ${(z)patch_option} "$commit_option"
-      fi
-      return 0
+  if (( full_history )); then
+    if (( long_format )); then
+      git log ${(z)long_option} ${(z)patch_option}
+    else
+      git log --pretty=format:'%C(yellow)%h%Creset - [%C(cyan)%ad%Creset] %C(green)@%an%Creset %s%C(auto)%d%Creset' --date=format:'%Y-%m-%d %H:%M' --decorate=short ${(z)patch_option}
     fi
+    return 0
+  fi
 
+  if (( $#commit_option )); then
     if (( long_format )); then
       [[ -t 1 ]] && print "\033[36mgit log${long_option}${patch_option} $commit_option^..$commit_option\033[0m\n"
       git log ${(z)long_option} ${(z)patch_option} "$commit_option"^.."$commit_option"
@@ -1296,9 +1290,10 @@ EOF`
   fi
 
   if (( long_format )); then
-    git log ${(z)long_option} ${(z)patch_option}
-    return 0
+    [[ -t 1 ]] && print "\033[36mgit log${long_option}${patch_option} origin/HEAD...HEAD\033[0m\n"
+    git log ${(z)long_option} ${(z)patch_option} "origin/HEAD...HEAD"
+  else
+    [[ -t 1 ]] && print "\033[36mgit log${patch_option} origin/HEAD...HEAD\033[0m\n"
+    git log --pretty=format:'%C(yellow)%h%Creset - [%C(cyan)%ad%Creset] %C(green)@%an%Creset %s%C(auto)%d%Creset' --date=format:'%Y-%m-%d %H:%M' --decorate=short ${(z)patch_option} "origin/HEAD...HEAD"
   fi
-
-  git log --pretty=format:'%C(yellow)%h%Creset - [%C(cyan)%ad%Creset] %C(green)@%an%Creset %s%C(auto)%d%Creset' --date=format:'%Y-%m-%d %H:%M' --decorate=short ${(z)patch_option}
 }
