@@ -6,16 +6,10 @@ hide_agent_reasoning = true
 sandbox_mode = "workspace-write"
 approval_policy = "on-request"
 
+network_access = true
+
 [features]
 web_search_request = true
-
-[sandbox_workspace_write]
-writable_roots = [
-  "~/markdown_texts/",
-  "~/works/memolist/"
-]
-
-network_access = true
 
 [notice]
 hide_gpt5_1_migration_prompt = true
