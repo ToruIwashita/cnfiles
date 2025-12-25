@@ -416,12 +416,20 @@ else
   touch $MEMOLIST_TASK_MARKDOWN_FILE_PATH
 fi
 
-# memolist prompt  markdown file
+# memolist tmp prompt  markdown file
 if [[ -f $MEMOLIST_TMP_PROMPT_FILE_PATH ]]; then
   printf "\e[32m$MEMOLIST_TMP_PROMPT_FILE_PATH file already exists\e[0m\n"
 else
   printf "\e[31mcreate file $MEMOLIST_TMP_PROMPT_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TMP_PROMPT_FILE_PATH
+fi
+
+# memolist tmp dump prompt  markdown file
+if [[ -f $MEMOLIST_TMP_DUMP_PROMPT_FILE_PATH ]]; then
+  printf "\e[32m$MEMOLIST_TMP_DUMP_PROMPT_FILE_PATH file already exists\e[0m\n"
+else
+  printf "\e[31mcreate file $MEMOLIST_TMP_DUMP_PROMPT_FILE_PATH\e[0m\n"
+  touch $MEMOLIST_TMP_DUMP_PROMPT_FILE_PATH
 fi
 
 # memolist tmp markdown file
