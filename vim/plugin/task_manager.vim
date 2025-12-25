@@ -223,7 +223,11 @@ class TaskManager
       return
     endif
 
-    if this._CopyDirectoryExcludingSwap(source_path, target_path)
+    # タスク名部分を抽出（ファイル名置換用）
+    var source_task_body = this._ExtractTaskBodyFromDirName(dir_name)
+    var target_task_body = this._ExtractTaskBodyFromDirName(new_dir_name)
+
+    if this._CopyDirectoryExcludingSwap(source_path, target_path, source_task_body, target_task_body)
       this._ShowNotification('Copied: ' .. dir_name .. ' -> ' .. new_dir_name)
     else
       echohl ErrorMsg
@@ -456,6 +460,13 @@ class TaskManager
     var dir_body = join(parts[1 :], '_')
     var today_prefix = strftime(this.config.dir_prefix)
     return today_prefix .. '_' .. dir_body
+  enddef
+
+  def _ExtractTaskBodyFromDirName(dir_name: string): string
+    # ディレクトリ名からタスク名部分を抽出
+    # 例: "2025-12-25_testタスク" → "testタスク"
+    var parts = split(dir_name, '_', true)
+    return join(parts[1 :], '_')
   enddef
 
   def _DetermineFileName(input_name: string, dir_name: string): string
@@ -845,7 +856,7 @@ class TaskManager
     return ''
   enddef
 
-  def _CopyDirectoryExcludingSwap(source_path: string, target_path: string): bool
+  def _CopyDirectoryExcludingSwap(source_path: string, target_path: string, source_task_body: string = '', target_task_body: string = ''): bool
     try
       # ターゲットディレクトリを作成
       if !isdirectory(target_path)
@@ -893,18 +904,54 @@ class TaskManager
         endif
       endfor
 
-      # 次にファイルをコピー
+      # 次にファイルをコピー（タスク名部分を置換）
       for file_item in files
         var relative_path = substitute(file_item, '^' .. escape(source_path, '.*[]^$\\') .. '/', '', '')
+
+        # ファイル名内のタスク名部分を置換
+        if !empty(source_task_body) && !empty(target_task_body)
+          relative_path = substitute(relative_path, escape(source_task_body, '.*[]^$\\'), target_task_body, 'g')
+        endif
+
         var target_file = target_path .. '/' .. relative_path
         var content = readfile(file_item, 'b')
         writefile(content, target_file, 'b')
       endfor
 
+      # コピー先ファイルの接頭辞番号を00から連番に再付番
+      this._RenumberFilesInDirectory(target_path)
+
       return true
     catch
       return false
     endtry
+  enddef
+
+  def _RenumberFilesInDirectory(dir_path: string)
+    # ディレクトリ内のファイルを取得
+    var files = glob(dir_path .. '/*', false, true)
+    files = filter(files, '!isdirectory(v:val)')
+
+    # 番号順にソート
+    sort(files, (a, b) => {
+      var num_a = this._ExtractPrefixNumber(fnamemodify(a, ':t'))
+      var num_b = this._ExtractPrefixNumber(fnamemodify(b, ':t'))
+      return num_a - num_b
+    })
+
+    # 連番でリネーム
+    var seq_number = 0
+    for file_path in files
+      var filename = fnamemodify(file_path, ':t')
+      var new_filename = substitute(filename, '^\d\{2\}_', printf('%02d_', seq_number), '')
+
+      if filename !=# new_filename
+        var new_path = dir_path .. '/' .. new_filename
+        rename(file_path, new_path)
+      endif
+
+      seq_number += 1
+    endfor
   enddef
 endclass
 
