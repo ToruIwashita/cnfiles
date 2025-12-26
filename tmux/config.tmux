@@ -109,8 +109,8 @@ bind - select-layout even-vertical
 bind x kill-pane
 # 上35%・下65%に設定
 bind - resize-pane -t 0 -y 35%
-# 上75%・下25%に設定
-bind = resize-pane -t 0 -y 85%
+# 上80%・下30%に設定
+bind = resize-pane -t 0 -y 80%
 # 5ウィンドウ作成
 bind T new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}'
 # 等間隔4分割(Multi)
