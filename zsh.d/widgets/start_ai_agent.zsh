@@ -1,6 +1,6 @@
 ## start-ai-agent
 _start-ai-agent() {
-  BUFFER="${AI_AGENT:-claude}"
+  BUFFER="${AI_AGENT_WITH_OPT:-claude}"
 
   zle accept-line
 }
