@@ -60,11 +60,9 @@ set grepformat=%f:%l:%m               " grepのフォーマット(ag用)
 
 "" abbreviation
 iabbrev =f #<SPACE>TODO:
-iabbrev =F <SPACE>TODO:
-iabbrev #=F #<SPACE>TODO:
+iabbrev #=f #<SPACE>TODO:
 iabbrev =q #<SPACE>QUESTION:
-iabbrev =Q <SPACE>QUESTION:
-iabbrev #=Q #<SPACE>QUESTION:
+iabbrev #=q #<SPACE>QUESTION:
 
 "" map
 " matchitでdo〜end等対応するブロックジャンプ
