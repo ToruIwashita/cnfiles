@@ -598,6 +598,7 @@ EOF`
 
   if (( quick )); then
     commit_message=$(__git-commit-message-from-staged)
+
     if (( $#commit_message )); then
       git commit -m "$commit_message"
     else
