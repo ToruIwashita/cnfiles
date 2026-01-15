@@ -512,8 +512,8 @@ greset-soft-latest() {
 }
 
 gc() {
-  integer amend empty fixup temporary option_count
-  local self_cmd help usage
+  integer amend empty fixup quick temporary option_count
+  local self_cmd help usage commit_message
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
@@ -521,6 +521,7 @@ gc() {
 usage: $self_cmd [-a --amend]
           [-e --empty]
           [-f --fixup]
+          [-q --quick]
           [-t --temporary]
           [-h --help]
 EOF`
@@ -543,6 +544,10 @@ EOF`
         ;;
       -f | --fixup)
         (( fixup++ ))
+        shift 1
+        ;;
+      -q | --quick)
+        (( quick++ ))
         shift 1
         ;;
       -t | --temporary)
@@ -569,7 +574,7 @@ EOF`
   done
 
   # 排他制御: 複数オプションが指定された場合はエラー
-  option_count=$((empty + fixup + temporary + amend))
+  option_count=$((empty + fixup + quick + temporary + amend))
 
   if (( option_count > 1 )); then
     print "$self_cmd: only one option may be specified" 1>&2
@@ -588,6 +593,17 @@ EOF`
 
   if (( fixup )); then
     git commit --amend --no-edit --allow-empty
+    return 0
+  fi
+
+  if (( quick )); then
+    commit_message=$(__git-commit-message-from-staged)
+    if (( $#commit_message )); then
+      git commit -m "$commit_message"
+    else
+      print "$self_cmd: no staged files to commit" 1>&2
+      return 1
+    fi
     return 0
   fi
 

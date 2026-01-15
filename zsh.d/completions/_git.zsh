@@ -117,6 +117,7 @@ _gc() {
   _arguments \
     '(-e --empty)'{-e,--empty}'[Empty commit]' \
     '(-f --fixup)'{-f,--fixup}'[Fixup commit]' \
+    '(-q --quick)'{-q,--quick}'[Quick commit with auto-generated message]' \
     '(-t --temporary)'{-t,--temporary}'[Temporary commit]' \
     '(-h --help)'{-h,--help}'[Show help text]'
 }
