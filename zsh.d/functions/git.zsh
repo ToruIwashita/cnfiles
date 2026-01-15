@@ -88,14 +88,15 @@ EOF`
 }
 
 ga() {
-  integer unstage
-  local self_cmd help usage
+  integer unstage commit
+  local self_cmd help usage commit_message
   local -a file_paths
 
   self_cmd=$0
   help="Try \`$self_cmd --help' for more information."
   usage=`cat <<EOF
-usage: $self_cmd [files]
+usage: $self_cmd <files>
+              [-c --commit]
               [-u --unstage]
               [-h --help]
 EOF`
@@ -108,6 +109,10 @@ EOF`
 
   while (( $# > 0 )); do
     case "$1" in
+      -c | --commit)
+        (( commit++ ))
+        shift 1
+        ;;
       -u | --unstage)
         (( unstage++ ))
         shift 1
@@ -151,45 +156,139 @@ EOF`
   fi
 
   git status --short
+
+  if (( commit )); then
+    commit_message=$(__git-commit-message-from-staged)
+
+    if (( $#commit_message )); then
+      git commit -m "$commit_message"
+    fi
+  fi
 }
 
 gam() {
-  local usage
+  integer commit
+  local self_cmd help usage commit_message
+  local -a file_paths
 
-  usage="usage: $0 <files>"
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <files>
+              [-c --commit]
+              [-h --help]
+EOF`
+
   if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
   fi
 
-  if (( ! $# )); then
+  while (( $# > 0 )); do
+    case "$1" in
+      -c | --commit)
+        (( commit++ ))
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift
+        file_paths+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        file_paths+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if (( ! ${#file_paths} )); then
     print $usage 1>&2
     return 1
   fi
 
-  (git diff $(git rev-parse --show-toplevel)/$^*) &&
-    (git add $(git rev-parse --show-toplevel)/$^*)
+  (git diff $(git rev-parse --show-toplevel)/"${^file_paths[@]}") &&
+    (git add $(git rev-parse --show-toplevel)/"${^file_paths[@]}")
+
+  if (( commit )); then
+    commit_message=$(__git-commit-message-from-staged)
+
+    if (( $#commit_message )); then
+      git commit -m "$commit_message"
+    fi
+  fi
 }
 
 gau() {
-  local usage
+  integer commit
+  local self_cmd help usage commit_message
+  local -a file_paths
 
-  usage="usage: $0 <files>"
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <files>
+              [-c --commit]
+              [-h --help]
+EOF`
+
   if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
   fi
 
-  if (( ! $# )); then
+  while (( $# > 0 )); do
+    case "$1" in
+      -c | --commit)
+        (( commit++ ))
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift
+        file_paths+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        file_paths+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if (( ! ${#file_paths} )); then
     print $usage 1>&2
     return 1
   fi
 
-  (git add --intent-to-add $(git rev-parse --show-toplevel)/$^*) &&
-    (git diff $(git rev-parse --show-toplevel)/$^*) &&
-    (git add $(git rev-parse --show-toplevel)/$^*)
+  (git add --intent-to-add $(git rev-parse --show-toplevel)/"${^file_paths[@]}") &&
+    (git diff $(git rev-parse --show-toplevel)/"${^file_paths[@]}") &&
+    (git add $(git rev-parse --show-toplevel)/"${^file_paths[@]}")
+
+  if (( commit )); then
+    commit_message=$(__git-commit-message-from-staged)
+
+    if (( $#commit_message )); then
+      git commit -m "$commit_message"
+    fi
+  fi
 }
 
 gac() {

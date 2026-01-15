@@ -100,20 +100,92 @@ __git-inside-work-tree() {
   [[ $(git rev-parse --is-inside-work-tree 2>/dev/null) == true ]]
 }
 
-__ga() {
-  local usage
+__git-commit-message-from-staged() {
+  __git-inside-work-tree || return
 
-  usage="usage: $0 <files>"
+  local status_line status_char file_path action
+  local -a messages
+
+  while IFS= read -r status_line; do
+    [[ -z $status_line ]] && continue
+
+    status_char=${status_line[1]}
+    file_path=${status_line[4,-1]}
+
+    case $status_char in
+      M) action="Update" ;;
+      A) action="Create" ;;
+      D) action="Delete" ;;
+      *) continue ;;
+    esac
+
+    messages+=("$action $file_path")
+  done < <(git status --short --porcelain)
+
+  if (( ${#messages} == 0 )); then
+    return 1
+  fi
+
+  printf '%s\n' "${(j:, :)messages}"
+}
+
+__ga() {
+  integer commit
+  local self_cmd help usage commit_message
+  local -a file_paths
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <files>
+              [-c --commit]
+              [-h --help]
+EOF`
+
   if ! __git-inside-work-tree; then
     print 'Not a git repository: .git'
     print $usage 1>&2
     return 1
   fi
 
-  if (( ! $# )); then
+  while (( $# > 0 )); do
+    case "$1" in
+      -c | --commit)
+        (( commit++ ))
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift
+        file_paths+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        file_paths+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if (( ! ${#file_paths} )); then
     print $usage 1>&2
     return 1
   fi
 
-  git add $(git rev-parse --show-toplevel)/"$^@"
+  git add $(git rev-parse --show-toplevel)/"${^file_paths[@]}"
+
+  if (( commit )); then
+    commit_message=$(__git-commit-message-from-staged)
+
+    if (( $#commit_message )); then
+      git commit -m "$commit_message"
+    fi
+  fi
 }
