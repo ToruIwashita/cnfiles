@@ -17,72 +17,6 @@ gbranch-default() {
   __git-default-branch
 }
 
-ga() {
-  integer unstage
-  local self_cmd help usage
-  local -a file_paths
-
-  self_cmd=$0
-  help="Try \`$self_cmd --help' for more information."
-  usage=`cat <<EOF
-usage: $self_cmd [files]
-              [-u --unstage]
-              [-h --help]
-EOF`
-
-  if ! __git-inside-work-tree; then
-    print 'Not a git repository: .git'
-    print $usage 1>&2
-    return 1
-  fi
-
-  while (( $# > 0 )); do
-    case "$1" in
-      -u | --unstage)
-        (( unstage++ ))
-        shift 1
-        ;;
-      -h | --help)
-        print $usage
-        return 0
-        ;;
-      -- | -) # Stop option processing
-        shift
-        file_paths+=("$@")
-        break
-        ;;
-      -*)
-        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
-        return 1
-        ;;
-      *)
-        file_paths+=("$1")
-        shift 1
-        ;;
-    esac
-  done
-
-  if (( unstage )); then
-    if (( ${#file_paths} )); then
-      git restore --staged $(git rev-parse --show-toplevel)/"${^file_paths[@]}"
-    else
-      git restore --staged "$(git rev-parse --show-toplevel)" &>/dev/null
-    fi
-
-    git status --short
-
-    return 0
-  fi
-
-  if (( ${#file_paths} )); then
-    git add $(git rev-parse --show-toplevel)/"${^file_paths[@]}"
-  else
-    git add "$(git rev-parse --show-toplevel)"
-  fi
-
-  git status --short
-}
-
 gaint() {
   integer restore
   local self_cmd help usage
@@ -148,6 +82,72 @@ EOF`
     git add --intent-to-add $(git rev-parse --show-toplevel)/"${^file_paths[@]}"
   else
     git add --intent-to-add "$(git rev-parse --show-toplevel)"
+  fi
+
+  git status --short
+}
+
+ga() {
+  integer unstage
+  local self_cmd help usage
+  local -a file_paths
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd [files]
+              [-u --unstage]
+              [-h --help]
+EOF`
+
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -u | --unstage)
+        (( unstage++ ))
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift
+        file_paths+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        file_paths+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if (( unstage )); then
+    if (( ${#file_paths} )); then
+      git restore --staged $(git rev-parse --show-toplevel)/"${^file_paths[@]}"
+    else
+      git restore --staged "$(git rev-parse --show-toplevel)" &>/dev/null
+    fi
+
+    git status --short
+
+    return 0
+  fi
+
+  if (( ${#file_paths} )); then
+    git add $(git rev-parse --show-toplevel)/"${^file_paths[@]}"
+  else
+    git add "$(git rev-parse --show-toplevel)"
   fi
 
   git status --short
