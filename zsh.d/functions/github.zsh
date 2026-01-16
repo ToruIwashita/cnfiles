@@ -1,4 +1,56 @@
 ## github
+gpr-search() {
+  local self_cmd help usage commit_id limit_option
+  local -a args
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <commit_id>
+           [-l --limit <number>]
+           [-h --help]
+EOF`
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -l | --limit)
+        if (( ! $#2 )) || [[ "$2" =~ ^-+ ]]; then
+          print "$self_cmd: option requires an argument -- '$1'\n$help" 1>&2
+          return 1
+        fi
+        limit_option="--limit $2"
+        shift 2
+        ;;
+      -- | -) # Stop option processing
+        shift
+        args+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        args+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if (( ! ${#args} )); then
+    print "$self_cmd: commit_id is required\n$help" 1>&2
+    return 1
+  fi
+
+  commit_id="${args[1]}"
+
+  gh pr list --search "$commit_id" --state merged ${=limit_option} 2>/dev/null
+}
+
 gpr() {
   integer show_comment show_review_comment ignore_outdated show_diff pr_count
   local self_cmd help usage current_branch pr_list default_pr_number pr_number owner_repo jq_filter body_content json_comments json_review_comments comment
