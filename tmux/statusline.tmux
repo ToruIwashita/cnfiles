@@ -4,8 +4,7 @@
 set -g status-style fg=colour188,bg=colour234
 
 # status-left
-set -g status-left-length 32
-set -g status-left '#[fg=colour223,bg=colour166,nobold] #(whoami) '
+set -g status-left ''
 
 # status-right
 set -g status-right-length 150
