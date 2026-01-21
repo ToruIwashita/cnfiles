@@ -196,6 +196,24 @@ class PbcopyManager
     this._ExecutePbcopy(path_ref, 'Copied path reference to clipboard: ' .. path_ref)
   enddef
 
+  def CopyYankRegisterToClipboard()
+    this._LoadConfig()
+
+    if !this._ValidateConfig()
+      return
+    endif
+
+    var content = getreg('"')
+    if empty(content)
+      echohl ErrorMsg
+      echo 'Yank register is empty'
+      echohl None
+      return
+    endif
+
+    this._ExecutePbcopy(content, 'Copied yank register to clipboard')
+  enddef
+
   def _LoadConfig()
     this.config = {
       'pbcopy_command': 'pbcopy'
@@ -325,6 +343,10 @@ def CopyFilePathWithLineToClipboardCommand()
   pbcopy_manager.CopyFilePathWithLineToClipboard()
 enddef
 
+def CopyYankRegisterToClipboardCommand()
+  pbcopy_manager.CopyYankRegisterToClipboard()
+enddef
+
 command! CopyBufferToClipboard call CopyBufferToClipboardCommand()
 command! CopyFilePathToClipboard call CopyFilePathToClipboardCommand()
 command! CopyFileNameToClipboard call CopyFileNameToClipboardCommand()
@@ -334,5 +356,6 @@ command! -range CopySelectionToClipboard call CopySelectionToClipboardCommand()
 command! -range CopySelectionWithPathToClipboard call CopySelectionWithPathToClipboardCommand()
 command! -range CopyWrappedSelectionWithPathToClipboard call CopyWrappedSelectionWithPathToClipboardCommand()
 command! CopyFilePathWithLineToClipboard call CopyFilePathWithLineToClipboardCommand()
+command! CopyYankRegisterToClipboard call CopyYankRegisterToClipboardCommand()
 
 &cpoptions = cpoptions_save
