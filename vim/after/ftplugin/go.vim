@@ -25,31 +25,6 @@ let g:go_highlight_functions = 1
 let g:go_highlight_methods = 1
 let g:go_highlight_structs = 1
 
-"" 関数
-fun! s:godef_vsplit() abort
-  execute 'vsplit'
-  GoDef
-endf
-
-fun! s:godef_tabnew() abort
-  let l:current_line_num = line('.')
-
-  call s:godef_vsplit()
-
-  tabedit %
-
-  tabp
-  hide
-  tabn
-
-  execute l:current_line_num
-  execute 'normal! zz'
-endf
-
-"" コマンド
-command! GodefVsplit call s:godef_vsplit()
-command! GodefTabnew call s:godef_tabnew()
-
 "" キーマップ
 " メソッド定義ジャンプ
 nmap <buffer> <C-s>l :<C-u>GodefVsplit<CR>
