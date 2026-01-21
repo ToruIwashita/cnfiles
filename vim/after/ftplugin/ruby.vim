@@ -17,6 +17,8 @@ silent! nunmap <buffer> <C-]>
 nnoremap <buffer> =d :<C-u>RemoveBindingPry<CR>
 nnoremap <buffer> =t :<C-u>RemoveCurrentMarker<CR>
 
+vnoremap <buffer> =y :YankNamespace<CR>
+
 iabbrev <buffer> =a , :aggregate_failures
 iabbrev <buffer> =c context "current", :current do
 iabbrev <buffer> =d binding.pry
