@@ -22,7 +22,7 @@ iabbrev <buffer> =c context "current", :current do
 iabbrev <buffer> =d binding.pry
 iabbrev <buffer> =t , :current
 
-vnoremap <buffer> =m :ModuleToQualifiedName<CR>
+vnoremap <buffer> =m :YankNamespace<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save

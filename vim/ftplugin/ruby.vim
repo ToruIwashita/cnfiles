@@ -10,7 +10,7 @@ let b:did_cnfiles_ruby_ftplugin = 1
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
-fun! s:ruby_module_to_qualified_name(line_start, line_end) abort
+fun! s:yank_namespace(line_start, line_end) abort
   let l:lines = getline(a:line_start, a:line_end)
   let l:names = []
 
@@ -67,7 +67,7 @@ fun! s:remove_current_marker() abort
   call setpos('.', l:save_cursor)
 endf
 
-command! -buffer -range ModuleToQualifiedName call s:ruby_module_to_qualified_name(<line1>, <line2>)
+command! -buffer -range YankNamespace call s:yank_namespace(<line1>, <line2>)
 command! -buffer RemoveBindingPry call s:remove_binding_pry()
 command! -buffer RemoveCurrentMarker call s:remove_current_marker()
 
