@@ -17,14 +17,12 @@ silent! nunmap <buffer> <C-]>
 nnoremap <buffer> =d :<C-u>RemoveBindingPry<CR>
 nnoremap <buffer> =t :<C-u>RemoveCurrentMarker<CR>
 
-vnoremap <buffer> =y :YankNamespace<CR>
+vnoremap <buffer> =y :<C-u>YankNamespace<CR>
 
 iabbrev <buffer> =a , :aggregate_failures
 iabbrev <buffer> =c context "current", :current do
 iabbrev <buffer> =d binding.pry
 iabbrev <buffer> =t , :current
-
-vnoremap <buffer> =m :YankNamespace<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
