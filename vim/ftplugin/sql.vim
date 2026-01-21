@@ -1,8 +1,8 @@
 "" FILE: sql.vim
-if exists('b:did_ftplugin')
+if exists('b:did_cnfiles_sql_ftplugin')
   finish
 endif
-let b:did_ftplugin = 1
+let b:did_cnfiles_sql_ftplugin = 1
 
 let s:cpoptions_save = &cpoptions
 set cpoptions&vim
