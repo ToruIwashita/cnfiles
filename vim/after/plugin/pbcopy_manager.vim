@@ -11,6 +11,7 @@ nnoremap <C-s>y :<C-u>CopyFilePathToClipboard <CR>
 nnoremap <C-s>Y :<C-u>CopyFileNameToClipboard <CR>
 nnoremap <C-s><C-y> :<C-u>CopyDirPathToClipboard <CR>
 
+nnoremap YY :<C-u>CopyYankRegisterToClipboard<CR>
 nnoremap Yw :<C-u>CopyWordToClipboard<CR>
 nnoremap <C-y> :<C-u>CopyFilePathWithLineToClipboard<CR>
 
