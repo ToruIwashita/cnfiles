@@ -17,11 +17,11 @@ setlocal softtabstop=2
 nnoremap _ :<C-u>AddMdSpaceToggle<CR>
 nnoremap <C-_> :<C-u>AddMdSpaceToggle<CR>
 
-vnoremap <Leader>fr :WrapWithFence ruby<CR>
-vnoremap <Leader>fb :WrapWithFence bash<CR>
-vnoremap <Leader>fs :WrapWithFence sql<CR>
-vnoremap <Leader>fp :WrapWithFence plantuml<CR>
-vnoremap <Leader>ff :WrapWithFence<CR>
+vnoremap <Leader>fr :<C-u>'<,'>WrapWithFence ruby<CR>
+vnoremap <Leader>fb :<C-u>'<,'>WrapWithFence bash<CR>
+vnoremap <Leader>fs :<C-u>'<,'>WrapWithFence sql<CR>
+vnoremap <Leader>fp :<C-u>'<,'>WrapWithFence plantuml<CR>
+vnoremap <Leader>ff :<C-u>'<,'>WrapWithFence<CR>
 
 cnorea %M %MdFormat
 cnorea '<,'>M '<,'>MdFormat
