@@ -116,6 +116,10 @@ __git-commit-message-from-staged() {
       M) action="Update" ;;
       A) action="Create" ;;
       D) action="Delete" ;;
+      R)
+        action="Rename"
+        file_path=${file_path/ -> / to }
+        ;;
       *) continue ;;
     esac
 
