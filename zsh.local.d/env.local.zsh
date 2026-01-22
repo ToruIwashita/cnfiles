@@ -28,6 +28,7 @@ export YARN_GLOBAL_NODE_MODULES_BIN_PATH=~/.config/yarn/global/node_modules/.bin
 ## path
 path=(
   $LOCAL_DIR_PATH/bin
+  $DOT_LOCAL_DIR_PATH/bin
   $ASDF_DATA_DIR/shims
   $YARN_ROOT/bin
   $YARN_GLOBAL_NODE_MODULES_BIN_PATH
