@@ -57,10 +57,6 @@ printf "\e[32mnpm install -g @mermaid-js/mermaid-cli\e[0m\n"
 npm install -g @mermaid-js/mermaid-cli
 
 echo
-printf "\e[32mnpm install -g @anthropic-ai/claude-code\e[0m\n"
-npm install -g @anthropic-ai/claude-code
-
-echo
 printf "\e[32mnpm install -g @openai/codex\e[0m\n"
 npm install -g @openai/codex
 
