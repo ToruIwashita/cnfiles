@@ -64,7 +64,7 @@ class PbcopyManager
     write
 
     var dir_path = expand('%:p:h')
-    var display_path = this._GetDisplayPath(dir_path)
+    var display_path = this._GetDisplayPath(dir_path) .. '/'
 
     this._ExecutePbcopy(display_path, 'Copied to clipboard: ' .. display_path)
   enddef
