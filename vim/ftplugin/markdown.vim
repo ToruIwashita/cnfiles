@@ -13,7 +13,7 @@ set cpoptions&vim
 " 末尾に半角スペース追加はデフォルトOFF
 let g:add_md_space_enabled = 0
 
-fun! markdown#add_md_space_enabeld() abort
+fun! markdown#add_md_space_enabled() abort
   return g:add_md_space_enabled
 endf
 

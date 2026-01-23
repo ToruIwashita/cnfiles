@@ -56,7 +56,7 @@ function! LightlineMdSpaceStatusLine()
     return ''
   endif
 
-  if exists('*markdown#add_md_space_enabeld()') && markdown#add_md_space_enabeld()
+  if exists('*markdown#add_md_space_enabled()') && markdown#add_md_space_enabled()
     return 'mdspace[*]'
   else
     return 'mdspace[]'
