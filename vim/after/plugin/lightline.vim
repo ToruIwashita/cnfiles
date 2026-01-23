@@ -11,7 +11,7 @@ let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'readonly', 'linter_errors', 'linter_warnings' ], [ 'ctrlpmark' ] ],
-  \   'right': [ [ 'deoplete', 'mdspace', 'gutentags', 'lineinfo' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
+  \   'right': [ [ 'deoplete', 'mdspace', 'gutentags', 'syncscroll', 'lineinfo' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
   \ },
   \ 'component_function': {
   \   'fugitive':     'LightlineFugitive',
@@ -29,7 +29,8 @@ let g:lightline = {
   \   'linter_errors':   'LightlineLinterErrors',
   \   'deoplete':        'LightlineDeopleteStatusLine',
   \   'mdspace':         'LightlineMdSpaceStatusLine',
-  \   'gutentags':       'LightlineGutentagsStatusLine'
+  \   'gutentags':       'LightlineGutentagsStatusLine',
+  \   'syncscroll':      'LightlineSyncScrollStatusLine'
   \ },
   \ 'component_type': {
   \   'readonly':        'error',
@@ -57,9 +58,9 @@ function! LightlineMdSpaceStatusLine()
   endif
 
   if exists('*markdown#add_md_space_enabled()') && markdown#add_md_space_enabled()
-    return 'mdspace[*]'
+    return 'mds[*]'
   else
-    return 'mdspace[]'
+    return 'mds[]'
   endif
 endfunction
 
@@ -80,6 +81,18 @@ function! LightlineDeopleteStatusLine()
     return 'deoplete[*]'
   else
     return 'deoplete[]'
+  endif
+endfunction
+
+function! LightlineSyncScrollStatusLine()
+  if winwidth(0) <= 100
+    return ''
+  endif
+
+  if exists('g:sync_scroll_enabled') && g:sync_scroll_enabled
+    return 'sync[*]'
+  else
+    return 'sync[]'
   endif
 endfunction
 
