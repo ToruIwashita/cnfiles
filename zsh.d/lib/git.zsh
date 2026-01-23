@@ -130,7 +130,7 @@ __git-commit-message-from-staged() {
     return 1
   fi
 
-  printf '%s\n' "${(j:, :)messages}"
+  printf '%s\n' "${messages[@]}"
 }
 
 __ga() {
