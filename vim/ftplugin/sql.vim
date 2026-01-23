@@ -1,4 +1,5 @@
 "" FILE: sql.vim
+
 if exists('b:did_cnfiles_sql_ftplugin')
   finish
 endif

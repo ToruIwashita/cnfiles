@@ -1,4 +1,4 @@
-" FILE: git_diff_viewer.vim
+"" FILE: git_diff_viewer.vim
 
 vim9script
 

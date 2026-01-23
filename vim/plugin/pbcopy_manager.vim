@@ -1,4 +1,4 @@
-" FILE: pbcopy_manager.vim
+"" FILE: pbcopy_manager.vim
 
 vim9script
 

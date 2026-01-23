@@ -1,4 +1,4 @@
-" FILE: glow_viewer.vim
+"" FILE: glow_viewer.vim
 
 vim9script
 
