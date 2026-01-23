@@ -77,6 +77,10 @@ function! LightlineGutentagsStatusLine()
 endfunction
 
 function! LightlineDeopleteStatusLine()
+  if winwidth(0) <= 100
+    return ''
+  endif
+
   if deoplete#is_enabled()
     return 'deoplete[*]'
   else
@@ -85,10 +89,6 @@ function! LightlineDeopleteStatusLine()
 endfunction
 
 function! LightlineSyncScrollStatusLine()
-  if winwidth(0) <= 100
-    return ''
-  endif
-
   if exists('g:sync_scroll_enabled') && g:sync_scroll_enabled
     return 'sync[*]'
   else
