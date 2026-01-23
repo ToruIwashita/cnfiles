@@ -53,13 +53,20 @@ _my-tables() {
   _arguments '(:)*: :__my-table-names'
 }
 
+_mytable() {
+  _arguments \
+    '(-i --index-show)'{-i,--index-show}'[Show index information]' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '(:)*: :__my-table-names'
+}
+
 compdef _mf mf
 compdef _mq mq
 compdef _mq mqout
 compdef _mq mqexp
 compdef _myfindg myfindg
 compdef _myg myg
-compdef _my-tables mytable
+compdef _mytable mytable
 compdef _my-tables mydesc
 compdef _my-tables myindex
 compdef _my-tables myctable

@@ -289,17 +289,61 @@ EOF`
 }
 
 mytable() {
-  __check-presence-of-args $*
-  (( $? )) && return 1
+  integer index_show
+  local self_cmd help usage table_name
+  local -a args
 
-  print "> DESC $*;"
-  mydesc $*
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <table name>
+              [-i --index-show]
+              [-h --help]
+EOF`
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -i | --index-show)
+        (( index_show++ ))
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift;
+        args+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        args+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  table_name=${args[1]}
+
+  if (( ! $#table_name )); then
+    print $usage 1>&2
+    return 1
+  fi
+
+  print "> DESC $table_name;"
+  mydesc $table_name
   echo
-  print "> SHOW INDEX FROM $*;"
-  myindex $*
-  echo
-  print "> SHOW CREATE TABLE $*\G"
-  myctable $*
+  if (( index_show )); then
+    print "> SHOW INDEX FROM $table_name;"
+    myindex $table_name
+    echo
+  fi
+  print "> SHOW CREATE TABLE $table_name\G"
+  myctable $table_name
 }
 
 mydesc() {
