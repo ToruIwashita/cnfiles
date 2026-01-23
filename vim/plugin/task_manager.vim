@@ -342,6 +342,57 @@ class TaskManager
     endif
   enddef
 
+  def RenameTask(dir_name: string)
+    if empty(dir_name)
+      echohl ErrorMsg
+      echo 'Error: RenameTask requires a directory name'
+      echohl None
+      return
+    endif
+
+    this._LoadConfig()
+
+    if !this._ValidateConfig()
+      return
+    endif
+
+    if !this._ValidateDirectoryExists(dir_name)
+      return
+    endif
+
+    var new_dir_name = this._GetRenameTargetDirName(dir_name)
+    if empty(new_dir_name)
+      return
+    endif
+
+    if new_dir_name ==# dir_name
+      echo 'Rename cancelled: same name'
+      return
+    endif
+
+    var root_dir = this._GetCleanRootDir()
+    var source_path = root_dir .. '/' .. dir_name
+    var target_path = root_dir .. '/' .. new_dir_name
+
+    if isdirectory(target_path)
+      echohl ErrorMsg
+      echo 'Error: Directory "' .. new_dir_name .. '" already exists'
+      echohl None
+      return
+    endif
+
+    this._CleanupBuffersBeforeMove(source_path)
+
+    if rename(source_path, target_path) == 0
+      this._CleanupBuffersAfterMove(source_path, target_path)
+      this._ShowNotification('Renamed: ' .. dir_name .. ' -> ' .. new_dir_name)
+    else
+      echohl ErrorMsg
+      echo 'Error: Failed to rename directory'
+      echohl None
+    endif
+  enddef
+
   def DeleteTask(dir_name: string)
     if empty(dir_name)
       echohl ErrorMsg
@@ -856,6 +907,28 @@ class TaskManager
     return ''
   enddef
 
+  def _GetRenameTargetDirName(current_name: string): string
+    var new_name = input('Rename to: ', current_name)
+    if !empty(new_name)
+      return new_name
+    endif
+
+    while true
+      redraw
+
+      echohl ErrorMsg
+      echo 'Directory name cannot be empty.'
+      echohl None
+      echo ''
+
+      var retry_name = input('Rename to: ', current_name)
+      if !empty(retry_name)
+        return retry_name
+      endif
+    endwhile
+    return ''
+  enddef
+
   def _CopyDirectoryExcludingSwap(source_path: string, target_path: string, source_task_body: string = '', target_task_body: string = ''): bool
     try
       # ターゲットディレクトリを作成
@@ -994,11 +1067,16 @@ def DeleteTaskCommand(dir_name: string)
   task_manager.DeleteTask(dir_name)
 enddef
 
+def RenameTaskCommand(dir_name: string)
+  task_manager.RenameTask(dir_name)
+enddef
+
 command! -nargs=? CreateTask call CreateTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,ActiveTasksComplete AppendTask call AppendTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,ActiveTasksComplete CopyTask call CopyTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,ActiveTasksComplete ArchiveTask call ArchiveTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,ArchivedTasksComplete RestoreTask call RestoreTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,ArchivedTasksComplete DeleteTask call DeleteTaskCommand(<f-args>)
+command! -nargs=1 -complete=customlist,ActiveTasksComplete RenameTask call RenameTaskCommand(<f-args>)
 
 &cpoptions = cpoptions_save
