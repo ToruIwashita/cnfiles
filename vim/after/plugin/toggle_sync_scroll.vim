@@ -4,6 +4,7 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 nnoremap <C-w><Space> :<C-u>ToggleSyncScroll<CR>
+nnoremap <C-w><C-@> :<C-u>ToggleSyncScroll<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
