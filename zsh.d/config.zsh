@@ -79,7 +79,7 @@ bindkey -v '^s@' clear-screen                         # Ctrl+@でclear-screen
 bindkey -v '^s,' gtran-en-to-ja                       # Ctrl+s,/で英語を日本語に翻訳
 bindkey -v '^s.' gtran-ja-to-en                       # Ctrl+s,.で日本語を英語に翻訳
 bindkey -v '^s_' peco-cd-ghq-repo                     # Ctrl+s,_でghq管理下のリポジトリを絞り込んで移動
-bindkey -v '^s ' google-search                        # Ctrl+s,<SPACE>でBUFFERの文字列を使ったGoogle検索
+# bindkey -v '^s ' xxx                                # Ctrl+s,<SPACE>（空き）
 bindkey -v '^s^a' immediate-git-add-all               # Ctrl+s,Ctrl+aでgit add .
 bindkey -v '^s^d' start-ai-sub-agent                  # Ctrl+s,Ctrl+dでAIサブエージェント起動
 bindkey -v '^s^f' peco-file-finder                    # Ctrl+s,Ctrl+fでpeco-file-finder
@@ -95,7 +95,7 @@ bindkey -v '^s^z' run-fg-last-with-up-line-or-history # Ctrl+s,Ctrl+zで履歴�
 bindkey -v '^s^@' clear-screen                        # Ctrl+@でclear-screen（Ctrl+@はCtrl+<SPACE>も表す）
 bindkey -v '^s^]' vi-backward-word                    # Ctrl+s,Ctrl+]で前の単語の先頭に移動
 bindkey -v '^s^_' peco-cd-git-worktree                # Ctrl+s,Ctrl+_でgit worktreeを絞り込んで移動
-bindkey -v '^@' google-search                         # Ctrl+@でBUFFERの文字列を使ったGoogle検索（Ctrl+@はCtrl+<SPACE>も表す）
+# bindkey -v '^@' xxx                                 # Ctrl+@（空き）
 bindkey -v '^]' vi-forward-word                       # Ctrl+]で次の単語の先頭に移動
 bindkey -v '^?' backward-delete-char                  # BSでbackward-delete-char(menuselectのinteractive-modeでbackword)
 
