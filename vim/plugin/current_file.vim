@@ -41,12 +41,28 @@ fun! s:change_word_to_current_file_name_with_ext() abort
   call setpos('.', l:pos)
 endf
 
-fun! s:yank_current_file_path() abort
-  let @" = expand('%')
+fun! s:yank_current_file_name() abort
+  let @" = expand('%:t')
+endf
+
+fun! s:yank_current_full_file_path() abort
+  let l:full_path = expand('%:p')
+  let l:home = expand('~')
+  if l:full_path =~# '^' . l:home
+    let @" = substitute(l:full_path, '^' . l:home, '~', '')
+  else
+    let @" = l:full_path
+  endif
 endf
 
 fun! s:yank_current_full_dir_path() abort
-  let @" = expand('%:p:h')
+  let l:full_path = expand('%:p:h')
+  let l:home = expand('~')
+  if l:full_path =~# '^' . l:home
+    let @" = substitute(l:full_path, '^' . l:home, '~', '') . '/'
+  else
+    let @" = l:full_path . '/'
+  endif
 endf
 
 fun! s:clear_file_and_insert_mode() abort
@@ -63,7 +79,8 @@ command! AppendCurrentFileNameWithExt call s:append_current_file_name_with_ext()
 command! ChangeWordToCurrentFileName call s:change_word_to_current_file_name()
 command! ChangeWordToCurrentFileNameWithExt call s:change_word_to_current_file_name_with_ext()
 
-command! YankCurrentFilePath call s:yank_current_file_path()
+command! YankCurrentFileName call s:yank_current_file_name()
+command! YankCurrentFullFilePath call s:yank_current_full_file_path()
 command! YankCurrentFullDirPath call s:yank_current_full_dir_path()
 
 command! ClearFileAndInsertMode call s:clear_file_and_insert_mode()
