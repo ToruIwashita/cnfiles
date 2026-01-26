@@ -49,6 +49,11 @@ fun! s:yank_current_full_dir_path() abort
   let @" = expand('%:p:h')
 endf
 
+fun! s:clear_file_and_insert_mode() abort
+  execute ':%d'
+  startinsert
+endf
+
 command! InsertCurrentFileName call s:insert_current_file_name()
 command! InsertCurrentFileNameWithExt call s:insert_current_file_name_with_ext()
 
@@ -60,6 +65,8 @@ command! ChangeWordToCurrentFileNameWithExt call s:change_word_to_current_file_n
 
 command! YankCurrentFilePath call s:yank_current_file_path()
 command! YankCurrentFullDirPath call s:yank_current_full_dir_path()
+
+command! ClearFileAndInsertMode call s:clear_file_and_insert_mode()
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
