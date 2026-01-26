@@ -20,7 +20,7 @@ nnoremap <C-s><C-c> :<C-u>ChangeWordToCurrentFileNameWithExt<CR>
 nnoremap <leader>y :<C-u>YankCurrentFilePath<CR>
 nnoremap <leader>Y :<C-u>YankCurrentFullDirPath<CR>
 
-nnoremap <leader>C :<C-u>InsertCurrentFileName<CR>
+nnoremap <leader>C :<C-u>ClearFileAndInsertMode<CR>
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
