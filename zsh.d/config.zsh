@@ -120,7 +120,7 @@ alias v='vim'
 alias vi='vim'
 # tmux
 alias tm='tmux'
-alias start-ai-session="tmux new-session -A -s $TMUX_AI_SESSION"
+alias t-ai-session="tmux new-session -A -s $TMUX_AI_SESSION"
 # ls
 alias ls='ls -F --color'
 alias l='ls -ahl'
