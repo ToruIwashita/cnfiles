@@ -119,7 +119,7 @@ alias zmv='noglob zmv -W'
 alias v='vim'
 alias vi='vim'
 # tmux
-alias tm='tmux -2'
+alias tm='tmux'
 # ls
 alias ls='ls -F --color'
 alias l='ls -ahl'
