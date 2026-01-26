@@ -25,6 +25,20 @@ class PbcopyManager
     echo 'Buffer copied to clipboard'
   enddef
 
+  def CopyFileNameToClipboard()
+    this._LoadConfig()
+
+    if !this._ValidateConfig()
+      return
+    endif
+
+    write
+
+    var file_name = expand('%:t')
+
+    this._ExecutePbcopy(file_name, 'Copied to clipboard: ' .. file_name)
+  enddef
+
   def CopyFilePathToClipboard()
     this._LoadConfig()
 
@@ -38,20 +52,6 @@ class PbcopyManager
     var display_path = this._GetDisplayPath(full_path)
 
     this._ExecutePbcopy(display_path, 'Copied to clipboard: ' .. display_path)
-  enddef
-
-  def CopyFileNameToClipboard()
-    this._LoadConfig()
-
-    if !this._ValidateConfig()
-      return
-    endif
-
-    write
-
-    var file_name = expand('%:t')
-
-    this._ExecutePbcopy(file_name, 'Copied to clipboard: ' .. file_name)
   enddef
 
   def CopyDirPathToClipboard()
@@ -348,8 +348,8 @@ def CopyYankRegisterToClipboardCommand()
 enddef
 
 command! CopyBufferToClipboard call CopyBufferToClipboardCommand()
-command! CopyFilePathToClipboard call CopyFilePathToClipboardCommand()
 command! CopyFileNameToClipboard call CopyFileNameToClipboardCommand()
+command! CopyFilePathToClipboard call CopyFilePathToClipboardCommand()
 command! CopyDirPathToClipboard call CopyDirPathToClipboardCommand()
 command! CopyWordToClipboard call CopyWordToClipboardCommand()
 command! -range CopySelectionToClipboard call CopySelectionToClipboardCommand()

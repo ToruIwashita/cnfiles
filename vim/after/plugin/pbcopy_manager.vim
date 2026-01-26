@@ -7,16 +7,16 @@ set cpoptions&vim
 
 nnoremap <C-s>b :<C-u>wa<CR>:CopyBufferToClipboard<CR>
 nnoremap <C-s><C-b> :<C-u>wa<CR>:CopyBufferToClipboard<CR>
-nnoremap <C-s>y :<C-u>CopyFilePathToClipboard <CR>
 nnoremap <C-s>Y :<C-u>CopyFileNameToClipboard <CR>
+nnoremap <C-s>y :<C-u>CopyFilePathToClipboard <CR>
 nnoremap <C-s><C-y> :<C-u>CopyDirPathToClipboard <CR>
 
 nnoremap YY :<C-u>CopyYankRegisterToClipboard<CR>
 nnoremap Yw :<C-u>CopyWordToClipboard<CR>
 nnoremap <C-y> :<C-u>CopyFilePathWithLineToClipboard<CR>
 
-vnoremap <C-y> :<C-u>CopyWrappedSelectionWithPathToClipboard<CR>
 vnoremap Y :<C-u>CopySelectionWithPathToClipboard<CR>
+vnoremap <C-y> :<C-u>CopyWrappedSelectionWithPathToClipboard<CR>
 vnoremap <leader>y :<C-u>CopySelectionToClipboard<CR>
 
 let &cpoptions = s:cpoptions_save
