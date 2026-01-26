@@ -19,6 +19,101 @@
                                 "type": "basic"
                             }
                         ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+h: send '/go-to-next-step' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "h",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/go-to-next-step' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+j: send '/act-on-tmp-prompt' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "j",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/act-on-tmp-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+k: activate Terminal and focus ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "k",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "osascript -e 'tell application \"Terminal\" to activate' && ~/local/bin/tmux select-window -t ai-agent-session:1 && ~/local/bin/tmux select-pane -t ai-agent-session:1.1"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+l: send '/run-todo-in-git-diff' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "l",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/run-todo-in-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+;: send '/question-answer-in-git-diff' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "semicolon",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/question-answer-in-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
                     }
                 ]
             },
