@@ -70,7 +70,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"Terminal\" to activate' && ~/local/bin/tmux select-window -t ai-agent-session:1 && ~/local/bin/tmux select-pane -t ai-agent-session:1.1"
+                                        "shell_command": "osascript -e 'tell application \"Terminal\" to activate' && ~/local/bin/tmux select-pane -t ai-agent-session:1.1"
                                     }
                                 ],
                                 "type": "basic"
