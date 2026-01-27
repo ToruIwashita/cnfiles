@@ -23,7 +23,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+h: send '/go-to-next-step' to ai-agent-session:1.1",
+                                "description": "Ctrl+Cmd+h: send Shift+Tab to ai-agent-session:1.1",
                                 "from": {
                                     "key_code": "h",
                                     "modifiers": {
@@ -32,7 +32,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/go-to-next-step' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 BTab"
                                     }
                                 ],
                                 "type": "basic"
@@ -42,7 +42,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+j: send '/act-on-tmp-prompt' to ai-agent-session:1.1",
+                                "description": "Ctrl+Cmd+j: send Enter to ai-agent-session:1.1",
                                 "from": {
                                     "key_code": "j",
                                     "modifiers": {
@@ -51,7 +51,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/act-on-tmp-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -80,9 +80,47 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+l: send '/run-todo-in-git-diff' to ai-agent-session:1.1",
+                                "description": "Ctrl+Cmd+l: send '/go-to-next-step' to ai-agent-session:1.1",
                                 "from": {
                                     "key_code": "l",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/go-to-next-step' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+;: send '/act-on-tmp-prompt' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "semicolon",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/act-on-tmp-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+i: send '/run-todo-in-git-diff' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "i",
                                     "modifiers": {
                                         "mandatory": ["control", "command"]
                                     }
@@ -99,9 +137,9 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+;: send '/question-answer-in-git-diff' to ai-agent-session:1.1",
+                                "description": "Ctrl+Cmd+o: send '/question-answer-in-git-diff' to ai-agent-session:1.1",
                                 "from": {
-                                    "key_code": "semicolon",
+                                    "key_code": "o",
                                     "modifiers": {
                                         "mandatory": ["control", "command"]
                                     }
@@ -109,6 +147,44 @@
                                 "to": [
                                     {
                                         "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/question-answer-in-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+n: send '/next-max-effort' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "n",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/next-max-effort' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+p: send '/prev-max-effort' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "p",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/prev-max-effort' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
                                     }
                                 ],
                                 "type": "basic"
