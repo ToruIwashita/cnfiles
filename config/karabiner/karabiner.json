@@ -175,9 +175,28 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+u: send '/create-worklog-from-committed-diff-and-git-diff' to ai-agent-session:1.1",
+                                "description": "Ctrl+Cmd+u: send '/create-commit-message' to ai-agent-session:1.1",
                                 "from": {
                                     "key_code": "u",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/create-commit-message' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+]: send '/create-worklog-from-committed-diff-and-git-diff' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "backslash",
                                     "modifiers": {
                                         "mandatory": ["control", "command"]
                                     }
