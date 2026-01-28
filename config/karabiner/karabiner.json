@@ -327,6 +327,25 @@
                     {
                         "manipulators": [
                             {
+                                "description": "Ctrl+Cmd+\\: send '/prohibit-internal-todo' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "international3",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/prohibit-internal-todo' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
                                 "description": "Ctrl+Cmd+:: send '/dump-latest-output-to-tmp-prompt' to ai-agent-session:1.1",
                                 "from": {
                                     "key_code": "quote",
