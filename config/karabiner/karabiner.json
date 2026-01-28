@@ -203,7 +203,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux set-buffer \"$(pbpaste)\" && ~/local/bin/tmux paste-buffer -t ai-agent-session:1.1"
+                                        "shell_command": "~/local/bin/tmux -u set-buffer \"$(LANG=ja_JP.UTF-8 pbpaste)\" && ~/local/bin/tmux -u paste-buffer -t ai-agent-session:1.1"
                                     }
                                 ],
                                 "type": "basic"
