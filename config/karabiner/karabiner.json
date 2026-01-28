@@ -175,9 +175,104 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+u: send '/create-commit-message' to ai-agent-session:1.1",
+                                "description": "Ctrl+Cmd+u: send C-u (kill line) to ai-agent-session:1.1",
                                 "from": {
                                     "key_code": "u",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 C-u"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+v: paste to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "v",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux set-buffer \"$(pbpaste)\" && ~/local/bin/tmux paste-buffer -t ai-agent-session:1.1"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+x: send '/clear' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "x",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/clear' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+y: send '/purge-awareness ' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "y",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/purge-awareness '"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+,: send '/start-task ' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "comma",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/start-task '"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+-: send '/create-commit-message' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "hyphen",
                                     "modifiers": {
                                         "mandatory": ["control", "command"]
                                     }
@@ -194,45 +289,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+]: send '/create-worklog-from-committed-diff-and-git-diff' to ai-agent-session:1.1",
-                                "from": {
-                                    "key_code": "backslash",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/create-worklog-from-committed-diff-and-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Ctrl+Cmd+,: send '/dump-latest-output-to-tmp-prompt' to ai-agent-session:1.1",
-                                "from": {
-                                    "key_code": "comma",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/dump-latest-output-to-tmp-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Ctrl+Cmd+.: send '/dump-research-summary-to-tmp-prompt' to ai-agent-session:1.1",
+                                "description": "Ctrl+Cmd+.: send '/read-task ' to ai-agent-session:1.1",
                                 "from": {
                                     "key_code": "period",
                                     "modifiers": {
@@ -241,7 +298,45 @@
                                 },
                                 "to": [
                                     {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/read-task '"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+/: send '/dump-research-summary-to-tmp-prompt' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "slash",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
                                         "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/dump-research-summary-to-tmp-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+:: send '/dump-latest-output-to-tmp-prompt' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "quote",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/dump-latest-output-to-tmp-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -270,6 +365,25 @@
                     {
                         "manipulators": [
                             {
+                                "description": "Ctrl+Cmd+@: send '/read-path ' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "open_bracket",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/read-path '"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
                                 "description": "Ctrl+Cmd+[: send Escape to ai-agent-session:1.1",
                                 "from": {
                                     "key_code": "close_bracket",
@@ -289,7 +403,26 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+_: send '/create-worklog' to ai-agent-session:1.1",
+                                "description": "Ctrl+Cmd+]: send '/create-worklog' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "backslash",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/create-worklog' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+_: send '/create-worklog-from-committed-diff-and-git-diff' to ai-agent-session:1.1",
                                 "from": {
                                     "key_code": "international1",
                                     "modifiers": {
@@ -298,7 +431,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/create-worklog' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/create-worklog-from-committed-diff-and-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
                                     }
                                 ],
                                 "type": "basic"
