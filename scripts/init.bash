@@ -504,6 +504,14 @@ else
   ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/commands ~/.claude/commands
 fi
 
+# markdown_texts skills to ~/.claude/skills dir
+if [[ -L ~/.claude/skills  ]]; then
+  printf "\e[32m~/.claude/skills  dir symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink ~/.claude/skills  dir\e[0m\n"
+  ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/skills  ~/.claude/skills 
+fi
+
 # markdown_texts commands to ~/.codex/prompts dir
 if [[ -L ~/.codex/prompts ]]; then
   printf "\e[32m~/.codex/prompts dir symlink already exists\e[0m\n"
