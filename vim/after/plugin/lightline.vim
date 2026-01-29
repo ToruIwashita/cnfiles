@@ -11,17 +11,13 @@ let g:lightline = {
   \ 'colorscheme': 'Tomorrow',
   \ 'active': {
   \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename', 'readonly', 'linter_errors', 'linter_warnings' ], [ 'ctrlpmark' ] ],
-  \   'right': [ [ 'deoplete', 'mdspace', 'gutentags', 'syncscroll', 'lineinfo' ], [ 'percent' ], [ 'getcharcode', 'fileencoding', 'filetype', 'fileformat' ] ]
+  \   'right': [ [ 'deoplete', 'mdspace', 'gutentags', 'syncscroll', 'lineinfo' ], [ 'percent' ] ]
   \ },
   \ 'component_function': {
   \   'fugitive':     'LightlineFugitive',
   \   'filename':     'LightlineFilename',
-  \   'fileformat':   'LightlineFileformat',
-  \   'filetype':     'LightlineFiletype',
-  \   'fileencoding': 'LightlineFileencoding',
   \   'mode':         'LightlineMode',
   \   'ctrlpmark':    'LightlineCtrlPMark',
-  \   'getcharcode':  'LightlineGetCharCode'
   \ },
   \ 'component_expand': {
   \   'readonly':        'LightlineReadonly',
@@ -129,18 +125,6 @@ function! LightlineFilename()
         \ ('' !=# LightlineModified() ? ' ' . LightlineModified() : '')
 endfunction
 
-function! LightlineFileformat()
-  return winwidth(0) > 100 ? &fileformat : ''
-endfunction
-
-function! LightlineFiletype()
-  return winwidth(0) > 100 ? (strlen(&filetype) ? &filetype : 'no filetype') : ''
-endfunction
-
-function! LightlineFileencoding()
-  return winwidth(0) > 100 ? (strlen(&fileencoding) ? &fileencoding : &encoding) : ''
-endfunction
-
 function! LightlineMode()
   let l:fname = expand('%:t')
 
@@ -204,41 +188,6 @@ function! TagbarStatusFunc(current, sort, fname, ...)
 endfunction
 
 let g:tagbar_status_func = 'TagbarStatusFunc'
-
-function! LightlineGetCharCode()
-  " Get the output of :ascii
-  if winwidth(0) <= 100
-    return ''
-  endif
-
-  redir => l:ascii
-  silent! ascii
-  redir END
-
-  if match(l:ascii, 'NUL') != -1
-    return 'NUL'
-  endif
-
-  " Zero pad hex values
-  let l:nrformat = '0x%02x'
-
-  let l:encoding = (&fileencoding ==# '' ? &encoding : &fileencoding)
-
-  if l:encoding ==# 'utf-8'
-    " Zero pad with 4 zeroes in unicode files
-    let l:nrformat = '0x%04x'
-  endif
-
-  " Get the character and the numeric value from the return value of :ascii
-  " This matches the two first pieces of the return value, e.g.
-  " "<F>  70" => char: 'F', nr: '70'
-  let [l:str, l:char, l:nr; l:rest] = matchlist(l:ascii, '\v\<(.{-1,})\>\s*([0-9]+)')
-
-  " Format the numeric value
-  let l:nr = printf(l:nrformat, l:nr)
-
-  return "'". l:char ."' ". l:nr
-endfunction
 
 let &cpoptions = s:cpoptions_save
 unlet s:cpoptions_save
