@@ -82,9 +82,9 @@ function! LightlineDeopleteStatusLine()
   endif
 
   if deoplete#is_enabled()
-    return 'deoplete[*]'
+    return 'deo[*]'
   else
-    return 'deoplete[]'
+    return 'deo[]'
   endif
 endfunction
 
