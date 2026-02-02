@@ -31,7 +31,7 @@ fun! s:yank_namespace(line_start, line_end) abort
   let l:qualified_name = join(l:names, '::')
   let @" = l:qualified_name
 
-  echo 'Copied: ' . l:qualified_name
+  echo 'Yank: ' . l:qualified_name
 endf
 
 fun! s:remove_binding_pry() abort
