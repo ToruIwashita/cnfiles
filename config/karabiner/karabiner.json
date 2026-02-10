@@ -232,9 +232,28 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+y: send '/purge-awareness ' to ai-agent-session:1.1",
+                                "description": "Ctrl+Cmd+y: send '/check-and-annotate-test-completeness' to ai-agent-session:1.1",
                                 "from": {
                                     "key_code": "y",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/check-and-annotate-test-completeness '"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+^: send '/purge-awareness ' to ai-agent-session:1.1",
+                                "from": {
+                                    "key_code": "equal_sign",
                                     "modifiers": {
                                         "mandatory": ["control", "command"]
                                     }
