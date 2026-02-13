@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+set -eu
+
+current_agent=$(cat "$CURRENT_TMUX_AI_AGENT_FILE")
+
+if [[ "$current_agent" == "$AI_AGENT" ]]; then
+  echo "$AI_SUB_AGENT" > "$CURRENT_TMUX_AI_AGENT_FILE"
+  echo "$TMUX_AI_SUB_AGENT_SESSION" > "$CURRENT_TMUX_AI_AGENT_SESSION_FILE"
+elif [[ "$current_agent" == "$AI_SUB_AGENT" ]]; then
+  echo "$AI_AGENT" > "$CURRENT_TMUX_AI_AGENT_FILE"
+  echo "$TMUX_AI_AGENT_SESSION" > "$CURRENT_TMUX_AI_AGENT_SESSION_FILE"
+fi

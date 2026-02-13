@@ -416,6 +416,14 @@ else
   touch $MYSQL_SLOW_QUERY_LOG_FILE_PATH
 fi
 
+# switch-tmux-ai-session
+if [[ -L $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session ]]; then
+  printf "\e[32m$LOCAL_BIN_DIR_PATH/switch-tmux-ai-session symlink already exists\e[0m\n"
+else
+  printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/switch-tmux-ai-session $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session
+fi
+
 # plantuml.jar
 if [[ -L $LOCAL_JAR_DIR_PATH/plantuml.jar ]]; then
   printf "\e[32m$LOCAL_JAR_DIR_PATH/plantuml.jar symlink already exists\e[0m\n"
