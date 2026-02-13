@@ -448,14 +448,6 @@ else
   touch $MYSQL_SLOW_QUERY_LOG_FILE_PATH
 fi
 
-# tmux-display-message
-if [[ -L $LOCAL_BIN_DIR_PATH/tmux-display-message ]]; then
-  printf "\e[32m$LOCAL_BIN_DIR_PATH/tmux-display-message symlink already exists\e[0m\n"
-else
-  printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/tmux-display-message\e[0m\n"
-  ln -is $BASE_DIR_PATH/local/bin/tmux-display-message $LOCAL_BIN_DIR_PATH/tmux-display-message
-fi
-
 # plantuml.jar
 if [[ -L $LOCAL_JAR_DIR_PATH/plantuml.jar ]]; then
   printf "\e[32m$LOCAL_JAR_DIR_PATH/plantuml.jar symlink already exists\e[0m\n"

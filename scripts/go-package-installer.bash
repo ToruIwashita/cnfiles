@@ -51,9 +51,6 @@ go install github.com/mattn/longcat@latest
 printf "\e[32mgo install github.com/x-motemen/ghq@latest\e[0m\n"
 go install github.com/x-motemen/ghq@latest
 
-printf "\e[32mgo install github.com/skanehira/gtran@latest\e[0m\n"
-go install github.com/skanehira/gtran@latest
-
 printf "\e[32mgo install github.com/x-motemen/gore/cmd/gore@latest\e[0m\n"
 go install github.com/x-motemen/gore/cmd/gore@latest
 
