@@ -4,10 +4,17 @@ __FILE__=$_
 BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
-# OS info
+# os info
 OS_INFO=darwin
 
-# Homebrew
+# ai
+TMUX_AI_SESSION='ai-agent-session'
+AI_AGENT=claude
+AI_AGENT_TMUX_SESSION="$TMUX_AI_SESSION:1.1"
+AI_SUB_AGENT=codex
+AI_SUB_AGENT_TMUX_SESSION="$TMUX_AI_SESSION:1.0"
+
+# homebrew
 HOMEBREW_INSTALL_DIR_PATH=/opt/homebrew
 
 # local dir
