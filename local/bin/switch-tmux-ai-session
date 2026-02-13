@@ -1,12 +1,20 @@
 #!/usr/bin/env zsh
 set -eu
 
-current_agent=$(cat "$CURRENT_TMUX_AI_AGENT_FILE")
+ai_agent=claude
+ai_sub_agent=codex
+tmux_ai_agent_session=ai-agent-session:1.1
+tmux_ai_sub_agent_session=ai-agent-session:1.0
 
-if [[ "$current_agent" == "$AI_AGENT" ]]; then
-  echo "$AI_SUB_AGENT" > "$CURRENT_TMUX_AI_AGENT_FILE"
-  echo "$TMUX_AI_SUB_AGENT_SESSION" > "$CURRENT_TMUX_AI_AGENT_SESSION_FILE"
-elif [[ "$current_agent" == "$AI_SUB_AGENT" ]]; then
-  echo "$AI_AGENT" > "$CURRENT_TMUX_AI_AGENT_FILE"
-  echo "$TMUX_AI_AGENT_SESSION" > "$CURRENT_TMUX_AI_AGENT_SESSION_FILE"
+current_tmux_ai_agent_file=~/.config/ai_agents/current_tmux_ai_agent.txt
+current_tmux_ai_agent_session_file=~/.config/ai_agents/current_tmux_ai_agent_session.txt
+
+current_agent=$(cat "$current_tmux_ai_agent_file")
+
+if [[ "$current_agent" == "$ai_agent" ]]; then
+  echo "$ai_sub_agent" > "$current_tmux_ai_agent_file"
+  echo "$tmux_ai_sub_agent_session" > "$current_tmux_ai_agent_session_file"
+elif [[ "$current_agent" == "$ai_sub_agent" ]]; then
+  echo "$ai_agent" > "$current_tmux_ai_agent_file"
+  echo "$tmux_ai_agent_session" > "$current_tmux_ai_agent_session_file"
 fi
