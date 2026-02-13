@@ -8,6 +8,7 @@
 /tmux/plugins/
 /claude/commands
 /my.local.cnf
-/config/ai_agents/*
+/config/ai_agents/current_tmux_ai_agent.txt
+/config/ai_agents/current_tmux_ai_agent_session.txt
 /config/karabiner/automatic_backups
 /.bundle
