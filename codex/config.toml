@@ -12,7 +12,7 @@ network_access = true
 personality = "pragmatic"
 
 [features]
-web_search_request = true
+web_search = true
 
 [notice]
 hide_gpt5_1_migration_prompt = true
