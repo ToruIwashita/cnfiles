@@ -14,7 +14,7 @@ set -g repeat-time 500
 # display-panesの表示時間5000ms
 set -g display-panes-time 5000
 # ステータスリフレッシュ間隔(デフォルト15)
-set -g status-interval 2
+set -g status-interval 1
 # ウィンドウの番号を0からではなく1からにする
 set -g base-index 1
 # buffer
