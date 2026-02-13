@@ -319,52 +319,20 @@ else
   ln -is $BASE_DIR_PATH/config/karabiner $CONFIG_DIR_PATH/karabiner
 fi
 
-# ai_agents current_ai_agent.txt file
-if [[ -f $BASE_DIR_PATH/config/ai_agents/current_ai_agent.txt ]]; then
-  printf "\e[32m$BASE_DIR_PATH/config/ai_agents/current_ai_agent.txt file already exists\e[0m\n"
+# ai_agents current_tmux_ai_agent.txt file
+if [[ -f $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent.txt ]]; then
+  printf "\e[32m$BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent.txt file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $BASE_DIR_PATH/config/ai_agents/current_ai_agent.txt\e[0m\n"
-  echo "$AI_AGENT" > $BASE_DIR_PATH/config/ai_agents/current_ai_agent.txt
+  printf "\e[31mcreate file $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent.txt\e[0m\n"
+  echo "$AI_AGENT" > $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent.txt
 fi
 
-# ai_agents current_ai_agent_tmux_session.txt file
-if [[ -f $BASE_DIR_PATH/config/ai_agents/current_ai_agent_tmux_session.txt ]]; then
-  printf "\e[32m$BASE_DIR_PATH/config/ai_agents/current_ai_agent_tmux_session.txt file already exists\e[0m\n"
+# ai_agents current_tmux_ai_agent_session.txt file
+if [[ -f $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent_session.txt ]]; then
+  printf "\e[32m$BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent_session.txt file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $BASE_DIR_PATH/config/ai_agents/current_ai_agent_tmux_session.txt\e[0m\n"
-  echo "$AI_AGENT_TMUX_SESSION" > $BASE_DIR_PATH/config/ai_agents/current_ai_agent_tmux_session.txt
-fi
-
-# ai_agents ai_agent.txt file
-if [[ -f $BASE_DIR_PATH/config/ai_agents/ai_agent.txt ]]; then
-  printf "\e[32m$BASE_DIR_PATH/config/ai_agents/ai_agent.txt file already exists\e[0m\n"
-else
-  printf "\e[31mcreate file $BASE_DIR_PATH/config/ai_agents/ai_agent.txt\e[0m\n"
-  echo "$AI_AGENT" > $BASE_DIR_PATH/config/ai_agents/ai_agent.txt
-fi
-
-# ai_agents ai_agent_tmux_session.txt file
-if [[ -f $BASE_DIR_PATH/config/ai_agents/ai_agent_tmux_session.txt ]]; then
-  printf "\e[32m$BASE_DIR_PATH/config/ai_agents/ai_agent_tmux_session.txt file already exists\e[0m\n"
-else
-  printf "\e[31mcreate file $BASE_DIR_PATH/config/ai_agents/ai_agent_tmux_session.txt\e[0m\n"
-  echo "$AI_AGENT_TMUX_SESSION" > $BASE_DIR_PATH/config/ai_agents/ai_agent_tmux_session.txt
-fi
-
-# ai_agents ai_sub_agent.txt file
-if [[ -f $BASE_DIR_PATH/config/ai_agents/ai_sub_agent.txt ]]; then
-  printf "\e[32m$BASE_DIR_PATH/config/ai_agents/ai_sub_agent.txt file already exists\e[0m\n"
-else
-  printf "\e[31mcreate file $BASE_DIR_PATH/config/ai_agents/ai_sub_agent.txt\e[0m\n"
-  echo "$AI_SUB_AGENT" > $BASE_DIR_PATH/config/ai_agents/ai_sub_agent.txt
-fi
-
-# ai_agents ai_sub_agent_tmux_session.txt file
-if [[ -f $BASE_DIR_PATH/config/ai_agents/ai_sub_agent_tmux_session.txt ]]; then
-  printf "\e[32m$BASE_DIR_PATH/config/ai_agents/ai_sub_agent_tmux_session.txt file already exists\e[0m\n"
-else
-  printf "\e[31mcreate file $BASE_DIR_PATH/config/ai_agents/ai_sub_agent_tmux_session.txt\e[0m\n"
-  echo "$AI_SUB_AGENT_TMUX_SESSION" > $BASE_DIR_PATH/config/ai_agents/ai_sub_agent_tmux_session.txt
+  printf "\e[31mcreate file $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent_session.txt\e[0m\n"
+  echo "$TMUX_AI_AGENT_SESSION" > $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent_session.txt
 fi
 
 # ai_agents symlink
