@@ -32,7 +32,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 BTab"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) BTab"
                                     }
                                 ],
                                 "type": "basic"
@@ -51,7 +51,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/run-todo-in-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/run-todo-in-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -70,7 +70,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -89,7 +89,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "osascript -e 'tell application \"Terminal\" to activate' && ~/local/bin/tmux select-pane -t ai-agent-session:1.1"
+                                        "shell_command": "osascript -e 'tell application \"Terminal\" to activate' && ~/local/bin/tmux select-pane -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt)"
                                     }
                                 ],
                                 "type": "basic"
@@ -108,7 +108,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/go-to-next-step' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/go-to-next-step' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -127,7 +127,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/next-max-effort' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/next-max-effort' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -146,7 +146,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/question-answer-in-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/question-answer-in-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -165,7 +165,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/prev-max-effort' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/prev-max-effort' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -184,7 +184,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 C-u"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) C-u"
                                     }
                                 ],
                                 "type": "basic"
@@ -203,7 +203,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux -u set-buffer \"$(LANG=ja_JP.UTF-8 pbpaste)\" && ~/local/bin/tmux -u paste-buffer -t ai-agent-session:1.1"
+                                        "shell_command": "~/local/bin/tmux -u set-buffer \"$(LANG=ja_JP.UTF-8 pbpaste)\" && ~/local/bin/tmux -u paste-buffer -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt)"
                                     }
                                 ],
                                 "type": "basic"
@@ -222,7 +222,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/clear' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/clear' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -241,7 +241,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/check-and-annotate-test-completeness '"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/check-and-annotate-test-completeness '"
                                     }
                                 ],
                                 "type": "basic"
@@ -260,7 +260,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/purge-awareness '"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/purge-awareness '"
                                     }
                                 ],
                                 "type": "basic"
@@ -279,7 +279,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/start-task '"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/start-task '"
                                     }
                                 ],
                                 "type": "basic"
@@ -298,7 +298,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/create-commit-message' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/create-commit-message' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -317,7 +317,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/read-task '"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/read-task '"
                                     }
                                 ],
                                 "type": "basic"
@@ -336,7 +336,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/dump-research-summary-to-tmp-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/dump-research-summary-to-tmp-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -355,7 +355,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/prohibit-internal-todo' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/prohibit-internal-todo' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -374,7 +374,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/dump-latest-output-to-tmp-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/dump-latest-output-to-tmp-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -393,7 +393,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/act-on-tmp-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/act-on-tmp-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -412,7 +412,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/read-path '"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/read-path '"
                                     }
                                 ],
                                 "type": "basic"
@@ -431,7 +431,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 Escape"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Escape"
                                     }
                                 ],
                                 "type": "basic"
@@ -450,7 +450,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/create-worklog' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/create-worklog' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -469,7 +469,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t ai-agent-session:1.1 '/create-worklog-from-committed-diff-and-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t ai-agent-session:1.1 Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/create-worklog-from-committed-diff-and-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
