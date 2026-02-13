@@ -8,5 +8,6 @@
 /tmux/plugins/
 /claude/commands
 /my.local.cnf
+/config/ai_agents/*
 /config/karabiner/automatic_backups
 /.bundle
