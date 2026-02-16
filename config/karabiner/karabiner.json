@@ -42,7 +42,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+x: send '/clear' + Enter",
+                                "description": "Ctrl+Cmd+x: send '/new' + Enter",
                                 "from": {
                                     "key_code": "x",
                                     "modifiers": {
@@ -51,7 +51,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/clear' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/new' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -99,6 +99,25 @@
                     {
                         "manipulators": [
                             {
+                                "description": "Ctrl+Cmd+Shift+y: send '/create-pr-title '",
+                                "from": {
+                                    "key_code": "y",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command", "shift"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/create-pr-title '"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
                                 "description": "Ctrl+Cmd+u: send C-u (kill line)",
                                 "from": {
                                     "key_code": "u",
@@ -118,16 +137,16 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+u: send '/create-branch '",
+                                "description": "Ctrl+Cmd+Shift+u: send '/create-pr-description '",
                                 "from": {
                                     "key_code": "u",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/create-branch '"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/create-pr-description '"
                                     }
                                 ],
                                 "type": "basic"
@@ -156,11 +175,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+i: send '/create-commit-message' + Enter",
+                                "description": "Ctrl+Cmd+Shift+i: send '/create-commit-message' + Enter",
                                 "from": {
                                     "key_code": "i",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -194,16 +213,16 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+o: send '/create-pr-title '",
+                                "description": "Ctrl+Cmd+Shift+o: send '/create-branch '",
                                 "from": {
                                     "key_code": "o",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/create-pr-title '"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/create-branch '"
                                     }
                                 ],
                                 "type": "basic"
@@ -213,7 +232,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+p: send '/prev-max-effort' + Enter",
+                                "description": "Ctrl+Cmd+p: send C-p",
                                 "from": {
                                     "key_code": "p",
                                     "modifiers": {
@@ -222,7 +241,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/prev-max-effort' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) C-p"
                                     }
                                 ],
                                 "type": "basic"
@@ -232,16 +251,16 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+p: send '/create-pr-description '",
+                                "description": "Ctrl+Cmd+Shift+p: send '/prev-max-effort' + Enter",
                                 "from": {
                                     "key_code": "p",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/create-pr-description '"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/prev-max-effort' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -270,16 +289,16 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+@: send '/find-test-path '",
+                                "description": "Ctrl+Cmd+Shift+@: send '/read-tmp-dump-prompt' + Enter",
                                 "from": {
                                     "key_code": "open_bracket",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/find-test-path '"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/read-tmp-dump-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -327,11 +346,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+h: send '/outline-rspec-context '",
+                                "description": "Ctrl+Cmd+Shift+h: send '/outline-rspec-context '",
                                 "from": {
                                     "key_code": "h",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -365,11 +384,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+j: send '/annotate-for-rspec '",
+                                "description": "Ctrl+Cmd+Shift+j: send '/annotate-for-rspec '",
                                 "from": {
                                     "key_code": "j",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -403,11 +422,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+k: send '/fix-failed-test '",
+                                "description": "Ctrl+Cmd+Shift+k: send '/fix-failed-test '",
                                 "from": {
                                     "key_code": "k",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -441,11 +460,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+l: send '/implement-test-in-git-diff' + Enter",
+                                "description": "Ctrl+Cmd+Shift+l: send '/implement-test-in-git-diff' + Enter",
                                 "from": {
                                     "key_code": "l",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -479,11 +498,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+;: send '/read-tmp-prompt' + Enter",
+                                "description": "Ctrl+Cmd+Shift+;: send '/read-tmp-prompt' + Enter",
                                 "from": {
                                     "key_code": "semicolon",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -517,11 +536,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+:: send '/read-task '",
+                                "description": "Ctrl+Cmd+Shift+:: send '/read-task '",
                                 "from": {
                                     "key_code": "quote",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -555,11 +574,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+]: send '/create-worklog-from-committed-diff-and-git-diff' + Enter",
+                                "description": "Ctrl+Cmd+Shift+]: send '/create-worklog-from-committed-diff-and-git-diff' + Enter",
                                 "from": {
                                     "key_code": "backslash",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -574,11 +593,30 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+n: send '/next-max-effort' + Enter",
+                                "description": "Ctrl+Cmd+n: send C-n",
                                 "from": {
                                     "key_code": "n",
                                     "modifiers": {
                                         "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) C-n"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+Shift+n: send '/next-max-effort' + Enter",
+                                "from": {
+                                    "key_code": "n",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -612,11 +650,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+m: send '/verify-refactor-in-git-diff' + Enter",
+                                "description": "Ctrl+Cmd+Shift+m: send '/verify-refactor-in-git-diff' + Enter",
                                 "from": {
                                     "key_code": "m",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -631,9 +669,47 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+,: send '/dump-latest-output-to-tmp-prompt' + Enter",
+                                "description": "Ctrl+Cmd+,: send '/test-code '",
                                 "from": {
                                     "key_code": "comma",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/test-code '"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+Shift+,: send '/find-test-path '",
+                                "from": {
+                                    "key_code": "comma",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command", "shift"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/find-test-path '"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+.: send '/dump-latest-output-to-tmp-prompt' + Enter",
+                                "from": {
+                                    "key_code": "period",
                                     "modifiers": {
                                         "mandatory": ["control", "command"]
                                     }
@@ -650,35 +726,16 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+,: send '/dump-research-summary-to-tmp-prompt' + Enter",
+                                "description": "Ctrl+Cmd+Shift+.: send '/dump-research-summary-to-tmp-prompt' + Enter",
                                 "from": {
-                                    "key_code": "comma",
+                                    "key_code": "period",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
                                     {
                                         "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/dump-research-summary-to-tmp-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Ctrl+Cmd+.: send '/read-tmp-dump-prompt' + Enter",
-                                "from": {
-                                    "key_code": "period",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/read-tmp-dump-prompt' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -707,11 +764,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+/: send '/cross-check-with-other-task '",
+                                "description": "Ctrl+Cmd+Shift+/: send '/cross-check-with-other-task '",
                                 "from": {
                                     "key_code": "slash",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -745,11 +802,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+_: send '/capture-skill-from-session' + Enter",
+                                "description": "Ctrl+Cmd+Shift+_: send '/capture-skill-from-session' + Enter",
                                 "from": {
                                     "key_code": "international1",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -783,11 +840,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+-: send '/purge-awareness '",
+                                "description": "Ctrl+Cmd+Shift+-: send '/purge-awareness '",
                                 "from": {
                                     "key_code": "hyphen",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -821,11 +878,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+^: send '/read-commit-diff' + Enter",
+                                "description": "Ctrl+Cmd+Shift+^: send '/read-commit-diff' + Enter",
                                 "from": {
                                     "key_code": "equal_sign",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -859,11 +916,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Opt+Shift+\\: send '/review-committed-diff' + Enter",
+                                "description": "Ctrl+Cmd+Shift+\\: send '/review-committed-diff' + Enter",
                                 "from": {
                                     "key_code": "international3",
                                     "modifiers": {
-                                        "mandatory": ["control", "option", "shift"]
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
