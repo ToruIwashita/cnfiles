@@ -422,7 +422,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+k: send '/fix-failed-test' + Tab",
+                                "description": "Ctrl+Cmd+Shift+k: send '/find-test-path' + Tab",
                                 "from": {
                                     "key_code": "k",
                                     "modifiers": {
@@ -431,7 +431,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/fix-failed-test' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/find-test-path' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
                                     }
                                 ],
                                 "type": "basic"
@@ -669,7 +669,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+,: send '/test-code' + Tab",
+                                "description": "Ctrl+Cmd+,: send '/fix-failed-test' + Tab",
                                 "from": {
                                     "key_code": "comma",
                                     "modifiers": {
@@ -678,7 +678,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/test-code' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/fix-failed-test' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
                                     }
                                 ],
                                 "type": "basic"
@@ -688,7 +688,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+,: send '/find-test-path' + Tab",
+                                "description": "Ctrl+Cmd+Shift+,: send '/test-code' + Tab",
                                 "from": {
                                     "key_code": "comma",
                                     "modifiers": {
@@ -697,7 +697,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/find-test-path' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/test-code' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
                                     }
                                 ],
                                 "type": "basic"
