@@ -19,6 +19,7 @@
       "Bash(source:*)",
       "Bash(pbcopy:*)",
       "Bash(git commit:*)",
+      "Bash(git diff:*)",
       "Bash(git grep:*)",
       "Bash(git pull:*)",
       "Bash(git show:*)",
