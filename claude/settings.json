@@ -18,6 +18,7 @@
       "Bash(awk:*)",
       "Bash(source:*)",
       "Bash(pbcopy:*)",
+      "Bash(git checkout:*)",
       "Bash(git commit:*)",
       "Bash(git diff:*)",
       "Bash(git grep:*)",
