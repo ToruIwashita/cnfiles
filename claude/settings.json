@@ -38,6 +38,7 @@
     "deny": [
       "Bash(sudo:*)",
       "Bash(rm:*)",
+      "Bash(rmdir:*)",
       "Bash(git push:*)",
       "Bash(git reset:*)",
       "Bash(git rebase:*)",
