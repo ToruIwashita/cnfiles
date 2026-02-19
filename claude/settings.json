@@ -17,6 +17,7 @@
       "Bash(tail:*)",
       "Bash(awk:*)",
       "Bash(source:*)",
+      "Bash(pbcopy:*)",
       "Bash(git commit:*)",
       "Bash(git grep:*)",
       "Bash(git pull:*)",
