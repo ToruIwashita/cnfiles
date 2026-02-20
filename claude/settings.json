@@ -42,6 +42,7 @@
       "Bash(sudo:*)",
       "Bash(rm:*)",
       "Bash(rmdir:*)",
+      "Bash(git -C:*)",
       "Bash(git push:*)",
       "Bash(git reset:*)",
       "Bash(git rebase:*)",
