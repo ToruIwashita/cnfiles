@@ -15,6 +15,7 @@
       "Bash(cat:*)",
       "Bash(head:*)",
       "Bash(tail:*)",
+      "Bash(sed:*)",
       "Bash(awk:*)",
       "Bash(source:*)",
       "Bash(pbcopy:*)",
