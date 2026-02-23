@@ -14,7 +14,7 @@ current_agent=$(cat "$current_tmux_ai_agent_file")
 if [[ "$current_agent" == "$ai_agent" ]]; then
   echo "$ai_sub_agent" > "$current_tmux_ai_agent_file"
   echo "$tmux_ai_sub_agent_session" > "$current_tmux_ai_agent_session_file"
-elif [[ "$current_agent" == "$ai_sub_agent" ]]; then
+else
   echo "$ai_agent" > "$current_tmux_ai_agent_file"
   echo "$tmux_ai_agent_session" > "$current_tmux_ai_agent_session_file"
 fi
