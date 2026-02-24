@@ -1,6 +1,8 @@
 #!/usr/bin/env zsh
 set -eu
 
+tmux=~/local/bin/tmux
+
 ai_agent=claude
 ai_sub_agent=codex
 tmux_ai_agent_session=ai-agent-session:1.1
@@ -14,7 +16,31 @@ current_agent=$(cat "$current_tmux_ai_agent_file")
 if [[ "$current_agent" == "$ai_agent" ]]; then
   echo "$ai_sub_agent" > "$current_tmux_ai_agent_file"
   echo "$tmux_ai_sub_agent_session" > "$current_tmux_ai_agent_session_file"
+
+  # green
+  accent=colour82
+  border_bg=colour22
 else
   echo "$ai_agent" > "$current_tmux_ai_agent_file"
   echo "$tmux_ai_agent_session" > "$current_tmux_ai_agent_session_file"
+
+  # default cyan
+  accent=colour38
+  border_bg=colour20
+fi
+
+# pane border
+$tmux set -g pane-active-border-style "fg=${accent},bg=${border_bg}"
+
+# current window tab
+$tmux setw -g window-status-current-format "#[fg=${accent},bg=colour20,noreverse,nobold] #I #W "
+
+# status-right
+plugin_path=""
+if result=$($tmux show-environment -g TMUX_PLUGIN_MANAGER_PATH 2>/dev/null); then
+  plugin_path=${result#TMUX_PLUGIN_MANAGER_PATH=}
+fi
+
+if [[ -n "$plugin_path" ]]; then
+  $tmux set -g status-right "#{prefix_highlight} #[fg=${accent},bg=colour234,nobold]#(${plugin_path}/tmux-mem-cpu-load/tmux-mem-cpu-load) #{?pane_synchronized,#[bg=colour54],#[bg=colour242]}#{?pane_synchronized,#[fg=colour231],#[fg=colour251]} sync#{?pane_synchronized,[*],[]} #[fg=colour234,bg=${accent}] #(cat ${current_tmux_ai_agent_file}) "
 fi
