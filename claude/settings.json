@@ -17,6 +17,7 @@
       "Bash(tail:*)",
       "Bash(sed:*)",
       "Bash(awk:*)",
+      "Bash(ps:*)",
       "Bash(source:*)",
       "Bash(pbcopy:*)",
       "Bash(git branch:*)",
