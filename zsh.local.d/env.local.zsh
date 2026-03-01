@@ -1,4 +1,6 @@
 ## 環境変数設定
+# Claude Code
+export CLAUDE_CODE_OAUTH_TOKEN=
 
 # mysql (その他の設定は ~/.my.cnf に書く)
 export MYSQL_DATABASE=
