@@ -72,5 +72,6 @@
   },
   "outputStyle": "Explanatory",
   "language": "Japanese",
-  "teammateMode": "tmux"
+  "teammateMode": "tmux",
+  "model": "opus"
 }
