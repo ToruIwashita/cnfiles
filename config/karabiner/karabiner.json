@@ -384,11 +384,30 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+[: send Escape",
+                                "description": "Ctrl+Cmd+[: send '/no-op' + Tab",
                                 "from": {
                                     "key_code": "close_bracket",
                                     "modifiers": {
                                         "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/no-op' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+Shift+[: send Escape",
+                                "from": {
+                                    "key_code": "close_bracket",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
