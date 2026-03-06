@@ -73,5 +73,6 @@
   },
   "outputStyle": "Explanatory",
   "language": "Japanese",
-  "teammateMode": "tmux"
+  "teammateMode": "tmux",
+  "effortLevel": "high"
 }
