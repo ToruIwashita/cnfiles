@@ -136,7 +136,7 @@ alias gb='git branch'
 alias gf='git fetch --prune'
 alias gp='git prune'
 alias gs='git status'
-alias gss='git stash save'
+alias gss='git stash --include-untracked'
 alias gsp='git stash pop'
 # ping
 alias ping-one='ping -v -c 1'
