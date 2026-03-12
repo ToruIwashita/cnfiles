@@ -36,13 +36,13 @@ export MEMOLIST_TMP_DIFF_FILE_PATH=$MEMOLIST_DIR_PATH/00-tmp.diff
 export GIT_WORKTREES_DIR_PATH=$WORKS_DIR_PATH/git_worktrees
 
 ## agentic coding
-export TMUX_AI_SESSION='ai-agent-session'               # tmuxのAIエージェント専用セッション
-export AI_AGENT=claude                                  # デフォルトで使用されるAIエージェント
-export AI_AGENT_WITH_OPT="$AI_AGENT --chrome"           # デフォルトで使用されるAIエージェント（オプション付き）
-export TMUX_AI_AGENT_SESSION="$TMUX_AI_SESSION:1.1"     # AIエージェントのTMUXセッション位置
-export AI_SUB_AGENT=codex                               # デフォルトで使用されるAIサブエージェント
-export AI_SUB_AGENT_WITH_OPT="$AI_SUB_AGENT"            # デフォルトで使用されるAIサブエージェント（オプション付き）
-export TMUX_AI_SUB_AGENT_SESSION="$TMUX_AI_SESSION:1.0" # AIサブエージェントのTMUXセッション位置
+export TMUX_AI_SESSION='ai-agent-session'                            # tmuxのAIエージェント専用セッション
+export AI_AGENT=claude                                               # デフォルトで使用されるAIエージェント
+export AI_AGENT_WITH_OPT="$AI_AGENT --chrome --permission-mode auto" # デフォルトで使用されるAIエージェント（オプション付き）
+export TMUX_AI_AGENT_SESSION="$TMUX_AI_SESSION:1.1"                  # AIエージェントのTMUXセッション位置
+export AI_SUB_AGENT=codex                                            # デフォルトで使用されるAIサブエージェント
+export AI_SUB_AGENT_WITH_OPT="$AI_SUB_AGENT"                         # デフォルトで使用されるAIサブエージェント（オプション付き）
+export TMUX_AI_SUB_AGENT_SESSION="$TMUX_AI_SESSION:1.0"              # AIサブエージェントのTMUXセッション位置
 export CURRENT_TMUX_AI_AGENT_FILE=$CONFIG_DIR_PATH/ai_agents/current_tmux_ai_agent.txt
 export CURRENT_TMUX_AI_AGENT_SESSION_FILE=$CONFIG_DIR_PATH/ai_agents/current_tmux_ai_agent_session.txt
 export AGENTIC_CODING_DIR_PATH=$MARKDOWN_TEXTS_DIR_PATH/agentic_coding
