@@ -61,11 +61,30 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+r: send '/local-load-development-guide' + Tab + Enter",
+                                "description": "Ctrl+Cmd+r: send '/resume' + Tab + Enter",
                                 "from": {
                                     "key_code": "r",
                                     "modifiers": {
                                         "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/resume' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+Shift+r: send '/local-load-development-guide' + Tab + Enter",
+                                "from": {
+                                    "key_code": "r",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
@@ -384,7 +403,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+[: send '/no-op' + Tab",
+                                "description": "Ctrl+Cmd+[: send Escape",
                                 "from": {
                                     "key_code": "close_bracket",
                                     "modifiers": {
@@ -393,7 +412,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/no-op' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Escape"
                                     }
                                 ],
                                 "type": "basic"
@@ -403,7 +422,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+[: send Escape",
+                                "description": "Ctrl+Cmd+Shift+[: send '/no-op' + Tab",
                                 "from": {
                                     "key_code": "close_bracket",
                                     "modifiers": {
@@ -412,7 +431,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Escape"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/no-op' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
                                     }
                                 ],
                                 "type": "basic"
