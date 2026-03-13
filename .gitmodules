@@ -22,9 +22,6 @@
 [submodule "modules/the_silver_searcher"]
 	path = modules/the_silver_searcher
 	url = https://github.com/ggreer/the_silver_searcher.git
-[submodule "modules/github-markdown-css"]
-	path = modules/github-markdown-css
-	url = https://github.com/sindresorhus/github-markdown-css.git
 [submodule "modules/asdf"]
 	path = modules/asdf
 	url = https://github.com/asdf-vm/asdf.git
