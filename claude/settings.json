@@ -21,6 +21,7 @@
       "Bash(source:*)",
       "Bash(pbcopy:*)",
       "Bash(git branch:*)",
+      "Bash(git check-ignore:*)",
       "Bash(git checkout:*)",
       "Bash(git commit:*)",
       "Bash(git diff:*)",
