@@ -29,3 +29,6 @@
 [submodule "modules/gh-cli"]
 	path = modules/gh-cli
 	url = https://github.com/cli/cli.git
+[submodule "modules/github-markdown-css"]
+	path = modules/github-markdown-css
+	url = https://github.com/sindresorhus/github-markdown-css.git
