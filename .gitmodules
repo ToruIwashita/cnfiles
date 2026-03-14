@@ -29,6 +29,3 @@
 [submodule "modules/gh-cli"]
 	path = modules/gh-cli
 	url = https://github.com/cli/cli.git
-[submodule "modules/highlight.js"]
-	path = modules/highlight.js
-	url = https://github.com/highlightjs/highlight.js.git
