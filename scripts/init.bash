@@ -151,12 +151,12 @@ else
   cp -p $BASE_DIR_PATH/my.cnf $BASE_DIR_PATH/my.local.cnf
 fi
 
-## copy github-markdown-css/github-markdown-dark.css file
-if [[ -f $CONFIG_DIR_PATH/github-markdown-dark.css ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH/github-markdown-dark.css file already exists\e[0m\n"
+## copy github-markdown-dark.css as override file for previm (customized by sed below)
+if [[ -f $CONFIG_DIR_PATH/github-markdown-dark.override.css ]]; then
+  printf "\e[32m$CONFIG_DIR_PATH/github-markdown-dark.override.css file already exists\e[0m\n"
 else
-  printf "\e[31mcopy file $BASE_DIR_PATH/modules/github-markdown-css/github-markdown-dark.css to $CONFIG_DIR_PATH/github-markdown-dark.css\e[0m\n"
-  cp -p $BASE_DIR_PATH/modules/github-markdown-css/github-markdown-dark.css $CONFIG_DIR_PATH/github-markdown-dark.css
+  printf "\e[31mcopy file $BASE_DIR_PATH/modules/github-markdown-css/github-markdown-dark.css to $CONFIG_DIR_PATH/github-markdown-dark.override.css\e[0m\n"
+  cp -p $BASE_DIR_PATH/modules/github-markdown-css/github-markdown-dark.css $CONFIG_DIR_PATH/github-markdown-dark.override.css
 fi
 
 # zsh
@@ -564,7 +564,7 @@ sed -i '' -e 's/\.markdown-body/#body/g' \
 #body .hljs-addition{color:#aff5b4;background-color:#033a16}\
 #body .hljs-emphasis{font-style:italic}\
 #body .hljs-strong{font-weight:700}' \
-  $CONFIG_DIR_PATH/github-markdown-dark.css
+  $CONFIG_DIR_PATH/github-markdown-dark.override.css
 
 printf "\ninit complete\n"
 exit 0

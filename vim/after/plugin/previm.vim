@@ -9,7 +9,7 @@ let g:previm_enable_realtime = 1
 let g:previm_show_header = 0
 let g:previm_plantuml_imageprefix = 'http://localhost:8888/img/'
 let g:previm_disable_default_css = 1
-let g:previm_custom_css_path = g:config_dir_path.'/github-markdown-dark.css'
+let g:previm_custom_css_path = g:config_dir_path.'/github-markdown-dark.override.css'
 fun! s:previm_setting() abort
   nnoremap <buffer> <C-s>v :<C-u>PrevimOpen<CR>
 endf
