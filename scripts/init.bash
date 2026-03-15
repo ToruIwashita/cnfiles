@@ -544,9 +544,27 @@ else
   ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/commands ~/.codex/prompts
 fi
 
-# text replacement
-sed -e 's/\.markdown-body/#body/g' $CONFIG_DIR_PATH/github-markdown-dark.css > $CONFIG_DIR_PATH/github-markdown-dark.css.tmp
-mv -f $CONFIG_DIR_PATH/github-markdown-dark.css.tmp $CONFIG_DIR_PATH/github-markdown-dark.css
+# previm css: selector replacement + highlight.js github dark overrides
+sed -i '' -e 's/\.markdown-body/#body/g' \
+  -e '$a\
+#body .hljs{background:#151b23;color:#f0f6fc}\
+#body .hljs-comment,#body .hljs-quote{color:#9198a1;font-style:italic}\
+#body .hljs-keyword,#body .hljs-selector-tag{color:#ff7b72}\
+#body .hljs-string,#body .hljs-doctag{color:#a5d6ff}\
+#body .hljs-number,#body .hljs-literal{color:#79c0ff}\
+#body .hljs-built_in,#body .hljs-bullet{color:#ffa657}\
+#body .hljs-title,#body .hljs-section{color:#d2a8ff}\
+#body .hljs-attr,#body .hljs-attribute{color:#79c0ff}\
+#body .hljs-variable,#body .hljs-template-variable{color:#ffa657}\
+#body .hljs-symbol{color:#79c0ff}\
+#body .hljs-type,#body .hljs-name{color:#7ee787}\
+#body .hljs-meta{color:#79c0ff}\
+#body .hljs-subst{color:#f0f6fc}\
+#body .hljs-deletion{color:#ffdcd7;background-color:#67060c}\
+#body .hljs-addition{color:#aff5b4;background-color:#033a16}\
+#body .hljs-emphasis{font-style:italic}\
+#body .hljs-strong{font-weight:700}' \
+  $CONFIG_DIR_PATH/github-markdown-dark.css
 
 printf "\ninit complete\n"
 exit 0
