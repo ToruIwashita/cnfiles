@@ -48,7 +48,6 @@
       "Bash(git -C:*)",
       "Bash(git push:*)",
       "Bash(git rebase:*)",
-      "Bash(git reset:*)",
       "Bash(git rm:*)",
       "Bash(curl:*)",
       "Bash(wget:*)",
