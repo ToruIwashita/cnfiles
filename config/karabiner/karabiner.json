@@ -460,7 +460,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+h: send '/outline-rspec-context' + Tab",
+                                "description": "Ctrl+Cmd+Shift+h: send '/test-code' + Tab",
                                 "from": {
                                     "key_code": "h",
                                     "modifiers": {
@@ -469,7 +469,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/outline-rspec-context' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/test-code' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
                                     }
                                 ],
                                 "type": "basic"
@@ -935,7 +935,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+-: send '/test-code' + Tab",
+                                "description": "Ctrl+Cmd+-: send '/outline-rspec-context' + Tab",
                                 "from": {
                                     "key_code": "hyphen",
                                     "modifiers": {
@@ -944,7 +944,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/test-code' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/outline-rspec-context' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
                                     }
                                 ],
                                 "type": "basic"
@@ -973,7 +973,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+^: send '/review-git-diff' + Tab + Enter",
+                                "description": "Ctrl+Cmd+^: send '/outline-rspec-context-in-git-diff' + Tab + Enter",
                                 "from": {
                                     "key_code": "equal_sign",
                                     "modifiers": {
@@ -982,7 +982,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/review-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/outline-rspec-context-in-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -992,11 +992,30 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+^: send '/review-committed-diff' + Tab + Enter",
+                                "description": "Ctrl+Cmd+Shift+^: send '/outline-rspec-context-in-committed-diff' + Tab + Enter",
                                 "from": {
                                     "key_code": "equal_sign",
                                     "modifiers": {
                                         "mandatory": ["control", "command", "shift"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/outline-rspec-context-in-committed-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+\\: send '/review-committed-diff' + Tab + Enter",
+                                "from": {
+                                    "key_code": "international3",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
                                     }
                                 },
                                 "to": [
@@ -1011,26 +1030,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+\\: send '/review-security-in-committed-diff-and-git-diff' + Tab + Enter",
-                                "from": {
-                                    "key_code": "international3",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/review-security-in-committed-diff-and-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Ctrl+Cmd+Shift+\\: send '/verify-refactor-in-git-diff' + Tab + Enter",
+                                "description": "Ctrl+Cmd+Shift+\\: send '/review-security-in-committed-diff-and-git-diff' + Tab + Enter",
                                 "from": {
                                     "key_code": "international3",
                                     "modifiers": {
@@ -1039,7 +1039,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/verify-refactor-in-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/review-security-in-committed-diff-and-git-diff' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
