@@ -27,6 +27,7 @@
       "Bash(git diff:*)",
       "Bash(git grep:*)",
       "Bash(git pull:*)",
+      "Bash(git reset:*)",
       "Bash(git show:*)",
       "Bash(git symbolic-ref:*)",
       "Read(*)",
