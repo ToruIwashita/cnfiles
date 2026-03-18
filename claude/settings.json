@@ -20,6 +20,7 @@
       "Bash(ps:*)",
       "Bash(source:*)",
       "Bash(pbcopy:*)",
+      "Bash(gh pr:*)",
       "Bash(git branch:*)",
       "Bash(git check-ignore:*)",
       "Bash(git checkout:*)",
