@@ -449,11 +449,11 @@ else
 fi
 
 # memolist tmp dump prompt  markdown file
-if [[ -f $MEMOLIST_TMP_DUMP_PROMPT_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TMP_DUMP_PROMPT_FILE_PATH file already exists\e[0m\n"
+if [[ -f $MEMOLIST_TMP_DUMP_FILE_PATH ]]; then
+  printf "\e[32m$MEMOLIST_TMP_DUMP_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MEMOLIST_TMP_DUMP_PROMPT_FILE_PATH\e[0m\n"
-  touch $MEMOLIST_TMP_DUMP_PROMPT_FILE_PATH
+  printf "\e[31mcreate file $MEMOLIST_TMP_DUMP_FILE_PATH\e[0m\n"
+  touch $MEMOLIST_TMP_DUMP_FILE_PATH
 fi
 
 # memolist tmp markdown file
