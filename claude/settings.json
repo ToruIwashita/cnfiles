@@ -76,5 +76,6 @@
   "language": "Japanese",
   "effortLevel": "high",
   "skipAutoPermissionPrompt": true,
-  "teammateMode": "tmux"
+  "teammateMode": "tmux",
+  "model": "opus"
 }
