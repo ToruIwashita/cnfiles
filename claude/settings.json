@@ -21,6 +21,7 @@
       "Bash(source:*)",
       "Bash(pbcopy:*)",
       "Bash(gh pr:*)",
+      "Bash(git add:*)",
       "Bash(git branch:*)",
       "Bash(git check-ignore:*)",
       "Bash(git checkout:*)",
@@ -76,6 +77,5 @@
   "language": "Japanese",
   "effortLevel": "high",
   "skipAutoPermissionPrompt": true,
-  "teammateMode": "tmux",
-  "model": "opus"
+  "teammateMode": "tmux"
 }
