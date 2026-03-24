@@ -232,7 +232,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+u: send '/create-pr' + Tab + Enter",
+                                "description": "Ctrl+Cmd+Shift+u: send '/create-or-update-pr' + Tab + Enter",
                                 "from": {
                                     "key_code": "u",
                                     "modifiers": {
@@ -241,7 +241,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/create-pr' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) '/create-or-update-pr' && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
