@@ -33,6 +33,7 @@
       "Bash(git pull:*)",
       "Bash(git reset:*)",
       "Bash(git show:*)",
+      "Bash(git status:*)",
       "Bash(git symbolic-ref:*)",
       "Read(*)",
       "Edit(*)",
