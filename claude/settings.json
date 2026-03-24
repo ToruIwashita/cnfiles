@@ -21,6 +21,8 @@
       "Bash(source:*)",
       "Bash(pbcopy:*)",
       "Bash(gh pr:*)",
+      "Bash(gis:*)",
+      "Bash(gpr:*)",
       "Bash(git add:*)",
       "Bash(git branch:*)",
       "Bash(git check-ignore:*)",
