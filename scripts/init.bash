@@ -143,6 +143,15 @@ else
   cp -p $BASE_DIR_PATH/zsh.local.d/env.local.zsh $BASE_DIR_PATH/zsh.d/env.local.zsh
 fi
 
+## copy tmux config file
+# tmux/config.local.tmux file
+if [[ -f $BASE_DIR_PATH/tmux/config.local.tmux ]]; then
+  printf "\e[32m$BASE_DIR_PATH/tmux/config.local.tmux file already exists\e[0m\n"
+else
+  printf "\e[31mcopy file $BASE_DIR_PATH/tmux.local/config.local.tmux to $BASE_DIR_PATH/tmux/config.local.tmux\e[0m\n"
+  cp -p $BASE_DIR_PATH/tmux.local/config.local.tmux $BASE_DIR_PATH/tmux/config.local.tmux
+fi
+
 ## copy my.cnf file
 if [[ -f $BASE_DIR_PATH/my.local.cnf ]]; then
   printf "\e[32m$BASE_DIR_PATH/my.local.cnf file already exists\e[0m\n"
