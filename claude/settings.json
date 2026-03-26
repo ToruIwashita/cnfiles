@@ -7,7 +7,6 @@
   "permissions": {
     "allow": [
       "Bash(zsh:*)",
-      "Bash(tmux:*)",
       "Bash(echo:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
@@ -36,6 +35,7 @@
       "Bash(git show:*)",
       "Bash(git status:*)",
       "Bash(git symbolic-ref:*)",
+      "Bash(tmux display-message:*)",
       "Read(*)",
       "Edit(*)",
       "MultiEdit(*)",
