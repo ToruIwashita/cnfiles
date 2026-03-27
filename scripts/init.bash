@@ -531,18 +531,18 @@ fi
 
 # markdown_texts skills to ~/.claude/skills dir
 if [[ -L ~/.claude/skills  ]]; then
-  printf "\e[32m~/.claude/skills  dir symlink already exists\e[0m\n"
+  printf "\e[32m~/.claude/skills dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.claude/skills  dir\e[0m\n"
-  ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/skills  ~/.claude/skills 
+  printf "\e[31mcreate symlink ~/.claude/skills dir\e[0m\n"
+  ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/skills ~/.claude/skills 
 fi
 
-# markdown_texts commands to ~/.codex/prompts dir
-if [[ -L ~/.codex/prompts ]]; then
-  printf "\e[32m~/.codex/prompts dir symlink already exists\e[0m\n"
+# markdown_texts commands to ~/.codex/skills dir
+if [[ -L ~/.codex/skills  ]]; then
+  printf "\e[32m~/.codex/skills dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.codex/prompts dir\e[0m\n"
-  ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/commands ~/.codex/prompts
+  printf "\e[31mcreate symlink ~/.codex/skills dir\e[0m\n"
+  ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/skills ~/.codex/skills
 fi
 
 # previm css: selector replacement + highlight.js github dark overrides
