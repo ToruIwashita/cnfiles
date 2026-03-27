@@ -3,547 +3,565 @@
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
 
+_printf() { printf "${1//$HOME/~}"; }
+
 $(cd $BASE_DIR_PATH;git submodule update --init)
 
 ## create base dir
 # local dir
 if [[ -d $LOCAL_DIR_PATH ]]; then
-  printf "\e[32m$LOCAL_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$LOCAL_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $LOCAL_DIR_PATH\e[0m\n"
+  _printf "\e[31mmkdir $LOCAL_DIR_PATH\e[0m\n"
   mkdir $LOCAL_DIR_PATH
 fi
 
 # local bin dir
 if [[ -d $LOCAL_BIN_DIR_PATH ]]; then
-  printf "\e[32m$LOCAL_BIN_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $LOCAL_BIN_DIR_PATH\e[0m\n"
+  _printf "\e[31mmkdir $LOCAL_BIN_DIR_PATH\e[0m\n"
   mkdir $LOCAL_BIN_DIR_PATH
 fi
 
 # local jar dir
 if [[ -d $LOCAL_JAR_DIR_PATH ]]; then
-  printf "\e[32m$LOCAL_JAR_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$LOCAL_JAR_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $LOCAL_JAR_DIR_PATH\e[0m\n"
+  _printf "\e[31mmkdir $LOCAL_JAR_DIR_PATH\e[0m\n"
   mkdir $LOCAL_JAR_DIR_PATH
 fi
 
 # config
 if [[ -d $CONFIG_DIR_PATH ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$CONFIG_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $CONFIG_DIR_PATH dir\e[0m\n"
+  _printf "\e[31mmkdir $CONFIG_DIR_PATH dir\e[0m\n"
   mkdir $CONFIG_DIR_PATH
 fi
 
 # cache dir
 if [[ -d $CACHE_DIR_PATH ]]; then
-  printf "\e[32m$CACHE_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$CACHE_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $CACHE_DIR_PATH\e[0m\n"
+  _printf "\e[31mmkdir $CACHE_DIR_PATH\e[0m\n"
   mkdir $CACHE_DIR_PATH
 fi
 
 # log dir
 if [[ -d $LOG_DIR_PATH ]]; then
-  printf "\e[32m$LOG_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$LOG_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $LOG_DIR_PATH\e[0m\n"
+  _printf "\e[31mmkdir $LOG_DIR_PATH\e[0m\n"
   mkdir $LOG_DIR_PATH
 fi
 
 # mysql log dir
 if [[ -d $MYSQL_LOG_DIR_PATH ]]; then
-  printf "\e[32m$MYSQL_LOG_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$MYSQL_LOG_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $MYSQL_LOG_DIR_PATH\e[0m\n"
+  _printf "\e[31mmkdir $MYSQL_LOG_DIR_PATH\e[0m\n"
   mkdir $MYSQL_LOG_DIR_PATH
 fi
 
 # zsh.d/local dir
 if [[ -d $BASE_DIR_PATH/zsh.d/local ]]; then
-  printf "\e[32m$BASE_DIR_PATH/zsh.d/local dir already exists\e[0m\n"
+  _printf "\e[32m$BASE_DIR_PATH/zsh.d/local dir already exists\e[0m\n"
 else
-  printf "\e[31mcopy dir $BASE_DIR_PATH/zsh.local.d/local to $BASE_DIR_PATH/zsh.d/local\e[0m\n"
+  _printf "\e[31mcopy dir $BASE_DIR_PATH/zsh.local.d/local to $BASE_DIR_PATH/zsh.d/local\e[0m\n"
   cp -rp $BASE_DIR_PATH/zsh.local.d/local $BASE_DIR_PATH/zsh.d
 fi
 
 # works dir
 if [[ -d $WORKS_DIR_PATH ]]; then
-  printf "\e[32m$WORKS_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$WORKS_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $WORKS_DIR_PATH\e[0m\n"
+  _printf "\e[31mmkdir $WORKS_DIR_PATH\e[0m\n"
   mkdir $WORKS_DIR_PATH
 fi
 
 # works tmp dir
 if [[ -d $TMP_DIR_PATH ]]; then
-  printf "\e[32m$TMP_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$TMP_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $TMP_DIR_PATH\e[0m\n"
+  _printf "\e[31mmkdir $TMP_DIR_PATH\e[0m\n"
   mkdir $TMP_DIR_PATH
 fi
 
 # works memolist dir
 if [[ -d $MEMOLIST_DIR_PATH ]]; then
-  printf "\e[32m$MEMOLIST_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$MEMOLIST_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $MEMOLIST_DIR_PATH\e[0m\n"
+  _printf "\e[31mmkdir $MEMOLIST_DIR_PATH\e[0m\n"
   mkdir $MEMOLIST_DIR_PATH
 fi
 
 # works git worktrees dir
 if [[ -d $GIT_WORKTREES_DIR_PATH ]]; then
-  printf "\e[32m$GIT_WORKTREES_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$GIT_WORKTREES_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir -p $GIT_WORKTREES_DIR_PATH\e[0m\n"
+  _printf "\e[31mmkdir -p $GIT_WORKTREES_DIR_PATH\e[0m\n"
   mkdir -p $GIT_WORKTREES_DIR_PATH
 fi
 
 # works cursor workspaces dir
 if [[ -d $CURSOR_WORKSPACES_DIR_PATH ]]; then
-  printf "\e[32m$CURSOR_WORKSPACES_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$CURSOR_WORKSPACES_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir -p $CURSOR_WORKSPACES_DIR_PATH\e[0m\n"
+  _printf "\e[31mmkdir -p $CURSOR_WORKSPACES_DIR_PATH\e[0m\n"
   mkdir -p $CURSOR_WORKSPACES_DIR_PATH
 fi
 
 # works docker dir
 if [[ -d $DOCKER_DIR_PATH ]]; then
-  printf "\e[32m$DOCKER_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$DOCKER_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $DOCKER_DIR_PATH\e[0m\n"
+  _printf "\e[31mmkdir $DOCKER_DIR_PATH\e[0m\n"
   mkdir $DOCKER_DIR_PATH
 fi
 
 # works docker mysql dir
 if [[ -d $DOCKER_MYSQL_DIR_PATH ]]; then
-  printf "\e[32m$DOCKER_MYSQL_DIR_PATH dir already exists\e[0m\n"
+  _printf "\e[32m$DOCKER_MYSQL_DIR_PATH dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir $DOCKER_MYSQL_DIR_PATH\e[0m\n"
+  _printf "\e[31mmkdir $DOCKER_MYSQL_DIR_PATH\e[0m\n"
   mkdir $DOCKER_MYSQL_DIR_PATH
 fi
 
 ## copy zsh config file
 # zsh.d/config.local.zsh file
 if [[ -f $BASE_DIR_PATH/zsh.d/config.local.zsh ]]; then
-  printf "\e[32m$BASE_DIR_PATH/zsh.d/config.local.zsh file already exists\e[0m\n"
+  _printf "\e[32m$BASE_DIR_PATH/zsh.d/config.local.zsh file already exists\e[0m\n"
 else
-  printf "\e[31mcopy file $BASE_DIR_PATH/zsh.local.d/config.local.zsh to $BASE_DIR_PATH/zsh.d/config.local.zsh\e[0m\n"
+  _printf "\e[31mcopy file $BASE_DIR_PATH/zsh.local.d/config.local.zsh to $BASE_DIR_PATH/zsh.d/config.local.zsh\e[0m\n"
   cp -p $BASE_DIR_PATH/zsh.local.d/config.local.zsh $BASE_DIR_PATH/zsh.d/config.local.zsh
 fi
 
 # zsh.d/env.local.zsh file
 if [[ -f $BASE_DIR_PATH/zsh.d/env.local.zsh ]]; then
-  printf "\e[32m$BASE_DIR_PATH/zsh.d/env.local.zsh file already exists\e[0m\n"
+  _printf "\e[32m$BASE_DIR_PATH/zsh.d/env.local.zsh file already exists\e[0m\n"
 else
-  printf "\e[31mcopy file $BASE_DIR_PATH/zsh.local.d/env.local.zsh to $BASE_DIR_PATH/zsh.d/env.local.zsh\e[0m\n"
+  _printf "\e[31mcopy file $BASE_DIR_PATH/zsh.local.d/env.local.zsh to $BASE_DIR_PATH/zsh.d/env.local.zsh\e[0m\n"
   cp -p $BASE_DIR_PATH/zsh.local.d/env.local.zsh $BASE_DIR_PATH/zsh.d/env.local.zsh
 fi
 
 ## copy tmux config file
 # tmux/config.local.tmux file
 if [[ -f $BASE_DIR_PATH/tmux/config.local.tmux ]]; then
-  printf "\e[32m$BASE_DIR_PATH/tmux/config.local.tmux file already exists\e[0m\n"
+  _printf "\e[32m$BASE_DIR_PATH/tmux/config.local.tmux file already exists\e[0m\n"
 else
-  printf "\e[31mcopy file $BASE_DIR_PATH/tmux.local/config.local.tmux to $BASE_DIR_PATH/tmux/config.local.tmux\e[0m\n"
+  _printf "\e[31mcopy file $BASE_DIR_PATH/tmux.local/config.local.tmux to $BASE_DIR_PATH/tmux/config.local.tmux\e[0m\n"
   cp -p $BASE_DIR_PATH/tmux.local/config.local.tmux $BASE_DIR_PATH/tmux/config.local.tmux
 fi
 
 ## copy my.cnf file
 if [[ -f $BASE_DIR_PATH/my.local.cnf ]]; then
-  printf "\e[32m$BASE_DIR_PATH/my.local.cnf file already exists\e[0m\n"
+  _printf "\e[32m$BASE_DIR_PATH/my.local.cnf file already exists\e[0m\n"
 else
-  printf "\e[31mcopy file $BASE_DIR_PATH/my.cnf to $BASE_DIR_PATH/my.local.cnf\e[0m\n"
+  _printf "\e[31mcopy file $BASE_DIR_PATH/my.cnf to $BASE_DIR_PATH/my.local.cnf\e[0m\n"
   cp -p $BASE_DIR_PATH/my.cnf $BASE_DIR_PATH/my.local.cnf
 fi
 
 ## copy github-markdown-dark.css as override file for previm (customized by sed below)
 if [[ -f $CONFIG_DIR_PATH/github-markdown-dark.override.css ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH/github-markdown-dark.override.css file already exists\e[0m\n"
+  _printf "\e[32m$CONFIG_DIR_PATH/github-markdown-dark.override.css file already exists\e[0m\n"
 else
-  printf "\e[31mcopy file $BASE_DIR_PATH/modules/github-markdown-css/github-markdown-dark.css to $CONFIG_DIR_PATH/github-markdown-dark.override.css\e[0m\n"
+  _printf "\e[31mcopy file $BASE_DIR_PATH/modules/github-markdown-css/github-markdown-dark.css to $CONFIG_DIR_PATH/github-markdown-dark.override.css\e[0m\n"
   cp -p $BASE_DIR_PATH/modules/github-markdown-css/github-markdown-dark.css $CONFIG_DIR_PATH/github-markdown-dark.override.css
 fi
 
 # zsh
 if [[ -L ~/.zprofile ]]; then
-  printf "\e[32m~/.zprofile  symlink already exists\e[0m\n"
+  _printf "\e[32m~/.zprofile symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.zprofile \e[0m\n"
-  ln -is $BASE_DIR_PATH/zprofile  ~/.zprofile
+  _printf "\e[31mcreate symlink ~/.zprofile\e[0m\n"
+  ln -is $BASE_DIR_PATH/zprofile ~/.zprofile
 fi
 
 if [[ -L ~/.zshrc ]]; then
-  printf "\e[32m~/.zshrc symlink already exists\e[0m\n"
+  _printf "\e[32m~/.zshrc symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.zshrc\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.zshrc\e[0m\n"
   ln -is $BASE_DIR_PATH/zshrc ~/.zshrc
 fi
 
 if [[ -L ~/.zsh.d ]]; then
-  printf "\e[32m~/.zsh.d dir symlink already exists\e[0m\n"
+  _printf "\e[32m~/.zsh.d dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.zsh.d dir\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.zsh.d dir\e[0m\n"
   ln -isn $BASE_DIR_PATH/zsh.d ~/.zsh.d
 fi
 
 # vim
 if [[ -L ~/.vimrc ]]; then
-  printf "\e[32m~/.vimrc symlink already exists\e[0m\n"
+  _printf "\e[32m~/.vimrc symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.vimrc\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.vimrc\e[0m\n"
   ln -is $BASE_DIR_PATH/vimrc ~/.vimrc
 fi
 
 if [[ -L ~/.vim ]]; then
-  printf "\e[32m~/.vim dir symlink already exists\e[0m\n"
+  _printf "\e[32m~/.vim dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.vim dir\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.vim dir\e[0m\n"
   ln -isn $BASE_DIR_PATH/vim ~/.vim
 fi
 
 # tmux
 if [[ -L ~/.tmux.conf ]]; then
-  printf "\e[32m~/.tmux.conf symlink already exists\e[0m\n"
+  _printf "\e[32m~/.tmux.conf symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.tmux.conf\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.tmux.conf\e[0m\n"
   ln -is $BASE_DIR_PATH/tmux.conf ~/.tmux.conf
 fi
 
 if [[ -L ~/.tmux ]]; then
-  printf "\e[32m~/.tmux dir symlink already exists\e[0m\n"
+  _printf "\e[32m~/.tmux dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.tmux dir\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.tmux dir\e[0m\n"
   ln -isn $BASE_DIR_PATH/tmux ~/.tmux
 fi
 
 # claude
 if [[ -d ~/.claude ]]; then
-  printf "\e[32m~/.claude dir already exists\e[0m\n"
+  _printf "\e[32m~/.claude dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir ~/.claude\e[0m\n"
+  _printf "\e[31mmkdir ~/.claude\e[0m\n"
   mkdir ~/.claude
 fi
 
 if [[ -L ~/.claude/CLAUDE.md ]]; then
-  printf "\e[32m~/.claude/CLAUDE.md symlink already exists\e[0m\n"
+  _printf "\e[32m~/.claude/CLAUDE.md symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.claude/CLAUDE.md\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.claude/CLAUDE.md\e[0m\n"
   ln -is $BASE_DIR_PATH/claude/CLAUDE.md ~/.claude/CLAUDE.md
 fi
 
 if [[ -L ~/.claude/settings.json ]]; then
-  printf "\e[32m~/.claude/settings.json symlink already exists\e[0m\n"
+  _printf "\e[32m~/.claude/settings.json symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.claude/settings.json\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.claude/settings.json\e[0m\n"
   ln -is $BASE_DIR_PATH/claude/settings.json ~/.claude/settings.json
 fi
 
 # codex cli
-if [[ -d ~/.codex  ]]; then
-  printf "\e[32m~/.codex  dir already exists\e[0m\n"
+if [[ -d ~/.codex ]]; then
+  _printf "\e[32m~/.codex dir already exists\e[0m\n"
 else
-  printf "\e[31mmkdir ~/.codex \e[0m\n"
-  mkdir ~/.codex 
+  _printf "\e[31mmkdir ~/.codex\e[0m\n"
+  mkdir ~/.codex
 fi
 
 if [[ -L ~/.codex/AGENTS.md ]]; then
-  printf "\e[32m~/.codex/AGENTS.md symlink already exists\e[0m\n"
+  _printf "\e[32m~/.codex/AGENTS.md symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.codex/AGENTS.md\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.codex/AGENTS.md\e[0m\n"
   ln -is $BASE_DIR_PATH/codex/AGENTS.md ~/.codex/AGENTS.md
 fi
 
 if [[ -f ~/.codex/config.toml ]]; then
-  printf "\e[32m~/.codex/config.toml symlink already exists\e[0m\n"
+  _printf "\e[32m~/.codex/config.toml symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.codex/config.toml\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.codex/config.toml\e[0m\n"
   cp -p $BASE_DIR_PATH/codex/config.toml ~/.codex/config.toml
 fi
 
 # gitconfig
 if [[ -L ~/.gitconfig ]]; then
-  printf "\e[32m~/.gitconfig symlink already exists\e[0m\n"
+  _printf "\e[32m~/.gitconfig symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.gitconfig\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.gitconfig\e[0m\n"
   ln -is $GIT_DIR_PATH/gitconfig ~/.gitconfig
 fi
 
 # gitattributes
 if [[ -L ~/.gitattributes ]]; then
-  printf "\e[32m~/.gitattributes symlink already exists\e[0m\n"
+  _printf "\e[32m~/.gitattributes symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.gitattributes\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.gitattributes\e[0m\n"
   ln -is $GIT_DIR_PATH/gitattributes ~/.gitattributes
 fi
 
 # gitignore
 if [[ -L ~/.gitignore ]]; then
-  printf "\e[32m~/.gitignore symlink already exists\e[0m\n"
+  _printf "\e[32m~/.gitignore symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.gitignore \e[0m\n"
+  _printf "\e[31mcreate symlink ~/.gitignore\e[0m\n"
   ln -is $GIT_DIR_PATH/gitignore ~/.gitignore
 fi
 
 # peco
 if [[ -L ~/.peco ]]; then
-  printf "\e[32m~/.peco dir symlink already exists\e[0m\n"
+  _printf "\e[32m~/.peco dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.peco dir\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.peco dir\e[0m\n"
   ln -isn $BASE_DIR_PATH/peco ~/.peco
 fi
 
 # delve
 if [[ -L ~/.dlv ]]; then
-  printf "\e[32m~/.dlv dir symlink already exists\e[0m\n"
+  _printf "\e[32m~/.dlv dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.dlv dir\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.dlv dir\e[0m\n"
   ln -isn $BASE_DIR_PATH/dlv ~/.dlv
 fi
 
 # ctags
 if [[ -L ~/.ctags.d ]]; then
-  printf "\e[32m~/.ctags.d dir symlink already exists\e[0m\n"
+  _printf "\e[32m~/.ctags.d dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.ctags.d dir\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.ctags.d dir\e[0m\n"
   ln -isn $BASE_DIR_PATH/ctags.d ~/.ctags.d
 fi
 
 # lint
 if [[ -L ~/.lint ]]; then
-  printf "\e[32m~/.lint symlink already exists\e[0m\n"
+  _printf "\e[32m~/.lint symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.lint dir\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.lint dir\e[0m\n"
   ln -is $BASE_DIR_PATH/lint ~/.lint
 fi
 
 # karabiner
 if [[ -L $CONFIG_DIR_PATH/karabiner ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH/karabiner symlink already exists\e[0m\n"
+  _printf "\e[32m$CONFIG_DIR_PATH/karabiner symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/karabiner\e[0m\n"
+  _printf "\e[31mcreate symlink $CONFIG_DIR_PATH/karabiner\e[0m\n"
   ln -is $BASE_DIR_PATH/config/karabiner $CONFIG_DIR_PATH/karabiner
 fi
 
 # ai_agents current_tmux_ai_agent.txt file
 if [[ -f $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent.txt ]]; then
-  printf "\e[32m$BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent.txt file already exists\e[0m\n"
+  _printf "\e[32m$BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent.txt file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent.txt\e[0m\n"
+  _printf "\e[31mcreate file $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent.txt\e[0m\n"
   echo "$AI_AGENT" > $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent.txt
 fi
 
 # ai_agents current_tmux_ai_agent_session.txt file
 if [[ -f $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent_session.txt ]]; then
-  printf "\e[32m$BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent_session.txt file already exists\e[0m\n"
+  _printf "\e[32m$BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent_session.txt file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent_session.txt\e[0m\n"
+  _printf "\e[31mcreate file $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent_session.txt\e[0m\n"
   echo "$TMUX_AI_AGENT_SESSION" > $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent_session.txt
 fi
 
 # ai_agents symlink
 if [[ -L $CONFIG_DIR_PATH/ai_agents ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH/ai_agents symlink already exists\e[0m\n"
+  _printf "\e[32m$CONFIG_DIR_PATH/ai_agents symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/ai_agents\e[0m\n"
+  _printf "\e[31mcreate symlink $CONFIG_DIR_PATH/ai_agents\e[0m\n"
   ln -isn $BASE_DIR_PATH/config/ai_agents $CONFIG_DIR_PATH/ai_agents
 fi
 
 # flake8
 if [[ -L $CONFIG_DIR_PATH/flake8 ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH/flake8 symlink already exists\e[0m\n"
+  _printf "\e[32m$CONFIG_DIR_PATH/flake8 symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/flake8\e[0m\n"
+  _printf "\e[31mcreate symlink $CONFIG_DIR_PATH/flake8\e[0m\n"
   ln -is $BASE_DIR_PATH/config/flake8 $CONFIG_DIR_PATH/flake8
 fi
 
 # black
 if [[ -L $CONFIG_DIR_PATH/black ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH/black symlink already exists\e[0m\n"
+  _printf "\e[32m$CONFIG_DIR_PATH/black symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/black\e[0m\n"
+  _printf "\e[31mcreate symlink $CONFIG_DIR_PATH/black\e[0m\n"
   ln -is $BASE_DIR_PATH/config/black $CONFIG_DIR_PATH/black
 fi
 
 # mypy
 if [[ -L $CONFIG_DIR_PATH/mypy ]]; then
-  printf "\e[32m$CONFIG_DIR_PATH/mypy dir symlink already exists\e[0m\n"
+  _printf "\e[32m$CONFIG_DIR_PATH/mypy dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink $CONFIG_DIR_PATH/mypy dir\e[0m\n"
+  _printf "\e[31mcreate symlink $CONFIG_DIR_PATH/mypy dir\e[0m\n"
   ln -is $BASE_DIR_PATH/config/mypy $CONFIG_DIR_PATH/mypy
 fi
 
 # eslint
 if [[ -L ~/.eslintrc.json ]]; then
-  printf "\e[32m~/.eslintrc.json symlink already exists\e[0m\n"
+  _printf "\e[32m~/.eslintrc.json symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.eslintrc.json\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.eslintrc.json\e[0m\n"
   ln -is $BASE_DIR_PATH/eslintrc.json ~/.eslintrc.json
 fi
 
 # pry
 if [[ -L ~/.pryrc ]]; then
-  printf "\e[32m~/.pryrc symlink already exists\e[0m\n"
+  _printf "\e[32m~/.pryrc symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.pryrc\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.pryrc\e[0m\n"
   ln -is $BASE_DIR_PATH/pryrc ~/.pryrc
 fi
 
 # rspec
 if [[ -L ~/.rspec ]]; then
-  printf "\e[32m~/.rspec symlink already exists\e[0m\n"
+  _printf "\e[32m~/.rspec symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.rspec\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.rspec\e[0m\n"
   ln -is $BASE_DIR_PATH/rspec ~/.rspec
 fi
 
 # my.cnf
 if [[ -L ~/.my.cnf ]]; then
-  printf "\e[32m~/.my.cnf symlink already exists\e[0m\n"
+  _printf "\e[32m~/.my.cnf symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.my.cnf\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.my.cnf\e[0m\n"
   ln -is $BASE_DIR_PATH/my.local.cnf ~/.my.cnf
 fi
 
 ## create initial file
 # mysql general_log
 if [[ -f $MYSQL_GENERAL_LOG_FILE_PATH ]]; then
-  printf "\e[32m$MYSQL_GENERAL_LOG_FILE_PATH file already exists\e[0m\n"
+  _printf "\e[32m$MYSQL_GENERAL_LOG_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MYSQL_GENERAL_LOG_FILE_PATH\e[0m\n"
+  _printf "\e[31mcreate file $MYSQL_GENERAL_LOG_FILE_PATH\e[0m\n"
   touch $MYSQL_GENERAL_LOG_FILE_PATH
 fi
 
 # mysql slow_query
 if [[ -f $MYSQL_SLOW_QUERY_LOG_FILE_PATH ]]; then
-  printf "\e[32m$MYSQL_SLOW_QUERY_LOG_FILE_PATH file already exists\e[0m\n"
+  _printf "\e[32m$MYSQL_SLOW_QUERY_LOG_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MYSQL_SLOW_QUERY_LOG_FILE_PATH\e[0m\n"
+  _printf "\e[31mcreate file $MYSQL_SLOW_QUERY_LOG_FILE_PATH\e[0m\n"
   touch $MYSQL_SLOW_QUERY_LOG_FILE_PATH
 fi
 
 # switch-tmux-ai-session
 if [[ -L $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session ]]; then
-  printf "\e[32m$LOCAL_BIN_DIR_PATH/switch-tmux-ai-session symlink already exists\e[0m\n"
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/switch-tmux-ai-session symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session\e[0m\n"
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session\e[0m\n"
   ln -is $BASE_DIR_PATH/local/bin/switch-tmux-ai-session $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session
 fi
 
 # plantuml.jar
 if [[ -L $LOCAL_JAR_DIR_PATH/plantuml.jar ]]; then
-  printf "\e[32m$LOCAL_JAR_DIR_PATH/plantuml.jar symlink already exists\e[0m\n"
+  _printf "\e[32m$LOCAL_JAR_DIR_PATH/plantuml.jar symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink $LOCAL_JAR_DIR_PATH/plantuml.jar\e[0m\n"
+  _printf "\e[31mcreate symlink $LOCAL_JAR_DIR_PATH/plantuml.jar\e[0m\n"
   ln -is $BASE_DIR_PATH/local/jar/plantuml.jar $LOCAL_JAR_DIR_PATH/plantuml.jar
 fi
 
 # memolist task markdown file
 if [[ -f $MEMOLIST_TASK_MARKDOWN_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TASK_MARKDOWN_FILE_PATH file already exists\e[0m\n"
+  _printf "\e[32m$MEMOLIST_TASK_MARKDOWN_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MEMOLIST_TASK_MARKDOWN_FILE_PATH\e[0m\n"
+  _printf "\e[31mcreate file $MEMOLIST_TASK_MARKDOWN_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TASK_MARKDOWN_FILE_PATH
 fi
 
-# memolist tmp prompt  markdown file
+# memolist tmp prompt markdown file
 if [[ -f $MEMOLIST_TMP_PROMPT_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TMP_PROMPT_FILE_PATH file already exists\e[0m\n"
+  _printf "\e[32m$MEMOLIST_TMP_PROMPT_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MEMOLIST_TMP_PROMPT_FILE_PATH\e[0m\n"
+  _printf "\e[31mcreate file $MEMOLIST_TMP_PROMPT_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TMP_PROMPT_FILE_PATH
 fi
 
-# memolist tmp dump prompt  markdown file
+# memolist tmp dump prompt markdown file
 if [[ -f $MEMOLIST_TMP_DUMP_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TMP_DUMP_FILE_PATH file already exists\e[0m\n"
+  _printf "\e[32m$MEMOLIST_TMP_DUMP_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MEMOLIST_TMP_DUMP_FILE_PATH\e[0m\n"
+  _printf "\e[31mcreate file $MEMOLIST_TMP_DUMP_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TMP_DUMP_FILE_PATH
 fi
 
 # memolist tmp markdown file
 if [[ -f $MEMOLIST_TMP_MARKDOWN_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TMP_MARKDOWN_FILE_PATH file already exists\e[0m\n"
+  _printf "\e[32m$MEMOLIST_TMP_MARKDOWN_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MEMOLIST_TMP_MARKDOWN_FILE_PATH\e[0m\n"
+  _printf "\e[31mcreate file $MEMOLIST_TMP_MARKDOWN_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TMP_MARKDOWN_FILE_PATH
 fi
 
 # memolist tmp sql file
 if [[ -f $MEMOLIST_TMP_SQL_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TMP_SQL_FILE_PATH file already exists\e[0m\n"
+  _printf "\e[32m$MEMOLIST_TMP_SQL_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MEMOLIST_TMP_SQL_FILE_PATH\e[0m\n"
+  _printf "\e[31mcreate file $MEMOLIST_TMP_SQL_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TMP_SQL_FILE_PATH
 fi
 
 # memolist tmp text file
 if [[ -f $MEMOLIST_TMP_TEXT_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TMP_TEXT_FILE_PATH file already exists\e[0m\n"
+  _printf "\e[32m$MEMOLIST_TMP_TEXT_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MEMOLIST_TMP_TEXT_FILE_PATH\e[0m\n"
+  _printf "\e[31mcreate file $MEMOLIST_TMP_TEXT_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TMP_TEXT_FILE_PATH
 fi
 
 # memolist tmp uml file
 if [[ -f $MEMOLIST_TMP_UML_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TMP_UML_FILE_PATH file already exists\e[0m\n"
+  _printf "\e[32m$MEMOLIST_TMP_UML_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MEMOLIST_TMP_UML_FILE_PATH\e[0m\n"
+  _printf "\e[31mcreate file $MEMOLIST_TMP_UML_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TMP_UML_FILE_PATH
 fi
 
 # memolist tmp json file
 if [[ -f $MEMOLIST_TMP_JSON_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TMP_JSON_FILE_PATH file already exists\e[0m\n"
+  _printf "\e[32m$MEMOLIST_TMP_JSON_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MEMOLIST_TMP_JSON_FILE_PATH\e[0m\n"
+  _printf "\e[31mcreate file $MEMOLIST_TMP_JSON_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TMP_JSON_FILE_PATH
 fi
 
 # memolist tmp diff file
 if [[ -f $MEMOLIST_TMP_DIFF_FILE_PATH ]]; then
-  printf "\e[32m$MEMOLIST_TMP_DIFF_FILE_PATH file already exists\e[0m\n"
+  _printf "\e[32m$MEMOLIST_TMP_DIFF_FILE_PATH file already exists\e[0m\n"
 else
-  printf "\e[31mcreate file $MEMOLIST_TMP_DIFF_FILE_PATH\e[0m\n"
+  _printf "\e[31mcreate file $MEMOLIST_TMP_DIFF_FILE_PATH\e[0m\n"
   touch $MEMOLIST_TMP_DIFF_FILE_PATH
 fi
 
 # markdown_texts code implementation guide dir
 if [[ -L $DOCS_DIR_PATH/code_implementation_guide ]]; then
-  printf "\e[32m$DOCS_DIR_PATH/code_implementation_guide dir symlink already exists\e[0m\n"
+  _printf "\e[32m$DOCS_DIR_PATH/code_implementation_guide dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink $DOCS_DIR_PATH/code_implementation_guide dir\e[0m\n"
+  _printf "\e[31mcreate symlink $DOCS_DIR_PATH/code_implementation_guide dir\e[0m\n"
   ln -isn $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/code_implementation_guide $DOCS_DIR_PATH/code_implementation_guide
 fi
 
 # markdown_texts agents dir
 if [[ -L ~/.claude/agents ]]; then
-  printf "\e[32m~/.claude/agents dir symlink already exists\e[0m\n"
+  _printf "\e[32m~/.claude/agents dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.claude/agents dir\e[0m\n"
+  _printf "\e[31mcreate symlink ~/.claude/agents dir\e[0m\n"
   ln -is $MARKDOWN_TEXTS_DIR_PATH/claude/agents ~/.claude/agents
 fi
 
 # markdown_texts skills to ~/.claude/skills dir
-if [[ -L ~/.claude/skills  ]]; then
-  printf "\e[32m~/.claude/skills dir symlink already exists\e[0m\n"
+if [[ -L ~/.claude/skills ]]; then
+  _printf "\e[32m~/.claude/skills dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.claude/skills dir\e[0m\n"
-  ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/skills ~/.claude/skills 
+  _printf "\e[31mcreate symlink ~/.claude/skills dir\e[0m\n"
+  ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/skills ~/.claude/skills
 fi
 
-# markdown_texts commands to ~/.codex/skills dir
-if [[ -L ~/.codex/skills  ]]; then
-  printf "\e[32m~/.codex/skills dir symlink already exists\e[0m\n"
+# markdown_texts commands to ~/.codex/prompts dir
+if [[ -L ~/.codex/prompts ]]; then
+  _printf "\e[32m~/.codex/prompts dir symlink already exists\e[0m\n"
 else
-  printf "\e[31mcreate symlink ~/.codex/skills dir\e[0m\n"
-  ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/skills ~/.codex/skills
+  _printf "\e[31mcreate symlink ~/.codex/prompts dir\e[0m\n"
+  ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/commands ~/.codex/prompts
 fi
+
+# markdown_texts skills SKILL.md symlinks to commands dir
+for skill_dir in $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/skills/*/; do
+  skill_name=$(basename "$skill_dir")
+  skill_file=$MARKDOWN_TEXTS_DIR_PATH/agentic_coding/skills/$skill_name/SKILL.md
+  link_path=$MARKDOWN_TEXTS_DIR_PATH/agentic_coding/commands/$skill_name.md
+
+  [[ -f $skill_file ]] || continue
+
+  if [[ -L $link_path ]]; then
+    _printf "\e[32m$link_path symlink already exists\e[0m\n"
+  else
+    _printf "\e[31mcreate symlink $link_path\e[0m\n"
+    ln -s $skill_file $link_path
+  fi
+done
 
 # previm css: selector replacement + highlight.js github dark overrides
 sed -i '' -e 's/\.markdown-body/#body/g' \
