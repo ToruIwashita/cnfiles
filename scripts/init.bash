@@ -539,29 +539,13 @@ else
   ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/skills ~/.claude/skills
 fi
 
-# markdown_texts commands to ~/.codex/prompts dir
-if [[ -L ~/.codex/prompts ]]; then
-  _printf "\e[32m~/.codex/prompts dir symlink already exists\e[0m\n"
+# markdown_texts commands to ~/.codex/skills dir
+if [[ -L ~/.codex/skills ]]; then
+  _printf "\e[32m~/.codex/skills dir symlink already exists\e[0m\n"
 else
-  _printf "\e[31mcreate symlink ~/.codex/prompts dir\e[0m\n"
-  ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/commands ~/.codex/prompts
+  _printf "\e[31mcreate symlink ~/.codex/skills dir\e[0m\n"
+  ln -is $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/skills ~/.codex/skills
 fi
-
-# markdown_texts skills SKILL.md symlinks to commands dir
-for skill_dir in $MARKDOWN_TEXTS_DIR_PATH/agentic_coding/skills/*/; do
-  skill_name=$(basename "$skill_dir")
-  skill_file=$MARKDOWN_TEXTS_DIR_PATH/agentic_coding/skills/$skill_name/SKILL.md
-  link_path=$MARKDOWN_TEXTS_DIR_PATH/agentic_coding/commands/$skill_name.md
-
-  [[ -f $skill_file ]] || continue
-
-  if [[ -L $link_path ]]; then
-    _printf "\e[32m$link_path symlink already exists\e[0m\n"
-  else
-    _printf "\e[31mcreate symlink $link_path\e[0m\n"
-    ln -s $skill_file $link_path
-  fi
-done
 
 # previm css: selector replacement + highlight.js github dark overrides
 sed -i '' -e 's/\.markdown-body/#body/g' \
