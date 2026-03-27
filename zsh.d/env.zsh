@@ -44,6 +44,7 @@ export AI_SUB_AGENT=codex                                            # デフォ
 export AI_SUB_AGENT_WITH_OPT="$AI_SUB_AGENT"                         # デフォルトで使用されるAIサブエージェント（オプション付き）
 export TMUX_AI_SUB_AGENT_SESSION="$TMUX_AI_SESSION:1.0"              # AIサブエージェントのTMUXセッション位置
 export CURRENT_TMUX_AI_AGENT_FILE=$CONFIG_DIR_PATH/ai_agents/current_tmux_ai_agent.txt
+export CURRENT_TMUX_AI_AGENT_COMMAND_PREFIX_FILE=$CONFIG_DIR_PATH/ai_agents/current_tmux_ai_agent_command_prefix.txt
 export CURRENT_TMUX_AI_AGENT_SESSION_FILE=$CONFIG_DIR_PATH/ai_agents/current_tmux_ai_agent_session.txt
 export AGENTIC_CODING_DIR_PATH=$MARKDOWN_TEXTS_DIR_PATH/agentic_coding
 export AGENTIC_CODING_DEVELOPMENT_GUIDE_DIR_PATH=$AGENTIC_CODING_DIR_PATH/development_guide

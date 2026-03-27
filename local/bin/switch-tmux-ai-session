@@ -5,16 +5,20 @@ tmux=~/local/bin/tmux
 
 ai_agent=claude
 ai_sub_agent=codex
+ai_agent_command_prefix='/'
+ai_sub_agent_command_prefix='$'
 tmux_ai_agent_session=ai-agent-session:1.1
 tmux_ai_sub_agent_session=ai-agent-session:1.0
 
 current_tmux_ai_agent_file=~/.config/ai_agents/current_tmux_ai_agent.txt
 current_tmux_ai_agent_session_file=~/.config/ai_agents/current_tmux_ai_agent_session.txt
+current_tmux_ai_agent_command_prefix_file=~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt
 
 current_agent=$(cat "$current_tmux_ai_agent_file")
 
 if [[ "$current_agent" == "$ai_agent" ]]; then
   echo "$ai_sub_agent" > "$current_tmux_ai_agent_file"
+  echo "$ai_sub_agent_command_prefix" > "$current_tmux_ai_agent_command_prefix_file"
   echo "$tmux_ai_sub_agent_session" > "$current_tmux_ai_agent_session_file"
 
   # green
@@ -22,6 +26,7 @@ if [[ "$current_agent" == "$ai_agent" ]]; then
   border_bg=colour22
 else
   echo "$ai_agent" > "$current_tmux_ai_agent_file"
+  echo "$ai_agent_command_prefix" > "$current_tmux_ai_agent_command_prefix_file"
   echo "$tmux_ai_agent_session" > "$current_tmux_ai_agent_session_file"
 
   # default cyan
