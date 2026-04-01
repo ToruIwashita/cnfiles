@@ -19,6 +19,8 @@
       "Bash(sed:*)",
       "Bash(awk:*)",
       "Bash(ps:*)",
+      "Bash(top:*)",
+      "Bash(vm_stat:*)",
       "Bash(source:*)",
       "Bash(pbcopy:*)",
       "Bash(gh pr:*)",
