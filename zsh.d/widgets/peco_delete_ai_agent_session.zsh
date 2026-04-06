@@ -1,5 +1,5 @@
-## peco-delete-claude-session
-_peco-delete-claude-session() {
+## peco-delete-ai-agent-session
+_peco-delete-ai-agent-session() {
   local selected session_id rest session_name
 
   zle -I
@@ -17,7 +17,7 @@ _peco-delete-claude-session() {
   rest=${selected#*@}
   session_name=${rest##* - }
 
-  if read -q "?Delete '${session_name}' (y/n)? "; then
+  if read -q "?Delete '${selected}' (y/n)? "; then
     __ai-agent-session-delete "$session_id"
     print "\nDeleted."
   else
@@ -29,4 +29,4 @@ _peco-delete-claude-session() {
   while read -k 1 -s -t 0; do :; done
 }
 
-zle -N peco-delete-claude-session _peco-delete-claude-session
+zle -N peco-delete-ai-agent-session _peco-delete-ai-agent-session

@@ -5,7 +5,7 @@ __ai-agent-session-add() {
 
   session_name=$1
   session_id=$2
-  session_dir=$3
+  session_dir="~${3#$HOME}"
   sessions_file=$AI_AGENT_SESSIONS_FILE_PATH
 
   if [[ ! -f $sessions_file ]]; then

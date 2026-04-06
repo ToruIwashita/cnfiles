@@ -1,10 +1,12 @@
-## save-claude-session
-_save-claude-session() {
+## save-ai-agent-session
+_save-ai-agent-session() {
   local session_name session_id
 
   zle -I
   zle push-line
   print -n '\e[?2004l'
+
+  trap 'print "\nCancelled."; zle get-line; while read -k 1 -s -t 0; do :; done; trap - INT; return' INT
 
   print -n "Session name: "
   read -r session_name < /dev/tty
@@ -13,6 +15,7 @@ _save-claude-session() {
     print "Cancelled."
     zle get-line
     while read -k 1 -s -t 0; do :; done
+    trap - INT
     return
   fi
 
@@ -23,15 +26,16 @@ _save-claude-session() {
     print "Cancelled."
     zle get-line
     while read -k 1 -s -t 0; do :; done
+    trap - INT
     return
   fi
 
   __ai-agent-session-add "$session_name" "$session_id" "$PWD"
-  print "Saved: ${session_id}@${PWD} - ${session_name}"
+  print "Saved: ${session_id}@~${PWD#$HOME} - ${session_name}"
 
   zle get-line
-
   while read -k 1 -s -t 0; do :; done
+  trap - INT
 }
 
-zle -N save-claude-session _save-claude-session
+zle -N save-ai-agent-session _save-ai-agent-session

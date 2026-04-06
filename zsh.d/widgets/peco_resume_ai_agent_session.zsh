@@ -1,5 +1,5 @@
-## peco-resume-claude-session
-_peco-resume-claude-session() {
+## peco-resume-ai-agent-session
+_peco-resume-ai-agent-session() {
   local selected session_id rest dir
 
   selected=$(__ai-agent-session-list | peco --select-1 2>/dev/null)
@@ -18,4 +18,4 @@ _peco-resume-claude-session() {
   zle accept-line
 }
 
-zle -N peco-resume-claude-session _peco-resume-claude-session
+zle -N peco-resume-ai-agent-session _peco-resume-ai-agent-session
