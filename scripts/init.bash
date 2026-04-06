@@ -354,6 +354,14 @@ else
   echo "/" > $BASE_DIR_PATH/config/ai_agents/current_tmux_ai_agent_command_prefix.txt
 fi
 
+# ai_agents ai_agent_sessions.txt file
+if [[ -f $BASE_DIR_PATH/config/ai_agents/ai_agent_sessions.txt ]]; then
+  _printf "\e[32m$BASE_DIR_PATH/config/ai_agents/ai_agent_sessions.txt file already exists\e[0m\n"
+else
+  _printf "\e[31mcreate file $BASE_DIR_PATH/config/ai_agents/ai_agent_sessions.txt\e[0m\n"
+  touch $BASE_DIR_PATH/config/ai_agents/ai_agent_sessions.txt
+fi
+
 # ai_agents symlink
 if [[ -L $CONFIG_DIR_PATH/ai_agents ]]; then
   _printf "\e[32m$CONFIG_DIR_PATH/ai_agents symlink already exists\e[0m\n"
