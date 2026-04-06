@@ -31,7 +31,7 @@ _save-ai-agent-session() {
   fi
 
   __ai-agent-session-add "$session_name" "$session_id" "$PWD"
-  print "Saved: ${session_id}@~${PWD#$HOME} - ${session_name}"
+  print "Saved: ${session_id} - ${session_name}@~${PWD#$HOME}"
 
   zle get-line
   while read -k 1 -s -t 0; do :; done

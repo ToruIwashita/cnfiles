@@ -12,12 +12,12 @@ __ai-agent-session-add() {
     return 1
   fi
 
-  if grep -Fq "${session_id}@" $sessions_file; then
-    grep -Fv "${session_id}@" $sessions_file > ${sessions_file}.tmp
+  if grep -Fq "${session_id} - " $sessions_file; then
+    grep -Fv "${session_id} - " $sessions_file > ${sessions_file}.tmp
     mv ${sessions_file}.tmp $sessions_file
   fi
 
-  print "${session_id}@${session_dir} - ${session_name}" >> $sessions_file
+  print "${session_id} - ${session_name}@${session_dir}" >> $sessions_file
 }
 
 __ai-agent-session-list() {
@@ -42,6 +42,6 @@ __ai-agent-session-delete() {
     return 1
   fi
 
-  grep -Fv "${session_id}@" $sessions_file > ${sessions_file}.tmp
+  grep -Fv "${session_id} - " $sessions_file > ${sessions_file}.tmp
   mv ${sessions_file}.tmp $sessions_file
 }

@@ -1,6 +1,6 @@
 ## peco-delete-ai-agent-session
 _peco-delete-ai-agent-session() {
-  local selected session_id rest session_name
+  local selected session_id
 
   zle -I
   zle push-line
@@ -13,9 +13,7 @@ _peco-delete-ai-agent-session() {
     return
   fi
 
-  session_id=${selected%%@*}
-  rest=${selected#*@}
-  session_name=${rest##* - }
+  session_id=${selected%% - *}
 
   if read -q "?Delete '${selected}' (y/n)? "; then
     __ai-agent-session-delete "$session_id"

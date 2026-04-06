@@ -1,6 +1,6 @@
 ## peco-resume-ai-agent-session
 _peco-resume-ai-agent-session() {
-  local selected session_id rest dir
+  local selected session_id dir
 
   selected=$(__ai-agent-session-list | peco --select-1 2>/dev/null)
 
@@ -9,9 +9,8 @@ _peco-resume-ai-agent-session() {
     return
   fi
 
-  session_id=${selected%%@*}
-  rest=${selected#*@}
-  dir=${rest%% - *}
+  session_id=${selected%% - *}
+  dir=${selected##*@}
 
   zle kill-whole-line
   BUFFER="cd ${dir} && ${AI_AGENT_WITH_OPT:-claude} --resume ${session_id}"
