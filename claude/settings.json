@@ -1,11 +1,4 @@
 {
-  "mcpServers": {
-    "codex": {
-      "command": "codex",
-      "args": ["mcp-server"],
-      "env": {}
-    }
-  },
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
@@ -91,6 +84,14 @@
   "language": "Japanese",
   "effortLevel": "high",
   "skipAutoPermissionPrompt": true,
-  "teammateMode": "tmux",
-  "model": "opus"
+  "mcpServers": {
+    "codex": {
+      "command": "codex",
+      "args": [
+        "mcp-server"
+      ],
+      "env": {}
+    }
+  },
+  "teammateMode": "tmux"
 }
