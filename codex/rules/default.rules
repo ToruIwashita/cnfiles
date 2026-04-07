@@ -1,0 +1,4 @@
+prefix_rule(
+    pattern = ["tmux", "send-keys", "-t"],
+    decision = "allow",
+)

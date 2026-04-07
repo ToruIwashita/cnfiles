@@ -266,6 +266,13 @@ else
   cp -p $BASE_DIR_PATH/codex/config.toml ~/.codex/config.toml
 fi
 
+if [[ -L ~/.codex/rules ]]; then
+  _printf "\e[32m~/.codex/rules dir symlink already exists\e[0m\n"
+else
+  _printf "\e[31mcreate symlink ~/.codex/rules dir\e[0m\n"
+  ln -isn $BASE_DIR_PATH/codex/rules ~/.codex/rules
+fi
+
 # gitconfig
 if [[ -L ~/.gitconfig ]]; then
   _printf "\e[32m~/.gitconfig symlink already exists\e[0m\n"
