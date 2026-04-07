@@ -47,5 +47,5 @@ if result=$($tmux show-environment -g TMUX_PLUGIN_MANAGER_PATH 2>/dev/null); the
 fi
 
 if [[ -n "$plugin_path" ]]; then
-  $tmux set -g status-right "#{prefix_highlight} #[fg=${accent},bg=colour234,nobold]#(${plugin_path}/tmux-mem-cpu-load/tmux-mem-cpu-load) #{?pane_synchronized,#[bg=colour54],#[bg=colour242]}#{?pane_synchronized,#[fg=colour231],#[fg=colour251]} sync#{?pane_synchronized,[*],[]} #[fg=colour234,bg=${accent}] #(cat ${current_tmux_ai_agent_file}) "
+  $tmux set -g status-right "#{prefix_highlight} #[fg=${accent},bg=colour234,nobold]#(${plugin_path}/tmux-mem-cpu-load/tmux-mem-cpu-load -v -a 1) #{?pane_synchronized,#[bg=colour54],#[bg=colour242]}#{?pane_synchronized,#[fg=colour231],#[fg=colour251]} sync#{?pane_synchronized,[*],[]} #[fg=colour234,bg=${accent}] #(cat ${current_tmux_ai_agent_file}) "
 fi
