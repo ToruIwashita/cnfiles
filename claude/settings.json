@@ -82,7 +82,6 @@
   },
   "outputStyle": "Explanatory",
   "language": "Japanese",
-  "effortLevel": "max",
   "showThinkingSummaries": true,
   "skipAutoPermissionPrompt": true,
   "mcpServers": {
