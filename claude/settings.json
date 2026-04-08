@@ -94,6 +94,5 @@
       "env": {}
     }
   },
-  "teammateMode": "tmux",
-  "model": "opus"
+  "teammateMode": "tmux"
 }
