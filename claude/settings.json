@@ -83,6 +83,7 @@
   "outputStyle": "Explanatory",
   "language": "Japanese",
   "effortLevel": "high",
+  "showThinkingSummaries": true,
   "skipAutoPermissionPrompt": true,
   "mcpServers": {
     "codex": {
