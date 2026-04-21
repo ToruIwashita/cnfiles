@@ -55,6 +55,10 @@ fun! s:yank_current_full_file_path() abort
   endif
 endf
 
+fun! s:yank_current_dir_name() abort
+  let @" = expand('%:p:h:t')
+endf
+
 fun! s:yank_current_full_dir_path() abort
   let l:full_path = expand('%:p:h')
   let l:home = expand('~')
@@ -81,6 +85,7 @@ command! ChangeWordToCurrentFileNameWithExt call s:change_word_to_current_file_n
 
 command! YankCurrentFileName call s:yank_current_file_name()
 command! YankCurrentFullFilePath call s:yank_current_full_file_path()
+command! YankCurrentDirName call s:yank_current_dir_name()
 command! YankCurrentFullDirPath call s:yank_current_full_dir_path()
 
 command! ClearFileAndInsertMode call s:clear_file_and_insert_mode()

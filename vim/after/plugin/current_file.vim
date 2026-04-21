@@ -19,6 +19,7 @@ nnoremap <C-s><C-c> :<C-u>ChangeWordToCurrentFileNameWithExt<CR>
 
 nnoremap <leader>Y :<C-u>YankCurrentFileName<CR>
 nnoremap <leader>y :<C-u>YankCurrentFullFilePath<CR>
+nnoremap <leader>v :<C-u>YankCurrentDirName<CR>
 nnoremap <leader><C-y> :<C-u>YankCurrentFullDirPath<CR>
 
 nnoremap <leader>C :<C-u>ClearFileAndInsertMode<CR>

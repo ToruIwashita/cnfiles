@@ -115,7 +115,7 @@ noremap <C-j> <ESC>
 " _でカーソル行が画面の上端に来るようにスクロール
 noremap <CR> zt
 " 現在のファイル名表示
-noremap <leader>v :<C-u>echo expand('%')<CR>
+noremap <leader>f :<C-u>echo expand('%')<CR>
 " シェルコマンドを実行するためのプレフィックス
 noremap <leader>: :<C-u>%!
 " カーソル行をシェルコマンドとして実行
