@@ -9,7 +9,7 @@ nnoremap <C-s>b :<C-u>wa<CR>:CopyBufferToClipboard<CR>
 nnoremap <C-s><C-b> :<C-u>wa<CR>:CopyBufferToClipboard<CR>
 nnoremap <C-s>Y :<C-u>CopyFileNameToClipboard<CR>
 nnoremap <C-s>y :<C-u>CopyFilePathToClipboard<CR>
-nnoremap <C-s>v :<C-u>CopyDirNameToClipboard<CR>
+nnoremap <C-s><Space> :<C-u>CopyDirNameToClipboard<CR>
 nnoremap <C-s><C-y> :<C-u>CopyDirPathToClipboard<CR>
 
 nnoremap YY :<C-u>CopyYankRegisterToClipboard<CR>
