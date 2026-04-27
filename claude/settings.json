@@ -82,6 +82,7 @@
   },
   "outputStyle": "Explanatory",
   "language": "Japanese",
+  "effortLevel": "xhigh",
   "teammateMode": "tmux",
   "skipAutoPermissionPrompt": true,
   "mcpServers": {
@@ -92,6 +93,5 @@
       ],
       "env": {}
     }
-  },
-  "effortLevel": "xhigh"
+  }
 }
