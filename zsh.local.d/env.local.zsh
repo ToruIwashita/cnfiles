@@ -3,6 +3,9 @@
 export CLAUDE_CODE_OAUTH_TOKEN=
 
 # mysql (その他の設定は ~/.my.cnf に書く)
+export MYSQL_HOST=127.0.0.1
+export MYSQL_PORT=3306
+export MYSQL_DEFAULTS_GROUP_SUFFIX=default
 export MYSQL_DATABASE=
 
 # psql (全ての設定を環境変数に書く)
