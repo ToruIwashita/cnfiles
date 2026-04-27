@@ -9,7 +9,7 @@ __my-check-args() {
 }
 
 __my-connect() {
-  mysql $MYSQL_DATABASE $*
+  mysql --defaults-group-suffix=$MYSQL_DEFAULTS_GROUP_SUFFIX -h $MYSQL_HOST -P $MYSQL_PORT $MYSQL_DATABASE $*
 }
 
 __my-cmd() {
