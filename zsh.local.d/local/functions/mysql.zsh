@@ -2,8 +2,8 @@
 my-toggle() {
   if [[ $MYSQL_DEFAULTS_GROUP_SUFFIX == 'default' ]]; then
     export MYSQL_HOST=127.0.0.1
-    export MYSQL_PORT=3306
-    export MYSQL_DEFAULTS_GROUP_SUFFIX=default
+    export MYSQL_PORT=3307
+    export MYSQL_DEFAULTS_GROUP_SUFFIX=other
     export MYSQL_DATABASE=
   else
     export MYSQL_HOST=127.0.0.1
@@ -11,6 +11,8 @@ my-toggle() {
     export MYSQL_DEFAULTS_GROUP_SUFFIX=default
     export MYSQL_DATABASE=
   fi
+
+  print "Switched to MYSQL_DATABASE='$MYSQL_DATABASE'"
 }
 
 my() {
