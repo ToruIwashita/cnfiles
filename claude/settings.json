@@ -82,7 +82,7 @@
   },
   "outputStyle": "Explanatory",
   "language": "Japanese",
-  "showThinkingSummaries": true,
+  "teammateMode": "tmux",
   "skipAutoPermissionPrompt": true,
   "mcpServers": {
     "codex": {
@@ -93,5 +93,5 @@
       "env": {}
     }
   },
-  "teammateMode": "tmux"
+  "effortLevel": "xhigh"
 }
