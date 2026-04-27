@@ -1,4 +1,18 @@
 ## mysql
+my-toggle() {
+  if [[ $MYSQL_DEFAULTS_GROUP_SUFFIX == 'default' ]]; then
+    export MYSQL_HOST=127.0.0.1
+    export MYSQL_PORT=3306
+    export MYSQL_DEFAULTS_GROUP_SUFFIX=default
+    export MYSQL_DATABASE=
+  else
+    export MYSQL_HOST=127.0.0.1
+    export MYSQL_PORT=3306
+    export MYSQL_DEFAULTS_GROUP_SUFFIX=default
+    export MYSQL_DATABASE=
+  fi
+}
+
 my() {
   __my-connect
 }
