@@ -115,6 +115,7 @@ alias cdc="cd $CNFILES_DIR_PATH"
 alias cdm="cd $MARKDOWN_TEXTS_DIR_PATH"
 alias cdml="cd $MEMOLIST_DIR_PATH"
 alias cdd="cd $DEEP_DIVE_PROBE_DIR_PATH"
+alias cdi="cd $MEMOLIST_DEEP_DIVE_PROBE_ISSUES_DIR_PATH"
 # zmv
 alias zmv='noglob zmv -W'
 # vim
