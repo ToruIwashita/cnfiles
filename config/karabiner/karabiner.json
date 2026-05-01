@@ -1030,7 +1030,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+.: send '/dump-latest-output-to-tmp-dump' + Tab + Enter",
+                                "description": "Ctrl+Cmd+.: send '/inspect-affected-entrypoints' + Tab",
                                 "from": {
                                     "key_code": "period",
                                     "modifiers": {
@@ -1039,7 +1039,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)dump-latest-output-to-tmp-dump\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)inspect-affected-entrypoints\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
                                     }
                                 ],
                                 "type": "basic"
@@ -1049,7 +1049,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+.: send '/dump-research-summary-to-tmp-dump' + Tab + Enter",
+                                "description": "Ctrl+Cmd+Shift+.: send '/inspect-affected-entrypoints-in-committed-diff-and-git-diff' + Tab + Enter",
                                 "from": {
                                     "key_code": "period",
                                     "modifiers": {
@@ -1058,7 +1058,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)dump-research-summary-to-tmp-dump\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)inspect-affected-entrypoints-in-committed-diff-and-git-diff\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -1106,7 +1106,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+_: send '/capture-skill' + Tab",
+                                "description": "Ctrl+Cmd+_: send '/dump-latest-output-to-tmp-dump' + Tab + Enter",
                                 "from": {
                                     "key_code": "international1",
                                     "modifiers": {
@@ -1115,7 +1115,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)capture-skill\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)dump-latest-output-to-tmp-dump\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -1125,7 +1125,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+_: send '/capture-skill-from-session' + Tab + Enter",
+                                "description": "Ctrl+Cmd+Shift+_: send '/dump-research-summary-to-tmp-dump' + Tab + Enter",
                                 "from": {
                                     "key_code": "international1",
                                     "modifiers": {
@@ -1134,7 +1134,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)capture-skill-from-session\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)dump-research-summary-to-tmp-dump\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
