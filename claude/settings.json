@@ -82,6 +82,7 @@
   },
   "language": "Japanese",
   "effortLevel": "xhigh",
+  "skillListingBudgetFraction": 0.02,
   "teammateMode": "tmux",
   "skipAutoPermissionPrompt": true,
   "mcpServers": {
