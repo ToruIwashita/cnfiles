@@ -31,6 +31,7 @@
       "Bash(git checkout:*)",
       "Bash(git commit:*)",
       "Bash(git diff:*)",
+      "Bash(git fetch:*)",
       "Bash(git grep:*)",
       "Bash(git pull:*)",
       "Bash(git reset:*)",
