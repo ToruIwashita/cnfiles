@@ -1,4 +1,5 @@
 {
+  "skillListingBudgetFraction": 0.02,
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
@@ -81,7 +82,6 @@
   },
   "language": "Japanese",
   "effortLevel": "xhigh",
-  "skillListingBudgetFraction": 0.02,
   "teammateMode": "tmux",
   "skipAutoPermissionPrompt": true,
   "mcpServers": {
