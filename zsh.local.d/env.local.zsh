@@ -1,5 +1,5 @@
 ## 環境変数設定
-# Claude Code
+# claude code
 export CLAUDE_CODE_OAUTH_TOKEN=
 
 # mysql (その他の設定は ~/.my.cnf に書く)
@@ -19,6 +19,9 @@ export PGDATABASE=
 export GITHUB_TOKEN=
 export GITHUB_USER_NAME=
 export OWNED_GITHUB_REPOSITORIES=()
+
+# error monitoring tool
+export ERROR_MONITORING_TOOL=
 
 # asdf
 export ASDF_DATA_DIR=~/.asdf
