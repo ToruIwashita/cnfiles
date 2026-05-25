@@ -15,25 +15,26 @@ let g:quickrun_config = {
   \ }
 \ }
 
-" rspecを実行するための設定定義
+" rspecを実行するための設定定義（outputter/buffer/filetypeはrspec-result-syntax依存）
 let s:rspec_quickrun_config = {
   \ 'command': 'rspec',
-  \ 'outputter': 'buffered:target=buffer'
+  \ 'outputter': 'buffered:target=buffer',
+  \ 'outputter/buffer/filetype': 'rspec-result'
 \ }
 
 let g:quickrun_config['rspec/normal'] = extend(copy(s:rspec_quickrun_config), {
   \ 'type': 'rspec/normal',
-  \ 'exec': 'time %c %s%o --color --tty'
+  \ 'exec': 'time %c %s%o --format documentation'
 \ })
 
 let g:quickrun_config['rspec/bundle'] = extend(copy(s:rspec_quickrun_config), {
   \ 'type': 'rspec/bundle',
-  \ 'exec': 'time bundle exec %c %s%o --color --tty'
+  \ 'exec': 'time bundle exec %c %s%o --format documentation'
 \ })
 
 let g:quickrun_config['rspec/bin'] = extend(copy(s:rspec_quickrun_config), {
   \ 'type': 'rspec/bin',
-  \ 'exec': 'time ./bin/rspec %s%o --color --tty'
+  \ 'exec': 'time ./bin/rspec %s%o --format documentation'
 \ })
 
 " :QuickRunで実行されるrpsecコマンドを定義する
@@ -85,10 +86,8 @@ command! StopQuickrun call quickrun#sweep_sessions()
 " quickrun outputを閉じる
 command! CloseQuickrunOutput call s:close_quickrun_output()
 
-" quickrunの出力結果にAnsiEscを実行して色付けする
 augroup local_vim_quickrun
   autocmd!
-  autocmd FileType quickrun AnsiEsc
   autocmd BufReadPost *_spec.rb call s:rspec_quickrun()
 augroup END
 

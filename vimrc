@@ -114,7 +114,8 @@ Plug 'kshenoy/vim-signature'                           " マーカー表示
 Plug 'adie/BlockDiff'                                  " BlockDiff(選択範囲の比較)
 Plug 'LeafCage/yankround.vim'                          " ヤンク履歴管理
 Plug 'Konfekt/FastFold'                                " 自動折畳
-Plug 'vim-scripts/AnsiEsc.vim'                         " ANSIカラー表示
+Plug 'chrisbra/Colorizer'                              " ANSIカラー・カラーコード表示
+Plug 'glidenote/rspec-result-syntax'                   " rspec出力専用syntax(quickrun連携)
 Plug 'yami-beta/vim-responsive-tabline'                " タブの横幅を調整
 Plug 'vim/killersheep'                                 " killersheep
 Plug 'ToruIwashita/tab-relocator.vim'                  " タブ移動補助
