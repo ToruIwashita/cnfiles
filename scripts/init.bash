@@ -506,6 +506,14 @@ else
   touch $MEMOLIST_TMP_DUMP_FILE_PATH
 fi
 
+# memolist tmp dump prompt html file
+if [[ -f $MEMOLIST_TMP_DUMP_HTML_FILE_PATH ]]; then
+  _printf "\e[32m$MEMOLIST_TMP_DUMP_HTML_FILE_PATH file already exists\e[0m\n"
+else
+  _printf "\e[31mcreate file $MEMOLIST_TMP_DUMP_HTML_FILE_PATH\e[0m\n"
+  touch $MEMOLIST_TMP_DUMP_HTML_FILE_PATH
+fi
+
 # memolist tmp markdown file
 if [[ -f $MEMOLIST_TMP_MARKDOWN_FILE_PATH ]]; then
   _printf "\e[32m$MEMOLIST_TMP_MARKDOWN_FILE_PATH file already exists\e[0m\n"

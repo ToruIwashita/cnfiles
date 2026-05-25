@@ -73,6 +73,9 @@ MEMOLIST_TMP_PROMPT_FILE_PATH=$MEMOLIST_DIR_PATH/00-tmp-prompt.md
 # memolist tmp dump prompt markdown file
 MEMOLIST_TMP_DUMP_FILE_PATH=$MEMOLIST_DIR_PATH/00-tmp-dump.md
 
+# memolist tmp dump prompt html file
+MEMOLIST_TMP_DUMP_HTML_FILE_PATH=$MEMOLIST_DIR_PATH/00-tmp-dump.html
+
 # memolist tmp file
 MEMOLIST_TMP_MARKDOWN_FILE_PATH=$MEMOLIST_DIR_PATH/00-tmp.md
 MEMOLIST_TMP_SQL_FILE_PATH=$MEMOLIST_DIR_PATH/00-tmp.sql
