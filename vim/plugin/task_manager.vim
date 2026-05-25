@@ -201,7 +201,13 @@ class TaskManager
       return
     endif
 
-    if !this._ValidateDirectoryExists(dir_name)
+    var archives_dir = this._GetArchivesDir()
+    var source_path = archives_dir .. '/' .. dir_name
+
+    if !isdirectory(source_path)
+      echohl ErrorMsg
+      echo 'Error: Directory "' .. dir_name .. '" not found in archives'
+      echohl None
       return
     endif
 
@@ -212,7 +218,6 @@ class TaskManager
     endif
 
     var root_dir = this._GetCleanRootDir()
-    var source_path = root_dir .. '/' .. dir_name
     var target_path = root_dir .. '/' .. new_dir_name
 
     # コピー先が既に存在する場合はエラー
@@ -444,9 +449,7 @@ class TaskManager
       return dir_names
     endif
 
-    var escaped_filter = escape(filter_text, '.*[]^$\\')
-    var pattern_regex = '^' .. escaped_filter .. '.*'
-    return filter(dir_names, (_, v) => v =~# pattern_regex)
+    return matchfuzzy(dir_names, filter_text)
   enddef
 
   def GetArchiveDirectoryList(filter_text: string): list<string>
@@ -469,9 +472,7 @@ class TaskManager
       return dir_names
     endif
 
-    var escaped_filter = escape(filter_text, '.*[]^$\\')
-    var pattern_regex = '^' .. escaped_filter .. '.*'
-    return filter(dir_names, (_, v) => v =~# pattern_regex)
+    return matchfuzzy(dir_names, filter_text)
   enddef
 
   def _LoadConfig()
@@ -1073,7 +1074,7 @@ enddef
 
 command! -nargs=? CreateTask call CreateTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,ActiveTasksComplete AppendTask call AppendTaskCommand(<f-args>)
-command! -nargs=1 -complete=customlist,ActiveTasksComplete CopyTask call CopyTaskCommand(<f-args>)
+command! -nargs=1 -complete=customlist,ArchivedTasksComplete CopyTask call CopyTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,ActiveTasksComplete ArchiveTask call ArchiveTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,ArchivedTasksComplete RestoreTask call RestoreTaskCommand(<f-args>)
 command! -nargs=1 -complete=customlist,ArchivedTasksComplete DeleteTask call DeleteTaskCommand(<f-args>)

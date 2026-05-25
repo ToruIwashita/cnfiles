@@ -14,12 +14,12 @@ let g:task_manager_dir_prefix = '%Y-%m-%d'
 " テンプレートディレクトリの指定
 let g:task_manager_instruction_file_template_dir = g:agentic_coding_task_template_dir_path
 
-nnoremap <leader>W :<C-u>CopyTask<SPACE><C-R>=strftime('%Y-%m-%d')<CR>
+nnoremap <leader>W :<C-u>CopyTask<SPACE>
 nnoremap <leader>M :<C-u>RenameTask<SPACE><C-R>=strftime('%Y-%m-%d')<CR>
 nnoremap <leader>A :<C-u>AppendTask<SPACE><C-R>=strftime('%Y-%m-%d')<CR>
-nnoremap <leader>R :<C-u>RestoreTask<SPACE><C-R>=strftime('%Y-%m-%d')<CR>
+nnoremap <leader>R :<C-u>RestoreTask<SPACE>
 nnoremap <leader>K :<C-u>ArchiveTask<SPACE><C-R>=strftime('%Y-%m-%d')<CR>
-nnoremap <leader>E :<C-u>DeleteTask<SPACE><C-R>=strftime('%Y-%m-%d')<CR>
+nnoremap <leader>E :<C-u>DeleteTask<SPACE>
 nnoremap <leader>T :<C-u>CreateTask<SPACE>
 
 let &cpoptions = s:cpoptions_save
