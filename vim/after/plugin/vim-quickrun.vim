@@ -6,35 +6,36 @@ let s:cpoptions_save = &cpoptions
 set cpoptions&vim
 
 " hook/running/enableはshabadou.vim依存
+" hook/colorize_output_buffer/enableはvim/autoload/quickrun/hook/colorize_output_buffer.vim依存
 " quickrunの実行モジュールをjobに設定
 let g:quickrun_config = {
   \ '_': {
   \   'runner': 'job',
   \   'runner/job/interval': 500,
-  \   'hook/running/enable': 1
+  \   'hook/running/enable': 1,
+  \   'hook/colorize_output_buffer/enable': 1
   \ }
 \ }
 
-" rspecを実行するための設定定義（outputter/buffer/filetypeはrspec-result-syntax依存）
+" rspecを実行するための設定定義
 let s:rspec_quickrun_config = {
   \ 'command': 'rspec',
-  \ 'outputter': 'buffered:target=buffer',
-  \ 'outputter/buffer/filetype': 'rspec-result'
+  \ 'outputter': 'buffered:target=buffer'
 \ }
 
 let g:quickrun_config['rspec/normal'] = extend(copy(s:rspec_quickrun_config), {
   \ 'type': 'rspec/normal',
-  \ 'exec': 'time %c %s%o --format documentation'
+  \ 'exec': 'time %c %s%o --color --tty'
 \ })
 
 let g:quickrun_config['rspec/bundle'] = extend(copy(s:rspec_quickrun_config), {
   \ 'type': 'rspec/bundle',
-  \ 'exec': 'time bundle exec %c %s%o --format documentation'
+  \ 'exec': 'time bundle exec %c %s%o --color --tty'
 \ })
 
 let g:quickrun_config['rspec/bin'] = extend(copy(s:rspec_quickrun_config), {
   \ 'type': 'rspec/bin',
-  \ 'exec': 'time ./bin/rspec %s%o --format documentation'
+  \ 'exec': 'time ./bin/rspec %s%o --color --tty'
 \ })
 
 " :QuickRunで実行されるrpsecコマンドを定義する
