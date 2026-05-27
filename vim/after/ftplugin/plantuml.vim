@@ -13,7 +13,7 @@ augroup local_markdown
   autocmd BufWritePost *.uml PlantumlSave
 augroup END
 
-nnoremap <C-s>v :<C-u>w<CR>:PlantumlOpen<CR>
+nnoremap <buffer> <C-s>v :<C-u>w<CR>:PlantumlOpen<CR>
 
 cnorea PS PlantumlSave
 
