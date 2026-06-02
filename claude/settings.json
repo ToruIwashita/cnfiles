@@ -103,5 +103,17 @@
       ],
       "env": {}
     }
+  },
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v afplay >/dev/null 2>&1 && afplay /System/Library/Sounds/Ping.aiff || true"
+          }
+        ]
+      }
+    ]
   }
 }
