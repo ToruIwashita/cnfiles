@@ -113,23 +113,11 @@ X をリファクタリング | 変更前後で既存テストが通ることを
 
 ### よくあるタスクとスキルの対応例
 
-タスク種別                  | 確認するスキル
-:---                        | :---
-マークダウン作成・編集      | load-markdown-guide
-RSpecテスト作成・修正       | load-rspec-guide
-Ruby実装                    | load-ruby-guide
-DDD設計                     | load-ddd-guide
-OOP設計                     | load-oop-guide
-「codexで〇〇して」系の指示 | codex
-動作確認項目の作成          | generate-qa-checklist
-
-### Codex連携ルール
-
-「codexで〇〇して」「codexを使って〇〇」と指示された場合,必ず /codex スキルを参照してから実行すること
-
-フレーズ                  | 委譲方法
-:---                      | :---
-「codexで実装して」       | 実装タスクとしてcodexに委譲
-「codexでレビューして」   | read-onlyレビューとしてcodexに委譲
-「codexでリファクタして」 | リファクタリングタスクとして委譲
-「codexで〇〇して」       | 上記に準じて判断
+タスク種別             | 確認するスキル
+:---                   | :---
+マークダウン作成・編集 | load-markdown-guide
+RSpecテスト作成・修正  | load-rspec-guide
+Ruby実装               | load-ruby-guide
+DDD設計                | load-ddd-guide
+OOP設計                | load-oop-guide
+動作確認項目の作成     | generate-qa-checklist
