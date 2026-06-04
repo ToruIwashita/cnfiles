@@ -482,6 +482,16 @@ else
   ln -is $BASE_DIR_PATH/local/bin/switch-tmux-ai-session $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session
 fi
 
+# open (macOS open)
+if [[ -L $LOCAL_BIN_DIR_PATH/open ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/open symlink already exists\e[0m\n"
+elif [[ -z $OPEN_COMMAND_PATH ]]; then
+  _printf "\e[31mopen command not found, skip creating symlink\e[0m\n"
+else
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/open\e[0m\n"
+  ln -is $OPEN_COMMAND_PATH $LOCAL_BIN_DIR_PATH/open
+fi
+
 # plantuml.jar
 if [[ -L $LOCAL_JAR_DIR_PATH/plantuml.jar ]]; then
   _printf "\e[32m$LOCAL_JAR_DIR_PATH/plantuml.jar symlink already exists\e[0m\n"

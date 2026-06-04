@@ -7,6 +7,9 @@ BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 # os info
 OS_INFO=darwin
 
+# os command path
+OPEN_COMMAND_PATH=$(command -v open)
+
 # ai
 AI_AGENT=claude
 TMUX_AI_AGENT_SESSION="ai-agent-session:1.1"
