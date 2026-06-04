@@ -555,6 +555,25 @@
                     {
                         "manipulators": [
                             {
+                                "description": "Ctrl+Cmd+Shift+p: open ~/works/memolist/00-tmp.html",
+                                "from": {
+                                    "key_code": "p",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command", "shift"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/open ~/works/memolist/00-tmp.html"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
                                 "description": "Ctrl+Cmd+@: send '/read-path' + Tab",
                                 "from": {
                                     "key_code": "open_bracket",
@@ -888,6 +907,25 @@
                                 "to": [
                                     {
                                         "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) C-n"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
+                                "description": "Ctrl+Cmd+Shift+n: open ~/works/memolist/00-tmp-dump.html",
+                                "from": {
+                                    "key_code": "n",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command", "shift"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/open ~/works/memolist/00-tmp-dump.html"
                                     }
                                 ],
                                 "type": "basic"
