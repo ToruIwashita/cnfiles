@@ -104,12 +104,20 @@ else
   mkdir $MEMOLIST_DIR_PATH/deep-dive-probe
 fi
 
-# works memolist deep-dive-probe issues dir
-if [[ -d $MEMOLIST_DIR_PATH/deep-dive-probe/issues ]]; then
-  _printf "\e[32m$MEMOLIST_DIR_PATH/deep-dive-probe/issues dir already exists\e[0m\n"
+# works memolist error-monitoring-tool dir
+if [[ -d $MEMOLIST_ERROR_MONITORING_TOOL_DIR_PATH ]]; then
+  _printf "\e[32m$MEMOLIST_ERROR_MONITORING_TOOL_DIR_PATH dir already exists\e[0m\n"
 else
-  _printf "\e[31mmkdir $MEMOLIST_DIR_PATH/deep-dive-probe/issues\e[0m\n"
-  mkdir $MEMOLIST_DIR_PATH/deep-dive-probe/issues
+  _printf "\e[31mmkdir $MEMOLIST_ERROR_MONITORING_TOOL_DIR_PATH\e[0m\n"
+  mkdir $MEMOLIST_ERROR_MONITORING_TOOL_DIR_PATH
+fi
+
+# works memolist deep-dive-probe issues dir
+if [[ -d $MEMOLIST_DEEP_DIVE_PROBE_ISSUES_DIR_PATH ]]; then
+  _printf "\e[32m$MEMOLIST_DEEP_DIVE_PROBE_ISSUES_DIR_PATH dir already exists\e[0m\n"
+else
+  _printf "\e[31mmkdir $MEMOLIST_DEEP_DIVE_PROBE_ISSUES_DIR_PATH\e[0m\n"
+  mkdir $MEMOLIST_DEEP_DIVE_PROBE_ISSUES_DIR_PATH
 fi
 
 # works git worktrees dir
