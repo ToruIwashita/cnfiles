@@ -251,6 +251,25 @@
                     {
                         "manipulators": [
                             {
+                                "description": "Ctrl+Cmd+w: run copy-tmp-dump-html-to-tmp-html",
+                                "from": {
+                                    "key_code": "w",
+                                    "modifiers": {
+                                        "mandatory": ["control", "command"]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "shell_command": "~/local/bin/copy-tmp-dump-html-to-tmp-html"
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
+                        "manipulators": [
+                            {
                                 "description": "Ctrl+Cmd+r: send '/resolve-pr-ci-failure' + Tab + Enter",
                                 "from": {
                                     "key_code": "r",
