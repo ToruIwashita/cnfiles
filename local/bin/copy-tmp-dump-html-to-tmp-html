@@ -1,0 +1,30 @@
+#!/usr/bin/env zsh
+set -eu
+
+src=~/works/memolist/00-tmp-dump.html
+dest=~/works/memolist/00-tmp.html
+
+success_sound=/System/Library/Sounds/Glass.aiff
+failure_sound=/System/Library/Sounds/Basso.aiff
+
+__play_sound() {
+  local sound
+  sound=$1
+
+  if command -v afplay >/dev/null 2>&1 && [[ -f $sound ]]; then
+    afplay $sound || true
+  fi
+}
+
+if [[ ! -f $src ]]; then
+  print "copy-tmp-dump-html-to-tmp-html: source file not found: $src" 1>&2
+  __play_sound $failure_sound
+  exit 1
+fi
+
+if command cp $src $dest; then
+  __play_sound $success_sound
+else
+  __play_sound $failure_sound
+  exit 1
+fi
