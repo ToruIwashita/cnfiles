@@ -482,6 +482,14 @@ else
   ln -is $BASE_DIR_PATH/local/bin/switch-tmux-ai-session $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session
 fi
 
+# copy-tmp-dump-html-to-tmp-html
+if [[ -L $LOCAL_BIN_DIR_PATH/copy-tmp-dump-html-to-tmp-html ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/copy-tmp-dump-html-to-tmp-html symlink already exists\e[0m\n"
+else
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/copy-tmp-dump-html-to-tmp-html\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/copy-tmp-dump-html-to-tmp-html $LOCAL_BIN_DIR_PATH/copy-tmp-dump-html-to-tmp-html
+fi
+
 # open (macOS open)
 if [[ -L $LOCAL_BIN_DIR_PATH/open ]]; then
   _printf "\e[32m$LOCAL_BIN_DIR_PATH/open symlink already exists\e[0m\n"
