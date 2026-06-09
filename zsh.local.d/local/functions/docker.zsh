@@ -46,3 +46,26 @@ docker-container-attach() {
 docker-stop-all() {
   docker stop $(docker ps -q)
 }
+
+deep-dive-probe-session() {
+  local repo_root remote_url
+
+  repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || {
+    print -u2 'git リポジトリ内ではありません'
+    return 1
+  }
+
+  remote_url=$(git config --get remote.origin.url 2>/dev/null)
+  if [[ $remote_url != */deep-dive-probe(.git|) ]]; then
+    print -u2 'deep-dive-probe リポジトリではありません'
+    return 1
+  fi
+
+  if [[ $PWD != $repo_root ]]; then
+    print -u2 "deep-dive-probe プロジェクト直下で実行してください (ルート: $repo_root)"
+    return 1
+  fi
+
+  print 'docker compose exec -it deep-dive-probe ./scripts/run-manual.sh'
+  docker compose exec -it deep-dive-probe ./scripts/run-manual.sh
+}
