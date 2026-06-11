@@ -593,7 +593,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+@: send '/read-path' + Tab",
+                                "description": "Ctrl+Cmd+@: send '/read-path-or-url' + Tab",
                                 "from": {
                                     "key_code": "open_bracket",
                                     "modifiers": {
@@ -602,7 +602,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)read-path\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)read-path-or-url\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
                                     }
                                 ],
                                 "type": "basic"
