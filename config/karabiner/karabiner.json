@@ -612,7 +612,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+@: send '/find-test-path' + Tab",
+                                "description": "Ctrl+Cmd+Shift+@: send '/find-and-copy-test-path' + Tab",
                                 "from": {
                                     "key_code": "open_bracket",
                                     "modifiers": {
@@ -621,7 +621,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)find-test-path\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)find-and-copy-test-path\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
                                     }
                                 ],
                                 "type": "basic"
