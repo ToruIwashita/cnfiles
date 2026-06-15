@@ -2,7 +2,8 @@
   "skillListingBudgetFraction": 0.02,
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1"
+    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "TMP_LATEST_AI_PRECOMPACT_SNAPSHOT_FILE_PATH": "~/works/tmp/latest-ai-precompact-snapshot.md"
   },
   "permissions": {
     "allow": [
@@ -93,6 +94,17 @@
           {
             "type": "command",
             "command": "command -v afplay >/dev/null 2>&1 && afplay /System/Library/Sounds/Funk.aiff || true"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=\"${TMP_LATEST_AI_PRECOMPACT_SNAPSHOT_FILE_PATH/#\\~/$HOME}\"; test -s \"$f\" && cat \"$f\"; true"
           }
         ]
       }

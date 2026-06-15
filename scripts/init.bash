@@ -516,12 +516,12 @@ else
   ln -is $BASE_DIR_PATH/local/jar/plantuml.jar $LOCAL_JAR_DIR_PATH/plantuml.jar
 fi
 
-# works tmp latest ai compact snapshot file
-if [[ -f $TMP_LATEST_AI_COMPACT_SNAPSHOT_FILE_PATH ]]; then
-  _printf "\e[32m$TMP_LATEST_AI_COMPACT_SNAPSHOT_FILE_PATH file already exists\e[0m\n"
+# works tmp latest ai precompact snapshot file
+if [[ -f $TMP_LATEST_AI_PRECOMPACT_SNAPSHOT_FILE_PATH ]]; then
+  _printf "\e[32m$TMP_LATEST_AI_PRECOMPACT_SNAPSHOT_FILE_PATH file already exists\e[0m\n"
 else
-  _printf "\e[31mcreate file $TMP_LATEST_AI_COMPACT_SNAPSHOT_FILE_PATH\e[0m\n"
-  touch $TMP_LATEST_AI_COMPACT_SNAPSHOT_FILE_PATH
+  _printf "\e[31mcreate file $TMP_LATEST_AI_PRECOMPACT_SNAPSHOT_FILE_PATH\e[0m\n"
+  touch $TMP_LATEST_AI_PRECOMPACT_SNAPSHOT_FILE_PATH
 fi
 
 # memolist task markdown file
