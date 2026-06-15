@@ -104,6 +104,14 @@ else
   mkdir $MEMOLIST_DIR_PATH/deep-dive-probe
 fi
 
+# works memolist ai-records dir
+if [[ -d $MEMOLIST_AI_RECORDS_DIR_PATH ]]; then
+  _printf "\e[32m$MEMOLIST_AI_RECORDS_DIR_PATH dir already exists\e[0m\n"
+else
+  _printf "\e[31mmkdir $MEMOLIST_AI_RECORDS_DIR_PATH\e[0m\n"
+  mkdir $MEMOLIST_AI_RECORDS_DIR_PATH
+fi
+
 # works memolist error-monitoring-tool dir
 if [[ -d $MEMOLIST_ERROR_MONITORING_TOOL_DIR_PATH ]]; then
   _printf "\e[32m$MEMOLIST_ERROR_MONITORING_TOOL_DIR_PATH dir already exists\e[0m\n"
