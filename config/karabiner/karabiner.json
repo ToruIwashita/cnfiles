@@ -1125,7 +1125,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+_: send '/dump-research-summary-to-tmp-dump-html-with-record' + Tab + 'md'",
+                                "description": "Ctrl+Cmd+Shift+_: send '/dump-work-summary-to-tmp-dump-html-with-record' + Tab + 'md'",
                                 "from": {
                                     "key_code": "international1",
                                     "modifiers": {
@@ -1134,7 +1134,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)dump-research-summary-to-tmp-dump-html-with-record\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) md"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)dump-work-summary-to-tmp-dump-html-with-record\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) md"
                                     }
                                 ],
                                 "type": "basic"
