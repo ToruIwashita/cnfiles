@@ -28,9 +28,9 @@ bindkey -v '^s^e' insert-bundle-exec-pry         # Ctr+s,Ctr+eでbundle exec pry
 bindkey -v '^s^y' immediate-path-pbcopy          # Ctr+s,yでBUFFER考慮したpathコピー
 
 ## alias
-# clipboard（Linux環境でpbcopyがない場合）
-# alias pbcopy='xclip -selection clipboard'
-# alias pbpaste='xclip -selection clipboard -o'
+# cd
+alias cde="cd $MEMOLIST_ERROR_MONITORING_TOOL_DIR_PATH"
+alias cdei="cd $MEMOLIST_ERROR_MONITORING_TOOL_ISSUES_DIR_PATH"
 # git
 alias gcs='git commit -m "- update submodules"'
 # python
@@ -61,6 +61,9 @@ alias bspork='bundle exec spork'
 # alias output-drouting='output-routing && drouting'
 ## localstack
 # alias localstack-s='DEBUG=true SERVICES=sqs DEFAULT_REGION=ap-northeast-1 HOSTNAME=localstack localstack start'
+## clipboard（Linux環境でpbcopyがない場合）
+# alias pbcopy='xclip -selection clipboard'
+# alias pbpaste='xclip -selection clipboard -o'
 
 ## global alisas
 alias -g PP='| pbcopy'
