@@ -6,5 +6,5 @@ ai-update() {
   echo
 
   print -- "--- update $AI_SUB_AGENT ---"
-  npm install -g @openai/$AI_SUB_AGENT 2>&1 | sed '/./,$!d'
+  $AI_SUB_AGENT update 2>&1
 }
