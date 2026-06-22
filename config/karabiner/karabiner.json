@@ -878,7 +878,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+]: send '/create-worklog' + Tab + 'latest-doc'",
+                                "description": "Ctrl+Cmd+]: send '/create-worklog' + Enter",
                                 "from": {
                                     "key_code": "backslash",
                                     "modifiers": {
@@ -887,7 +887,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)create-worklog\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) latest-doc"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)create-worklog\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
