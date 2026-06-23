@@ -24,6 +24,7 @@ gem update --system
 echo
 gem install aws-sdk
 gem install bundler
+gem install webrick
 gem install foreman
 gem install git-gsub
 gem install pry
