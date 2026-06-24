@@ -650,7 +650,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+h: send C-h",
+                                "description": "Ctrl+Cmd+h: send BTab (Shift+Tab)",
                                 "from": {
                                     "key_code": "h",
                                     "modifiers": {
@@ -659,7 +659,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) C-h"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) BTab"
                                     }
                                 ],
                                 "type": "basic"
