@@ -158,3 +158,17 @@ Ruby実装               | load-ruby-guide
 DDD設計                | load-ddd-guide
 OOP設計                | load-oop-guide
 動作確認項目の作成     | generate-qa-checklist
+
+## 7. 技術情報の調査
+
+**開発関連タスクで技術情報を検索する時は,信頼性の高い情報源を優先する**
+
+### 優先する情報源
+
+1. 公式ドキュメント
+2. 公式GitHubリポジトリ
+3. RFC / 仕様書 / 標準規格
+4. 公式Issue / Discussion
+5. メンテナのブログやリリースノート
+6. 信頼できる企業の技術ブログ
+7. Stack Overflowは実務的なトラブルシュート時のみ補助的に使う
