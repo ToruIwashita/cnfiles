@@ -62,6 +62,11 @@ if [[ $(which node) =~ asdf ]]; then
   corepack enable
 fi
 
+printf "\nreshim all\n"
+echo
+
+asdf reshim
+
 printf "\nafter versions:\n"
 echo
 
