@@ -20,6 +20,9 @@ export GITHUB_TOKEN=
 export GITHUB_USER_NAME=
 export OWNED_GITHUB_REPOSITORIES=()
 
+# slack
+export SLACK_BOT_OAUTH_TOKEN=
+
 # error monitoring tool
 export ERROR_MONITORING_TOOL=
 export MEMOLIST_ERROR_MONITORING_TOOL_DIR_PATH=$MEMOLIST_DIR_PATH/error-monitoring-tool
