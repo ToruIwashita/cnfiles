@@ -125,6 +125,7 @@ alias vi='vim'
 # tmux
 alias tm='tmux'
 alias t-ai-session="tmux new-session -A -s $TMUX_AI_SESSION \; split-window -v"
+alias t-ai-loop-session="tmux new-session -A -s $TMUX_AI_LOOP_SESSION"
 # ls
 alias ls='ls -F --color'
 alias l='ls -ahl'

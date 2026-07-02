@@ -42,7 +42,8 @@ export MEMOLIST_DEEP_DIVE_PROBE_ISSUES_DIR_PATH=$MEMOLIST_DIR_PATH/deep-dive-pro
 export GIT_WORKTREES_DIR_PATH=$WORKS_DIR_PATH/git_worktrees
 
 ## agentic coding
-export TMUX_AI_SESSION='ai-agent-session'
+export TMUX_AI_SESSION='ai-session'
+export TMUX_AI_LOOP_SESSION='ai-loop-session'
 export AI_AGENT=claude
 export AI_AGENT_WITH_OPT="CLAUDE_CODE_OAUTH_TOKEN= $AI_AGENT --chrome --permission-mode auto --effort xhigh"
 export TMUX_AI_AGENT_SESSION="$TMUX_AI_SESSION:1.1"
