@@ -270,25 +270,6 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+w: send '/rewrite-latest-or-specified-research-report-for-readability' + Tab",
-                                "from": {
-                                    "key_code": "w",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command", "shift"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)rewrite-latest-or-specified-research-report-for-readability\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
                                 "description": "Ctrl+Cmd+r: send '/resolve-pr-ci-failure' + Tab + Enter",
                                 "from": {
                                     "key_code": "r",
@@ -802,7 +783,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+l: send '/explain-code-to-tmp-dump-html-with-record' + Tab + Enter",
+                                "description": "Ctrl+Cmd+Shift+l: send '/explain-code-to-tmp-dump-html-with-record' + Tab",
                                 "from": {
                                     "key_code": "l",
                                     "modifiers": {
@@ -811,7 +792,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)explain-code-to-tmp-dump-html-with-record\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
+                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)explain-code-to-tmp-dump-html-with-record\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
                                     }
                                 ],
                                 "type": "basic"
@@ -973,30 +954,11 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+m: send '/dump-latest-or-specified-doc-to-tmp-dump-html' + Tab",
+                                "description": "Ctrl+Cmd+m: send '/no-op' + Tab",
                                 "from": {
                                     "key_code": "m",
                                     "modifiers": {
                                         "mandatory": ["control", "command"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)dump-latest-or-specified-doc-to-tmp-dump-html\" && sleep 0.1 && ~/local/bin/tmux send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Ctrl+Cmd+Shift+m: send '/no-op' + Tab",
-                                "from": {
-                                    "key_code": "m",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command", "shift"]
                                     }
                                 },
                                 "to": [
