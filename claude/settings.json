@@ -58,6 +58,7 @@
       "Bash(sudo:*)",
       "Bash(rm:*)",
       "Bash(rmdir:*)",
+      "Bash(gh pr merge:*)",
       "Bash(git -C:*)",
       "Bash(git push:*)",
       "Bash(git rebase:*)",
@@ -82,6 +83,16 @@
       "~/works/memolist/",
       "~/works/git_worktrees/"
     ]
+  },
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": false,
+    "network": {
+      "allowedDomains": [
+        "slack.com",
+        "github.com"
+      ]
+    }
   },
   "hooks": {
     "Stop": [
