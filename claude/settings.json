@@ -88,7 +88,7 @@
     "enabled": true,
     "failIfUnavailable": false,
     "excludedCommands": [
-      "tmux"
+      "tmux *"
     ],
     "network": {
       "allowedDomains": [
