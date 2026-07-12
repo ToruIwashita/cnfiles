@@ -9,6 +9,8 @@ let g:mapleader = ','
 
 "" シンタックスハイライト
 syntax on
+" JSONの引用符（""）常に表示
+let g:vim_json_conceal = 0
 
 "" 補完設定
 set wildmenu
