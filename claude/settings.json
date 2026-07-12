@@ -87,6 +87,9 @@
   "sandbox": {
     "enabled": true,
     "failIfUnavailable": false,
+    "excludedCommands": [
+      "tmux"
+    ],
     "network": {
       "allowedDomains": [
         "slack.com",
