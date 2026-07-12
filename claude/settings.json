@@ -89,7 +89,9 @@
     "failIfUnavailable": false,
     "excludedCommands": [
       "tmux *",
-      "gh *"
+      "docker *",
+      "gh *",
+      "bundle *"
     ],
     "network": {
       "allowedDomains": [
