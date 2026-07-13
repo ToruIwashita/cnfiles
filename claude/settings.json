@@ -95,7 +95,8 @@
       "gpr *",
       "gh *",
       "git fetch*",
-      "git pull*"
+      "git pull*",
+      "git status*"
     ],
     "network": {
       "allowedDomains": [
