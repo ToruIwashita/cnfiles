@@ -132,7 +132,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "f=\"${TMP_LATEST_AI_PRECOMPACT_SNAPSHOT_FILE_PATH/#\\~/$HOME}\"; test -s \"$f\" && cat \"$f\"; true"
+            "command": "f=\"${TMP_LATEST_AI_PRECOMPACT_SNAPSHOT_FILE_PATH/#\\~/$HOME}\"; test -s \"$f\" && cat \"$f\" && : > \"$f\"; true"
           }
         ]
       }
