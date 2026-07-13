@@ -86,7 +86,7 @@
   },
   "sandbox": {
     "enabled": true,
-    "failIfUnavailable": false,
+    "failIfUnavailable": true,
     "excludedCommands": [
       "tmux *",
       "docker *",
