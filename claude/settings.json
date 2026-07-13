@@ -89,9 +89,12 @@
     "failIfUnavailable": true,
     "excludedCommands": [
       "tmux *",
-      "docker *",
+      "bundle *",
+      "gis *",
+      "gpr *",
       "gh *",
-      "bundle *"
+      "git fetch*",
+      "git pull*"
     ],
     "network": {
       "allowedDomains": [
