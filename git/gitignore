@@ -3,3 +3,5 @@
 .tags.lock
 .tags.temp
 .tool-versions
+
+**/.claude/.cc-writes/
