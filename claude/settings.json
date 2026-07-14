@@ -42,12 +42,8 @@
       "Bash(git symbolic-ref:*)",
       "Read(*)",
       "Edit(*)",
-      "MultiEdit(*)",
       "Glob(*)",
       "Grep(*)",
-      "LS(*)",
-      "Task(*)",
-      "TodoRead(*)",
       "TodoWrite(*)",
       "WebSearch",
       "WebFetch(domain:docs.anthropic.com)",
@@ -107,7 +103,11 @@
       "Write(**/.claude/settings.json)",
       "Write(**/.claude/settings.local.json)",
       "Write(~/.claude/settings.json)",
-      "Write(~/.cnfiles/claude/settings.json)"
+      "Write(~/.cnfiles/claude/settings.json)",
+      "Edit(~/.claude/CLAUDE.md)",
+      "Edit(~/.cnfiles/claude/CLAUDE.md)",
+      "Write(~/.claude/CLAUDE.md)",
+      "Write(~/.cnfiles/claude/CLAUDE.md)"
     ],
     "additionalDirectories": [
       "~/.cnfiles/",
@@ -121,7 +121,6 @@
     "failIfUnavailable": true,
     "allowUnsandboxedCommands": false,
     "excludedCommands": [
-      "bin/*",
       "tmux *",
       "bundle *",
       "gis *",
