@@ -51,6 +51,7 @@
       "TodoWrite(*)",
       "WebSearch",
       "WebFetch(domain:docs.anthropic.com)",
+      "WebFetch(domain:code.claude.com)",
       "mcp__codex__codex",
       "mcp__codex__codex-reply"
     ],
@@ -66,19 +67,50 @@
       "Bash(curl:*)",
       "Bash(wget:*)",
       "Bash(nc:*)",
+      "Bash(ncat:*)",
+      "Bash(socat:*)",
+      "Bash(ssh:*)",
+      "Bash(scp:*)",
+      "Bash(sftp:*)",
+      "Bash(rsync:*)",
+      "Bash(ftp:*)",
+      "Bash(telnet:*)",
+      "Bash(dig:*)",
+      "Bash(nslookup:*)",
+      "Bash(host:*)",
+      "Bash(security:*)",
       "Bash(env)",
       "Bash(printenv:*)",
+      "Read(.env)",
       "Read(.env.*)",
       "Read(id_rsa)",
+      "Read(id_dsa)",
+      "Read(id_ecdsa)",
+      "Read(id_ecdsa_sk)",
       "Read(id_ed25519)",
+      "Read(id_ed25519_sk)",
       "Read(**/.ssh/**)",
+      "Read(~/.ssh/**)",
       "Read(**/*.pem)",
       "Read(**/*.key)",
       "Read(**/.aws/**)",
+      "Read(~/.aws/**)",
+      "Read(~/.netrc)",
       "Write(.env*)",
       "Write(**/secrets/**)"
     ],
+    "ask": [
+      "Edit(**/.claude/settings.json)",
+      "Edit(**/.claude/settings.local.json)",
+      "Edit(~/.claude/settings.json)",
+      "Edit(~/.cnfiles/claude/settings.json)",
+      "Write(**/.claude/settings.json)",
+      "Write(**/.claude/settings.local.json)",
+      "Write(~/.claude/settings.json)",
+      "Write(~/.cnfiles/claude/settings.json)"
+    ],
     "additionalDirectories": [
+      "~/.cnfiles/",
       "~/markdown_texts/",
       "~/works/memolist/",
       "~/works/git_worktrees/"
@@ -89,6 +121,7 @@
     "failIfUnavailable": true,
     "allowUnsandboxedCommands": false,
     "excludedCommands": [
+      "bin/*",
       "tmux *",
       "bundle *",
       "gis *",
@@ -102,6 +135,11 @@
       "allowedDomains": [
         "slack.com",
         "github.com"
+      ]
+    },
+    "credentials": {
+      "envVars": [
+        { "name": "GITHUB_TOKEN", "mode": "deny" }
       ]
     }
   },
