@@ -111,34 +111,6 @@
       "~/works/git_worktrees/"
     ]
   },
-  "sandbox": {
-    "enabled": true,
-    "failIfUnavailable": true,
-    "allowUnsandboxedCommands": false,
-    "excludedCommands": [
-      "tmux *",
-      "bundle *",
-      "gis *",
-      "gpr *",
-      "gh *",
-      "git fetch*",
-      "git pull*",
-      "git status*"
-    ],
-    "network": {
-      "allowedDomains": [
-        "slack.com",
-        "github.com",
-        "rubygems.org",
-        "index.rubygems.org"
-      ]
-    },
-    "credentials": {
-      "envVars": [
-        { "name": "GITHUB_TOKEN", "mode": "deny" }
-      ]
-    }
-  },
   "hooks": {
     "Stop": [
       {
@@ -188,6 +160,37 @@
     }
   },
   "language": "Japanese",
+  "sandbox": {
+    "enabled": true,
+    "failIfUnavailable": true,
+    "allowUnsandboxedCommands": false,
+    "network": {
+      "allowedDomains": [
+        "slack.com",
+        "github.com",
+        "rubygems.org",
+        "index.rubygems.org"
+      ]
+    },
+    "credentials": {
+      "envVars": [
+        {
+          "name": "GITHUB_TOKEN",
+          "mode": "deny"
+        }
+      ]
+    },
+    "excludedCommands": [
+      "tmux *",
+      "bundle *",
+      "gis *",
+      "gpr *",
+      "gh *",
+      "git fetch*",
+      "git pull*",
+      "git status*"
+    ]
+  },
   "effortLevel": "xhigh",
   "teammateMode": "tmux",
   "skipAutoPermissionPrompt": true,
