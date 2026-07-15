@@ -128,7 +128,9 @@
     "network": {
       "allowedDomains": [
         "slack.com",
-        "github.com"
+        "github.com",
+        "rubygems.org",
+        "index.rubygems.org"
       ]
     },
     "credentials": {
