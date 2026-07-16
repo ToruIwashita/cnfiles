@@ -82,27 +82,26 @@ else
   line1+=$(printf ' | []@%s' "$dir_name")
 fi
 
-# --- 2行目: コンテキスト使用量 ---
+# --- 2行目: cx | 5h | 7d を横並び（reset時間は "(1h 32m)" と括弧で短く添える。レート制限は存在する時のみ）---
 cx_bar=$(make_bar "$cx_pct")
 cx_col=$(color_for "$cx_pct")
-line_cx=$(printf 'cx \033[%sm%s\033[0m %4s |' "$cx_col" "$cx_bar" "$(fmt_tokens "$cx_tok")")
+line2=$(printf 'cx \033[%sm%s\033[0m %s' "$cx_col" "$cx_bar" "$(fmt_tokens "$cx_tok")")
 
-# --- 出力 ---
-printf '%s\n%s' "$line1" "$line_cx"
-
-# --- 3行目以降: レート制限（存在する時のみ） ---
 if [[ -n "$h5_pct" ]]; then
   h5_col=$(color_for "$h5_pct")
   h5_bar=$(make_bar "$h5_pct")
   h5_reset_txt=""
-  [[ -n "$h5_reset" ]] && h5_reset_txt=" $(fmt_remaining "$h5_reset") to reset"
-  printf '\n5h \033[%sm%s\033[0m %3s%% |%s' "$h5_col" "$h5_bar" "$h5_pct" "$h5_reset_txt"
+  [[ -n "$h5_reset" ]] && h5_reset_txt=$(printf ' (%s)' "$(fmt_remaining "$h5_reset")")
+  line2+=$(printf ' | 5h \033[%sm%s\033[0m %s%%%s' "$h5_col" "$h5_bar" "$h5_pct" "$h5_reset_txt")
 fi
 
 if [[ -n "$d7_pct" ]]; then
   d7_col=$(color_for "$d7_pct")
   d7_bar=$(make_bar "$d7_pct")
   d7_reset_txt=""
-  [[ -n "$d7_reset" ]] && d7_reset_txt=" $(fmt_remaining "$d7_reset") to reset"
-  printf '\n7d \033[%sm%s\033[0m %3s%% |%s' "$d7_col" "$d7_bar" "$d7_pct" "$d7_reset_txt"
+  [[ -n "$d7_reset" ]] && d7_reset_txt=$(printf ' (%s)' "$(fmt_remaining "$d7_reset")")
+  line2+=$(printf ' | 7d \033[%sm%s\033[0m %s%%%s' "$d7_col" "$d7_bar" "$d7_pct" "$d7_reset_txt")
 fi
+
+# --- 出力 ---
+printf '%s\n%s' "$line1" "$line2"
