@@ -41,8 +41,7 @@ upload-file-to-slack() {
     --data-urlencode "length=$length")
 
   if [[ $(print -r -- $resp_url | jq -r '.ok') != true ]]; then
-    print "upload-file-to-slack: getUploadURLExternal failed: $(print -r -- $resp_url | jq -r '.error //
-.')" 1>&2
+    print "upload-file-to-slack: getUploadURLExternal failed: $(print -r -- $resp_url | jq -r '.error // .')" 1>&2
     return 1
   fi
 
@@ -62,8 +61,7 @@ upload-file-to-slack() {
     --data-urlencode "channel_id=$channel")
 
   if [[ $(print -r -- $resp_complete | jq -r '.ok') != true ]]; then
-    print "upload-file-to-slack: completeUploadExternal failed: $(print -r -- $resp_complete | jq -r
-'.error // .')" 1>&2
+    print "upload-file-to-slack: completeUploadExternal failed: $(print -r -- $resp_complete | jq -r '.error // .')" 1>&2
     return 1
   fi
 
