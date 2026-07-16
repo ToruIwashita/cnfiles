@@ -182,7 +182,8 @@
       "gh *",
       "git fetch*",
       "git pull*",
-      "git status*"
+      "git status*",
+      "pbcopy*"
     ]
   },
   "effortLevel": "xhigh",
