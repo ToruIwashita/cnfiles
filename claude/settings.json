@@ -88,22 +88,16 @@
       "Read(**/.aws/**)",
       "Read(~/.aws/**)",
       "Read(~/.netrc)",
-      "Write(.env*)",
-      "Write(**/secrets/**)"
+      "Edit(.env*)",
+      "Edit(**/secrets/**)"
     ],
     "ask": [
       "Edit(**/.claude/settings.json)",
       "Edit(**/.claude/settings.local.json)",
       "Edit(~/.claude/settings.json)",
       "Edit(~/.cnfiles/claude/settings.json)",
-      "Write(**/.claude/settings.json)",
-      "Write(**/.claude/settings.local.json)",
-      "Write(~/.claude/settings.json)",
-      "Write(~/.cnfiles/claude/settings.json)",
       "Edit(~/.claude/CLAUDE.md)",
-      "Edit(~/.cnfiles/claude/CLAUDE.md)",
-      "Write(~/.claude/CLAUDE.md)",
-      "Write(~/.cnfiles/claude/CLAUDE.md)"
+      "Edit(~/.cnfiles/claude/CLAUDE.md)"
     ],
     "additionalDirectories": [
       "~/markdown_texts/",
