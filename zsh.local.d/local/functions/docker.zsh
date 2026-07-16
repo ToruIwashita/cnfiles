@@ -66,6 +66,39 @@ deep-dive-probe-session() {
     return 1
   fi
 
+  if ! docker compose ps --status running --format '{{.Service}}' 2>/dev/null | grep -q '^deep-dive-probe$'; then
+    print 'docker compose up -d'
+    docker compose up -d || return 1
+  fi
+
   print 'docker compose exec -it deep-dive-probe ./scripts/run-manual.sh'
   docker compose exec -it deep-dive-probe ./scripts/run-manual.sh
+}
+
+claude-airlock-session() {
+  local repo_root remote_url
+
+  repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || {
+    print -u2 'git リポジトリ内ではありません'
+    return 1
+  }
+
+  remote_url=$(git config --get remote.origin.url 2>/dev/null)
+  if [[ $remote_url != */claude-airlock(.git|) ]]; then
+    print -u2 'claude-airlock リポジトリではありません'
+    return 1
+  fi
+
+  if [[ $PWD != $repo_root ]]; then
+    print -u2 "claude-airlock プロジェクト直下で実行してください (ルート: $repo_root)"
+    return 1
+  fi
+
+  if ! docker compose ps --status running --format '{{.Service}}' 2>/dev/null | grep -q '^claude-airlock$'; then
+    print 'docker compose up -d'
+    docker compose up -d || return 1
+  fi
+
+  print 'docker compose exec -it claude-airlock /opt/run.sh'
+  docker compose exec -it claude-airlock /opt/run.sh
 }
