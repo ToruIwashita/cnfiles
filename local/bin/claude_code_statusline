@@ -1,0 +1,108 @@
+#!/usr/bin/env zsh
+# Claude Code statusLine: モデル/effort/ブランチ + コンテキスト・5h/7d使用量バーを表示する
+# stdinで受け取るJSONの公式フィールドのみ使用（rate_limitsはPro/Max・初回API応答後のみ出現）
+
+zmodload zsh/datetime
+
+input=$(cat)
+
+jqr() { printf '%s' "$input" | jq -r "$1" 2>/dev/null }
+
+# --- 値の取得 ---
+model=$(jqr '.model.display_name // "?"')
+effort=$(jqr '.effort.level // empty')
+cur_dir=$(jqr '.workspace.current_dir // .cwd // "."')
+
+cx_tok=$(jqr '.context_window.total_input_tokens // 0')
+cx_pct=$(jqr '.context_window.used_percentage // 0'); cx_pct=${cx_pct%%.*}
+
+h5_pct=$(jqr '.rate_limits.five_hour.used_percentage // empty'); h5_pct=${h5_pct%%.*}
+h5_reset=$(jqr '.rate_limits.five_hour.resets_at // empty')
+d7_pct=$(jqr '.rate_limits.seven_day.used_percentage // empty'); d7_pct=${d7_pct%%.*}
+d7_reset=$(jqr '.rate_limits.seven_day.resets_at // empty')
+
+# --- ディレクトリ・ブランチ ---
+dir_name=${cur_dir:t}
+branch=""
+if cd "$cur_dir" 2>/dev/null && git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+  branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo detached)
+fi
+
+# --- ヘルパー ---
+# 使用率(0-100)から8マスのバーを生成
+make_bar() {
+  local pct=${1:-0} width=8 filled empty bar=""
+  (( filled = pct * width / 100 ))
+  (( filled > width )) && filled=width
+  (( filled < 0 )) && filled=0
+  (( empty = width - filled ))
+  repeat $filled; do bar+="▰"; done
+  repeat $empty; do bar+="▱"; done
+  printf '%s' "$bar"
+}
+
+# 使用率に応じた色（緑<50,黄<80,赤>=80）
+color_for() {
+  local pct=${1:-0}
+  if   (( pct >= 80 )); then printf '31'
+  elif (( pct >= 50 )); then printf '33'
+  else                       printf '32'
+  fi
+}
+
+# リセットまでの残り時間を英語表記で（例: 2h 20m / 2d 16h 0m）
+fmt_remaining() {
+  local reset=$1 rem d h m
+  (( rem = reset - EPOCHSECONDS ))
+  (( rem < 0 )) && rem=0
+  (( d = rem / 86400 ))
+  (( h = (rem % 86400) / 3600 ))
+  (( m = (rem % 3600) / 60 ))
+  if   (( d > 0 )); then printf '%dd %dh %dm' $d $h $m
+  elif (( h > 0 )); then printf '%dh %dm' $h $m
+  else                   printf '%dm' $m
+  fi
+}
+
+# トークン数を 61K 形式に
+fmt_tokens() {
+  local t=${1:-0}
+  if   (( t >= 1000000 )); then printf '%dM' $(( t / 1000000 ))
+  elif (( t >= 1000 ));    then printf '%dK' $(( t / 1000 ))
+  else                          printf '%d' $t
+  fi
+}
+
+# --- 1行目: モデル | effort | [git|* ブランチ]@ディレクトリ（非gitは []@ディレクトリ）---
+line1=$(printf '\033[1;33m%s\033[0m' "$model")
+[[ -n "$effort" ]] && line1+=$(printf ' - \033[38;5;135m%s\033[0m' "$effort")
+if [[ -n "$branch" ]]; then
+  line1+=$(printf ' | [git|* \033[32m%s\033[0m]@%s' "$branch" "$dir_name")
+else
+  line1+=$(printf ' | []@%s' "$dir_name")
+fi
+
+# --- 2行目: コンテキスト使用量 ---
+cx_bar=$(make_bar "$cx_pct")
+cx_col=$(color_for "$cx_pct")
+line_cx=$(printf 'cx \033[%sm%s\033[0m %4s |' "$cx_col" "$cx_bar" "$(fmt_tokens "$cx_tok")")
+
+# --- 出力 ---
+printf '%s\n%s' "$line1" "$line_cx"
+
+# --- 3行目以降: レート制限（存在する時のみ） ---
+if [[ -n "$h5_pct" ]]; then
+  h5_col=$(color_for "$h5_pct")
+  h5_bar=$(make_bar "$h5_pct")
+  h5_reset_txt=""
+  [[ -n "$h5_reset" ]] && h5_reset_txt=" $(fmt_remaining "$h5_reset") to reset"
+  printf '\n5h \033[%sm%s\033[0m %3s%% |%s' "$h5_col" "$h5_bar" "$h5_pct" "$h5_reset_txt"
+fi
+
+if [[ -n "$d7_pct" ]]; then
+  d7_col=$(color_for "$d7_pct")
+  d7_bar=$(make_bar "$d7_pct")
+  d7_reset_txt=""
+  [[ -n "$d7_reset" ]] && d7_reset_txt=" $(fmt_remaining "$d7_reset") to reset"
+  printf '\n7d \033[%sm%s\033[0m %3s%% |%s' "$d7_col" "$d7_bar" "$d7_pct" "$d7_reset_txt"
+fi
