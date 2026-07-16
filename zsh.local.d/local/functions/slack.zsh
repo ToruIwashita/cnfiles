@@ -57,7 +57,7 @@ upload-file-to-slack() {
   # 3) アップロード完了 + チャンネルへ共有
   resp_complete=$(curl -sS -X POST 'https://slack.com/api/files.completeUploadExternal' \
     -H "Authorization: Bearer $SLACK_BOT_OAUTH_TOKEN" \
-    --data-urlencode "files=[{\"id\":\"$file_id\",\"title\":\"$title\"}]" \
+    --data-urlencode "files=$(jq -cn --arg id "$file_id" --arg t "$title" '[{id:$id,title:$t}]')" \
     --data-urlencode "channel_id=$channel")
 
   if [[ $(print -r -- $resp_complete | jq -r '.ok') != true ]]; then
