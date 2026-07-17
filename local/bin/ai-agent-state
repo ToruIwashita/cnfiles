@@ -1,0 +1,143 @@
+#!/usr/bin/env zsh
+# AIエージェント(claude/codex)の状態をpane単位で記録し,tmuxのwindowタブ色(@ai_state)に反映する
+#
+# 使い方:
+#   ai-agent-state <agent> <event>            # claude/codexのhooksから呼ぶ(stdin: hook JSON)
+#   ai-agent-state --focus-reset [window_id]  # tmuxのフックから呼ぶ(doneをidleへ戻す)
+#
+# イベントと状態の対応:
+#   UserPromptSubmit / PreToolUse -> working
+#   PermissionRequest             -> blocked
+#   Notification                  -> blocked (権限以外の入力待ち,matcherで対象を限定して登録する)
+#   Stop                          -> done (background_tasks実行中はworking維持)
+#   SessionStart                  -> idle
+#   SessionEnd                    -> 状態クリア
+set -eu
+
+tmux=~/local/bin/tmux
+state_dir=${AI_AGENT_STATE_DIR_PATH:-$HOME/.config/ai_agents/state}
+
+# イベントから状態を決定する(Stopはstdin JSONのbackground_tasksを考慮)
+__resolve_state() {
+  local event input
+  event=$1
+  input=$2
+
+  case $event in
+    UserPromptSubmit | PreToolUse)
+      print working
+      ;;
+    PermissionRequest | Notification)
+      print blocked
+      ;;
+    SessionStart)
+      print idle
+      ;;
+    Stop)
+      # ターン終了時にバックグラウンドタスクが動いていればまだ作業中扱い
+      if print -r -- "$input" | jq -e '[.background_tasks[]? | select(.status == "running")] | length > 0' >/dev/null 2>&1; then
+        print working
+      else
+        print done
+      fi
+      ;;
+  esac
+}
+
+# 状態ファイルへatomicに書き込む(内容: "<state> <agent>")
+__write_state() {
+  local pane_id state agent tmp_file
+  pane_id=$1
+  state=$2
+  agent=$3
+
+  tmp_file=$(mktemp "$state_dir/.state.XXXXXX")
+  print -r -- "$state $agent" > "$tmp_file"
+  mv -f "$tmp_file" "$state_dir/$pane_id.state"
+}
+
+# window内の全pane状態を集約する(優先度: blocked > done > working > idle)
+__aggregate_window_state() {
+  local target states state
+  target=$1
+
+  states=$(
+    for pane_id in $($tmux list-panes -t "$target" -F '#{pane_id}' 2>/dev/null); do
+      [[ -f $state_dir/$pane_id.state ]] || continue
+      cut -d' ' -f1 "$state_dir/$pane_id.state"
+    done
+  )
+
+  for state in blocked done working; do
+    if [[ $states == *$state* ]]; then
+      print $state
+      return 0
+    fi
+  done
+
+  print idle
+}
+
+# 集約した状態を対象windowの@ai_stateへ反映する
+__apply_window_state() {
+  local target
+  target=$1
+
+  $tmux set-option -w -t "$target" @ai_state "$(__aggregate_window_state "$target")" 2>/dev/null || return 0
+  $tmux refresh-client -S >/dev/null 2>&1 || true
+}
+
+# フォーカスしたwindowのdoneをidleへ戻す(確認済み扱い,blockedは保持)
+__focus_reset() {
+  local window_id pane_id state agent
+  window_id=$1
+
+  for pane_id in $($tmux list-panes -t "$window_id" -F '#{pane_id}' 2>/dev/null); do
+    [[ -f $state_dir/$pane_id.state ]] || continue
+    read -r state agent < "$state_dir/$pane_id.state" || continue
+    if [[ $state == done ]]; then
+      __write_state "$pane_id" idle "$agent"
+    fi
+  done
+
+  __apply_window_state "$window_id"
+}
+
+mkdir -p "$state_dir"
+
+if [[ ${1:-} == --focus-reset ]]; then
+  __focus_reset "${2:-$($tmux display-message -p '#{window_id}')}"
+  exit 0
+fi
+
+if (( $# != 2 )); then
+  print "$0: usage: ai-agent-state <agent> <event> | ai-agent-state --focus-reset [window_id]" 1>&2
+  exit 1
+fi
+
+# tmux paneの外で動くエージェントは対象外(hookのstdinは読み捨てる)
+if [[ -z ${TMUX_PANE:-} ]]; then
+  cat >/dev/null 2>&1 || true
+  exit 0
+fi
+
+input=$(cat 2>/dev/null || true)
+
+if [[ $2 == SessionEnd ]]; then
+  rm -f "$state_dir/$TMUX_PANE.state" "$state_dir/$TMUX_PANE.meta.json"
+  __apply_window_state "$TMUX_PANE"
+  exit 0
+fi
+
+state=$(__resolve_state "$2" "$input")
+
+# 未知のイベントは無視する
+[[ -n $state ]] || exit 0
+
+# 状態が変わらないならtmux反映を省く(PreToolUseの高頻度発火対策)
+if [[ -f $state_dir/$TMUX_PANE.state && $(cut -d' ' -f1 "$state_dir/$TMUX_PANE.state") == $state ]]; then
+  exit 0
+fi
+
+__write_state "$TMUX_PANE" "$state" "$1"
+__apply_window_state "$TMUX_PANE"
