@@ -498,12 +498,12 @@ else
   ln -is $BASE_DIR_PATH/local/bin/copy-tmp-dump-html-to-tmp-html $LOCAL_BIN_DIR_PATH/copy-tmp-dump-html-to-tmp-html
 fi
 
-# claude_code_statusline
-if [[ -L $LOCAL_BIN_DIR_PATH/claude_code_statusline ]]; then
-  _printf "\e[32m$LOCAL_BIN_DIR_PATH/claude_code_statusline symlink already exists\e[0m\n"
+# claude-code-statusline
+if [[ -L $LOCAL_BIN_DIR_PATH/claude-code-statusline ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/claude-code-statusline symlink already exists\e[0m\n"
 else
-  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/claude_code_statusline\e[0m\n"
-  ln -is $BASE_DIR_PATH/local/bin/claude_code_statusline $LOCAL_BIN_DIR_PATH/claude_code_statusline
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/claude-code-statusline\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/claude-code-statusline $LOCAL_BIN_DIR_PATH/claude-code-statusline
 fi
 
 # open (macOS open)

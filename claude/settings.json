@@ -141,7 +141,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "claude_code_statusline"
+    "command": "claude-code-statusline"
   },
   "enabledPlugins": {
     "sentry-mcp@sentry-mcp": true
