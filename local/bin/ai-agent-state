@@ -35,8 +35,11 @@ __resolve_state() {
       ;;
     Stop)
       # ターン終了時にバックグラウンドタスクが動いていればまだ作業中扱い
+      # 完了したwindowをユーザーが見ている(attached+カレント)なら確認済みとしてidle扱い
       if print -r -- "$input" | jq -e '[.background_tasks[]? | select(.status == "running")] | length > 0' >/dev/null 2>&1; then
         print working
+      elif [[ $($tmux display-message -p -t "$TMUX_PANE" '#{?#{&&:#{window_active},#{session_attached}},1,0}' 2>/dev/null) == 1 ]]; then
+        print idle
       else
         print done
       fi

@@ -20,10 +20,10 @@ set -g base-index 1
 # buffer
 set -g buffer-limit 33
 set -g history-limit 50000
-# ウィンドウで動作があるとハイライト
-setw -g monitor-activity on
-# monitor-activity onでウィンドウ動作があった時にステータスラインメッセージを表示
-set -g visual-activity off
+# AIエージェント状態: フォーカスしたwindowのdone(赤タブ)をidleへ戻す(blockedは保持)
+# session-window-changedはselect/next/previous/last等すべてのカレントwindow変更で発火する
+set-hook -g session-window-changed 'run-shell "ai-agent-state --focus-reset #{window_id}"'
+set-hook -g client-session-changed 'run-shell "ai-agent-state --focus-reset #{window_id}"'
 
 ## unbind
 # デフォルトprefixを解除
