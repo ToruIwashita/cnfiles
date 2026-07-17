@@ -107,12 +107,46 @@
     ]
   },
   "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ai-agent-state claude UserPromptSubmit"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ai-agent-state claude PreToolUse"
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ai-agent-state claude PermissionRequest"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "hooks": [
           {
             "type": "command",
             "command": "command -v afplay >/dev/null 2>&1 && afplay \"$SYSTEM_SOUNDS_DIR_PATH/Funk.aiff\" || true"
+          },
+          {
+            "type": "command",
+            "command": "ai-agent-state claude Stop"
           }
         ]
       }
@@ -125,6 +159,15 @@
             "command": "command -v afplay >/dev/null 2>&1 && afplay \"$SYSTEM_SOUNDS_DIR_PATH/Funk.aiff\" || true"
           }
         ]
+      },
+      {
+        "matcher": "permission_prompt|agent_needs_input|elicitation_dialog",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ai-agent-state claude Notification"
+          }
+        ]
       }
     ],
     "SessionStart": [
@@ -134,6 +177,24 @@
           {
             "type": "command",
             "command": "f=\"$TMP_DIR_PATH/latest-ai-precompact-snapshot.md\"; test -s \"$f\" && cat \"$f\" && : > \"$f\"; true"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ai-agent-state claude SessionStart"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ai-agent-state claude SessionEnd"
           }
         ]
       }

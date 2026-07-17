@@ -4,6 +4,7 @@
 /config/ai_agents/current_tmux_ai_agent.txt
 /config/ai_agents/current_tmux_ai_agent_command_prefix.txt
 /config/ai_agents/current_tmux_ai_agent_session.txt
+/config/ai_agents/state/
 /config/karabiner/automatic_backups
 /docs/code_implementation_guide
 /my.local.cnf
