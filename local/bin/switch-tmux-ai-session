@@ -37,8 +37,8 @@ fi
 # pane border
 $tmux set -g pane-active-border-style "fg=${accent},bg=${border_bg}"
 
-# current window tab
-$tmux setw -g window-status-current-format "#[fg=${accent},bg=colour20,noreverse,nobold] #I #W "
+# current window tab (@ai_state条件はstatusline.tmuxのwindow-status-current-formatと揃える)
+$tmux setw -g window-status-current-format "#{?#{==:#{@ai_state},blocked},#[fg=colour16 bg=colour220],#{?#{==:#{@ai_state},done},#[fg=colour231 bg=colour167],#[fg=${accent} bg=colour20 noreverse nobold]}} #I #W "
 
 # status-right
 plugin_path=""
