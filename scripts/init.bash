@@ -514,6 +514,14 @@ else
   ln -is $BASE_DIR_PATH/local/bin/ai-agent-state $LOCAL_BIN_DIR_PATH/ai-agent-state
 fi
 
+# ai-agents-list
+if [[ -L $LOCAL_BIN_DIR_PATH/ai-agents-list ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/ai-agents-list symlink already exists\e[0m\n"
+else
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/ai-agents-list\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/ai-agents-list $LOCAL_BIN_DIR_PATH/ai-agents-list
+fi
+
 # open (macOS open)
 if [[ -L $LOCAL_BIN_DIR_PATH/open ]]; then
   _printf "\e[32m$LOCAL_BIN_DIR_PATH/open symlink already exists\e[0m\n"

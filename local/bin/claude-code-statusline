@@ -4,9 +4,29 @@
 
 zmodload zsh/datetime
 
+if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
+  print "$0: AI_AGENTS_CONFIG_DIR_PATH is not set"
+  exit 1
+fi
+
 input=$(cat)
 
 jqr() { printf '%s' "$input" | jq -r "$1" 2>/dev/null }
+
+# メタ情報(ai-agents-list用)をキャッシュへatomicに書き出す
+# キーはtmux内=pane ID / tmux外=sid-<session_id>。失敗してもstatusline本来の出力は妨げない
+if [[ -n ${TMUX_PANE:-} ]]; then
+  meta_key=$TMUX_PANE
+else
+  meta_key="sid-$(jqr '.session_id // empty')"
+fi
+if [[ $meta_key != sid- ]]; then
+  meta_dir=$AI_AGENTS_CONFIG_DIR_PATH/state
+  mkdir -p "$meta_dir" 2>/dev/null
+  meta_tmp=$(mktemp "$meta_dir/.meta.XXXXXX" 2>/dev/null) \
+    && printf '%s' "$input" | jq -c '{model: .model.display_name, cx_tok: .context_window.total_input_tokens, cx_pct: .context_window.used_percentage}' > "$meta_tmp" 2>/dev/null \
+    && mv -f "$meta_tmp" "$meta_dir/$meta_key.meta.json"
+fi
 
 # --- 値の取得 ---
 model=$(jqr '.model.display_name // "?"')
