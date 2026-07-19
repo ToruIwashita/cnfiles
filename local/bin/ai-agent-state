@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 # AIエージェント(claude/codex)の状態をpane単位で記録し,tmuxのwindowタブ色(@ai_state)に反映する
+# tmux外で動くエージェントはsession_id単位(sid-*.state)で記録する(ai-agents-listの一覧用)
 #
 # 使い方:
 #   ai-agent-state <agent> <event>            # claude/codexのhooksから呼ぶ(stdin: hook JSON)
@@ -90,6 +91,54 @@ __apply_window_state() {
   $tmux refresh-client -S >/dev/null 2>&1 || true
 }
 
+# tmux外エージェント用: イベントから状態を決定する(タブ反映が無いため可視判定なし)
+__resolve_state_outside() {
+  local event input state_file
+  event=$1
+  input=$2
+  state_file=$3
+
+  case $event in
+    UserPromptSubmit | PreToolUse | PostToolUse)
+      print working
+      ;;
+    PermissionRequest)
+      print blocked
+      ;;
+    SessionStart)
+      print idle
+      ;;
+    Notification)
+      # 入力待ち通知はターン中(working)のみblockedにする
+      if [[ -f $state_file && $(cut -f1 "$state_file") == working ]]; then
+        print blocked
+      fi
+      ;;
+    Stop)
+      if print -r -- "$input" | jq -e '[.background_tasks[]? | select(.status == "running")] | length > 0' >/dev/null 2>&1; then
+        print working
+      else
+        print done
+      fi
+      ;;
+  esac
+}
+
+# tmux外エージェントの状態をatomicに書き込む(タブ区切り: state agent pid tty cwd)
+__write_state_outside() {
+  local key state agent agent_pid agent_tty cwd tmp_file
+  key=$1
+  state=$2
+  agent=$3
+  agent_pid=$4
+  agent_tty=$5
+  cwd=$6
+
+  tmp_file=$(mktemp "$state_dir/.state.XXXXXX")
+  printf '%s\t%s\t%s\t%s\t%s\n' "$state" "$agent" "$agent_pid" "$agent_tty" "$cwd" > "$tmp_file"
+  mv -f "$tmp_file" "$state_dir/$key.state"
+}
+
 # フォーカスしたwindowのdoneをidleへ戻す(確認済み扱い,blockedは保持)
 __focus_reset() {
   local window_id pane_id state agent
@@ -118,9 +167,32 @@ if (( $# != 2 )); then
   exit 1
 fi
 
-# tmux paneの外で動くエージェントは対象外(hookのstdinは読み捨てる)
+# tmux paneの外で動くエージェントはsession_id単位で記録する(tmuxタブ反映なし)
 if [[ -z ${TMUX_PANE:-} ]]; then
-  cat >/dev/null 2>&1 || true
+  input=$(cat 2>/dev/null || true)
+  session_id=$(print -r -- "$input" | jq -r '.session_id // empty' 2>/dev/null || true)
+  [[ -n $session_id ]] || exit 0
+
+  state_file=$state_dir/sid-$session_id.state
+
+  if [[ $2 == SessionEnd ]]; then
+    rm -f "$state_file" "$state_dir/sid-$session_id.meta.json"
+    exit 0
+  fi
+
+  state=$(__resolve_state_outside "$2" "$input" "$state_file")
+  [[ -n $state ]] || exit 0
+
+  if [[ -f $state_file && $(cut -f1 "$state_file") == $state ]]; then
+    exit 0
+  fi
+
+  # エージェント本体のPID(hookはエージェントからシェル経由で起動されるため親の親)と
+  # TTY・作業ディレクトリを記録する(一覧での生存判定・表示用)
+  agent_pid=$(ps -o ppid= -p $PPID 2>/dev/null | tr -d ' ')
+  agent_tty=$(ps -o tty= -p "${agent_pid:-0}" 2>/dev/null | tr -d ' ')
+  cwd=$(print -r -- "$input" | jq -r '.cwd // empty' 2>/dev/null || true)
+  __write_state_outside "sid-$session_id" "$state" "$1" "${agent_pid:-}" "${agent_tty:-}" "${cwd:-}"
   exit 0
 fi
 
