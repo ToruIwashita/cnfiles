@@ -12,7 +12,12 @@ set -eu
 
 zmodload zsh/datetime
 
-state_dir=${AI_AGENT_STATE_DIR_PATH:-$HOME/.config/ai_agents/state}
+if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
+  print "$0: AI_AGENTS_CONFIG_DIR_PATH is not set"
+  exit 1
+fi
+
+state_dir=$AI_AGENTS_CONFIG_DIR_PATH/state
 
 # 一覧の並び順(上ほど対応が必要): blocked > done > working > idle
 __priority_for() {

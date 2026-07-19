@@ -7,7 +7,7 @@
 #   ai-agent-state --focus-reset [window_id]  # tmuxのフックから呼ぶ(doneをidleへ戻す)
 #
 # イベントと状態の対応:
-#   UserPromptSubmit / PreToolUse -> working
+#   UserPromptSubmit / PreToolUse / PostToolUse -> working
 #   PermissionRequest             -> blocked
 #   Notification                  -> blocked (権限以外の入力待ち,matcherで対象を限定して登録する)
 #   Stop                          -> done (background_tasks実行中はworking維持)
@@ -15,8 +15,12 @@
 #   SessionEnd                    -> 状態クリア
 set -eu
 
-tmux=~/local/bin/tmux
-state_dir=${AI_AGENT_STATE_DIR_PATH:-$HOME/.config/ai_agents/state}
+if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
+  print "$0: AI_AGENTS_CONFIG_DIR_PATH is not set"
+  exit 1
+fi
+
+state_dir=$AI_AGENTS_CONFIG_DIR_PATH/state
 
 # イベントから状態を決定する(Stopはstdin JSONのbackground_tasksを考慮)
 __resolve_state() {
@@ -25,11 +29,18 @@ __resolve_state() {
   input=$2
 
   case $event in
-    UserPromptSubmit | PreToolUse)
+    UserPromptSubmit | PreToolUse | PostToolUse)
       print working
       ;;
-    PermissionRequest | Notification)
+    PermissionRequest)
       print blocked
+      ;;
+    Notification)
+      # 入力待ち通知はターン中(working)のみblockedにする
+      # (ターン終了後にも入力待ち系の通知が発火しStop後のidle/doneを上書きしてしまうため)
+      if [[ -f $state_dir/$TMUX_PANE.state && $(cut -d' ' -f1 "$state_dir/$TMUX_PANE.state") == working ]]; then
+        print blocked
+      fi
       ;;
     SessionStart)
       print idle
@@ -39,7 +50,7 @@ __resolve_state() {
       # 完了したwindowをユーザーが見ている(attached+カレント)なら確認済みとしてidle扱い
       if print -r -- "$input" | jq -e '[.background_tasks[]? | select(.status == "running")] | length > 0' >/dev/null 2>&1; then
         print working
-      elif [[ $($tmux display-message -p -t "$TMUX_PANE" '#{?#{&&:#{window_active},#{session_attached}},1,0}' 2>/dev/null) == 1 ]]; then
+      elif [[ $(tmux display-message -p -t "$TMUX_PANE" '#{?#{&&:#{window_active},#{session_attached}},1,0}' 2>/dev/null) == 1 ]]; then
         print idle
       else
         print done
@@ -66,7 +77,7 @@ __aggregate_window_state() {
   target=$1
 
   states=$(
-    for pane_id in $($tmux list-panes -t "$target" -F '#{pane_id}' 2>/dev/null); do
+    for pane_id in $(tmux list-panes -t "$target" -F '#{pane_id}' 2>/dev/null); do
       [[ -f $state_dir/$pane_id.state ]] || continue
       cut -d' ' -f1 "$state_dir/$pane_id.state"
     done
@@ -87,8 +98,8 @@ __apply_window_state() {
   local target
   target=$1
 
-  $tmux set-option -w -t "$target" @ai_state "$(__aggregate_window_state "$target")" 2>/dev/null || return 0
-  $tmux refresh-client -S >/dev/null 2>&1 || true
+  tmux set-option -w -t "$target" @ai_state "$(__aggregate_window_state "$target")" 2>/dev/null || return 0
+  tmux refresh-client -S >/dev/null 2>&1 || true
 }
 
 # tmux外エージェント用: イベントから状態を決定する(タブ反映が無いため可視判定なし)
@@ -144,7 +155,7 @@ __focus_reset() {
   local window_id pane_id state agent
   window_id=$1
 
-  for pane_id in $($tmux list-panes -t "$window_id" -F '#{pane_id}' 2>/dev/null); do
+  for pane_id in $(tmux list-panes -t "$window_id" -F '#{pane_id}' 2>/dev/null); do
     [[ -f $state_dir/$pane_id.state ]] || continue
     read -r state agent < "$state_dir/$pane_id.state" || continue
     if [[ $state == done ]]; then
@@ -158,7 +169,7 @@ __focus_reset() {
 mkdir -p "$state_dir"
 
 if [[ ${1:-} == --focus-reset ]]; then
-  __focus_reset "${2:-$($tmux display-message -p '#{window_id}')}"
+  __focus_reset "${2:-$(tmux display-message -p '#{window_id}')}"
   exit 0
 fi
 

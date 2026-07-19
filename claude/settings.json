@@ -127,6 +127,16 @@
         ]
       }
     ],
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ai-agent-state claude PostToolUse"
+          }
+        ]
+      }
+    ],
     "PermissionRequest": [
       {
         "hooks": [

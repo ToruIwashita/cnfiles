@@ -4,6 +4,11 @@
 
 zmodload zsh/datetime
 
+if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
+  print "$0: AI_AGENTS_CONFIG_DIR_PATH is not set"
+  exit 1
+fi
+
 input=$(cat)
 
 jqr() { printf '%s' "$input" | jq -r "$1" 2>/dev/null }
@@ -16,7 +21,7 @@ else
   meta_key="sid-$(jqr '.session_id // empty')"
 fi
 if [[ $meta_key != sid- ]]; then
-  meta_dir=${AI_AGENT_STATE_DIR_PATH:-$HOME/.config/ai_agents/state}
+  meta_dir=$AI_AGENTS_CONFIG_DIR_PATH/state
   mkdir -p "$meta_dir" 2>/dev/null
   meta_tmp=$(mktemp "$meta_dir/.meta.XXXXXX" 2>/dev/null) \
     && printf '%s' "$input" | jq -c '{model: .model.display_name, cx_tok: .context_window.total_input_tokens, cx_pct: .context_window.used_percentage}' > "$meta_tmp" 2>/dev/null \
