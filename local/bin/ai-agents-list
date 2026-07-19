@@ -61,10 +61,20 @@ __fmt_last() {
   fi
 }
 
-# 現存しないpane・死んだプロセスの状態ファイルを掃除する
+# 現存しないpane・シェルに戻ったpane・死んだプロセスの状態ファイルを掃除する
 __cleanup_stale() {
-  local live state_file id pid
-  live=$(tmux list-panes -a -F '#{pane_id}' 2>/dev/null || true)
+  local live state_file id cmd pid
+  # カレントコマンドがシェルのpane(=エージェント終了後)は,SessionEndが
+  # 発火しない異常終了でも掃除できるよう生存リストから除外する
+  live=$(
+    tmux list-panes -a -F '#{pane_id} #{pane_current_command}' 2>/dev/null \
+      | while read -r id cmd; do
+          case $cmd in
+            zsh | bash) ;;
+            *) print -r -- "$id" ;;
+          esac
+        done
+  )
 
   for state_file in "$state_dir"/%*.state(N); do
     id=${${state_file:t}%.state}
