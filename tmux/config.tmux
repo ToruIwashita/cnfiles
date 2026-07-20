@@ -20,10 +20,6 @@ set -g base-index 1
 # buffer
 set -g buffer-limit 33
 set -g history-limit 50000
-# AIエージェント状態: フォーカスしたwindowのdone(赤タブ)をidleへ戻す(blockedは保持)
-# session-window-changedはselect/next/previous/last等すべてのカレントwindow変更で発火する
-set-hook -g session-window-changed 'run-shell "ai-agent-state --focus-reset #{window_id}"'
-set-hook -g client-session-changed 'run-shell "ai-agent-state --focus-reset #{window_id}"'
 
 ## unbind
 # デフォルトprefixを解除
@@ -117,8 +113,6 @@ bind T new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_pat
 bind M split-window -h \; split-window -v \; select-pane -t :.+ \; split-window -v \; select-pane -t :.-
 # ペイン同時操作
 bind Space setw synchronize-panes \; display "synchronize-panes #{?pane_synchronized,on,off}"
-# AIエージェント一覧をpopupで表示
-bind g display-popup -E -w 90% -h 70% ~/local/bin/ai-agent-list
 
 ## コピーモード
 bind v copy-mode
@@ -144,3 +138,11 @@ bind -T copy-mode-vi Space send -X copy-pipe-and-cancel "xargs -I {} open https:
 bind p paste-buffer
 # バッファ選択ペースト
 bind P choose-buffer
+
+# AIエージェント一覧をpopupで表示
+bind g display-popup -E -w 98% -h 70% ai-agent-list
+
+# AIエージェント状態: フォーカスしたwindowのdone(赤タブ)をidleへ戻す(blockedは保持)
+# session-window-changedはselect/next/previous/last等すべてのカレントwindow変更で発火する
+set-hook -g session-window-changed 'run-shell "ai-agent-state --focus-reset #{window_id}"'
+set-hook -g client-session-changed 'run-shell "ai-agent-state --focus-reset #{window_id}"'
