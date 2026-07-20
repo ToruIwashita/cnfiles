@@ -39,6 +39,20 @@ __label_for() {
   esac
 }
 
+# 表示幅ベースで切り詰め+右パディングする(全角文字を含む名前の列ズレ対策)
+__pad() {
+  local text width w
+  text=$1
+  width=$2
+
+  w=${(m)#text}
+  while (( w > width )); do
+    text=${text[1,-2]}
+    w=${(m)#text}
+  done
+  printf '%s%*s' "$text" $(( width - w )) ''
+}
+
 # トークン数を 61K / 1M 形式に
 __fmt_tokens() {
   local t
@@ -97,7 +111,8 @@ __meta_columns() {
   meta_file=$state_dir/$1.meta.json
 
   if [[ -f $meta_file ]]; then
-    model=$(jq -r '.model // "-"' "$meta_file" 2>/dev/null || print -- -)
+    # モデル名の括弧付き補足("Opus 4.8 (1M context)"等)は列に収まらないため除去する
+    model=$(jq -r '(.model // "-") | split(" (")[0]' "$meta_file" 2>/dev/null || print -- -)
     cx_pct=$(jq -r '.cx_pct // 0 | floor' "$meta_file" 2>/dev/null || print 0)
     cx_tok=$(jq -r '.cx_tok // 0' "$meta_file" 2>/dev/null || print 0)
     printf '%s\t%s' "$model" "${cx_pct}% $(__fmt_tokens "$cx_tok")"
@@ -121,13 +136,13 @@ __format_row() {
   model=${meta%$'\t'*}
   ctx=${meta#*$'\t'}
 
-  printf '%s\t%-7s %-18s %-7s %s %-22s %-12s %-9s %s\n' \
+  printf '%s\t%-7s %s %-7s %s %s %-12s %-9s %s\n' \
     "$(__priority_for "$state")" \
     "${${agent_pid:--}[1,7]}" \
-    "${target[1,18]}" \
+    "$(__pad "$target" 20)" \
     "${agent[1,7]}" \
     "$(__label_for "$state")" \
-    "${dir[1,22]}" \
+    "$(__pad "$dir" 22)" \
     "${model[1,12]}" \
     "$ctx" \
     "$(__fmt_last "$mtime")"
@@ -171,7 +186,7 @@ __emit_rows() {
 # ヘッダ+ソート済み一覧を出力する
 __render() {
   printf 'AI Agents  %s  (q: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
-  printf '%-7s %-18s %-7s %-9s %-22s %-12s %-9s %s\n' PID TARGET AGENT STATUS DIR MODEL CONTEXT LAST
+  printf '%-7s %-20s %-7s %-9s %-22s %-12s %-9s %s\n' PID TARGET AGENT STATUS DIR MODEL CONTEXT LAST
   __emit_rows | sort -t$'\t' -k1,1n | cut -f2-
 }
 
