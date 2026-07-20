@@ -108,20 +108,22 @@ __meta_columns() {
 
 # 1行分の表示を整形する(形式: "<priority>\t<整形済み表示行>")
 __format_row() {
-  local target agent state dir key mtime meta model ctx
+  local target agent agent_pid state dir key mtime meta model ctx
   target=$1
   agent=$2
-  state=$3
-  dir=$4
-  key=$5
-  mtime=$6
+  agent_pid=$3
+  state=$4
+  dir=$5
+  key=$6
+  mtime=$7
 
   meta=$(__meta_columns "$key")
   model=${meta%$'\t'*}
   ctx=${meta#*$'\t'}
 
-  printf '%s\t%-18s %-7s %s %-22s %-12s %-9s %s\n' \
+  printf '%s\t%-7s %-18s %-7s %s %-22s %-12s %-9s %s\n' \
     "$(__priority_for "$state")" \
+    "${${agent_pid:--}[1,7]}" \
     "${target[1,18]}" \
     "${agent[1,7]}" \
     "$(__label_for "$state")" \
@@ -150,10 +152,10 @@ __emit_rows() {
         pane=${parts[4]:-}
         pane_path=${parts[5]:-}
         [[ -n $pane_id && -f $state_dir/$pane_id.state ]] || continue
-        read -r state agent < "$state_dir/$pane_id.state" || continue
+        read -r state agent agent_pid < "$state_dir/$pane_id.state" || continue
         mtime=$(stat -f %m "$state_dir/$pane_id.state" 2>/dev/null || print $EPOCHSECONDS)
 
-        __format_row "${session}:${win}.${pane}" "$agent" "$state" "${pane_path:t}" "$pane_id" "$mtime"
+        __format_row "${session}:${win}.${pane}" "$agent" "${agent_pid:-}" "$state" "${pane_path:t}" "$pane_id" "$mtime"
       done
 
   # tmux外(session_id単位)
@@ -162,14 +164,14 @@ __emit_rows() {
     IFS=$'\t' read -r state agent agent_pid agent_tty cwd < "$state_file" || continue
     mtime=$(stat -f %m "$state_file" 2>/dev/null || print $EPOCHSECONDS)
 
-    __format_row "${agent_tty:-pid:$agent_pid}" "$agent" "$state" "${cwd:t}" "$key" "$mtime"
+    __format_row "${agent_tty:-tty?}" "$agent" "${agent_pid:-}" "$state" "${cwd:t}" "$key" "$mtime"
   done
 }
 
 # ヘッダ+ソート済み一覧を出力する
 __render() {
   printf 'AI Agents  %s  (q: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
-  printf '%-18s %-7s %-9s %-22s %-12s %-9s %s\n' TARGET AGENT STATUS DIR MODEL CONTEXT LAST
+  printf '%-7s %-18s %-7s %-9s %-22s %-12s %-9s %s\n' PID TARGET AGENT STATUS DIR MODEL CONTEXT LAST
   __emit_rows | sort -t$'\t' -k1,1n | cut -f2-
 }
 

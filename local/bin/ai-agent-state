@@ -59,15 +59,16 @@ __resolve_state() {
   esac
 }
 
-# 状態ファイルへatomicに書き込む(内容: "<state> <agent>")
+# 状態ファイルへatomicに書き込む(内容: "<state> <agent> <pid>")
 __write_state() {
-  local pane_id state agent tmp_file
+  local pane_id state agent agent_pid tmp_file
   pane_id=$1
   state=$2
   agent=$3
+  agent_pid=$4
 
   tmp_file=$(mktemp "$state_dir/.state.XXXXXX")
-  print -r -- "$state $agent" > "$tmp_file"
+  print -r -- "$state $agent $agent_pid" > "$tmp_file"
   mv -f "$tmp_file" "$state_dir/$pane_id.state"
 }
 
@@ -152,14 +153,14 @@ __write_state_outside() {
 
 # フォーカスしたwindowのdoneをidleへ戻す(確認済み扱い,blockedは保持)
 __focus_reset() {
-  local window_id pane_id state agent
+  local window_id pane_id state agent agent_pid
   window_id=$1
 
   for pane_id in $(tmux list-panes -t "$window_id" -F '#{pane_id}' 2>/dev/null); do
     [[ -f $state_dir/$pane_id.state ]] || continue
-    read -r state agent < "$state_dir/$pane_id.state" || continue
+    read -r state agent agent_pid < "$state_dir/$pane_id.state" || continue
     if [[ $state == done ]]; then
-      __write_state "$pane_id" idle "$agent"
+      __write_state "$pane_id" idle "$agent" "${agent_pid:-}"
     fi
   done
 
@@ -225,5 +226,7 @@ if [[ -f $state_dir/$TMUX_PANE.state && $(cut -d' ' -f1 "$state_dir/$TMUX_PANE.s
   exit 0
 fi
 
-__write_state "$TMUX_PANE" "$state" "$1"
+# エージェント本体のPID(hookはエージェントからシェル経由で起動されるため親の親)
+agent_pid=$(ps -o ppid= -p $PPID 2>/dev/null | tr -d ' ')
+__write_state "$TMUX_PANE" "$state" "$1" "${agent_pid:-}"
 __apply_window_state "$TMUX_PANE"
