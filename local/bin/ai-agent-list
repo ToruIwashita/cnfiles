@@ -2,8 +2,8 @@
 # AIエージェント(claude/codex)の状態一覧をwatch表示する(tmux内外を統合)
 #
 # 使い方:
-#   ai-agents-list           # 自動更新表示(1秒間隔, qで終了)
-#   ai-agents-list --once    # 1回だけ出力して終了
+#   ai-agent-list           # 自動更新表示(1秒間隔, qで終了)
+#   ai-agent-list --once    # 1回だけ出力して終了
 #
 # 表示対象:
 #   tmux内のエージェント: <pane_id>.state (TARGET=セッション:window.pane)

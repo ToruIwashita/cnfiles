@@ -118,7 +118,7 @@ bind M split-window -h \; split-window -v \; select-pane -t :.+ \; split-window 
 # ペイン同時操作
 bind Space setw synchronize-panes \; display "synchronize-panes #{?pane_synchronized,on,off}"
 # AIエージェント一覧をpopupで表示
-bind g display-popup -E -w 90% -h 70% ~/local/bin/ai-agents-list
+bind g display-popup -E -w 90% -h 70% ~/local/bin/ai-agent-list
 
 ## コピーモード
 bind v copy-mode

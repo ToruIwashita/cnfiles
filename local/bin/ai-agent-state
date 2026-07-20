@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 # AIエージェント(claude/codex)の状態をpane単位で記録し,tmuxのwindowタブ色(@ai_state)に反映する
-# tmux外で動くエージェントはsession_id単位(sid-*.state)で記録する(ai-agents-listの一覧用)
+# tmux外で動くエージェントはsession_id単位(sid-*.state)で記録する(ai-agent-listの一覧用)
 #
 # 使い方:
 #   ai-agent-state <agent> <event>            # claude/codexのhooksから呼ぶ(stdin: hook JSON)

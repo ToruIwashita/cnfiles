@@ -13,7 +13,7 @@ input=$(cat)
 
 jqr() { printf '%s' "$input" | jq -r "$1" 2>/dev/null }
 
-# メタ情報(ai-agents-list用)をキャッシュへatomicに書き出す
+# メタ情報(ai-agent-list用)をキャッシュへatomicに書き出す
 # キーはtmux内=pane ID / tmux外=sid-<session_id>。失敗してもstatusline本来の出力は妨げない
 if [[ -n ${TMUX_PANE:-} ]]; then
   meta_key=$TMUX_PANE
