@@ -255,6 +255,11 @@
         }
       ]
     },
+    "filesystem": {
+      "allowWrite": [
+        "~/.config/ai_agents/"
+      ]
+    },
     "excludedCommands": [
       "tmux *",
       "bundle *",
