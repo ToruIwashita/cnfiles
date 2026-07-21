@@ -142,6 +142,9 @@ bind P choose-buffer
 # AIエージェント一覧をpopupで表示
 bind g display-popup -E -w 98% -h 70% ai-agent-list
 
+# AIエージェント一覧を先頭ウィンドウで実行
+bind A move-window -t 0 \; send-keys 'ai-agent-list' Enter
+
 # AIエージェント状態: フォーカスしたwindowのdone(赤タブ)をidleへ戻す(blockedは保持)
 # session-window-changedはselect/next/previous/last等すべてのカレントwindow変更で発火する
 set-hook -g session-window-changed 'run-shell "ai-agent-state --focus-reset #{window_id}"'
