@@ -125,6 +125,15 @@
             "command": "ai-agent-state claude PreToolUse"
           }
         ]
+      },
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -c '(.tool_input.file_path // \"\") as $f | ((env.TMP_DIR_PATH // \"\") + \"/\") as $d | ((env.SYSTEM_TMP_AI_DIR_PATH // \"\") + \"/\") as $t | if $d != \"/\" and $t != \"/\" and ($f | startswith($d)) and $f != (env.TMP_LATEST_AI_PRECOMPACT_SNAPSHOT_FILE_PATH // \"\") then {hookSpecificOutput: {hookEventName: \"PreToolUse\", permissionDecision: \"allow\", permissionDecisionReason: \"$TMP_DIR_PATH への書き込みを $SYSTEM_TMP_AI_DIR_PATH へリダイレクト\", updatedInput: (.tool_input | .file_path = ($t + ($f | ltrimstr($d) | gsub(\"/\"; \"_\"))))}} else empty end'"
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -186,7 +195,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "f=\"$TMP_DIR_PATH/latest-ai-precompact-snapshot.md\"; test -s \"$f\" && cat \"$f\" && : > \"$f\"; true"
+            "command": "f=\"$TMP_LATEST_AI_PRECOMPACT_SNAPSHOT_FILE_PATH\"; test -s \"$f\" && cat \"$f\" && : > \"$f\"; true"
           }
         ]
       },
