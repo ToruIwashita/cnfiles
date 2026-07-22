@@ -78,8 +78,8 @@ bindkey -v '^sw' show-rprompt                         # Ctrl+s,wで退避したR
 bindkey -v '^s@' clear-screen                         # Ctrl+@でclear-screen
 bindkey -v '^s_' peco-cd-ghq-repo                     # Ctrl+s,_でghq管理下のリポジトリを絞り込んで移動
 bindkey -v '^s;' save-ai-agent-session                # Ctrl+s,;でAIエージェントセッション保存
-bindkey -v '^s:' peco-delete-ai-agent-session         # Ctrl+s,:でAIエージェントセッション削除
-bindkey -v "^s'" peco-delete-ai-agent-session         # Ctr+s,'(Ctr+:)でAIエージェントセッション削除
+bindkey -v '^s:' peco-delete-saved-ai-agent-session   # Ctrl+s,:でAIエージェントセッション削除
+bindkey -v "^s'" peco-delete-saved-ai-agent-session   # Ctr+s,'(Ctr+:)でAIエージェントセッション削除
 bindkey -v '^s\' peco-edit-ai-agent-session           # Ctr+s,\でAIエージェントセッション編集
 bindkey -v '^s ' peco-resume-ai-agent-session         # Ctrl+s,<SPACE>でAIエージェントセッション選択・起動
 bindkey -v '^s^a' immediate-git-add-all               # Ctrl+s,Ctrl+aでgit add .

@@ -1,5 +1,5 @@
-## peco-delete-ai-agent-session
-_peco-delete-ai-agent-session() {
+## peco-delete-saved-ai-agent-session
+_peco-delete-saved-ai-agent-session() {
   local selected session_id
 
   zle -I
@@ -27,4 +27,4 @@ _peco-delete-ai-agent-session() {
   while read -k 1 -s -t 0; do :; done
 }
 
-zle -N peco-delete-ai-agent-session _peco-delete-ai-agent-session
+zle -N peco-delete-saved-ai-agent-session _peco-delete-saved-ai-agent-session
