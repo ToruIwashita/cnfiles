@@ -247,17 +247,17 @@
         "index.rubygems.org"
       ]
     },
+    "filesystem": {
+      "allowWrite": [
+        "~/.config/ai_agents/"
+      ]
+    },
     "credentials": {
       "envVars": [
         {
           "name": "GITHUB_TOKEN",
           "mode": "deny"
         }
-      ]
-    },
-    "filesystem": {
-      "allowWrite": [
-        "~/.config/ai_agents/"
       ]
     },
     "excludedCommands": [
