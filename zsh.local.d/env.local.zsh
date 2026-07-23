@@ -22,6 +22,8 @@ export OWNED_GITHUB_REPOSITORIES=()
 
 # slack
 export SLACK_BOT_OAUTH_TOKEN=
+# slack research
+export SLACK_RESEARCH_CHANNEL_ID=
 # slack crypto research
 export SLACK_CRYPTO_RESEARCH_CHANNEL_ID=
 # slack market catalysts
