@@ -1,20 +1,4 @@
 ## mysql
-my-toggle() {
-  if [[ $MYSQL_DEFAULTS_GROUP_SUFFIX == 'default' ]]; then
-    export MYSQL_HOST=127.0.0.1
-    export MYSQL_PORT=3307
-    export MYSQL_DEFAULTS_GROUP_SUFFIX=other
-    export MYSQL_DATABASE=
-  else
-    export MYSQL_HOST=127.0.0.1
-    export MYSQL_PORT=3306
-    export MYSQL_DEFAULTS_GROUP_SUFFIX=default
-    export MYSQL_DATABASE=
-  fi
-
-  print "Switched to MYSQL_DATABASE='$MYSQL_DATABASE'"
-}
-
 my() {
   __my-connect
 }
@@ -545,4 +529,47 @@ tailf-my-slow-query-log() {
 
 tailf-my-query-upsertd-log() {
   tail -f $LOG_DIR_PATH/mysql/query.log | grep -e UPDATE -e INSERT -e DELETE
+}
+
+set-db-type() {
+  local db_type
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <db type>
+EOF`
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -t | --tmp-sql)
+        (( tmp_sql++ ))
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift;
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        db_type="$1"
+        shift 1
+        ;;
+    esac
+  done
+
+  if [[ $db_type != 'default' ]]; then
+    MYSQL_DATABASE=
+    print 'set xxx'
+  else
+    MYSQL_DATABASE=
+    print 'set yyy'
+  fi
 }

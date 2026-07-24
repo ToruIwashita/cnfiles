@@ -7,6 +7,10 @@ __my-limits() {
   compadd 1
 }
 
+__my-db-types() {
+  compadd 'yyy'
+}
+
 _mf() {
   _arguments \
     '(-a --id-asc)'{-a,--id-asc}'[Order by id asc]' \
@@ -60,6 +64,12 @@ _mytable() {
     '(:)*: :__my-table-names'
 }
 
+_set-db-type() {
+  _arguments \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '(:)*: :__my-db-types'
+}
+
 compdef _mf mf
 compdef _mq mq
 compdef _mq mqout
@@ -73,3 +83,4 @@ compdef _my-tables myctable
 compdef _my-tables myfcsv
 compdef _my-tables mycnt
 compdef _watch-myps watch-myps
+compdef _set-db-type set-db-type
