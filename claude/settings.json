@@ -73,22 +73,26 @@
       "Bash(security:*)",
       "Bash(env)",
       "Bash(printenv:*)",
-      "Read(.env)",
-      "Read(.env.*)",
-      "Read(id_rsa)",
-      "Read(id_dsa)",
-      "Read(id_ecdsa)",
-      "Read(id_ecdsa_sk)",
-      "Read(id_ed25519)",
-      "Read(id_ed25519_sk)",
-      "Read(**/.ssh/**)",
-      "Read(~/.ssh/**)",
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/id_rsa)",
+      "Read(**/id_dsa)",
+      "Read(**/id_ecdsa)",
+      "Read(**/id_ecdsa_sk)",
+      "Read(**/id_ed25519)",
+      "Read(**/id_ed25519_sk)",
+      "Read(**/.netrc)",
+      "Read(**/.my.cnf)",
+      "Read(**/my.local.cnf)",
       "Read(**/*.pem)",
       "Read(**/*.key)",
+      "Read(**/.ssh/**)",
       "Read(**/.aws/**)",
-      "Read(~/.aws/**)",
-      "Read(~/.netrc)",
       "Read(**/secrets/**)",
+      "Read(~/.netrc)",
+      "Read(~/.my.cnf)",
+      "Read(~/.ssh/**)",
+      "Read(~/.aws/**)",
       "Edit(.env*)",
       "Edit(**/secrets/**)"
     ],
@@ -106,6 +110,7 @@
       "~/works/git_worktrees/"
     ]
   },
+  "model": "claude-fable-5",
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -272,7 +277,7 @@
       "pbcopy*"
     ]
   },
-  "effortLevel": "xhigh",
+  "effortLevel": "high",
   "teammateMode": "tmux",
   "skipAutoPermissionPrompt": true,
   "mcpServers": {
