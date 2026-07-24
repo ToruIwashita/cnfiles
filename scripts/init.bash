@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2086
 
 source $(cd $(dirname $_);pwd)/env.bash
 set -e
