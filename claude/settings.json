@@ -92,6 +92,7 @@
       "Read(~/.my.cnf)",
       "Read(~/.ssh/**)",
       "Read(~/.aws/**)",
+      "Read(~/prods/**)",
       "Edit(.env*)",
       "Edit(**/secrets/**)"
     ],
