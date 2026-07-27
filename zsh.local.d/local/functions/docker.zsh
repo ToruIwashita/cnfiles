@@ -47,22 +47,33 @@ docker-stop-all() {
   docker stop $(docker ps -q)
 }
 
+docker-compose-rebuild() {
+  print 'docker compose build --pull --no-cache'
+  docker compose build --pull --no-cache || return 1
+
+  print 'docker compose up -d --force-recreate'
+  docker compose up -d --force-recreate || return 1
+
+  print 'docker image prune -f'
+  docker image prune -f
+}
+
 deep-dive-probe-session() {
   local repo_root remote_url
 
   repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || {
-    print -u2 'git リポジトリ内ではありません'
+    print -u2 'not inside a git repository'
     return 1
   }
 
   remote_url=$(git config --get remote.origin.url 2>/dev/null)
   if [[ $remote_url != */deep-dive-probe(.git|) ]]; then
-    print -u2 'deep-dive-probe リポジトリではありません'
+    print -u2 'not the deep-dive-probe repository'
     return 1
   fi
 
   if [[ $PWD != $repo_root ]]; then
-    print -u2 "deep-dive-probe プロジェクト直下で実行してください (ルート: $repo_root)"
+    print -u2 "run this from the deep-dive-probe project root (root: $repo_root)"
     return 1
   fi
 
@@ -79,18 +90,18 @@ claude-airlock-session() {
   local repo_root remote_url
 
   repo_root=$(git rev-parse --show-toplevel 2>/dev/null) || {
-    print -u2 'git リポジトリ内ではありません'
+    print -u2 'not inside a git repository'
     return 1
   }
 
   remote_url=$(git config --get remote.origin.url 2>/dev/null)
   if [[ $remote_url != */claude-airlock(.git|) ]]; then
-    print -u2 'claude-airlock リポジトリではありません'
+    print -u2 'not the claude-airlock repository'
     return 1
   fi
 
   if [[ $PWD != $repo_root ]]; then
-    print -u2 "claude-airlock プロジェクト直下で実行してください (ルート: $repo_root)"
+    print -u2 "run this from the claude-airlock project root (root: $repo_root)"
     return 1
   fi
 
