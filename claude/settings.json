@@ -110,7 +110,6 @@
       "~/works/git_worktrees/"
     ]
   },
-  "model": "claude-fable-5",
   "hooks": {
     "UserPromptSubmit": [
       {
