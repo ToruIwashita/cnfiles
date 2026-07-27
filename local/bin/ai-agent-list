@@ -7,7 +7,7 @@
 #
 # 表示対象:
 #   tmux内のエージェント: <pane_id>.state (TARGET=セッション:window.pane)
-#   tmux外のエージェント: sid-<session_id>.state (TARGET=tty)
+#   tmux外のエージェント: sid-<session_id>.state (TARGET=tty, 制御端末なしはheadless)
 set -eu
 
 zmodload zsh/datetime
@@ -151,7 +151,7 @@ __format_row() {
 # 全エージェントのデータ行を出力する
 __emit_rows() {
   local line pane_id session win pane pane_path state agent
-  local state_file key agent_pid agent_tty cwd mtime sep
+  local state_file key agent_pid agent_tty cwd mtime sep target
   local -a parts
 
   __cleanup_stale
@@ -179,7 +179,14 @@ __emit_rows() {
     IFS=$'\t' read -r state agent agent_pid agent_tty cwd < "$state_file" || continue
     mtime=$(stat -f %m "$state_file" 2>/dev/null || print $EPOCHSECONDS)
 
-    __format_row "${agent_tty:-tty?}" "$agent" "${agent_pid:-}" "$state" "${cwd:t}" "$key" "$mtime"
+    # 制御端末を持たないヘッドレス実行(cron等)はpsのttyが??になるため表示名に置き換える
+    if [[ -z ${agent_tty:-} || $agent_tty == '??' ]]; then
+      target=headless
+    else
+      target=$agent_tty
+    fi
+
+    __format_row "$target" "$agent" "${agent_pid:-}" "$state" "${cwd:t}" "$key" "$mtime"
   done
 }
 
