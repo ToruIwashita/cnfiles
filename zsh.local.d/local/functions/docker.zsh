@@ -48,6 +48,11 @@ docker-stop-all() {
 }
 
 docker-compose-rebuild() {
+  if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    print -u2 'not inside a git repository'
+    return 1
+  fi
+
   print 'docker compose build --pull --no-cache'
   docker compose build --pull --no-cache || return 1
 
