@@ -104,7 +104,7 @@ bind - select-layout even-vertical
 # ペインkill
 bind x kill-pane
 # 上35%・下65%に設定
-bind - resize-pane -t 0 -y 35%
+bind - resize-pane -t 0 -y 20%
 # 上80%・下30%に設定
 bind = resize-pane -t 0 -y 80%
 # 7ウィンドウ作成
