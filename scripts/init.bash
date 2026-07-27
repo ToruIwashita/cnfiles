@@ -187,14 +187,6 @@ else
   cp -p $BASE_DIR_PATH/tmux.local/config.local.tmux $BASE_DIR_PATH/tmux/config.local.tmux
 fi
 
-## copy my.cnf file
-if [[ -f $BASE_DIR_PATH/my.local.cnf ]]; then
-  _printf "\e[32m$BASE_DIR_PATH/my.local.cnf file already exists\e[0m\n"
-else
-  _printf "\e[31mcopy file $BASE_DIR_PATH/my.cnf to $BASE_DIR_PATH/my.local.cnf\e[0m\n"
-  cp -p $BASE_DIR_PATH/my.cnf $BASE_DIR_PATH/my.local.cnf
-fi
-
 ## copy github-markdown-dark.css as override file for previm (customized by sed below)
 if [[ -f $CONFIG_DIR_PATH/github-markdown-dark.override.css ]]; then
   _printf "\e[32m$CONFIG_DIR_PATH/github-markdown-dark.override.css file already exists\e[0m\n"
@@ -459,11 +451,11 @@ else
 fi
 
 # my.cnf
-if [[ -L ~/.my.cnf ]]; then
-  _printf "\e[32m~/.my.cnf symlink already exists\e[0m\n"
+if [[ -f ~/.my.cnf ]]; then
+  _printf "\e[32m~/.my.cnf file already exists\e[0m\n"
 else
-  _printf "\e[31mcreate symlink ~/.my.cnf\e[0m\n"
-  ln -is $BASE_DIR_PATH/my.local.cnf ~/.my.cnf
+  _printf "\e[31mcopy file $BASE_DIR_PATH/my.cnf to ~/.my.cnf\e[0m\n"
+  cp -p $BASE_DIR_PATH/my.cnf ~/.my.cnf
 fi
 
 ## create initial file
