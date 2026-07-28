@@ -434,12 +434,12 @@ else
   ln -is $BASE_DIR_PATH/eslintrc.json ~/.eslintrc.json
 fi
 
-# pry
-if [[ -L ~/.pryrc ]]; then
-  _printf "\e[32m~/.pryrc symlink already exists\e[0m\n"
+# irb
+if [[ -L ~/.irbrc ]]; then
+  _printf "\e[32m~/.irbrc symlink already exists\e[0m\n"
 else
-  _printf "\e[31mcreate symlink ~/.pryrc\e[0m\n"
-  ln -is $BASE_DIR_PATH/pryrc ~/.pryrc
+  _printf "\e[31mcreate symlink ~/.irbrc\e[0m\n"
+  ln -is $BASE_DIR_PATH/irbrc ~/.irbrc
 fi
 
 # rspec
