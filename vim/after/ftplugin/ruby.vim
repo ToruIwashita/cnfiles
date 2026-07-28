@@ -14,14 +14,14 @@ silent! nunmap <buffer> <C-w><C-]>
 " タグ移動のmapを解除
 silent! nunmap <buffer> <C-]>
 
-nnoremap <buffer> =d :<C-u>RemoveBindingPry<CR>
+nnoremap <buffer> =d :<C-u>RemoveBindingIrb<CR>
 nnoremap <buffer> =t :<C-u>RemoveCurrentMarker<CR>
 
 vnoremap <buffer> =y :<C-u>'<,'>YankNamespace<CR>
 
 iabbrev <buffer> =a , :aggregate_failures
 iabbrev <buffer> =c context "current", :current do
-iabbrev <buffer> =d binding.pry
+iabbrev <buffer> =d binding.irb
 iabbrev <buffer> =t , :current
 
 let &cpoptions = s:cpoptions_save
