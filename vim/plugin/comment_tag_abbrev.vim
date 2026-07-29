@@ -11,7 +11,7 @@ class CommentTagAbbrev
   enddef
 
   # カーソル手前のコメントリーダー(#)有無を判定してタグコメントを返す
-  # oやEnterで自動挿入された'#'が既にある場合は#を重ねず,無ければ'# 'を補う
+  # oやEnterで自動挿入された'#'後の整列用空白は,挿入前に標準の空白1つへ正規化する
   # hash_typedは'#=f'の形でアブレビの一部として'#'を打った場合に真となり,
   # その'#'は展開で消えるため既存リーダーの判定から除く
   def Expand(tag: string, hash_typed: bool): string
@@ -21,14 +21,9 @@ class CommentTagAbbrev
       return '# ' .. tag .. ':'
     endif
 
-    var spaces = matchstr(before, '#\zs\s*$')
-
-    if empty(spaces)
-      return ' ' .. tag .. ':'
-    endif
-
-    # oやEnterが前行から引き継いだ整列用の空白は空白1つまで詰める
-    return repeat("\<BS>", len(spaces) - 1) .. tag .. ':'
+    # バックスペースで空白を削ると,設定によっては行頭のインデントまで
+    # 削除される。タグを入力してからコメントリーダーだけを直接正規化する。
+    return tag .. ":\<C-o>:call setline('.', substitute(getline('.'), '#" .. '\s*' .. tag .. ":', '# " .. tag .. ":', ''))\<CR>"
   enddef
 
   # 展開時にバッファから取り除かれるアブレビ部分の正規表現
