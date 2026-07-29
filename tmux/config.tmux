@@ -109,8 +109,6 @@ bind - resize-pane -t 0 -y 20%
 bind = resize-pane -t 0 -y 80%
 # 7ウィンドウ作成
 bind T new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}'
-# 等間隔4分割(Multi)
-bind M split-window -h \; split-window -v \; select-pane -t :.+ \; split-window -v \; select-pane -t :.-
 # ペイン同時操作
 bind Space setw synchronize-panes \; display "synchronize-panes #{?pane_synchronized,on,off}"
 
