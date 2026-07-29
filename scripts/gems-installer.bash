@@ -24,15 +24,10 @@ gem update --system
 echo
 gem install aws-sdk
 gem install bundler
+gem install debug
 gem install webrick
 gem install foreman
 gem install git-gsub
-gem install pry
-gem install pry-byebug
-gem install pry-doc
-gem install pry-rails
-gem install pry-remote
-gem install pry-stack_explorer
 gem install rails
 gem install rspec
 gem install rubocop
