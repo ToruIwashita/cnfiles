@@ -103,7 +103,7 @@ bind | select-layout even-horizontal
 bind - select-layout even-vertical
 # ペインkill
 bind x kill-pane
-# 上35%・下65%に設定
+# 上20%・下80%に設定
 bind - resize-pane -t 0 -y 20%
 # 上80%・下30%に設定
 bind = resize-pane -t 0 -y 80%
@@ -139,11 +139,13 @@ bind p paste-buffer
 # バッファ選択ペースト
 bind P choose-buffer
 
+## AI
+# AIエージェント一覧を上側ペインで実行
+bind A resize-pane -y 20% \; send-keys 'ai-agent-list' Enter \; select-pane -D
+# AIエージェント一覧を先頭ウィンドウで実行
+bind @ move-window -t 0 \; send-keys 'ai-agent-list' Enter
 # AIエージェント一覧をpopupで表示
 bind g display-popup -E -w 98% -h 70% ai-agent-list
-
-# AIエージェント一覧を先頭ウィンドウで実行
-bind A move-window -t 0 \; send-keys 'ai-agent-list' Enter
 
 # AIエージェント状態: フォーカスしたwindowのdone(赤タブ)をidleへ戻す(blockedは保持)
 # session-window-changedはselect/next/previous/last等すべてのカレントwindow変更で発火する
