@@ -277,7 +277,7 @@
     ]
   },
   "effortLevel": "high",
-  "teammateMode": "tmux",
+  "teammateMode": "in-process",
   "skipAutoPermissionPrompt": true,
   "mcpServers": {
     "codex": {
