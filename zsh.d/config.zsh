@@ -96,7 +96,7 @@ bindkey -v '^s^w' hide-rprompt                        # Ctrl+s,Ctrl+wでRPROMPT�
 bindkey -v '^s^z' run-fg-last-with-up-line-or-history # Ctrl+s,Ctrl+zで履歴を逆上る+最後にサスペンドしたjobに復帰する
 bindkey -v '^s^@' clear-screen                        # Ctrl+@でclear-screen（Ctrl+@はCtrl+<SPACE>も表す）
 bindkey -v '^s^]' vi-backward-word                    # Ctrl+s,Ctrl+]で前の単語の先頭に移動
-bindkey -v '^s^_' peco-cd-git-worktree                # Ctrl+s,Ctrl+_でgit worktreeを絞り込んで移動
+bindkey -v '^s^_' peco-cd-prod                        # Ctrl+s,Ctrl+_で~/prods配下を絞り込んで移動
 bindkey -v '^@' peco-resume-ai-agent-session          # Ctrl+@でAIエージェントセッション選択・起動
 bindkey -v '^]' vi-forward-word                       # Ctrl+]で次の単語の先頭に移動
 bindkey -v '^?' backward-delete-char                  # BSでbackward-delete-char(menuselectのinteractive-modeでbackword)

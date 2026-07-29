@@ -12,6 +12,7 @@ export CNFILES_DIR_PATH=~/.cnfiles
 export LOCAL_DIR_PATH=~/local
 export DOT_LOCAL_DIR_PATH=~/.local
 export WORKS_DIR_PATH=~/works
+export PRODS_DIR_PATH=~/prods
 export CONFIG_DIR_PATH=~/.config
 export LOG_DIR_PATH=~/log
 export LINT_DIR_PATH=~/.lint
