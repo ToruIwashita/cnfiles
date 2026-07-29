@@ -110,6 +110,7 @@
       "~/works/git_worktrees/"
     ]
   },
+  "fallbackModel": [],
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -277,6 +278,7 @@
     ]
   },
   "effortLevel": "high",
+  "switchModelsOnFlag": false,
   "teammateMode": "in-process",
   "skipAutoPermissionPrompt": true,
   "mcpServers": {
