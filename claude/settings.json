@@ -110,6 +110,7 @@
       "~/works/git_worktrees/"
     ]
   },
+  "model": "claude-fable-5",
   "fallbackModel": [],
   "hooks": {
     "UserPromptSubmit": [
@@ -277,7 +278,7 @@
       "pbcopy*"
     ]
   },
-  "effortLevel": "high",
+  "effortLevel": "xhigh",
   "switchModelsOnFlag": false,
   "teammateMode": "in-process",
   "skipAutoPermissionPrompt": true,
