@@ -139,7 +139,7 @@ bind P choose-buffer
 
 ## AI
 # AIエージェント一覧を上側ペインで実行
-bind a split-window -v -c '#{pane_current_path}' \; select-pane -D \; resize-pane -y 20% \; send-keys 'ai-agent-list' Enter \; select-pane -D
+bind a new-window -c '#{pane_current_path}' \; split-window -v -c '#{pane_current_path}' \; select-pane -D \; resize-pane -y 20% \; send-keys 'ai-agent-list' Enter \; select-pane -D
 # AIエージェント一覧を先頭ウィンドウで実行
 bind @ move-window -t 0 \; send-keys 'ai-agent-list' Enter
 # AIエージェント一覧をpopupで表示
