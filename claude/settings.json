@@ -288,7 +288,7 @@
       "pbcopy*"
     ]
   },
-  "effortLevel": "xhigh",
+  "effortLevel": "high",
   "switchModelsOnFlag": false,
   "teammateMode": "in-process",
   "skipAutoPermissionPrompt": true,
