@@ -110,7 +110,7 @@
       "~/works/git_worktrees/"
     ]
   },
-  "model": "claude-opus-5",
+  "model": "opus[1m]",
   "fallbackModel": [],
   "hooks": {
     "UserPromptSubmit": [
