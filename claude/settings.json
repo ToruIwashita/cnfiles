@@ -176,6 +176,16 @@
         ]
       }
     ],
+    "StopFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ai-agent-state claude Stop"
+          }
+        ]
+      }
+    ],
     "Notification": [
       {
         "hooks": [

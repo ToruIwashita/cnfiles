@@ -5,6 +5,7 @@
 # 使い方:
 #   ai-agent-state <agent> <event>            # claude/codexのhooksから呼ぶ(stdin: hook JSON)
 #   ai-agent-state --focus-reset [window_id]  # tmuxのフックから呼ぶ(doneをidleへ戻す)
+#   ai-agent-state --reconcile-stuck          # ai-agent-listの描画ループから呼ぶ(取り残されたworkingを倒す)
 #
 # イベントと状態の対応:
 #   UserPromptSubmit / PreToolUse / PostToolUse -> working
@@ -14,6 +15,8 @@
 #   SessionStart                  -> idle
 #   SessionEnd                    -> 状態クリア
 set -eu
+
+zmodload zsh/datetime
 
 if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
   print "$0: AI_AGENTS_CONFIG_DIR_PATH is not set"
@@ -47,16 +50,25 @@ __resolve_state() {
       ;;
     Stop)
       # ターン終了時にバックグラウンドタスクが動いていればまだ作業中扱い
-      # 完了したwindowをユーザーが見ている(attached+カレント)なら確認済みとしてidle扱い
       if print -r -- "$input" | jq -e '[.background_tasks[]? | select(.status == "running")] | length > 0' >/dev/null 2>&1; then
         print working
-      elif [[ $(tmux display-message -p -t "$TMUX_PANE" '#{?#{&&:#{window_active},#{session_attached}},1,0}' 2>/dev/null) == 1 ]]; then
-        print idle
       else
-        print done
+        __stop_state_for_pane "$TMUX_PANE"
       fi
       ;;
   esac
+}
+
+# ターン終了時の遷移先を返す(完了したwindowをユーザーが見ている(attached+カレント)なら確認済みとしてidle扱い)
+__stop_state_for_pane() {
+  local pane_id
+  pane_id=$1
+
+  if [[ $(tmux display-message -p -t "$pane_id" '#{?#{&&:#{window_active},#{session_attached}},1,0}' 2>/dev/null) == 1 ]]; then
+    print idle
+  else
+    print done
+  fi
 }
 
 # 状態ファイルへatomicに書き込む(内容: "<state> <agent> <pid>")
@@ -167,6 +179,76 @@ __focus_reset() {
   __apply_window_state "$window_id"
 }
 
+# transcript末尾からターンの終了状況を判定する
+#   interrupted: 最後のメッセージがESC割り込みマーカー
+#   stopped:     Stopフック実行済みで終了(最後の有意なエントリがstop_hook_summary)
+#   active:      ターン進行中または新しいプロンプト受付後
+#   none:        判定不能(transcript無し・読み取り失敗)
+__transcript_turn_status() {
+  local transcript_path
+  transcript_path=$1
+
+  [[ -f $transcript_path ]] || { print none; return 0 }
+
+  tail -n 25 "$transcript_path" 2>/dev/null | jq -rs '
+    [ .[]
+      | select(.type? == "user" or .type? == "assistant" or (.type? == "system" and .subtype? == "stop_hook_summary")) ]
+    | last
+    | if . == null then "none"
+      elif .type == "system" then "stopped"
+      elif .type == "user" and ((.message.content | tostring) | contains("[Request interrupted by user")) then "interrupted"
+      else "active" end
+  ' 2>/dev/null || print none
+}
+
+# セッション成果物(transcript本体とsubagents/journal等のjsonl)の最終更新からの経過秒を返す
+__session_last_activity_age() {
+  local transcript_path newest
+  transcript_path=$1
+
+  newest=$(ls -t "$transcript_path" "${transcript_path%.jsonl}"/**/*.jsonl(N) 2>/dev/null | head -n 1)
+  [[ -n $newest ]] || { print 999999; return 0 }
+
+  print $(( EPOCHSECONDS - $(stat -f %m "$newest" 2>/dev/null || print 0) ))
+}
+
+# ターン終了イベントを取りこぼしてworkingのまま残った状態をdone/idleへ倒す
+#   interrupted: ESC割り込み(終了イベントが届かないことがある)は即倒す
+#   stopped: Stopがbackground_tasks実行中でworkingを維持した後,タスクが孤児化して後続イベントが
+#            来ないケースが対象で,実行中の背景タスクと区別するため成果物の更新が60秒超止まったものだけ倒す
+__reconcile_stuck() {
+  local state_file key state agent agent_pid agent_tty cwd transcript_path turn_status
+
+  for state_file in "$state_dir"/%*.state(N); do
+    key=${${state_file:t}%.state}
+    read -r state agent agent_pid < "$state_file" || continue
+    [[ $state == working ]] || continue
+    transcript_path=$(jq -r '.transcript_path // empty' "$state_dir/$key.meta.json" 2>/dev/null) || continue
+    [[ -n $transcript_path ]] || continue
+
+    turn_status=$(__transcript_turn_status "$transcript_path")
+    if [[ $turn_status == interrupted ]] \
+      || { [[ $turn_status == stopped ]] && (( $(__session_last_activity_age "$transcript_path") > 60 )) }; then
+      __write_state "$key" "$(__stop_state_for_pane "$key")" "$agent" "${agent_pid:-}"
+      __apply_window_state "$key"
+    fi
+  done
+
+  for state_file in "$state_dir"/sid-*.state(N); do
+    key=${${state_file:t}%.state}
+    IFS=$'\t' read -r state agent agent_pid agent_tty cwd < "$state_file" || continue
+    [[ $state == working ]] || continue
+    transcript_path=$(jq -r '.transcript_path // empty' "$state_dir/$key.meta.json" 2>/dev/null) || continue
+    [[ -n $transcript_path ]] || continue
+
+    turn_status=$(__transcript_turn_status "$transcript_path")
+    if [[ $turn_status == interrupted ]] \
+      || { [[ $turn_status == stopped ]] && (( $(__session_last_activity_age "$transcript_path") > 60 )) }; then
+      __write_state_outside "$key" done "$agent" "${agent_pid:-}" "${agent_tty:-}" "${cwd:-}"
+    fi
+  done
+}
+
 mkdir -p "$state_dir"
 
 if [[ ${1:-} == --focus-reset ]]; then
@@ -174,8 +256,13 @@ if [[ ${1:-} == --focus-reset ]]; then
   exit 0
 fi
 
+if [[ ${1:-} == --reconcile-stuck ]]; then
+  __reconcile_stuck
+  exit 0
+fi
+
 if (( $# != 2 )); then
-  print "$0: usage: ai-agent-state <agent> <event> | ai-agent-state --focus-reset [window_id]" 1>&2
+  print "$0: usage: ai-agent-state <agent> <event> | ai-agent-state --focus-reset [window_id] | ai-agent-state --reconcile-stuck" 1>&2
   exit 1
 fi
 

@@ -155,6 +155,8 @@ __emit_rows() {
   local -a parts
 
   __cleanup_stale
+  # ターン終了イベントを取りこぼしてworkingのまま残った状態を倒す
+  ai-agent-state --reconcile-stuck 2>/dev/null || true
 
   # tmux内(pane単位)
   sep=$'\t'
