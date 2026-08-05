@@ -1,12 +1,13 @@
-project_doc_fallback_filenames = ["CLAUDE .md"]
+project_doc_fallback_filenames = ["CLAUDE.md"]
 
-model = "gpt-5.5"
-model_reasoning_effort = "xhigh"
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
 model_reasoning_summary = "detailed"
 hide_agent_reasoning = true
 
 sandbox_mode = "workspace-write"
 approval_policy = "on-request"
+approvals_reviewer = "auto_review"
 
 network_access = true
 personality = "pragmatic"
