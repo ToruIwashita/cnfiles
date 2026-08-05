@@ -107,7 +107,8 @@
     "additionalDirectories": [
       "~/markdown_texts/",
       "~/works/memolist/",
-      "~/works/git_worktrees/"
+      "~/works/git_worktrees/",
+      "~/works/tmp/"
     ]
   },
   "model": "opus[1m]",
