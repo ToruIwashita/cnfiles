@@ -3,6 +3,7 @@
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
+    "CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION": "500",
     "SYSTEM_SOUNDS_DIR_PATH": "/System/Library/Sounds"
   },
   "permissions": {
@@ -301,5 +302,6 @@
       ],
       "env": {}
     }
-  }
+  },
+  "skipWorkflowUsageWarning": true
 }
