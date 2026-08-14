@@ -291,6 +291,7 @@
     ]
   },
   "effortLevel": "high",
+  "skipWorkflowUsageWarning": true,
   "switchModelsOnFlag": false,
   "teammateMode": "in-process",
   "skipAutoPermissionPrompt": true,
@@ -302,6 +303,5 @@
       ],
       "env": {}
     }
-  },
-  "skipWorkflowUsageWarning": true
+  }
 }
