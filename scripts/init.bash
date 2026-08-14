@@ -291,6 +291,13 @@ else
   cp -p $BASE_DIR_PATH/codex/config.toml ~/.codex/config.toml
 fi
 
+if [[ -L ~/.codex/hooks.json ]]; then
+  _printf "\e[32m~/.codex/hooks.json symlink already exists\e[0m\n"
+else
+  _printf "\e[31mcreate symlink ~/.codex/hooks.json\e[0m\n"
+  ln -is $BASE_DIR_PATH/codex/hooks.json ~/.codex/hooks.json
+fi
+
 if [[ -L ~/.codex/rules ]]; then
   _printf "\e[32m~/.codex/rules dir symlink already exists\e[0m\n"
 else
