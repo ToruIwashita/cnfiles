@@ -46,7 +46,11 @@ __resolve_state() {
       fi
       ;;
     SessionStart)
-      print idle
+      # 自動compact後にもSessionStartが発火する,その間も作業は継続しているため状態を変えない
+      # (サブエージェント完了待ち等の無イベント区間でidle上書きが残留するのを防ぐ)
+      if [[ $(print -r -- "$input" | jq -r '.source // empty' 2>/dev/null) != compact ]]; then
+        print idle
+      fi
       ;;
     Stop)
       # ターン終了時にバックグラウンドタスクが動いていればまだ作業中扱い
@@ -59,12 +63,13 @@ __resolve_state() {
   esac
 }
 
-# ターン終了時の遷移先を返す(完了したwindowをユーザーが見ている(attached+カレント)なら確認済みとしてidle扱い)
+# ターン終了時の遷移先を返す(完了したpaneをユーザーが見ている(attached+カレントwindow+フォーカス中pane)なら確認済みとしてidle扱い)
+# window粒度だと同一window内の別paneで動くサブエージェントの完了までidle扱いになるためpaneのフォーカスも条件に含める
 __stop_state_for_pane() {
   local pane_id
   pane_id=$1
 
-  if [[ $(tmux display-message -p -t "$pane_id" '#{?#{&&:#{window_active},#{session_attached}},1,0}' 2>/dev/null) == 1 ]]; then
+  if [[ $(tmux display-message -p -t "$pane_id" '#{?#{&&:#{pane_active},#{&&:#{window_active},#{session_attached}}},1,0}' 2>/dev/null) == 1 ]]; then
     print idle
   else
     print done
@@ -174,7 +179,10 @@ __resolve_state_outside() {
       print blocked
       ;;
     SessionStart)
-      print idle
+      # 自動compact後にもSessionStartが発火する,その間も作業は継続しているため状態を変えない
+      if [[ $(print -r -- "$input" | jq -r '.source // empty' 2>/dev/null) != compact ]]; then
+        print idle
+      fi
       ;;
     Notification)
       # 入力待ち通知はターン中(working)のみblockedにする
@@ -259,7 +267,9 @@ __session_last_activity_age() {
 # ターン終了イベントを取りこぼしてworkingのまま残った状態をdone/idleへ倒す
 #   interrupted: ESC割り込み(終了イベントが届かないことがある)は即倒す
 #   stopped: Stopがbackground_tasks実行中でworkingを維持した後,タスクが孤児化して後続イベントが
-#            来ないケースが対象で,実行中の背景タスクと区別するため成果物の更新が60秒超止まったものだけ倒す
+#            来ないケースが対象で,実行中の背景タスクと区別するため成果物の更新が10分超止まったものだけ倒す
+#            (teammateは長いツール実行中にtranscript・成果物が数分無更新になるため,60秒では完了待ち中の
+#            セッションを誤ってdone/idleへ倒してしまう)
 __reconcile_stuck() {
   local state_file key state agent agent_pid agent_tty cwd transcript_path turn_status
 
@@ -272,7 +282,7 @@ __reconcile_stuck() {
 
     turn_status=$(__transcript_turn_status "$transcript_path")
     if [[ $turn_status == interrupted ]] \
-      || { [[ $turn_status == stopped ]] && (( $(__session_last_activity_age "$transcript_path") > 60 )) }; then
+      || { [[ $turn_status == stopped ]] && (( $(__session_last_activity_age "$transcript_path") > 600 )) }; then
       __write_state "$key" "$(__stop_state_for_pane "$key")" "$agent" "${agent_pid:-}"
       __apply_window_state "$key"
     fi
@@ -287,7 +297,7 @@ __reconcile_stuck() {
 
     turn_status=$(__transcript_turn_status "$transcript_path")
     if [[ $turn_status == interrupted ]] \
-      || { [[ $turn_status == stopped ]] && (( $(__session_last_activity_age "$transcript_path") > 60 )) }; then
+      || { [[ $turn_status == stopped ]] && (( $(__session_last_activity_age "$transcript_path") > 600 )) }; then
       __write_state_outside "$key" done "$agent" "${agent_pid:-}" "${agent_tty:-}" "${cwd:-}"
     fi
   done
