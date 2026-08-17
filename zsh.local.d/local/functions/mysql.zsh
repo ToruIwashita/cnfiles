@@ -515,12 +515,12 @@ EOF`
     my_cmd="SELECT${selected_field_list} FROM${table_name}${where_condition}${group_condition}${order_condition}${limit_condition}${vertical_option}"
   fi
 
-  print "> $my_cmd"
+  print "> $my_cmd;"
   myq "$my_cmd"
 }
 
 tailf-my-query-log() {
-  tail -f $LOG_DIR_PATH/mysql/query.log
+  tail -f $LOG_DIR_PATH/mysql/query.log | sed -l -E 's/^[0-9]{4}-[^\t]*Z\t[[:space:]]*[0-9]+ (Query|Execute)\t//'
 }
 
 tailf-my-slow-query-log() {
@@ -528,7 +528,7 @@ tailf-my-slow-query-log() {
 }
 
 tailf-my-query-upsertd-log() {
-  tail -f $LOG_DIR_PATH/mysql/query.log | grep -e UPDATE -e INSERT -e DELETE
+  tail -f $LOG_DIR_PATH/mysql/query.log | sed -n -l -E '/UPDATE|INSERT|DELETE/ { s/^[0-9]{4}-[^\t]*Z\t[[:space:]]*[0-9]+ (Query|Execute)\t//; p; }'
 }
 
 set-db-type() {
