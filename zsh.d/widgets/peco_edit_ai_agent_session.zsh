@@ -1,6 +1,6 @@
 ## peco-edit-ai-agent-session
 _peco-edit-ai-agent-session() {
-  local selected session_id specified_line sessions_file
+  local selected specified_line sessions_file
   local -a session_lines
 
   sessions_file=$AI_AGENT_SESSIONS_FILE_PATH
@@ -12,9 +12,9 @@ _peco-edit-ai-agent-session() {
     return
   fi
 
-  session_id=${selected%% - *}
+  # session_idはファイル内で重複し得るため,選択した行そのものの完全一致で行番号を引く
   session_lines=("${(@f)$(<$sessions_file)}")
-  specified_line=${session_lines[(i)${session_id} - *]}
+  specified_line=${session_lines[(ie)$selected]}
 
   zle kill-whole-line
   BUFFER="${EDITOR:-vim} +${specified_line} ${sessions_file}"
