@@ -78,8 +78,6 @@ bind -r _ last-window
 bind -r C-_ last-window
 
 ## ペイン操作
-# ペイン選択
-bind - display-panes
 # ペイン移動
 bind h select-pane -L
 bind j select-pane -D
@@ -98,9 +96,6 @@ bind -r L resize-pane -R 2
 bind -r < swap-pane -U
 # ペインを前に入れ替え
 bind -r > swap-pane -D
-# 等間隔分割に変更する
-bind | select-layout even-horizontal
-bind - select-layout even-vertical
 # ペインkill
 bind x kill-pane
 # 上20%・下80%に設定
