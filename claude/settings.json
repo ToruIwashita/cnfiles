@@ -174,6 +174,10 @@
           {
             "type": "command",
             "command": "ai-agent-state claude Stop"
+          },
+          {
+            "type": "command",
+            "command": "jq -c 'if (.stop_hook_active // false) then empty elif ([.background_tasks[]? | select(.type == \"teammate\" and .status == \"running\")] | length) > 0 then {decision: \"block\", reason: \"使い終わったteammate・サブエージェントが残っていればシャットダウン(TaskStop)で片付けてから終了し,全てが稼働中・結果待ちであればそのまま終了してください\"} else empty end'"
           }
         ]
       }
@@ -262,7 +266,9 @@
         "slack.com",
         "github.com",
         "rubygems.org",
-        "index.rubygems.org"
+        "index.rubygems.org",
+        "forex-api.coin.z.com",
+        "api.coin.z.com"
       ]
     },
     "filesystem": {
@@ -290,7 +296,6 @@
       "pbcopy*"
     ]
   },
-  "effortLevel": "max",
   "skipWorkflowUsageWarning": true,
   "switchModelsOnFlag": false,
   "teammateMode": "in-process",
