@@ -290,7 +290,7 @@
       "pbcopy*"
     ]
   },
-  "effortLevel": "high",
+  "effortLevel": "max",
   "skipWorkflowUsageWarning": true,
   "switchModelsOnFlag": false,
   "teammateMode": "in-process",
