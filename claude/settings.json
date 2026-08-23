@@ -257,6 +257,7 @@
     }
   },
   "language": "Japanese",
+  "tui": "default",
   "sandbox": {
     "enabled": true,
     "failIfUnavailable": true,
