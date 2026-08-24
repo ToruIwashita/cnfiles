@@ -28,6 +28,7 @@ pip3 install -U ipython
 pip3 install -U wheel
 pip3 install -U pynvim
 pip3 install -U uv
+pip3 install -U faster-whisper
 
 asdf reshim python
 
