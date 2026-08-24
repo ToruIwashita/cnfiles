@@ -257,7 +257,6 @@
     }
   },
   "language": "Japanese",
-  "tui": "default",
   "sandbox": {
     "enabled": true,
     "failIfUnavailable": true,
@@ -297,6 +296,7 @@
       "pbcopy*"
     ]
   },
+  "tui": "default",
   "skipWorkflowUsageWarning": true,
   "switchModelsOnFlag": false,
   "teammateMode": "in-process",
