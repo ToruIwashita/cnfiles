@@ -243,7 +243,8 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "claude-code-statusline"
+    "command": "claude-code-statusline",
+    "refreshInterval": 30
   },
   "enabledPlugins": {
     "sentry-mcp@sentry-mcp": true
