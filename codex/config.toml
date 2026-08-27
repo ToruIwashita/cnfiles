@@ -20,7 +20,6 @@ status_line = [
   "context-used",
   "five-hour-limit",
   "weekly-limit",
-  "current-dir",
   "git-branch",
 ]
 status_line_use_colors = true
