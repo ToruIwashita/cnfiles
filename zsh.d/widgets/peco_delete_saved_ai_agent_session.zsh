@@ -1,30 +1,30 @@
 ## peco-delete-saved-ai-agent-session
 _peco-delete-saved-ai-agent-session() {
-  local selected session_id
+  local selected
 
   zle -I
   zle push-line
 
-  selected=$(__ai-agent-session-list | peco --select-1 2>/dev/null)
+  {
+    selected=$(__ai-agent-session-list | peco --select-1 2>/dev/null)
 
-  if (( ! $#selected )); then
+    if (( ! $#selected )); then
+      return
+    fi
+
+    if read -q "?Delete '${selected}' (y/n)? "; then
+      if __ai-agent-session-delete "$selected"; then
+        print "\nDeleted."
+      else
+        print "\npeco-delete-saved-ai-agent-session: failed to delete session" 1>&2
+      fi
+    else
+      print "\nCancelled."
+    fi
+  } always {
     zle get-line
     while read -k 1 -s -t 0; do :; done
-    return
-  fi
-
-  session_id=${selected%% - *}
-
-  if read -q "?Delete '${selected}' (y/n)? "; then
-    __ai-agent-session-delete "$session_id"
-    print "\nDeleted."
-  else
-    print "\nCancelled."
-  fi
-
-  zle get-line
-
-  while read -k 1 -s -t 0; do :; done
+  }
 }
 
 zle -N peco-delete-saved-ai-agent-session _peco-delete-saved-ai-agent-session
