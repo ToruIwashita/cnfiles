@@ -17,11 +17,11 @@ web_search = "live"
 [tui]
 status_line = [
   "model-with-reasoning",
-  "git-branch",
-  "project-name",
   "context-used",
   "five-hour-limit",
   "weekly-limit",
+  "current-dir",
+  "git-branch",
 ]
 status_line_use_colors = true
 
