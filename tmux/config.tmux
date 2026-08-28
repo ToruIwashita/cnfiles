@@ -7,6 +7,8 @@ set -g prefix C-q
 set -g default-terminal 'screen-256color'
 # copy-mode vim
 setw -g mode-key vi
+# 拡張キー入力を有効化
+set -s extended-keys on
 # キーストロークのディレイ0sec
 set -s escape-time 0
 # プレフィックスキーのリピート時間（デフォルト500ms）
