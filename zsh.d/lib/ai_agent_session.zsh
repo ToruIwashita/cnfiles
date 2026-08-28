@@ -63,25 +63,30 @@ __ai-agent-session-add() {
 }
 
 __ai-agent-session-update-id() {
-  local session_name session_id sessions_file sessions_file_tmp
+  local ai_agent session_name session_id session_prefix sessions_file sessions_file_tmp
 
-  session_name=$1
-  session_id=$2
+  ai_agent=$1
+  session_name=$2
+  session_id=$3
+  session_prefix=$(__ai-agent-session-prefix "$ai_agent") || return 1
   sessions_file=$AI_AGENT_SESSIONS_FILE_PATH
 
   if [[ ! -f $sessions_file ]]; then
     return 1
   fi
 
-  if (( $(grep -Fc -- " - ${session_name}@" "$sessions_file") != 1 )); then
+  if (( $(awk -v prefix="$session_prefix" -v name=" - ${session_name}@" '
+    index($0, prefix) == 1 && index($0, name) { count++ }
+    END { print count + 0 }
+  ' "$sessions_file") != 1 )); then
     return 1
   fi
 
   sessions_file_tmp=$(command mktemp "${sessions_file}.tmp.XXXXXX") || return 1
 
   {
-    awk -v name=" - ${session_name}@" -v id="$session_id" '
-      index($0, name) { sub(/[|] [^ ]+ - /, "| " id " - ") }
+    awk -v prefix="$session_prefix" -v name=" - ${session_name}@" -v id="$session_id" '
+      index($0, prefix) == 1 && index($0, name) { sub(/[|] [^ ]+ - /, "| " id " - ") }
       { print }
     ' "$sessions_file" >| "$sessions_file_tmp" || return 1
     command mv "$sessions_file_tmp" "$sessions_file"
