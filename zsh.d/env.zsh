@@ -56,7 +56,7 @@ export AI_SUB_AGENT_WITH_OPT="$AI_SUB_AGENT"
 export TMUX_AI_SUB_AGENT_SESSION="$TMUX_AI_SESSION:1.0"
 export AI_AGENT_SESSION_AGENTS='claude,codex'
 export AI_AGENT_SESSION_CLAUDE_COMMAND='CLAUDE_CODE_OAUTH_TOKEN= claude --chrome --permission-mode auto'
-export AI_AGENT_SESSION_CLAUDE_MODELS='claude-opus-5,claude-fable-5'
+export AI_AGENT_SESSION_CLAUDE_MODELS='claude-opus-5,claude-fable-5-1'
 export AI_AGENT_SESSION_CLAUDE_EFFORTS='max,xhigh,high,medium,low'
 export AI_AGENT_SESSION_CODEX_COMMAND='codex'
 export AI_AGENT_SESSION_CODEX_MODELS='gpt-5.6-sol,gpt-5.6-terra,gpt-5.6-luna'
