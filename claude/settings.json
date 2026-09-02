@@ -245,17 +245,6 @@
     "command": "claude-code-statusline",
     "refreshInterval": 30
   },
-  "enabledPlugins": {
-    "sentry-mcp@sentry-mcp": true
-  },
-  "extraKnownMarketplaces": {
-    "sentry-mcp": {
-      "source": {
-        "source": "github",
-        "repo": "getsentry/sentry-mcp"
-      }
-    }
-  },
   "language": "Japanese",
   "sandbox": {
     "enabled": true,
@@ -266,9 +255,7 @@
         "slack.com",
         "github.com",
         "rubygems.org",
-        "index.rubygems.org",
-        "forex-api.coin.z.com",
-        "api.coin.z.com"
+        "index.rubygems.org"
       ]
     },
     "filesystem": {
@@ -300,14 +287,5 @@
   "skipWorkflowUsageWarning": true,
   "preferredNotifChannel": "terminal_bell",
   "switchModelsOnFlag": false,
-  "teammateMode": "in-process",
-  "mcpServers": {
-    "codex": {
-      "command": "codex",
-      "args": [
-        "mcp-server"
-      ],
-      "env": {}
-    }
-  }
+  "teammateMode": "in-process"
 }
