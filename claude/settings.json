@@ -298,9 +298,9 @@
   },
   "tui": "default",
   "skipWorkflowUsageWarning": true,
+  "preferredNotifChannel": "terminal_bell",
   "switchModelsOnFlag": false,
   "teammateMode": "in-process",
-  "skipAutoPermissionPrompt": true,
   "mcpServers": {
     "codex": {
       "command": "codex",
