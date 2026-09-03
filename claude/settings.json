@@ -6,6 +6,7 @@
     "SYSTEM_SOUNDS_DIR_PATH": "/System/Library/Sounds"
   },
   "permissions": {
+    "defaultMode": "auto",
     "allow": [
       "Bash(zsh:*)",
       "Bash(tmux:*)",
