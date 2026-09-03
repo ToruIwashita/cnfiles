@@ -80,7 +80,6 @@ bind -r C-] next-window
 # 前のウィンドウへ
 bind -r [ previous-window
 bind -r C-[ previous-window
-bind -r Escape previous-window
 # 直前のウィンドウへ
 bind -r _ last-window
 bind -r C-_ last-window
