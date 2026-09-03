@@ -63,10 +63,13 @@ bind C-, rename-window "#{b:pane_current_path}"
 bind X kill-window
 # ウィンドウ上下分割
 bind s split-window -v -c '#{pane_current_path}'
+bind C-s split-window -v -c '#{pane_current_path}'
 # ウィンドウ左右分割
 bind i split-window -h -c '#{pane_current_path}'
+bind C-i split-window -h -c '#{pane_current_path}'
 # ウィンドウindex変更
 bind m command-prompt 'move-window -t %%'
+bind C-m command-prompt 'move-window -t %%'
 # ウィンドウ選択choose
 bind ';' choose-window
 # ウィンドウ選択select
