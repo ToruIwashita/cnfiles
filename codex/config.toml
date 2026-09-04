@@ -6,14 +6,19 @@ model_reasoning_effort = "xhigh"
 model_reasoning_summary = "detailed"
 hide_agent_reasoning = true
 
-sandbox_mode = "workspace-write"
+default_permissions = "default-local"
 approval_policy = "on-request"
 approvals_reviewer = "auto_review"
 
-network_access = true
 personality = "pragmatic"
 
 web_search = "live"
+
+[shell_environment_policy]
+ignore_default_excludes = false
+
+[shell_environment_policy.filters]
+GITHUB_TOKEN = "exclude"
 
 [tui]
 status_line = [
@@ -27,6 +32,55 @@ status_line_use_colors = true
 
 [features]
 multi_agent = true
+network_proxy = true
+
+[permissions.default-local]
+description = "Default local development permissions with sensitive paths protected"
+extends = ":workspace"
+
+[permissions.default-local.workspace_roots]
+"~/.config/ai_agents" = true
+"~/markdown_texts" = true
+"~/works/memolist" = true
+"~/works/git_worktrees" = true
+"~/works/tmp" = true
+
+[permissions.default-local.filesystem."~"]
+"**/.env*" = "deny"
+"**/env.*" = "deny"
+"**/id_rsa" = "deny"
+"**/id_dsa" = "deny"
+"**/id_ecdsa" = "deny"
+"**/id_ecdsa_sk" = "deny"
+"**/id_ed25519" = "deny"
+"**/id_ed25519_sk" = "deny"
+"**/.netrc" = "deny"
+"**/.my.cnf" = "deny"
+"**/*.pem" = "deny"
+"**/*.key" = "deny"
+"**/.ssh/**" = "deny"
+"**/.aws/**" = "deny"
+"**/secrets/**" = "deny"
+"prods/**" = "deny"
+".claude/settings.json" = "read"
+".claude/settings.local.json" = "read"
+".claude/CLAUDE.md" = "read"
+".cnfiles/claude/settings.json" = "read"
+".cnfiles/claude/CLAUDE.md" = "read"
+
+[permissions.default-local.filesystem.":workspace_roots"]
+".claude/settings.json" = "read"
+".claude/settings.local.json" = "read"
+".claude/CLAUDE.md" = "read"
+
+[permissions.default-local.network]
+enabled = true
+
+[permissions.default-local.network.domains]
+"slack.com" = "allow"
+"github.com" = "allow"
+"rubygems.org" = "allow"
+"index.rubygems.org" = "allow"
 
 [notice]
 hide_gpt5_1_migration_prompt = true

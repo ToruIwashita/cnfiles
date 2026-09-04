@@ -2,3 +2,59 @@ prefix_rule(
     pattern = ["tmux", "send-keys", "-t"],
     decision = "allow",
 )
+
+prefix_rule(
+    pattern = [["sudo", "rm", "rmdir"]],
+    decision = "forbidden",
+    justification = "These commands are denied by the shared local safety policy.",
+    match = [
+        "sudo true",
+        "rm file.txt",
+        "rmdir empty-directory",
+    ],
+)
+
+prefix_rule(
+    pattern = ["gh", "pr", "merge"],
+    decision = "forbidden",
+    justification = "Pull request merges are denied by the shared local safety policy.",
+    match = ["gh pr merge 123"],
+)
+
+prefix_rule(
+    pattern = ["git", ["-C", "push", "rebase", "rm"]],
+    decision = "forbidden",
+    justification = "These Git operations are denied by the shared local safety policy.",
+    match = [
+        "git -C /tmp/repository status",
+        "git push origin main",
+        "git rebase main",
+        "git rm file.txt",
+    ],
+    not_match = [
+        "git status",
+        "git pull",
+    ],
+)
+
+prefix_rule(
+    pattern = [["curl", "wget", "nc", "ncat", "socat", "ssh", "scp", "sftp", "rsync", "ftp", "telnet", "dig", "nslookup", "host"]],
+    decision = "forbidden",
+    justification = "Direct network commands are denied by the shared local safety policy.",
+    match = [
+        "curl https://example.com",
+        "ssh example.com",
+        "dig example.com",
+    ],
+)
+
+prefix_rule(
+    pattern = [["security", "env", "printenv"]],
+    decision = "forbidden",
+    justification = "Credential and environment inspection commands are denied by the shared local safety policy.",
+    match = [
+        "security find-generic-password -s example",
+        "env",
+        "printenv PATH",
+    ],
+)
