@@ -80,6 +80,7 @@ extends = ":workspace"
 
 [permissions.default-local.network]
 enabled = true
+allow_local_binding = true
 
 [permissions.default-local.network.domains]
 "0.0.0.0" = "allow"
