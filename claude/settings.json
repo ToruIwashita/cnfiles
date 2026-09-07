@@ -262,8 +262,8 @@
     "allowUnsandboxedCommands": false,
     "network": {
       "allowedDomains": [
-        "slack.com",
         "github.com",
+        "slack.com",
         "rubygems.org",
         "index.rubygems.org"
       ]
