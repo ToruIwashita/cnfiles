@@ -30,6 +30,11 @@ status_line = [
 ]
 status_line_use_colors = true
 
+[tui.model_availability_nux]
+"gpt-5.5" = 4
+"gpt-5.6-sol" = 4
+gpt-6-astra = 2
+
 [features]
 multi_agent = true
 network_proxy = true
@@ -77,8 +82,11 @@ extends = ":workspace"
 enabled = true
 
 [permissions.default-local.network.domains]
-"slack.com" = "allow"
+"0.0.0.0" = "allow"
+"127.0.0.1" = "allow"
+"localhost" = "allow"
 "github.com" = "allow"
+"slack.com" = "allow"
 "rubygems.org" = "allow"
 "index.rubygems.org" = "allow"
 
