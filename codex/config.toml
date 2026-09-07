@@ -1,18 +1,36 @@
 project_doc_fallback_filenames = ["CLAUDE.md"]
 
-model = "gpt-5.6-sol"
+model = "gpt-6-astra"
 service_tier = "priority"
 model_reasoning_effort = "xhigh"
 model_reasoning_summary = "detailed"
 hide_agent_reasoning = true
 
 default_permissions = "default-local"
-approval_policy = "on-request"
 approvals_reviewer = "auto_review"
 
 personality = "pragmatic"
 
 web_search = "live"
+
+[approval_policy.granular]
+sandbox_approval = false
+rules = true
+mcp_elicitations = true
+request_permissions = false
+skill_approval = true
+
+[analytics]
+enabled = false
+
+[feedback]
+enabled = false
+
+[otel]
+exporter = "none"
+trace_exporter = "none"
+metrics_exporter = "none"
+log_user_prompt = false
 
 [shell_environment_policy]
 ignore_default_excludes = false
@@ -33,7 +51,7 @@ status_line_use_colors = true
 [tui.model_availability_nux]
 "gpt-5.5" = 4
 "gpt-5.6-sol" = 4
-gpt-6-astra = 2
+gpt-6-astra = 3
 
 [features]
 multi_agent = true
@@ -90,6 +108,8 @@ allow_local_binding = true
 "slack.com" = "allow"
 "rubygems.org" = "allow"
 "index.rubygems.org" = "allow"
+"docs.anthropic.com" = "allow"
+"code.claude.com" = "allow"
 
 [notice]
 hide_gpt5_1_migration_prompt = true

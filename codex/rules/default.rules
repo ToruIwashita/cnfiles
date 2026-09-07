@@ -1,6 +1,25 @@
+# Claudeのsandbox.excludedCommandsを移植。競合時は下記のforbiddenが優先される。
+# 文字列ワイルドカードではなく、コマンド名・サブコマンド単位で一致させる。
 prefix_rule(
-    pattern = ["tmux", "send-keys", "-t"],
+    pattern = [["tmux", "bundle", "gis", "gpr", "gh", "pbcopy"]],
     decision = "allow",
+    match = [
+        "tmux list-sessions",
+        "tmux send-keys -t session:1.1 text Enter",
+        "bundle exec ruby -v",
+        "gis --help",
+        "gpr --help",
+        "gh pr view 123",
+        "pbcopy",
+    ],
+    not_match = ["bundler exec ruby -v", "pbcopy-other"],
+)
+
+prefix_rule(
+    pattern = ["git", ["fetch", "pull", "status"]],
+    decision = "allow",
+    match = ["git fetch origin", "git pull --ff-only", "git status --short"],
+    not_match = ["git push origin main", "git fetch-other"],
 )
 
 prefix_rule(
