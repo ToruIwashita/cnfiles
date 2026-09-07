@@ -148,32 +148,34 @@ __format_agent_line() {
   print -r -- "$line"
 }
 
-# claudeの5時間/週次利用枠(アカウント単位の値なので最新のmeta.jsonから1件だけ採る)
-# rate_limitsはプランと初回API応答の有無で欠けるため,取れなければその枠を出さない
-__usage_lines_claude() {
-  local meta_file h5_pct h5_reset d7_pct d7_reset h5 d7
+# claudeのmeta.jsonから指定枠の "使用率 リセットepoch" を返す(値を持つ最新ファイルまで遡る)
+# statusLineが受け取るrate_limitsはセッションによって5時間枠だけ欠けることがあり,
+# 最新1件に固定すると枠が出たり消えたりするため,アカウント単位で共通な値を枠ごとに独立して探す
+__claude_window() {
+  local pct_key reset_key meta_file pct reset
+
+  pct_key=$1
+  reset_key=$2
 
   for meta_file in "$state_dir"/*.meta.json(N.om); do
-    h5_pct=$(jq -r '.h5_pct // empty | floor' "$meta_file" 2>/dev/null || true)
-    d7_pct=$(jq -r '.d7_pct // empty | floor' "$meta_file" 2>/dev/null || true)
-    [[ -n ${h5_pct:-} || -n ${d7_pct:-} ]] || continue
+    pct=$(jq -r --arg k "$pct_key" '.[$k] // empty | floor' "$meta_file" 2>/dev/null || true)
+    [[ -n ${pct:-} ]] || continue
 
-    h5=''
-    d7=''
-
-    if [[ -n ${h5_pct:-} ]]; then
-      h5_reset=$(jq -r '.h5_reset // empty' "$meta_file" 2>/dev/null || true)
-      h5="$h5_pct ${h5_reset:-}"
-    fi
-
-    if [[ -n ${d7_pct:-} ]]; then
-      d7_reset=$(jq -r '.d7_reset // empty' "$meta_file" 2>/dev/null || true)
-      d7="$d7_pct ${d7_reset:-}"
-    fi
-
-    __format_agent_line claude "$h5" "$d7"
+    reset=$(jq -r --arg k "$reset_key" '.[$k] // empty' "$meta_file" 2>/dev/null || true)
+    print -r -- "$pct ${reset:-}"
     return 0
   done
+}
+
+# claudeの5時間/週次利用枠
+__usage_lines_claude() {
+  local h5 d7
+
+  h5=$(__claude_window h5_pct h5_reset)
+  d7=$(__claude_window d7_pct d7_reset)
+  [[ -n ${h5:-} || -n ${d7:-} ]] || return 0
+
+  __format_agent_line claude "$h5" "$d7"
 }
 
 # codexのrate_limitsスナップショットから指定ウィンドウの "使用率 リセットepoch" を返す
@@ -199,22 +201,33 @@ __codex_window() {
 # state DBのthreadsが最終更新順のrollout_pathを持つのでそれを使う(WAL反映のためimmutableは付けない)
 # rolloutは20MB級になるがtoken_countは毎ターン出るのでtailで足りる
 __usage_lines_codex() {
-  local rollout snapshot h5 d7
+  local rollouts rollout snapshot h5 d7
   local -a state_dbs
 
   # state DBはスキーマ更新でstate_5→state_6のように採番が上がるためglobで最新を採る
   state_dbs=("$HOME"/.codex/state_*.sqlite(N.om))
   (( ${#state_dbs} )) || return 0
 
-  rollout=$(sqlite3 "file:${state_dbs[1]}?mode=ro" \
-    'SELECT rollout_path FROM threads ORDER BY updated_at DESC LIMIT 1;' 2>/dev/null) || return 0
-  [[ -n ${rollout:-} && -f $rollout ]] || return 0
+  # 開始直後のスレッドはまだtoken_countを書いていないため,最新1件に固定すると枠が消える
+  # 5時間枠と週次枠は同じrate_limits応答に同居するので,値を持つ最新スナップショットを1つ探す
+  rollouts=$(sqlite3 "file:${state_dbs[1]}?mode=ro" \
+    'SELECT rollout_path FROM threads ORDER BY updated_at DESC LIMIT 5;' 2>/dev/null) || return 0
+  [[ -n ${rollouts:-} ]] || return 0
 
-  snapshot=$(tail -n 500 "$rollout" 2>/dev/null | grep '"type":"token_count"' | tail -n 1) || return 0
-  [[ -n ${snapshot:-} ]] || return 0
+  h5=''
+  d7=''
 
-  h5=$(__codex_window "$snapshot" 300)
-  d7=$(__codex_window "$snapshot" 10080)
+  while IFS= read -r rollout; do
+    [[ -n ${rollout:-} && -f $rollout ]] || continue
+
+    snapshot=$(tail -n 500 "$rollout" 2>/dev/null | grep '"type":"token_count"' | tail -n 1) || continue
+    [[ -n ${snapshot:-} ]] || continue
+
+    h5=$(__codex_window "$snapshot" 300)
+    d7=$(__codex_window "$snapshot" 10080)
+    [[ -n ${h5:-} || -n ${d7:-} ]] && break
+  done < <(print -r -- "$rollouts")
+
   [[ -n ${h5:-} || -n ${d7:-} ]] || return 0
 
   __format_agent_line codex "$h5" "$d7"

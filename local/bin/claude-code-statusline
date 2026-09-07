@@ -14,7 +14,7 @@ input=$(cat)
 jqr() { printf '%s' "$input" | jq -r "$1" 2>/dev/null }
 
 # メタ情報(ai-agent-list用)をキャッシュへatomicに書き出す
-# キーはtmux内=pane ID / tmux外=sid-<session_id>。失敗してもstatusline本来の出力は妨げない
+# キーはtmux内=pane ID / tmux外=sid-<session_id>で,失敗してもstatusline本来の出力は妨げない
 if [[ -n ${TMUX_PANE:-} ]]; then
   meta_key=$TMUX_PANE
 else
@@ -99,7 +99,7 @@ if [[ -n "$branch" ]]; then
   line1+=$(printf ' | [git|* \033[32m%s\033[0m]' "$branch")
 fi
 
-# --- 2行目: cx | 5h | 7d を横並び（reset時間は "(1h 32m)" と括弧で短く添える。レート制限は存在する時のみ）---
+# --- 2行目: cx | 5h | 7d を横並び（reset時間は "(1h 32m)" と括弧で短く添え,レート制限は存在する時のみ）---
 cx_bar=$(make_bar "$cx_pct")
 cx_col=$(color_for "$cx_pct")
 line2=$(printf 'cx \033[%sm%s\033[0m %s' "$cx_col" "$cx_bar" "$(fmt_tokens "$cx_tok")")
