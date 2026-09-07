@@ -23,7 +23,7 @@ GITHUB_TOKEN = "exclude"
 [tui]
 status_line = [
   "model-with-reasoning",
-  "context-used",
+  "context-remaining",
   "five-hour-limit",
   "weekly-limit",
   "git-branch",
