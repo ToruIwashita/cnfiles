@@ -112,42 +112,94 @@ __usage_color() {
   fi
 }
 
-# 週次利用枠の表示行を組み立てる(label=エージェント名, pct=使用率, reset=リセットのepoch)
-__format_weekly() {
-  local label pct reset line
-  label=$1
-  pct=$2
-  reset=$3
+# 利用枠1つ分のセグメントを組み立てる(window=5h/7d, values="使用率 リセットepoch")
+# 枠を横並びにしても桁が揃うよう,リセット表記まで含めて固定幅(26列)にする
+__format_window() {
+  local window values pct reset reset_txt
 
-  line=$(printf '  %-7s \e[%sm%s\e[0m %3d%%' "$label" "$(__usage_color "$pct")" "$(__usage_bar "$pct")" "$pct")
-  [[ -n ${reset:-} ]] && line+=$(printf '  reset in %s' "$(__fmt_reset "$reset")")
+  window=$1
+  values=$2
+
+  if [[ -z ${values:-} ]]; then
+    printf '%26s' ''
+    return 0
+  fi
+
+  pct=${values%% *}
+  reset=${values#* }
+  reset_txt=''
+  [[ -n ${reset:-} ]] && reset_txt="($(__fmt_reset "$reset"))"
+
+  printf '%-2s \e[%sm%s\e[0m %3d%% %-9s' \
+    "$window" "$(__usage_color "$pct")" "$(__usage_bar "$pct")" "$pct" "$reset_txt"
+}
+
+# エージェント1行を組み立てる(5時間枠と週次枠を横並びにする)
+__format_agent_line() {
+  local label h5 d7 line
+
+  label=$1
+  h5=$2
+  d7=$3
+
+  line=$(printf '  %-7s %s %s' "$label" "$(__format_window 5h "$h5")" "$(__format_window 7d "$d7")")
+  while [[ $line == *' ' ]]; do line=${line% }; done
 
   print -r -- "$line"
 }
 
-# claudeの週次(7日)利用枠(アカウント単位の値なので最新のmeta.jsonから1件だけ採る)
-# rate_limitsはプランと初回API応答の有無で欠けるため,取れなければ空を返す
-__weekly_usage_claude() {
-  local meta_file pct reset
+# claudeの5時間/週次利用枠(アカウント単位の値なので最新のmeta.jsonから1件だけ採る)
+# rate_limitsはプランと初回API応答の有無で欠けるため,取れなければその枠を出さない
+__usage_lines_claude() {
+  local meta_file h5_pct h5_reset d7_pct d7_reset h5 d7
 
   for meta_file in "$state_dir"/*.meta.json(N.om); do
-    pct=$(jq -r '.d7_pct // empty | floor' "$meta_file" 2>/dev/null) || continue
-    [[ -n $pct ]] || continue
+    h5_pct=$(jq -r '.h5_pct // empty | floor' "$meta_file" 2>/dev/null || true)
+    d7_pct=$(jq -r '.d7_pct // empty | floor' "$meta_file" 2>/dev/null || true)
+    [[ -n ${h5_pct:-} || -n ${d7_pct:-} ]] || continue
 
-    reset=$(jq -r '.d7_reset // empty' "$meta_file" 2>/dev/null || true)
-    __format_weekly claude "$pct" "${reset:-}"
+    h5=''
+    d7=''
+
+    if [[ -n ${h5_pct:-} ]]; then
+      h5_reset=$(jq -r '.h5_reset // empty' "$meta_file" 2>/dev/null || true)
+      h5="$h5_pct ${h5_reset:-}"
+    fi
+
+    if [[ -n ${d7_pct:-} ]]; then
+      d7_reset=$(jq -r '.d7_reset // empty' "$meta_file" 2>/dev/null || true)
+      d7="$d7_pct ${d7_reset:-}"
+    fi
+
+    __format_agent_line claude "$h5" "$d7"
     return 0
   done
 }
 
-# codexの週次利用枠(codexはmeta.jsonを持たないためセッションのrolloutから採る)
+# codexのrate_limitsスナップショットから指定ウィンドウの "使用率 リセットepoch" を返す
+# 判定はcodex本体のTUIと同じく期待値の±5%を許容する
+# (5時間と週次のどちらがprimary/secondaryに入るかはバックエンド応答次第で位置固定できない)
+__codex_window() {
+  local snapshot minutes lo hi
+  snapshot=$1
+  minutes=$2
+  lo=$(( minutes * 95 / 100 ))
+  hi=$(( minutes * 105 / 100 ))
+
+  print -r -- "$snapshot" \
+    | jq -r --argjson lo "$lo" --argjson hi "$hi" \
+        '[.payload.rate_limits.primary, .payload.rate_limits.secondary]
+         | map(select(. != null and (.window_minutes // 0) >= $lo and (.window_minutes // 0) <= $hi))
+         | first
+         | if . == null then empty else "\(.used_percent | floor) \(.resets_at // "")" end' 2>/dev/null || true
+}
+
+# codexの5時間/週次利用枠(codexはmeta.jsonを持たないためセッションのrolloutから採る)
 # rolloutは開始日のディレクトリに残り続けるため,日付から辿ると長時間セッションを取り逃がす
 # state DBのthreadsが最終更新順のrollout_pathを持つのでそれを使う(WAL反映のためimmutableは付けない)
 # rolloutは20MB級になるがtoken_countは毎ターン出るのでtailで足りる
-# 週次の判定はcodex本体のTUIと同じく10080分(7日)の±5%を許容する
-# (primary/secondaryのどちらに入るかはバックエンド応答次第で位置固定できない)
-__weekly_usage_codex() {
-  local rollout values pct reset
+__usage_lines_codex() {
+  local rollout snapshot h5 d7
   local -a state_dbs
 
   # state DBはスキーマ更新でstate_5→state_6のように採番が上がるためglobで最新を採る
@@ -158,20 +210,14 @@ __weekly_usage_codex() {
     'SELECT rollout_path FROM threads ORDER BY updated_at DESC LIMIT 1;' 2>/dev/null) || return 0
   [[ -n ${rollout:-} && -f $rollout ]] || return 0
 
-  values=$(
-    tail -n 500 "$rollout" 2>/dev/null \
-      | grep '"type":"token_count"' \
-      | tail -n 1 \
-      | jq -r '[.payload.rate_limits.primary, .payload.rate_limits.secondary]
-               | map(select(. != null and (.window_minutes // 0) >= 9576 and (.window_minutes // 0) <= 10584))
-               | first
-               | if . == null then empty else "\(.used_percent | floor) \(.resets_at // "")" end' 2>/dev/null
-  ) || return 0
-  [[ -n ${values:-} ]] || return 0
+  snapshot=$(tail -n 500 "$rollout" 2>/dev/null | grep '"type":"token_count"' | tail -n 1) || return 0
+  [[ -n ${snapshot:-} ]] || return 0
 
-  pct=${values%% *}
-  reset=${values#* }
-  __format_weekly codex "$pct" "${reset:-}"
+  h5=$(__codex_window "$snapshot" 300)
+  d7=$(__codex_window "$snapshot" 10080)
+  [[ -n ${h5:-} || -n ${d7:-} ]] || return 0
+
+  __format_agent_line codex "$h5" "$d7"
 }
 
 # 一覧に出ているエージェント種別を返す(pane単位は空白区切り,tmux外はタブ区切り)
@@ -191,16 +237,16 @@ __active_agents() {
   } | sort -u
 }
 
-# 週次利用枠を一覧に出ているエージェントの分だけ並べて返す
-__weekly_usage() {
+# 利用枠を一覧に出ているエージェントの分だけ並べて返す
+__usage_lines() {
   local agents
   local -a parts
 
   agents=$(__active_agents)
   parts=()
 
-  [[ $'\n'$agents$'\n' == *$'\n'claude$'\n'* ]] && parts+=("$(__weekly_usage_claude)")
-  [[ $'\n'$agents$'\n' == *$'\n'codex$'\n'* ]] && parts+=("$(__weekly_usage_codex)")
+  [[ $'\n'$agents$'\n' == *$'\n'claude$'\n'* ]] && parts+=("${(@f)$(__usage_lines_claude)}")
+  [[ $'\n'$agents$'\n' == *$'\n'codex$'\n'* ]] && parts+=("${(@f)$(__usage_lines_codex)}")
   parts=(${parts:#})
 
   (( ${#parts} )) || return 0
@@ -331,15 +377,15 @@ __emit_rows() {
 
 # ヘッダ+ソート済み一覧を出力する
 __render() {
-  local weekly
+  local usage
 
-  # 週次利用枠は一覧に出るエージェントで絞るため,先に古い状態ファイルを掃除する
+  # 利用枠は一覧に出るエージェントで絞るため,先に古い状態ファイルを掃除する
   __cleanup_stale
-  weekly=$(__weekly_usage)
+  usage=$(__usage_lines)
 
   printf 'AI Agents  %s  (q: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
-  if (( $#weekly )); then
-    print -r -- "$weekly"
+  if (( $#usage )); then
+    print -r -- "$usage"
     print
   fi
   printf '%-7s %-20s %-7s %-9s %-22s %-12s %-9s %s\n' PID TARGET AGENT STATUS DIR MODEL CONTEXT LAST
