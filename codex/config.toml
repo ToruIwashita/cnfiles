@@ -105,6 +105,7 @@ allow_local_binding = true
 "127.0.0.1" = "allow"
 "localhost" = "allow"
 "github.com" = "allow"
+"api.github.com" = "allow"
 "slack.com" = "allow"
 "rubygems.org" = "allow"
 "index.rubygems.org" = "allow"
