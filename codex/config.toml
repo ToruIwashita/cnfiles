@@ -92,6 +92,7 @@ extends = ":workspace"
 ".cnfiles/claude/CLAUDE.md" = "read"
 
 [permissions.default-local.filesystem.":workspace_roots"]
+".git" = "write"
 ".claude/settings.json" = "read"
 ".claude/settings.local.json" = "read"
 ".claude/CLAUDE.md" = "read"
