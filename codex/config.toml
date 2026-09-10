@@ -12,6 +12,7 @@ approvals_reviewer = "auto_review"
 personality = "pragmatic"
 
 web_search = "live"
+allow_login_shell = true
 
 [approval_policy.granular]
 sandbox_approval = false
@@ -56,6 +57,7 @@ gpt-6-astra = 3
 [features]
 multi_agent = true
 network_proxy = true
+shell_snapshot = false
 
 [permissions.default-local]
 description = "Default local development permissions with sensitive paths protected"
