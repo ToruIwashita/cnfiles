@@ -418,13 +418,17 @@ if [[ ${1:-} == --once ]]; then
 fi
 
 # watch表示(1秒間隔で再描画, qで終了)
-trap 'printf "\e[?25h"' EXIT
+# 代替画面を使う(通常バッファに上書きし続けると溢れた分がペインのスクロールになり,
+# iTerm2は既定でalternate screenから流れた行をscrollbackへ送るため端末側の表示がずれていく)
+trap 'printf "\e[?7h\e[?25h\e[?1049l"' EXIT
 trap 'exit 0' INT TERM
-printf '\e[?25l'
+printf '\e[?1049h\e[?7l\e[?25l'
 
 while :; do
-  out=$(__render)
-  printf '\e[H\e[J%s\n' "$out"
+  # 折り返し抑止だけでは行数超過を防げないため,ペインに収まる行数へ切り詰める
+  # 末尾に改行を出さないのも同じ理由(最終行で改行するとそれだけでスクロールする)
+  out=$(__render | head -n "$(tput lines 2>/dev/null || print 24)")
+  printf '\e[H\e[J%s' "$out"
 
   if [[ -t 0 ]]; then
     if read -t 1 -k 1 key 2>/dev/null && [[ $key == q ]]; then
