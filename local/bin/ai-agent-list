@@ -203,29 +203,36 @@ __codex_window() {
 __usage_lines_codex() {
   local rollouts rollout snapshot h5 d7
   local -a state_dbs
+  local -i seen=0
 
   # state DBはスキーマ更新でstate_5→state_6のように採番が上がるためglobで最新を採る
   state_dbs=("$HOME"/.codex/state_*.sqlite(N.om))
   (( ${#state_dbs} )) || return 0
 
-  # 開始直後のスレッドはまだtoken_countを書いていないため,最新1件に固定すると枠が消える
-  # 5時間枠と週次枠は同じrate_limits応答に同居するので,値を持つ最新スナップショットを1つ探す
-  rollouts=$(sqlite3 "file:${state_dbs[1]}?mode=ro" \
-    'SELECT rollout_path FROM threads ORDER BY updated_at DESC LIMIT 5;' 2>/dev/null) || return 0
+  # 起動しただけで1ターンも回していないスレッドはtoken_countを持たず,候補が浅いと
+  # それだけで埋まって行ごと消えるため多めに採る
+  # WALはcodex稼働中も書かれ続け,busy_timeout未設定だと競合した瞬間に即失敗するので待たせる
+  rollouts=$(sqlite3 -cmd '.timeout 1000' "file:${state_dbs[1]}?mode=ro" \
+    'SELECT rollout_path FROM threads ORDER BY updated_at DESC LIMIT 20;' 2>/dev/null) || return 0
   [[ -n ${rollouts:-} ]] || return 0
 
   h5=''
   d7=''
 
+  # 5時間枠と週次枠は同じrate_limits応答に同居するが応答によって片方だけ欠けることがあり,
+  # 1スナップショットで打ち切ると枠が出たり消えたりするため枠ごとに独立して探す
+  # 枠自体を持たないプランでは何件見ても埋まらないのでtoken_countを持つ3件で打ち切る
   while IFS= read -r rollout; do
     [[ -n ${rollout:-} && -f $rollout ]] || continue
 
     snapshot=$(tail -n 500 "$rollout" 2>/dev/null | grep '"type":"token_count"' | tail -n 1) || continue
     [[ -n ${snapshot:-} ]] || continue
 
-    h5=$(__codex_window "$snapshot" 300)
-    d7=$(__codex_window "$snapshot" 10080)
-    [[ -n ${h5:-} || -n ${d7:-} ]] && break
+    (( seen += 1 ))
+    [[ -z ${h5:-} ]] && h5=$(__codex_window "$snapshot" 300)
+    [[ -z ${d7:-} ]] && d7=$(__codex_window "$snapshot" 10080)
+    [[ -n ${h5:-} && -n ${d7:-} ]] && break
+    (( seen >= 3 )) && break
   done < <(print -r -- "$rollouts")
 
   [[ -n ${h5:-} || -n ${d7:-} ]] || return 0
