@@ -147,7 +147,7 @@ EOF`
   fi
 
   if (( show_diff )); then
-    gh pr diff "$pr_number"
+    gh pr diff "$pr_number" --repo "$owner_repo"
     return
   fi
 
