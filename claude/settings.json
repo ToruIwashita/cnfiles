@@ -284,6 +284,8 @@
     "excludedCommands": [
       "tmux *",
       "bundle *",
+      "ps *",
+      "top *",
       "gis *",
       "gpr *",
       "gh *",
