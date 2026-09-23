@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2086
 
-source $(cd $(dirname $_);pwd)/env.bash
+# shellcheck source=/dev/null
+source "$(cd "$(dirname "$_")" && pwd)/env.bash"
 set -e
 
-_printf() { printf "${1//$HOME/~}"; }
+_printf() { printf '%b' "${1//$HOME/~}"; }
 
-$(cd $BASE_DIR_PATH;git submodule update --init)
+(cd $BASE_DIR_PATH && git submodule update --init)
 
 ## create base dir
 # local dir
@@ -111,6 +112,14 @@ if [[ -d $MEMOLIST_AI_RECORDS_DIR_PATH ]]; then
 else
   _printf "\e[31mmkdir $MEMOLIST_AI_RECORDS_DIR_PATH\e[0m\n"
   mkdir $MEMOLIST_AI_RECORDS_DIR_PATH
+fi
+
+# works memolist airlock-sources dir
+if [[ -d $MEMOLIST_AIRLOCK_SOURCES_DIR_PATH ]]; then
+  _printf "\e[32m$MEMOLIST_AIRLOCK_SOURCES_DIR_PATH dir already exists\e[0m\n"
+else
+  _printf "\e[31mmkdir $MEMOLIST_AIRLOCK_SOURCES_DIR_PATH\e[0m\n"
+  mkdir $MEMOLIST_AIRLOCK_SOURCES_DIR_PATH
 fi
 
 # works memolist error-monitoring-tool dir

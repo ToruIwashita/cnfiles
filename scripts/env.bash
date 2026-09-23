@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2034
 
 __FILE__=$_
-BASE_DIR_PATH=$(cd $(dirname $__FILE__);pwd)
+BASE_DIR_PATH=$(cd "$(dirname "$__FILE__")" && pwd)
 BASE_DIR_PATH=${BASE_DIR_PATH%/scripts*}
 
 # os info
@@ -91,6 +92,7 @@ MEMOLIST_TMP_DIFF_FILE_PATH=$MEMOLIST_DIR_PATH/00-tmp.diff
 
 # memolist ai-records dir
 MEMOLIST_AI_RECORDS_DIR_PATH=$MEMOLIST_DIR_PATH/ai-records
+MEMOLIST_AIRLOCK_SOURCES_DIR_PATH=$MEMOLIST_DIR_PATH/airlock-sources
 
 # memolist dev tool dirs
 MEMOLIST_ERROR_MONITORING_TOOL_DIR_PATH=$MEMOLIST_DIR_PATH/error-monitoring-tool
