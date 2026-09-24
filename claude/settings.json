@@ -160,6 +160,26 @@
             "command": "ai-agent-state claude PostToolUse"
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -c 'if (.tool_input.command // \"\" | test(\"[|;]|&&\")) then {hookSpecificOutput: {hookEventName: .hook_event_name, additionalContext: \"サンドボックス起因で失敗していれば,パイプ等で繋がず単独で再実行してください\"}} else empty end'"
+          }
+        ]
+      }
+    ],
+    "PostToolUseFailure": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "jq -c 'if (.tool_input.command // \"\" | test(\"[|;]|&&\")) then {hookSpecificOutput: {hookEventName: .hook_event_name, additionalContext: \"サンドボックス起因で失敗していれば,パイプ等で繋がず単独で再実行してください\"}} else empty end'"
+          }
+        ]
       }
     ],
     "PermissionRequest": [
