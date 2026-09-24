@@ -1,6 +1,6 @@
 ## peco-resume-ai-agent-session
 _peco-resume-ai-agent-session() {
-  local REPLY selected ai_agent session_record session_id stored_dir session_dir models efforts model effort resume_command
+  local REPLY selected ai_agent session_record session_id session_name stored_dir session_dir models efforts model effort resume_command
   local -a reply
 
   selected=$(__ai-agent-session-list | peco --select-1 2>/dev/null)
@@ -19,6 +19,8 @@ _peco-resume-ai-agent-session() {
   fi
 
   session_id=${session_record%% - *}
+  # session_name自体に@が含まれ得るため,ディレクトリ側は最後の@で切り落とす
+  session_name=${${session_record#* - }%@*}
   stored_dir=${session_record##*@}
   session_dir=${stored_dir/#\~/$HOME}
 
@@ -42,7 +44,7 @@ _peco-resume-ai-agent-session() {
     return 1
   fi
 
-  if ! __ai-agent-session-select-options 'Model' "$models" 'Effort' "$efforts"; then
+  if ! __ai-agent-session-select-options --header "Session: ${session_name}" 'Model' "$models" 'Effort' "$efforts"; then
     zle -R
     return
   fi

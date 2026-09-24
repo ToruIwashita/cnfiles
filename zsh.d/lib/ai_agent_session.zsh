@@ -237,6 +237,10 @@ __ai-agent-session-display-selection() {
   __ai_agent_session_select_prompts[$stage]=$selection_prompt
   __ai_agent_session_select_prefix=$'\n'
 
+  if (( $#__ai_agent_session_select_header )); then
+    __ai_agent_session_select_prefix+="${__ai_agent_session_select_header}"$'\n'
+  fi
+
   for (( stage_index = 1; stage_index < stage; stage_index++ )); do
     selected_line="${__ai_agent_session_select_prompts[$stage_index]}${__ai_agent_session_selected_options[$stage_index]}"
     __ai_agent_session_select_prefix+="${selected_line}"$'\n'
@@ -269,8 +273,13 @@ __ai-agent-session-cancel-selection() {
 
 __ai-agent-session-select-options() {
   integer initial_cursor recursive_status stage_index __ai_agent_session_select_cancelled __ai_agent_session_select_index __ai_agent_session_select_stage
-  local prompt_label options_csv initial_buffer initial_keymap selected_line __ai_agent_session_select_prefix
+  local prompt_label options_csv initial_buffer initial_keymap selected_line __ai_agent_session_select_prefix __ai_agent_session_select_header
   local -a __ai_agent_session_select_labels __ai_agent_session_select_option_lists __ai_agent_session_select_options __ai_agent_session_select_prompts __ai_agent_session_selected_options
+
+  if [[ $1 == --header ]]; then
+    __ai_agent_session_select_header=$2
+    shift 2
+  fi
 
   if (( $# == 0 || $# % 2 != 0 )); then
     return 1
@@ -310,6 +319,10 @@ __ai-agent-session-select-options() {
 
   if (( recursive_status || __ai_agent_session_select_cancelled )); then
     return 1
+  fi
+
+  if (( $#__ai_agent_session_select_header )); then
+    print -r -- "$__ai_agent_session_select_header"
   fi
 
   for (( stage_index = 1; stage_index <= ${#__ai_agent_session_select_labels}; stage_index++ )); do
