@@ -531,6 +531,14 @@ else
   ln -is $BASE_DIR_PATH/local/bin/ai-agent-list $LOCAL_BIN_DIR_PATH/ai-agent-list
 fi
 
+# claude-code-bash-guard
+if [[ -L $LOCAL_BIN_DIR_PATH/claude-code-bash-guard ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/claude-code-bash-guard symlink already exists\e[0m\n"
+else
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/claude-code-bash-guard\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/claude-code-bash-guard $LOCAL_BIN_DIR_PATH/claude-code-bash-guard
+fi
+
 # open (macOS open)
 if [[ -L $LOCAL_BIN_DIR_PATH/open ]]; then
   _printf "\e[32m$LOCAL_BIN_DIR_PATH/open symlink already exists\e[0m\n"

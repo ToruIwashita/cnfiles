@@ -150,6 +150,15 @@
             "command": "jq -c '(.tool_input.file_path // \"\") as $f | ((env.TMP_DIR_PATH // \"\") + \"/\") as $d | ((env.SYSTEM_TMP_AI_DIR_PATH // \"\") + \"/\") as $t | if $d != \"/\" and $t != \"/\" and ($f | startswith($d)) and $f != (env.TMP_LATEST_AI_PRECOMPACT_SNAPSHOT_FILE_PATH // \"\") then {hookSpecificOutput: {hookEventName: \"PreToolUse\", permissionDecision: \"allow\", permissionDecisionReason: \"$TMP_DIR_PATH への書き込みを $SYSTEM_TMP_AI_DIR_PATH へリダイレクト\", updatedInput: (.tool_input | .file_path = ($t + ($f | ltrimstr($d) | gsub(\"/\"; \"_\"))))}} else empty end'"
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "claude-code-bash-guard"
+          }
+        ]
       }
     ],
     "PostToolUse": [
@@ -158,26 +167,6 @@
           {
             "type": "command",
             "command": "ai-agent-state claude PostToolUse"
-          }
-        ]
-      },
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "jq -c 'if (.tool_input.command // \"\" | test(\"[|;]|&&\")) then {hookSpecificOutput: {hookEventName: .hook_event_name, additionalContext: \"サンドボックス起因で失敗していれば,パイプ等で繋がず単独で再実行してください\"}} else empty end'"
-          }
-        ]
-      }
-    ],
-    "PostToolUseFailure": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "jq -c 'if (.tool_input.command // \"\" | test(\"[|;]|&&\")) then {hookSpecificOutput: {hookEventName: .hook_event_name, additionalContext: \"サンドボックス起因で失敗していれば,パイプ等で繋がず単独で再実行してください\"}} else empty end'"
           }
         ]
       }

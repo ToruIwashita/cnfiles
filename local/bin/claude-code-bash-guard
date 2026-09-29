@@ -1,0 +1,23 @@
+#!/usr/bin/env zsh
+# Claude Code PreToolUse(Bash): sandbox.excludedCommandsのコマンドを他と繋いだ呼び出しを実行前に止める
+# 繋ぐとコマンド全体がサンドボックス内で実行されて必ず失敗するが,パイプライン末尾の終了コードで成功に見えたり
+# pbcopyのように無言で失敗したりして事後の通知では判別できず,毎回出る注意書きは読み流されるため
+
+settings=$HOME/.claude/settings.json
+
+[[ -f $settings ]] || exit 0
+
+# 除外リストはsettings.jsonから読み,二重管理にしない
+# $(...)とバッククォートの中身もサンドボックス内で実行されるので,繋ぎと同じ扱いにする
+jq -c --slurpfile s "$settings" '
+  (.tool_input.command // "") as $c
+  | ($s[0].sandbox.excludedCommands // [] | map(sub(" ?\\*$"; ""))) as $ex
+  | [ $ex[] as $e | select($c | test("[|;&]|\\$\\(|`") and test("(^|[|;&(`]\\s*)" + $e + "(\\s|$)")) | $e ] as $hit
+  | if ($hit | length) > 0 then
+      {hookSpecificOutput: {
+        hookEventName: "PreToolUse",
+        permissionDecision: "deny",
+        permissionDecisionReason: "`\($hit | join("`, `"))` は sandbox.excludedCommands の対象ですが,パイプ・`;`・`&&` 等で他のコマンドと繋ぐとコマンド全体がサンドボックス内で実行され失敗するため,`\($hit[0])` を単独のBash呼び出しで実行し,加工が必要なら結果を見てから別の呼び出しで行ってください(標準入力が必要なら heredoc で渡す)"
+      }}
+    else empty end
+'
