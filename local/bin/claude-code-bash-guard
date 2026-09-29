@@ -9,15 +9,31 @@ settings=$HOME/.claude/settings.json
 
 # 除外リストはsettings.jsonから読み,二重管理にしない
 # $(...)とバッククォートの中身もサンドボックス内で実行されるので,繋ぎと同じ扱いにする
+# 改行で区切った行も同じ呼び出しで実行されるので繋ぎと同じ扱いにし,行頭の字下げ・if/for等の構文・前置(nohup・変数代入・パス等)の後ろも探す
+# 語末は空白なしで繋いだ `pbcopy;echo $?` 等も拾うため ; & ) < > も区切りとみなし,引用符はgrep等の引数の "a\|pbcopy" を
+#   誤検知しないよう,シェルに -c で渡した中身がある時だけ区切りとみなす
+# シェルに -c や heredoc で渡した中身も同じ呼び出しで実行されるので,単独呼び出しとみなさない
+# heredocの本文は実行されず標準入力の渡し方として案内もしているため,展開されない本文と終端行は判定から除く
+# 標準入力は,本文が展開されずclaude-code-bash-clipboardも肩代わりできる,終端を引用符で囲んだheredocで渡すよう案内する
 jq -c --slurpfile s "$settings" '
-  (.tool_input.command // "") as $c
-  | ($s[0].sandbox.excludedCommands // [] | map(sub(" ?\\*$"; ""))) as $ex
-  | [ $ex[] as $e | select($c | test("[|;&]|\\$\\(|`") and test("(^|[|;&(`]\\s*)" + $e + "(\\s|$)")) | $e ] as $hit
+  (.tool_input.command // "")
+  | if test("(^|[\\n\\r|;&({`!])[ \\t]*(?:[^\\s|;&]*/)?(?:bash|zsh|sh)(?:[ \\t][^\\n]*)?<<") then .
+    else
+      gsub("<<-?[ \\t]*(?<q>[\\x27\"])(?<t>[A-Za-z_][A-Za-z0-9_]*)\\k<q>(?<r>[^\\n]*)\\n(?:(?s:.*?)\\n)?[ \\t]*\\k<t>[ \\t]*(?=\\n|$)"; "<<:\(.r)")
+      | gsub("<<-?[ \\t]*(?<t>[A-Za-z_][A-Za-z0-9_]*)(?<r>[^\\n]*)\\n(?:(?s:(?:[^`$]|\\$(?!\\())*?)\\n)?[ \\t]*\\k<t>[ \\t]*(?=\\n|$)"; "<<:\(.r)")
+    end
+  | . as $c
+  | "(^|\\s)(?:[^\\s|;&]*/)?(?:bash|zsh|sh)(?:[ \\t]+-\\S+)*[ \\t]+[\\x27\"]" as $shc
+  | select(test("[\\n\\r|;&`]|\\$\\(|[<>]\\(") or test($shc))
+  | "(^|[\\n\\r|;&({`!])[ \\t]*(?:(?:if|then|else|elif|do|while|until|time|exec|command|builtin|nohup|env|sudo|xargs|nice|timeout)(?:[ \\t]+(?:-\\S*|[0-9]+[smhd]?))*[ \\t]+|[A-Za-z_][A-Za-z0-9_]*=\\S*[ \\t]+|(?:[^\\s|;&]*/)?(?:bash|zsh|sh)(?:[ \\t]+-\\S+)*[ \\t]+[\\x27\"][ \\t]*)*(?:[^\\s|;&]*/)?" as $pos
+  | (if test($shc) then "(?=[\\s;&)<>\\x27\"]|$)" else "(?=[\\s;&)<>]|$)" end) as $end
+  | [ $s[0].sandbox.excludedCommands // [] | .[] | sub(" ?\\*$"; "")
+      | select(gsub(" +"; "[ \\t]+") as $e | $c | test($pos + $e + $end)) ] as $hit
   | if ($hit | length) > 0 then
       {hookSpecificOutput: {
         hookEventName: "PreToolUse",
         permissionDecision: "deny",
-        permissionDecisionReason: "`\($hit | join("`, `"))` は sandbox.excludedCommands の対象ですが,パイプ・`;`・`&&` 等で他のコマンドと繋ぐとコマンド全体がサンドボックス内で実行され失敗するため,`\($hit[0])` を単独のBash呼び出しで実行し,加工が必要なら結果を見てから別の呼び出しで行ってください(標準入力が必要なら heredoc で渡す)"
+        permissionDecisionReason: "`\($hit | join("`, `"))` は sandbox.excludedCommands の対象ですが,パイプ・`;`・`&&`・改行等で他のコマンドと繋ぐとコマンド全体がサンドボックス内で実行され失敗するため,`\($hit[0])` を単独のBash呼び出しで実行し,cwdの移動は先に別の呼び出しで行い,加工が必要なら結果を見てから別の呼び出しで行ってください(標準入力が必要なら終端を引用符で囲んだ heredoc で渡す)"
       }}
     else empty end
 '

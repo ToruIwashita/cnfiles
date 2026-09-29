@@ -1,0 +1,41 @@
+#!/usr/bin/env zsh
+# Claude Code PreToolUse(Bash): 単独の `{クリップボードコマンド} <<'終端'` を受けたら本文をこのフックでクリップボードへ書き込み,コマンドを結果の表示に差し替える
+# サンドボックス内のクリップボードコマンドはクリップボードに届かず,excludedCommandsに入れても内容をheredocで渡す形はサンドボックス内で実行される(2026-09-30にmacOSで実測)ため,
+#   サンドボックスの外で動くフックで書き込む
+# 本文を展開する引用なしheredocと,本文中の終端行の後ろにコマンドが続く形はシェルと同じ結果を再現できないため対象外とし,そのまま実行させる
+# 付けられたオプションはサンドボックスの外で実行させず,コマンドごとに決めた形でクリップボードへ書く(xclip・xselは既定がクリップボードでなくPRIMARY選択のため)
+# xclipとwl-copyは選択を渡すために裏に残るので,フックの出力を握らせないよう出力は/dev/nullへ向ける
+
+setopt pipefail
+
+input=$(cat)
+
+m=$(printf '%s' "$input" | jq -c '
+  (.tool_input.command // "")
+  | capture("^(?<c>pbcopy|xclip|xsel|wl-copy)(?:[ \\t]+[-A-Za-z0-9_=]+)*[ \\t]*<<[ \\t]*(?<q>[\\x27\"])(?<d>[A-Za-z_][A-Za-z0-9_]*)\\k<q>[ \\t]*\\n(?<b>(?s:.*?)\\n)?\\k<d>\\n?$")
+  | . as $m
+  | select("\n" + ($m.b // "") | test("\\n" + $m.d + "\\n") | not)
+  | {c: $m.c, b: ($m.b // "")}
+')
+
+[[ -n $m ]] || exit 0
+
+case $(printf '%s' "$m" | jq -r .c) in
+  pbcopy)  copy=(pbcopy) ;;
+  xclip)   copy=(xclip -selection clipboard) ;;
+  xsel)    copy=(xsel --clipboard --input) ;;
+  wl-copy) copy=(wl-copy) ;;
+esac
+
+if printf '%s' "$m" | jq -j .b | "${copy[@]}" >/dev/null 2>&1; then
+  cmd="echo 'クリップボードにコピーしました'"
+else
+  cmd="echo 'クリップボードへのコピーに失敗しました' >&2; exit 1"
+fi
+
+printf '%s' "$input" | jq -c --arg c "$cmd" '{hookSpecificOutput: {
+  hookEventName: "PreToolUse",
+  permissionDecision: "allow",
+  permissionDecisionReason: "クリップボードコマンドの本文をフックでクリップボードへ書き込み,コマンドを結果の表示に差し替え",
+  updatedInput: (.tool_input | .command = $c)
+}}'

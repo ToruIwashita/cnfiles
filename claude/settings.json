@@ -157,6 +157,10 @@
           {
             "type": "command",
             "command": "claude-code-bash-guard"
+          },
+          {
+            "type": "command",
+            "command": "claude-code-bash-clipboard"
           }
         ]
       }
