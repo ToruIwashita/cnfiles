@@ -41,18 +41,18 @@ prefix_rule(
 )
 
 prefix_rule(
-    pattern = ["git", ["-C", "push", "rebase"]],
+    pattern = ["git", ["-C", "push"]],
     decision = "forbidden",
     justification = "These Git operations are denied by the shared local safety policy.",
     match = [
         "git -C /tmp/repository status",
         "git push origin main",
-        "git rebase main",
     ],
     not_match = [
         "git status",
         "git pull",
         "git rm file.txt",
+        "git rebase main",
     ],
 )
 
