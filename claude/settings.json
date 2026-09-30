@@ -305,6 +305,7 @@
       "git pull*",
       "git status*",
       "git commit*",
+      "git rebase*",
       "pbcopy*"
     ]
   },

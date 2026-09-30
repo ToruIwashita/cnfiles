@@ -16,9 +16,9 @@ prefix_rule(
 )
 
 prefix_rule(
-    pattern = ["git", ["fetch", "pull", "status"]],
+    pattern = ["git", ["fetch", "pull", "status", "commit", "rebase"]],
     decision = "allow",
-    match = ["git fetch origin", "git pull --ff-only", "git status --short"],
+    match = ["git fetch origin", "git pull --ff-only", "git status --short", "git commit -m message", "git rebase --autosquash main"],
     not_match = ["git push origin main", "git fetch-other"],
 )
 
