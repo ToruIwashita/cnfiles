@@ -148,23 +148,34 @@ __format_agent_line() {
   print -r -- "$line"
 }
 
-# claudeのmeta.jsonから指定枠の "使用率 リセットepoch" を返す(値を持つ最新ファイルまで遡る)
+# claudeのmeta.jsonから指定枠の "使用率 リセットepoch" を返す
 # statusLineが受け取るrate_limitsはセッションによって5時間枠だけ欠けることがあり,
 # 最新1件に固定すると枠が出たり消えたりするため,アカウント単位で共通な値を枠ごとに独立して探す
+# 各セッションの値はそのセッションの最終API応答時点のもので,待機中のセッションも古い値のまま書き直し続けるため
+# 更新時刻では選べない,同じ枠の中では使用率は減らないので最新の枠(リセットが最も遅い)の最大値を採る
 __claude_window() {
-  local pct_key reset_key meta_file pct reset
+  local pct_key reset_key meta_file best reset pct
 
   pct_key=$1
   reset_key=$2
 
-  for meta_file in "$state_dir"/*.meta.json(N.om); do
-    pct=$(jq -r --arg k "$pct_key" '.[$k] // empty | floor' "$meta_file" 2>/dev/null || true)
-    [[ -n ${pct:-} ]] || continue
+  best=$(
+    for meta_file in "$state_dir"/*.meta.json(N); do
+      jq -r --arg p "$pct_key" --arg r "$reset_key" \
+        'select(.[$p] != null) | "\(.[$r] // 0) \(.[$p] | floor)"' "$meta_file" 2>/dev/null || true
+    done | sort -k1,1n -k2,2n | tail -n 1
+  )
+  [[ -n ${best:-} ]] || return 0
 
-    reset=$(jq -r --arg k "$reset_key" '.[$k] // empty' "$meta_file" 2>/dev/null || true)
-    print -r -- "$pct ${reset:-}"
-    return 0
-  done
+  reset=${best%% *}
+  pct=${best#* }
+
+  # リセット不明時も "使用率 " の形を保つ(呼び出し側が空白区切りで分解するため)
+  if (( reset > 0 )); then
+    print -r -- "$pct $reset"
+  else
+    print -r -- "$pct "
+  fi
 }
 
 # claudeの5時間/週次利用枠
