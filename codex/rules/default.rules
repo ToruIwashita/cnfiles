@@ -1,12 +1,14 @@
 # Claudeのsandbox.excludedCommandsを移植。競合時は下記のforbiddenが優先される。
 # 文字列ワイルドカードではなく、コマンド名・サブコマンド単位で一致させる。
 prefix_rule(
-    pattern = [["tmux", "bundle", "gis", "gpr", "gh", "pbcopy"]],
+    pattern = [["tmux", "bundle", "ps", "top", "gis", "gpr", "gh", "pbcopy"]],
     decision = "allow",
     match = [
         "tmux list-sessions",
         "tmux send-keys -t session:1.1 text Enter",
         "bundle exec ruby -v",
+        "ps aux",
+        "top -l 1",
         "gis --help",
         "gpr --help",
         "gh pr view 123",
