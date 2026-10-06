@@ -105,6 +105,9 @@ extends = ":workspace"
 enabled = true
 allow_local_binding = true
 
+[permissions.default-local.network.unix_sockets]
+"/private/tmp/tmux-fixed/default" = "allow"
+
 [permissions.default-local.network.domains]
 "0.0.0.0" = "allow"
 "127.0.0.1" = "allow"
