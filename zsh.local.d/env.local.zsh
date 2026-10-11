@@ -29,6 +29,9 @@ export SLACK_CRYPTO_RESEARCH_CHANNEL_ID=
 # slack market catalysts
 export SLACK_MARKET_CATALYSTS_CHANNEL_ID=
 
+# e2e-queue
+export E2E_QUEUE_DIR_PATH=
+
 # error monitoring tool
 export ERROR_MONITORING_TOOL=
 export MEMOLIST_ERROR_MONITORING_TOOL_DIR_PATH=$MEMOLIST_DIR_PATH/error-monitoring-tool
