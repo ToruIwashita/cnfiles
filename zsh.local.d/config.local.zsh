@@ -69,8 +69,3 @@ alias bspork='bundle exec spork'
 ## global alisas
 alias -g PP='| pbcopy'
 alias -g SS='| tr "\n" " "'
-
-## CursorのAI Agentがターミナルを実行する時にclear-screenするためvim起動との競合を回避
-# if [[ "$TERM_PROGRAM" == 'vscode' ]]; then
-#   bindkey '^L' clear-screen
-# fi

@@ -146,14 +146,6 @@ else
   mkdir -p $GIT_WORKTREES_DIR_PATH
 fi
 
-# works cursor workspaces dir
-if [[ -d $CURSOR_WORKSPACES_DIR_PATH ]]; then
-  _printf "\e[32m$CURSOR_WORKSPACES_DIR_PATH dir already exists\e[0m\n"
-else
-  _printf "\e[31mmkdir -p $CURSOR_WORKSPACES_DIR_PATH\e[0m\n"
-  mkdir -p $CURSOR_WORKSPACES_DIR_PATH
-fi
-
 # works docker dir
 if [[ -d $DOCKER_DIR_PATH ]]; then
   _printf "\e[32m$DOCKER_DIR_PATH dir already exists\e[0m\n"
