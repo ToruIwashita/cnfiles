@@ -41,6 +41,7 @@
       "Bash(git rm:*)",
       "Bash(git show:*)",
       "Bash(git status:*)",
+      "Bash(git switch:*)",
       "Bash(git symbolic-ref:*)",
       "Edit(*)",
       "WebSearch",
