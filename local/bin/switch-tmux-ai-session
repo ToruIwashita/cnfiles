@@ -1,7 +1,8 @@
 #!/usr/bin/env zsh
 set -eu
 
-tmux=~/local/bin/tmux
+# Karabinerから呼ばれ$TMUXを持たないため,tm系エイリアスが起動するサーバーの固定ソケットを明示する
+tmux=(~/local/bin/tmux -S /private/tmp/tmux-fixed/default)
 
 ai_agent=claude
 ai_sub_agent=codex
