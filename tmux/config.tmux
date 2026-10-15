@@ -9,6 +9,8 @@ set -g default-terminal 'screen-256color'
 setw -g mode-key vi
 # 拡張キー入力を有効化
 set -s extended-keys on
+# フォーカスの出入りをアプリへ通知する(ai-agent-listが利用)
+set -s focus-events on
 # キーストロークのディレイ0sec
 set -s escape-time 0
 # プレフィックスキーのリピート時間（デフォルト500ms）

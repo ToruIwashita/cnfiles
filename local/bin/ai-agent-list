@@ -764,10 +764,11 @@ fi
 # 代替画面を使う(通常バッファに上書きし続けると溢れた分がペインのスクロールになり,
 # iTerm2は既定でalternate screenから流れた行をscrollbackへ送るため端末側の表示がずれていく)
 # 下に開いたAIを入れ替えたまま残さないよう,終了時(ペインやウィンドウを閉じた時も含む)に元の配置へ戻す
+# 下に開いたAIから一覧へ戻ったことを知るため,フォーカスの出入りも通知させる(tmuxのfocus-eventsがonの時だけ届く)
 last_swap=()
-trap '__undo_swap; printf "\e[?7h\e[?25h\e[?1049l"' EXIT
+trap '__undo_swap; printf "\e[?1004l\e[?7h\e[?25h\e[?1049l"' EXIT
 trap 'exit 0' INT TERM HUP
-printf '\e[?1049h\e[?7l\e[?25l'
+printf '\e[?1049h\e[?7l\e[?25l\e[?1004h'
 
 # iTerm2のウィンドウをまたいだジャンプはmacOSのAppleScriptで行うため,macOS以外やtmuxの外では選択自体を無効にする
 if [[ $OSTYPE == darwin* && -n ${TMUX:-} ]] && (( $+commands[osascript] )); then
@@ -791,11 +792,24 @@ while :; do
     if read -s -t 1 -k 1 key 2>/dev/null; then
       case $key in
         $'\e')
-          # 矢印キー等はEscに続く文字と一緒に届くため,単独のEscの時だけ終了し,続きがあれば読み捨てる
+          # 矢印キー等はEscに続く文字と一緒に届くため,単独のEscの時だけ終了する
           if ! read -s -t 0.05 -k 1 rest 2>/dev/null; then
             break
           fi
-          while read -s -t 0.01 -k 1 rest 2>/dev/null; do :; done
+          # ESC [ で始まる列は終端の文字(@〜~)まで読む(直後に届いたキーまで読み捨てないよう終端で止める)
+          esc_seq=$rest
+          if [[ $rest == '[' ]]; then
+            rest=''
+            while [[ $rest != [@-~] ]] && read -s -t 0.01 -k 1 rest 2>/dev/null; do
+              esc_seq+=$rest
+            done
+          fi
+          # フォーカスが戻った(\e[I)時,直前にいたペインが下に開いたAIなら作業を終えたとみなして q と同じく元に戻す
+          # 描画中に届いて遅れて処理しても判定がずれないよう,印を持たずにその時点のtmuxの「直前のペイン」で決める
+          # (別のウィンドウから入れ替えたAIは入れ替えた時点では履歴に載らないため,ウィンドウやアプリの切り替えから戻っても閉じない)
+          if [[ $esc_seq == '[I' ]] && (( ${#last_swap} )) && [[ $(tmux display -p -t "${last_swap[1]}" '#{pane_last}' 2>/dev/null) == 1 ]]; then
+            __undo_swap
+          fi
           ;;
         $'\x0e') # Ctrl+n
           if (( selectable )); then
