@@ -177,6 +177,13 @@ _gdeleteb() {
     '(-h --help)'{-h,--help}'[Show help text]'
 }
 
+_gbd() {
+  _arguments \
+    '(-f --force)'{-f,--force}'[Force remove worktree with local changes]' \
+    '(-h --help)'{-h,--help}'[Show help text]' \
+    '*: :__git-branches'
+}
+
 _gl() {
   _arguments \
     '(-f --full-history)'{-f,--full-history}'[Show full history]' \
@@ -203,4 +210,5 @@ compdef _gll gll
 compdef _gsh gsh
 compdef _gpickfile gpickfile
 compdef _gdeleteb gdeleteb
+compdef _gbd gbd
 compdef _gl gl

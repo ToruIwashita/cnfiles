@@ -1320,6 +1320,66 @@ EOF`
   done
 }
 
+gbd() {
+  local self_cmd help usage force_option branch worktree_path
+  local -a branches
+
+  self_cmd=$0
+  help="Try \`$self_cmd --help' for more information."
+  usage=`cat <<EOF
+usage: $self_cmd <branches>
+           [-f --force]
+           [-h --help]
+EOF`
+
+  while (( $# > 0 )); do
+    case "$1" in
+      -f | --force)
+        force_option="--force"
+        shift 1
+        ;;
+      -h | --help)
+        print $usage
+        return 0
+        ;;
+      -- | -) # Stop option processing
+        shift
+        branches+=("$@")
+        break
+        ;;
+      -*)
+        print "$self_cmd: unknown option -- '$1'\n$help" 1>&2
+        return 1
+        ;;
+      *)
+        branches+=("$1")
+        shift 1
+        ;;
+    esac
+  done
+
+  if ! __git-inside-work-tree; then
+    print 'Not a git repository: .git'
+    print $usage 1>&2
+    return 1
+  fi
+
+  if (( ! ${#branches} )); then
+    print "$self_cmd: requires arguments\n$help" 1>&2
+    return 1
+  fi
+
+  for branch in $branches; do
+    worktree_path=$(git worktree list --porcelain | awk -v ref="refs/heads/$branch" '/^worktree /{ path = substr($0, 10) } $0 == "branch " ref { print path }')
+
+    if (( $#worktree_path )); then
+      git worktree remove ${(z)force_option} $worktree_path || continue
+    fi
+
+    git branch -D $branch
+  done
+}
+
 gl() {
   integer graph long_format full_history patch
   local self_cmd help usage commit_option long_option patch_option
