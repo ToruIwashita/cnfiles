@@ -491,7 +491,7 @@ __render() {
   usage=$(__usage_lines)
 
   if (( ${selectable:-0} )); then
-    printf 'AI Agents  %s  (C-n/C-p:select, C-s:open, Enter:below, Space:jump, q:close, C-g:clear, Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Agents  %s  (C-n/C-p:select, C-s:open, C-k:open-below, Enter:jump, q:close, C-g:clear, Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   else
     printf 'AI Agents  %s  (Esc: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   fi
@@ -812,12 +812,14 @@ while :; do
             __open_below "$selected_id"
           fi
           ;;
-        $'\n' | $'\r')
-          if (( selectable )); then
+        $'\x0b') # Ctrl+k
+          # 既に下に開いていれば __open_below は何もしないので,下のペインへ移るだけになる
+          if (( selectable )) && [[ -n $selected_id ]]; then
+            __open_below "$selected_id"
             __focus_below
           fi
           ;;
-        ' ')
+        $'\n' | $'\r')
           if (( selectable )) && [[ -n $selected_id ]]; then
             # 下に開いているAIや,それと入れ替わったAIは元の位置へ戻してから移る
             if [[ $selected_id == "${last_swap[1]:-}" || $selected_id == "${last_swap[2]:-}" ]]; then
