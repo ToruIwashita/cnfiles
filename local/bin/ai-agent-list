@@ -491,7 +491,7 @@ __render() {
   usage=$(__usage_lines)
 
   if (( ${selectable:-0} )); then
-    printf 'AI Agents  %s  (C-n/C-p: select, Enter: jump, C-g/q: clear, Esc: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Agents  %s  (C-n/C-p:select, C-s:open, Enter:below, Space:jump, q:close, C-g:clear, Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   else
     printf 'AI Agents  %s  (Esc: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   fi
@@ -551,6 +551,77 @@ __jump() {
     -e 'end tell' \
     -e 'end run' \
     "$client_tty" >/dev/null 2>&1 || true
+}
+
+# このai-agent-listのペインの真下にある,同じウィンドウのペインIDを返す(無ければ何も返さない)
+__pane_below() {
+  local self_geometry
+  integer top height left width
+
+  [[ -n ${TMUX_PANE:-} ]] || return 0
+  self_geometry=$(tmux display -p -t "$TMUX_PANE" '#{pane_top} #{pane_height} #{pane_left} #{pane_width}' 2>/dev/null) || return 0
+  read -r top height left width <<< "$self_geometry"
+
+  # 真下のペインは上端が「自分の上端+高さ+境界線1行」で,横方向に自分と重なる
+  tmux list-panes -t "$TMUX_PANE" -F '#{pane_id} #{pane_top} #{pane_left} #{pane_width}' 2>/dev/null \
+    | awk -v t=$(( top + height + 1 )) -v l=$left -v w=$width '$2 == t && $3 < l + w && $3 + $4 > l { print $1; exit }'
+}
+
+# 選んだペインを,このウィンドウのai-agent-listの真下のペインと入れ替えて表示する(フォーカスはai-agent-listに残す)
+# ペインIDはペインと一緒に移動するため,入れ替えた2つを last_swap に残しておけば同じ2つを入れ替え直して戻せる
+# 真下にペインが無ければ仮のペインを作って入れ替え,AIが元いた場所の配置を崩さないよう仮のペインをそこへ置く
+# 仮のペインが他のウィンドウに溜まらないよう,入れ替えは常に1組だけにする(表示中の別のAIは先に元の場所へ戻す)
+__open_below() {
+  local pane_id below target placeholder
+
+  pane_id=$1
+
+  [[ $(__pane_below) != "$pane_id" ]] || return 0
+  (( ! ${#last_swap} )) || __undo_swap
+
+  below=$(__pane_below)
+  if [[ -n $below ]]; then
+    target=$below
+  else
+    placeholder=$(tmux split-window -d -v -l 70% -t "$TMUX_PANE" -P -F '#{pane_id}' 2>/dev/null) || return 0
+    target=$placeholder
+  fi
+
+  if ! tmux swap-pane -d -s "$pane_id" -t "$target" 2>/dev/null; then
+    [[ -z ${placeholder:-} ]] || tmux kill-pane -t "$placeholder" 2>/dev/null || true
+    return 0
+  fi
+
+  last_swap=("$pane_id" "$target" "${placeholder:-}")
+}
+
+# このウィンドウのai-agent-listの真下のペインへフォーカスを移す
+__focus_below() {
+  local below
+
+  below=$(__pane_below)
+  [[ -n $below ]] || return 0
+
+  tmux select-pane -t "$below" 2>/dev/null || true
+}
+
+# 直前の入れ替えを元に戻す(どちらかのペインが閉じていれば入れ替えは失敗するので何もしない)
+# 仮のペインはai-agent-listの下へ戻ってくるので閉じて元の配置に戻すが,そこで何か実行していれば巻き込まないよう残す
+__undo_swap() {
+  local placeholder
+
+  (( ${#last_swap} )) || return 0
+
+  tmux swap-pane -d -s "${last_swap[1]}" -t "${last_swap[2]}" 2>/dev/null || true
+
+  placeholder=${last_swap[3]:-}
+  if [[ -n $placeholder ]]; then
+    case $(tmux display -p -t "$placeholder" '#{pane_current_command}' 2>/dev/null || true) in
+      zsh | bash) tmux kill-pane -t "$placeholder" 2>/dev/null || true ;;
+    esac
+  fi
+
+  last_swap=()
 }
 
 # 描画結果からジャンプ先の列を外して lines に,選択できるペインIDを並び順に jump_ids に入れる
@@ -624,6 +695,7 @@ else
   selectable=0
 fi
 selected_id=''
+last_swap=()
 
 while :; do
   rendered=("${(@f)$(__render)}")
@@ -661,12 +733,31 @@ while :; do
             selected_id=$(__step_selection -1 "$selected_id" "${jump_ids[@]}")
           fi
           ;;
-        $'\n' | $'\r')
+        $'\x13') # Ctrl+s
           if (( selectable )) && [[ -n $selected_id ]]; then
+            __open_below "$selected_id"
+          fi
+          ;;
+        $'\n' | $'\r')
+          if (( selectable )); then
+            __focus_below
+          fi
+          ;;
+        ' ')
+          if (( selectable )) && [[ -n $selected_id ]]; then
+            # 下に開いているAIや,それと入れ替わったAIは元の位置へ戻してから移る
+            if [[ $selected_id == "${last_swap[1]:-}" || $selected_id == "${last_swap[2]:-}" ]]; then
+              __undo_swap
+            fi
             __jump "$selected_id"
           fi
           ;;
-        q | $'\x07') # q / Ctrl+g
+        q)
+          if (( selectable )); then
+            __undo_swap
+          fi
+          ;;
+        $'\x07') # Ctrl+g
           selected_id=''
           ;;
       esac
