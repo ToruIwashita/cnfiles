@@ -2,7 +2,7 @@
 # AIエージェント(claude/codex)の状態一覧をwatch表示する(tmux内外を統合)
 #
 # 使い方:
-#   ai-agent-list           # 自動更新表示(1秒間隔, qで終了)
+#   ai-agent-list           # 自動更新表示(1秒間隔, Escで終了)
 #   ai-agent-list --once    # 1回だけ出力して終了
 #
 # 表示対象:
@@ -390,9 +390,9 @@ __meta_columns() {
   fi
 }
 
-# 1行分の表示を整形する(形式: "<priority>\t<mtime>\t<整形済み表示行>")
+# 1行分の表示を整形する(形式: "<priority>\t<mtime>\t<ジャンプ先のペインID>\t<整形済み表示行>")
 __format_row() {
-  local target agent agent_pid state dir key mtime meta model ctx
+  local target agent agent_pid state dir key mtime meta model ctx jump
   target=$1
   agent=$2
   agent_pid=$3
@@ -405,9 +405,17 @@ __format_row() {
   model=${meta%$'\t'*}
   ctx=${meta#*$'\t'}
 
-  printf '%s\t%s\t%-7s %s %-7s %s %s %-12s %-9s %s\n' \
+  # ジャンプできるのはtmux内のペインだけなので,tmux外の行は - にする
+  if [[ $key == %* ]]; then
+    jump=$key
+  else
+    jump=-
+  fi
+
+  printf '%s\t%s\t%s\t%-7s %s %-7s %s %s %-12s %-9s %s\n' \
     "$(__priority_for "$state")" \
     "$mtime" \
+    "$jump" \
     "${${agent_pid:--}[1,7]}" \
     "$(__pad "$target" 20)" \
     "${agent[1,7]}" \
@@ -482,44 +490,186 @@ __render() {
   __cleanup_stale
   usage=$(__usage_lines)
 
-  printf 'AI Agents  %s  (q: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+  if (( ${selectable:-0} )); then
+    printf 'AI Agents  %s  (C-n/C-p: select, Enter: jump, C-g/q: clear, Esc: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+  else
+    printf 'AI Agents  %s  (Esc: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+  fi
   if (( $#usage )); then
+    print
     print -r -- "$usage"
     print
   fi
   printf '%-7s %-20s %-7s %-9s %-22s %-12s %-9s %s\n' PID TARGET AGENT STATUS DIR MODEL CONTEXT LAST
-  # 同じ状態の中では直近に状態が変わったものを上に出す
+  # 同じ状態の中では直近に状態が変わったものを上に出す(データ行はジャンプ先のペインIDを先頭に残す)
   __emit_rows | sort -t$'\t' -k1,1n -k2,2nr | cut -f3-
 }
 
+# 選んだペインへ移り,そのセッションを表示しているiTerm2のウィンドウも前面に出す
+__jump() {
+  local pane_id session client_tty
+
+  pane_id=$1
+
+  session=$(tmux display -p -t "$pane_id" '#{session_name}' 2>/dev/null) || return 0
+  tmux select-window -t "$pane_id" 2>/dev/null || return 0
+  tmux select-pane -t "$pane_id" 2>/dev/null || return 0
+
+  # 同じセッションを複数のウィンドウで表示している場合は最後に操作したものを使う
+  client_tty=$(
+    tmux list-clients -F "#{client_activity}"$'\t'"#{client_tty}"$'\t'"#{client_session}" 2>/dev/null \
+      | awk -F '\t' -v s="$session" '$3 == s' \
+      | sort -t$'\t' -k1,1nr \
+      | head -n 1 \
+      | cut -f2
+  )
+
+  # どのウィンドウにも表示されていないセッションは,このai-agent-listのウィンドウに出す
+  if [[ -z $client_tty ]]; then
+    tmux switch-client -t "$pane_id" 2>/dev/null || true
+    return 0
+  fi
+
+  # iTerm2が起動していない時に tell で起動させてしまわないよう,起動中の時だけ操作する
+  osascript \
+    -e 'on run argv' \
+    -e 'if application "iTerm2" is not running then return' \
+    -e 'tell application "iTerm2"' \
+    -e 'repeat with w in windows' \
+    -e 'repeat with t in tabs of w' \
+    -e 'repeat with s in sessions of t' \
+    -e 'if tty of s is (item 1 of argv) then' \
+    -e 'select w' \
+    -e 'select t' \
+    -e 'select s' \
+    -e 'activate' \
+    -e 'return' \
+    -e 'end if' \
+    -e 'end repeat' \
+    -e 'end repeat' \
+    -e 'end repeat' \
+    -e 'end tell' \
+    -e 'end run' \
+    "$client_tty" >/dev/null 2>&1 || true
+}
+
+# 描画結果からジャンプ先の列を外して lines に,選択できるペインIDを並び順に jump_ids に入れる
+# 選択中のペインがあれば反転表示にし,一覧から消えていれば選択を外す
+__split_rendered() {
+  local line id
+  integer selected_line=0
+
+  lines=()
+  jump_ids=()
+
+  for line in "${rendered[@]}"; do
+    if [[ $line == *$'\t'* ]]; then
+      id=${line%%$'\t'*}
+      if [[ $id == %* ]]; then
+        jump_ids+=("$id")
+        [[ $id == "$selected_id" ]] && selected_line=$(( ${#lines} + 1 ))
+      fi
+      line=${line#*$'\t'}
+    fi
+    lines+=("$line")
+  done
+
+  if (( ! selected_line )); then
+    selected_id=''
+    return 0
+  fi
+
+  # 色付きのSTATUSを残したまま反転すると,その色が背景になって行の中で別の色の帯になるため色指定を外して反転する
+  lines[selected_line]=$'\e[7m'${(S)lines[selected_line]//$'\e['*m/}$'\e[0m'
+}
+
+# 次(1)/前(-1)の選択できるペインIDを返す(未選択ならC-nは先頭から,C-pは末尾から始める)
+__step_selection() {
+  local direction current
+  integer n idx
+
+  direction=$1
+  current=$2
+  shift 2
+  n=$#
+
+  (( n )) || return 0
+
+  idx=${@[(ie)$current]}
+  if (( direction > 0 )); then
+    (( idx > n )) && idx=0
+    print -r -- "${@[idx % n + 1]}"
+  else
+    (( idx > n )) && idx=1
+    print -r -- "${@[(idx - 2 + n) % n + 1]}"
+  fi
+}
+
 if [[ ${1:-} == --once ]]; then
-  __render
+  __render | while IFS= read -r line; do print -r -- "${line#*$'\t'}"; done
   exit 0
 fi
 
-# watch表示(1秒間隔で再描画, qで終了)
+# watch表示(1秒間隔で再描画, Escで終了)
 # 代替画面を使う(通常バッファに上書きし続けると溢れた分がペインのスクロールになり,
 # iTerm2は既定でalternate screenから流れた行をscrollbackへ送るため端末側の表示がずれていく)
 trap 'printf "\e[?7h\e[?25h\e[?1049l"' EXIT
 trap 'exit 0' INT TERM
 printf '\e[?1049h\e[?7l\e[?25l'
 
+# iTerm2のウィンドウをまたいだジャンプはmacOSのAppleScriptで行うため,macOS以外やtmuxの外では選択自体を無効にする
+if [[ $OSTYPE == darwin* && -n ${TMUX:-} ]] && (( $+commands[osascript] )); then
+  selectable=1
+else
+  selectable=0
+fi
+selected_id=''
+
 while :; do
+  rendered=("${(@f)$(__render)}")
+  __split_rendered
+
   # 折り返し抑止だけでは行数超過を防げないため,ペインに収まる行数へ切り詰める
   # 末尾に改行を出さないのも同じ理由(最終行で改行するとそれだけでスクロールする)
   # 切り詰めで行が黙って消えないよう,溢れる場合は最終行を隠れた行数の表示に充てる
-  rendered=("${(@f)$(__render)}")
   max_lines=$(tput lines 2>/dev/null || print 24)
-  if (( ${#rendered} > max_lines )); then
-    out=${(F)rendered[1,max_lines-1]}$'\n'$(printf '\e[90m… +%d more\e[0m' $(( ${#rendered} - max_lines + 1 )))
+  if (( ${#lines} > max_lines )); then
+    out=${(F)lines[1,max_lines-1]}$'\n'$(printf '\e[90m… +%d more\e[0m' $(( ${#lines} - max_lines + 1 )))
   else
-    out=${(F)rendered}
+    out=${(F)lines}
   fi
   printf '\e[H\e[J%s' "$out"
 
   if [[ -t 0 ]]; then
-    if read -t 1 -k 1 key 2>/dev/null && [[ $key == q ]]; then
-      break
+    # 押したキーがエコーされると,カーソルのある画面右下に ^N 等が次の再描画まで残るため -s で抑える
+    if read -s -t 1 -k 1 key 2>/dev/null; then
+      case $key in
+        $'\e')
+          # 矢印キー等はEscに続く文字と一緒に届くため,単独のEscの時だけ終了し,続きがあれば読み捨てる
+          if ! read -s -t 0.05 -k 1 rest 2>/dev/null; then
+            break
+          fi
+          while read -s -t 0.01 -k 1 rest 2>/dev/null; do :; done
+          ;;
+        $'\x0e') # Ctrl+n
+          if (( selectable )); then
+            selected_id=$(__step_selection 1 "$selected_id" "${jump_ids[@]}")
+          fi
+          ;;
+        $'\x10') # Ctrl+p
+          if (( selectable )); then
+            selected_id=$(__step_selection -1 "$selected_id" "${jump_ids[@]}")
+          fi
+          ;;
+        $'\n' | $'\r')
+          if (( selectable )) && [[ -n $selected_id ]]; then
+            __jump "$selected_id"
+          fi
+          ;;
+        q | $'\x07') # q / Ctrl+g
+          selected_id=''
+          ;;
+      esac
     fi
   else
     sleep 1
