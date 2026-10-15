@@ -16,6 +16,7 @@ UTF8PROC_PATH=$HOMEBREW_INSTALL_DIR_PATH/opt/utf8proc
 ./configure                         \
   --prefix=$LOCAL_DIR_PATH          \
   --enable-utf8proc                 \
+  --enable-jemalloc                 \
   CFLAGS="-I$UTF8PROC_PATH/include" \
   LDFLAGS="-L$UTF8PROC_PATH/lib"
 make && make install
