@@ -625,16 +625,19 @@ __undo_swap() {
 }
 
 # 描画結果からジャンプ先の列を外して lines に,選択できるペインIDを並び順に jump_ids に入れる
+# 表示範囲をずらせるよう,データ行の開始位置を first_row に,選択中の行の位置を selected_line に入れる(無ければ0)
 # 選択中のペインがあれば反転表示にし,一覧から消えていれば選択を外す
 __split_rendered() {
   local line id
-  integer selected_line=0
 
   lines=()
   jump_ids=()
+  first_row=0
+  selected_line=0
 
   for line in "${rendered[@]}"; do
     if [[ $line == *$'\t'* ]]; then
+      (( first_row )) || first_row=$(( ${#lines} + 1 ))
       id=${line%%$'\t'*}
       if [[ $id == %* ]]; then
         jump_ids+=("$id")
@@ -652,6 +655,82 @@ __split_rendered() {
 
   # 色付きのSTATUSを残したまま反転すると,その色が背景になって行の中で別の色の帯になるため色指定を外して反転する
   lines[selected_line]=$'\e[7m'${(S)lines[selected_line]//$'\e['*m/}$'\e[0m'
+}
+
+# 隠れた行数の表示(下だけなら従来どおり "+N more")
+__hidden_rows_label() {
+  integer above below
+
+  above=$1
+  below=$2
+
+  if (( above && below )); then
+    printf '\e[90m… +%d above, +%d more\e[0m' $above $below
+  elif (( above )); then
+    printf '\e[90m… +%d above\e[0m' $above
+  else
+    printf '\e[90m… +%d more\e[0m' $below
+  fi
+}
+
+# ペインに収まる画面を組み立てて out に入れる
+# 折り返し抑止だけでは行数超過を防げないため,ペインに収まる行数へ切り詰め,隠れた行数は最終行に出す
+# 末尾に改行を出さないのも同じ理由(最終行で改行するとそれだけでスクロールする)
+# 選択中の行が隠れないようデータ行の表示範囲(scroll_top)を必要な分だけずらす
+__compose_screen() {
+  integer max_lines shown_header room capacity row_count sel bottom
+  local -a rows screen
+
+  max_lines=$1
+
+  if (( ${#lines} <= max_lines )); then
+    scroll_top=1
+    out=${(F)lines}
+    return 0
+  fi
+
+  # データ行が無いのに溢れる場合は見出しを先頭から切り詰める
+  if (( ! first_row )); then
+    out=${(F)lines[1,max_lines-1]}$'\n'$(__hidden_rows_label 0 $(( ${#lines} - max_lines + 1 )))
+    return 0
+  fi
+
+  rows=("${(@)lines[first_row,-1]}")
+  row_count=${#rows}
+
+  # 見出しを出しても隠れた行数の表示と1行以上のデータ行が入るなら見出しを残し,
+  # 入らない狭いペインでは選択中の行が見えることを優先して見出しを外す
+  if (( max_lines - (first_row - 1) - 1 >= 1 )); then
+    shown_header=$(( first_row - 1 ))
+  else
+    shown_header=0
+  fi
+  room=$(( max_lines - shown_header ))
+
+  # データ行が全部入るなら隠れた行数の表示は出さず,1行しか入らない時も行を優先して出さない
+  if (( row_count <= room )); then
+    capacity=$row_count
+  elif (( room >= 2 )); then
+    capacity=$(( room - 1 ))
+  else
+    capacity=$room
+  fi
+
+  if (( selected_line )); then
+    sel=$(( selected_line - first_row + 1 ))
+    scroll_top=$(( scroll_top > sel ? sel : (scroll_top < sel - capacity + 1 ? sel - capacity + 1 : scroll_top) ))
+  else
+    scroll_top=1
+  fi
+  scroll_top=$(( scroll_top > row_count - capacity + 1 ? row_count - capacity + 1 : (scroll_top < 1 ? 1 : scroll_top) ))
+  bottom=$(( scroll_top + capacity - 1 ))
+
+  screen=()
+  (( ! shown_header )) || screen+=("${(@)lines[1,shown_header]}")
+  screen+=("${(@)rows[scroll_top,bottom]}")
+  (( capacity == row_count || capacity == room )) || screen+=("$(__hidden_rows_label $(( scroll_top - 1 )) $(( row_count - bottom )))")
+
+  out=${(F)screen}
 }
 
 # 次(1)/前(-1)の選択できるペインIDを返す(未選択ならC-nは先頭から,C-pは末尾から始める)
@@ -684,8 +763,10 @@ fi
 # watch表示(1秒間隔で再描画, Escで終了)
 # 代替画面を使う(通常バッファに上書きし続けると溢れた分がペインのスクロールになり,
 # iTerm2は既定でalternate screenから流れた行をscrollbackへ送るため端末側の表示がずれていく)
-trap 'printf "\e[?7h\e[?25h\e[?1049l"' EXIT
-trap 'exit 0' INT TERM
+# 下に開いたAIを入れ替えたまま残さないよう,終了時(ペインやウィンドウを閉じた時も含む)に元の配置へ戻す
+last_swap=()
+trap '__undo_swap; printf "\e[?7h\e[?25h\e[?1049l"' EXIT
+trap 'exit 0' INT TERM HUP
 printf '\e[?1049h\e[?7l\e[?25l'
 
 # iTerm2のウィンドウをまたいだジャンプはmacOSのAppleScriptで行うため,macOS以外やtmuxの外では選択自体を無効にする
@@ -695,21 +776,14 @@ else
   selectable=0
 fi
 selected_id=''
-last_swap=()
+scroll_top=1
 
 while :; do
   rendered=("${(@f)$(__render)}")
   __split_rendered
-
-  # 折り返し抑止だけでは行数超過を防げないため,ペインに収まる行数へ切り詰める
-  # 末尾に改行を出さないのも同じ理由(最終行で改行するとそれだけでスクロールする)
-  # 切り詰めで行が黙って消えないよう,溢れる場合は最終行を隠れた行数の表示に充てる
-  max_lines=$(tput lines 2>/dev/null || print 24)
-  if (( ${#lines} > max_lines )); then
-    out=${(F)lines[1,max_lines-1]}$'\n'$(printf '\e[90m… +%d more\e[0m' $(( ${#lines} - max_lines + 1 )))
-  else
-    out=${(F)lines}
-  fi
+  # tput lines はstdoutもstderrも端末でないと実際の縦幅が取れず既定の24を返すため,端末に直接聞く
+  tty_size=$(stty size </dev/tty 2>/dev/null || print 24)
+  __compose_screen "${tty_size%% *}"
   printf '\e[H\e[J%s' "$out"
 
   if [[ -t 0 ]]; then
