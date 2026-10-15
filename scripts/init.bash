@@ -146,6 +146,22 @@ else
   mkdir -p $GIT_WORKTREES_DIR_PATH
 fi
 
+# works queue dir
+if [[ -d $WORKS_DIR_PATH/queue ]]; then
+  _printf "\e[32m$WORKS_DIR_PATH/queue dir already exists\e[0m\n"
+else
+  _printf "\e[31mmkdir $WORKS_DIR_PATH/queue\e[0m\n"
+  mkdir $WORKS_DIR_PATH/queue
+fi
+
+# works queue inbox dir
+if [[ -d $WORKS_DIR_PATH/queue/inbox ]]; then
+  _printf "\e[32m$WORKS_DIR_PATH/queue/inbox dir already exists\e[0m\n"
+else
+  _printf "\e[31mmkdir $WORKS_DIR_PATH/queue/inbox\e[0m\n"
+  mkdir $WORKS_DIR_PATH/queue/inbox
+fi
+
 # works docker dir
 if [[ -d $DOCKER_DIR_PATH ]]; then
   _printf "\e[32m$DOCKER_DIR_PATH dir already exists\e[0m\n"
