@@ -371,6 +371,7 @@ __cleanup_stale() {
 }
 
 # メタ情報の表示列を出力する(形式: "<model>\t<context>")
+# contextは使用率で色分けし,色指定を幅に数えて列がずれないよう幅をそろえてから色で囲む
 __meta_columns() {
   local meta_file values model cx_pct cx_tok
   local -a fields
@@ -384,9 +385,9 @@ __meta_columns() {
     model=${fields[1]:--}
     cx_pct=${fields[2]:-0}
     cx_tok=${fields[3]:-0}
-    printf '%s\t%s' "$model" "${cx_pct}% $(__fmt_tokens "$cx_tok")"
+    printf '%s\t\e[%sm%-9s\e[0m' "$model" "$(__usage_color "$cx_pct")" "${cx_pct}% $(__fmt_tokens "$cx_tok")"
   else
-    printf -- '-\t-'
+    printf -- '-\t%-9s' -
   fi
 }
 
@@ -412,7 +413,7 @@ __format_row() {
     jump=-
   fi
 
-  printf '%s\t%s\t%s\t%-7s %s %-7s %s %s %-12s %-9s %s\n' \
+  printf '%s\t%s\t%s\t%-7s %s %-7s %s %s %-12s %s %s\n' \
     "$(__priority_for "$state")" \
     "$mtime" \
     "$jump" \
@@ -429,11 +430,17 @@ __format_row() {
 # 全エージェントのデータ行を出力する
 __emit_rows() {
   local line pane_id session win pane pane_path state agent
-  local state_file key agent_pid agent_tty cwd mtime sep target bg_kind row_state
+  local state_file key agent_pid agent_tty cwd mtime sep target bg_kind row_state home
   local -a parts
 
   # ターン終了イベントを取りこぼしてworkingのまま残った状態を倒す
   ai-agent-state --reconcile-stuck 2>/dev/null || true
+
+  # 下に開いているAIの位置は一覧の隣になるため,入れ替わったペインがいる元の場所を印付きで出す
+  home=''
+  if [[ -n ${last_swap[2]:-} ]]; then
+    home=$(tmux display -p -t "${last_swap[2]}" '#{session_name}:#{window_index}.#{pane_index}' 2>/dev/null || true)
+  fi
 
   # tmux内(pane単位)
   sep=$'\t'
@@ -448,8 +455,13 @@ __emit_rows() {
         [[ -n $pane_id && -f $state_dir/$pane_id.state ]] || continue
         read -r state agent agent_pid < "$state_dir/$pane_id.state" || continue
         mtime=$(stat -f %m "$state_dir/$pane_id.state" 2>/dev/null || print $EPOCHSECONDS)
+        if [[ -n $home && $pane_id == "${last_swap[1]:-}" ]]; then
+          target="▼ $home"
+        else
+          target="${session}:${win}.${pane}"
+        fi
 
-        __format_row "${session}:${win}.${pane}" "$agent" "${agent_pid:-}" "$state" "${pane_path:t}" "$pane_id" "$mtime"
+        __format_row "$target" "$agent" "${agent_pid:-}" "$state" "${pane_path:t}" "$pane_id" "$mtime"
       done
 
   # tmux外(session_id単位)
@@ -500,9 +512,10 @@ __render() {
     print -r -- "$usage"
     print
   fi
-  printf '%-7s %-20s %-7s %-9s %-22s %-12s %-9s %s\n' PID TARGET AGENT STATUS DIR MODEL CONTEXT LAST
-  # 同じ状態の中では直近に状態が変わったものを上に出す(データ行はジャンプ先のペインIDを先頭に残す)
-  __emit_rows | sort -t$'\t' -k1,1n -k2,2nr | cut -f3-
+  # 選択できる時はデータ行の頭に番号(数字キーで選ぶ)が付くので,見出しも同じだけずらす
+  printf '%*s%-7s %-20s %-7s %-9s %-22s %-12s %-9s %s\n' $(( ${selectable:-0} ? 2 : 0 )) '' PID TARGET AGENT STATUS DIR MODEL CONTEXT LAST
+  # 同じ状態の中では直近に状態が変わったものを上に出す(データ行は優先度とジャンプ先のペインIDを先頭に残す)
+  __emit_rows | sort -t$'\t' -k1,1n -k2,2nr | cut -f1,3-
 }
 
 # 選んだペインへ移り,そのセッションを表示しているiTerm2のウィンドウも前面に出す
@@ -605,6 +618,15 @@ __focus_below() {
   tmux select-pane -t "$below" 2>/dev/null || true
 }
 
+# 選んだペインを真下に開いてそこへ移る(既に下に開いていれば __open_below は何もしないので,移るだけになる)
+# 開いて移った時点で見たとみなして完了をidleへ戻す(ウィンドウを移らないのでtmuxのフックでは戻らず,
+# 未選択のC-kで同じ行が選ばれ続けるため)
+__open_and_focus_below() {
+  __open_below "$1"
+  __focus_below
+  ai-agent-state --focus-reset "$(tmux display -p -t "$TMUX_PANE" '#{window_id}' 2>/dev/null || true)" 2>/dev/null || true
+}
+
 # 直前の入れ替えを元に戻す(どちらかのペインが閉じていれば入れ替えは失敗するので何もしない)
 # 仮のペインはai-agent-listの下へ戻ってくるので閉じて元の配置に戻すが,そこで何か実行していれば巻き込まないよう残す
 __undo_swap() {
@@ -624,29 +646,43 @@ __undo_swap() {
   last_swap=()
 }
 
-# 描画結果からジャンプ先の列を外して lines に,選択できるペインIDを並び順に jump_ids に入れる
+# 描画結果から優先度とジャンプ先の列を外して lines に,選択できるペインIDを並び順に jump_ids に入れる
 # 表示範囲をずらせるよう,データ行の開始位置を first_row に,選択中の行の位置を selected_line に入れる(無ければ0)
+# 未選択のC-kで開く先として,判断待ち,無ければ完了のうち一番上のペインIDを attention_id に入れる
+# 選択できる時は数字キーで選べるよう,選択できる行の頭に1〜9の番号を付ける
 # 選択中のペインがあれば反転表示にし,一覧から消えていれば選択を外す
 __split_rendered() {
-  local line id
+  local line priority id input_id done_id num input_priority done_priority
 
   lines=()
   jump_ids=()
   first_row=0
   selected_line=0
+  input_id=''
+  done_id=''
+  input_priority=$(__priority_for blocked)
+  done_priority=$(__priority_for done)
 
   for line in "${rendered[@]}"; do
     if [[ $line == *$'\t'* ]]; then
       (( first_row )) || first_row=$(( ${#lines} + 1 ))
+      priority=${line%%$'\t'*}
+      line=${line#*$'\t'}
       id=${line%%$'\t'*}
+      line=${line#*$'\t'}
+      num=''
       if [[ $id == %* ]]; then
         jump_ids+=("$id")
+        (( ${#jump_ids} > 9 )) || num=${#jump_ids}
         [[ $id == "$selected_id" ]] && selected_line=$(( ${#lines} + 1 ))
+        [[ $priority == "$input_priority" && -z $input_id ]] && input_id=$id
+        [[ $priority == "$done_priority" && -z $done_id ]] && done_id=$id
       fi
-      line=${line#*$'\t'}
+      (( ! selectable )) || line=${(r:2:)num}$line
     fi
     lines+=("$line")
   done
+  attention_id=${input_id:-$done_id}
 
   if (( ! selected_line )); then
     selected_id=''
@@ -756,7 +792,7 @@ __step_selection() {
 }
 
 if [[ ${1:-} == --once ]]; then
-  __render | while IFS= read -r line; do print -r -- "${line#*$'\t'}"; done
+  __render | while IFS= read -r line; do print -r -- "${${line#*$'\t'}#*$'\t'}"; done
   exit 0
 fi
 
@@ -827,10 +863,16 @@ while :; do
           fi
           ;;
         $'\x0b') # Ctrl+k
-          # 既に下に開いていれば __open_below は何もしないので,下のペインへ移るだけになる
-          if (( selectable )) && [[ -n $selected_id ]]; then
-            __open_below "$selected_id"
-            __focus_below
+          # 未選択なら判断待ち,無ければ完了のうち一番上を開く(選択は変えないので,次も一番上から選び直す)
+          open_id=${selected_id:-$attention_id}
+          if (( selectable )) && [[ -n $open_id ]]; then
+            __open_and_focus_below "$open_id"
+          fi
+          ;;
+        [1-9])
+          if (( selectable && key <= ${#jump_ids} )); then
+            selected_id=${jump_ids[key]}
+            __open_and_focus_below "$selected_id"
           fi
           ;;
         $'\n' | $'\r')
