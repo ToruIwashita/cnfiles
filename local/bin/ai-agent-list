@@ -148,33 +148,46 @@ __format_agent_line() {
   print -r -- "$line"
 }
 
-# claudeのmeta.jsonから指定枠の "使用率 リセットepoch" を返す
+# claudeのmeta.jsonから枠ごとの候補を "<枠> <最終assistant時刻> <使用率> <リセットepoch>" 形式で列挙する
 # statusLineが受け取るrate_limitsはセッションによって5時間枠だけ欠けることがあり,
 # 最新1件に固定すると枠が出たり消えたりするため,アカウント単位で共通な値を枠ごとに独立して探す
 # 各セッションの値はそのセッションの最終API応答時点のもので,待機中のセッションも古い値のまま書き直し続けるため
 # meta.jsonやtranscriptの更新時刻では選べない(transcriptにはAPI応答なしでメタデータ行が足されることがある)
 # 手動リセットでは同じ枠のまま使用率が下がるため最大値でも選べず,最後のassistantエントリが最も新しいセッションの値を採る
+# transcriptの読み込みが重いため,両枠ぶんを1回の走査でまとめて出す
+__claude_window_candidates() {
+  local meta_file line transcript_path h5 d7 last_at
+  local -a fields
+
+  for meta_file in "$state_dir"/*.meta.json(N); do
+    line=$(jq -r \
+      'def w($p; $r): if .[$p] != null then "\(.[$p] | floor) \(.[$r] // 0)" else "" end;
+       "\(.transcript_path // "")\t\(w("h5_pct"; "h5_reset"))\t\(w("d7_pct"; "d7_reset"))"' "$meta_file" 2>/dev/null) || continue
+    fields=("${(@ps.\t.)line}")
+    transcript_path=${fields[1]:-}
+    h5=${fields[2]:-}
+    d7=${fields[3]:-}
+    [[ -n $h5 || -n $d7 ]] || continue
+
+    # transcriptは数十MBになるため末尾だけを読む(UTCのISO8601は文字列順が時刻順になる)
+    last_at=$(tail -c 262144 "$transcript_path" 2>/dev/null \
+      | grep -F '"type":"assistant"' \
+      | jq -Rr 'fromjson? | select(.type == "assistant") | .timestamp // empty' 2>/dev/null \
+      | tail -n 1)
+    [[ -n $h5 ]] && print -r -- "h5 ${last_at:-0} $h5"
+    [[ -n $d7 ]] && print -r -- "d7 ${last_at:-0} $d7"
+  done
+  return 0
+}
+
+# 候補から指定枠の "使用率 リセットepoch" を返す
 __claude_window() {
-  local pct_key reset_key meta_file line transcript_path last_at best reset pct
+  local candidates window best reset pct
 
-  pct_key=$1
-  reset_key=$2
+  candidates=$1
+  window=$2
 
-  best=$(
-    for meta_file in "$state_dir"/*.meta.json(N); do
-      line=$(jq -r --arg p "$pct_key" --arg r "$reset_key" \
-        'select(.[$p] != null) | "\(.transcript_path // "")\t\(.[$p] | floor) \(.[$r] // 0)"' "$meta_file" 2>/dev/null) || continue
-      [[ -n $line ]] || continue
-      transcript_path=${line%%$'\t'*}
-
-      # transcriptは数十MBになるため末尾だけを読む(UTCのISO8601は文字列順が時刻順になる)
-      last_at=$(tail -c 262144 "$transcript_path" 2>/dev/null \
-        | grep -F '"type":"assistant"' \
-        | jq -Rr 'fromjson? | select(.type == "assistant") | .timestamp // empty' 2>/dev/null \
-        | tail -n 1)
-      print -r -- "${last_at:-0} ${line#*$'\t'}"
-    done | sort -k1,1 | tail -n 1
-  )
+  best=$(print -r -- "$candidates" | grep "^$window " | cut -d' ' -f2- | sort -k1,1 | tail -n 1)
   [[ -n ${best:-} ]] || return 0
 
   reset=${best##* }
@@ -190,10 +203,11 @@ __claude_window() {
 
 # claudeの5時間/週次利用枠
 __usage_lines_claude() {
-  local h5 d7
+  local candidates h5 d7
 
-  h5=$(__claude_window h5_pct h5_reset)
-  d7=$(__claude_window d7_pct d7_reset)
+  candidates=$(__claude_window_candidates)
+  h5=$(__claude_window "$candidates" h5)
+  d7=$(__claude_window "$candidates" d7)
   [[ -n ${h5:-} || -n ${d7:-} ]] || return 0
 
   __format_agent_line claude "$h5" "$d7"
@@ -332,21 +346,25 @@ __cleanup_stale() {
 
 # メタ情報の表示列を出力する(形式: "<model>\t<context>")
 __meta_columns() {
-  local meta_file model cx_pct cx_tok
+  local meta_file values model cx_pct cx_tok
+  local -a fields
   meta_file=$state_dir/$1.meta.json
 
   if [[ -f $meta_file ]]; then
+    # 毎秒・行ごとに呼ばれるためjqは1回で全列を取る
     # モデル名の括弧付き補足("Opus 4.8 (1M context)"等)は列に収まらないため除去する
-    model=$(jq -r '(.model // "-") | split(" (")[0]' "$meta_file" 2>/dev/null || print -- -)
-    cx_pct=$(jq -r '.cx_pct // 0 | floor' "$meta_file" 2>/dev/null || print 0)
-    cx_tok=$(jq -r '.cx_tok // 0' "$meta_file" 2>/dev/null || print 0)
+    values=$(jq -r '[((.model // "-") | split(" (")[0]), (.cx_pct // 0 | floor), (.cx_tok // 0)] | @tsv' "$meta_file" 2>/dev/null || true)
+    fields=("${(@ps.\t.)values}")
+    model=${fields[1]:--}
+    cx_pct=${fields[2]:-0}
+    cx_tok=${fields[3]:-0}
     printf '%s\t%s' "$model" "${cx_pct}% $(__fmt_tokens "$cx_tok")"
   else
     printf -- '-\t-'
   fi
 }
 
-# 1行分の表示を整形する(形式: "<priority>\t<整形済み表示行>")
+# 1行分の表示を整形する(形式: "<priority>\t<mtime>\t<整形済み表示行>")
 __format_row() {
   local target agent agent_pid state dir key mtime meta model ctx
   target=$1
@@ -361,8 +379,9 @@ __format_row() {
   model=${meta%$'\t'*}
   ctx=${meta#*$'\t'}
 
-  printf '%s\t%-7s %s %-7s %s %s %-12s %-9s %s\n' \
+  printf '%s\t%s\t%-7s %s %-7s %s %s %-12s %-9s %s\n' \
     "$(__priority_for "$state")" \
+    "$mtime" \
     "${${agent_pid:--}[1,7]}" \
     "$(__pad "$target" 20)" \
     "${agent[1,7]}" \
@@ -430,7 +449,8 @@ __render() {
     print
   fi
   printf '%-7s %-20s %-7s %-9s %-22s %-12s %-9s %s\n' PID TARGET AGENT STATUS DIR MODEL CONTEXT LAST
-  __emit_rows | sort -t$'\t' -k1,1n | cut -f2-
+  # 同じ状態の中では直近に状態が変わったものを上に出す
+  __emit_rows | sort -t$'\t' -k1,1n -k2,2nr | cut -f3-
 }
 
 if [[ ${1:-} == --once ]]; then
@@ -448,7 +468,14 @@ printf '\e[?1049h\e[?7l\e[?25l'
 while :; do
   # 折り返し抑止だけでは行数超過を防げないため,ペインに収まる行数へ切り詰める
   # 末尾に改行を出さないのも同じ理由(最終行で改行するとそれだけでスクロールする)
-  out=$(__render | head -n "$(tput lines 2>/dev/null || print 24)")
+  # 切り詰めで行が黙って消えないよう,溢れる場合は最終行を隠れた行数の表示に充てる
+  rendered=("${(@f)$(__render)}")
+  max_lines=$(tput lines 2>/dev/null || print 24)
+  if (( ${#rendered} > max_lines )); then
+    out=${(F)rendered[1,max_lines-1]}$'\n'$(printf '\e[90m… +%d more\e[0m' $(( ${#rendered} - max_lines + 1 )))
+  else
+    out=${(F)rendered}
+  fi
   printf '\e[H\e[J%s' "$out"
 
   if [[ -t 0 ]]; then
