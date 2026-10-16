@@ -17,6 +17,8 @@
 set -eu
 
 zmodload zsh/datetime
+# 作業ログが大きくなったかを外部コマンドを使わずに調べる
+zmodload -F zsh/stat b:zstat
 
 if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
   print "$0: AI_AGENTS_CONFIG_DIR_PATH is not set"
@@ -87,6 +89,79 @@ __write_state() {
   tmp_file=$(mktemp "$state_dir/.state.XXXXXX")
   print -r -- "$state $agent $agent_pid" > "$tmp_file"
   mv -f "$tmp_file" "$state_dir/$pane_id.state"
+}
+
+# ai-bridgeの作業ログ用に,指示・ツールの開始と完了・承認待ち・ターン終了を1行ずつ追記する
+# 一覧の下に「どのリポジトリで何をしているか」を出すための短い要約だけを残す(コマンドは説明があれば説明を使う)
+# 形式: 時刻<TAB>種類(U=指示 P=開始 D=完了 W=承認待ち S=終了)<TAB>ツール<TAB>対象<TAB>補足<TAB>作業ディレクトリ
+# 増え続けないよう,64KBを超えたら新しい200行だけを残す
+__record_activity() {
+  local activity_file event input kind line
+  local -a size
+  activity_file=$1
+  event=$2
+  input=$3
+
+  case $event in
+    UserPromptSubmit) kind=U ;;
+    PreToolUse) kind=P ;;
+    PostToolUse) kind=D ;;
+    PermissionRequest) kind=W ;;
+    Stop) kind=S ;;
+    *) return 0 ;;
+  esac
+
+  line=$(print -r -- "$input" | jq -r --arg kind "$kind" --arg now "$EPOCHREALTIME" '
+    def clip($n): if length > $n then .[0:$n] + "…" else . end;
+    def flat: tostring | gsub("\\s+"; " ") | ltrimstr(" ") | rtrimstr(" ");
+    def text($v): if ($v | type) == "array" then ($v | map(tostring) | join(" ")) else ($v // "" | tostring) end;
+    def files: [scan("\\*\\*\\* (?:Update|Add|Delete) File: ([^\\n]+)") | .[0]] | join(", ");
+    def counts($l): "+\($l | map(select(startswith("+"))) | length) -\($l | map(select(startswith("-"))) | length)";
+    (.tool_name // "") as $t
+    | (.tool_input // {}) as $i
+    | text($i.command // $i.cmd) as $cmd
+    | (text($i.patch // $i.input) + "\n" + $cmd) as $patch
+    | ($t == "Bash" or $t == "exec" or $t == "shell") as $shell
+    | [
+        $now, $kind, $t,
+        ( if $kind == "U" then ([.prompt // "" | split("\n")[] | select(test("\\S"))][0] // "" | flat | clip(120))
+          elif $kind == "S" then ""
+          elif $shell then (($i.description // "") | flat) as $d | (if $d != "" then $d else ($cmd | flat | clip(100)) end)
+          elif $t == "apply_patch" then ($patch | files | clip(120))
+          elif $t == "Edit" or $t == "MultiEdit" or $t == "Write" or $t == "Read" then ($i.file_path // "")
+          elif $t == "NotebookEdit" then ($i.notebook_path // "")
+          elif $t == "Grep" or $t == "Glob" then ($i.pattern // "" | flat | clip(60))
+          elif $t == "WebFetch" then ($i.url // "")
+          elif $t == "WebSearch" then ($i.query // "" | flat | clip(80))
+          elif $t == "Agent" or $t == "Task" then ($i.description // "" | flat | clip(80))
+          elif $t == "Skill" then ($i.skill // "")
+          elif $t == "AskUserQuestion" then ($i.questions[0].question // "" | flat | clip(100))
+          elif $t == "TodoWrite" then ([$i.todos[]? | select(.status == "in_progress") | .activeForm // .content][0] // "" | flat | clip(100))
+          elif ($t | startswith("mcp__")) then ([$i[]? | select(type == "string")][0] // "" | flat | clip(60))
+          else "" end ),
+        ( if $kind == "D" and ($t == "Edit" or $t == "MultiEdit" or $t == "Write") then
+            [.tool_response.structuredPatch[]?.lines[]?] as $l
+            | if ($l | length) > 0 then counts($l) elif $t == "Write" then "+\($i.content // "" | split("\n") | length) -0" else "" end
+          elif $kind == "D" and $t == "apply_patch" then counts([$patch | split("\n")[] | select(test("^[+-]") and (test("^(\\+\\+\\+|---) ") | not))])
+          elif ($kind == "P" or $kind == "W") and $shell then ($cmd | flat | clip(160))
+          elif $kind == "P" and $t == "Grep" then ($i.path // "")
+          elif $kind == "P" and ($t == "Agent" or $t == "Task") then ($i.subagent_type // "")
+          elif $kind == "D" and $t == "WebFetch" then (.tool_response.code // "" | tostring)
+          else "" end ),
+        (.cwd // "")
+      ]
+    | map(tostring | gsub("[\\t\\n]"; " ")) | join("\t")
+  ' 2>/dev/null) || return 0
+  [[ -n $line ]] || return 0
+  # 指示やコマンドが入るので,状態ファイルと同じく本人だけが読めるようにして作る
+  umask 077
+  print -r -- "$line" >> "$activity_file"
+
+  zstat -A size +size "$activity_file" 2>/dev/null || return 0
+  if (( size[1] > 65536 )); then
+    tail -n 200 "$activity_file" >| "$activity_file.tmp" 2>/dev/null && mv -f "$activity_file.tmp" "$activity_file"
+  fi
+  return 0
 }
 
 # 判断待ちの項目(許可を待っているツール名)を記録し,判断待ち以外になったら消す(ai-bridgeが Input(Bash) のように添えて出す)
@@ -351,7 +426,7 @@ if [[ -z ${TMUX_PANE:-} ]]; then
   state_file=$state_dir/sid-$session_id.state
 
   if [[ $2 == SessionEnd ]]; then
-    rm -f "$state_file" "$state_dir/sid-$session_id.meta.json" "$state_dir/sid-$session_id.wait"
+    rm -f "$state_file" "$state_dir/sid-$session_id.meta.json" "$state_dir/sid-$session_id.wait" "$state_dir/sid-$session_id.activity"
     exit 0
   fi
 
@@ -362,6 +437,7 @@ if [[ -z ${TMUX_PANE:-} ]]; then
   state=$(__resolve_state_outside "$2" "$input" "$state_file")
   [[ -n $state ]] || exit 0
   __record_wait "$state_dir/sid-$session_id.wait" "$2" "$state" "$input"
+  __record_activity "$state_dir/sid-$session_id.activity" "$2" "$input"
 
   if [[ -f $state_file && $(cut -f1 "$state_file") == $state ]]; then
     exit 0
@@ -379,7 +455,7 @@ fi
 input=$(cat 2>/dev/null || true)
 
 if [[ $2 == SessionEnd ]]; then
-  rm -f "$state_dir/$TMUX_PANE.state" "$state_dir/$TMUX_PANE.meta.json" "$state_dir/$TMUX_PANE.wait"
+  rm -f "$state_dir/$TMUX_PANE.state" "$state_dir/$TMUX_PANE.meta.json" "$state_dir/$TMUX_PANE.wait" "$state_dir/$TMUX_PANE.activity"
   __apply_window_state "$TMUX_PANE"
   exit 0
 fi
@@ -393,6 +469,8 @@ state=$(__resolve_state "$2" "$input")
 # 未知のイベントは無視する
 [[ -n $state ]] || exit 0
 __record_wait "$state_dir/$TMUX_PANE.wait" "$2" "$state" "$input"
+# 状態が変わらない(作業中にツールが続く)時も残したいので,状態が変わったかを見る前に記録する
+__record_activity "$state_dir/$TMUX_PANE.activity" "$2" "$input"
 
 # 状態が変わらないならtmux反映を省く(PreToolUseの高頻度発火対策)
 if [[ -f $state_dir/$TMUX_PANE.state && $(cut -d' ' -f1 "$state_dir/$TMUX_PANE.state") == $state ]]; then

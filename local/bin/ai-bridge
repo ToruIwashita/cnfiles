@@ -11,6 +11,11 @@
 set -eu
 
 zmodload zsh/datetime
+# 裏で一覧を組み立てる時の待ちと置き換えを,外部コマンドを起動せずに行う
+zmodload zsh/zselect
+zmodload -F zsh/files b:zf_mv
+# 作業ログが変わったかを外部コマンドを起動せずに調べる
+zmodload -F zsh/stat b:zstat
 
 if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
   print "$0: AI_AGENTS_CONFIG_DIR_PATH is not set"
@@ -18,6 +23,16 @@ if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
 fi
 
 state_dir=$AI_AGENTS_CONFIG_DIR_PATH/state
+
+# 作業中の行を回し,判断待ちの行を脈打たせるコマ(描き直しは1秒10コマ)
+spin=(⣾ ⣽ ⣻ ⢿ ⡿ ⣟ ⣯ ⣷)
+pulse=(● ◉ ◎ ○ ○ ◎ ◉ ●)
+# 状態が変わった行を閃光で知らせるため,ペインごとの前回の状態・光らせ始めた時刻・一覧での行の位置を持つ
+typeset -A row_state flash_at line_of
+split_once=0
+# 一覧の下の作業の見える化で使う,一覧に出ているAIのキー(並び順)・TARGET・優先度
+agent_keys=()
+typeset -A target_of agent_prio
 
 # 一覧の並び順(上ほど対応が必要): blocked > done > working > idle
 __priority_for() {
@@ -378,14 +393,14 @@ __cleanup_stale() {
   for state_file in "$state_dir"/%*.state(N); do
     id=${${state_file:t}%.state}
     if [[ $'\n'$live$'\n' != *$'\n'$id$'\n'* ]]; then
-      rm -f "$state_file" "$state_dir/$id.meta.json" "$state_dir/$id.wait"
+      rm -f "$state_file" "$state_dir/$id.meta.json" "$state_dir/$id.wait" "$state_dir/$id.activity"
     fi
   done
 
   for state_file in "$state_dir"/sid-*.state(N); do
     pid=$(cut -f3 "$state_file" 2>/dev/null || true)
     if [[ -z ${pid:-} ]] || ! kill -0 "$pid" 2>/dev/null; then
-      rm -f "$state_file" "${state_file%.state}.meta.json" "${state_file%.state}.wait"
+      rm -f "$state_file" "${state_file%.state}.meta.json" "${state_file%.state}.wait" "${state_file%.state}.activity"
     fi
   done
 }
@@ -411,9 +426,11 @@ __meta_columns() {
   fi
 }
 
-# 1行分の表示を整形する(形式: "<priority>\t<mtime>\t<ジャンプ先のペインID>\t<整形済み表示行>")
+# 1行分の表示を整形する(形式: "<priority>\t<mtime>\t<キー>\t<TARGET>\t<整形済み表示行>")
+# キーはtmux内ならペインID,tmux外なら sid-<session_id> で,選べる(ジャンプできる)のはペインIDの行だけ
+# 一覧の下の作業の見える化でAIを同じ名前で示すため,TARGETも添える(並びは状態で入れ替わるので行番号は使えない)
 __format_row() {
-  local target agent agent_pid state dir key mtime meta model ctx jump wait_label target_col open_mark
+  local target agent agent_pid state dir key mtime meta model ctx wait_label target_col open_mark
   target=$1
   agent=$2
   agent_pid=$3
@@ -426,13 +443,6 @@ __format_row() {
   model=${meta%$'\t'*}
   ctx=${meta#*$'\t'}
 
-  # ジャンプできるのはtmux内のペインだけなので,tmux外の行は - にする
-  if [[ $key == %* ]]; then
-    jump=$key
-  else
-    jump=-
-  fi
-
   if [[ $state == blocked && -f $state_dir/$key.wait ]]; then
     wait_label=$(__wait_label "$(<"$state_dir/$key.wait")")
   fi
@@ -442,10 +452,11 @@ __format_row() {
   target_col=$(__pad "$target" 23)
   open_mark=$'\e[1;38;5;196m▼\e[0m'
 
-  printf '%s\t%s\t%s\t%-7s %s %-7s %s %s %-12s %s %s\n' \
+  printf '%s\t%s\t%s\t%s\t%-7s %s %-7s %s %s %-12s %s %s\n' \
     "$(__priority_for "$state")" \
     "$mtime" \
-    "$jump" \
+    "$key" \
+    "${target#▼ }" \
     "${${agent_pid:--}[1,7]}" \
     "${target_col/#▼/$open_mark}" \
     "${agent[1,7]}" \
@@ -543,7 +554,7 @@ __render() {
   fi
   # 選択できる時はデータ行の頭に番号(数字キーで選ぶ)が付くので,見出しも同じだけずらす
   printf '%*s%-7s %-23s %-7s %-14s %-22s %-12s %-9s %s\n' $(( ${selectable:-0} ? 2 : 0 )) '' PID TARGET AGENT STATUS DIR MODEL CONTEXT LAST
-  # 同じ状態の中では直近に状態が変わったものを上に出す(データ行は優先度とジャンプ先のペインIDを先頭に残す)
+  # 同じ状態の中では直近に状態が変わったものを上に出す(データ行は優先度・キー・TARGETを先頭に残す)
   __emit_rows | sort -t$'\t' -k1,1n -k2,2nr | cut -f1,3-
 }
 
@@ -679,6 +690,8 @@ __open_below() {
 
   last_swap=("$pane_id" "$target" "${placeholder:-}" "$height")
   tmux resize-pane -t "$TMUX_PANE" -y $fit 2>/dev/null || true
+  __data_changed
+  size_stale=1
   __draw
 }
 
@@ -709,6 +722,7 @@ __open_and_focus_below() {
   __open_below "$1"
   __focus_below
   ai-agent-state --focus-reset "$(tmux display -p -t "$TMUX_PANE" '#{window_id}' 2>/dev/null || true)" 2>/dev/null || true
+  __data_changed
 }
 
 # 直前の入れ替えを元に戻す(どちらかのペインが閉じていれば入れ替えは失敗するので何もしない)
@@ -733,19 +747,60 @@ __undo_swap() {
   fi
 
   last_swap=()
+  __data_changed
+  size_stale=1
   __draw
 }
 
-# 描画結果から優先度とジャンプ先の列を外して lines に,選択できるペインIDを並び順に jump_ids に入れる
+# 下に開いた・閉じた・完了を待機へ戻した等,手元で一覧の中身を変えた時に呼ぶ
+# 裏の組み立てを待たずにその場で組み立て直させ,裏にも下に開いたAIを伝える
+# 変える前に裏で組み立て始めた一覧を取り込んで表示が戻らないよう,世代(gen)を上げて古い一覧を捨てさせる
+__data_changed() {
+  (( ++gen ))
+  print -r -- "$gen ${last_swap[1]:-} ${last_swap[2]:-}" >| "$ctl_file"
+  need_render=1
+}
+
+# 一覧の組み立て(約0.2秒)が1秒10コマの描き直しを止めないよう,裏で1秒ごとに組み立ててファイルに置く
+# 1行目に通し番号と組み立てた時の世代を添え,置き換えは一度に行う(描き手が書きかけを読まないように)
+# 描き手が強制終了されても裏に残り続けないよう,描き手がいなくなったら止まる
+__render_loop() {
+  local g a b
+  integer seq=0
+
+  trap - EXIT INT TERM HUP WINCH
+  while kill -0 $$ 2>/dev/null; do
+    if ! read -r g a b < "$ctl_file"; then
+      g=0 a='' b=''
+    fi
+    if [[ -n $a ]]; then
+      last_swap=("$a" "$b")
+    else
+      last_swap=()
+    fi
+    { print -r -- "$(( ++seq )) $g"; __render } >| "$render_file.tmp" 2>/dev/null || true
+    zf_mv -f "$render_file.tmp" "$render_file" 2>/dev/null || true
+    zselect -t 100 || true
+  done
+}
+
+# 描画結果から優先度・キー・TARGETの列を外して lines に,選択できるペインIDを並び順に jump_ids に入れる
+# 一覧の下の作業の見える化のため,一覧に出ているAIのキーを並び順に agent_keys に,TARGETと優先度を target_of / agent_prio に入れる
 # 表示範囲をずらせるよう,データ行の開始位置を first_row に,選択中の行の位置を selected_line に入れる(無ければ0)
 # 未選択のC-kで開く先として,判断待ち,無ければ完了のうち一番上のペインIDを attention_id に入れる
 # 選択できる時は数字キーで選べるよう,選択できる行の頭に1〜9の番号を付ける
 # 選択中のペインがあれば目立たせ,一覧から消えていれば選択を外す
+# 状態が変わった行と新しく出た行は閃光で知らせる(最初に一覧を出した時は全て新しいので光らせない)
 __split_rendered() {
-  local line priority id input_id done_id num input_priority done_priority
+  local line priority id target input_id done_id num input_priority done_priority
+  local -A states
 
   lines=()
+  line_of=()
   jump_ids=()
+  agent_keys=()
+  target_of=()
+  agent_prio=()
   first_row=0
   selected_line=0
   input_id=''
@@ -760,6 +815,11 @@ __split_rendered() {
       line=${line#*$'\t'}
       id=${line%%$'\t'*}
       line=${line#*$'\t'}
+      target=${line%%$'\t'*}
+      line=${line#*$'\t'}
+      agent_keys+=("$id")
+      target_of[$id]=$target
+      agent_prio[$id]=$priority
       num=''
       if [[ $id == %* ]]; then
         jump_ids+=("$id")
@@ -767,12 +827,22 @@ __split_rendered() {
         [[ $id == "$selected_id" ]] && selected_line=$(( ${#lines} + 1 ))
         [[ $priority == "$input_priority" && -z $input_id ]] && input_id=$id
         [[ $priority == "$done_priority" && -z $done_id ]] && done_id=$id
+        states[$id]=$priority
+        line_of[$id]=$(( ${#lines} + 1 ))
       fi
       (( ! selectable )) || line=${(r:2:)num}$line
     fi
     lines+=("$line")
   done
   attention_id=${input_id:-$done_id}
+
+  if (( split_once )); then
+    for id in ${(k)states}; do
+      [[ ${row_state[$id]:-} == "${states[$id]}" ]] || flash_at[$id]=$EPOCHREALTIME
+    done
+  fi
+  row_state=("${(@kv)states}")
+  split_once=1
 
   if (( ! selected_line )); then
     selected_id=''
@@ -870,17 +940,505 @@ __compose_screen() {
   out=${(F)screen}
 }
 
-# 描画済みの内容(lines)をペインに収めて出す
+# --- 作業の見える化: 一覧の下の余白に,どのリポジトリで何をしているか(WORKSPACE)と,有益な出来事だけの作業ログ(OPS.LOG)を出す ---
+# 材料は各AIのフックで ai-agent-state が残す作業ログ(<キー>.activity: 時刻 種類 ツール 対象 補足 作業ディレクトリ)
+# AIは一覧の並びが状態で入れ替わっても同じ名前で示せるよう,行番号ではなくTARGETで示す
+typeset -A repo_root_of ops_verb_col
+ops_verb_col=(ORDER 213 MSG 141 EDIT 48 EXEC 51 TEST 87 COMMIT 220 PUSH 214 SPAWN 141 FETCH 75 SEARCH 75 STEP 159 ASK 214 SKILL 141 AWAIT 214 DONE 203)
+ops_sig=''
+ops_log=()
+ops_cached=()
+ops_newest=''
+ops_newest_at=0
+ops_label_w=4
+ops_repo_count=0
+ops_cache_cols=0
+# ペインの幅(描画で大きさを聞き直す時に高さと一緒に覚える)
+pane_cols=80
+# AIごとの材料(作業ディレクトリのリポジトリ・指示とその時刻・ターンの始まりと終わり・実行中のコマンド・承認待ち・
+# 最後に動いた時刻・このターンの編集の集計・コミットやプッシュの印)と,このターンに触ったファイル
+typeset -A ag_root ag_task ag_task_t ag_turn_t ag_end ag_run ag_run_t ag_wait ag_last ag_files ag_add ag_del ag_mark ag_mark_t ops_files
+
+# コマンドの種類(テストの実行・コミット・プッシュ)を,コマンドとして実行した時だけ判定する
+# && ; | で区切った各部分の先頭の語で見る(環境変数の指定や bundle exec 等の前置きは飛ばす)
+__cmd_kind() { # $1=コマンド → REPLY=TEST/COMMIT/PUSH/空
+  setopt localoptions extendedglob
+  local seg
+  local -a w
+  REPLY=''
+  for seg in "${(@s:;:)${${1//\&\&/;}//[|]/;}}"; do
+    w=(${=seg})
+    while (( ${#w} )) && [[ ${w[1]} == [A-Za-z_][A-Za-z0-9_]#=* ]]; do w[1]=(); done
+    while (( ${#w} )) && [[ ${w[1]} == (time|env|npx|command) ]]; do w[1]=(); done
+    [[ ${w[1]:-} == bundle && ${w[2]:-} == exec ]] && w[1,2]=()
+    case ${w[1]:-} in
+      bin/rspec | rspec | jest | vitest | pytest) REPLY=TEST; return 0 ;;
+      go | cargo) [[ ${w[2]:-} == test ]] && { REPLY=TEST; return 0 } ;;
+      bin/rails | rails) [[ ${w[2]:-} == test* ]] && { REPLY=TEST; return 0 } ;;
+      pnpm | yarn | npm)
+        [[ ${w[2]:-} == (--filter|-F|-w) ]] && w[2,3]=()
+        [[ ${w[2]:-} == test(|:*) || ( ${w[2]:-} == run && ${w[3]:-} == test(|:*) ) ]] && { REPLY=TEST; return 0 } ;;
+      git)
+        [[ ${w[2]:-} == commit ]] && { REPLY=COMMIT; return 0 }
+        [[ ${w[2]:-} == push ]] && { REPLY=PUSH; return 0 } ;;
+    esac
+  done
+  return 0
+}
+
+# ファイルや作業ディレクトリが入っているgitリポジトリの一番上(無ければそのディレクトリ)
+__repo_root() {
+  local r=$1
+  if [[ -n ${repo_root_of[$1]:-} ]]; then
+    REPLY=${repo_root_of[$1]}
+    return 0
+  fi
+  while [[ $r != / && -n $r && ! -e $r/.git ]]; do r=${r:h}; done
+  [[ $r == / || -z $r ]] && r=$1
+  repo_root_of[$1]=$r
+  REPLY=$r
+}
+
+# 表示用のリポジトリ名(ghq の github.com/持ち主/名前 なら 持ち主/名前,ほかは一番上のディレクトリ名)
+__repo_name() {
+  local rest
+  case $1 in
+    */github.com/*/*) rest=${1#*/github.com/}; REPLY=${rest%%/*}/${${rest#*/}%%/*} ;;
+    *) REPLY=${1:t} ;;
+  esac
+}
+
+# 経過秒を 1h5m / 3m12s / 45s に(時刻の引き算は 74.999… のようになるので四捨五入する)
+__fmt_dur() {
+  integer s=$(( $1 + 0.5 ))
+  if (( s >= 3600 )); then REPLY="$(( s / 3600 ))h$(( s % 3600 / 60 ))m"
+  elif (( s >= 60 )); then REPLY="$(( s / 60 ))m$(( s % 60 ))s"
+  else REPLY="${s}s"; fi
+}
+
+__ops_add() { # 時刻 キー 動詞 対象 補足
+  local tk
+  # 秒未満の桁数が記録ごとに違うと数として並べた時に前後が狂うので,小数点以下を3桁にそろえる
+  printf -v tk '%.3f' $1
+  ops_log+=("$tk"$'\t'"$2"$'\t'"$3"$'\t'"$4"$'\t'"$5")
+}
+
+# 一覧に出ているAIの作業ログを読み,ワークスペースと作業ログの材料を作る
+# どのAIの作業ログもTARGETも変わっていなければ読み直さない
+__ops_load() {
+  local key f line kind tool obj extra cwd root k sig=''
+  local -a p v
+  local -A st
+  float t now=$EPOCHREALTIME
+  integer a d
+
+  for key in $agent_keys; do
+    f=$state_dir/$key.activity
+    if zstat -H st "$f" 2>/dev/null; then sig+="$key=${target_of[$key]}:${st[mtime]}:${st[size]} "; else sig+="$key=${target_of[$key]} "; fi
+  done
+  [[ $sig == "$ops_sig" ]] && return 0
+  ops_sig=$sig
+
+  ops_log=()
+  ag_root=() ag_task=() ag_task_t=() ag_turn_t=() ag_end=() ag_run=() ag_run_t=() ag_wait=() ag_last=()
+  ag_files=() ag_add=() ag_del=() ag_mark=() ag_mark_t=() ops_files=()
+  for key in $agent_keys; do
+    f=$state_dir/$key.activity
+    [[ -r $f ]] || continue
+    for line in "${(@f)$(<$f)}"; do
+      p=("${(@ps:\t:)line}")
+      t=${p[1]} kind=${p[2]} tool=${p[3]} obj=${p[4]} extra=${p[5]} cwd=${p[6]}
+      [[ -n $cwd ]] && { __repo_root "$cwd"; ag_root[$key]=$REPLY }
+      ag_last[$key]=$t
+      case $kind in
+        U)
+          case $obj in
+            # チームのエージェントからの連絡は人の指示と分け(中身は出さない),ほかの < で始まる自動の入力は出さない
+            '<agent-message'*) ag_turn_t[$key]=$t ag_end[$key]=''; __ops_add $t $key MSG 'チームのエージェントから連絡' ''; continue ;;
+            '<'*) continue ;;
+          esac
+          # 新しい指示で,そのAIのこのターンの記録をやり直す
+          ag_task[$key]=$obj ag_task_t[$key]=$t ag_turn_t[$key]=$t ag_end[$key]='' ag_wait[$key]='' ag_run[$key]=''
+          ag_files[$key]=0 ag_add[$key]=0 ag_del[$key]=0
+          for k in ${(k)ops_files}; do [[ ${ops_files[$k]%% *} == "$key" ]] && unset "ops_files[$k]"; done
+          __ops_add $t $key ORDER "「$obj」" '' ;;
+        P)
+          case $tool in
+            Bash | exec | shell)
+              ag_run[$key]=$obj ag_run_t[$key]=$t
+              __cmd_kind "$extra"
+              [[ $REPLY == (COMMIT|PUSH) ]] && ag_mark[$key]=$REPLY ag_mark_t[$key]=$t
+              __ops_add $t $key ${REPLY:-EXEC} "$obj" '' ;;
+            Agent | Task) __ops_add $t $key SPAWN "$obj" "$extra" ;;
+            WebFetch) __ops_add $t $key FETCH "${${obj#*://}%%/*}" '' ;;
+            WebSearch) __ops_add $t $key SEARCH "$obj" '' ;;
+            TodoWrite) [[ -n $obj ]] && __ops_add $t $key STEP "$obj" '' ;;
+            AskUserQuestion) __ops_add $t $key ASK "$obj" '' ;;
+            Skill) __ops_add $t $key SKILL "$obj" '' ;;
+          esac ;;
+        D)
+          case $tool in
+            Bash | exec | shell) [[ ${ag_run[$key]:-} == "$obj" ]] && ag_run[$key]='' ;;
+            Edit | Write | MultiEdit | NotebookEdit | apply_patch)
+              # パッチは複数のファイルをまとめて書くので,先頭のファイルに寄せる
+              obj=${obj%%, *}
+              [[ $obj == /* ]] || obj=${cwd:-$HOME}/$obj
+              # 一時ディレクトリのファイルは作業ではないので出さない
+              [[ $obj == (/tmp/*|/private/tmp/*|/var/folders/*) ]] && continue
+              __repo_root "${obj:h}"; root=$REPLY
+              a=${${extra%% *}#+} d=${${extra##* }#-}
+              k=$root$'\t'${obj#$root/}
+              if [[ -n ${ops_files[$k]:-} ]]; then
+                v=(${=ops_files[$k]})
+                ops_files[$k]="$key $(( v[2] + a )) $(( v[3] + d )) $(( v[4] + 1 )) $t"
+              else
+                ops_files[$k]="$key $a $d 1 $t"
+                (( ++ag_files[$key] ))
+              fi
+              ag_add[$key]=$(( ${ag_add[$key]:-0} + a )) ag_del[$key]=$(( ${ag_del[$key]:-0} + d ))
+              __ops_add $t $key EDIT "${obj#$root/}" "+$a -$d" ;;
+          esac ;;
+        W) ag_wait[$key]=$obj; __ops_add $t $key AWAIT "$obj" '' ;;
+        S)
+          ag_end[$key]=$t ag_run[$key]='' ag_wait[$key]=''
+          # かかった時間は,ターンの始まり(指示か連絡)が分かる時だけ添える
+          REPLY=''
+          [[ -n ${ag_turn_t[$key]:-} ]] && __fmt_dur $(( t - ag_turn_t[$key] ))
+          if (( ${ag_files[$key]:-0} == 1 )); then
+            obj="1 file  +${ag_add[$key]} -${ag_del[$key]}"
+          elif (( ${ag_files[$key]:-0} > 1 )); then
+            obj="${ag_files[$key]} files  +${ag_add[$key]} -${ag_del[$key]}"
+          else
+            obj='no changes'
+          fi
+          __ops_add $t $key DONE "$obj${REPLY:+  in $REPLY}" '' ;;
+      esac
+    done
+  done
+  # 1時間より前の出来事は出さず,時刻順に並べる
+  ops_log=("${(@on)ops_log}")
+  while (( ${#ops_log} )) && (( ${ops_log[1]%%$'\t'*} < now - 3600 )); do ops_log[1]=(); done
+  # いちばん新しい出来事が変わったら,それを1文字ずつ打ち出し直す
+  if [[ ${ops_log[-1]:-} != "$ops_newest" ]]; then
+    ops_newest=${ops_log[-1]:-} ops_newest_at=$now
+  fi
+  __ops_cache_log
+  return 0
+}
+
+# 色の指定を除いた見えている幅(全角は2)
+__vis() {
+  setopt localoptions extendedglob
+  local p=${1//$'\e'\[[0-9;]#[mG]/}
+  REPLY=${(m)#p}
+}
+# 色の指定の無い文字列を,見えている幅 $2 に切り詰める
+__clip() {
+  local s=$1
+  if (( ${(m)#s} <= $2 )); then
+    REPLY=$s
+    return 0
+  fi
+  s=${s[1,$2]}
+  while (( ${(m)#s} > $2 - 1 )); do s=${s[1,-2]}; done
+  REPLY=$s…
+}
+
+# 作業ログの1行(いちばん新しいものから数えた $2 番目ほど暗くする,$3=1 なら打ち出す途中に使う色の無い文字列)
+__ops_log_line() { # $1=出来事 $2=新しい順の位置(0が最新) $3=色の無い文字列にするか → REPLY
+  local ts verb obj extra name label tc col
+  local -a p
+  integer iw=$(( pane_cols - 4 )) lw rw ow
+  p=("${(@ps:\t:)1}")
+  strftime -s ts '%H:%M:%S' ${p[1]%.*}
+  __repo_name "${ag_root[${p[2]}]:--}"; name=$REPLY
+  label=${target_of[${p[2]}]:-${p[2]}}
+  verb=${p[3]} obj=${p[4]} extra=${p[5]}
+  lw=$(( ops_label_w )) rw=16
+  __clip "$label" $lw; label=$REPLY
+  __clip "$name" $rw; name=$REPLY
+  ow=$(( iw - 1 - 8 - 2 - lw - 2 - rw - 2 - 6 - 2 - (${#extra} ? ${#extra} + 2 : 0) ))
+  (( ow < 8 )) && ow=8
+  __clip "$obj" $ow; obj=$REPLY
+  if (( ${3:-0} )); then
+    REPLY=" $ts  ${(r:lw:)label}  ${(r:rw:)name}  ${(r:6:)verb}  $obj${extra:+  $extra}"
+    return 0
+  fi
+  tc=${${(s: :):-255 252 249 246 244 242 240}[$(( $2 > 6 ? 7 : $2 + 1 ))]}
+  col=${ops_verb_col[$verb]:-245}
+  REPLY=$'\e[38;5;242m'" $ts  "$'\e[38;5;244m'"${(r:lw:)label}  "$'\e[38;5;37m'"${(r:rw:)name}  "$'\e[1;38;5;'${col}m"${(r:6:)verb}"$'\e[0;38;5;'${tc}m"  $obj"
+  [[ -n $extra ]] && REPLY+="  "$'\e[38;5;34m'"${extra%% *}"$'\e[38;5;160m'" ${extra##* }"
+  return 0
+}
+
+# 作業ログの行は読み直した時に作っておき,コマごとには最新の1行だけ作り直す
+__ops_cache_log() {
+  local label
+  integer i n=${#ops_log}
+  ops_cache_cols=$pane_cols
+  # TARGETの列は出ているAIの名前の長さに合わせる(長すぎる名前は21桁で切る)
+  ops_label_w=4
+  for label in ${(v)target_of}; do (( ${(m)#label} > ops_label_w )) && ops_label_w=${(m)#label}; done
+  (( ops_label_w > 21 )) && ops_label_w=21
+  ops_cached=()
+  for (( i = 1; i < n; i++ )); do
+    __ops_log_line "${ops_log[i]}" $(( n - i )) 0
+    ops_cached+=("$REPLY")
+  done
+  return 0
+}
+
+# 枠(色の指定を除いた見えている幅で右端をそろえる)
+__ops_frame_top() {
+  integer fill=$(( pane_cols - 10 - ${#1} - ${(m)#2} ))
+  (( fill < 0 )) && fill=0
+  REPLY=" "$'\e[38;5;30m╭─\e[1;38;5;51m'" $1 "$'\e[0;38;5;30m'"${(l:fill::─:):-}"$'\e[38;5;242m'" $2 "$'\e[38;5;30m─╮\e[0m'
+}
+__ops_frame_mid() {
+  integer fill=$(( pane_cols - 10 - ${#1} - ${(m)#2} ))
+  (( fill < 0 )) && fill=0
+  REPLY=" "$'\e[38;5;30m├─\e[1;38;5;51m'" $1 "$'\e[0;38;5;30m'"${(l:fill::─:):-}"$'\e[38;5;242m'" $2 "$'\e[38;5;30m─┤\e[0m'
+}
+__ops_frame_line() {
+  local body=$1
+  integer pad iw=$(( pane_cols - 4 ))
+  __vis "$body"
+  # 狭いペインで中身が枠の内側より長い時だけ,色の指定は残して見えている幅で切る
+  if (( REPLY > iw )); then
+    __vis_cut "$body" $iw
+    body=$REPLY
+    __vis "$body"
+  fi
+  pad=$(( iw - REPLY ))
+  REPLY=" "$'\e[38;5;30m│\e[0m'"$body"$'\e[0m'"${(l:pad:: :):-}"$'\e[38;5;30m│\e[0m'
+}
+# 色の指定はそのまま残し,見えている幅 $2 までで切る
+__vis_cut() { # $1=文字列 $2=幅 → REPLY
+  setopt localoptions extendedglob
+  local s=$1 out='' ch
+  integer w=0 cw
+  while [[ -n $s ]]; do
+    if [[ ${s[1]} == $'\e' ]]; then
+      ch=${(M)s##$'\e'\[[0-9;]#[mG]}
+      if [[ -n $ch ]]; then
+        out+=$ch
+        s=${s:${#ch}}
+        continue
+      fi
+    fi
+    ch=${s[1]}
+    cw=${(m)#ch}
+    (( w + cw > $2 )) && break
+    out+=$ch
+    w=$(( w + cw ))
+    s=${s:1}
+  done
+  REPLY=$out
+}
+__ops_frame_bottom() { REPLY=" "$'\e[38;5;30m╰'"${(l:$(( pane_cols - 4 ))::─:):-}"$'╯\e[0m' }
+
+# AIの名前(TARGET)と状態の記号(作業中は回し,判断待ちは脈打たせる)
+__ops_badge() { # $1=キー $2=コマ → REPLY
+  local label=${target_of[$1]:-$1}
+  case ${agent_prio[$1]:-} in
+    0) REPLY=$'\e[1;38;5;214m'"$label ${pulse[$2 / 2 % 8 + 1]}" ;;
+    1) REPLY=$'\e[1;38;5;203m'"$label ●" ;;
+    2) REPLY=$'\e[1;38;5;46m'"$label ${spin[$2 % 8 + 1]}" ;;
+    *) REPLY=$'\e[38;5;242m'"$label ●" ;;
+  esac
+}
+
+# WORKSPACE: リポジトリごとに,そこで動くAIと今のターンで触ったファイル・実行中のコマンド
+__ops_ws() { # $1=使ってよい行数 $2=コマ → ops_ws 配列
+  local root name k f line bar col dur relp agents key
+  local -a roots files v picked sorted
+  local -A last_of block_of
+  integer i lvl shown working upto gap pw first max=$1 iw=$(( pane_cols - 4 ))
+  float t age now=$EPOCHREALTIME
+  ops_ws=()
+  # リポジトリを,AIの作業ディレクトリと触ったファイルから集め,入りきらない時に残すものは新しく動いた順に選ぶ
+  for key in ${(k)ag_root}; do root=${ag_root[$key]}; (( ${ag_last[$key]:-0} > ${last_of[$root]:-0} )) && last_of[$root]=${ag_last[$key]}; done
+  for k in ${(k)ops_files}; do root=${k%%$'\t'*}; v=(${=ops_files[$k]}); (( v[5] > ${last_of[$root]:-0} )) && last_of[$root]=${v[5]}; done
+  for root in ${(k)last_of}; do roots+=("${last_of[$root]}"$'\t'"$root"); done
+  roots=("${(@On)roots}")
+  ops_repo_count=${#roots}
+  for line in $roots; do
+    (( ${#ops_ws} < max )) || break
+    root=${line#*$'\t'}
+    __repo_name "$root"; name=$REPLY
+    working=0 agents='' first=$(( ${#ops_ws} + 1 ))
+    for key in $agent_keys; do
+      [[ ${ag_root[$key]:-} == "$root" ]] || continue
+      [[ ${agent_prio[$key]:-} == 2 ]] && working=1
+      __ops_badge $key $2; agents+="  $REPLY"
+      if [[ -n ${ag_wait[$key]:-} ]]; then
+        __clip "${ag_wait[$key]}" 30; agents+=$'\e[0;38;5;214m'" AWAIT $REPLY"
+      elif [[ -n ${ag_task[$key]:-} ]]; then
+        __clip "${ag_task[$key]}" 28
+        # 新しい指示が来た瞬間は1文字ずつ打ち出す
+        age=$(( now - ag_task_t[$key] ))
+        if (( age < 3 )); then
+          upto=$(( age * 20 + 1 ))
+          agents+=$'\e[0;38;5;195m'" 「${REPLY[1,upto]}"$'\e[1;38;5;51m█'
+        else
+          agents+=$'\e[0;38;5;245m'" 「$REPLY」"
+        fi
+      fi
+      # ターンが終わってから10分は,かかった時間を添える(始まりが分からない時は印だけ)
+      if [[ -n ${ag_end[$key]:-} && ${agent_prio[$key]:-} == [13] ]] && (( now - ag_end[$key] < 600 )); then
+        if [[ -n ${ag_turn_t[$key]:-} ]]; then
+          __fmt_dur $(( ag_end[$key] - ag_turn_t[$key] )); agents+=$'\e[0;38;5;71m'" ✓ $REPLY"
+        else
+          agents+=$'\e[0;38;5;71m'" ✓"
+        fi
+      fi
+      # コミット・プッシュの直後は金色の札を点滅させる
+      if [[ -n ${ag_mark[$key]:-} ]] && (( now - ag_mark_t[$key] < 8 && $2 / 3 % 2 )); then
+        if [[ ${ag_mark[$key]} == COMMIT ]]; then agents+=$'\e[1;38;5;220m  ◆ COMMIT'; else agents+=$'\e[1;38;5;220m  ▲ PUSH'; fi
+      fi
+    done
+    # リポジトリの札: そこで作業中のAIがいれば光が脈打つ
+    if (( working )); then col=${${(s: :):-51 45 38 31 38 45}[$(( $2 / 2 % 6 + 1 ))]}; else col=244; fi
+    ops_ws+=(" "$'\e[1;38;5;'${col}m"▣ "$'\e[1;38;5;255m'"$name"$'\e[0;38;5;23m'" ─"$agents)
+    # そのリポジトリで今のターンに触ったファイル(新しい順に3つまで)
+    files=()
+    for k in ${(k)ops_files}; do [[ ${k%%$'\t'*} == "$root" ]] || continue; v=(${=ops_files[$k]}); files+=("${v[5]}"$'\t'"$k"); done
+    files=("${(@On)files}")
+    shown=0
+    for f in $files; do
+      (( shown < 3 && ${#ops_ws} < max )) || break
+      k=${f#*$'\t'}; v=(${=ops_files[$k]})
+      age=$(( now - v[5] ))
+      # 熱量: 触ってから時間が経つほど短く暗くなる
+      if (( age < 30 )); then lvl=6; elif (( age < 120 )); then lvl=5; elif (( age < 300 )); then lvl=4; elif (( age < 600 )); then lvl=3; elif (( age < 1200 )); then lvl=2; else lvl=1; fi
+      bar=''
+      for (( i = 1; i <= 6; i++ )); do
+        if (( i <= lvl )); then bar+=$'\e[38;5;'${${(s: :):-22 28 34 40 46 120}[i]}m'▮'; else bar+=$'\e[38;5;236m▯'; fi
+      done
+      __fmt_dur $age; dur=$REPLY
+      pw=$(( iw - 48 - ops_label_w )); (( pw < 8 )) && pw=8
+      __clip "${k#*$'\t'}" $pw; relp=$REPLY
+      # 書き込んだ瞬間はその行を白く光らせる
+      if (( age < 1.5 )); then line="   "$'\e[1;38;5;231m'"✎ $relp"; else line="   "$'\e[38;5;48m'"✎ "$'\e[38;5;252m'"$relp"; fi
+      __vis "$line"
+      gap=$(( iw - 38 - ops_label_w - REPLY )); (( gap < 1 )) && gap=1
+      ops_ws+=("$line${(l:gap:: :):-}  $bar"$'\e[0;38;5;34m'" +${v[2]}"$'\e[38;5;160m'" -${v[3]}"$'\e[38;5;242m'"  ×${v[4]}  ${(l:6:: :)dur}  "$'\e[38;5;244m'"${target_of[${v[1]}]:-${v[1]}}")
+      (( ++shown ))
+    done
+    # そのリポジトリで動いているAIの,実行中のコマンド
+    for key in $agent_keys; do
+      [[ ${ag_root[$key]:-} == "$root" && -n ${ag_run[$key]:-} ]] || continue
+      (( ${#ops_ws} < max )) || break
+      __fmt_dur $(( now - ag_run_t[$key] )); dur=$REPLY
+      pw=$(( iw - 34 - ops_label_w )); (( pw < 8 )) && pw=8
+      __clip "${ag_run[$key]}" $pw
+      ops_ws+=("   "$'\e[38;5;51m▶ \e[38;5;250m'"$REPLY  "$'\e[38;5;51m'"${spin[$2 % 8 + 1]}"$'\e[38;5;245m'" $dur  "$'\e[38;5;244m'"${target_of[$key]:-$key}")
+    done
+    block_of[$root]="$first ${#ops_ws}"
+    picked+=("$name"$'\t'"$root")
+  done
+  # 並びは名前の順にして,AIが動くたびにリポジトリの行が入れ替わらないようにする
+  for line in ${(o)picked}; do
+    v=(${=block_of[${line#*$'\t'}]})
+    sorted+=("${(@)ops_ws[v[1],v[2]]}")
+  done
+  ops_ws=("${sorted[@]}")
+  return 0
+}
+
+# 作業ログ: 有益な出来事だけを新しいものを下に出す(いちばん新しい行は1文字ずつ打ち出し,承認待ちは脈打たせる)
+__ops_log_lines() { # $1=行数 $2=コマ → ops_lg 配列
+  local plain
+  local -a p
+  integer n=${#ops_log} c=${#ops_cached} take typed
+  float now=$EPOCHREALTIME
+  ops_lg=()
+  (( n )) || return 0
+  take=$(( $1 - 1 )); (( take > c )) && take=$c
+  (( take > 0 )) && ops_lg=("${(@)ops_cached[c-take+1,c]}")
+  typed=$(( (now - ops_newest_at) * 80 ))
+  __ops_log_line "${ops_log[n]}" 0 1; plain=$REPLY
+  if (( typed < ${#plain} )); then
+    ops_lg+=($'\e[38;5;195m'"${plain[1,typed]}"$'\e[1;38;5;51m█')
+  else
+    __ops_log_line "${ops_log[n]}" 0 0
+    p=("${(@ps:\t:)ops_log[n]}")
+    [[ ${p[3]} == AWAIT ]] && (( $2 / 3 % 2 )) && REPLY=${REPLY//$'\e[1;38;5;214m'/$'\e[1;38;5;94m'}
+    ops_lg+=("$REPLY")
+  fi
+}
+
+# 余白 $1 行に収まる枠を ops_panel に作る(ワークスペースは要る分だけ,多くても半分まで,残りを作業ログに使う)
+__ops_panel() { # $1=行数 $2=コマ
+  local -a out
+  integer h=$1 wh lh i agents_n=0
+  local key
+  # ペインの幅が変わったら,作っておいた作業ログの行を今の幅で作り直す
+  (( ops_cache_cols == pane_cols )) || __ops_cache_log
+  for key in $agent_keys; do [[ -n ${ag_last[$key]:-} ]] && (( ++agents_n )); done
+  __ops_ws $(( (h - 3) / 2 )) $2
+  wh=${#ops_ws}
+  lh=$(( h - 2 - (wh ? wh + 1 : 0) ))
+  if (( wh )); then
+    __ops_frame_top 'WORKSPACE' "$ops_repo_count REPOS / $agents_n GHOSTS"; out=("$REPLY")
+    for (( i = 1; i <= wh; i++ )); do __ops_frame_line "${ops_ws[i]}"; out+=("$REPLY"); done
+    __ops_frame_mid 'OPS.LOG' "${#ops_log} EVENTS / 1h"; out+=("$REPLY")
+  else
+    __ops_frame_top 'OPS.LOG' "${#ops_log} EVENTS / 1h"; out=("$REPLY")
+  fi
+  __ops_log_lines $lh $2
+  for (( i = 1; i <= lh - ${#ops_lg}; i++ )); do __ops_frame_line ''; out+=("$REPLY"); done
+  for (( i = 1; i <= ${#ops_lg}; i++ )); do __ops_frame_line "${ops_lg[i]}"; out+=("$REPLY"); done
+  __ops_frame_bottom; out+=("$REPLY")
+  ops_panel=("${out[@]}")
+}
+
+# 描画済みの内容(lines)をペインに収めて出す(作業中の行は回し,判断待ちの行は脈打たせる)
+# 1秒10コマで呼ぶため,ペインの高さは大きさが変わり得る時(size_stale)だけ聞き直す
 __draw() {
   local size
+  integer f
 
-  # 端末の縦幅はtmuxが続けてペインの大きさを変えると最大0.25秒遅れて届き,古い縦幅で描くと溢れた分だけ
-  # 表示が上にずれるため,tmuxの中では大きさを変えた時点で変わるペインの高さを使う
-  [[ -z ${TMUX_PANE:-} ]] || size=$(tmux display -p -t "$TMUX_PANE" '#{pane_height}' 2>/dev/null || true)
-  # tput lines はstdoutもstderrも端末でないと実際の縦幅が取れず既定の24を返すため,端末に直接聞く
-  [[ -n $size ]] || size=$(stty size </dev/tty 2>/dev/null || print 24)
-  __compose_screen "${size%% *}"
-  printf '\e[H\e[J%s' "$out"
+  if (( size_stale )); then
+    # 端末の縦幅はtmuxが続けてペインの大きさを変えると最大0.25秒遅れて届き,古い縦幅で描くと溢れた分だけ
+    # 表示が上にずれるため,tmuxの中では大きさを変えた時点で変わるペインの高さを使う
+    [[ -z ${TMUX_PANE:-} ]] || size=$(tmux display -p -t "$TMUX_PANE" '#{pane_height} #{pane_width}' 2>/dev/null || true)
+    # tput lines はstdoutもstderrも端末でないと実際の縦幅が取れず既定の24を返すため,端末に直接聞く
+    [[ -n $size ]] || size=$(stty size </dev/tty 2>/dev/null || print '24 80')
+    pane_rows=${size%% *}
+    pane_cols=${size##* }
+    size_stale=0
+  fi
+  # 閃光: 状態が変わってから0.4秒,STATUSを反転させて2度点滅させる(このコマだけなので一覧の写しに付ける)
+  local -a lines=("${lines[@]}")
+  local id
+  integer age i
+  for id in ${(k)flash_at}; do
+    age=$(( (EPOCHREALTIME - flash_at[$id]) * 10 ))
+    if (( age >= 4 )); then
+      unset "flash_at[$id]"
+      continue
+    fi
+    i=${line_of[$id]:-0}
+    (( i && age != 2 )) || continue
+    if [[ ${lines[i]} == *'● '* ]]; then
+      lines[i]=${lines[i]/● /$'\e[7m'● }
+    else
+      lines[i]=${lines[i]/○ /$'\e[7m'○ }
+    fi
+  done
+  __compose_screen "$pane_rows"
+  # コマは時刻から決め,キーを押して描き直しが増えても速さが変わらないようにする
+  f=$(( EPOCHREALTIME * 10 ))
+  out=${out//● Working/${spin[f % ${#spin} + 1]} Working}
+  out=${out//● Input/${pulse[f / 2 % ${#pulse} + 1]} Input}
+  # 一覧が収まって下に6行以上余る時は,余白に作業の見える化を出す(下に開いて一覧を中身の高さに縮めた時は出ない)
+  if (( ${#lines} + 7 <= pane_rows )); then
+    __ops_panel $(( pane_rows - ${#lines} - 1 )) $f
+    out+=$'\n\n'"${(pj:\n:)ops_panel}"
+  fi
+  # 1コマを書き終えるまでtmuxにペインを出させず,消してから描き直す途中の姿を見せない
+  printf '\e[?2026h\e[H\e[J%s\e[?2026l' "$out"
 }
 
 # 次(1)/前(-1)の選択できるペインIDを返す(未選択ならC-nは先頭から,C-pは末尾から始める)
@@ -906,19 +1464,31 @@ __step_selection() {
 }
 
 if [[ ${1:-} == --once ]]; then
-  __render | while IFS= read -r line; do print -r -- "${${line#*$'\t'}#*$'\t'}"; done
+  __render | while IFS= read -r line; do print -r -- "${${${line#*$'\t'}#*$'\t'}#*$'\t'}"; done
   exit 0
 fi
 
-# watch表示(1秒間隔で再描画, Escで終了)
+# watch表示(一覧は裏で1秒ごとに組み立て,ここでは1秒10コマで描き直す, Escで終了)
 # 代替画面を使う(通常バッファに上書きし続けると溢れた分がペインのスクロールになり,
 # iTerm2は既定でalternate screenから流れた行をscrollbackへ送るため端末側の表示がずれていく)
-# 下に開いたAIを入れ替えたまま残さないよう,終了時(ペインやウィンドウを閉じた時も含む)に元の配置へ戻す
+# 下に開いたAIを入れ替えたまま残さないよう,終了時(ペインやウィンドウを閉じた時も含む)に元の配置へ戻し,裏の組み立ても止める
 # 下に開いたAIやC-lで開いたウィンドウから一覧へ戻ったことを知るため,フォーカスの出入りも通知させる(tmuxのfocus-eventsがonの時だけ届く)
 last_swap=()
 dir_panes=()
-trap '__undo_swap; printf "\e[?1004l\e[?7h\e[?25h\e[?1049l"' EXIT
+gen=0
+need_render=0
+size_stale=1
+render_seq=''
+render_pid=''
+# 裏で組み立てた一覧と,手元で変えた中身(世代と下に開いたAI)を受け渡す場所
+work_dir=$(mktemp -d "${TMPDIR:-/tmp}/ai-bridge.XXXXXX")
+render_file=$work_dir/rendered
+ctl_file=$work_dir/ctl
+print -r -- 0 >| "$ctl_file"
+trap '__undo_swap; [[ -z $render_pid ]] || kill $render_pid 2>/dev/null; rm -rf -- "$work_dir"; printf "\e[?2026l\e[?1004l\e[?7h\e[?25h\e[?1049l"' EXIT
 trap 'exit 0' INT TERM HUP
+# ペインの大きさが変わったら,次のコマで高さを聞き直す
+trap 'size_stale=1' WINCH
 printf '\e[?1049h\e[?7l\e[?25l\e[?1004h'
 
 # iTerm2のウィンドウをまたいだジャンプはmacOSのAppleScriptで行うため,macOS以外やtmuxの外では選択自体を無効にする
@@ -930,14 +1500,29 @@ fi
 selected_id=''
 scroll_top=1
 
+# 最初の一覧は裏の組み立てを待たずにその場で出す
+rendered=("${(@f)$(__render)}")
+__split_rendered
+__ops_load
+__render_loop >/dev/null 2>&1 &
+render_pid=$!
+
 while :; do
-  rendered=("${(@f)$(__render)}")
-  __split_rendered
+  # 裏で組み立て終えた一覧のうち,手元で最後に中身を変えた後に組み立てたもの(世代が今と同じもの)だけを取り込む
+  # (起動直後は裏がまだ一覧を書いていないので,ファイルがある時だけ読む)
+  if [[ -r $render_file ]] && read -r new_seq new_gen < "$render_file" && [[ $new_seq != "$render_seq" && $new_gen == "$gen" ]]; then
+    rendered=("${(@f)$(<"$render_file")}")
+    rendered[1]=()
+    render_seq=$new_seq
+    __split_rendered
+    __ops_load
+    size_stale=1
+  fi
   __draw
 
   if [[ -t 0 ]]; then
     # 押したキーがエコーされると,カーソルのある画面右下に ^N 等が次の再描画まで残るため -s で抑える
-    if read -s -t 1 -k 1 key 2>/dev/null; then
+    if read -s -t 0.1 -k 1 key 2>/dev/null; then
       case $key in
         $'\e')
           # 矢印キー等はEscに続く文字と一緒に届くため,単独のEscの時だけ終了する
@@ -1012,6 +1597,13 @@ while :; do
           selected_id=''
           ;;
       esac
+      # 下に開いた等で中身が変わった時はその場で組み立て直し,選択の表示も裏を待たずに作り直す
+      if (( need_render )); then
+        rendered=("${(@f)$(__render)}")
+        need_render=0
+      fi
+      __split_rendered
+      __ops_load
     fi
   else
     sleep 1
