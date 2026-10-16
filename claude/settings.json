@@ -178,6 +178,16 @@
         ]
       }
     ],
+    "PostToolUseFailure": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ai-agent-state claude PostToolUseFailure"
+          }
+        ]
+      }
+    ],
     "PermissionRequest": [
       {
         "hooks": [
