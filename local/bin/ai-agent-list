@@ -413,7 +413,7 @@ __meta_columns() {
 
 # 1行分の表示を整形する(形式: "<priority>\t<mtime>\t<ジャンプ先のペインID>\t<整形済み表示行>")
 __format_row() {
-  local target agent agent_pid state dir key mtime meta model ctx jump wait_label
+  local target agent agent_pid state dir key mtime meta model ctx jump wait_label target_col open_mark
   target=$1
   agent=$2
   agent_pid=$3
@@ -437,12 +437,17 @@ __format_row() {
     wait_label=$(__wait_label "$(<"$state_dir/$key.wait")")
   fi
 
+  # 下に開いている印(▼)は細い記号でも目に留まるよう,鮮やかな赤の太字にする
+  # 色の指定が幅に数えられないよう,幅をそろえた後で色を付ける
+  target_col=$(__pad "$target" 20)
+  open_mark=$'\e[1;38;5;196m▼\e[0m'
+
   printf '%s\t%s\t%s\t%-7s %s %-7s %s %s %-12s %s %s\n' \
     "$(__priority_for "$state")" \
     "$mtime" \
     "$jump" \
     "${${agent_pid:--}[1,7]}" \
-    "$(__pad "$target" 20)" \
+    "${target_col/#▼/$open_mark}" \
     "${agent[1,7]}" \
     "$(__label_for "$state" "$wait_label")" \
     "$(__pad "$dir" 22)" \
@@ -674,7 +679,7 @@ __undo_swap() {
 # 表示範囲をずらせるよう,データ行の開始位置を first_row に,選択中の行の位置を selected_line に入れる(無ければ0)
 # 未選択のC-kで開く先として,判断待ち,無ければ完了のうち一番上のペインIDを attention_id に入れる
 # 選択できる時は数字キーで選べるよう,選択できる行の頭に1〜9の番号を付ける
-# 選択中のペインがあれば反転表示にし,一覧から消えていれば選択を外す
+# 選択中のペインがあれば目立たせ,一覧から消えていれば選択を外す
 __split_rendered() {
   local line priority id input_id done_id num input_priority done_priority
 
@@ -713,8 +718,19 @@ __split_rendered() {
     return 0
   fi
 
-  # 色付きのSTATUSを残したまま反転すると,その色が背景になって行の中で別の色の帯になるため色指定を外して反転する
-  lines[selected_line]=$'\e[7m'${(S)lines[selected_line]//$'\e['*m/}$'\e[0m'
+  lines[selected_line]=$(__highlight_selected "${lines[selected_line]}")
+}
+
+# 選択中の行に暗い紺を行末まで敷き,文字の色は残す
+# (反転は白地が目に刺さり,色付きの列が別の色の帯になるため背景色で示す)
+__highlight_selected() {
+  local bg reset bright
+  bg=$'\e[48;2;31;47;79m'
+  reset=$'\e[0m'
+  # 紺地では暗い赤・緑・黄・灰色が読みにくいため,同じ色相の明るい色にする(灰色は明るい灰色)
+  bright=${${${${${${1//$'\e[1;31m'/$'\e[1;91m'}//$'\e[1;33m'/$'\e[1;93m'}//$'\e[31m'/$'\e[91m'}//$'\e[32m'/$'\e[92m'}//$'\e[33m'/$'\e[93m'}//$'\e[90m'/$'\e[37m'}
+  # 行の中の色の解除で背景も消えるので,解除のたびに敷き直してから行末まで塗る
+  print -rn -- "$bg${bright//$reset/$reset$bg}"$'\e[K'"$reset"
 }
 
 # 隠れた行数の表示(下だけなら従来どおり "+N more")
