@@ -372,6 +372,11 @@ __usage_lines() {
 # 現存しないpane・シェルに戻ったpane・死んだプロセスの状態ファイルを掃除する
 __cleanup_stale() {
   local panes live state_file id cmd pid
+  local -a tmp_files
+
+  # 書き込みの途中で止められて残った一時ファイルを消す(書き込み中のものを消さないよう,5分以上経ったものだけ)
+  tmp_files=("$state_dir"/.(state|meta|activity).*(N.mm+5))
+  (( ! ${#tmp_files} )) || rm -f -- "${tmp_files[@]}"
 
   # tmuxサーバー停止中やソケット一時障害でpane一覧が取れないと,全paneを
   # 「消えたpane」と誤判定して状態ファイルを消し去るため掃除自体を打ち切る
@@ -617,21 +622,20 @@ __open_dir_window() {
   dir_panes+=("$pane")
 }
 
-# 開いたディレクトリのウィンドウから一覧へ戻った時,開いた時のシェル1つのままなら閉じる
-# 何か実行中だったりペインを分けていれば巻き込まないよう残し,後でアプリの切り替え等から戻った時に
-# 閉じてしまわないよう以後は追わない(別のウィンドウから戻った時は直前のウィンドウではないので何もしない)
+# ウィンドウを移ってから一覧へ戻った時に呼び,C-lで開いたウィンドウのうちシェル1つに戻っているものを全部閉じる
+# 何か実行中だったりペインを分けていれば巻き込まないよう残し,次に戻った時にもう一度見る
 __close_dir_window() {
-  local pane info last panes cmd
+  local pane info panes cmd
   local -a kept
 
   for pane in "${dir_panes[@]}"; do
     # 既に閉じられたウィンドウは追うのをやめる
-    info=$(tmux display -p -t "$pane" '#{window_last_flag} #{window_panes} #{pane_current_command}' 2>/dev/null) || continue
-    read -r last panes cmd <<< "$info"
-    if [[ $last != 1 ]]; then
-      kept+=("$pane")
-    elif [[ $panes == 1 && ( $cmd == zsh || $cmd == bash ) ]]; then
+    info=$(tmux display -p -t "$pane" '#{window_panes} #{pane_current_command}' 2>/dev/null) || continue
+    read -r panes cmd <<< "$info"
+    if [[ $panes == 1 && ( $cmd == zsh || $cmd == bash ) ]]; then
       tmux kill-window -t "$pane" 2>/dev/null || true
+    else
+      kept+=("$pane")
     fi
   done
   dir_panes=("${kept[@]}")
@@ -945,7 +949,7 @@ __compose_screen() {
 # AIは一覧の並びが状態で入れ替わっても同じ名前で示せるよう,行番号ではなくTARGETで示す
 typeset -A repo_root_of ops_verb_col
 ops_verb_col=(ORDER 213 MSG 141 EDIT 48 EXEC 51 TEST 87 COMMIT 220 PUSH 214 SPAWN 141 FETCH 75 SEARCH 75 STEP 159 ASK 214 SKILL 141 AWAIT 214 DONE 203)
-ops_sig=''
+ops_tsig=''
 ops_log=()
 ops_cached=()
 ops_newest=''
@@ -953,11 +957,15 @@ ops_newest_at=0
 ops_label_w=4
 ops_repo_count=0
 ops_cache_cols=0
-# ペインの幅(描画で大きさを聞き直す時に高さと一緒に覚える)
+ops_cache_rows=0
+# ペインの高さと幅(描画で大きさを聞き直す時に覚える,作業ログの行は高さの分だけ作っておく)
+pane_rows=24
 pane_cols=80
-# AIごとの材料(作業ディレクトリのリポジトリ・指示とその時刻・ターンの始まりと終わり・実行中のコマンド・承認待ち・
-# 最後に動いた時刻・このターンの編集の集計・コミットやプッシュの印)と,このターンに触ったファイル
-typeset -A ag_root ag_task ag_task_t ag_turn_t ag_end ag_run ag_run_t ag_wait ag_last ag_files ag_add ag_del ag_mark ag_mark_t ops_files
+# AIごとの材料(作業ディレクトリとそのリポジトリ・指示とその時刻・ターンの始まりと終わり・実行中のコマンド・承認待ち・
+# 最後に動いた時刻・このターンの編集の集計・コミットやプッシュの印)と,このターンに触ったファイル(キーは リポジトリ<TAB>パス<TAB>AI)
+typeset -A ag_cwd ag_root ag_task ag_task_t ag_turn_t ag_end ag_run ag_run_t ag_wait ag_last ag_files ag_add ag_del ag_mark ag_mark_t ops_files
+# 作業ログは追記されていくだけなので,AIごとに読んだ所(inode・大きさ・1行目・行数)と拾った出来事を覚えて,増えた行だけを読む
+typeset -A ops_ino ops_size ops_head ops_seen ops_ev
 
 # コマンドの種類(テストの実行・コミット・プッシュ)を,コマンドとして実行した時だけ判定する
 # && ; | で区切った各部分の先頭の語で見る(環境変数の指定や bundle exec 等の前置きは飛ばす)
@@ -1016,39 +1024,86 @@ __fmt_dur() {
   else REPLY="${s}s"; fi
 }
 
+# 読んでいるAIの出来事(呼び出し元の ev)に足す
 __ops_add() { # 時刻 キー 動詞 対象 補足
   local tk
   # 秒未満の桁数が記録ごとに違うと数として並べた時に前後が狂うので,小数点以下を3桁にそろえる
   printf -v tk '%.3f' $1
-  ops_log+=("$tk"$'\t'"$2"$'\t'"$3"$'\t'"$4"$'\t'"$5")
+  ev+=("$tk"$'\t'"$2"$'\t'"$3"$'\t'"$4"$'\t'"$5")
+}
+
+# 文字列のバイト数(書きかけの行を見分けるため,ファイルの大きさと比べる)
+__byte_len() {
+  setopt localoptions nomultibyte
+  REPLY=${#1}
+}
+
+# AIの材料と作業ログを読んだ所を捨てる(作業ログを最初から読み直す時と,一覧から消えた時)
+__ops_forget() {
+  local k
+
+  unset "ag_cwd[$1]" "ag_root[$1]" "ag_task[$1]" "ag_task_t[$1]" "ag_turn_t[$1]" "ag_end[$1]" "ag_run[$1]" "ag_run_t[$1]" \
+    "ag_wait[$1]" "ag_last[$1]" "ag_files[$1]" "ag_add[$1]" "ag_del[$1]" "ag_mark[$1]" "ag_mark_t[$1]" \
+    "ops_ino[$1]" "ops_size[$1]" "ops_head[$1]" "ops_seen[$1]" "ops_ev[$1]"
+  for k in ${(k)ops_files}; do
+    [[ ${ops_files[$k]%% *} == "$1" ]] && unset "ops_files[$k]"
+  done
+  return 0
 }
 
 # 一覧に出ているAIの作業ログを読み,ワークスペースと作業ログの材料を作る
-# どのAIの作業ログもTARGETも変わっていなければ読み直さない
+# 全部を読み直すと描き直しが止まるため,追記されていくだけの作業ログは前に読んだ行を読み直さず,増えた行だけを読む
+# (切り詰めや作り直しで中身が入れ替わった時は最初から読み直し,一覧から消えたAIの材料は捨てる)
 __ops_load() {
-  local key f line kind tool obj extra cwd root k sig=''
-  local -a p v
-  local -A st
-  float t now=$EPOCHREALTIME
-  integer a d
+  local key f kind tool obj extra cwd root k content tsig
+  local -a p v lines ev all
+  local -A st st2
+  typeset -F t now
+  integer a d i n changed
 
-  for key in $agent_keys; do
-    f=$state_dir/$key.activity
-    if zstat -H st "$f" 2>/dev/null; then sig+="$key=${target_of[$key]}:${st[mtime]}:${st[size]} "; else sig+="$key=${target_of[$key]} "; fi
+  now=$EPOCHREALTIME
+
+  for key in ${(k)ops_ino}; do
+    (( ${agent_keys[(Ie)$key]} )) && continue
+    __ops_forget $key
+    changed=1
   done
-  [[ $sig == "$ops_sig" ]] && return 0
-  ops_sig=$sig
 
-  ops_log=()
-  ag_root=() ag_task=() ag_task_t=() ag_turn_t=() ag_end=() ag_run=() ag_run_t=() ag_wait=() ag_last=()
-  ag_files=() ag_add=() ag_del=() ag_mark=() ag_mark_t=() ops_files=()
   for key in $agent_keys; do
     f=$state_dir/$key.activity
-    [[ -r $f ]] || continue
-    for line in "${(@f)$(<$f)}"; do
-      p=("${(@ps:\t:)line}")
+    if ! zstat -H st "$f" 2>/dev/null; then
+      if (( ${+ops_ino[$key]} )); then
+        __ops_forget $key
+        changed=1
+      fi
+      continue
+    fi
+    [[ ${st[inode]} == "${ops_ino[$key]:-}" ]] && (( st[size] == ${ops_size[$key]:-0} )) && continue
+
+    changed=1
+    content=$(<$f)
+    # 読んでいる間に置き換わると,どちらの中身を読んだか分からないので次に最初から読み直す
+    if ! zstat -H st2 "$f" 2>/dev/null || [[ ${st2[inode]} != "${st[inode]}" ]]; then
+      __ops_forget $key
+      continue
+    fi
+    lines=("${(@f)content}")
+    # 切り詰めで置き換わった(inodeが違う)・作り直された(1行目が違う)時は最初から読み直す
+    [[ ${st[inode]} == "${ops_ino[$key]:-}" && ${lines[1]} == "${ops_head[$key]:-}" ]] || __ops_forget $key
+    n=${#lines}
+    # 大きさが読んだ中身と末尾の改行1つの分に合わない時は,最後の行が書きかけかもしれないので次に読む
+    __byte_len "$content"
+    (( REPLY + 1 == st[size] )) || (( n-- ))
+    ev=()
+    for (( i = ${ops_seen[$key]:-0} + 1; i <= n; i++ )); do
+      p=("${(@ps:\t:)lines[i]}")
+      # 時刻で始まらない行は数として扱えず描き手ごと止まるので読み飛ばす
+      [[ ${p[1]} == <->.<-> ]] || continue
       t=${p[1]} kind=${p[2]} tool=${p[3]} obj=${p[4]} extra=${p[5]} cwd=${p[6]}
-      [[ -n $cwd ]] && { __repo_root "$cwd"; ag_root[$key]=$REPLY }
+      if [[ -n $cwd && $cwd != "${ag_cwd[$key]:-}" ]]; then
+        __repo_root "$cwd"
+        ag_cwd[$key]=$cwd ag_root[$key]=$REPLY
+      fi
       ag_last[$key]=$t
       case $kind in
         U)
@@ -1076,10 +1131,14 @@ __ops_load() {
             AskUserQuestion) __ops_add $t $key ASK "$obj" '' ;;
             Skill) __ops_add $t $key SKILL "$obj" '' ;;
           esac ;;
-        D)
+        D | F)
+          # 承認を待っていたツールが終われば(失敗も含む),承認待ちも終わっている
+          [[ ${ag_wait[$key]:-} == "$obj" ]] && ag_wait[$key]=''
           case $tool in
             Bash | exec | shell) [[ ${ag_run[$key]:-} == "$obj" ]] && ag_run[$key]='' ;;
             Edit | Write | MultiEdit | NotebookEdit | apply_patch)
+              # 失敗した編集はファイルを変えていないので数えない
+              [[ $kind == D ]] || continue
               # パッチは複数のファイルをまとめて書くので,先頭のファイルに寄せる
               obj=${obj%%, *}
               [[ $obj == /* ]] || obj=${cwd:-$HOME}/$obj
@@ -1087,7 +1146,8 @@ __ops_load() {
               [[ $obj == (/tmp/*|/private/tmp/*|/var/folders/*) ]] && continue
               __repo_root "${obj:h}"; root=$REPLY
               a=${${extra%% *}#+} d=${${extra##* }#-}
-              k=$root$'\t'${obj#$root/}
+              # 同じファイルを複数のAIが触っても,AIごとに数える
+              k=$root$'\t'${obj#$root/}$'\t'$key
               if [[ -n ${ops_files[$k]:-} ]]; then
                 v=(${=ops_files[$k]})
                 ops_files[$k]="$key $(( v[2] + a )) $(( v[3] + d )) $(( v[4] + 1 )) $t"
@@ -1114,10 +1174,30 @@ __ops_load() {
           __ops_add $t $key DONE "$obj${REPLY:+  in $REPLY}" '' ;;
       esac
     done
+    (( ! ${#ev} )) || ops_ev[$key]+=${(F)ev}$'\n'
+    ops_ino[$key]=${st[inode]} ops_size[$key]=${st[size]} ops_head[$key]=${lines[1]} ops_seen[$key]=$n
   done
-  # 1時間より前の出来事は出さず,時刻順に並べる
-  ops_log=("${(@on)ops_log}")
-  while (( ${#ops_log} )) && (( ${ops_log[1]%%$'\t'*} < now - 3600 )); do ops_log[1]=(); done
+
+  # AIごとの出来事を合わせて時刻順に並べる
+  if (( changed )); then
+    all=()
+    for key in ${(k)ops_ev}; do
+      all+=("${(@f)${ops_ev[$key]%$'\n'}}")
+    done
+    ops_log=("${(@on)all}")
+  fi
+  # 1時間より前の出来事は出さない(作業ログが変わらなくても,時間が経てば外す)
+  for (( i = 1; i <= ${#ops_log}; i++ )); do
+    (( ${ops_log[i]%%$'\t'*} < now - 3600 )) || break
+  done
+  if (( i > 1 )); then
+    ops_log=("${(@)ops_log[i,-1]}")
+    changed=1
+  fi
+  # 出来事もTARGETの名前も変わっていなければ,作っておいた作業ログの行をそのまま使う
+  tsig=${(j: :)${(@kv)target_of}}
+  (( changed )) || [[ $tsig != "$ops_tsig" ]] || return 0
+  ops_tsig=$tsig
   # いちばん新しい出来事が変わったら,それを1文字ずつ打ち出し直す
   if [[ ${ops_log[-1]:-} != "$ops_newest" ]]; then
     ops_newest=${ops_log[-1]:-} ops_newest_at=$now
@@ -1172,16 +1252,19 @@ __ops_log_line() { # $1=出来事 $2=新しい順の位置(0が最新) $3=色の
 }
 
 # 作業ログの行は読み直した時に作っておき,コマごとには最新の1行だけ作り直す
+# 出せるのは多くてもペインの高さまでなので,新しい方からその分だけ作る
 __ops_cache_log() {
   local label
-  integer i n=${#ops_log}
+  integer i n=${#ops_log} from
   ops_cache_cols=$pane_cols
+  ops_cache_rows=$pane_rows
   # TARGETの列は出ているAIの名前の長さに合わせる(長すぎる名前は21桁で切る)
   ops_label_w=4
   for label in ${(v)target_of}; do (( ${(m)#label} > ops_label_w )) && ops_label_w=${(m)#label}; done
   (( ops_label_w > 21 )) && ops_label_w=21
   ops_cached=()
-  for (( i = 1; i < n; i++ )); do
+  from=$(( n - pane_rows > 1 ? n - pane_rows : 1 ))
+  for (( i = from; i < n; i++ )); do
     __ops_log_line "${ops_log[i]}" $(( n - i )) 0
     ops_cached+=("$REPLY")
   done
@@ -1271,7 +1354,8 @@ __ops_ws() { # $1=使ってよい行数 $2=コマ → ops_ws 配列
       [[ ${ag_root[$key]:-} == "$root" ]] || continue
       [[ ${agent_prio[$key]:-} == 2 ]] && working=1
       __ops_badge $key $2; agents+="  $REPLY"
-      if [[ -n ${ag_wait[$key]:-} ]]; then
+      # 承認待ちは一覧の状態が判断待ちの時だけ出す(拒否や中断では作業ログに終わりが残らないため)
+      if [[ -n ${ag_wait[$key]:-} && ${agent_prio[$key]:-} == 0 ]]; then
         __clip "${ag_wait[$key]}" 30; agents+=$'\e[0;38;5;214m'" AWAIT $REPLY"
       elif [[ -n ${ag_task[$key]:-} ]]; then
         __clip "${ag_task[$key]}" 28
@@ -1317,7 +1401,7 @@ __ops_ws() { # $1=使ってよい行数 $2=コマ → ops_ws 配列
       done
       __fmt_dur $age; dur=$REPLY
       pw=$(( iw - 48 - ops_label_w )); (( pw < 8 )) && pw=8
-      __clip "${k#*$'\t'}" $pw; relp=$REPLY
+      __clip "${${k#*$'\t'}%$'\t'*}" $pw; relp=$REPLY
       # 書き込んだ瞬間はその行を白く光らせる
       if (( age < 1.5 )); then line="   "$'\e[1;38;5;231m'"✎ $relp"; else line="   "$'\e[38;5;48m'"✎ "$'\e[38;5;252m'"$relp"; fi
       __vis "$line"
@@ -1326,8 +1410,9 @@ __ops_ws() { # $1=使ってよい行数 $2=コマ → ops_ws 配列
       (( ++shown ))
     done
     # そのリポジトリで動いているAIの,実行中のコマンド
+    # (中断・拒否では作業ログに終わりが残らないため,一覧の状態が作業中の時だけ出す)
     for key in $agent_keys; do
-      [[ ${ag_root[$key]:-} == "$root" && -n ${ag_run[$key]:-} ]] || continue
+      [[ ${ag_root[$key]:-} == "$root" && -n ${ag_run[$key]:-} && ${agent_prio[$key]:-} == 2 ]] || continue
       (( ${#ops_ws} < max )) || break
       __fmt_dur $(( now - ag_run_t[$key] )); dur=$REPLY
       pw=$(( iw - 34 - ops_label_w )); (( pw < 8 )) && pw=8
@@ -1346,7 +1431,7 @@ __ops_ws() { # $1=使ってよい行数 $2=コマ → ops_ws 配列
   return 0
 }
 
-# 作業ログ: 有益な出来事だけを新しいものを下に出す(いちばん新しい行は1文字ずつ打ち出し,承認待ちは脈打たせる)
+# 作業ログ: 有益な出来事だけを新しいものを下に出す(いちばん新しい行は1文字ずつ打ち出し,判断待ちの間の承認待ちは脈打たせる)
 __ops_log_lines() { # $1=行数 $2=コマ → ops_lg 配列
   local plain
   local -a p
@@ -1363,7 +1448,7 @@ __ops_log_lines() { # $1=行数 $2=コマ → ops_lg 配列
   else
     __ops_log_line "${ops_log[n]}" 0 0
     p=("${(@ps:\t:)ops_log[n]}")
-    [[ ${p[3]} == AWAIT ]] && (( $2 / 3 % 2 )) && REPLY=${REPLY//$'\e[1;38;5;214m'/$'\e[1;38;5;94m'}
+    [[ ${p[3]} == AWAIT && ${agent_prio[${p[2]}]:-} == 0 ]] && (( $2 / 3 % 2 )) && REPLY=${REPLY//$'\e[1;38;5;214m'/$'\e[1;38;5;94m'}
     ops_lg+=("$REPLY")
   fi
 }
@@ -1373,8 +1458,8 @@ __ops_panel() { # $1=行数 $2=コマ
   local -a out
   integer h=$1 wh lh i agents_n=0
   local key
-  # ペインの幅が変わったら,作っておいた作業ログの行を今の幅で作り直す
-  (( ops_cache_cols == pane_cols )) || __ops_cache_log
+  # ペインの幅が変わった・作っておいたより高くなったら,作業ログの行を今の大きさで作り直す
+  (( ops_cache_cols == pane_cols && ops_cache_rows >= pane_rows )) || __ops_cache_log
   for key in $agent_keys; do [[ -n ${ag_last[$key]:-} ]] && (( ++agents_n )); done
   __ops_ws $(( (h - 3) / 2 )) $2
   wh=${#ops_ws}
@@ -1437,6 +1522,9 @@ __draw() {
     __ops_panel $(( pane_rows - ${#lines} - 1 )) $f
     out+=$'\n\n'"${(pj:\n:)ops_panel}"
   fi
+  # 何も動いていない時に端末へ書き続けないよう,前のコマと大きさも中身も同じなら書き直さない
+  [[ "$pane_rows $pane_cols"$'\n'$out != "$drawn" ]] || return 0
+  drawn="$pane_rows $pane_cols"$'\n'$out
   # 1コマを書き終えるまでtmuxにペインを出させず,消してから描き直す途中の姿を見せない
   printf '\e[?2026h\e[H\e[J%s\e[?2026l' "$out"
 }
@@ -1472,12 +1560,15 @@ fi
 # 代替画面を使う(通常バッファに上書きし続けると溢れた分がペインのスクロールになり,
 # iTerm2は既定でalternate screenから流れた行をscrollbackへ送るため端末側の表示がずれていく)
 # 下に開いたAIを入れ替えたまま残さないよう,終了時(ペインやウィンドウを閉じた時も含む)に元の配置へ戻し,裏の組み立ても止める
-# 下に開いたAIやC-lで開いたウィンドウから一覧へ戻ったことを知るため,フォーカスの出入りも通知させる(tmuxのfocus-eventsがonの時だけ届く)
+# 下に開いたAIから一覧へ戻ったことや,ウィンドウを移ってから一覧へ戻ったことを知るため,フォーカスの出入りも通知させる
+# (tmuxのfocus-eventsがonの時だけ届く)
 last_swap=()
 dir_panes=()
+left_window=0
 gen=0
 need_render=0
 size_stale=1
+drawn=''
 render_seq=''
 render_pid=''
 # 裏で組み立てた一覧と,手元で変えた中身(世代と下に開いたAI)を受け渡す場所
@@ -1485,7 +1576,8 @@ work_dir=$(mktemp -d "${TMPDIR:-/tmp}/ai-bridge.XXXXXX")
 render_file=$work_dir/rendered
 ctl_file=$work_dir/ctl
 print -r -- 0 >| "$ctl_file"
-trap '__undo_swap; [[ -z $render_pid ]] || kill $render_pid 2>/dev/null; rm -rf -- "$work_dir"; printf "\e[?2026l\e[?1004l\e[?7h\e[?25h\e[?1049l"' EXIT
+# ペインを閉じた時は描き直しや停止が失敗し得るが,set -e で後片付けが途中で止まらないよう失敗しても続ける
+trap '__undo_swap || true; [[ -z $render_pid ]] || kill $render_pid 2>/dev/null || true; rm -rf -- "$work_dir"; printf "\e[?2026l\e[?1004l\e[?7h\e[?25h\e[?1049l"' EXIT
 trap 'exit 0' INT TERM HUP
 # ペインの大きさが変わったら,次のコマで高さを聞き直す
 trap 'size_stale=1' WINCH
@@ -1537,14 +1629,22 @@ while :; do
               esc_seq+=$rest
             done
           fi
+          # フォーカスが外れた(\e[O)時,この一覧のウィンドウがカレントでなくなっていればウィンドウを移ったと覚えておく
+          # (アプリの切り替えではカレントのウィンドウが変わらないので,そこから戻ってもC-lで開いたウィンドウは閉じない)
+          if [[ $esc_seq == '[O' ]] && (( ${#dir_panes} )) && [[ $(tmux display -p -t "${TMUX_PANE:-}" '#{window_active}' 2>/dev/null) == 0 ]]; then
+            left_window=1
+          fi
           # フォーカスが戻った(\e[I)時,直前にいたペインが下に開いたAIなら作業を終えたとみなして q と同じく元に戻す
           # 描画中に届いて遅れて処理しても判定がずれないよう,印を持たずにその時点のtmuxの「直前のペイン」で決める
           # (別のウィンドウから入れ替えたAIは入れ替えた時点では履歴に載らないため,ウィンドウやアプリの切り替えから戻っても閉じない)
           if [[ $esc_seq == '[I' ]] && (( ${#last_swap} )) && [[ $(tmux display -p -t "${last_swap[1]}" '#{pane_last}' 2>/dev/null) == 1 ]]; then
             __undo_swap
           fi
-          # 同じく直前にいたウィンドウがC-lで開いたウィンドウなら閉じる
-          [[ $esc_seq != '[I' ]] || __close_dir_window
+          # ウィンドウを移ってから戻った時は,C-lで開いたウィンドウのうちシェルに戻っているものを閉じる
+          if [[ $esc_seq == '[I' ]]; then
+            (( ! left_window )) || __close_dir_window
+            left_window=0
+          fi
           ;;
         $'\x0e') # Ctrl+n
           if (( selectable )); then

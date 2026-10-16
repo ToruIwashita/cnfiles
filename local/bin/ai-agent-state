@@ -8,10 +8,11 @@
 #   ai-agent-state --reconcile-stuck          # ai-bridgeの描画ループから呼ぶ(取り残されたworkingを倒す)
 #
 # イベントと状態の対応:
-#   UserPromptSubmit / PreToolUse / PostToolUse -> working
+#   UserPromptSubmit / PreToolUse / PostToolUse / PostToolUseFailure -> working
 #   PermissionRequest             -> blocked
 #   Notification                  -> blocked (権限以外の入力待ち,matcherで対象を限定して登録する)
 #   Stop                          -> done (background_tasks実行中はworking維持)
+#   Interrupt                     -> done (codexのEsc中断,中断したターンにはStopが来ない)
 #   SessionStart                  -> idle
 #   SessionEnd                    -> 状態クリア
 set -eu
@@ -34,7 +35,7 @@ __resolve_state() {
   input=$2
 
   case $event in
-    UserPromptSubmit | PreToolUse | PostToolUse)
+    UserPromptSubmit | PreToolUse | PostToolUse | PostToolUseFailure)
       print working
       ;;
     PermissionRequest)
@@ -61,6 +62,10 @@ __resolve_state() {
       else
         __stop_state_for_pane "$TMUX_PANE"
       fi
+      ;;
+    Interrupt)
+      # codexはEscで中断したターンにStopを出さずInterruptを出すため,ここでターンを終える
+      __stop_state_for_pane "$TMUX_PANE"
       ;;
   esac
 }
@@ -91,12 +96,13 @@ __write_state() {
   mv -f "$tmp_file" "$state_dir/$pane_id.state"
 }
 
-# ai-bridgeの作業ログ用に,指示・ツールの開始と完了・承認待ち・ターン終了を1行ずつ追記する
+# ai-bridgeの作業ログ用に,指示・ツールの開始と完了(失敗を含む)・承認待ち・ターン終了(中断を含む)を1行ずつ追記する
 # 一覧の下に「どのリポジトリで何をしているか」を出すための短い要約だけを残す(コマンドは説明があれば説明を使う)
-# 形式: 時刻<TAB>種類(U=指示 P=開始 D=完了 W=承認待ち S=終了)<TAB>ツール<TAB>対象<TAB>補足<TAB>作業ディレクトリ
-# 増え続けないよう,64KBを超えたら新しい200行だけを残す
+# 形式: 時刻<TAB>種類(U=指示 P=開始 D=完了 F=失敗 W=承認待ち S=終了)<TAB>ツール<TAB>対象<TAB>補足<TAB>作業ディレクトリ
+# 一覧にそのまま出すので,タブ・改行に限らず制御文字は空白にする(エスケープシーケンスで表示が崩れないように)
+# 増え続けないよう,64KBを超えたら新しい200行だけを残す(今のターンの指示がそれより前にあれば,その行も残す)
 __record_activity() {
-  local activity_file event input kind line
+  local activity_file event input kind line tmp_file
   local -a size
   activity_file=$1
   event=$2
@@ -106,8 +112,10 @@ __record_activity() {
     UserPromptSubmit) kind=U ;;
     PreToolUse) kind=P ;;
     PostToolUse) kind=D ;;
+    # 失敗した時はPostToolUseが来ないため,失敗として残して実行中の表示を終わらせる
+    PostToolUseFailure) kind=F ;;
     PermissionRequest) kind=W ;;
-    Stop) kind=S ;;
+    Stop | Interrupt) kind=S ;;
     *) return 0 ;;
   esac
 
@@ -150,7 +158,7 @@ __record_activity() {
           else "" end ),
         (.cwd // "")
       ]
-    | map(tostring | gsub("[\\t\\n]"; " ")) | join("\t")
+    | map(tostring | gsub("[[:cntrl:]]"; " ")) | join("\t")
   ' 2>/dev/null) || return 0
   [[ -n $line ]] || return 0
   # 指示やコマンドが入るので,状態ファイルと同じく本人だけが読めるようにして作る
@@ -159,7 +167,17 @@ __record_activity() {
 
   zstat -A size +size "$activity_file" 2>/dev/null || return 0
   if (( size[1] > 65536 )); then
-    tail -n 200 "$activity_file" >| "$activity_file.tmp" 2>/dev/null && mv -f "$activity_file.tmp" "$activity_file"
+    # 並んで動いた別のフックと一時ファイルを取り合わないよう,一時ファイルは毎回別の名前で作る
+    tmp_file=$(mktemp "$state_dir/.activity.XXXXXX" 2>/dev/null) || return 0
+    awk -F '\t' '
+      { l[NR] = $0 }
+      $2 == "U" && $4 !~ /^</ { u = NR }
+      END {
+        s = NR > 200 ? NR - 199 : 1
+        if (u && u < s) print l[u]
+        for (i = s; i <= NR; i++) print l[i]
+      }
+    ' "$activity_file" >| "$tmp_file" 2>/dev/null && mv -f "$tmp_file" "$activity_file" || rm -f "$tmp_file"
   fi
   return 0
 }
@@ -269,7 +287,7 @@ __resolve_state_outside() {
   state_file=$3
 
   case $event in
-    UserPromptSubmit | PreToolUse | PostToolUse)
+    UserPromptSubmit | PreToolUse | PostToolUse | PostToolUseFailure)
       print working
       ;;
     PermissionRequest)
@@ -293,6 +311,9 @@ __resolve_state_outside() {
       else
         print done
       fi
+      ;;
+    Interrupt)
+      print done
       ;;
   esac
 }
