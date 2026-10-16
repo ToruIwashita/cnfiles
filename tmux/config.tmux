@@ -111,8 +111,8 @@ bind x kill-pane
 bind - resize-pane -t 0 -y 20%
 # 上80%・下30%に設定
 bind = resize-pane -t 0 -y 80%
-# 7ウィンドウ作成
-bind T new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}'
+# 6ウィンドウ作成
+bind T new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}' \; new-window -c '#{pane_current_path}'
 # ペイン同時操作
 bind Space setw synchronize-panes \; display "synchronize-panes #{?pane_synchronized,on,off}"
 
