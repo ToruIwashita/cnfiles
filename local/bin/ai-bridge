@@ -961,6 +961,8 @@ ops_cache_rows=0
 # ペインの高さと幅(描画で大きさを聞き直す時に覚える,作業ログの行は高さの分だけ作っておく)
 pane_rows=24
 pane_cols=80
+# 一覧が短い時に作業の見える化の枠が大きくなりすぎないよう,枠の上端はペインの上からこの割合(%)の位置より上にしない
+ops_top_pct=25
 # AIごとの材料(作業ディレクトリとそのリポジトリ・指示とその時刻・ターンの始まりと終わり・実行中のコマンド・承認待ち・
 # 最後に動いた時刻・このターンの編集の集計・コミットやプッシュの印)と,このターンに触ったファイル(キーは リポジトリ<TAB>パス<TAB>AI)
 typeset -A ag_cwd ag_root ag_task ag_task_t ag_turn_t ag_end ag_run ag_run_t ag_wait ag_last ag_files ag_add ag_del ag_mark ag_mark_t ops_files
@@ -1482,7 +1484,7 @@ __ops_panel() { # $1=行数 $2=コマ
 # 1秒10コマで呼ぶため,ペインの高さは大きさが変わり得る時(size_stale)だけ聞き直す
 __draw() {
   local size
-  integer f
+  integer f top nl
 
   if (( size_stale )); then
     # 端末の縦幅はtmuxが続けてペインの大きさを変えると最大0.25秒遅れて届き,古い縦幅で描くと溢れた分だけ
@@ -1518,9 +1520,15 @@ __draw() {
   out=${out//● Working/${spin[f % ${#spin} + 1]} Working}
   out=${out//● Input/${pulse[f / 2 % ${#pulse} + 1]} Input}
   # 一覧が収まって下に6行以上余る時は,余白に作業の見える化を出す(下に開いて一覧を中身の高さに縮めた時は出ない)
+  # 枠の上端は,一覧の下に空行を1行置いた位置か上から ops_top_pct %の位置の低い方にする(枠の6行は残す)
   if (( ${#lines} + 7 <= pane_rows )); then
-    __ops_panel $(( pane_rows - ${#lines} - 1 )) $f
-    out+=$'\n\n'"${(pj:\n:)ops_panel}"
+    top=$(( pane_rows * ops_top_pct / 100 ))
+    (( top > ${#lines} )) || top=$(( ${#lines} + 1 ))
+    (( top <= pane_rows - 6 )) || top=$(( pane_rows - 6 ))
+    __ops_panel $(( pane_rows - top )) $f
+    # 一覧の最後の行を終える改行と,枠までの空行の分
+    nl=$(( top - ${#lines} + 1 ))
+    out+=${(pl:nl::\n:):-}"${(pj:\n:)ops_panel}"
   fi
   # 何も動いていない時に端末へ書き続けないよう,前のコマと大きさも中身も同じなら書き直さない
   [[ "$pane_rows $pane_cols"$'\n'$out != "$drawn" ]] || return 0
