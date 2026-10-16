@@ -125,7 +125,7 @@ alias vi='vim'
 # tmux
 alias tm='mkdir -p -m 700 /private/tmp/tmux-fixed && tmux -S /private/tmp/tmux-fixed/default'
 alias t-ai-session="tm new-session -s $TMUX_AI_SESSION \; split-window -v -c '#{pane_current_path}' \; select-pane -D \; resize-pane -y 20% \; send-keys 'ai-agent-list' Enter \; select-pane -D"
-alias t-ai-loop-session="tm new-session -s $TMUX_AI_LOOP_SESSION \; split-window -v -c '#{pane_current_path}' \; select-pane -D \; resize-pane -y 20% \; send-keys 'ai-agent-list' Enter \; select-pane -D"
+alias t-ai-manage-session="tm new-session -s $TMUX_AI_MANAGE_SESSION \; split-window -v -c '#{pane_current_path}' \; select-pane -D \; resize-pane -y 20% \; send-keys 'ai-agent-list' Enter \; select-pane -D"
 # ls
 alias ls='ls -F --color'
 alias l='ls -ahl'
