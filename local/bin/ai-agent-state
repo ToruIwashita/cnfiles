@@ -11,7 +11,7 @@
 #   UserPromptSubmit / PreToolUse / PostToolUse / PostToolUseFailure -> working
 #   PermissionRequest             -> blocked
 #   Notification                  -> blocked (権限以外の入力待ち,matcherで対象を限定して登録する)
-#   Stop                          -> done (background_tasks実行中はworking維持)
+#   Stop                          -> done (サブエージェント等のAIの作業が裏で続いていればworking維持)
 #   Interrupt                     -> done (codexのEsc中断,中断したターンにはStopが来ない)
 #   SessionStart                  -> idle
 #   SessionEnd                    -> 状態クリア
@@ -27,6 +27,12 @@ if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
 fi
 
 state_dir=$AI_AGENTS_CONFIG_DIR_PATH/state
+
+# ターン終了時に,サブエージェント・チームメイト等のAIの作業がまだ裏で動いているか(stdin JSONのbackground_tasks)
+# シェルのコマンド・監視・MCPのタスクはAIが結果を待っているだけなので含めない(sleepで待つ間をworkingにしないため)
+__background_work_running() {
+  print -r -- "$1" | jq -e '[.background_tasks[]? | select(.status == "running" and ((.type // "") | IN("shell", "monitor", "MCP task") | not))] | length > 0' >/dev/null 2>&1
+}
 
 # イベントから状態を決定する(Stopはstdin JSONのbackground_tasksを考慮)
 __resolve_state() {
@@ -56,8 +62,8 @@ __resolve_state() {
       fi
       ;;
     Stop)
-      # ターン終了時にバックグラウンドタスクが動いていればまだ作業中扱い
-      if print -r -- "$input" | jq -e '[.background_tasks[]? | select(.status == "running")] | length > 0' >/dev/null 2>&1; then
+      # ターン終了時にAIの作業が裏で続いていればまだ作業中扱い
+      if __background_work_running "$input"; then
         print working
       else
         __stop_state_for_pane "$TMUX_PANE"
@@ -306,7 +312,7 @@ __resolve_state_outside() {
       fi
       ;;
     Stop)
-      if print -r -- "$input" | jq -e '[.background_tasks[]? | select(.status == "running")] | length > 0' >/dev/null 2>&1; then
+      if __background_work_running "$input"; then
         print working
       else
         print done
