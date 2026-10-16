@@ -37,6 +37,8 @@ typeset -A target_of agent_prio
 # (見出しの AI Bridge と括弧を付けても幅102桁のペインで見切れないよう,区切りは空白1つにする)
 key_help='C-n/C-p:select C-s:open C-k:open-below C-l:open-dir Enter:jump q:close C-g:clear Esc:quit'
 show_keys=0
+# 一覧の下の作業の見える化(WORKSPACE・OPS.LOG)は,起動時は出さず Space を押した時だけ出す
+show_ops=0
 
 # 一覧の並び順(上ほど対応が必要): blocked > done > working > idle
 __priority_for() {
@@ -551,10 +553,11 @@ __render() {
   __cleanup_stale
   usage=$(__usage_lines)
 
+  # Space はキーの説明に足すと幅102桁のペインで見切れるため,いつも出している見出しの方に書く
   if (( ${selectable:-0} )); then
-    printf 'AI Bridge  %s  (?:keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Bridge  %s  (Space:ops ?:keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   else
-    printf 'AI Bridge  %s  (Esc: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Bridge  %s  (Space:ops Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   fi
   if (( $#usage )); then
     print
@@ -1019,11 +1022,12 @@ __repo_root() {
   REPLY=$r
 }
 
-# 表示用のリポジトリ名(ghq の github.com/持ち主/名前 なら 持ち主/名前,ほかは一番上のディレクトリ名)
+# 表示用のリポジトリ名(ghq の github.com/持ち主/名前 なら名前だけ,ほかは一番上のディレクトリ名)
+# 持ち主まで出すと長くなり,狭いペインで名前が切れて読みにくいため出さない
 __repo_name() {
   local rest
   case $1 in
-    */github.com/*/*) rest=${1#*/github.com/}; REPLY=${rest%%/*}/${${rest#*/}%%/*} ;;
+    */github.com/*/*) rest=${1#*/github.com/}; REPLY=${${rest#*/}%%/*} ;;
     *) REPLY=${1:t} ;;
   esac
 }
@@ -1073,6 +1077,8 @@ __ops_load() {
   typeset -F t now
   integer a d i n changed
 
+  # 出していない間は読まない(出した時に,それまでに増えた行をまとめて読む)
+  (( show_ops )) || return 0
   now=$EPOCHREALTIME
 
   for key in ${(k)ops_ino}; do
@@ -1529,9 +1535,9 @@ __draw() {
   f=$(( EPOCHREALTIME * 10 ))
   out=${out//● Working/${spin[f % ${#spin} + 1]} Working}
   out=${out//● Input/${pulse[f / 2 % ${#pulse} + 1]} Input}
-  # 一覧が収まって下に6行以上余る時は,余白に作業の見える化を出す(下に開いて一覧を中身の高さに縮めた時は出ない)
+  # Space で出している間,一覧が収まって下に6行以上余る時は,余白に作業の見える化を出す(下に開いて一覧を中身の高さに縮めた時は出ない)
   # 枠の上端は,一覧の下に空行を1行置いた位置か上から ops_top_pct %の位置の低い方にする(枠の6行は残す)
-  if (( ${#lines} + 7 <= pane_rows )); then
+  if (( show_ops && ${#lines} + 7 <= pane_rows )); then
     top=$(( pane_rows * ops_top_pct / 100 ))
     (( top > ${#lines} )) || top=$(( ${#lines} + 1 ))
     (( top <= pane_rows - 6 )) || top=$(( pane_rows - 6 ))
@@ -1719,6 +1725,10 @@ while :; do
           if (( selectable )); then
             show_keys=$(( ! show_keys ))
           fi
+          ;;
+        ' ')
+          # 作業の見える化(WORKSPACE・OPS.LOG)を出す・消す
+          show_ops=$(( ! show_ops ))
           ;;
       esac
       # 下に開いた等で中身が変わった時はその場で組み立て直し,選択の表示も裏を待たずに作り直す
