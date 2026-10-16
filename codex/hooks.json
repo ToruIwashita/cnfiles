@@ -66,6 +66,16 @@
         ]
       }
     ],
+    "Interrupt": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ai-agent-state codex Interrupt"
+          }
+        ]
+      }
+    ],
     "SessionEnd": [
       {
         "hooks": [
