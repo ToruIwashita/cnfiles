@@ -614,7 +614,8 @@ __pane_below() {
 # 真下にペインが無ければ仮のペインを作って入れ替え,AIが元いた場所の配置を崩さないよう仮のペインをそこへ置く
 # 仮のペインが他のウィンドウに溜まらないよう,入れ替えは常に1組だけにする(表示中の別のAIは先に元の場所へ戻す)
 __open_below() {
-  local pane_id below target placeholder
+  local pane_id below target placeholder height
+  integer fit
 
   pane_id=$1
 
@@ -622,10 +623,21 @@ __open_below() {
   (( ! ${#last_swap} )) || __undo_swap
 
   below=$(__pane_below)
+  # 開いた時に一覧の高さを中身に合わせるので,閉じた時に戻せるよう開く前の高さを残す
+  height=$(tmux display -p -t "$TMUX_PANE" '#{pane_height}' 2>/dev/null || true)
+  # tmuxはペインを縮める時,カーソルより下の行を消し切ると残りを上の行から消して表示が上にずれるため,
+  # 一覧の高さを変える前にカーソルを左上へ移して下の行から消させる
+  # (描き終えた後も左上に置くと,読み込みの合間に打ったキーのエコーが見出しに重なるので,ここでだけ移す)
+  printf '\e[H'
   if [[ -n $below ]]; then
     target=$below
+    # 一覧と下のAIで分け合う高さは,下のペインの分と間の境界線1行を足したもの
+    fit=$(__fit_height $(( height + 1 + $(tmux display -p -t "$below" '#{pane_height}' 2>/dev/null || print 0) )))
   else
-    placeholder=$(tmux split-window -d -v -l 70% -t "$TMUX_PANE" -P -F '#{pane_id}' 2>/dev/null) || return 0
+    fit=$(__fit_height $height)
+    # 一度縮めてから合わせ直すと一覧も下のAIも続けて2回大きさが変わり,その度に描き直しになるため,
+    # 仮のペインは最初から合わせた後の大きさで作る
+    placeholder=$(tmux split-window -d -v -l $(( height - fit - 1 )) -t "$TMUX_PANE" -P -F '#{pane_id}' 2>/dev/null) || return 0
     target=$placeholder
   fi
 
@@ -634,7 +646,19 @@ __open_below() {
     return 0
   fi
 
-  last_swap=("$pane_id" "$target" "${placeholder:-}")
+  last_swap=("$pane_id" "$target" "${placeholder:-}" "$height")
+  tmux resize-pane -t "$TMUX_PANE" -y $fit 2>/dev/null || true
+  __draw
+}
+
+# 下にAIを開いた時の一覧の高さ(見切れないよう中身の行数にする)
+# 下のAIに半分以上を残すため,一覧と下のAIで分け合う高さ($1)から境界線1行を除いた半分までにし,
+# 入りきらない分は … +N more の表示に任せる
+__fit_height() {
+  integer half
+
+  half=$(( ($1 - 1) / 2 ))
+  print -r -- $(( ${#lines} < half ? ${#lines} : half ))
 }
 
 # このウィンドウのai-bridgeの真下のペインへフォーカスを移す
@@ -663,6 +687,8 @@ __undo_swap() {
 
   (( ${#last_swap} )) || return 0
 
+  # 一覧を開く前の高さへ縮める時も表示が上にずれないよう,先にカーソルを左上へ移す(__open_below と同じ理由)
+  printf '\e[H'
   tmux swap-pane -d -s "${last_swap[1]}" -t "${last_swap[2]}" 2>/dev/null || true
 
   placeholder=${last_swap[3]:-}
@@ -670,9 +696,13 @@ __undo_swap() {
     case $(tmux display -p -t "$placeholder" '#{pane_current_command}' 2>/dev/null || true) in
       zsh | bash) tmux kill-pane -t "$placeholder" 2>/dev/null || true ;;
     esac
+  elif (( ${last_swap[4]:-0} > 0 )); then
+    # 元からあった下のペインと入れ替えた時は,一覧の高さも開く前に戻す(仮のペインは閉じれば元の高さに戻る)
+    tmux resize-pane -t "$TMUX_PANE" -y "${last_swap[4]}" 2>/dev/null || true
   fi
 
   last_swap=()
+  __draw
 }
 
 # 描画結果から優先度とジャンプ先の列を外して lines に,選択できるペインIDを並び順に jump_ids に入れる
@@ -809,6 +839,19 @@ __compose_screen() {
   out=${(F)screen}
 }
 
+# 描画済みの内容(lines)をペインに収めて出す
+__draw() {
+  local size
+
+  # 端末の縦幅はtmuxが続けてペインの大きさを変えると最大0.25秒遅れて届き,古い縦幅で描くと溢れた分だけ
+  # 表示が上にずれるため,tmuxの中では大きさを変えた時点で変わるペインの高さを使う
+  [[ -z ${TMUX_PANE:-} ]] || size=$(tmux display -p -t "$TMUX_PANE" '#{pane_height}' 2>/dev/null || true)
+  # tput lines はstdoutもstderrも端末でないと実際の縦幅が取れず既定の24を返すため,端末に直接聞く
+  [[ -n $size ]] || size=$(stty size </dev/tty 2>/dev/null || print 24)
+  __compose_screen "${size%% *}"
+  printf '\e[H\e[J%s' "$out"
+}
+
 # 次(1)/前(-1)の選択できるペインIDを返す(未選択ならC-nは先頭から,C-pは末尾から始める)
 __step_selection() {
   local direction current
@@ -858,10 +901,7 @@ scroll_top=1
 while :; do
   rendered=("${(@f)$(__render)}")
   __split_rendered
-  # tput lines はstdoutもstderrも端末でないと実際の縦幅が取れず既定の24を返すため,端末に直接聞く
-  tty_size=$(stty size </dev/tty 2>/dev/null || print 24)
-  __compose_screen "${tty_size%% *}"
-  printf '\e[H\e[J%s' "$out"
+  __draw
 
   if [[ -t 0 ]]; then
     # 押したキーがエコーされると,カーソルのある画面右下に ^N 等が次の再描画まで残るため -s で抑える
