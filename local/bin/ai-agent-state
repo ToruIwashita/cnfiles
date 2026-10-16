@@ -89,6 +89,28 @@ __write_state() {
   mv -f "$tmp_file" "$state_dir/$pane_id.state"
 }
 
+# 判断待ちの項目(許可を待っているツール名)を記録し,判断待ち以外になったら消す(ai-agent-listが Input(Bash) のように添えて出す)
+# 質問(AskUserQuestion)は許可の要らないツールのため,どのフックから判断待ちになっても分類できるよう出す直前のPreToolUseで記録する
+# 通知から判断待ちになった時はツール名が無いので記録を変えず,記録が無ければ種類なしの Input になる
+__record_wait() {
+  local wait_file event state input tool
+  wait_file=$1
+  event=$2
+  state=$3
+  input=$4
+
+  # PreToolUseは全てのツールで発火するため,質問を含む時だけjqでツール名を確かめる
+  if [[ $event == PermissionRequest || ( $event == PreToolUse && $input == *AskUserQuestion* ) ]]; then
+    tool=$(print -r -- "$input" | jq -r '.tool_name // empty' 2>/dev/null || true)
+    if [[ $event == PermissionRequest || $tool == AskUserQuestion ]]; then
+      print -r -- "$tool" >| "$wait_file"
+      return 0
+    fi
+  fi
+
+  [[ $state == blocked ]] || rm -f "$wait_file"
+}
+
 # Codex hook入力からai-agent-list用メタ情報をatomicに書き込む
 # transcript形式は安定インターフェースではないため,token_countを取得できない場合は0へフォールバックする
 __write_codex_meta() {
@@ -329,7 +351,7 @@ if [[ -z ${TMUX_PANE:-} ]]; then
   state_file=$state_dir/sid-$session_id.state
 
   if [[ $2 == SessionEnd ]]; then
-    rm -f "$state_file" "$state_dir/sid-$session_id.meta.json"
+    rm -f "$state_file" "$state_dir/sid-$session_id.meta.json" "$state_dir/sid-$session_id.wait"
     exit 0
   fi
 
@@ -339,6 +361,7 @@ if [[ -z ${TMUX_PANE:-} ]]; then
 
   state=$(__resolve_state_outside "$2" "$input" "$state_file")
   [[ -n $state ]] || exit 0
+  __record_wait "$state_dir/sid-$session_id.wait" "$2" "$state" "$input"
 
   if [[ -f $state_file && $(cut -f1 "$state_file") == $state ]]; then
     exit 0
@@ -356,7 +379,7 @@ fi
 input=$(cat 2>/dev/null || true)
 
 if [[ $2 == SessionEnd ]]; then
-  rm -f "$state_dir/$TMUX_PANE.state" "$state_dir/$TMUX_PANE.meta.json"
+  rm -f "$state_dir/$TMUX_PANE.state" "$state_dir/$TMUX_PANE.meta.json" "$state_dir/$TMUX_PANE.wait"
   __apply_window_state "$TMUX_PANE"
   exit 0
 fi
@@ -369,6 +392,7 @@ state=$(__resolve_state "$2" "$input")
 
 # 未知のイベントは無視する
 [[ -n $state ]] || exit 0
+__record_wait "$state_dir/$TMUX_PANE.wait" "$2" "$state" "$input"
 
 # 状態が変わらないならtmux反映を省く(PreToolUseの高頻度発火対策)
 if [[ -f $state_dir/$TMUX_PANE.state && $(cut -d' ' -f1 "$state_dir/$TMUX_PANE.state") == $state ]]; then
