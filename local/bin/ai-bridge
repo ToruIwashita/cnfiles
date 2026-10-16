@@ -532,7 +532,7 @@ __render() {
   usage=$(__usage_lines)
 
   if (( ${selectable:-0} )); then
-    printf 'AI Bridge  %s  (C-n/C-p:select, C-s:open, C-k:open-below, Enter:jump, q:close, C-g:clear, Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Bridge  %s  (C-n/C-p:select, C-s:open, C-k:open-below, C-l:open-dir, Enter: jump, q:close, C-g:clear, Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   else
     printf 'AI Bridge  %s  (Esc: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   fi
@@ -593,6 +593,37 @@ __jump() {
     -e 'end tell' \
     -e 'end run' \
     "$client_tty" >/dev/null 2>&1 || true
+}
+
+# 選んだペインの作業ディレクトリ(DIR)で,このai-bridgeのセッションに新しいウィンドウを開いて移る
+# 一覧へ戻った時に閉じられるよう,開いたペインを dir_panes に残す
+__open_dir_window() {
+  local dir pane
+
+  dir=$(tmux display -p -t "$1" '#{pane_current_path}' 2>/dev/null) || return 0
+  # -c はtmuxのフォーマットとして展開されるため,パスの # は ## にして文字どおりに渡す
+  pane=$(tmux new-window -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 0
+  dir_panes+=("$pane")
+}
+
+# 開いたディレクトリのウィンドウから一覧へ戻った時,開いた時のシェル1つのままなら閉じる
+# 何か実行中だったりペインを分けていれば巻き込まないよう残し,後でアプリの切り替え等から戻った時に
+# 閉じてしまわないよう以後は追わない(別のウィンドウから戻った時は直前のウィンドウではないので何もしない)
+__close_dir_window() {
+  local pane info last panes cmd
+  local -a kept
+
+  for pane in "${dir_panes[@]}"; do
+    # 既に閉じられたウィンドウは追うのをやめる
+    info=$(tmux display -p -t "$pane" '#{window_last_flag} #{window_panes} #{pane_current_command}' 2>/dev/null) || continue
+    read -r last panes cmd <<< "$info"
+    if [[ $last != 1 ]]; then
+      kept+=("$pane")
+    elif [[ $panes == 1 && ( $cmd == zsh || $cmd == bash ) ]]; then
+      tmux kill-window -t "$pane" 2>/dev/null || true
+    fi
+  done
+  dir_panes=("${kept[@]}")
 }
 
 # このai-bridgeのペインの真下にある,同じウィンドウのペインIDを返す(無ければ何も返さない)
@@ -883,8 +914,9 @@ fi
 # 代替画面を使う(通常バッファに上書きし続けると溢れた分がペインのスクロールになり,
 # iTerm2は既定でalternate screenから流れた行をscrollbackへ送るため端末側の表示がずれていく)
 # 下に開いたAIを入れ替えたまま残さないよう,終了時(ペインやウィンドウを閉じた時も含む)に元の配置へ戻す
-# 下に開いたAIから一覧へ戻ったことを知るため,フォーカスの出入りも通知させる(tmuxのfocus-eventsがonの時だけ届く)
+# 下に開いたAIやC-lで開いたウィンドウから一覧へ戻ったことを知るため,フォーカスの出入りも通知させる(tmuxのfocus-eventsがonの時だけ届く)
 last_swap=()
+dir_panes=()
 trap '__undo_swap; printf "\e[?1004l\e[?7h\e[?25h\e[?1049l"' EXIT
 trap 'exit 0' INT TERM HUP
 printf '\e[?1049h\e[?7l\e[?25l\e[?1004h'
@@ -926,6 +958,8 @@ while :; do
           if [[ $esc_seq == '[I' ]] && (( ${#last_swap} )) && [[ $(tmux display -p -t "${last_swap[1]}" '#{pane_last}' 2>/dev/null) == 1 ]]; then
             __undo_swap
           fi
+          # 同じく直前にいたウィンドウがC-aで開いたウィンドウなら閉じる
+          [[ $esc_seq != '[I' ]] || __close_dir_window
           ;;
         $'\x0e') # Ctrl+n
           if (( selectable )); then
@@ -962,6 +996,11 @@ while :; do
               __undo_swap
             fi
             __jump "$selected_id"
+          fi
+          ;;
+        $'\x01') # Ctrl+a
+          if (( selectable )) && [[ -n $selected_id ]]; then
+            __open_dir_window "$selected_id"
           fi
           ;;
         q)
