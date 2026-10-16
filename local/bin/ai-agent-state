@@ -1,11 +1,11 @@
 #!/usr/bin/env zsh
 # AIエージェント(claude/codex)の状態をpane単位で記録し,tmuxのwindowタブ色(@ai_state)に反映する
-# tmux外で動くエージェントはsession_id単位(sid-*.state)で記録する(ai-agent-listの一覧用)
+# tmux外で動くエージェントはsession_id単位(sid-*.state)で記録する(ai-bridgeの一覧用)
 #
 # 使い方:
 #   ai-agent-state <agent> <event>            # claude/codexのhooksから呼ぶ(stdin: hook JSON)
 #   ai-agent-state --focus-reset [window_id]  # tmuxのフックから呼ぶ(doneをidleへ戻す)
-#   ai-agent-state --reconcile-stuck          # ai-agent-listの描画ループから呼ぶ(取り残されたworkingを倒す)
+#   ai-agent-state --reconcile-stuck          # ai-bridgeの描画ループから呼ぶ(取り残されたworkingを倒す)
 #
 # イベントと状態の対応:
 #   UserPromptSubmit / PreToolUse / PostToolUse -> working
@@ -89,7 +89,7 @@ __write_state() {
   mv -f "$tmp_file" "$state_dir/$pane_id.state"
 }
 
-# 判断待ちの項目(許可を待っているツール名)を記録し,判断待ち以外になったら消す(ai-agent-listが Input(Bash) のように添えて出す)
+# 判断待ちの項目(許可を待っているツール名)を記録し,判断待ち以外になったら消す(ai-bridgeが Input(Bash) のように添えて出す)
 # 質問(AskUserQuestion)は許可の要らないツールのため,どのフックから判断待ちになっても分類できるよう出す直前のPreToolUseで記録する
 # 通知から判断待ちになった時はツール名が無いので記録を変えず,記録が無ければ種類なしの Input になる
 __record_wait() {
@@ -111,7 +111,7 @@ __record_wait() {
   [[ $state == blocked ]] || rm -f "$wait_file"
 }
 
-# Codex hook入力からai-agent-list用メタ情報をatomicに書き込む
+# Codex hook入力からai-bridge用メタ情報をatomicに書き込む
 # transcript形式は安定インターフェースではないため,token_countを取得できない場合は0へフォールバックする
 __write_codex_meta() {
   local key input hook_meta transcript_path usage tmp_file

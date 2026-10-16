@@ -2,8 +2,8 @@
 # AIエージェント(claude/codex)の状態一覧をwatch表示する(tmux内外を統合)
 #
 # 使い方:
-#   ai-agent-list           # 自動更新表示(1秒間隔, Escで終了)
-#   ai-agent-list --once    # 1回だけ出力して終了
+#   ai-bridge           # 自動更新表示(1秒間隔, Escで終了)
+#   ai-bridge --once    # 1回だけ出力して終了
 #
 # 表示対象:
 #   tmux内のエージェント: <pane_id>.state (TARGET=セッション:window.pane)
@@ -439,7 +439,7 @@ __format_row() {
 
   # 下に開いている印(▼)は細い記号でも目に留まるよう,鮮やかな赤の太字にする
   # 色の指定が幅に数えられないよう,幅をそろえた後で色を付ける
-  target_col=$(__pad "$target" 20)
+  target_col=$(__pad "$target" 23)
   open_mark=$'\e[1;38;5;196m▼\e[0m'
 
   printf '%s\t%s\t%s\t%-7s %s %-7s %s %s %-12s %s %s\n' \
@@ -532,9 +532,9 @@ __render() {
   usage=$(__usage_lines)
 
   if (( ${selectable:-0} )); then
-    printf 'AI Agents  %s  (C-n/C-p:select, C-s:open, C-k:open-below, Enter:jump, q:close, C-g:clear, Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Bridge  %s  (C-n/C-p:select, C-s:open, C-k:open-below, Enter:jump, q:close, C-g:clear, Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   else
-    printf 'AI Agents  %s  (Esc: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Bridge  %s  (Esc: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   fi
   if (( $#usage )); then
     print
@@ -542,7 +542,7 @@ __render() {
     print
   fi
   # 選択できる時はデータ行の頭に番号(数字キーで選ぶ)が付くので,見出しも同じだけずらす
-  printf '%*s%-7s %-20s %-7s %-14s %-22s %-12s %-9s %s\n' $(( ${selectable:-0} ? 2 : 0 )) '' PID TARGET AGENT STATUS DIR MODEL CONTEXT LAST
+  printf '%*s%-7s %-23s %-7s %-14s %-22s %-12s %-9s %s\n' $(( ${selectable:-0} ? 2 : 0 )) '' PID TARGET AGENT STATUS DIR MODEL CONTEXT LAST
   # 同じ状態の中では直近に状態が変わったものを上に出す(データ行は優先度とジャンプ先のペインIDを先頭に残す)
   __emit_rows | sort -t$'\t' -k1,1n -k2,2nr | cut -f1,3-
 }
@@ -566,7 +566,7 @@ __jump() {
       | cut -f2
   )
 
-  # どのウィンドウにも表示されていないセッションは,このai-agent-listのウィンドウに出す
+  # どのウィンドウにも表示されていないセッションは,このai-bridgeのウィンドウに出す
   if [[ -z $client_tty ]]; then
     tmux switch-client -t "$pane_id" 2>/dev/null || true
     return 0
@@ -595,7 +595,7 @@ __jump() {
     "$client_tty" >/dev/null 2>&1 || true
 }
 
-# このai-agent-listのペインの真下にある,同じウィンドウのペインIDを返す(無ければ何も返さない)
+# このai-bridgeのペインの真下にある,同じウィンドウのペインIDを返す(無ければ何も返さない)
 __pane_below() {
   local self_geometry
   integer top height left width
@@ -609,7 +609,7 @@ __pane_below() {
     | awk -v t=$(( top + height + 1 )) -v l=$left -v w=$width '$2 == t && $3 < l + w && $3 + $4 > l { print $1; exit }'
 }
 
-# 選んだペインを,このウィンドウのai-agent-listの真下のペインと入れ替えて表示する(フォーカスはai-agent-listに残す)
+# 選んだペインを,このウィンドウのai-bridgeの真下のペインと入れ替えて表示する(フォーカスはai-bridgeに残す)
 # ペインIDはペインと一緒に移動するため,入れ替えた2つを last_swap に残しておけば同じ2つを入れ替え直して戻せる
 # 真下にペインが無ければ仮のペインを作って入れ替え,AIが元いた場所の配置を崩さないよう仮のペインをそこへ置く
 # 仮のペインが他のウィンドウに溜まらないよう,入れ替えは常に1組だけにする(表示中の別のAIは先に元の場所へ戻す)
@@ -637,7 +637,7 @@ __open_below() {
   last_swap=("$pane_id" "$target" "${placeholder:-}")
 }
 
-# このウィンドウのai-agent-listの真下のペインへフォーカスを移す
+# このウィンドウのai-bridgeの真下のペインへフォーカスを移す
 __focus_below() {
   local below
 
@@ -657,7 +657,7 @@ __open_and_focus_below() {
 }
 
 # 直前の入れ替えを元に戻す(どちらかのペインが閉じていれば入れ替えは失敗するので何もしない)
-# 仮のペインはai-agent-listの下へ戻ってくるので閉じて元の配置に戻すが,そこで何か実行していれば巻き込まないよう残す
+# 仮のペインはai-bridgeの下へ戻ってくるので閉じて元の配置に戻すが,そこで何か実行していれば巻き込まないよう残す
 __undo_swap() {
   local placeholder
 

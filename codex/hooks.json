@@ -1,5 +1,5 @@
 {
-  "description": "Codexのセッション状態をai-agent-list用に記録する。",
+  "description": "Codexのセッション状態をai-bridge用に記録する。",
   "hooks": {
     "SessionStart": [
       {

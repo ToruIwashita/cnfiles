@@ -9,7 +9,7 @@ set -g default-terminal 'screen-256color'
 setw -g mode-key vi
 # 拡張キー入力を有効化
 set -s extended-keys on
-# フォーカスの出入りをアプリへ通知する(ai-agent-listが利用)
+# フォーカスの出入りをアプリへ通知する(ai-bridgeが利用)
 set -s focus-events on
 # キーストロークのディレイ0sec
 set -s escape-time 0
@@ -143,9 +143,9 @@ bind P choose-buffer
 
 ## AI
 # AIエージェント一覧を上側ペインで実行
-bind a new-window -c '#{pane_current_path}' \; split-window -v -c '#{pane_current_path}' \; select-pane -D \; resize-pane -y 20% \; send-keys 'ai-agent-list' Enter \; select-pane -D
+bind a new-window -c '#{pane_current_path}' \; split-window -v -c '#{pane_current_path}' \; select-pane -D \; resize-pane -y 20% \; send-keys 'ai-bridge' Enter \; select-pane -D
 # AIエージェント一覧を先頭ウィンドウで実行
-bind @ move-window -t 0 \; send-keys 'ai-agent-list' Enter
+bind @ move-window -t 0 \; send-keys 'ai-bridge' Enter
 
 # AIエージェント状態: フォーカスしたwindowのdone(赤タブ)をidleへ戻す(blockedは保持)
 # session-window-changedはselect/next/previous/last等すべてのカレントwindow変更で発火する

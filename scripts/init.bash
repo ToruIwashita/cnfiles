@@ -531,12 +531,12 @@ else
   ln -is $BASE_DIR_PATH/local/bin/ai-agent-state $LOCAL_BIN_DIR_PATH/ai-agent-state
 fi
 
-# ai-agent-list
-if [[ -L $LOCAL_BIN_DIR_PATH/ai-agent-list ]]; then
-  _printf "\e[32m$LOCAL_BIN_DIR_PATH/ai-agent-list symlink already exists\e[0m\n"
+# ai-bridge
+if [[ -L $LOCAL_BIN_DIR_PATH/ai-bridge ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/ai-bridge symlink already exists\e[0m\n"
 else
-  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/ai-agent-list\e[0m\n"
-  ln -is $BASE_DIR_PATH/local/bin/ai-agent-list $LOCAL_BIN_DIR_PATH/ai-agent-list
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/ai-bridge\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/ai-bridge $LOCAL_BIN_DIR_PATH/ai-bridge
 fi
 
 # claude-code-bash-guard
