@@ -958,7 +958,7 @@ while :; do
           if [[ $esc_seq == '[I' ]] && (( ${#last_swap} )) && [[ $(tmux display -p -t "${last_swap[1]}" '#{pane_last}' 2>/dev/null) == 1 ]]; then
             __undo_swap
           fi
-          # 同じく直前にいたウィンドウがC-aで開いたウィンドウなら閉じる
+          # 同じく直前にいたウィンドウがC-lで開いたウィンドウなら閉じる
           [[ $esc_seq != '[I' ]] || __close_dir_window
           ;;
         $'\x0e') # Ctrl+n
@@ -998,7 +998,7 @@ while :; do
             __jump "$selected_id"
           fi
           ;;
-        $'\x01') # Ctrl+a
+        $'\x0c') # Ctrl+l
           if (( selectable )) && [[ -n $selected_id ]]; then
             __open_dir_window "$selected_id"
           fi
