@@ -33,6 +33,10 @@ split_once=0
 # 一覧の下の作業の見える化で使う,一覧に出ているAIのキー(並び順)・TARGET・優先度
 agent_keys=()
 typeset -A target_of agent_prio
+# 見出しの時刻と並べると狭いペインで見切れるため,キーの説明は ? を押した時だけ時刻に代えて出す
+# (見出しの AI Bridge と括弧を付けても幅102桁のペインで見切れないよう,区切りは空白1つにする)
+key_help='C-n/C-p:select C-s:open C-k:open-below C-l:open-dir Enter:jump q:close C-g:clear Esc:quit'
+show_keys=0
 
 # 一覧の並び順(上ほど対応が必要): blocked > done > working > idle
 __priority_for() {
@@ -548,7 +552,7 @@ __render() {
   usage=$(__usage_lines)
 
   if (( ${selectable:-0} )); then
-    printf 'AI Bridge  %s  (C-n/C-p:select, C-s:open, C-k:open-below, C-l:open-dir, Enter: jump, q:close, C-g:clear, Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Bridge  %s  (?:keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   else
     printf 'AI Bridge  %s  (Esc: quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   fi
@@ -660,7 +664,7 @@ __pane_below() {
 # 真下にペインが無ければ仮のペインを作って入れ替え,AIが元いた場所の配置を崩さないよう仮のペインをそこへ置く
 # 仮のペインが他のウィンドウに溜まらないよう,入れ替えは常に1組だけにする(表示中の別のAIは先に元の場所へ戻す)
 __open_below() {
-  local pane_id below target placeholder height
+  local pane_id below target placeholder height dir
   integer fit
 
   pane_id=$1
@@ -681,9 +685,12 @@ __open_below() {
     fit=$(__fit_height $(( height + 1 + $(tmux display -p -t "$below" '#{pane_height}' 2>/dev/null || print 0) )))
   else
     fit=$(__fit_height $height)
+    # 入れ替えた後にAIを閉じても元の場所が同じディレクトリのままになるよう,仮のペインはAIの作業ディレクトリで開く
+    # (-c はtmuxのフォーマットとして展開されるため,パスの # は ## にして文字どおりに渡す)
+    dir=$(tmux display -p -t "$pane_id" '#{pane_current_path}' 2>/dev/null) || return 0
     # 一度縮めてから合わせ直すと一覧も下のAIも続けて2回大きさが変わり,その度に描き直しになるため,
     # 仮のペインは最初から合わせた後の大きさで作る
-    placeholder=$(tmux split-window -d -v -l $(( height - fit - 1 )) -t "$TMUX_PANE" -P -F '#{pane_id}' 2>/dev/null) || return 0
+    placeholder=$(tmux split-window -d -v -l $(( height - fit - 1 )) -c "${dir//\#/##}" -t "$TMUX_PANE" -P -F '#{pane_id}' 2>/dev/null) || return 0
     target=$placeholder
   fi
 
@@ -835,6 +842,9 @@ __split_rendered() {
         line_of[$id]=$(( ${#lines} + 1 ))
       fi
       (( ! selectable )) || line=${(r:2:)num}$line
+    elif (( ! ${#lines} && show_keys )); then
+      # ? でキーの説明を出している間は,見出しの時刻をキーの説明に差し替える
+      line="AI Bridge  ($key_help)"
     fi
     lines+=("$line")
   done
@@ -1703,6 +1713,12 @@ while :; do
           ;;
         $'\x07') # Ctrl+g
           selected_id=''
+          ;;
+        '?')
+          # 見出しの時刻とキーの説明を切り替える
+          if (( selectable )); then
+            show_keys=$(( ! show_keys ))
+          fi
           ;;
       esac
       # 下に開いた等で中身が変わった時はその場で組み立て直し,選択の表示も裏を待たずに作り直す
