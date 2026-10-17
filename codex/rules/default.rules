@@ -24,6 +24,14 @@ prefix_rule(
     not_match = ["git push origin main", "git fetch-other"],
 )
 
+# e2e-queue の運用用の clone は sandbox から読めない場所に置くため,依頼側の2つだけを sandbox の外で動かす（実行係は人が起動する）
+prefix_rule(
+    pattern = [["e2e-request", "e2e-wait"]],
+    decision = "allow",
+    match = ["e2e-request -s 01_login", "e2e-wait 20261014-101500-12345"],
+    not_match = ["e2e-requester", "e2e-worker"],
+)
+
 prefix_rule(
     pattern = [["sudo", "rm", "rmdir"]],
     decision = "forbidden",
