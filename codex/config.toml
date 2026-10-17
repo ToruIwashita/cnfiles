@@ -70,6 +70,7 @@ extends = ":workspace"
 "~/markdown_texts" = true
 "~/works/memolist" = true
 "~/works/git_worktrees" = true
+"~/works/queue/inbox" = true
 "~/works/tmp" = true
 
 [permissions.default-local.filesystem."~"]
