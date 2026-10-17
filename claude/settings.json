@@ -28,6 +28,8 @@
       "Bash(gh pr:*)",
       "Bash(gis:*)",
       "Bash(gpr:*)",
+      "Bash(e2e-request:*)",
+      "Bash(e2e-wait:*)",
       "Bash(git add:*)",
       "Bash(git branch:*)",
       "Bash(git check-ignore:*)",
@@ -319,7 +321,9 @@
       "git status*",
       "git commit*",
       "git rebase*",
-      "pbcopy*"
+      "pbcopy*",
+      "e2e-request *",
+      "e2e-wait *"
     ]
   },
   "tui": "default",
