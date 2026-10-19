@@ -40,7 +40,7 @@ show_keys=0
 # 一覧の下の作業の見える化(WORKSPACE・OPS.LOG)は,起動時は出さず Space を押した時だけ出す
 show_ops=0
 
-# 一覧の並び順(上ほど対応が必要): blocked > done > working > idle
+# 一覧の並び順(上ほど対応が必要): blocked > done > working > idle > spare
 __priority_for() {
   case $1 in
     blocked) print 0 ;;
@@ -274,7 +274,7 @@ __codex_window() {
          | if . == null then empty else "\(.used_percent | floor) \(.resets_at // "")" end' 2>/dev/null || true
 }
 
-# codexの5時間/週次利用枠(codexはmeta.jsonを持たないためセッションのrolloutから採る)
+# codexの5時間/週次利用枠(codexのmeta.jsonには利用枠が無いためセッションのrolloutから採る)
 # rolloutは開始日のディレクトリに残り続けるため,日付から辿ると長時間セッションを取り逃がす
 # state DBのthreadsが最終更新順のrollout_pathを持つのでそれを使う(WAL反映のためimmutableは付けない)
 # rolloutは20MB級になるがtoken_countは毎ターン出るのでtailで足りる
@@ -524,21 +524,17 @@ __emit_rows() {
 
     # agent view経由のプロセスはattach等にそのまま使える短縮IDを出す
     # 制御端末を持たないヘッドレス実行(cron等)はpsのttyが??になるため表示名に置き換える
+    # 予備プロセスはタスクを持たないので,通常のセッションのIdleと紛れないよう専用の状態で出す
+    row_state=$state
     if [[ $bg_kind == spare ]]; then
       target=agents:spare
+      row_state=spare
     elif [[ $bg_kind == task ]]; then
       target=agents:${${key#sid-}[1,8]}
     elif [[ -z ${agent_tty:-} || $agent_tty == '??' ]]; then
       target=headless
     else
       target=$agent_tty
-    fi
-
-    # 予備プロセスはタスクを持たないので,通常のセッションのIdleと紛れないよう専用の状態で出す
-    if [[ $bg_kind == spare ]]; then
-      row_state=spare
-    else
-      row_state=$state
     fi
 
     __format_row "$target" "$agent" "${agent_pid:-}" "$row_state" "${cwd:t}" "$key" "$mtime"
@@ -673,7 +669,7 @@ __open_below() {
   pane_id=$1
 
   [[ $(__pane_below) != "$pane_id" ]] || return 0
-  (( ! ${#last_swap} )) || __undo_swap
+  (( ! ${#last_swap} )) || __undo_swap --no-draw
 
   below=$(__pane_below)
   # 開いた時に一覧の高さを中身に合わせるので,閉じた時に戻せるよう開く前の高さを残す
@@ -739,8 +735,9 @@ __open_and_focus_below() {
   __data_changed
 }
 
-# 直前の入れ替えを元に戻す(どちらかのペインが閉じていれば入れ替えは失敗するので何もしない)
+# 直前の入れ替えを元に戻す(どちらかのペインが閉じていれば入れ替え自体は失敗するが,後片付けと描き直しは続ける)
 # 仮のペインはai-bridgeの下へ戻ってくるので閉じて元の配置に戻すが,そこで何か実行していれば巻き込まないよう残す
+# --no-draw は続けて別のAIを下に開く時に使い,開いた後にまとめて描かせる(途中の配置で1回余分に描かないように)
 __undo_swap() {
   local placeholder
 
@@ -763,7 +760,7 @@ __undo_swap() {
   last_swap=()
   __data_changed
   size_stale=1
-  __draw
+  [[ ${1:-} == --no-draw ]] || __draw
 }
 
 # 下に開いた・閉じた・完了を待機へ戻した等,手元で一覧の中身を変えた時に呼ぶ
@@ -976,10 +973,11 @@ pane_rows=24
 pane_cols=80
 # 一覧が短い時に作業の見える化の枠が大きくなりすぎないよう,枠の上端はペインの上からこの割合(%)の位置より上にしない
 ops_top_pct=25
-# AIごとの材料(作業ディレクトリとそのリポジトリ・指示とその時刻・ターンの始まりと終わり・実行中のコマンド・承認待ち・
+# AIごとの材料(作業ディレクトリのリポジトリ・指示とその時刻・ターンの始まりと終わり・実行中のコマンド・承認待ち・
 # 最後に動いた時刻・このターンの編集の集計・コミットやプッシュの印)と,このターンに触ったファイル(キーは リポジトリ<TAB>パス<TAB>AI)
-typeset -A ag_cwd ag_root ag_task ag_task_t ag_turn_t ag_end ag_run ag_run_t ag_wait ag_last ag_files ag_add ag_del ag_mark ag_mark_t ops_files
-# 作業ログは追記されていくだけなので,AIごとに読んだ所(inode・大きさ・1行目・行数)と拾った出来事を覚えて,増えた行だけを読む
+typeset -A ag_root ag_task ag_task_t ag_turn_t ag_end ag_run ag_run_t ag_wait ag_last ag_files ag_add ag_del ag_mark ag_mark_t ops_files
+# 作業ログは追記されていくだけなので,AIごとに読んだ所(inode・大きさ・1行目・行数)と拾った出来事を覚えて,
+# 変わった時にファイルを読み直しても,解釈するのは増えた行だけにする
 typeset -A ops_ino ops_size ops_head ops_seen ops_ev
 
 # コマンドの種類(テストの実行・コミット・プッシュ)を,コマンドとして実行した時だけ判定する
@@ -1058,7 +1056,7 @@ __byte_len() {
 __ops_forget() {
   local k
 
-  unset "ag_cwd[$1]" "ag_root[$1]" "ag_task[$1]" "ag_task_t[$1]" "ag_turn_t[$1]" "ag_end[$1]" "ag_run[$1]" "ag_run_t[$1]" \
+  unset "ag_root[$1]" "ag_task[$1]" "ag_task_t[$1]" "ag_turn_t[$1]" "ag_end[$1]" "ag_run[$1]" "ag_run_t[$1]" \
     "ag_wait[$1]" "ag_last[$1]" "ag_files[$1]" "ag_add[$1]" "ag_del[$1]" "ag_mark[$1]" "ag_mark_t[$1]" \
     "ops_ino[$1]" "ops_size[$1]" "ops_head[$1]" "ops_seen[$1]" "ops_ev[$1]"
   for k in ${(k)ops_files}; do
@@ -1068,8 +1066,9 @@ __ops_forget() {
 }
 
 # 一覧に出ているAIの作業ログを読み,ワークスペースと作業ログの材料を作る
-# 全部を読み直すと描き直しが止まるため,追記されていくだけの作業ログは前に読んだ行を読み直さず,増えた行だけを読む
-# (切り詰めや作り直しで中身が入れ替わった時は最初から読み直し,一覧から消えたAIの材料は捨てる)
+# 全部を解釈し直すと描き直しが止まるため,追記されていくだけの作業ログは前に解釈した行を解釈し直さず,増えた行だけを解釈する
+# (ファイルは書きかけの行や入れ替わりを見分けるため変わるたびに丸ごと読む,切り詰めや作り直しで中身が入れ替わった時は
+# 最初から解釈し直し,一覧から消えたAIの材料は捨てる)
 __ops_load() {
   local key f kind tool obj extra cwd root k content tsig
   local -a p v lines ev all
@@ -1118,9 +1117,9 @@ __ops_load() {
       # 時刻で始まらない行は数として扱えず描き手ごと止まるので読み飛ばす
       [[ ${p[1]} == <->.<-> ]] || continue
       t=${p[1]} kind=${p[2]} tool=${p[3]} obj=${p[4]} extra=${p[5]} cwd=${p[6]}
-      if [[ -n $cwd && $cwd != "${ag_cwd[$key]:-}" ]]; then
+      if [[ -n $cwd ]]; then
         __repo_root "$cwd"
-        ag_cwd[$key]=$cwd ag_root[$key]=$REPLY
+        ag_root[$key]=$REPLY
       fi
       ag_last[$key]=$t
       case $kind in
@@ -1162,10 +1161,15 @@ __ops_load() {
               [[ $obj == /* ]] || obj=${cwd:-$HOME}/$obj
               # 一時ディレクトリのファイルは作業ではないので出さない
               [[ $obj == (/tmp/*|/private/tmp/*|/var/folders/*) ]] && continue
+              # ~/.claude/skills のようにリンクの先が git の中にある道筋は,実体の場所で辿る
+              obj=${obj:A}
               __repo_root "${obj:h}"; root=$REPLY
               a=${${extra%% *}#+} d=${${extra##* }#-}
               # 同じファイルを複数のAIが触っても,AIごとに数える
               k=$root$'\t'${obj#$root/}$'\t'$key
+              # git の外のファイル(タスクのメモ等)はリポジトリの変更ではないので,リポジトリの欄を空にしてワークスペースに出さない
+              # (作業ログとターンの集計には入れる)
+              [[ -e $root/.git ]] || k=$'\t'$k
               if [[ -n ${ops_files[$k]:-} ]]; then
                 v=(${=ops_files[$k]})
                 ops_files[$k]="$key $(( v[2] + a )) $(( v[3] + d )) $(( v[4] + 1 )) $t"
@@ -1265,7 +1269,12 @@ __ops_log_line() { # $1=出来事 $2=新しい順の位置(0が最新) $3=色の
   tc=${${(s: :):-255 252 249 246 244 242 240}[$(( $2 > 6 ? 7 : $2 + 1 ))]}
   col=${ops_verb_col[$verb]:-245}
   REPLY=$'\e[38;5;242m'" $ts  "$'\e[38;5;244m'"${(r:lw:)label}  "$'\e[38;5;37m'"${(r:rw:)name}  "$'\e[1;38;5;'${col}m"${(r:6:)verb}"$'\e[0;38;5;'${tc}m"  $obj"
-  [[ -n $extra ]] && REPLY+="  "$'\e[38;5;34m'"${extra%% *}"$'\e[38;5;160m'" ${extra##* }"
+  # 補足は,編集の増減(+追加 -削除)なら色を分け,ほか(子エージェントの種類等)はそのまま出す
+  if [[ $extra == +<->' '-<-> ]]; then
+    REPLY+="  "$'\e[38;5;34m'"${extra%% *}"$'\e[38;5;160m'" ${extra##* }"
+  elif [[ -n $extra ]]; then
+    REPLY+="  "$'\e[38;5;245m'"$extra"
+  fi
   return 0
 }
 
@@ -1355,11 +1364,11 @@ __ops_ws() { # $1=使ってよい行数 $2=コマ → ops_ws 配列
   local -a roots files v picked sorted
   local -A last_of block_of
   integer i lvl shown working upto gap pw first max=$1 iw=$(( pane_cols - 4 ))
-  float t age now=$EPOCHREALTIME
+  float age now=$EPOCHREALTIME
   ops_ws=()
   # リポジトリを,AIの作業ディレクトリと触ったファイルから集め,入りきらない時に残すものは新しく動いた順に選ぶ
   for key in ${(k)ag_root}; do root=${ag_root[$key]}; (( ${ag_last[$key]:-0} > ${last_of[$root]:-0} )) && last_of[$root]=${ag_last[$key]}; done
-  for k in ${(k)ops_files}; do root=${k%%$'\t'*}; v=(${=ops_files[$k]}); (( v[5] > ${last_of[$root]:-0} )) && last_of[$root]=${v[5]}; done
+  for k in ${(k)ops_files}; do root=${k%%$'\t'*}; [[ -n $root ]] || continue; v=(${=ops_files[$k]}); (( v[5] > ${last_of[$root]:-0} )) && last_of[$root]=${v[5]}; done
   for root in ${(k)last_of}; do roots+=("${last_of[$root]}"$'\t'"$root"); done
   roots=("${(@On)roots}")
   ops_repo_count=${#roots}
@@ -1497,7 +1506,8 @@ __ops_panel() { # $1=行数 $2=コマ
 }
 
 # 描画済みの内容(lines)をペインに収めて出す(作業中の行は回し,判断待ちの行は脈打たせる)
-# 1秒10コマで呼ぶため,ペインの高さは大きさが変わり得る時(size_stale)だけ聞き直す
+# 1秒10コマで呼ぶため,ペインの高さは大きさが変わり得る時(size_stale: WINCH・手元で配置を変えた時と,
+# WINCHを取りこぼしても直るよう裏の一覧を取り込むたび(約1秒ごと))だけ聞き直す
 __draw() {
   local size
   integer f top nl
@@ -1535,7 +1545,7 @@ __draw() {
   f=$(( EPOCHREALTIME * 10 ))
   out=${out//● Working/${spin[f % ${#spin} + 1]} Working}
   out=${out//● Input/${pulse[f / 2 % ${#pulse} + 1]} Input}
-  # Space で出している間,一覧が収まって下に6行以上余る時は,余白に作業の見える化を出す(下に開いて一覧を中身の高さに縮めた時は出ない)
+  # Space で出している間,一覧が収まって下に7行以上(空行1行と枠の6行)余る時は,余白に作業の見える化を出す(下に開いて一覧を中身の高さに縮めた時は出ない)
   # 枠の上端は,一覧の下に空行を1行置いた位置か上から ops_top_pct %の位置の低い方にする(枠の6行は残す)
   if (( show_ops && ${#lines} + 7 <= pane_rows )); then
     top=$(( pane_rows * ops_top_pct / 100 ))
@@ -1632,6 +1642,7 @@ while :; do
     render_seq=$new_seq
     __split_rendered
     __ops_load
+    # WINCHを取りこぼしてもペインの大きさが直るよう,取り込むたび(約1秒ごと)に聞き直す
     size_stale=1
   fi
   __draw

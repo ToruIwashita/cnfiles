@@ -4,16 +4,16 @@
 #
 # 使い方:
 #   ai-agent-state <agent> <event>            # claude/codexのhooksから呼ぶ(stdin: hook JSON)
-#   ai-agent-state --focus-reset [window_id]  # tmuxのフックから呼ぶ(doneをidleへ戻す)
+#   ai-agent-state --focus-reset [window_id]  # tmuxのフックとai-bridgeから呼ぶ(doneをidleへ戻す)
 #   ai-agent-state --reconcile-stuck          # ai-bridgeの描画ループから呼ぶ(取り残されたworkingを倒す)
 #
 # イベントと状態の対応:
 #   UserPromptSubmit / PreToolUse / PostToolUse / PostToolUseFailure -> working
 #   PermissionRequest             -> blocked
-#   Notification                  -> blocked (権限以外の入力待ち,matcherで対象を限定して登録する)
-#   Stop                          -> done (サブエージェント等のAIの作業が裏で続いていればworking維持)
-#   Interrupt                     -> done (codexのEsc中断,中断したターンにはStopが来ない)
-#   SessionStart                  -> idle
+#   Notification                  -> blocked (権限の確認を含む入力待ちの通知,matcherで対象を限定して登録する,作業中の時だけ)
+#   Stop                          -> done (見ているペインならidle,サブエージェント等のAIの作業が裏で続いていればworking維持)
+#   Interrupt                     -> done (見ているペインならidle,codexのEsc中断,中断したターンにはStopが来ない)
+#   SessionStart                  -> idle (compact後は状態を変えない)
 #   SessionEnd                    -> 状態クリア
 set -eu
 
@@ -34,11 +34,21 @@ __background_work_running() {
   print -r -- "$1" | jq -e '[.background_tasks[]? | select(.status == "running" and ((.type // "") | IN("shell", "monitor", "MCP task") | not))] | length > 0' >/dev/null 2>&1
 }
 
-# イベントから状態を決定する(Stopはstdin JSONのbackground_tasksを考慮)
+# 状態ファイルの今の状態(tmux内は空白区切り,tmux外はタブ区切りで,どちらも先頭の欄,ファイルが無ければ空)
+__current_state() {
+  local state rest
+
+  [[ -f $state_dir/$1.state ]] || return 0
+  read -r state rest < "$state_dir/$1.state" || true
+  print -r -- "$state"
+}
+
+# イベントから状態を決定する(Stopはstdin JSONのbackground_tasksを考慮,$3はペインIDかsid-<session_id>)
 __resolve_state() {
-  local event input
+  local event input key
   event=$1
   input=$2
+  key=$3
 
   case $event in
     UserPromptSubmit | PreToolUse | PostToolUse | PostToolUseFailure)
@@ -50,7 +60,7 @@ __resolve_state() {
     Notification)
       # 入力待ち通知はターン中(working)のみblockedにする
       # (ターン終了後にも入力待ち系の通知が発火しStop後のidle/doneを上書きしてしまうため)
-      if [[ -f $state_dir/$TMUX_PANE.state && $(cut -d' ' -f1 "$state_dir/$TMUX_PANE.state") == working ]]; then
+      if [[ $(__current_state "$key") == working ]]; then
         print blocked
       fi
       ;;
@@ -66,23 +76,24 @@ __resolve_state() {
       if __background_work_running "$input"; then
         print working
       else
-        __stop_state_for_pane "$TMUX_PANE"
+        __stop_state_for_pane "$key"
       fi
       ;;
     Interrupt)
       # codexはEscで中断したターンにStopを出さずInterruptを出すため,ここでターンを終える
-      __stop_state_for_pane "$TMUX_PANE"
+      __stop_state_for_pane "$key"
       ;;
   esac
 }
 
 # ターン終了時の遷移先を返す(完了したpaneをユーザーが見ている(attached+カレントwindow+フォーカス中pane)なら確認済みとしてidle扱い)
 # window粒度だと同一window内の別paneで動くサブエージェントの完了までidle扱いになるためpaneのフォーカスも条件に含める
+# tmux外(sid-<session_id>)は見ているかを確かめようが無いのでいつもdone
 __stop_state_for_pane() {
-  local pane_id
-  pane_id=$1
+  local key
+  key=$1
 
-  if [[ $(tmux display-message -p -t "$pane_id" '#{?#{&&:#{pane_active},#{&&:#{window_active},#{session_attached}}},1,0}' 2>/dev/null) == 1 ]]; then
+  if [[ $key == %* && $(tmux display-message -p -t "$key" '#{?#{&&:#{pane_active},#{&&:#{window_active},#{session_attached}}},1,0}' 2>/dev/null) == 1 ]]; then
     print idle
   else
     print done
@@ -157,10 +168,8 @@ __record_activity() {
             [.tool_response.structuredPatch[]?.lines[]?] as $l
             | if ($l | length) > 0 then counts($l) elif $t == "Write" then "+\($i.content // "" | split("\n") | length) -0" else "" end
           elif $kind == "D" and $t == "apply_patch" then counts([$patch | split("\n")[] | select(test("^[+-]") and (test("^(\\+\\+\\+|---) ") | not))])
-          elif ($kind == "P" or $kind == "W") and $shell then ($cmd | flat | clip(160))
-          elif $kind == "P" and $t == "Grep" then ($i.path // "")
+          elif $kind == "P" and $shell then ($cmd | flat | clip(160))
           elif $kind == "P" and ($t == "Agent" or $t == "Task") then ($i.subagent_type // "")
-          elif $kind == "D" and $t == "WebFetch" then (.tool_response.code // "" | tostring)
           else "" end ),
         (.cwd // "")
       ]
@@ -254,7 +263,8 @@ __write_codex_meta() {
   fi
 }
 
-# window内の全pane状態を集約する(優先度: blocked > done > working > idle)
+# window内の全pane状態を集約する(優先度: blocked > done > idle)
+# タブの色が見分けるのはblockedとdoneだけなので,作業中のpaneしか無いwindowもidleにする
 __aggregate_window_state() {
   local target states state
   target=$1
@@ -266,7 +276,7 @@ __aggregate_window_state() {
     done
   )
 
-  for state in blocked done working; do
+  for state in blocked done; do
     if [[ $states == *$state* ]]; then
       print $state
       return 0
@@ -283,45 +293,6 @@ __apply_window_state() {
 
   tmux set-option -w -t "$target" @ai_state "$(__aggregate_window_state "$target")" 2>/dev/null || return 0
   tmux refresh-client -S >/dev/null 2>&1 || true
-}
-
-# tmux外エージェント用: イベントから状態を決定する(タブ反映が無いため可視判定なし)
-__resolve_state_outside() {
-  local event input state_file
-  event=$1
-  input=$2
-  state_file=$3
-
-  case $event in
-    UserPromptSubmit | PreToolUse | PostToolUse | PostToolUseFailure)
-      print working
-      ;;
-    PermissionRequest)
-      print blocked
-      ;;
-    SessionStart)
-      # 自動compact後にもSessionStartが発火する,その間も作業は継続しているため状態を変えない
-      if [[ $(print -r -- "$input" | jq -r '.source // empty' 2>/dev/null) != compact ]]; then
-        print idle
-      fi
-      ;;
-    Notification)
-      # 入力待ち通知はターン中(working)のみblockedにする
-      if [[ -f $state_file && $(cut -f1 "$state_file") == working ]]; then
-        print blocked
-      fi
-      ;;
-    Stop)
-      if __background_work_running "$input"; then
-        print working
-      else
-        print done
-      fi
-      ;;
-    Interrupt)
-      print done
-      ;;
-  esac
 }
 
 # tmux外エージェントの状態をatomicに書き込む(タブ区切り: state agent pid tty cwd)
@@ -355,10 +326,10 @@ __focus_reset() {
   __apply_window_state "$window_id"
 }
 
-# transcript末尾からターンの終了状況を判定する
-#   interrupted: 最後のメッセージがESC割り込みマーカー
-#   stopped:     Stopフック実行済みで終了(最後の有意なエントリがstop_hook_summary)
-#   active:      ターン進行中または新しいプロンプト受付後
+# transcript末尾からターンの終了状況を判定する(codexのrolloutはターンの開始・完了・中断の出来事で判定する)
+#   interrupted: 最後のメッセージがESC割り込みマーカー(codexはturn_aborted)
+#   stopped:     Stopフック実行済みで終了(最後の有意なエントリがstop_hook_summary,codexはtask_complete)
+#   active:      ターン進行中または新しいプロンプト受付後(codexはtask_started)
 #   none:        判定不能(transcript無し・読み取り失敗)
 __transcript_turn_status() {
   local transcript_path
@@ -368,10 +339,12 @@ __transcript_turn_status() {
 
   tail -n 25 "$transcript_path" 2>/dev/null | jq -rs '
     [ .[]
-      | select(.type? == "user" or .type? == "assistant" or (.type? == "system" and .subtype? == "stop_hook_summary")) ]
+      | select(.type? == "user" or .type? == "assistant" or (.type? == "system" and .subtype? == "stop_hook_summary")
+          or (.type? == "event_msg" and (.payload.type? | IN("task_started", "task_complete", "turn_aborted")))) ]
     | last
     | if . == null then "none"
       elif .type == "system" then "stopped"
+      elif .type == "event_msg" then ({task_complete: "stopped", turn_aborted: "interrupted"}[.payload.type] // "active")
       elif .type == "user" and ((.message.content | tostring) | contains("[Request interrupted by user")) then "interrupted"
       else "active" end
   ' 2>/dev/null || print none
@@ -397,24 +370,13 @@ __session_last_activity_age() {
 __reconcile_stuck() {
   local state_file key state agent agent_pid agent_tty cwd transcript_path turn_status
 
-  for state_file in "$state_dir"/%*.state(N); do
+  for state_file in "$state_dir"/%*.state(N) "$state_dir"/sid-*.state(N); do
     key=${${state_file:t}%.state}
-    read -r state agent agent_pid < "$state_file" || continue
-    [[ $state == working ]] || continue
-    transcript_path=$(jq -r '.transcript_path // empty' "$state_dir/$key.meta.json" 2>/dev/null) || continue
-    [[ -n $transcript_path ]] || continue
-
-    turn_status=$(__transcript_turn_status "$transcript_path")
-    if [[ $turn_status == interrupted ]] \
-      || { [[ $turn_status == stopped ]] && (( $(__session_last_activity_age "$transcript_path") > 600 )) }; then
-      __write_state "$key" "$(__stop_state_for_pane "$key")" "$agent" "${agent_pid:-}"
-      __apply_window_state "$key"
+    if [[ $key == %* ]]; then
+      read -r state agent agent_pid < "$state_file" || continue
+    else
+      IFS=$'\t' read -r state agent agent_pid agent_tty cwd < "$state_file" || continue
     fi
-  done
-
-  for state_file in "$state_dir"/sid-*.state(N); do
-    key=${${state_file:t}%.state}
-    IFS=$'\t' read -r state agent agent_pid agent_tty cwd < "$state_file" || continue
     [[ $state == working ]] || continue
     transcript_path=$(jq -r '.transcript_path // empty' "$state_dir/$key.meta.json" 2>/dev/null) || continue
     [[ -n $transcript_path ]] || continue
@@ -422,7 +384,12 @@ __reconcile_stuck() {
     turn_status=$(__transcript_turn_status "$transcript_path")
     if [[ $turn_status == interrupted ]] \
       || { [[ $turn_status == stopped ]] && (( $(__session_last_activity_age "$transcript_path") > 600 )) }; then
-      __write_state_outside "$key" done "$agent" "${agent_pid:-}" "${agent_tty:-}" "${cwd:-}"
+      if [[ $key == %* ]]; then
+        __write_state "$key" "$(__stop_state_for_pane "$key")" "$agent" "$agent_pid"
+        __apply_window_state "$key"
+      else
+        __write_state_outside "$key" done "$agent" "$agent_pid" "$agent_tty" "$cwd"
+      fi
     fi
   done
 }
@@ -444,67 +411,46 @@ if (( $# != 2 )); then
   exit 1
 fi
 
-# tmux paneの外で動くエージェントはsession_id単位で記録する(tmuxタブ反映なし)
-if [[ -z ${TMUX_PANE:-} ]]; then
-  input=$(cat 2>/dev/null || true)
-  session_id=$(print -r -- "$input" | jq -r '.session_id // empty' 2>/dev/null || true)
-  [[ -n $session_id ]] || exit 0
-
-  state_file=$state_dir/sid-$session_id.state
-
-  if [[ $2 == SessionEnd ]]; then
-    rm -f "$state_file" "$state_dir/sid-$session_id.meta.json" "$state_dir/sid-$session_id.wait" "$state_dir/sid-$session_id.activity"
-    exit 0
-  fi
-
-  if [[ $1 == codex ]]; then
-    __write_codex_meta "sid-$session_id" "$input"
-  fi
-
-  state=$(__resolve_state_outside "$2" "$input" "$state_file")
-  [[ -n $state ]] || exit 0
-  __record_wait "$state_dir/sid-$session_id.wait" "$2" "$state" "$input"
-  __record_activity "$state_dir/sid-$session_id.activity" "$2" "$input"
-
-  if [[ -f $state_file && $(cut -f1 "$state_file") == $state ]]; then
-    exit 0
-  fi
-
-  # エージェント本体のPID(hookはエージェントからシェル経由で起動されるため親の親)と
-  # TTY・作業ディレクトリを記録する(一覧での生存判定・表示用)
-  agent_pid=$(ps -o ppid= -p $PPID 2>/dev/null | tr -d ' ')
-  agent_tty=$(ps -o tty= -p "${agent_pid:-0}" 2>/dev/null | tr -d ' ')
-  cwd=$(print -r -- "$input" | jq -r '.cwd // empty' 2>/dev/null || true)
-  __write_state_outside "sid-$session_id" "$state" "$1" "${agent_pid:-}" "${agent_tty:-}" "${cwd:-}"
-  exit 0
-fi
-
 input=$(cat 2>/dev/null || true)
 
+# tmuxのpaneで動くエージェントはpane単位,paneの外で動くエージェントはsession_id単位で記録する(tmuxタブ反映なし)
+if [[ -n ${TMUX_PANE:-} ]]; then
+  key=$TMUX_PANE
+else
+  session_id=$(print -r -- "$input" | jq -r '.session_id // empty' 2>/dev/null || true)
+  [[ -n $session_id ]] || exit 0
+  key=sid-$session_id
+fi
+
 if [[ $2 == SessionEnd ]]; then
-  rm -f "$state_dir/$TMUX_PANE.state" "$state_dir/$TMUX_PANE.meta.json" "$state_dir/$TMUX_PANE.wait" "$state_dir/$TMUX_PANE.activity"
-  __apply_window_state "$TMUX_PANE"
+  rm -f "$state_dir/$key.state" "$state_dir/$key.meta.json" "$state_dir/$key.wait" "$state_dir/$key.activity"
+  [[ $key != %* ]] || __apply_window_state "$key"
   exit 0
 fi
 
 if [[ $1 == codex ]]; then
-  __write_codex_meta "$TMUX_PANE" "$input"
+  __write_codex_meta "$key" "$input"
 fi
 
-state=$(__resolve_state "$2" "$input")
+state=$(__resolve_state "$2" "$input" "$key")
 
-# 未知のイベントは無視する
+# 状態を決めないイベント(未知のもの・作業中でない時の入力待ち通知・compact後のSessionStart)はここで終える
 [[ -n $state ]] || exit 0
-__record_wait "$state_dir/$TMUX_PANE.wait" "$2" "$state" "$input"
+__record_wait "$state_dir/$key.wait" "$2" "$state" "$input"
 # 状態が変わらない(作業中にツールが続く)時も残したいので,状態が変わったかを見る前に記録する
-__record_activity "$state_dir/$TMUX_PANE.activity" "$2" "$input"
+__record_activity "$state_dir/$key.activity" "$2" "$input"
 
-# 状態が変わらないならtmux反映を省く(PreToolUseの高頻度発火対策)
-if [[ -f $state_dir/$TMUX_PANE.state && $(cut -d' ' -f1 "$state_dir/$TMUX_PANE.state") == $state ]]; then
-  exit 0
-fi
+# 状態が変わらないなら書き込みとtmux反映を省く(PreToolUseの高頻度発火対策)
+[[ $(__current_state "$key") != "$state" ]] || exit 0
 
 # エージェント本体のPID(hookはエージェントからシェル経由で起動されるため親の親)
 agent_pid=$(ps -o ppid= -p $PPID 2>/dev/null | tr -d ' ')
-__write_state "$TMUX_PANE" "$state" "$1" "${agent_pid:-}"
-__apply_window_state "$TMUX_PANE"
+if [[ $key == %* ]]; then
+  __write_state "$key" "$state" "$1" "$agent_pid"
+  __apply_window_state "$key"
+else
+  # tmux外は一覧での生存判定・表示用に,TTYと作業ディレクトリも記録する
+  agent_tty=$(ps -o tty= -p "${agent_pid:-0}" 2>/dev/null | tr -d ' ')
+  cwd=$(print -r -- "$input" | jq -r '.cwd // empty' 2>/dev/null || true)
+  __write_state_outside "$key" "$state" "$1" "$agent_pid" "$agent_tty" "$cwd"
+fi
