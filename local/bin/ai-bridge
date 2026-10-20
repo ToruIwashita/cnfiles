@@ -34,11 +34,17 @@ split_once=0
 agent_keys=()
 typeset -A target_of agent_prio
 # 見出しの時刻と並べると狭いペインで見切れるため,キーの説明は ? を押した時だけ時刻に代えて出す
-# (見出しの AI Bridge と括弧を付けても幅102桁のペインで見切れないよう,区切りは空白1つにする)
-key_help='C-n/C-p:select C-s:open C-k:open-below C-l:open-dir Enter:jump q:close C-g:clear Esc:quit'
+# (見出しの AI Bridge と括弧を付けても幅102桁のペインで見切れないよう,区切りは空白1つにし,C-n/C-p は C-n/p と縮める)
+# (Esc:quit はいつも出している見出しの方に書く)
+key_help='C-n/p:select C-s:open C-k:open-below C-l:open-dir Enter:jump q:close C-g:clear X:exit-all'
 show_keys=0
 # 一覧の下の作業の見える化(WORKSPACE・OPS.LOG)は,起動時は出さず Space を押した時だけ出す
 show_ops=0
+# X で一覧に出ているtmux内のAIを一括で終了させる前の確かめ(出している間は見出しを確かめの文に差し替え,y で実行する)
+confirm_exit=0
+exit_prompt=''
+exit_targets=()
+integer exit_working was_confirming
 
 # 一覧の並び順(上ほど対応が必要): blocked > done > working > idle > spare
 __priority_for() {
@@ -549,11 +555,12 @@ __render() {
   __cleanup_stale
   usage=$(__usage_lines)
 
-  # Space はキーの説明に足すと幅102桁のペインで見切れるため,いつも出している見出しの方に書く
+  # Space と Esc はキーの説明に足すと幅102桁のペインで見切れるため,いつも出している見出しの方に書く
+  # (? でキーの説明を出せない時は,X もこちらに書く)
   if (( ${selectable:-0} )); then
-    printf 'AI Bridge  %s  (Space:ops ?:keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Bridge  %s  (Space:ops Esc:quit ?:keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   else
-    printf 'AI Bridge  %s  (Space:ops Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Bridge  %s  (Space:ops X:exit-all Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   fi
   if (( $#usage )); then
     print
@@ -761,6 +768,28 @@ __undo_swap() {
   __data_changed
   size_stale=1
   [[ ${1:-} == --no-draw ]] || __draw
+}
+
+# tmux内のAIを終了させる(X で一括終了する時に,AIごとに裏で呼ぶ)
+# Ctrl-Cは待機中なら1回目で入力欄を空け2回目で終了し,作業中は1回目が中断になるため,ペインがシェルに戻るまで送り続ける
+# 状態ファイルのpidはペインのシェルでAIが終わっても生きているため,終わったかはペインのカレントコマンドで見る(__cleanup_stale と同じ)
+# 中断が長引いてもシェルに戻ったペインへCtrl-Cを打ち込み続けないよう,10秒で諦める
+__exit_agent() {
+  local pane_id
+  integer deadline
+
+  # 描き手のEXITのtrap(後片付け)を裏で走らせないよう外す(__render_loop と同じ)
+  trap - EXIT INT TERM HUP WINCH
+  pane_id=$1
+  deadline=$(( EPOCHSECONDS + 10 ))
+
+  while (( EPOCHSECONDS < deadline )); do
+    case $(tmux display -p -t "$pane_id" '#{pane_current_command}' 2>/dev/null || print zsh) in
+      zsh | bash) return 0 ;;
+    esac
+    tmux send-keys -t "$pane_id" C-c 2>/dev/null || return 0
+    zselect -t 30 || true
+  done
 }
 
 # 下に開いた・閉じた・完了を待機へ戻した等,手元で一覧の中身を変えた時に呼ぶ
@@ -1526,6 +1555,8 @@ __draw() {
   local -a lines=("${lines[@]}")
   local id
   integer age i
+  # 一括終了の確かめを出している間は,見出しを確かめの文に差し替える
+  (( ! confirm_exit )) || lines[1]=$exit_prompt
   for id in ${(k)flash_at}; do
     age=$(( (EPOCHREALTIME - flash_at[$id]) * 10 ))
     if (( age >= 4 )); then
@@ -1650,11 +1681,26 @@ while :; do
   if [[ -t 0 ]]; then
     # 押したキーがエコーされると,カーソルのある画面右下に ^N 等が次の再描画まで残るため -s で抑える
     if read -s -t 0.1 -k 1 key 2>/dev/null; then
+      # 一括終了の確かめを出している間は,y で終了させ,それ以外のキーでは取り消すだけにする
+      # (Esc で始まるもの(単独のEsc・フォーカスの出入り等)は下の Esc の扱いで取り消す)
+      if (( confirm_exit )) && [[ $key != $'\e' ]]; then
+        confirm_exit=0
+        if [[ $key == y ]]; then
+          for id in "${exit_targets[@]}"; do
+            __exit_agent "$id" &!
+          done
+        fi
+        key=''
+      fi
       case $key in
         $'\e')
+          was_confirming=$confirm_exit
+          confirm_exit=0
           # 矢印キー等はEscに続く文字と一緒に届くため,単独のEscの時だけ終了する
+          # (一括終了の確かめを出していた時の単独のEscは,確かめを取り消すだけで一覧は閉じない)
           if ! read -s -t 0.05 -k 1 rest 2>/dev/null; then
-            break
+            (( was_confirming )) || break
+            continue
           fi
           # ESC [ で始まる列は終端の文字(@〜~)まで読む(直後に届いたキーまで読み捨てないよう終端で止める)
           esc_seq=$rest
@@ -1740,6 +1786,19 @@ while :; do
         ' ')
           # 作業の見える化(WORKSPACE・OPS.LOG)を出す・消す
           show_ops=$(( ! show_ops ))
+          ;;
+        X)
+          # 一覧に出ているtmux内のAIを一括で終了させる前に,対象と作業中と対象外(tmux外で送れない)の数を見出しに出して確かめる
+          # 作業中のAIは実行中のコマンドごと中断されるため,その数も出す
+          if (( ${#jump_ids} )); then
+            exit_targets=("${jump_ids[@]}")
+            exit_working=0
+            for id in "${exit_targets[@]}"; do
+              [[ ${agent_prio[$id]:-} != "$(__priority_for working)" ]] || exit_working+=1
+            done
+            exit_prompt=$'\e[1;97;41m'"AI Bridge  Exit ${#exit_targets} AI(s) with Ctrl-C ($exit_working working, $(( ${#agent_keys} - ${#exit_targets} )) outside tmux skipped)? y/N"$'\e[0m'
+            confirm_exit=1
+          fi
           ;;
       esac
       # 下に開いた等で中身が変わった時はその場で組み立て直し,選択の表示も裏を待たずに作り直す
