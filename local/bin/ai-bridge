@@ -34,9 +34,9 @@ split_once=0
 agent_keys=()
 typeset -A target_of agent_prio
 # 見出しの時刻と並べると狭いペインで見切れるため,キーの説明は ? を押した時だけ時刻に代えて出す
-# (見出しの AI Bridge と括弧を付けても幅102桁のペインで見切れないよう,区切りは空白1つにし,C-n/C-p は C-n/p と縮める)
+# (区切りは空白1つにし,C-j/C-k は C-j/k,C-n/C-p は C-n/p と縮める,見出しの AI Bridge と括弧を付けて118桁になるので,それより狭いペインでは末尾が見切れる)
 # (Esc:quit はいつも出している見出しの方に書く)
-key_help='C-n/p:select C-s:open C-k:open-below C-l:open-dir Enter:jump q:close C-g:clear X:exit-all'
+key_help='C-j/k:select C-n/p:select-open C-s:open C-o:open-below C-l:open-dir C-i:jump q:close C-g:clear X:exit-all'
 show_keys=0
 # 一覧の下の作業の見える化(WORKSPACE・OPS.LOG)は,起動時は出さず Space を押した時だけ出す
 show_ops=0
@@ -735,7 +735,7 @@ __focus_below() {
 
 # 選んだペインを真下に開いてそこへ移る(既に下に開いていれば __open_below は何もしないので,移るだけになる)
 # 開いて移った時点で見たとみなして完了をidleへ戻す(ウィンドウを移らないのでtmuxのフックでは戻らず,
-# 未選択のC-kで同じ行が選ばれ続けるため)
+# 未選択のC-oで同じ行が選ばれ続けるため)
 __open_and_focus_below() {
   __open_below "$1"
   __focus_below
@@ -828,7 +828,7 @@ __render_loop() {
 # 描画結果から優先度・キー・TARGETの列を外して lines に,選択できるペインIDを並び順に jump_ids に入れる
 # 一覧の下の作業の見える化のため,一覧に出ているAIのキーを並び順に agent_keys に,TARGETと優先度を target_of / agent_prio に入れる
 # 表示範囲をずらせるよう,データ行の開始位置を first_row に,選択中の行の位置を selected_line に入れる(無ければ0)
-# 未選択のC-kで開く先として,判断待ち,無ければ完了のうち一番上のペインIDを attention_id に入れる
+# 未選択のC-oで開く先として,判断待ち,無ければ完了のうち一番上のペインIDを attention_id に入れる
 # 選択できる時は数字キーで選べるよう,選択できる行の頭に1〜9の番号を付ける
 # 選択中のペインがあれば目立たせ,一覧から消えていれば選択を外す
 # 状態が変わった行と新しく出た行は閃光で知らせる(最初に一覧を出した時は全て新しいので光らせない)
@@ -1595,7 +1595,7 @@ __draw() {
   printf '\e[?2026h\e[H\e[J%s\e[?2026l' "$out"
 }
 
-# 次(1)/前(-1)の選択できるペインIDを返す(未選択ならC-nは先頭から,C-pは末尾から始める)
+# 次(1)/前(-1)の選択できるペインIDを返す(未選択ならC-jは先頭から,C-kは末尾から始める)
 __step_selection() {
   local direction current
   integer n idx
@@ -1643,11 +1643,18 @@ render_file=$work_dir/rendered
 ctl_file=$work_dir/ctl
 print -r -- 0 >| "$ctl_file"
 # ペインを閉じた時は描き直しや停止が失敗し得るが,set -e で後片付けが途中で止まらないよう失敗しても続ける
-trap '__undo_swap || true; [[ -z $render_pid ]] || kill $render_pid 2>/dev/null || true; rm -rf -- "$work_dir"; printf "\e[?2026l\e[?1004l\e[?7h\e[?25h\e[?1049l"' EXIT
+trap '__undo_swap || true; [[ -z $render_pid ]] || kill $render_pid 2>/dev/null || true; rm -rf -- "$work_dir"; [[ -z ${tty_saved:-} ]] || stty "$tty_saved" 2>/dev/null || true; printf "\e[?2026l\e[?1004l\e[?7h\e[?25h\e[?1049l"' EXIT
 trap 'exit 0' INT TERM HUP
 # ペインの大きさが変わったら,次のコマで高さを聞き直す
 trap 'size_stale=1' WINCH
 printf '\e[?1049h\e[?7l\e[?25l\e[?1004h'
+# C-o(端末の既定では出力を捨てる操作になりアプリに届かない)と,Enterと区別したC-j(端末の既定ではEnterも改行に直る)を
+# キーとして受け取るため,動いている間だけ端末の設定を変え,終わる時に戻す
+tty_saved=''
+if [[ -t 0 ]]; then
+  tty_saved=$(stty -g 2>/dev/null || true)
+  stty discard undef -icrnl 2>/dev/null || true
+fi
 
 # iTerm2のウィンドウをまたいだジャンプはmacOSのAppleScriptで行うため,macOS以外やtmuxの外では選択自体を無効にする
 if [[ $OSTYPE == darwin* && -n ${TMUX:-} ]] && (( $+commands[osascript] )); then
@@ -1728,14 +1735,22 @@ while :; do
             left_window=0
           fi
           ;;
-        $'\x0e') # Ctrl+n
+        $'\n') # Ctrl+j(Enterは端末の設定で改行に直さないので \r で届き,ここには来ない)
           if (( selectable )); then
             selected_id=$(__step_selection 1 "$selected_id" "${jump_ids[@]}")
           fi
           ;;
-        $'\x10') # Ctrl+p
+        $'\x0b') # Ctrl+k
           if (( selectable )); then
             selected_id=$(__step_selection -1 "$selected_id" "${jump_ids[@]}")
+          fi
+          ;;
+        $'\x0e' | $'\x10') # Ctrl+n / Ctrl+p
+          # 選択を1つ動かし,フォーカスは一覧に置いたまま下に開く(C-j/C-k の後に C-s を押したのと同じ)
+          if (( selectable )); then
+            if [[ $key == $'\x0e' ]]; then step=1; else step=-1; fi
+            selected_id=$(__step_selection $step "$selected_id" "${jump_ids[@]}")
+            [[ -z $selected_id ]] || __open_below "$selected_id"
           fi
           ;;
         $'\x13') # Ctrl+s
@@ -1743,7 +1758,7 @@ while :; do
             __open_below "$selected_id"
           fi
           ;;
-        $'\x0b') # Ctrl+k
+        $'\x0f') # Ctrl+o
           # 未選択なら判断待ち,無ければ完了のうち一番上を開く(選択は変えないので,次も一番上から選び直す)
           open_id=${selected_id:-$attention_id}
           if (( selectable )) && [[ -n $open_id ]]; then
@@ -1756,7 +1771,7 @@ while :; do
             __open_and_focus_below "$selected_id"
           fi
           ;;
-        $'\n' | $'\r')
+        $'\t') # Ctrl+i(Tabも同じ文字で届く)
           if (( selectable )) && [[ -n $selected_id ]]; then
             # 下に開いているAIや,それと入れ替わったAIは元の位置へ戻してから移る
             if [[ $selected_id == "${last_swap[1]:-}" || $selected_id == "${last_swap[2]:-}" ]]; then
