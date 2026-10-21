@@ -270,25 +270,6 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+r: send '/resolve-pr-ci-failure' + Tab + Enter",
-                                "from": {
-                                    "key_code": "r",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)resolve-pr-ci-failure\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
                                 "description": "Ctrl+Cmd+s: switch tmux ai session",
                                 "from": {
                                     "key_code": "s",
@@ -318,25 +299,6 @@
                                 "to": [
                                     {
                                         "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)new\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Ctrl+Cmd+Shift+x: send '/purge-awareness' + Tab",
-                                "from": {
-                                    "key_code": "x",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command", "shift"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)purge-awareness\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
                                     }
                                 ],
                                 "type": "basic"
@@ -546,25 +508,6 @@
                                 "to": [
                                     {
                                         "shell_command": "~/local/bin/open ~/works/memolist/00-tmp.html"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Ctrl+Cmd+@: send '/read-path-or-url' + Tab",
-                                "from": {
-                                    "key_code": "open_bracket",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)read-path-or-url\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
                                     }
                                 ],
                                 "type": "basic"
@@ -859,26 +802,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+m: send '/multiple-agent-review-in-committed-diff-and-git-diff-with-code-comment' + Tab + Enter",
-                                "from": {
-                                    "key_code": "m",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command", "shift"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)multiple-agent-review-in-committed-diff-and-git-diff-with-code-comment\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Ctrl+Cmd+,: send '/outline-rspec-context-to-tmp-dump' + Tab",
+                                "description": "Ctrl+Cmd+,: send '/multiple-review-in-committed-diff-and-git-diff-with-comment' + Tab + Enter",
                                 "from": {
                                     "key_code": "comma",
                                     "modifiers": {
@@ -887,7 +811,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)outline-rspec-context-to-tmp-dump\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
+                                        "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)multiple-review-in-committed-diff-and-git-diff-with-comment\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
@@ -897,26 +821,7 @@
                     {
                         "manipulators": [
                             {
-                                "description": "Ctrl+Cmd+Shift+,: send '/explain-code-to-tmp-dump-html-with-code-comment-and-record' + Tab",
-                                "from": {
-                                    "key_code": "comma",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command", "shift"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)explain-code-to-tmp-dump-html-with-code-comment-and-record\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Ctrl+Cmd+.: send '/outline-rspec-context-in-git-diff-to-tmp-dump' + Tab",
+                                "description": "Ctrl+Cmd+.: send '/forge-ruby-code-in-committed-diff-and-git-diff' + Tab + Enter",
                                 "from": {
                                     "key_code": "period",
                                     "modifiers": {
@@ -925,83 +830,7 @@
                                 },
                                 "to": [
                                     {
-                                        "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)outline-rspec-context-in-git-diff-to-tmp-dump\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Ctrl+Cmd+Shift+.: send '/explain-git-diff-rationale-to-tmp-dump-html-with-code-comment-and-record' + Tab",
-                                "from": {
-                                    "key_code": "period",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command", "shift"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)explain-git-diff-rationale-to-tmp-dump-html-with-code-comment-and-record\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Ctrl+Cmd+/: send '/outline-rspec-context-in-committed-diff-to-tmp-dump' + Tab",
-                                "from": {
-                                    "key_code": "slash",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)outline-rspec-context-in-committed-diff-to-tmp-dump\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Ctrl+Cmd+Shift+/: send '/explain-committed-diff-rationale-to-tmp-dump-html-with-code-comment-and-record' + Tab",
-                                "from": {
-                                    "key_code": "slash",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command", "shift"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)explain-committed-diff-rationale-to-tmp-dump-html-with-code-comment-and-record\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
-                                    }
-                                ],
-                                "type": "basic"
-                            }
-                        ]
-                    },
-                    {
-                        "manipulators": [
-                            {
-                                "description": "Ctrl+Cmd+_: send '/check-and-annotate-test-completeness' + Tab",
-                                "from": {
-                                    "key_code": "international1",
-                                    "modifiers": {
-                                        "mandatory": ["control", "command"]
-                                    }
-                                },
-                                "to": [
-                                    {
-                                        "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)check-and-annotate-test-completeness\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab"
+                                        "shell_command": "~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) \"$(cat ~/.config/ai_agents/current_tmux_ai_agent_command_prefix.txt)forge-ruby-code-in-committed-diff-and-git-diff\" && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Tab && sleep 0.1 && ~/local/bin/tmux -S /private/tmp/tmux-fixed/default send-keys -t $(cat ~/.config/ai_agents/current_tmux_ai_agent_session.txt) Enter"
                                     }
                                 ],
                                 "type": "basic"
