@@ -77,6 +77,7 @@ bindkey -v '^su' immediate-git-diff                   # Ctrl+s,uでgit diff
 bindkey -v '^sw' show-rprompt                         # Ctrl+s,wで退避したRPROMPTを復元
 bindkey -v '^s@' clear-screen                         # Ctrl+@でclear-screen
 bindkey -v '^s_' peco-cd-ghq-repo                     # Ctrl+s,_でghq管理下のリポジトリを絞り込んで移動
+bindkey -v '^s,' start-ai-bridge                      # Ctrl+s,,でai-bridge起動
 bindkey -v '^s;' save-ai-agent-session                # Ctrl+s,;でAIエージェントセッション保存
 bindkey -v '^s:' peco-delete-saved-ai-agent-session   # Ctrl+s,:でAIエージェントセッション削除
 bindkey -v '^s\' peco-edit-ai-agent-session           # Ctr+s,\でAIエージェントセッション編集
