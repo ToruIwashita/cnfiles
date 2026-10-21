@@ -34,9 +34,9 @@ split_once=0
 agent_keys=()
 typeset -A target_of agent_prio
 # 見出しの時刻と並べると狭いペインで見切れるため,キーの説明は ? を押した時だけ時刻に代えて出す
-# (区切りは空白1つにし,C-j/C-k は C-j/k,C-n/C-p は C-n/p と縮める,見出しの AI Bridge と括弧を付けて118桁になるので,それより狭いペインでは末尾が見切れる)
-# (Esc:quit はいつも出している見出しの方に書く)
-key_help='C-j/k:select C-n/p:select-open C-s:open C-o:open-below C-l:open-dir C-i:jump q:close C-g:clear X:exit-all'
+# (区切りは空白1つにし,C-j/C-k は C-j/k,C-n/C-p は C-n/p と縮める,見出しの AI Bridge と括弧を付けて107桁になるので,それより狭いペインでは末尾が見切れる)
+# (X:exit-all と Esc:quit はいつも出している見出しの方に書く)
+key_help='C-j/k:select C-n/p:select-open C-s:open C-o:open-below C-l:open-dir C-i:jump q:close C-g:clear'
 show_keys=0
 # 一覧の下の作業の見える化(WORKSPACE・OPS.LOG)は,起動時は出さず Space を押した時だけ出す
 show_ops=0
@@ -555,10 +555,9 @@ __render() {
   __cleanup_stale
   usage=$(__usage_lines)
 
-  # Space と Esc はキーの説明に足すと幅102桁のペインで見切れるため,いつも出している見出しの方に書く
-  # (? でキーの説明を出せない時は,X もこちらに書く)
+  # Space と Esc はキーの説明に足すと幅102桁のペインで見切れるため,X は ? を押さなくても分かるよう,いつも出している見出しの方に書く
   if (( ${selectable:-0} )); then
-    printf 'AI Bridge  %s  (Space:activity Esc:quit ?:keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Bridge  %s  (Space:activity X:exit-all Esc:quit ?:keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   else
     printf 'AI Bridge  %s  (Space:activity X:exit-all Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   fi
