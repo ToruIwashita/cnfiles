@@ -562,8 +562,9 @@ __render() {
   else
     printf 'AI Bridge  %s  (Space:ops X:exit-all Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   fi
+  # 見出しの下は,利用枠の行が無い時も1行空ける
+  print
   if (( $#usage )); then
-    print
     print -r -- "$usage"
     print
   fi
