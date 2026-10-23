@@ -58,11 +58,11 @@ go install github.com/x-motemen/gore/cmd/gore@latest
 printf "\e[32mgo install github.com/go-delve/delve/cmd/dlv@latest\e[0m\n"
 go install github.com/go-delve/delve/cmd/dlv@latest
 
-printf "\e[32mgo install github.com/direnv/direnv@latest\e[0m\n"
-go install github.com/direnv/direnv@latest
+printf "\e[32mgo install github.com/direnv/direnv/v2@latest\e[0m\n"
+go install github.com/direnv/direnv/v2@latest
 
-printf "\e[32mgo install github.com/charmbracelet/glow@latest\e[0m\n"
-go install github.com/charmbracelet/glow@latest
+printf "\e[32mgo install github.com/charmbracelet/glow/v2@latest\e[0m\n"
+go install github.com/charmbracelet/glow/v2@latest
 
 printf "\e[32mgo install github.com/peco/peco/cmd/peco@latest\e[0m\n"
 go install github.com/peco/peco/cmd/peco@latest
