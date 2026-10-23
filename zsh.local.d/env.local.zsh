@@ -89,16 +89,6 @@ fpath=(
   $fpath
 )
 
-## go
-if [[ $(which go) =~ asdf ]]; then
-  export GOROOT=$(go env GOROOT)
-  export GOPATH=$(go env GOPATH)
-  path=(
-    $GOPATH/bin
-    $path
-  )
-fi
-
 ## node
 if [[ $(which node) =~ asdf ]]; then
   export NODE_PATH=$(npm root -g)
