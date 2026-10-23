@@ -5,7 +5,7 @@ set -e
 
 DEFAULT_GO_VERSION=1.27.3
 DEFAULT_JAVA_VERSION=temurin-24.0.1+9
-DEFAULT_NODE_VERSION=24.19.0
+DEFAULT_NODE_VERSION=26.12.1
 DEFAULT_PYTHON3_VERSION=3.13.1
 DEFAULT_RUBY_VERSION=4.0.6
 DEFAULT_RUST_VERSION=1.86.0
@@ -57,10 +57,6 @@ echo
 asdf install rust "$USE_RUST_VERSION"
 asdf set -u rust "$USE_RUST_VERSION"
 echo
-
-if [[ $(which node) =~ asdf ]]; then
-  corepack enable
-fi
 
 printf "\nreshim all\n"
 echo
