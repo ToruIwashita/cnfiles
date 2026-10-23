@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source $(cd $(dirname $_);pwd)/env.bash
+source "$(cd "$(dirname "$_")"; pwd)/env.bash"
 set -e
 
 if [[ ! $(which go) =~ asdf ]]; then
@@ -8,41 +8,42 @@ if [[ ! $(which go) =~ asdf ]]; then
   exit 1
 fi
 
-export GOROOT=$(go env GOROOT)
-export GOPATH=$(go env GOPATH)
+GOROOT=$(go env GOROOT)
+GOPATH=$(go env GOPATH)
+export GOROOT GOPATH
 
 # check GOROOT
 if [[ ! $GOROOT =~ asdf ]]; then
-  printf "$GOROOT does not contain .asdf/\n"
+  printf "%s does not contain .asdf/\n" "$GOROOT"
   exit 1
 fi
 
 # check GOPATH
 if [[ ! $GOPATH =~ asdf ]]; then
-  printf "$GOPATH does not contain .asdf/\n"
+  printf "%s does not contain .asdf/\n" "$GOPATH"
   exit 1
 fi
 
 # create $GOPATH
 if [[ -d $GOPATH ]]; then
-  printf "\e[32m$GOPATH dir already exists\e[0m\n"
+  printf "\e[32m%s dir already exists\e[0m\n" "$GOPATH"
 else
-  printf "\e[31mmkdir $GOPATH\e[0m\n"
-  mkdir -p $GOPATH
+  printf "\e[31mmkdir %s\e[0m\n" "$GOPATH"
+  mkdir -p "$GOPATH"
 fi
 
 # create $GOPATH/bin
 if [[ -d $GOPATH/bin ]]; then
-  printf "\e[32m$GOPATH/bin dir already exists\e[0m\n"
+  printf "\e[32m%s/bin dir already exists\e[0m\n" "$GOPATH"
 else
-  printf "\e[31mmkdir $GOPATH/bin\e[0m\n"
-  mkdir -p $GOPATH/bin
+  printf "\e[31mmkdir %s/bin\e[0m\n" "$GOPATH"
+  mkdir -p "$GOPATH/bin"
 fi
 
 export PATH="$PATH:$GOPATH/bin"
 
 echo
-printf "go: $(go version)\n"
+printf "go: %s\n" "$(go version)"
 
 echo
 printf "\e[32mgo install github.com/mattn/longcat@latest\e[0m\n"

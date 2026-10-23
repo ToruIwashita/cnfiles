@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source $(cd $(dirname $_);pwd)/env.bash
+source "$(cd "$(dirname "$_")"; pwd)/env.bash"
 set -e
 
 DEFAULT_GO_VERSION=1.24.6
@@ -34,28 +34,28 @@ asdf list
 
 echo
 
-asdf install golang $USE_GO_VERSION
-asdf set -u golang $USE_GO_VERSION
+asdf install golang "$USE_GO_VERSION"
+asdf set -u golang "$USE_GO_VERSION"
 echo
 
-asdf install java $USE_JAVA_VERSION
-asdf set -u java $USE_JAVA_VERSION
+asdf install java "$USE_JAVA_VERSION"
+asdf set -u java "$USE_JAVA_VERSION"
 echo
 
-asdf install nodejs $USE_NODE_VERSION
-asdf set -u nodejs $USE_NODE_VERSION
+asdf install nodejs "$USE_NODE_VERSION"
+asdf set -u nodejs "$USE_NODE_VERSION"
 echo
 
-asdf install python $USE_PYTHON3_VERSION
-asdf set -u python $USE_PYTHON3_VERSION
+asdf install python "$USE_PYTHON3_VERSION"
+asdf set -u python "$USE_PYTHON3_VERSION"
 echo
 
-asdf install ruby $USE_RUBY_VERSION
-asdf set -u ruby $USE_RUBY_VERSION
+asdf install ruby "$USE_RUBY_VERSION"
+asdf set -u ruby "$USE_RUBY_VERSION"
 echo
 
-asdf install rust $USE_RUST_VERSION
-asdf set -u rust $USE_RUST_VERSION
+asdf install rust "$USE_RUST_VERSION"
+asdf set -u rust "$USE_RUST_VERSION"
 echo
 
 if [[ $(which node) =~ asdf ]]; then

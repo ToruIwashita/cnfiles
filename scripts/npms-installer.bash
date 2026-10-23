@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source $(cd $(dirname $_);pwd)/env.bash
+source "$(cd "$(dirname "$_")"; pwd)/env.bash"
 set -e
 
 if [[ ! $(which npm) =~ asdf ]]; then
@@ -8,7 +8,7 @@ if [[ ! $(which npm) =~ asdf ]]; then
   exit 1
 fi
 
-printf "npm: $(npm --version)\n"
+printf "npm: %s\n" "$(npm --version)"
 
 echo
 which npm

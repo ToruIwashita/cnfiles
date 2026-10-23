@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source $(cd $(dirname $_);pwd)/env.bash
+source "$(cd "$(dirname "$_")"; pwd)/env.bash"
 set -e
 
 if [[ ! $(which ruby) =~ asdf ]]; then
@@ -13,7 +13,7 @@ if [[ ! $(which gem) =~ asdf ]]; then
   exit 1
 fi
 
-printf "gem: $(gem --version)\n"
+printf "gem: %s\n" "$(gem --version)"
 
 echo
 which gem

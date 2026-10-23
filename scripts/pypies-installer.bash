@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source $(cd $(dirname $_);pwd)/env.bash
+source "$(cd "$(dirname "$_")"; pwd)/env.bash"
 set -e
 
 if [[ ! $(which python3) =~ asdf ]]; then
@@ -8,7 +8,7 @@ if [[ ! $(which python3) =~ asdf ]]; then
   exit 1
 fi
 
-printf "pip3: $(pip3 --version)\n"
+printf "pip3: %s\n" "$(pip3 --version)"
 
 echo
 which pip3

@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
-source $(cd $(dirname $_);pwd)/env.bash
+source "$(cd "$(dirname "$_")"; pwd)/env.bash"
 set -e
 
-cd $CTAGS_SRC_DIR_PATH
+cd "$CTAGS_SRC_DIR_PATH"
 
 # backup
 if [[ -f $LOCAL_BIN_DIR_PATH/ctags ]]; then
-  mv $LOCAL_BIN_DIR_PATH/{ctags,ctags.prev}
+  mv "$LOCAL_BIN_DIR_PATH"/{ctags,ctags.prev}
 fi
 
 LIBXML2_PATH=$HOMEBREW_INSTALL_DIR_PATH/opt/libxml2
 
 ./autogen.sh
 ./configure                                     \
-  --prefix=$LOCAL_DIR_PATH                      \
+  --prefix="$LOCAL_DIR_PATH"                    \
   --enable-iconv                                \
   --disable-external-sort                       \
   PKG_CONFIG_PATH="$LIBXML2_PATH/lib/pkgconfig" \

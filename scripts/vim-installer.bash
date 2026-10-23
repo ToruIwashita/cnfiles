@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source $(cd $(dirname $_);pwd)/env.bash
+source "$(cd "$(dirname "$_")"; pwd)/env.bash"
 set -e
 
 # asdf
@@ -32,7 +32,7 @@ if [[ ! $PYTHON3_PATH =~ asdf ]]; then
   exit 1
 fi
 
-cd $VIM_SRC_DIR_PATH
+cd "$VIM_SRC_DIR_PATH"
 
 if [[ -f $VIM_SRC_DIR_PATH/src/auto/config.cache ]]; then
   rm -f src/auto/config.cache
@@ -40,11 +40,11 @@ fi
 
 # backup
 if [[ -f $LOCAL_BIN_DIR_PATH/vim ]]; then
-  mv $LOCAL_BIN_DIR_PATH/{vim,vim.prev}
+  mv "$LOCAL_BIN_DIR_PATH"/{vim,vim.prev}
 fi
 
 ./configure \
-  --prefix=$LOCAL_DIR_PATH       \
+  --prefix="$LOCAL_DIR_PATH"     \
   --with-features=huge           \
   --enable-multibyte             \
   --enable-xim                   \
@@ -52,7 +52,7 @@ fi
   --enable-rubyinterp=dynamic    \
   --enable-python3interp=dynamic \
   --enable-fail-if-missing       \
-  LDFLAGS=-Wl,-rpath,$RUBY_LIB_DIR,-rpath,$PYTHON3_LIB_DIR
+  LDFLAGS="-Wl,-rpath,$RUBY_LIB_DIR,-rpath,$PYTHON3_LIB_DIR"
 
 make && make install
 
