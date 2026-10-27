@@ -145,7 +145,8 @@ bind P choose-buffer
 
 ## AI
 # AIエージェント一覧を上側ペインで実行
-bind a new-window -c '#{pane_current_path}' \; split-window -v -c '#{pane_current_path}' \; select-pane -D \; resize-pane -y 20% \; send-keys 'ai-bridge' Enter \; select-pane -D
+# 高さは ai-bridge が下にAIを開く時と同じく,境界線を除いた高さの30%を四捨五入する(resize-pane -y は書式を展開しないため run-shell -C で計算してから渡す)
+bind a new-window -c '#{pane_current_path}' \; split-window -v -c '#{pane_current_path}' \; select-pane -D \; run-shell -C 'resize-pane -y #{e|/:#{e|+:#{e|*:#{e|-:#{window_height},1},30},50},100}' \; send-keys 'ai-bridge' Enter \; select-pane -D
 # AIエージェント一覧を先頭ウィンドウで実行
 bind @ move-window -t 0 \; send-keys 'ai-bridge' Enter
 

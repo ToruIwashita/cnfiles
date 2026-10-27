@@ -549,7 +549,9 @@ __emit_rows() {
 
 # ヘッダ+ソート済み一覧を出力する
 __render() {
-  local usage
+  local usage branch
+  local -a usage_lines
+  integer i
 
   # 利用枠は一覧に出るエージェントで絞るため,先に古い状態ファイルを掃除する
   __cleanup_stale
@@ -561,12 +563,16 @@ __render() {
   else
     printf 'AI Bridge  %s  (Space:activity X:exit-all Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   fi
-  # 見出しの下は,利用枠の行が無い時も1行空ける
-  print
+  # 利用枠の行は見出しから枝分かれさせ(途中の行は ┣,最後の行は ┗ にして線をつなげる),
+  # 列の名前との間は,利用枠の行が無い時も1行空ける
   if (( $#usage )); then
-    print -r -- "$usage"
-    print
+    usage_lines=("${(@f)usage}")
+    for (( i = 1; i <= ${#usage_lines}; i++ )); do
+      if (( i < ${#usage_lines} )); then branch='┣'; else branch='┗'; fi
+      print -r -- "  $branch ${usage_lines[i]#  }"
+    done
   fi
+  print
   # 選択できる時はデータ行の頭に番号(数字キーで選ぶ)が付くので,見出しも同じだけずらす
   printf '%*s%-7s %-23s %-7s %-14s %-22s %-12s %-9s %s\n' $(( ${selectable:-0} ? 2 : 0 )) '' PID TARGET AGENT STATUS DIR MODEL CONTEXT LAST
   # 同じ状態の中では直近に状態が変わったものを上に出す(データ行は優先度・キー・TARGETを先頭に残す)
@@ -679,7 +685,7 @@ __open_below() {
   (( ! ${#last_swap} )) || __undo_swap --no-draw
 
   below=$(__pane_below)
-  # 開いた時に一覧の高さを中身に合わせるので,閉じた時に戻せるよう開く前の高さを残す
+  # 開いた時に一覧の高さを変えるので,閉じた時に戻せるよう開く前の高さを残す
   height=$(tmux display -p -t "$TMUX_PANE" '#{pane_height}' 2>/dev/null || true)
   # tmuxはペインを縮める時,カーソルより下の行を消し切ると残りを上の行から消して表示が上にずれるため,
   # 一覧の高さを変える前にカーソルを左上へ移して下の行から消させる
@@ -712,14 +718,15 @@ __open_below() {
   __draw
 }
 
-# 下にAIを開いた時の一覧の高さ(見切れないよう中身の行数にする)
-# 下のAIに半分以上を残すため,一覧と下のAIで分け合う高さ($1)から境界線1行を除いた半分までにし,
+# 下にAIを開いた時の一覧の高さ
+# 一覧と下のAIで分け合う高さ($1)から境界線1行を除いた分を,一覧の行数に依らず 30:70 に分け(四捨五入,少なくとも1行),
 # 入りきらない分は … +N more の表示に任せる
 __fit_height() {
-  integer half
+  integer fit
 
-  half=$(( ($1 - 1) / 2 ))
-  print -r -- $(( ${#lines} < half ? ${#lines} : half ))
+  fit=$(( (($1 - 1) * 30 + 50) / 100 ))
+  (( fit >= 1 )) || fit=1
+  print -r -- $fit
 }
 
 # このウィンドウのai-bridgeの真下のペインへフォーカスを移す
@@ -1576,7 +1583,7 @@ __draw() {
   f=$(( EPOCHREALTIME * 10 ))
   out=${out//● Working/${spin[f % ${#spin} + 1]} Working}
   out=${out//● Input/${pulse[f / 2 % ${#pulse} + 1]} Input}
-  # Space で出している間,一覧が収まって下に7行以上(空行1行と枠の6行)余る時は,余白に作業の見える化を出す(下に開いて一覧を中身の高さに縮めた時は出ない)
+  # Space で出している間,一覧が収まって下に7行以上(空行1行と枠の6行)余る時は,余白に作業の見える化を出す(下に開いて一覧を縮め,余白が足りない時は出ない)
   # 枠の上端は,一覧の下に空行を1行置いた位置か上から ops_top_pct %の位置の低い方にする(枠の6行は残す)
   if (( show_ops && ${#lines} + 7 <= pane_rows )); then
     top=$(( pane_rows * ops_top_pct / 100 ))
