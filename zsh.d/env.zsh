@@ -53,10 +53,10 @@ export TMUX_AI_SESSION='ai-session'
 export TMUX_AI_MANAGE_SESSION=ai-manage-session
 export AI_AGENT=claude
 export AI_AGENT_WITH_OPT="CLAUDE_CODE_OAUTH_TOKEN= $AI_AGENT --chrome --permission-mode auto --effort xhigh"
-export TMUX_AI_AGENT_SESSION="$TMUX_AI_SESSION:1.0"
+export TMUX_AI_AGENT_SESSION="$TMUX_AI_SESSION:1.{bottom}"
 export AI_SUB_AGENT=codex
 export AI_SUB_AGENT_WITH_OPT="$AI_SUB_AGENT"
-export TMUX_AI_SUB_AGENT_SESSION="$TMUX_AI_SESSION:0.0"
+export TMUX_AI_SUB_AGENT_SESSION="$TMUX_AI_SESSION:0.{bottom}"
 export AI_AGENT_SESSION_AGENTS='claude,codex'
 export AI_AGENT_SESSION_CLAUDE_COMMAND='CLAUDE_CODE_OAUTH_TOKEN= claude --chrome --permission-mode auto'
 export AI_AGENT_SESSION_CLAUDE_MODELS='claude-opus-5-5,claude-fable-5-1'

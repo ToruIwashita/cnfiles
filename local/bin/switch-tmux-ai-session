@@ -8,7 +8,8 @@ ai_agent=claude
 ai_sub_agent=codex
 ai_agent_command_prefix='/'
 ai_sub_agent_command_prefix='$'
-tmux_ai_agent_session=ai-session:1.0
+# ウィンドウ1の上にai-bridgeを置いてもAIへ届くよう,一番下のペインを宛先にする
+tmux_ai_agent_session='ai-session:1.{bottom}'
 tmux_ai_sub_agent_session=ai-session:0.0
 
 current_tmux_ai_agent_file=~/.config/ai_agents/current_tmux_ai_agent.txt

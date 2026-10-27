@@ -13,7 +13,7 @@ OPEN_COMMAND_PATH=$(command -v open)
 
 # ai
 AI_AGENT=claude
-TMUX_AI_AGENT_SESSION="ai-agent-session:1.1"
+TMUX_AI_AGENT_SESSION="ai-agent-session:1.{bottom}"
 
 # homebrew
 HOMEBREW_INSTALL_DIR_PATH=/opt/homebrew
