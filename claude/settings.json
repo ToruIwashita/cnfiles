@@ -1,6 +1,6 @@
 {
-  "skillListingBudgetFraction": 0.02,
   "cleanupPeriodDays": 180,
+  "skillListingBudgetFraction": 0.02,
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
     "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
@@ -214,6 +214,10 @@
           {
             "type": "command",
             "command": "ai-agent-state claude Stop"
+          },
+          {
+            "type": "command",
+            "command": "command -v claude-code-stop-japanese-guard >/dev/null 2>&1 && claude-code-stop-japanese-guard || true"
           },
           {
             "type": "command",

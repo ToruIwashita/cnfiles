@@ -547,6 +547,14 @@ else
   ln -is $BASE_DIR_PATH/local/bin/claude-code-bash-guard $LOCAL_BIN_DIR_PATH/claude-code-bash-guard
 fi
 
+# claude-code-stop-japanese-guard
+if [[ -L $LOCAL_BIN_DIR_PATH/claude-code-stop-japanese-guard ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/claude-code-stop-japanese-guard symlink already exists\e[0m\n"
+else
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/claude-code-stop-japanese-guard\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/claude-code-stop-japanese-guard $LOCAL_BIN_DIR_PATH/claude-code-stop-japanese-guard
+fi
+
 # claude-code-bash-clipboard
 if [[ -L $LOCAL_BIN_DIR_PATH/claude-code-bash-clipboard ]]; then
   _printf "\e[32m$LOCAL_BIN_DIR_PATH/claude-code-bash-clipboard symlink already exists\e[0m\n"

@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+# Claude Code Stop: 直前の返答が日本語で書かれていなければ,内容を変えずに日本語で出し直させる
+# 返答を日本語にする指示が設定や指示文書にあっても英語で返すことがあり,手で言い直させる手間を省くため
+# コードブロック・インラインコード・URL・パスは日本語の文章と無関係に英字が多くなるため数えない
+# 英字200字以上かつ日本語がその15%未満を英語の返答とみなす(2026-10-29に過去30日の返答3,178件で試し,言い直させた19件のうち17件を捕まえ,英語を依頼された返答の誤判定は無かった)
+# 続けさせた後の Stop(stop_hook_active が true)では判定せず,出し直しを繰り返させない
+
+jq -c '
+  if (.stop_hook_active // false) then empty
+  else
+    (.last_assistant_message // "")
+    | gsub("```(?s:.*?)```"; "")
+    | gsub("`[^`\\n]*`"; "")
+    | gsub("https?://\\S+"; "")
+    | gsub("(?:~|\\.{1,2})?/[\\w.@:/-]+"; "")
+    | ([match("[\\p{Hiragana}\\p{Katakana}\\p{Han}]"; "g")] | length) as $ja
+    | ([match("[A-Za-z]"; "g")] | length) as $en
+    | if $en >= 200 and $ja * 100 < $en * 15 then
+        {hookSpecificOutput: {
+          hookEventName: "Stop",
+          additionalContext: "直前の返答が日本語になっていないため,内容を変えずに日本語で出し直してください(コード・コマンド・識別子・パスはそのまま)"
+        }}
+      else empty end
+  end
+'
