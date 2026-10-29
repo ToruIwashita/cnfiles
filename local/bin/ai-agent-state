@@ -5,7 +5,7 @@
 # 使い方:
 #   ai-agent-state <agent> <event>            # claude/codexのhooksから呼ぶ(stdin: hook JSON)
 #   ai-agent-state --focus-reset [window_id]  # tmuxのフックとai-bridgeから呼ぶ(doneをidleへ戻す)
-#   ai-agent-state --reconcile-stuck          # ai-bridgeの描画ループから呼ぶ(取り残されたworkingを倒す)
+#   ai-agent-state --reconcile-stuck          # ai-bridgeの描画ループから呼ぶ(取り残されたworking・blockedを倒す)
 #
 # イベントと状態の対応:
 #   UserPromptSubmit / PreToolUse / PostToolUse / PostToolUseFailure -> working
@@ -328,6 +328,7 @@ __focus_reset() {
 
 # transcript末尾からターンの終了状況を判定する(codexのrolloutはターンの開始・完了・中断の出来事で判定する)
 #   interrupted: 最後のメッセージがESC割り込みマーカー(codexはturn_aborted)
+#                (マーカーはuserのtextとして記録される,ツールの結果に同じ文字列が入る時(transcriptを読んだ等)は中断ではない)
 #   stopped:     Stopフック実行済みで終了(最後の有意なエントリがstop_hook_summary,codexはtask_complete)
 #   active:      ターン進行中または新しいプロンプト受付後(codexはtask_started)
 #   none:        判定不能(transcript無し・読み取り失敗)
@@ -345,7 +346,8 @@ __transcript_turn_status() {
     | if . == null then "none"
       elif .type == "system" then "stopped"
       elif .type == "event_msg" then ({task_complete: "stopped", turn_aborted: "interrupted"}[.payload.type] // "active")
-      elif .type == "user" and ((.message.content | tostring) | contains("[Request interrupted by user")) then "interrupted"
+      elif .type == "user" and ((.message.content | type) == "array")
+        and any(.message.content[]; .type? == "text" and ((.text // "") | startswith("[Request interrupted by user"))) then "interrupted"
       else "active" end
   ' 2>/dev/null || print none
 }
@@ -365,13 +367,15 @@ __session_last_activity_age() {
   print $(( EPOCHSECONDS - $(stat -f %m "$newest" 2>/dev/null || print 0) ))
 }
 
-# ターン終了イベントを取りこぼしてworkingのまま残った状態をdone/idleへ倒す
+# ターン終了イベントを取りこぼしてworking・blockedのまま残った状態をdone/idleへ倒す
 #   interrupted: ESC割り込み(終了イベントが届かないことがある)は即倒す
+#                (質問・許可の確認をEscで閉じた時はどのフックも来ずblockedのまま残る)
 #   stopped: Stopがbackground_tasks実行中でworkingを維持した後,タスクが孤児化して後続イベントが
 #            来ないケースが対象で,実行中の背景タスクと区別するため裏の作業の成果物の更新が10分超止まったものだけ倒す
 #            (聞き直し用に残して何もしていないサブエージェントも,これでターン終了後にdone/idleへ戻る)
 #            (teammateは長いツール実行中にtranscript・成果物が数分無更新になるため,60秒では完了待ち中の
 #            セッションを誤ってdone/idleへ倒してしまう)
+#            (blockedは対象にしない,裏のサブエージェントが許可を待つ間も成果物は更新が止まるため)
 __reconcile_stuck() {
   local state_file key state agent agent_pid agent_tty cwd transcript_path turn_status
 
@@ -382,13 +386,13 @@ __reconcile_stuck() {
     else
       IFS=$'\t' read -r state agent agent_pid agent_tty cwd < "$state_file" || continue
     fi
-    [[ $state == working ]] || continue
+    [[ $state == working || $state == blocked ]] || continue
     transcript_path=$(jq -r '.transcript_path // empty' "$state_dir/$key.meta.json" 2>/dev/null) || continue
     [[ -n $transcript_path ]] || continue
 
     turn_status=$(__transcript_turn_status "$transcript_path")
     if [[ $turn_status == interrupted ]] \
-      || { [[ $turn_status == stopped ]] && (( $(__session_last_activity_age "$transcript_path") > 600 )) }; then
+      || { [[ $state == working && $turn_status == stopped ]] && (( $(__session_last_activity_age "$transcript_path") > 600 )) }; then
       if [[ $key == %* ]]; then
         __write_state "$key" "$(__stop_state_for_pane "$key")" "$agent" "$agent_pid"
         __apply_window_state "$key"
