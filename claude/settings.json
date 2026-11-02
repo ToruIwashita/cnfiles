@@ -290,6 +290,7 @@
     "command": "claude-code-statusline",
     "refreshInterval": 30
   },
+  "idleCompaction": false,
   "language": "Japanese",
   "sandbox": {
     "enabled": true,
