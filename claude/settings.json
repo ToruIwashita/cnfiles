@@ -45,7 +45,6 @@
       "Bash(git status:*)",
       "Bash(git switch:*)",
       "Bash(git symbolic-ref:*)",
-      "Edit(*)",
       "WebSearch",
       "WebFetch(domain:docs.anthropic.com)",
       "WebFetch(domain:code.claude.com)",
