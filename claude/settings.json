@@ -110,7 +110,8 @@
       "Edit(~/**/.ssh/**)",
       "Edit(~/**/.aws/**)",
       "Edit(~/**/secrets/**)",
-      "Edit(~/prods/**)"
+      "Edit(~/prods/**)",
+      "mcp__claude_ai_Claude_Docs"
     ],
     "ask": [
       "Edit(~/**/.claude/settings.json)",
@@ -289,7 +290,6 @@
     "command": "claude-code-statusline",
     "refreshInterval": 30
   },
-  "idleCompaction": false,
   "language": "Japanese",
   "sandbox": {
     "enabled": true,
@@ -337,6 +337,8 @@
   "tui": "default",
   "skipWorkflowUsageWarning": true,
   "preferredNotifChannel": "terminal_bell",
+  "enableArtifact": false,
+  "idleCompaction": false,
   "switchModelsOnFlag": false,
   "teammateMode": "in-process"
 }
