@@ -2,9 +2,6 @@
     "Prompt": ">>>",
     "StickySelection": true,
     "MaxScanBufferSize": 102400,
-    "SingleKeyJump": {
-        "ShowPrefix": true
-    },
     "Action": {
         "SelectAllAndFinish": [
             "peco.SelectAll",
@@ -33,12 +30,11 @@
         "C-n": "peco.SelectDown",
         "C-o": "peco.Finish",
         "C-p": "peco.SelectUp",
-        "C-s": "peco.ToggleSingleKeyJump",
+        "C-r": "peco.RotateFilter",
+        "C-s": "peco.ToggleSelectionAndSelectNext",
         "C-t": "SelectAllAndFinish",
         "C-u": "peco.DeleteForwardWord",
         "C-w": "peco.DeleteBackwardWord",
-        "C-]": "peco.ToggleSelectionAndSelectNext",
-        "C-_": "peco.RotateMatcher",
         "Esc": "peco.Cancel"
     }
 }
