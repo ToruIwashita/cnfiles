@@ -33,9 +33,6 @@ class TaskManager
     endif
 
     var full_dir_path = this._BuildDirPath(actual_dir_name)
-    if !isdirectory(full_dir_path)
-      mkdir(full_dir_path, 'p')
-    endif
 
     var input_file_name: string
 
@@ -48,26 +45,47 @@ class TaskManager
     var file_name = this._DetermineFileName(input_file_name, actual_dir_name)
 
     var full_file_path = this._BuildFilePath(full_dir_path, file_name)
-    var file_exists = filereadable(full_file_path)
-
-    this._OpenFileInAppropriateBuffer(full_file_path)
-
     var display_name = fnamemodify(full_dir_path, ':t') .. '/' .. fnamemodify(full_file_path, ':t')
 
-    if file_exists
+    if filereadable(full_file_path)
+      this._OpenFileInAppropriateBuffer(full_file_path)
       echo 'Opened existing file: ' .. display_name
       return
     endif
 
-    # 新規ファイル作成の場合,テンプレート適用後に作成完了の通知を出す
-    var OnFinish = (file_was_created: bool = true) => {
-      if file_was_created
-        this._ShowNotification('Created task: ' .. display_name)
-      else
-        this._ShowNotification('Created directory: ' .. fnamemodify(full_dir_path, ':t') .. '/')
+    var template_files = this._GetAvailableTemplateFiles()
+    if empty(template_files)
+      if !isdirectory(full_dir_path)
+        mkdir(full_dir_path, 'p')
       endif
+      this._OpenFileInAppropriateBuffer(full_file_path)
+      this._ShowNotification('Created directory: ' .. fnamemodify(full_dir_path, ':t') .. '/')
+      return
+    endif
+
+    # テンプレート選択をキャンセルした時に何も残さないよう,ディレクトリ作成とファイルを開く処理は選択後に行う
+    var OnTemplateSelected = (selected_template: string) => {
+      if empty(selected_template)
+        this._ShowNotification('Canceled task creation')
+        return
+      endif
+
+      if !isdirectory(full_dir_path)
+        mkdir(full_dir_path, 'p')
+      endif
+
+      if selected_template ==# 'NO_TEMPLATE'
+        writefile([], full_file_path)
+      else
+        this._ApplyTemplate(selected_template, full_file_path, false)
+        # CreateTaskではプレースホルダをデフォルト値で置換（base_number = 0）
+        this._ProcessPlaceholders(full_file_path, 0)
+      endif
+
+      this._OpenFileInAppropriateBuffer(full_file_path)
+      this._ShowNotification('Created task: ' .. display_name)
     }
-    this._ApplyTemplateIfAvailable(full_file_path, OnFinish)
+    this._SelectTemplate(template_files, OnTemplateSelected)
   enddef
 
   def AppendTask(dir_name: string)
@@ -549,50 +567,17 @@ class TaskManager
     return dir_path .. '/' .. file_name_with_ext
   enddef
 
-  def _ApplyTemplateIfAvailable(target_file_path: string, OnCompletion: func)
+  def _GetAvailableTemplateFiles(): list<string>
     if empty(this.config.template_dir)
-      OnCompletion(false)
-      return
+      return []
     endif
 
     var expanded_template_dir = expand(this.config.template_dir)
     if !isdirectory(expanded_template_dir)
-      OnCompletion(false)
-      return
+      return []
     endif
 
-    var template_files = this._GetTemplateFiles(expanded_template_dir)
-    if empty(template_files)
-      OnCompletion(false)
-      return
-    endif
-
-    # テンプレート選択後の処理をコールバックとして渡す
-    this._SelectTemplate(template_files, (selected_template) => {
-      if selected_template == 'NO_TEMPLATE'
-        # [No template]選択時は空ファイルを作成
-        writefile([], target_file_path)
-        # ファイルが既にバッファに読み込まれている場合は再読み込み
-        if bufname('%') ==# fnameescape(target_file_path)
-          execute 'edit! ' .. fnameescape(target_file_path)
-          normal! gg
-        endif
-        OnCompletion(true)
-      elseif !empty(selected_template)
-        this._ApplyTemplate(selected_template, target_file_path)
-        # CreateTaskではプレースホルダをデフォルト値で置換（base_number = 0）
-        this._ProcessPlaceholders(target_file_path, 0)
-        # ファイルが既にバッファに読み込まれている場合は再読み込み
-        if bufname('%') ==# fnameescape(target_file_path)
-          execute 'edit! ' .. fnameescape(target_file_path)
-          normal! gg
-        endif
-        OnCompletion(true)
-      else
-        # キャンセル時
-        OnCompletion(false)
-      endif
-    })
+    return this._GetTemplateFiles(expanded_template_dir)
   enddef
 
   def _GetTemplateFiles(template_dir: string): list<string>
