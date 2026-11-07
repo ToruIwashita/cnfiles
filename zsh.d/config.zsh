@@ -128,6 +128,7 @@ alias tm='mkdir -p -m 700 /private/tmp/tmux-fixed && tmux -S /private/tmp/tmux-f
 # 上側ペインでai-bridgeを実行する(高さはtmuxのprefix+aと同じ計算)
 alias t-ai-session="tm new-session -s $TMUX_AI_SESSION \; split-window -v \; select-pane -D \; run-shell -C 'resize-pane -y #{e|/:#{e|+:#{e|*:#{e|-:#{window_height},1},30},50},100}' \; send-keys 'ai-bridge' Enter \; select-pane -D"
 alias t-ai-manage-session="tm new-session -s $TMUX_AI_MANAGE_SESSION \; send-keys 'ai-bridge' Enter"
+alias t-prods-session"tm new-session -s $TMUX_PRODS_SESSION"
 # ls
 alias ls='ls -F --color'
 alias l='ls -ahl'
