@@ -26,6 +26,7 @@ pip3 install -U mypy
 pip3 install -U black
 pip3 install -U isort
 pip3 install -U ipython
+pip3 install -U websocket-client
 pip3 install -U wheel
 pip3 install -U pynvim
 pip3 install -U uv
