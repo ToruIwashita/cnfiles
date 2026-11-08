@@ -18,8 +18,6 @@ pip3 install --upgrade pip
 
 echo
 pip3 install -U pipenv
-# vint 0.3.21 は setuptools 82 で削除された pkg_resources を使う
-pip3 install -U vim-vint 'setuptools<82'
 pip3 install -U sqlparse
 pip3 install -U flake8
 pip3 install -U mypy

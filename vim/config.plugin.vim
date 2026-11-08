@@ -29,7 +29,7 @@ let g:ale_linters = {
   \ 'python':    ['flake8', 'mypy'],
   \ 'go':        ['gopls', 'govet'],
   \ 'shell':     ['shell'],
-  \ 'vim':       ['vint'],
+  \ 'vim':       ['vimls'],
   \ 'json':      ['jq'],
   \ 'xml':       ['xmllint'],
   \ 'sql':       ['sqlint'],

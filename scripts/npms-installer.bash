@@ -41,6 +41,10 @@ printf "\e[32mnpm install -g fixjson\e[0m\n"
 npm install -g fixjson
 
 echo
+printf "\e[32mnpm install -g vim-language-server\e[0m\n"
+npm install -g vim-language-server
+
+echo
 printf "\e[32mnpm install -g lice\e[0m\n"
 npm install -g lice
 
