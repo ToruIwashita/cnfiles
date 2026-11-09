@@ -221,6 +221,11 @@ __record_wait() {
 
 # Codex hook入力からai-bridge用メタ情報をatomicに書き込む
 # transcript形式は安定インターフェースではないため,token_countを取得できない場合は0へフォールバックする
+# TODO(codex): ai-bridge の一括再起動(R)のため,session_id・cwd(hook入力の公式の項目)と effort も書く
+#   effort は hook入力に無く,transcript(rollout)の最後の turn_context の payload.effort にしかない(見つからなければ書かない)
+#   書き方は Claude のステータスライン(claude-code-statusline)が書く meta.json の項目名(session_id・project_dir・effort)に合わせる
+#   (cwd は project_dir の名前で書き,セッションを起動したディレクトリであることを確かめる)
+#   詳しくは ai-bridge の __plan_restart の TODO(codex) を参照
 __write_codex_meta() {
   local key input hook_meta transcript_path usage tmp_file
   key=$1
