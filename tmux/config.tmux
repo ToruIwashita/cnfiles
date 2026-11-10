@@ -46,6 +46,8 @@ unbind C-z
 unbind C-[
 unbind C-]
 unbind Space
+unbind -T copy-mode-vi C-e
+unbind -T copy-mode-vi C-y
 
 ## bind
 # detach
