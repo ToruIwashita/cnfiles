@@ -972,7 +972,8 @@ __plan_restart() {
 # 確かめてから y を押すまでに状態や入力欄が変わっていれば何もせず,終了させてシェルに戻ったと確かめられた時だけ再開コマンドを送る
 # (AIが動いたままのペインに送ると,再開コマンドが指示としてAIに送られてしまう)
 __restart_agent() {
-  local pane_id command state agent rest
+  local pane_id command state agent rest start_input
+  integer deadline
 
   # 描き手のEXITのtrap(後片付け)を裏で走らせないよう外す(__render_loop と同じ)
   trap - EXIT INT TERM HUP WINCH
@@ -983,6 +984,12 @@ __restart_agent() {
   [[ ( $agent == claude || $agent == codex ) && ( $state == idle || $state == done ) ]] || return 0
   __input_is_empty "$pane_id" "$agent" || return 0
 
+  # Codex は開き直しただけではフックが動かず,終了の SessionEnd で消えた記録が次の指示まで戻らないため,
+  # 終了させる前に meta.json の値を写し,開き直した後にフックの代わりに SessionStart(resume)として記録させる
+  if [[ $agent == codex ]]; then
+    start_input=$(jq -c '{hook_event_name: "SessionStart", source: "resume", session_id, cwd: .project_dir, model: .model_id, transcript_path}' "$state_dir/$pane_id.meta.json" 2>/dev/null || true)
+  fi
+
   __exit_agent "$pane_id"
   case $(tmux display -p -t "$pane_id" '#{pane_current_command}' 2>/dev/null || true) in
     zsh | bash) ;;
@@ -991,6 +998,17 @@ __restart_agent() {
 
   tmux send-keys -t "$pane_id" -l -- "$command" 2>/dev/null || return 0
   tmux send-keys -t "$pane_id" Enter 2>/dev/null || true
+
+  [[ -n $start_input ]] || return 0
+  # シェルのままのペインの記録は __cleanup_stale が消すため,Codex が動き始めてから記録させる
+  deadline=$(( EPOCHSECONDS + 10 ))
+  while (( EPOCHSECONDS < deadline )); do
+    if [[ $(tmux display -p -t "$pane_id" '#{pane_current_command}' 2>/dev/null || true) == codex ]]; then
+      print -r -- "$start_input" | TMUX_PANE=$pane_id ai-agent-state codex SessionStart 2>/dev/null || true
+      return 0
+    fi
+    zselect -t 30 || true
+  done
 }
 
 # 下に開いた・閉じた・完了を待機へ戻した等,手元で一覧の中身を変えた時に呼ぶ
