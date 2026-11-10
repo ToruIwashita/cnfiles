@@ -454,9 +454,6 @@ __meta_columns() {
     cx_tok=${fields[3]:-0}
     version=${fields[4]:-}
     # 動いている版(ステータスラインが書いた version)がインストール済みの版と違えば,R で再起動すると新しい版になる印を付ける
-    # TODO(codex): Codex の行にも印を付ける
-    #   版は codex app-server daemon version (手元のCLIと動いているdaemonの版をJSONで出す)で取れる(JSONの形は未確認)
-    #   Codex のセッションは共有のdaemonの上で動くため,比べるのはdaemonの版で,全セッション共通なので行ごと・毎秒ではなく間をあけて1回だけ聞く
     outdated=0
     if [[ $2 == claude && -n $version && -n ${claude_installed:-} && $version != "$claude_installed" ]]; then
       outdated=1
@@ -834,13 +831,18 @@ __exit_agent() {
   done
 }
 
-# ペインの画面の入力欄(上下を罫線に挟まれた ❯ の行)が空だと確かめられた時だけ0を返す
+# ペインの画面の入力欄(上下を罫線に挟まれた ❯ の行)が空だと確かめられた時だけ0を返す($2はエージェント種別)
 # 書きかけは終了の Ctrl-C で消えてしまい,判断待ちのダイアログ等で入力欄が見えない時は送ったキーの行き先が分からないため,
 # 入力欄が見つからない時も空でないものとして扱う(過去の指示も ❯ で始まるが,罫線に挟まれているのは入力欄だけ)
-# TODO(codex): Codex の入力欄は見え方が違うため,実物の画面で確かめてから判定を足す
+# Codex は入力欄の見え方が違うため __codex_input_is_empty で確かめる
 __input_is_empty() {
   local -a screen
   integer i
+
+  if [[ $2 == codex ]]; then
+    __codex_input_is_empty "$1"
+    return
+  fi
 
   screen=("${(@f)$(tmux capture-pane -p -t "$1" 2>/dev/null || true)}")
   for (( i = ${#screen}; i > 1; i-- )); do
@@ -852,19 +854,47 @@ __input_is_empty() {
   return 1
 }
 
+# Codex の入力欄が空だと確かめられた時だけ0を返す(__input_is_empty と同じく,見つからない時は空でないものとして扱う)
+# 入力欄は罫線が無く太字の › で始まる行で,下には状態の1行(モデル・残りのコンテキスト等)だけが続く
+# ダイアログの選択行は反転の › で始まり,過去の指示や複数行の書きかけは下に行が続くため,入力欄とみなさない
+# 空の時は薄字の案内文が出て,その文言は変わり得るため,文字ではなく色(薄字の部分を除いて何も残らないか)で確かめる
+__codex_input_is_empty() {
+  local line typed visible
+  local -a screen
+  integer i below
+
+  screen=("${(@f)$(tmux capture-pane -p -e -t "$1" 2>/dev/null || true)}")
+  for (( i = ${#screen}; i > 0; i-- )); do
+    line=${screen[i]}
+    if [[ $line != $'\e[1m›\e[0m'* ]]; then
+      [[ -z ${${(S)line//$'\e'\[*m/}//[[:space:]]/} ]] || below+=1
+      continue
+    fi
+    (( below <= 1 )) || return 1
+    typed=${line#$'\e[1m›\e[0m'}
+    visible=${(S)typed//$'\e[2m'*$'\e[0m'/}
+    [[ -z ${${(S)visible//$'\e'\[*m/}//[[:space:]]/} ]]
+    return
+  done
+  return 1
+}
+
 # R で再起動するペインと再開コマンドを restart_targets / restart_command に入れ,確かめの文を confirm_prompt に入れる
-# 再起動するのは,待機中か完了で,再開に要る値がそろい,入力欄が空と確かめられたClaudeだけにする
+# 再起動するのは,待機中か完了で,再開に要る値がそろい,入力欄が空と確かめられたClaude・Codexだけにする
 #   作業中: 中断すると,裏のサブエージェントやバックグラウンドのコマンドは再開されない
 #   判断待ち: 送ったキーがダイアログへの回答になってしまう
-#   値: セッションID・モデル・effort・起動したディレクトリはステータスラインが meta.json に書いた今の値で,会話記録が無いセッションは再開できない
-#       (Claude を終了すると meta.json は消えるため,値はここで写しておく)
+#   値: セッションID・モデル・effort・起動したディレクトリは meta.json に書かれた今の値(Claude はステータスライン,Codex は ai-agent-state が書く)で,
+#       会話記録が無いセッションは再開できない(終了すると meta.json は消えるため,値はここで写しておく)
 #       戻る先は今の作業ディレクトリ(workspace.current_dir)ではなく起動したディレクトリ(workspace.project_dir)にする
 #       (Bash の cd で作業ディレクトリが動いていると,その場所で開き直してしまうため)
-# 再開コマンドは,いつもの再開(peco-resume-ai-agent-session)と同じ起動の土台(AI_AGENT_SESSION_CLAUDE_COMMAND)に今の値を付けて組み立てる
+# 再開コマンドは,いつもの再開(peco-resume-ai-agent-session)と同じ起動の土台(AI_AGENT_SESSION_CLAUDE_COMMAND・AI_AGENT_SESSION_CODEX_COMMAND)に今の値を付けて組み立てる
+#   Codex: resume は元のモデル・effort を戻さず config.toml の値を使うため(openai/codex#32061),--model と --config model_reasoning_effort を付ける
+#       AI_AGENT_SESSION_CODEX_COMMAND は --no-daemon 付きにする(共有の daemon の上ではフックが daemon を起動したペインの環境で動き,別のペインの記録になるため)
+#       開き直した Codex は次の指示を送るまでフックが動かないため,それまで一覧から消える
 __plan_restart() {
-  local id state agent rest values session_id model_id effort project_dir transcript_path
+  local id state agent rest values session_id model_id effort project_dir transcript_path agent_command effort_config
   local -a fields skipped
-  integer working=0 waiting=0 input=0 noinfo=0 codex=0 other=0
+  integer working=0 waiting=0 input=0 noinfo=0 other=0
 
   restart_targets=()
   restart_command=()
@@ -874,28 +904,11 @@ __plan_restart() {
       continue
     fi
     case $agent in
-      claude) ;;
+      claude)
+        agent_command=${AI_AGENT_SESSION_CLAUDE_COMMAND:-}
+        ;;
       codex)
-        # TODO(codex): Codex も再起動の対象にする(この環境に Codex が無く,以下は実物で確かめていない)
-        #   値: セッションID・作業ディレクトリ・モデルはフック入力の公式の項目(session_id・cwd・model)にあるので,
-        #       ai-agent-state の __write_codex_meta で meta.json に書く(今はモデルと会話記録のパスだけを書いている)
-        #       作業ディレクトリは Claude と同じ project_dir の名前で書き,セッションを起動したディレクトリであることを確かめる
-        #       (途中で動く作業ディレクトリだと,Claude で起きたように違う場所で開き直してしまう)
-        #       effort はフック入力に無く,会話記録(rollout)の最後の turn_context の payload.effort にしかない
-        #       (会話記録の形式は公式に安定していないため,見つからなければ飛ばす)
-        #   再開: codex resume は元のセッションのモデル・effort を戻さず config.toml の値を使う(openai/codex#32061)ため,
-        #       "cd <project_dir> && $AI_AGENT_SESSION_CODEX_COMMAND resume <session_id> --model <model> --config model_reasoning_effort=\"<effort>\"" を送る
-        #       (いつもの再開の zsh.d/lib/ai_agent_session.zsh の __ai-agent-session-resume-command と同じ形で,--config は resume <ID> の後ろに置く)
-        #   入力欄: __input_is_empty に Codex の入力欄の判定を足す
-        #   終了: Ctrl-C で閉じてシェルに戻るか(__exit_agent をそのまま使えるか)を確かめる
-        #   daemon: 対話の Codex は共有のバックグラウンドサーバー(daemon)の上で動き,TUI を開き直しても daemon の版は変わらない
-        #       更新を取り込むには codex app-server daemon restart が要り,これは全ての Codex の作業を止め得る
-        #       どうするかは未決: (A)daemonがCLIより古く,作業中・判断待ちのCodexが無い時だけ再起動する / (B)毎回再起動する / (C)触らない
-        #       再起動するなら,対象のCodexを全て終了させた後,再開コマンドを送る前に行う(__restart_agent はペインごとに裏で並べて動くので,順番をそろえる仕組みが要る)
-        #   フック: daemon の時にフックを TUI と daemon のどちらが実行するか(TMUX_PANE が TUI のペインになるか)を確かめる
-        #       daemon が実行するなら,ペインごとの状態の記録(ai-agent-state)から見直す
-        codex+=1
-        continue
+        agent_command=${AI_AGENT_SESSION_CODEX_COMMAND:-}
         ;;
       *)
         other+=1
@@ -924,24 +937,31 @@ __plan_restart() {
     effort=${fields[3]:-}
     project_dir=${fields[4]:-}
     transcript_path=${fields[5]:-}
-    # effort に対応しないモデルでは effort が無いので,無ければ --effort を付けない
-    if [[ -z $session_id || -z $model_id || -z $project_dir || ! -f $transcript_path || -z ${AI_AGENT_SESSION_CLAUDE_COMMAND:-} ]]; then
+    # effort に対応しないモデルでは effort が無いので,無ければ effort の指定を付けない
+    if [[ -z $session_id || -z $model_id || -z $project_dir || ! -f $transcript_path || -z $agent_command ]]; then
       noinfo+=1
       continue
     fi
-    if ! __input_is_empty "$id"; then
+    if ! __input_is_empty "$id" "$agent"; then
       input+=1
       continue
     fi
     restart_targets+=("$id")
-    restart_command[$id]="cd ${(q)project_dir} && ${AI_AGENT_SESSION_CLAUDE_COMMAND} --resume ${(q)session_id} --model ${(q)model_id}${effort:+ --effort ${(q)effort}}"
+    case $agent in
+      claude)
+        restart_command[$id]="cd ${(q)project_dir} && ${agent_command} --resume ${(q)session_id} --model ${(q)model_id}${effort:+ --effort ${(q)effort}}"
+        ;;
+      codex)
+        effort_config="model_reasoning_effort=\"${effort}\""
+        restart_command[$id]="cd ${(q)project_dir} && ${agent_command} resume ${(q)session_id} --model ${(q)model_id}${effort:+ --config ${(q)effort_config}}"
+        ;;
+    esac
   done
 
   (( ! working )) || skipped+=("$working working")
   (( ! waiting )) || skipped+=("$waiting waiting")
   (( ! input )) || skipped+=("$input input")
   (( ! noinfo )) || skipped+=("$noinfo no-info")
-  (( ! codex )) || skipped+=("$codex codex")
   (( ! other )) || skipped+=("$other other")
   (( ${#agent_keys} == ${#jump_ids} )) || skipped+=("$(( ${#agent_keys} - ${#jump_ids} )) outside tmux")
   # 飛ばした理由が多いと幅102桁のペインで見切れるため,問いと y/N を先に出す
@@ -950,8 +970,7 @@ __plan_restart() {
 
 # R で選んだペインを1つ再起動する(y で決めた後,ペインごとに裏で動かす)
 # 確かめてから y を押すまでに状態や入力欄が変わっていれば何もせず,終了させてシェルに戻ったと確かめられた時だけ再開コマンドを送る
-# (Claude が動いたままのペインに送ると,再開コマンドが指示として Claude に送られてしまう)
-# TODO(codex): Codex を対象にしたら,ここで agent が codex の時も通し,daemon を再起動するならその順番も合わせる(__plan_restart の TODO を参照)
+# (AIが動いたままのペインに送ると,再開コマンドが指示としてAIに送られてしまう)
 __restart_agent() {
   local pane_id command state agent rest
 
@@ -961,8 +980,8 @@ __restart_agent() {
   command=$2
 
   read -r state agent rest < "$state_dir/$pane_id.state" 2>/dev/null || return 0
-  [[ $agent == claude && ( $state == idle || $state == done ) ]] || return 0
-  __input_is_empty "$pane_id" || return 0
+  [[ ( $agent == claude || $agent == codex ) && ( $state == idle || $state == done ) ]] || return 0
+  __input_is_empty "$pane_id" "$agent" || return 0
 
   __exit_agent "$pane_id"
   case $(tmux display -p -t "$pane_id" '#{pane_current_command}' 2>/dev/null || true) in

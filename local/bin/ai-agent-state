@@ -221,17 +221,16 @@ __record_wait() {
 
 # Codex hook入力からai-bridge用メタ情報をatomicに書き込む
 # transcript形式は安定インターフェースではないため,token_countを取得できない場合は0へフォールバックする
-# TODO(codex): ai-bridge の一括再起動(R)のため,session_id・cwd(hook入力の公式の項目)と effort も書く
-#   effort は hook入力に無く,transcript(rollout)の最後の turn_context の payload.effort にしかない(見つからなければ書かない)
-#   書き方は Claude のステータスライン(claude-code-statusline)が書く meta.json の項目名(session_id・project_dir・effort)に合わせる
-#   (cwd は project_dir の名前で書き,セッションを起動したディレクトリであることを確かめる)
-#   詳しくは ai-bridge の __plan_restart の TODO(codex) を参照
+# ai-bridge の一括再起動(R)に使う値は,Claude のステータスラインが書く meta.json と同じ項目名(session_id・model_id・effort・project_dir)で書く
+#   project_dir: hook入力の cwd(resume はこの場所と違う所から開くと,場所を選ぶダイアログで止まる)
+#   effort: hook入力に無いため transcript から取り,ターンごとの turn_context と,resume・設定変更の時の thread_settings_applied の新しい方を使う
+#     (effort を変えて resume した直後は thread_settings_applied にしか出ない,見つからなければ書かない)
 __write_codex_meta() {
-  local key input hook_meta transcript_path usage tmp_file
+  local key input hook_meta transcript_path usage effort tmp_file
   key=$1
   input=$2
 
-  hook_meta=$(print -r -- "$input" | jq -c '{model: (.model // "-"), transcript_path: (.transcript_path // null)}' 2>/dev/null) || return 0
+  hook_meta=$(print -r -- "$input" | jq -c '{model: (.model // "-"), model_id: (.model // null), session_id: (.session_id // null), project_dir: (.cwd // null), transcript_path: (.transcript_path // null)}' 2>/dev/null) || return 0
   transcript_path=$(print -r -- "$hook_meta" | jq -r '.transcript_path // empty' 2>/dev/null)
   usage=$(
     if [[ -f $transcript_path ]]; then
@@ -247,9 +246,23 @@ __write_codex_meta() {
         | head -n 1
     fi
   )
+  effort=$(
+    if [[ -f $transcript_path ]]; then
+      tail -r "$transcript_path" 2>/dev/null \
+        | jq -Rr '
+            fromjson?
+            | if .type? == "turn_context" then .payload.effort?
+              elif .type? == "event_msg" and .payload.type? == "thread_settings_applied" then .payload.thread_settings.reasoning_effort?
+              else empty
+              end
+            | strings
+          ' 2>/dev/null \
+        | head -n 1
+    fi
+  )
 
   tmp_file=$(mktemp "$state_dir/.meta.XXXXXX" 2>/dev/null) || return 0
-  if print -r -- "$hook_meta" | jq -c --argjson usage "${usage:-null}" '
+  if print -r -- "$hook_meta" | jq -c --argjson usage "${usage:-null}" --arg effort "$effort" '
     {
       model: .model,
       cx_tok: ($usage.cx_tok // 0),
@@ -259,7 +272,11 @@ __write_codex_meta() {
         else 0
         end
       ),
-      transcript_path: .transcript_path
+      transcript_path: .transcript_path,
+      session_id: .session_id,
+      model_id: .model_id,
+      effort: (if $effort == "" then null else $effort end),
+      project_dir: .project_dir
     }
   ' > "$tmp_file" 2>/dev/null; then
     mv -f "$tmp_file" "$state_dir/$key.meta.json"
