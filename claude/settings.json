@@ -3,8 +3,10 @@
   "skillListingBudgetFraction": 0.02,
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1",
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": "1",
-    "SYSTEM_SOUNDS_DIR_PATH": "/System/Library/Sounds"
+    "SYSTEM_SOUNDS_DIR_PATH": "/System/Library/Sounds",
+    "DISABLE_AUTOUPDATER": "1",
+    "DISABLE_FEEDBACK_COMMAND": "1",
+    "DISABLE_ERROR_REPORTING": "1"
   },
   "permissions": {
     "allow": [
