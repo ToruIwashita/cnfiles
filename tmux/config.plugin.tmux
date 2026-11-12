@@ -10,6 +10,10 @@ set -g @resurrect-save 'C-o'
 set -g @resurrect-restore 'C-r'
 set -g @resurrect-dir ~/.cache/tmux/resurrect
 
+# yank
+# YはコピーしてCopy Modeを続けるキーに使うため,デフォルトのYをpへ移す
+set -g @copy_mode_put 'p'
+
 # prefix-highlight
 set -g @prefix_highlight_fg 'colour78'
 set -g @prefix_highlight_bg 'colour23'
