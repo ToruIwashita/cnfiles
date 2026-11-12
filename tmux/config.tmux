@@ -153,10 +153,9 @@ bind P choose-buffer
 bind a new-window -c '#{pane_current_path}' \; split-window -v -c '#{pane_current_path}' \; select-pane -D \; run-shell -C 'resize-pane -y #{e|/:#{e|+:#{e|*:#{e|-:#{window_height},1},30},50},100}' \; send-keys 'ai-bridge' Enter \; select-pane -D
 # AIエージェント一覧を先頭ウィンドウで実行
 bind @ move-window -t 0 \; send-keys 'ai-bridge' Enter
-# Claude Code の最後の返答の冒頭へ,コピーモードにして移る(返答とツールの実行は行頭が ⏺ なので,一番下から上へ探す)
-# コピーモードで別の所を見ていても最新の画面から探すよう,一度抜けてから入り直す
-# 冒頭が画面より上にあれば scroll-top で一番上に出し(検索の色付けもこれで消える),右上の位置の表示が重ならないよう1行上を一番上にする
-bind V copy-mode -q \; copy-mode \; send -X history-bottom \; send -X search-backward '^⏺' \; send -X scroll-top \; send -X cursor-up \; send -X cursor-down \; send -X start-of-line
+# Claude Code の最後の返答の冒頭へ,コピーモードにして移る
+# コピーモードになる前に打ったキーがAIの入力欄に入らないよう,-b を付けずに終わるまで待たせる
+bind V run-shell 'scroll-tmux-to-last-reply #{pane_id}'
 
 # AIエージェント状態: フォーカスしたwindowのdone(赤タブ)をidleへ戻す(blockedは保持)
 # session-window-changedはselect/next/previous/last等すべてのカレントwindow変更で発火する

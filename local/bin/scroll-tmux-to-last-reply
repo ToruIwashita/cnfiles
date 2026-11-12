@@ -1,0 +1,51 @@
+#!/usr/bin/env zsh
+# tmux のペインを,Claude Code の最後の返答(行頭が ⏺ の最後の行)の冒頭にカーソルを置いたコピーモードにする
+#
+# 使い方:
+#   scroll-tmux-to-last-reply <pane_id>   # tmux の prefix + V から呼ぶ
+#
+# 返答とツールの実行は行頭が ⏺ になるので,最後の ⏺ の行を冒頭とみなす
+# tmux 3.8 の正規表現の検索(search-backward '^⏺')は,ペインの右端まで埋まって全角文字で終わる行を取りこぼすため,
+# 画面の文字を読んで自分で行を探す
+set -eu
+
+if (( $# != 1 )); then
+  print "scroll-tmux-to-last-reply: requires exactly 1 argument (pane_id)" 1>&2
+  exit 1
+fi
+
+pane=$1
+integer hsize line row
+typeset -a moves
+
+hsize=$(tmux display -p -t "$pane" '#{history_size}')
+# 履歴と画面を通して上から数えた行番号(1〜hsize 行目が履歴,hsize+1 行目からが画面)
+line=$(tmux capture-pane -p -t "$pane" -S - -E - | awk 'index($0, "⏺") == 1 { n = NR } END { print n + 0 }')
+
+# 返答が見つからない時は,普段の prefix + v と同じくコピーモードにだけする
+if (( ! line )); then
+  tmux copy-mode -t "$pane"
+  exit 0
+fi
+
+# 冒頭の行が,画面の一番上の行から何行下にあるか(負なら画面より上)
+row=$(( line - hsize - 1 ))
+if (( row >= 0 )); then
+  # 画面に見えていれば,画面は送らずカーソルだけ下げる
+  (( ! row )) || moves=(\; send-keys -X -N $row -t "$pane" cursor-down)
+elif (( line > 1 )); then
+  # 画面より上なら,一番上の行で cursor-up して1行ずつ画面を送る(goto-line は copy-mode-line-numbers の設定で数え方が変わるため使わない)
+  # 右上の位置の表示が冒頭の行に重ならないよう,1行上(返答の前の空行)を一番上にしてから,カーソルを冒頭へ戻す
+  moves=(\; send-keys -X -N $(( 1 - row )) -t "$pane" cursor-up \; send-keys -X -t "$pane" cursor-down)
+else
+  # 冒頭が履歴の一番上の行なら,その上の行は無い
+  moves=(\; send-keys -X -N $(( - row )) -t "$pane" cursor-up)
+fi
+
+# コピーモードで別の所を見ていても今の画面から数えた位置に合うよう,一度抜けてから入り直す
+# 検索は,n で一つ前の ⏺ の行へ移れるよう tmux に検索の文字を覚えさせるためだけに使い,
+# 止まった位置は一番下へ戻して捨て,検索の色付けは clear-selection で消す(vi では history-bottom 等では消えない)
+tmux copy-mode -q -t "$pane" \; copy-mode -t "$pane" \
+  \; send-keys -X -t "$pane" search-backward '^⏺' \; send-keys -X -t "$pane" clear-selection \
+  \; send-keys -X -t "$pane" history-bottom \; send-keys -X -t "$pane" top-line \
+  "${moves[@]}" \; send-keys -X -t "$pane" start-of-line

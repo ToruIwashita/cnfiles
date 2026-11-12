@@ -515,12 +515,20 @@ else
   ln -is $BASE_DIR_PATH/local/bin/copy-tmp-dump-html-to-tmp-html $LOCAL_BIN_DIR_PATH/copy-tmp-dump-html-to-tmp-html
 fi
 
-# claude-code-statusline
-if [[ -L $LOCAL_BIN_DIR_PATH/claude-code-statusline ]]; then
-  _printf "\e[32m$LOCAL_BIN_DIR_PATH/claude-code-statusline symlink already exists\e[0m\n"
+# scroll-tmux-to-last-reply
+if [[ -L $LOCAL_BIN_DIR_PATH/scroll-tmux-to-last-reply ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/scroll-tmux-to-last-reply symlink already exists\e[0m\n"
 else
-  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/claude-code-statusline\e[0m\n"
-  ln -is $BASE_DIR_PATH/local/bin/claude-code-statusline $LOCAL_BIN_DIR_PATH/claude-code-statusline
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/scroll-tmux-to-last-reply\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/scroll-tmux-to-last-reply $LOCAL_BIN_DIR_PATH/scroll-tmux-to-last-reply
+fi
+
+# ai-bridge
+if [[ -L $LOCAL_BIN_DIR_PATH/ai-bridge ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/ai-bridge symlink already exists\e[0m\n"
+else
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/ai-bridge\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/ai-bridge $LOCAL_BIN_DIR_PATH/ai-bridge
 fi
 
 # ai-agent-state
@@ -531,12 +539,12 @@ else
   ln -is $BASE_DIR_PATH/local/bin/ai-agent-state $LOCAL_BIN_DIR_PATH/ai-agent-state
 fi
 
-# ai-bridge
-if [[ -L $LOCAL_BIN_DIR_PATH/ai-bridge ]]; then
-  _printf "\e[32m$LOCAL_BIN_DIR_PATH/ai-bridge symlink already exists\e[0m\n"
+# claude-code-statusline
+if [[ -L $LOCAL_BIN_DIR_PATH/claude-code-statusline ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/claude-code-statusline symlink already exists\e[0m\n"
 else
-  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/ai-bridge\e[0m\n"
-  ln -is $BASE_DIR_PATH/local/bin/ai-bridge $LOCAL_BIN_DIR_PATH/ai-bridge
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/claude-code-statusline\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/claude-code-statusline $LOCAL_BIN_DIR_PATH/claude-code-statusline
 fi
 
 # claude-code-bash-guard
