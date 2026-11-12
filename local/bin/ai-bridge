@@ -35,8 +35,8 @@ agent_keys=()
 typeset -A target_of agent_prio
 # 見出しの時刻と並べると狭いペインで見切れるため,キーの説明は ? を押した時だけ時刻に代えて出す
 # (見出しの AI Bridge と括弧を付けても幅102桁のペインで見切れないよう,区切りは空白1つにし,C-n/C-p は C-n/p と縮める)
-# (Esc:quit はいつも出している見出しの方に書く)
-key_help='C-n/p:select C-s:open-close C-k:open-below C-l:open-dir Enter:jump C-g:clear X:exit-all'
+# (Esc:quit と X:exit-all はいつも出している見出しの方に書く)
+key_help='C-n/p:select C-s:open-close C-k:open-below V:last-reply C-l:open-dir Enter:jump C-g:clear'
 show_keys=0
 # 一覧の下の作業の見える化(WORKSPACE・OPS.LOG)は,起動時は出さず Space を押した時だけ出す
 show_ops=0
@@ -587,7 +587,7 @@ __render() {
   __cleanup_stale
   usage=$(__usage_lines)
 
-  # Space・Esc・R はキーの説明に足すと幅102桁のペインで見切れるため,いつも出している見出しの方に書く(X は ? を押さなくても分かるよう見出しにも書く)
+  # Space・Esc・R・X はキーの説明に足すと幅102桁のペインで見切れるため,いつも出している見出しの方に書く
   if (( ${selectable:-0} )); then
     printf 'AI Bridge  %s  (Space:activity R:restart-all X:exit-all Esc:quit ?:keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   else
@@ -2017,12 +2017,16 @@ while :; do
             fi
           fi
           ;;
-        $'\x0b') # Ctrl+k
+        $'\x0b' | V) # Ctrl+k / V
           # 未選択なら判断待ち,無ければ完了のうち一番上を開く(選択は変えないので,次も一番上から選び直す)
-          # 開いたAIは,最後の返答が画面の上へ流れていればその冒頭から読めるようにする
+          # V で開いた時は,最後の返答が画面の上へ流れていればその冒頭から読めるようにする
           open_id=${selected_id:-$attention_id}
           if (( selectable )) && [[ -n $open_id ]]; then
-            __open_and_focus_below "$open_id" --last-reply
+            if [[ $key == V ]]; then
+              __open_and_focus_below "$open_id" --last-reply
+            else
+              __open_and_focus_below "$open_id"
+            fi
           fi
           ;;
         [1-9])
