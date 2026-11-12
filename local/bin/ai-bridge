@@ -771,11 +771,53 @@ __focus_below() {
   tmux select-pane -t "$below" 2>/dev/null || true
 }
 
+# 開いたAIの最後の返答(行頭が ⏺ の最後の塊)の冒頭が画面より上へ流れていれば,コピーモードにしてその冒頭を画面の上に出す
+# 冒頭が画面に見えていれば返答は全部見えているので,コピーモードにせず,すぐ打ち込めるままにする
+# 作業中のAIは返答が書きかけで,コピーモードにすると下の進み具合が見えず Esc でも止められなくなるため何もしない
+# 入り方は普段の prefix + v と同じにする(-e を付けると,下まで読んで抜けた後に癖で押した q がAIの入力欄に入る)
+# goto-line は copy-mode-line-numbers の設定で数え方が変わるため,画面の一番上の行で cursor-up して1行ずつ上へ送る
+# 右上の位置の表示が冒頭の行に重ならないよう,1行上(返答の前の空行)を画面の一番上にする
+# 遡るのは2000行まで(最後の返答は90%点で1,654文字,画面では80行ほど)で,それより長い返答では何もしない
+# TODO(codex): Codex は返答の頭の印が違うため何もしない(画面で印を確かめ,⏺ の代わりにその印で探す)
+__scroll_to_last_reply() {
+  local pane state agent rest
+  local -a screen cmds
+  integer hsize n i up
+  pane=$1
+
+  [[ -f $state_dir/$pane.state ]] || return 0
+  read -r state agent rest < "$state_dir/$pane.state" || return 0
+  [[ $agent == claude && $state != working ]] || return 0
+
+  hsize=$(tmux display -p -t "$pane" '#{history_size}' 2>/dev/null || print 0)
+  (( hsize )) || return 0
+  n=$(( hsize < 2000 ? hsize : 2000 ))
+  # 1〜n 行目が履歴の末尾,n+1 行目からが画面になる
+  screen=("${(@f)$(tmux capture-pane -p -t "$pane" -S -$n -E - 2>/dev/null || true)}")
+  for (( i = ${#screen}; i > 0; i-- )); do
+    [[ ${screen[i]} != ⏺* ]] || break
+  done
+  (( i && i <= n )) || return 0
+
+  # 冒頭の行は画面の一番上より up 行上にある(履歴の一番上の行なら,その上の行は無い)
+  up=$(( n - i + 1 ))
+  cmds=(copy-mode -q -t "$pane" \; copy-mode -t "$pane" \; send-keys -X -t "$pane" top-line \;)
+  if (( up < hsize )); then
+    cmds+=(send-keys -X -N $(( up + 1 )) -t "$pane" cursor-up \; send-keys -X -t "$pane" cursor-down \;)
+  else
+    cmds+=(send-keys -X -N $up -t "$pane" cursor-up \;)
+  fi
+  cmds+=(send-keys -X -t "$pane" start-of-line)
+  tmux "${cmds[@]}" 2>/dev/null || true
+}
+
 # 選んだペインを真下に開いてそこへ移る(既に下に開いていれば __open_below は何もしないので,移るだけになる)
+# --last-reply を付けると,移る前に最後の返答の冒頭から読めるようにする(移った後だと,下の端が一瞬見えてから飛ぶため)
 # 開いて移った時点で見たとみなして完了をidleへ戻す(ウィンドウを移らないのでtmuxのフックでは戻らず,
 # 未選択のC-kで同じ行が選ばれ続けるため)
 __open_and_focus_below() {
   __open_below "$1"
+  [[ ${2:-} != --last-reply ]] || __scroll_to_last_reply "$1"
   __focus_below
   ai-agent-state --focus-reset "$(tmux display -p -t "$TMUX_PANE" '#{window_id}' 2>/dev/null || true)" 2>/dev/null || true
   __data_changed
@@ -1977,9 +2019,10 @@ while :; do
           ;;
         $'\x0b') # Ctrl+k
           # 未選択なら判断待ち,無ければ完了のうち一番上を開く(選択は変えないので,次も一番上から選び直す)
+          # 開いたAIは,最後の返答が画面の上へ流れていればその冒頭から読めるようにする
           open_id=${selected_id:-$attention_id}
           if (( selectable )) && [[ -n $open_id ]]; then
-            __open_and_focus_below "$open_id"
+            __open_and_focus_below "$open_id" --last-reply
           fi
           ;;
         [1-9])
