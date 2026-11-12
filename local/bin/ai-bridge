@@ -1498,7 +1498,7 @@ __clip() {
 __ops_log_line() { # $1=出来事 $2=新しい順の位置(0が最新) $3=色の無い文字列にするか → REPLY
   local ts verb obj extra name label tc col
   local -a p
-  integer iw=$(( pane_cols - 4 )) lw rw ow
+  integer iw=$(( pane_cols - 2 )) lw rw ow
   p=("${(@ps:\t:)1}")
   strftime -s ts '%H:%M:%S' ${p[1]%.*}
   __repo_name "${ag_root[${p[2]}]:--}"; name=$REPLY
@@ -1548,18 +1548,18 @@ __ops_cache_log() {
 
 # 枠(色の指定を除いた見えている幅で右端をそろえる)
 __ops_frame_top() {
-  integer fill=$(( pane_cols - 10 - ${#1} - ${(m)#2} ))
+  integer fill=$(( pane_cols - 8 - ${#1} - ${(m)#2} ))
   (( fill < 0 )) && fill=0
-  REPLY=" "$'\e[38;5;30m╭─\e[1;38;5;51m'" $1 "$'\e[0;38;5;30m'"${(l:fill::─:):-}"$'\e[38;5;242m'" $2 "$'\e[38;5;30m─╮\e[0m'
+  REPLY=$'\e[38;5;30m╭─\e[1;38;5;51m'" $1 "$'\e[0;38;5;30m'"${(l:fill::─:):-}"$'\e[38;5;242m'" $2 "$'\e[38;5;30m─╮\e[0m'
 }
 __ops_frame_mid() {
-  integer fill=$(( pane_cols - 10 - ${#1} - ${(m)#2} ))
+  integer fill=$(( pane_cols - 8 - ${#1} - ${(m)#2} ))
   (( fill < 0 )) && fill=0
-  REPLY=" "$'\e[38;5;30m├─\e[1;38;5;51m'" $1 "$'\e[0;38;5;30m'"${(l:fill::─:):-}"$'\e[38;5;242m'" $2 "$'\e[38;5;30m─┤\e[0m'
+  REPLY=$'\e[38;5;30m├─\e[1;38;5;51m'" $1 "$'\e[0;38;5;30m'"${(l:fill::─:):-}"$'\e[38;5;242m'" $2 "$'\e[38;5;30m─┤\e[0m'
 }
 __ops_frame_line() {
   local body=$1
-  integer pad iw=$(( pane_cols - 4 ))
+  integer pad iw=$(( pane_cols - 2 ))
   __vis "$body"
   # 狭いペインで中身が枠の内側より長い時だけ,色の指定は残して見えている幅で切る
   if (( REPLY > iw )); then
@@ -1568,7 +1568,7 @@ __ops_frame_line() {
     __vis "$body"
   fi
   pad=$(( iw - REPLY ))
-  REPLY=" "$'\e[38;5;30m│\e[0m'"$body"$'\e[0m'"${(l:pad:: :):-}"$'\e[38;5;30m│\e[0m'
+  REPLY=$'\e[38;5;30m│\e[0m'"$body"$'\e[0m'"${(l:pad:: :):-}"$'\e[38;5;30m│\e[0m'
 }
 # 色の指定はそのまま残し,見えている幅 $2 までで切る
 __vis_cut() { # $1=文字列 $2=幅 → REPLY
@@ -1593,7 +1593,7 @@ __vis_cut() { # $1=文字列 $2=幅 → REPLY
   done
   REPLY=$out
 }
-__ops_frame_bottom() { REPLY=" "$'\e[38;5;30m╰'"${(l:$(( pane_cols - 4 ))::─:):-}"$'╯\e[0m' }
+__ops_frame_bottom() { REPLY=$'\e[38;5;30m╰'"${(l:$(( pane_cols - 2 ))::─:):-}"$'╯\e[0m' }
 
 # AIの名前(TARGET)と状態の記号(作業中は回し,判断待ちは脈打たせる)
 __ops_badge() { # $1=キー $2=コマ → REPLY
@@ -1611,7 +1611,7 @@ __ops_ws() { # $1=使ってよい行数 $2=コマ → ops_ws 配列
   local root name k f line bar col dur relp agents key
   local -a roots files v picked sorted
   local -A last_of block_of
-  integer i lvl shown working upto gap pw first max=$1 iw=$(( pane_cols - 4 ))
+  integer i lvl shown working upto gap pw first max=$1 iw=$(( pane_cols - 2 ))
   float age now=$EPOCHREALTIME
   ops_ws=()
   # リポジトリを,AIの作業ディレクトリと触ったファイルから集め,入りきらない時に残すものは新しく動いた順に選ぶ
