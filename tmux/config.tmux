@@ -153,7 +153,7 @@ bind P choose-buffer
 bind a new-window -c '#{pane_current_path}' \; split-window -v -c '#{pane_current_path}' \; select-pane -D \; run-shell -C 'resize-pane -y #{e|/:#{e|+:#{e|*:#{e|-:#{window_height},1},30},50},100}' \; send-keys 'ai-bridge' Enter \; select-pane -D
 # AIエージェント一覧を先頭ウィンドウで実行
 bind @ move-window -t 0 \; send-keys 'ai-bridge' Enter
-# Claude Code の最後の返答の冒頭へ,コピーモードにして移る
+# Claude Code・Codex の最後の返答の冒頭へ,コピーモードにして移る
 # コピーモードになる前に打ったキーがAIの入力欄に入らないよう,-b を付けずに終わるまで待たせる
 bind V run-shell 'scroll-tmux-to-last-reply #{pane_id}'
 

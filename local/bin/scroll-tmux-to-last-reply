@@ -1,10 +1,11 @@
 #!/usr/bin/env zsh
-# tmux のペインを,Claude Code の最後の返答(行頭が ⏺ の最後の行)の冒頭にカーソルを置いたコピーモードにする
+# tmux のペインを,Claude Code・Codex の最後の返答(行頭が返答の印の最後の行)の冒頭にカーソルを置いたコピーモードにする
 #
 # 使い方:
 #   scroll-tmux-to-last-reply <pane_id>   # tmux の prefix + V から呼ぶ
 #
-# 返答とツールの実行は行頭が ⏺ になるので,最後の ⏺ の行を冒頭とみなす
+# 返答とツールの実行は行頭が印(Claude Code は ⏺,Codex は •)になるので,最後の印の行を冒頭とみなす
+# (Codex の返答の中の箇条書きの • は2桁下げて出るため,行頭の印とは混ざらない)
 # tmux 3.8 の正規表現の検索(search-backward '^⏺')は,ペインの右端まで埋まって全角文字で終わる行を取りこぼすため,
 # 画面の文字を読んで自分で行を探す
 set -eu
@@ -18,9 +19,16 @@ pane=$1
 integer hsize line row
 typeset -a moves
 
+# Codex のペインはコマンド名が codex になる(Claude Code は版の番号になる)
+if [[ $(tmux display -p -t "$pane" '#{pane_current_command}') == codex ]]; then
+  mark=•
+else
+  mark=⏺
+fi
+
 hsize=$(tmux display -p -t "$pane" '#{history_size}')
 # 履歴と画面を通して上から数えた行番号(1〜hsize 行目が履歴,hsize+1 行目からが画面)
-line=$(tmux capture-pane -p -t "$pane" -S - -E - | awk 'index($0, "⏺") == 1 { n = NR } END { print n + 0 }')
+line=$(tmux capture-pane -p -t "$pane" -S - -E - | awk -v mark="$mark" 'index($0, mark) == 1 { n = NR } END { print n + 0 }')
 
 # 返答が見つからない時は,普段の prefix + v と同じくコピーモードにだけする
 if (( ! line )); then
@@ -43,9 +51,9 @@ else
 fi
 
 # コピーモードで別の所を見ていても今の画面から数えた位置に合うよう,一度抜けてから入り直す
-# 検索は,n で一つ前の ⏺ の行へ移れるよう tmux に検索の文字を覚えさせるためだけに使い,
+# 検索は,n で一つ前の印の行へ移れるよう tmux に検索の文字を覚えさせるためだけに使い,
 # 止まった位置は一番下へ戻して捨て,検索の色付けは clear-selection で消す(vi では history-bottom 等では消えない)
 tmux copy-mode -q -t "$pane" \; copy-mode -t "$pane" \
-  \; send-keys -X -t "$pane" search-backward '^⏺' \; send-keys -X -t "$pane" clear-selection \
+  \; send-keys -X -t "$pane" search-backward "^$mark" \; send-keys -X -t "$pane" clear-selection \
   \; send-keys -X -t "$pane" history-bottom \; send-keys -X -t "$pane" top-line \
   "${moves[@]}" \; send-keys -X -t "$pane" start-of-line

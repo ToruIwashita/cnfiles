@@ -771,23 +771,28 @@ __focus_below() {
   tmux select-pane -t "$below" 2>/dev/null || true
 }
 
-# 開いたAIの最後の返答(行頭が ⏺ の最後の塊)の冒頭が画面より上へ流れていれば,コピーモードにしてその冒頭を画面の上に出す
+# 開いたAIの最後の返答(行頭が返答の印の最後の塊)の冒頭が画面より上へ流れていれば,コピーモードにしてその冒頭を画面の上に出す
+# 印は Claude Code が ⏺,Codex が • で,Codex の返答の中の箇条書きの • は2桁下げて出るため,行頭の印とは混ざらない
 # 冒頭が画面に見えていれば返答は全部見えているので,コピーモードにせず,すぐ打ち込めるままにする
 # 作業中のAIは返答が書きかけで,コピーモードにすると下の進み具合が見えず Esc でも止められなくなるため何もしない
 # 入り方は普段の prefix + v と同じにする(-e を付けると,下まで読んで抜けた後に癖で押した q がAIの入力欄に入る)
 # goto-line は copy-mode-line-numbers の設定で数え方が変わるため,画面の一番上の行で cursor-up して1行ずつ上へ送る
 # 右上の位置の表示が冒頭の行に重ならないよう,1行上(返答の前の空行)を画面の一番上にする
 # 遡るのは2000行まで(最後の返答は90%点で1,654文字,画面では80行ほど)で,それより長い返答では何もしない
-# TODO(codex): Codex は返答の頭の印が違うため何もしない(画面で印を確かめ,⏺ の代わりにその印で探す)
 __scroll_to_last_reply() {
-  local pane state agent rest
+  local pane state agent rest mark
   local -a screen cmds
   integer hsize n i up
   pane=$1
 
   [[ -f $state_dir/$pane.state ]] || return 0
   read -r state agent rest < "$state_dir/$pane.state" || return 0
-  [[ $agent == claude && $state != working ]] || return 0
+  [[ $state != working ]] || return 0
+  case $agent in
+    claude) mark=⏺ ;;
+    codex) mark=• ;;
+    *) return 0 ;;
+  esac
 
   hsize=$(tmux display -p -t "$pane" '#{history_size}' 2>/dev/null || print 0)
   (( hsize )) || return 0
@@ -795,7 +800,7 @@ __scroll_to_last_reply() {
   # 1〜n 行目が履歴の末尾,n+1 行目からが画面になる
   screen=("${(@f)$(tmux capture-pane -p -t "$pane" -S -$n -E - 2>/dev/null || true)}")
   for (( i = ${#screen}; i > 0; i-- )); do
-    [[ ${screen[i]} != ⏺* ]] || break
+    [[ ${screen[i]} != $mark* ]] || break
   done
   (( i && i <= n )) || return 0
 
