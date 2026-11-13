@@ -53,7 +53,7 @@ unbind -T copy-mode-vi C-y
 # detach
 bind C-d detach
 # reload config
-bind r source-file ~/.tmux.conf
+bind r source-file ~/.tmux.conf \; display-popup -E -b rounded -S 'fg=colour38' -w 27 -h 3 "printf '\\e[?25l\\e[1;38;5;51m %s' '~/.tmux.conf (reloaded)'; read -s -t 1 -k 1"
 
 ## ウィンドウ操作
 # 新しいウィンドウを作る
