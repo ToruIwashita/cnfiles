@@ -2,7 +2,7 @@
 # tmux のペインを,Claude Code・Codex の最後の返答(行頭が返答の印の最後の行)の冒頭にカーソルを置いたコピーモードにする
 #
 # 使い方:
-#   scroll-tmux-to-last-reply <pane_id>   # tmux の prefix + V から呼ぶ
+#   scroll-tmux-to-last-reply <pane_id>   # tmux の prefix + ; / prefix + C-; から呼ぶ
 #
 # 返答とツールの実行は行頭が印(Claude Code は ⏺,Codex は •)になるので,最後の印の行を冒頭とみなす
 # (Codex の返答の中の箇条書きの • は2桁下げて出るため,行頭の印とは混ざらない)

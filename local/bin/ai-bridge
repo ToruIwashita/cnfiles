@@ -36,7 +36,7 @@ typeset -A target_of agent_prio
 # 見出しの時刻と並べると狭いペインで見切れるため,キーの説明は ? を押した時だけ時刻に代えて出す
 # (見出しの AI Bridge と括弧を付けても幅102桁のペインで見切れないよう,区切りは空白1つにし,C-n/C-p は C-n/p と縮める)
 # (Esc:quit と X:exit-all はいつも出している見出しの方に書く)
-key_help='C-n/p:select C-s:open-close C-k:open-below V:last-reply C-l:open-dir Enter:jump C-g:clear'
+key_help='C-n/p:select C-s:open-close C-k:open-below C-;:reply C-l:open-dir Enter:jump C-g:clear'
 show_keys=0
 # 一覧の下の作業の見える化(WORKSPACE・OPS.LOG)は,起動時は出さず Space を押した時だけ出す
 show_ops=0
@@ -1908,11 +1908,14 @@ render_file=$work_dir/rendered
 ctl_file=$work_dir/ctl
 print -r -- 0 >| "$ctl_file"
 # ペインを閉じた時は描き直しや停止が失敗し得るが,set -e で後片付けが途中で止まらないよう失敗しても続ける
-trap '__undo_swap || true; [[ -z $render_pid ]] || kill $render_pid 2>/dev/null || true; rm -rf -- "$work_dir"; printf "\e[?2026l\e[?1004l\e[?7h\e[?25h\e[?1049l"' EXIT
+# 拡張キーは止めずに終えると,閉じた後のシェルにも Shift+Enter 等が拡張キーの並びのまま届くため止める
+trap '__undo_swap || true; [[ -z $render_pid ]] || kill $render_pid 2>/dev/null || true; rm -rf -- "$work_dir"; printf "\e[?2026l\e[?1004l\e[>4m\e[?7h\e[?25h\e[?1049l"' EXIT
 trap 'exit 0' INT TERM HUP
 # ペインの大きさが変わったら,次のコマで高さを聞き直す
 trap 'size_stale=1' WINCH
-printf '\e[?1049h\e[?7l\e[?25l\e[?1004h'
+# C-; は普段 ; として届き見分けられないため,tmux に拡張キーのモード1を頼み \e[27;5;59~ で受け取る
+# (モード1は C-n 等の決まった並びがあるキーを変えないが,モード2は C-n まで変えてしまう)
+printf '\e[?1049h\e[?7l\e[?25l\e[?1004h\e[>4;1m'
 
 # iTerm2のウィンドウをまたいだジャンプはmacOSのAppleScriptで行うため,macOS以外やtmuxの外では選択自体を無効にする
 if [[ $OSTYPE == darwin* && -n ${TMUX:-} ]] && (( $+commands[osascript] )); then
@@ -2001,6 +2004,14 @@ while :; do
             (( ! left_window )) || __close_dir_window
             left_window=0
           fi
+          # C-; は C-k と同じものを開き,最後の返答が画面の上へ流れていればその冒頭から読めるようにする
+          # (一括終了・一括再起動の確かめを出していた時は,ほかのキーと同じく確かめを取り消すだけにする)
+          if [[ $esc_seq == '[27;5;59~' ]] && (( ! was_confirming )); then
+            open_id=${selected_id:-$attention_id}
+            if (( selectable )) && [[ -n $open_id ]]; then
+              __open_and_focus_below "$open_id" --last-reply
+            fi
+          fi
           ;;
         $'\x0e' | $'\x10') # Ctrl+n / Ctrl+p
           # 選択を1つ動かす(C-s で下に開いている間は,動かした先も下に開いて開いたまま移る)
@@ -2022,16 +2033,11 @@ while :; do
             fi
           fi
           ;;
-        $'\x0b' | V) # Ctrl+k / V
+        $'\x0b') # Ctrl+k
           # 未選択なら判断待ち,無ければ完了のうち一番上を開く(選択は変えないので,次も一番上から選び直す)
-          # V で開いた時は,最後の返答が画面の上へ流れていればその冒頭から読めるようにする
           open_id=${selected_id:-$attention_id}
           if (( selectable )) && [[ -n $open_id ]]; then
-            if [[ $key == V ]]; then
-              __open_and_focus_below "$open_id" --last-reply
-            else
-              __open_and_focus_below "$open_id"
-            fi
+            __open_and_focus_below "$open_id"
           fi
           ;;
         [1-9])

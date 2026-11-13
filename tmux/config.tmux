@@ -76,8 +76,6 @@ bind C-i split-window -h -c '#{pane_current_path}'
 # ウィンドウindex変更
 bind m command-prompt 'move-window -t %%'
 bind C-m command-prompt 'move-window -t %%'
-# ウィンドウ選択choose
-bind ';' choose-window
 # ウィンドウ選択select
 bind w command-prompt 'select-window -t %%'
 # 次のウィンドウへ
@@ -155,7 +153,8 @@ bind a new-window -c '#{pane_current_path}' \; split-window -v -c '#{pane_curren
 bind @ move-window -t 0 \; send-keys 'ai-bridge' Enter
 # Claude Code・Codex の最後の返答の冒頭へ,コピーモードにして移る
 # コピーモードになる前に打ったキーがAIの入力欄に入らないよう,-b を付けずに終わるまで待たせる
-bind V run-shell 'scroll-tmux-to-last-reply #{pane_id}'
+bind ';' run-shell 'scroll-tmux-to-last-reply #{pane_id}'
+bind 'C-;' run-shell 'scroll-tmux-to-last-reply #{pane_id}'
 
 # AIエージェント状態: フォーカスしたwindowのdone(赤タブ)をidleへ戻す(blockedは保持)
 # session-window-changedはselect/next/previous/last等すべてのカレントwindow変更で発火する
