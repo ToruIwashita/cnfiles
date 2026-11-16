@@ -1360,6 +1360,8 @@ typeset -A ag_root ag_task ag_task_t ag_turn_t ag_end ag_run ag_run_t ag_wait ag
 typeset -A ops_ino ops_size ops_head ops_seen ops_ev
 # SYSTEM に出す CPU・GPU・メモリ・ストレージの値(裏が測って一覧のファイルの1行目に載せたものを,取り込むたびに写す)
 typeset -A sys
+# SYSTEM の行を作った時のペインの幅と,取り込んだ一覧の通し番号
+ops_sys_key=''
 
 # コマンドの種類(テストの実行・コミット・プッシュ)を,コマンドとして実行した時だけ判定する
 # && ; | で区切った各部分の先頭の語で見る(環境変数の指定や bundle exec 等の前置きは飛ばす)
@@ -1930,7 +1932,11 @@ __ops_panel() { # $1=行数 $2=コマ
   for (( i = 1; i <= lh - ${#ops_lg}; i++ )); do __ops_frame_line ''; out+=("$REPLY"); done
   for (( i = 1; i <= ${#ops_lg}; i++ )); do __ops_frame_line "${ops_lg[i]}"; out+=("$REPLY"); done
   if (( sh )); then
-    __ops_sys
+    # SYSTEM の値が変わるのは裏の一覧を取り込んだ時だけなので,その時とペインの幅が変わった時だけ作り直す
+    if [[ $ops_sys_key != "$pane_cols $render_seq" ]]; then
+      __ops_sys
+      ops_sys_key="$pane_cols $render_seq"
+    fi
     out+=("${ops_sys[@]}")
   fi
   __ops_frame_bottom; out+=("$REPLY")
