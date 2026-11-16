@@ -207,6 +207,11 @@ __format_agent_line() {
   print -r -- "$line"
 }
 
+# claudeのmeta.jsonから枠ごとの候補を作るために取る値を "<transcriptの場所>\t<5時間枠>\t<週次枠>" にする jq の式
+# (枠は "使用率 リセットepoch",その枠の値が無ければ空)
+claude_window_jq='def w($p; $r): if .[$p] != null then "\(.[$p] | floor) \(.[$r] // 0)" else "" end;
+  "\(.transcript_path // "")\t\(w("h5_pct"; "h5_reset"))\t\(w("d7_pct"; "d7_reset"))"'
+
 # claudeのmeta.jsonから枠ごとの候補を "<枠> <最終assistant時刻> <使用率> <リセットepoch>" 形式で列挙する
 # statusLineが受け取るrate_limitsはセッションによって5時間枠だけ欠けることがあり,
 # 最新1件に固定すると枠が出たり消えたりするため,アカウント単位で共通な値を枠ごとに独立して探す
@@ -214,39 +219,75 @@ __format_agent_line() {
 # meta.jsonやtranscriptの更新時刻では選べない(transcriptにはAPI応答なしでメタデータ行が足されることがある)
 # 手動リセットでは同じ枠のまま使用率が下がるため最大値でも選べず,最後のassistantエントリが最も新しいセッションの値を採る
 # transcriptの読み込みが重いため,両枠ぶんを1回の走査でまとめて出す
+# meta.json は全部のAIの分を1回の jq で読む(どれかが壊れていると,jq はそこから先を読まずに止まるため,その時は1つずつ読む)
+# 最後のassistantの時刻は,transcriptの大きさと更新時刻が前に調べた時と同じなら,前に調べた値を使う
+# (transcriptは追記されていくだけなので,どちらも同じなら中身も同じで,待機中のAIのtranscriptはほとんど変わらない)
+# (調べた値は,ai-bridge をいくつ開いていても使えるよう,state_dir の .usage_last_at に置く)
 __claude_window_candidates() {
-  local meta_file line transcript_path h5 d7 last_at
-  local -a fields
+  local meta_file line transcript_path h5 d7 last_at out cache f
+  local -a fields metas
+  local -A rows seen fresh st
 
-  for meta_file in "$state_dir"/*.meta.json(N); do
-    line=$(jq -r \
-      'def w($p; $r): if .[$p] != null then "\(.[$p] | floor) \(.[$r] // 0)" else "" end;
-       "\(.transcript_path // "")\t\(w("h5_pct"; "h5_reset"))\t\(w("d7_pct"; "d7_reset"))"' "$meta_file" 2>/dev/null) || continue
-    fields=("${(@ps.\t.)line}")
+  cache=$state_dir/.usage_last_at
+  if [[ -r $cache ]]; then
+    while IFS=$'\t' read -r f line; do
+      seen[$f]=$line
+    done < "$cache"
+  fi
+
+  metas=("$state_dir"/*.meta.json(N))
+  if (( ${#metas} )) && out=$(jq -r "$claude_window_jq"' as $v | "\(input_filename)\t\($v)"' "${metas[@]}" 2>/dev/null); then
+    for line in ${(f)out}; do
+      rows[${line%%$'\t'*}]=${line#*$'\t'}
+    done
+  else
+    for meta_file in "${metas[@]}"; do
+      line=$(jq -r "$claude_window_jq" "$meta_file" 2>/dev/null) || continue
+      rows[$meta_file]=$line
+    done
+  fi
+
+  for meta_file in "${metas[@]}"; do
+    (( ${+rows[$meta_file]} )) || continue
+    fields=("${(@ps.\t.)rows[$meta_file]}")
     transcript_path=${fields[1]:-}
     h5=${fields[2]:-}
     d7=${fields[3]:-}
     [[ -n $h5 || -n $d7 ]] || continue
 
     # transcriptは数十MBになるため末尾だけを読む(UTCのISO8601は文字列順が時刻順になる)
-    last_at=$(tail -c 262144 "$transcript_path" 2>/dev/null \
-      | grep -F '"type":"assistant"' \
-      | jq -Rr 'fromjson? | select(.type == "assistant") | .timestamp // empty' 2>/dev/null \
-      | tail -n 1)
+    last_at=''
+    if zstat -H st "$transcript_path" 2>/dev/null; then
+      if [[ ${seen[$transcript_path]-} == ${st[size]}$'\t'${st[mtime]}$'\t'* ]]; then
+        last_at=${seen[$transcript_path]#*$'\t'*$'\t'}
+      else
+        last_at=$(tail -c 262144 "$transcript_path" 2>/dev/null \
+          | grep -F '"type":"assistant"' \
+          | jq -Rr 'fromjson? | select(.type == "assistant") | .timestamp // empty' 2>/dev/null \
+          | tail -n 1)
+      fi
+      fresh[$transcript_path]=${st[size]}$'\t'${st[mtime]}$'\t'$last_at
+    fi
     [[ -n $h5 ]] && print -r -- "h5 ${last_at:-0} $h5"
     [[ -n $d7 ]] && print -r -- "d7 ${last_at:-0} $d7"
   done
+
+  { for f in ${(k)fresh}; do print -r -- "$f"$'\t'"${fresh[$f]}"; done >| "$cache.$$" && zf_mv -f "$cache.$$" "$cache" } 2>/dev/null || true
   return 0
 }
 
-# 候補から指定枠の "使用率 リセットepoch" を返す
-__claude_window() {
-  local candidates window best reset pct
+# 最後のassistantの時刻で並べ替えた候補から,指定枠の "使用率 リセットepoch" を返す
+__claude_window() { # $1=枠 $2..=並べ替えた候補
+  local window best line reset pct
 
-  candidates=$1
-  window=$2
+  window=$1
+  shift
 
-  best=$(print -r -- "$candidates" | grep "^$window " | cut -d' ' -f2- | sort -k1,1 | tail -n 1)
+  # 同じ枠のうち,並べ替えで最後になるもの(最後のassistantが最も新しいもの)を採る
+  best=''
+  for line in "$@"; do
+    [[ $line == "$window "* ]] && best=${line#* }
+  done
   [[ -n ${best:-} ]] || return 0
 
   reset=${best##* }
@@ -263,10 +304,14 @@ __claude_window() {
 # claudeの5時間/週次利用枠
 __usage_lines_claude() {
   local candidates h5 d7
+  local -a sorted
 
   candidates=$(__claude_window_candidates)
-  h5=$(__claude_window "$candidates" h5)
-  d7=$(__claude_window "$candidates" d7)
+  # 枠ごとに最後のassistantの時刻で選ぶため,候補を時刻(2列目)で1回だけ並べ替える
+  # (枠ごとに分けてから時刻で並べ替えるのと同じ順になる,時刻が同じものはどちらも行全体で比べ,枠の名前は同じため)
+  sorted=("${(@f)$(print -r -- "$candidates" | sort -k2,2)}")
+  h5=$(__claude_window h5 "${sorted[@]}")
+  d7=$(__claude_window d7 "${sorted[@]}")
   [[ -n ${h5:-} || -n ${d7:-} ]] || return 0
 
   __format_agent_line claude "$h5" "$d7"
@@ -397,7 +442,7 @@ __cleanup_stale() {
   local -a tmp_files
 
   # 書き込みの途中で止められて残った一時ファイルを消す(書き込み中のものを消さないよう,5分以上経ったものだけ)
-  tmp_files=("$state_dir"/.(state|meta|activity|usage).*(N.mm+5))
+  tmp_files=("$state_dir"/.(state|meta|activity|usage|usage_last_at).*(N.mm+5))
   (( ! ${#tmp_files} )) || rm -f -- "${tmp_files[@]}"
 
   # tmuxサーバー停止中やソケット一時障害でpane一覧が取れないと,全paneを
