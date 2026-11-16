@@ -515,6 +515,14 @@ else
   ln -is $BASE_DIR_PATH/local/bin/copy-tmp-dump-html-to-tmp-html $LOCAL_BIN_DIR_PATH/copy-tmp-dump-html-to-tmp-html
 fi
 
+# open-tmux-cursor-url
+if [[ -L $LOCAL_BIN_DIR_PATH/open-tmux-cursor-url ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/open-tmux-cursor-url symlink already exists\e[0m\n"
+else
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/open-tmux-cursor-url\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/open-tmux-cursor-url $LOCAL_BIN_DIR_PATH/open-tmux-cursor-url
+fi
+
 # scroll-tmux-to-last-reply
 if [[ -L $LOCAL_BIN_DIR_PATH/scroll-tmux-to-last-reply ]]; then
   _printf "\e[32m$LOCAL_BIN_DIR_PATH/scroll-tmux-to-last-reply symlink already exists\e[0m\n"

@@ -134,8 +134,9 @@ bind -T copy-mode-vi Y send -X copy-selection
 bind -T copy-mode-vi C-f command-prompt -1p '(jump backward)' 'send -X jump-backward "%%%"'
 # 逆再jump
 bind -T copy-mode-vi C-_ send-keys -X jump-reverse
-# 選択範囲open
-bind -T copy-mode-vi '-' send -X copy-pipe-and-cancel 'xargs -0 open'
+# 選択範囲open(選択していなければ,カーソルの下のURLをopen)
+# どちらもコピーモードは続ける(URLはリンクの文字の上なら行き先を開く)
+bind -T copy-mode-vi '-' if -F '#{selection_present}' { send -X copy-pipe 'xargs -0 open' } { run-shell 'open-tmux-cursor-url #{pane_id}' }
 # 選択範囲のGoogle検索
 bind -T copy-mode-vi Space send -X copy-pipe-and-cancel "xargs -I {} open https://www.google.co.jp/search?q='{}'"
 

@@ -1,0 +1,102 @@
+#!/usr/bin/env zsh
+# tmux のコピーモードで,カーソルの下にある http(s) の URL を open で開く(コピーモードは抜けない)
+#
+# 使い方:
+#   open-tmux-cursor-url <pane_id>   # tmux のコピーモードの -(選択していない時)から呼ぶ
+#
+# URL は次の順に探す
+#   1. カーソルの下の文字に付いたリンク(OSC 8)
+#      Claude Code は URL とマークダウンのリンクをこの形で出すので,見えている文字が URL と違っていても,
+#      画面の端で折り返したり見切れたりしていても,行き先がそのまま取れる
+#   2. 画面の文字の中の URL のうち,カーソルが乗っているもの
+#      tmux が折り返した行(シェルの出力の長い URL 等)は,折り返しをつないでから探す
+# run-shell は標準出力をペインに表示するため何も出力せず,結果は tmux のメッセージで知らせる
+set -eu
+
+if (( $# != 1 )); then
+  print "open-tmux-cursor-url: requires exactly 1 argument (pane_id)" 1>&2
+  exit 1
+fi
+
+pane=$1
+integer x y oy row n start idx col w i s e pos span
+typeset -A text_of wrapped
+url=''
+# カーソルの行の前後に読む行数(tmux が折り返した URL は,上下にこの行数までつなげる)
+span=30
+
+read -r x y oy link <<< "$(tmux display -p -t "$pane" '#{copy_cursor_x} #{copy_cursor_y} #{scroll_position} #{copy_cursor_hyperlink}')"
+
+if [[ $link == http(|s)://?* ]]; then
+  url=$link
+else
+  # 画面の一番上の行を0とした,カーソルの行の番号(履歴へ遡っているほど小さい負の数になる)
+  row=$(( y - oy ))
+  # 行ごとに「行番号 旗 文字」の形で読む(旗に W があれば,その行は次の行へ折り返している)
+  # コピーモードが見ているのは入った時点の画面の写しなので,-M でその写しを読む
+  tmux capture-pane -M -p -N -F -L -t "$pane" -S $(( row - span )) -E $(( row + span )) | while IFS= read -r line; do
+    n=${line%% *}
+    rest=${line#* }
+    [[ ${rest%% *} != *W* ]] || wrapped[$n]=1
+    text_of[$n]=${rest#* }
+  done
+
+  # 折り返しを遡って,カーソルの行を含むひと続きの行の先頭を探す
+  start=$row
+  while (( ${+wrapped[$(( start - 1 ))]} )); do
+    start=$(( start - 1 ))
+  done
+  logical=''
+  for (( n = start; n < row; n++ )); do
+    logical+=${text_of[$n]}
+  done
+
+  # カーソルの桁を,カーソルの行の中の文字の位置に直す(全角は2桁,タブは次の8桁区切りまでを占める)
+  line=${text_of[$row]:-}
+  for (( i = 1; i <= ${#line}; i++ )); do
+    ch=${line[i]}
+    if [[ $ch == $'\t' ]]; then w=$(( 8 - col % 8 )); else w=${(m)#ch}; fi
+    (( col + w <= x )) || break
+    col=$(( col + w ))
+  done
+  idx=$(( ${#logical} + i ))
+
+  logical+=$line
+  for (( n = row; ${+wrapped[$n]}; n++ )); do
+    logical+=${text_of[$(( n + 1 ))]:-}
+  done
+
+  # URL に使える文字が続く所までを URL とみなす(空白・" < > や全角の文字で終わる)
+  url_re="https?://[]A-Za-z0-9._~:/?#@!\$&'()*+,;=%[-]+"
+  rest=$logical
+  while [[ $rest =~ $url_re ]]; do
+    s=$(( pos + MBEGIN ))
+    e=$(( pos + MEND ))
+    if (( idx >= s && idx <= e )); then
+      url=$MATCH
+      break
+    fi
+    pos=$e
+    rest=${logical[e + 1,-1]}
+  done
+
+  # 文の中の URL に続く句読点と,URL を囲む括弧の閉じを外す(URL の中で開いた括弧と対になる閉じは残す)
+  while :; do
+    case $url in
+      *[.,\;:\!\?\']) ;;
+      *\)) (( ${#${url//[^\(]/}} < ${#${url//[^\)]/}} )) || break ;;
+      *\]) (( ${#${url//[^\[]/}} < ${#${url//[^\]]/}} )) || break ;;
+      *) break ;;
+    esac
+    url=${url%?}
+  done
+fi
+
+if [[ $url != http(|s)://?* ]]; then
+  tmux display-message -l 'no URL under the cursor'
+  exit 0
+fi
+
+open "$url"
+# URL の # 等が tmux の書式として展開されないよう,-l でそのまま出す
+tmux display-message -l "open $url"
