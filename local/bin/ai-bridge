@@ -38,7 +38,7 @@ typeset -A target_of agent_prio
 # (Esc:quit と X:exit-all はいつも出している見出しの方に書く)
 key_help='C-n/p:select C-s:open-close C-k:open-below C-;:reply C-l:open-dir Enter:jump C-g:clear'
 show_keys=0
-# 一覧の下の作業の見える化(WORKSPACE・OPS.LOG)は,起動時は出さず Space を押した時だけ出す
+# 一覧の下の作業の見える化(WORKSPACE・OPS.LOG・SYSTEM)は,起動時は出さず Space を押した時だけ出す
 show_ops=0
 # X(一括終了)と R(一括再起動)を実行する前の確かめ(出している間は見出しを確かめの文に差し替え,y で実行する)
 # confirm_action は確かめている操作で,exit か restart(確かめていない時は空)
@@ -1063,30 +1063,114 @@ __restart_agent() {
 # 変える前に裏で組み立て始めた一覧を取り込んで表示が戻らないよう,世代(gen)を上げて古い一覧を捨てさせる
 __data_changed() {
   (( ++gen ))
-  print -r -- "$gen ${last_swap[1]:-} ${last_swap[2]:-}" >| "$ctl_file"
+  __write_ctl
   need_render=1
+}
+
+# 裏に,世代・作業の見える化を出しているか(1/0)・下に開いたAIとその入れ替え相手を伝える
+# (出しているかは,裏が出している間だけ SYSTEM の GPU・メモリ・ストレージを測るために使う)
+# 空白区切りで読むため,必ず値のある項目は,空のことがある下に開いたAIの2つより前に置く
+__write_ctl() {
+  print -r -- "$gen $show_ops ${last_swap[1]:-} ${last_swap[2]:-}" >| "$ctl_file"
+}
+
+# --- SYSTEM の値を裏で測る(どれも sudo 無しで取れるもの) ---
+# CPU と負荷: iostat,GPU: ioreg,メモリ: vm_stat,ストレージ: df,チップ名・コア数・メモリの総量: system_profiler
+# 手前へは,一覧のファイルの1行目の世代の後ろに 名前=値 をタブ区切りにして載せて渡す
+
+# チップ名・コア数・メモリの総量を取る(変わらないので,裏を起動した時に1回だけ呼ぶ)
+__sys_hw() { # → reply=(CPUとGPUの補足を 名前=値 のタブ区切りにしたもの メモリの総量(GiB,取れなければ0))
+  local hw io chip='?' cpu_cores='?' gpu_cores='?' mem_total=0
+  hw=$(system_profiler SPHardwareDataType 2>/dev/null || true)
+  io=$(ioreg -r -c IOAccelerator -w 0 -d 1 2>/dev/null || true)
+  [[ $hw =~ 'Chip: ([^'$'\n'']+)' ]] && chip=$match[1]
+  [[ $hw =~ 'Total Number of Cores: ([0-9]+)' ]] && cpu_cores=$match[1]
+  [[ $hw =~ 'Memory: ([0-9]+) GB' ]] && mem_total=$match[1]
+  [[ $io =~ '"gpu-core-count" = ([0-9]+)' ]] && gpu_cores=$match[1]
+  reply=("cpu_sub=$chip · $cpu_cores cores"$'\t'"gpu_sub=$chip · $gpu_cores cores" $mem_total)
+}
+
+# CPU の使用率と負荷を iostat で1秒かけて測る(裏の1秒の休みを兼ねるため,iostat が動かない時は1秒休む)
+# iostat の1行目は起動してからの平均なので,最後の行(1秒の間の差分)を使う
+__sys_cpu() { # → REPLY=名前=値 のタブ区切り(測れない値は -)
+  local out=''
+  local -a v
+  if ! out=$(iostat -n0 -c 2 -w 1 2>/dev/null); then
+    zselect -t 100 || true
+  fi
+  v=(${=${(f)out}[-1]})
+  if (( ${#v} == 6 )) && [[ ${v[3]} == <-> ]]; then
+    REPLY="cpu=$(( 100 - v[3] ))"$'\t'"load=${v[4]} ${v[5]} ${v[6]}"
+  else
+    REPLY=$'cpu=-\tload=-'
+  fi
+}
+
+# GPU・メモリ・ストレージの使用率と使用量を測る(作業の見える化を出している間だけ,裏で組み立てるたびに呼ぶ)
+__sys_usage() { # $1=メモリの総量(GiB,不明なら0) → REPLY=名前=値 のタブ区切り(測れない値は -)
+  local io vm gpu=- mem=- mem_sub=- disk=- disk_sub=-
+  local -a v
+  integer page=16384 purge=0 wired=0 comp=0
+  float used
+
+  # GPU: Apple シリコンの GPU が報告する使用率
+  io=$(ioreg -r -c IOAccelerator -w 0 -d 1 2>/dev/null || true)
+  [[ $io =~ '"Device Utilization %"=([0-9]+)' ]] && gpu=$match[1]
+
+  # メモリ: アクティビティモニタの「使用済みメモリ」と同じく,アプリ(匿名-解放可能)・確保済み・圧縮の合計
+  vm=$(vm_stat 2>/dev/null || true)
+  if (( $1 )) && [[ $vm =~ 'Anonymous pages: *([0-9]+)' ]]; then
+    integer anon=$match[1]
+    [[ $vm =~ 'page size of ([0-9]+)' ]] && page=$match[1]
+    [[ $vm =~ 'Pages purgeable: *([0-9]+)' ]] && purge=$match[1]
+    [[ $vm =~ 'Pages wired down: *([0-9]+)' ]] && wired=$match[1]
+    [[ $vm =~ 'Pages occupied by compressor: *([0-9]+)' ]] && comp=$match[1]
+    used=$(( (anon - purge + wired + comp) * page / 1073741824.0 ))
+    printf -v mem '%.0f' $(( used * 100 / $1 ))
+    printf -v mem_sub '%.1f / %.1f GiB' $used $1
+  fi
+
+  # ストレージ: データの入るボリュームのコンテナ全体の大きさと空きから,ほかのボリュームの分も含めた使用量を出す
+  v=(${=${(f)"$(df -k /System/Volumes/Data 2>/dev/null || true)"}[2]})
+  if [[ ${v[2]:-} == <-> && ${v[4]:-} == <-> ]] && (( v[2] )); then
+    printf -v disk '%.0f' $(( (v[2] - v[4]) * 100.0 / v[2] ))
+    printf -v disk_sub '%.1f / %.1f GiB' $(( (v[2] - v[4]) / 1048576.0 )) $(( v[2] / 1048576.0 ))
+  fi
+  REPLY="gpu=$gpu"$'\t'"mem=$mem"$'\t'"mem_sub=$mem_sub"$'\t'"disk=$disk"$'\t'"disk_sub=$disk_sub"
 }
 
 # 一覧の組み立て(約0.2秒)が1秒10コマの描き直しを止めないよう,裏で1秒ごとに組み立ててファイルに置く
 # 1行目に通し番号と組み立てた時の世代を添え,置き換えは一度に行う(描き手が書きかけを読まないように)
+# 1行目の世代の後ろには SYSTEM の値を載せる(1秒の休みは iostat で CPU を測る1秒に充てる)
 # 描き手が強制終了されても裏に残り続けないよう,描き手がいなくなったら止まる
 __render_loop() {
-  local g a b
-  integer seq=0
+  local g s a b hw cpu usage
+  integer seq=0 mem_total
 
   trap - EXIT INT TERM HUP WINCH
+  __sys_hw
+  hw=${reply[1]} mem_total=${reply[2]}
+  cpu=$'cpu=-\tload=-'
   while kill -0 $$ 2>/dev/null; do
-    if ! read -r g a b < "$ctl_file"; then
-      g=0 a='' b=''
+    if ! read -r g s a b < "$ctl_file"; then
+      g=0 s=0 a='' b=''
     fi
     if [[ -n $a ]]; then
       last_swap=("$a" "$b")
     else
       last_swap=()
     fi
-    { print -r -- "$(( ++seq )) $g"; __render } >| "$render_file.tmp" 2>/dev/null || true
+    # GPU・メモリ・ストレージは,作業の見える化を出している間だけ測る
+    if [[ $s == 1 ]]; then
+      __sys_usage $mem_total
+      usage=$'\t'$REPLY
+    else
+      usage=''
+    fi
+    { print -r -- "$(( ++seq )) $g"$'\t'"$cpu"$'\t'"$hw$usage"; __render } >| "$render_file.tmp" 2>/dev/null || true
     zf_mv -f "$render_file.tmp" "$render_file" 2>/dev/null || true
-    zselect -t 100 || true
+    __sys_cpu
+    cpu=$REPLY
   done
 }
 
@@ -1249,7 +1333,7 @@ __compose_screen() {
   out=${(F)screen}
 }
 
-# --- 作業の見える化: 一覧の下の余白に,どのリポジトリで何をしているか(WORKSPACE)と,有益な出来事だけの作業ログ(OPS.LOG)を出す ---
+# --- 作業の見える化: 一覧の下の余白に,どのリポジトリで何をしているか(WORKSPACE)と,有益な出来事だけの作業ログ(OPS.LOG)と,この Mac の使用率(SYSTEM)を出す ---
 # 材料は各AIのフックで ai-agent-state が残す作業ログ(<キー>.activity: 時刻 種類 ツール 対象 補足 作業ディレクトリ)
 # AIは一覧の並びが状態で入れ替わっても同じ名前で示せるよう,行番号ではなくTARGETで示す
 typeset -A repo_root_of ops_verb_col
@@ -1274,6 +1358,8 @@ typeset -A ag_root ag_task ag_task_t ag_turn_t ag_end ag_run ag_run_t ag_wait ag
 # 作業ログは追記されていくだけなので,AIごとに読んだ所(inode・大きさ・1行目・行数)と拾った出来事を覚えて,
 # 変わった時にファイルを読み直しても,解釈するのは増えた行だけにする
 typeset -A ops_ino ops_size ops_head ops_seen ops_ev
+# SYSTEM に出す CPU・GPU・メモリ・ストレージの値(裏が測って一覧のファイルの1行目に載せたものを,取り込むたびに写す)
+typeset -A sys
 
 # コマンドの種類(テストの実行・コミット・プッシュ)を,コマンドとして実行した時だけ判定する
 # && ; | で区切った各部分の先頭の語で見る(環境変数の指定や bundle exec 等の前置きは飛ばす)
@@ -1775,17 +1861,64 @@ __ops_log_lines() { # $1=行数 $2=コマ → ops_lg 配列
   fi
 }
 
+# SYSTEM の1つを,名前・バー・使用率の1行と補足の1行にして幅 $5 に収める
+# バーは使った分を指標の色,残りを暗い灰色で引き,8割を超えたら使用率の数字を赤くして気づかせる
+__ops_sys_cell() { # $1=色 $2=名前 $3=使用率(測れていなければ -) $4=補足 $5=幅 → reply=(1行目 2行目)
+  local label sub
+  integer bw=$(( $5 - 12 > 4 ? $5 - 12 : 4 )) filled pc
+  if [[ $3 == <-> ]]; then
+    filled=$(( ($3 * bw + 50) / 100 < bw ? ($3 * bw + 50) / 100 : bw ))
+    pc=$(( $3 >= 80 ? 203 : 255 ))
+    label=$3%
+  else
+    filled=0 pc=255 label=-
+  fi
+  __vis "$4"
+  if (( REPLY > $5 - 7 )); then
+    __vis_cut "$4" $(( $5 - 7 ))
+    sub=$REPLY
+  else
+    sub=$4
+  fi
+  reply=(
+    $'\e[38;5;'$1$'m■ \e[1;38;5;255m'"${(r:4:)2} "$'\e[0;38;5;'$1'm'"${(l:filled::━:):-}"$'\e[38;5;237m'"${(l:bw-filled::━:):-}"$'\e[1;38;5;'$pc'm'"${(l:5:)label}"$'\e[0m'
+    $'\e[38;5;245m       '"$sub"$'\e[0m'
+  )
+}
+
+# SYSTEM の2つを横に並べた2行を ops_sys に足す
+__ops_sys_row() { # $1..$4=左の色・名前・使用率・補足 $5..$8=右の同じもの
+  local lt ls
+  integer cw=$(( (pane_cols - 2 - 4) / 2 ))
+  __ops_sys_cell $1 $2 $3 "$4" $cw
+  lt=${reply[1]} ls=${reply[2]}
+  __vis "$lt"; lt+="${(l:cw-REPLY:: :):-}"
+  __vis "$ls"; ls+="${(l:cw-REPLY:: :):-}"
+  __ops_sys_cell $5 $6 $7 "$8" $cw
+  __ops_frame_line " $lt   ${reply[1]}"; ops_sys+=("$REPLY")
+  __ops_frame_line " $ls   ${reply[2]}"; ops_sys+=("$REPLY")
+}
+
+# SYSTEM(負荷を添えた区切りの1行と,CPU・GPU・メモリ・ストレージを2つずつ並べた4行)を ops_sys に作る
+__ops_sys() {
+  ops_sys=()
+  __ops_frame_mid 'SYSTEM' "LOAD ${sys[load]:--}"; ops_sys+=("$REPLY")
+  __ops_sys_row 80 CPU "${sys[cpu]:--}" "${sys[cpu_sub]:--}" 141 GPU "${sys[gpu]:--}" "${sys[gpu_sub]:--}"
+  __ops_sys_row 108 MEM "${sys[mem]:--}" "${sys[mem_sub]:--}" 179 DISK "${sys[disk]:--}" "${sys[disk_sub]:--}"
+}
+
 # 余白 $1 行に収まる枠を ops_panel に作る(ワークスペースは要る分だけ,多くても半分まで,残りを作業ログに使う)
+# 最下部の SYSTEM(5行)は,それを除いても今までの最小の枠(6行)が残る時だけ出す
 __ops_panel() { # $1=行数 $2=コマ
   local -a out
-  integer h=$1 wh lh i agents_n=0
+  integer h=$1 sh=$(( $1 >= 11 ? 5 : 0 )) wh lh i agents_n=0
   local key
   # ペインの幅が変わった・作っておいたより高くなったら,作業ログの行を今の大きさで作り直す
   (( ops_cache_cols == pane_cols && ops_cache_rows >= pane_rows )) || __ops_cache_log
   for key in $agent_keys; do [[ -n ${ag_last[$key]:-} ]] && (( ++agents_n )); done
-  __ops_ws $(( (h - 3) / 2 )) $2
+  __ops_ws $(( (h - sh - 3) / 2 )) $2
   wh=${#ops_ws}
-  lh=$(( h - 2 - (wh ? wh + 1 : 0) ))
+  lh=$(( h - sh - 2 - (wh ? wh + 1 : 0) ))
   if (( wh )); then
     __ops_frame_top 'WORKSPACE' "$ops_repo_count REPOS / $agents_n GHOSTS"; out=("$REPLY")
     for (( i = 1; i <= wh; i++ )); do __ops_frame_line "${ops_ws[i]}"; out+=("$REPLY"); done
@@ -1796,6 +1929,10 @@ __ops_panel() { # $1=行数 $2=コマ
   __ops_log_lines $lh $2
   for (( i = 1; i <= lh - ${#ops_lg}; i++ )); do __ops_frame_line ''; out+=("$REPLY"); done
   for (( i = 1; i <= ${#ops_lg}; i++ )); do __ops_frame_line "${ops_lg[i]}"; out+=("$REPLY"); done
+  if (( sh )); then
+    __ops_sys
+    out+=("${ops_sys[@]}")
+  fi
   __ops_frame_bottom; out+=("$REPLY")
   ops_panel=("${out[@]}")
 }
@@ -1902,11 +2039,11 @@ size_stale=1
 drawn=''
 render_seq=''
 render_pid=''
-# 裏で組み立てた一覧と,手元で変えた中身(世代と下に開いたAI)を受け渡す場所
+# 裏で組み立てた一覧(1行目に SYSTEM の値も載せる)と,手元で変えた中身(世代・作業の見える化を出しているか・下に開いたAI)を受け渡す場所
 work_dir=$(mktemp -d "${TMPDIR:-/tmp}/ai-bridge.XXXXXX")
 render_file=$work_dir/rendered
 ctl_file=$work_dir/ctl
-print -r -- 0 >| "$ctl_file"
+__write_ctl
 # ペインを閉じた時は描き直しや停止が失敗し得るが,set -e で後片付けが途中で止まらないよう失敗しても続ける
 # 拡張キーは止めずに終えると,閉じた後のシェルにも Shift+Enter 等が拡張キーの並びのまま届くため止める
 trap '__undo_swap || true; [[ -z $render_pid ]] || kill $render_pid 2>/dev/null || true; rm -rf -- "$work_dir"; printf "\e[?2026l\e[?1004l\e[>4m\e[?7h\e[?25h\e[?1049l"' EXIT
@@ -1936,10 +2073,13 @@ render_pid=$!
 while :; do
   # 裏で組み立て終えた一覧のうち,手元で最後に中身を変えた後に組み立てたもの(世代が今と同じもの)だけを取り込む
   # (起動直後は裏がまだ一覧を書いていないので,ファイルがある時だけ読む)
-  if [[ -r $render_file ]] && read -r new_seq new_gen < "$render_file" && [[ $new_seq != "$render_seq" && $new_gen == "$gen" ]]; then
+  if [[ -r $render_file ]] && read -r new_seq new_gen new_sys < "$render_file" && [[ $new_seq != "$render_seq" && $new_gen == "$gen" ]]; then
     rendered=("${(@f)$(<"$render_file")}")
     rendered[1]=()
     render_seq=$new_seq
+    # 1行目の世代の後ろに裏が載せた SYSTEM の値(名前=値 のタブ区切り)を写す
+    sys=()
+    for kv in ${(ps:\t:)new_sys}; do sys[${kv%%=*}]=${kv#*=}; done
     __split_rendered
     __ops_load
     # WINCHを取りこぼしてもペインの大きさが直るよう,取り込むたび(約1秒ごと)に聞き直す
@@ -2070,8 +2210,10 @@ while :; do
           fi
           ;;
         ' ')
-          # 作業の見える化(WORKSPACE・OPS.LOG)を出す・消す
+          # 作業の見える化(WORKSPACE・OPS.LOG・SYSTEM)を出す・消す
+          # 裏が出している間だけ SYSTEM の値を測るよう伝える(一覧の中身は変えないので世代は上げない)
           show_ops=$(( ! show_ops ))
+          __write_ctl
           ;;
         X)
           # 一覧に出ているtmux内のAIを一括で終了させる前に,対象と作業中と対象外(tmux外で送れない)の数を見出しに出して確かめる
