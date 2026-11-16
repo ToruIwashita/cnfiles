@@ -50,20 +50,22 @@ integer exit_working was_confirming
 restart_targets=()
 typeset -A restart_command
 
+# 一覧の行を作る小さな関数は,行ごとに何度も呼ぶため,サブシェルを起こさないよう結果を REPLY に入れる
+
 # 一覧の並び順(上ほど対応が必要): blocked > done > working > idle > spare
-__priority_for() {
+__priority_for() { # $1=状態 → REPLY
   case $1 in
-    blocked) print 0 ;;
-    done)    print 1 ;;
-    working) print 2 ;;
-    spare)   print 4 ;;
-    *)       print 3 ;;
+    blocked) REPLY=0 ;;
+    done)    REPLY=1 ;;
+    working) REPLY=2 ;;
+    spare)   REPLY=4 ;;
+    *)       REPLY=3 ;;
   esac
 }
 
 # 状態ラベル(ANSI色付き・パディング込みで幅を揃える)
 # 判断待ちで待っている項目が分かる時は Input(Bash) のように添える(添えた最長の Input(Skill) に幅を合わせる)
-__label_for() {
+__label_for() { # $1=状態 $2=待っている項目 → REPLY
   local text color
 
   case $1 in
@@ -74,26 +76,28 @@ __label_for() {
     *)       text='● Idle';            color='90' ;;
   esac
 
-  print -rn -- $'\e['"${color}m$(__pad "$text" 14)"$'\e[0m'
+  __pad "$text" 14
+  REPLY=$'\e['"${color}m$REPLY"$'\e[0m'
 }
 
 # 判断待ちの項目(ai-agent-stateが記録したツール名)を一覧用の短い名前にする
-# 縮めると紛らわしいまれなツールは何も返さず,種類なしの Input にする
-__wait_label() {
+# 縮めると紛らわしいまれなツールは空にし,種類なしの Input にする
+__wait_label() { # $1=ツール名 → REPLY
   case $1 in
-    Bash | PowerShell)                          print -r -- Bash ;;
-    Edit | Write | NotebookEdit | apply_patch)  print -r -- Edit ;;
-    Read | Grep | Glob)                         print -r -- Read ;;
-    WebFetch | WebSearch)                       print -r -- Web ;;
-    mcp__*)                                     print -r -- MCP ;;
-    Skill)                                      print -r -- Skill ;;
-    ExitPlanMode)                               print -r -- Plan ;;
-    AskUserQuestion)                            print -r -- Q ;;
+    Bash | PowerShell)                          REPLY=Bash ;;
+    Edit | Write | NotebookEdit | apply_patch)  REPLY=Edit ;;
+    Read | Grep | Glob)                         REPLY=Read ;;
+    WebFetch | WebSearch)                       REPLY=Web ;;
+    mcp__*)                                     REPLY=MCP ;;
+    Skill)                                      REPLY=Skill ;;
+    ExitPlanMode)                               REPLY=Plan ;;
+    AskUserQuestion)                            REPLY=Q ;;
+    *)                                          REPLY='' ;;
   esac
 }
 
 # 表示幅ベースで切り詰め+右パディングする(全角文字を含む名前の列ズレ対策)
-__pad() {
+__pad() { # $1=文字列 $2=幅 → REPLY
   local text width w
   text=$1
   width=$2
@@ -103,28 +107,28 @@ __pad() {
     text=${text[1,-2]}
     w=${(m)#text}
   done
-  printf '%s%*s' "$text" $(( width - w )) ''
+  REPLY=$text${(l:width-w:: :):-}
 }
 
 # トークン数を 61K / 1M 形式に
-__fmt_tokens() {
+__fmt_tokens() { # $1=トークン数 → REPLY
   local t
   t=${1:-0}
-  if   (( t >= 1000000 )); then printf '%dM' $(( t / 1000000 ))
-  elif (( t >= 1000 ));    then printf '%dK' $(( t / 1000 ))
-  else                          printf '%d' $t
+  if   (( t >= 1000000 )); then printf -v REPLY '%dM' $(( t / 1000000 ))
+  elif (( t >= 1000 ));    then printf -v REPLY '%dK' $(( t / 1000 ))
+  else                          printf -v REPLY '%d' $t
   fi
 }
 
 # 最終更新からの経過時間を 8s / 15m / 2h 形式に
-__fmt_last() {
+__fmt_last() { # $1=更新時刻 → REPLY
   local rem
   # NOTE: (( rem = ... )) は結果0でexit 1となりset -eで死ぬため算術展開で代入する
   rem=$(( EPOCHSECONDS - $1 ))
   (( rem < 0 )) && rem=0
-  if   (( rem < 60 ));   then print "${rem}s"
-  elif (( rem < 3600 )); then print "$(( rem / 60 ))m"
-  else                        print "$(( rem / 3600 ))h"
+  if   (( rem < 60 ));   then REPLY=${rem}s
+  elif (( rem < 3600 )); then REPLY=$(( rem / 60 ))m
+  else                        REPLY=$(( rem / 3600 ))h
   fi
 }
 
@@ -158,17 +162,17 @@ __usage_bar() {
 }
 
 # 使用率に応じたANSI色(緑<50 / 黄<80 / 赤>=80)
-__usage_color() {
-  if   (( ${1:-0} >= 80 )); then print -rn -- 31
-  elif (( ${1:-0} >= 50 )); then print -rn -- 33
-  else                           print -rn -- 32
+__usage_color() { # $1=使用率 → REPLY
+  if   (( ${1:-0} >= 80 )); then REPLY=31
+  elif (( ${1:-0} >= 50 )); then REPLY=33
+  else                           REPLY=32
   fi
 }
 
 # 利用枠1つ分のセグメントを組み立てる(window=5h/7d, values="使用率 リセットepoch")
 # 枠を横並びにしても桁が揃うよう,リセット表記まで含めて固定幅(26列)にする
 __format_window() {
-  local window values pct reset reset_txt
+  local window values pct reset reset_txt color
 
   window=$1
   values=$2
@@ -182,9 +186,11 @@ __format_window() {
   reset=${values#* }
   reset_txt=''
   [[ -n ${reset:-} ]] && reset_txt="($(__fmt_reset "$reset"))"
+  __usage_color "$pct"
+  color=$REPLY
 
   printf '%-2s \e[%sm%s\e[0m %3d%% %-9s' \
-    "$window" "$(__usage_color "$pct")" "$(__usage_bar "$pct")" "$pct" "$reset_txt"
+    "$window" "$color" "$(__usage_bar "$pct")" "$pct" "$reset_txt"
 }
 
 # エージェント1行を組み立てる(5時間枠と週次枠を横並びにする)
@@ -391,7 +397,7 @@ __cleanup_stale() {
   local -a tmp_files
 
   # 書き込みの途中で止められて残った一時ファイルを消す(書き込み中のものを消さないよう,5分以上経ったものだけ)
-  tmp_files=("$state_dir"/.(state|meta|activity).*(N.mm+5))
+  tmp_files=("$state_dir"/.(state|meta|activity|usage).*(N.mm+5))
   (( ! ${#tmp_files} )) || rm -f -- "${tmp_files[@]}"
 
   # tmuxサーバー停止中やソケット一時障害でpane一覧が取れないと,全paneを
@@ -414,14 +420,14 @@ __cleanup_stale() {
   for state_file in "$state_dir"/%*.state(N); do
     id=${${state_file:t}%.state}
     if [[ $'\n'$live$'\n' != *$'\n'$id$'\n'* ]]; then
-      rm -f "$state_file" "$state_dir/$id.meta.json" "$state_dir/$id.wait" "$state_dir/$id.activity"
+      rm -f "$state_file" "$state_dir/$id.meta.json" "$state_dir/$id.wait" "$state_dir/$id.activity" "$state_dir/$id.artifact_mtime"
     fi
   done
 
   for state_file in "$state_dir"/sid-*.state(N); do
     pid=$(cut -f3 "$state_file" 2>/dev/null || true)
     if [[ -z ${pid:-} ]] || ! kill -0 "$pid" 2>/dev/null; then
-      rm -f "$state_file" "${state_file%.state}.meta.json" "${state_file%.state}.wait" "${state_file%.state}.activity"
+      rm -f "$state_file" "${state_file%.state}.meta.json" "${state_file%.state}.wait" "${state_file%.state}.activity" "${state_file%.state}.artifact_mtime"
     fi
   done
 }
@@ -437,17 +443,25 @@ __claude_installed_version() {
   fi
 }
 
+# meta.json から表示列に使う値を取る jq の式(モデル名・context の使用率・トークン数・動いている版)
+# モデル名の括弧付き補足("Opus 4.8 (1M context)"等)は列に収まらないため除去する
+meta_jq='[((.model // "-") | split(" (")[0]), (.cx_pct // 0 | floor), (.cx_tok // 0), (.version // "")]'
+
 # メタ情報の表示列を出力する(形式: "<model>\t<context>\t<古い版なら1,それ以外は0>",$2はエージェント種別)
 # contextは使用率で色分けし,色指定を幅に数えて列がずれないよう幅をそろえてから色で囲む
 __meta_columns() {
-  local meta_file values model cx_pct cx_tok version outdated
+  local meta_file values model cx_pct cx_tok version outdated color
   local -a fields
   meta_file=$state_dir/$1.meta.json
 
   if [[ -f $meta_file ]]; then
-    # 毎秒・行ごとに呼ばれるためjqは1回で全列を取る
-    # モデル名の括弧付き補足("Opus 4.8 (1M context)"等)は列に収まらないため除去する
-    values=$(jq -r '[((.model // "-") | split(" (")[0]), (.cx_pct // 0 | floor), (.cx_tok // 0), (.version // "")] | @tsv' "$meta_file" 2>/dev/null || true)
+    # 毎秒・行ごとに呼ばれるため,__emit_rows が全部のAIの分をまとめて読んだ値を使い,
+    # その中に無い時(まとめて読めなかった・その後にできた)だけ,このファイルを jq で1回読む
+    if (( ${+meta_vals[$1]} )); then
+      values=${meta_vals[$1]}
+    else
+      values=$(jq -r "$meta_jq | @tsv" "$meta_file" 2>/dev/null || true)
+    fi
     fields=("${(@ps.\t.)values}")
     model=${fields[1]:--}
     cx_pct=${fields[2]:-0}
@@ -458,7 +472,10 @@ __meta_columns() {
     if [[ $2 == claude && -n $version && -n ${claude_installed:-} && $version != "$claude_installed" ]]; then
       outdated=1
     fi
-    printf '%s\t\e[%sm%-9s\e[0m\t%s' "$model" "$(__usage_color "$cx_pct")" "${cx_pct}% $(__fmt_tokens "$cx_tok")" "$outdated"
+    __usage_color "$cx_pct"
+    color=$REPLY
+    __fmt_tokens "$cx_tok"
+    printf '%s\t\e[%sm%-9s\e[0m\t%s' "$model" "$color" "${cx_pct}% $REPLY" "$outdated"
   else
     printf -- '-\t%-9s\t0' -
   fi
@@ -469,6 +486,7 @@ __meta_columns() {
 # 一覧の下の作業の見える化でAIを同じ名前で示すため,TARGETも添える(並びは状態で入れ替わるので行番号は使えない)
 __format_row() {
   local target agent agent_pid state dir key mtime meta model ctx outdated model_col wait_label target_col open_mark
+  local prio label dir_col last
   target=$1
   agent=$2
   agent_pid=$3
@@ -484,44 +502,63 @@ __format_row() {
 
   # 古い版の印(↑)は,下に開いている印と同じく,幅をそろえた後で色を付ける
   if [[ $outdated == 1 ]]; then
-    model_col=$(__pad "${model[1,10]} ↑" 12)
-    model_col=${model_col/↑/$'\e[1;33m↑\e[0m'}
+    __pad "${model[1,10]} ↑" 12
+    model_col=${REPLY/↑/$'\e[1;33m↑\e[0m'}
   else
-    model_col=$(__pad "$model" 12)
+    __pad "$model" 12
+    model_col=$REPLY
   fi
 
   if [[ $state == blocked && -f $state_dir/$key.wait ]]; then
-    wait_label=$(__wait_label "$(<"$state_dir/$key.wait")")
+    __wait_label "$(<"$state_dir/$key.wait")"
+    wait_label=$REPLY
   fi
 
   # 下に開いている印(▼)は細い記号でも目に留まるよう,鮮やかな赤の太字にする
   # 色の指定が幅に数えられないよう,幅をそろえた後で色を付ける
-  target_col=$(__pad "$target" 23)
+  __pad "$target" 23
+  target_col=$REPLY
   open_mark=$'\e[1;38;5;196m▼\e[0m'
 
+  __priority_for "$state"
+  prio=$REPLY
+  __label_for "$state" "$wait_label"
+  label=$REPLY
+  __pad "$dir" 22
+  dir_col=$REPLY
+  __fmt_last "$mtime"
+  last=$REPLY
+
   printf '%s\t%s\t%s\t%s\t%-7s %s %-7s %s %s %s %s %s\n' \
-    "$(__priority_for "$state")" \
+    "$prio" \
     "$mtime" \
     "$key" \
     "${target#▼ }" \
     "${${agent_pid:--}[1,7]}" \
     "${target_col/#▼/$open_mark}" \
     "${agent[1,7]}" \
-    "$(__label_for "$state" "$wait_label")" \
-    "$(__pad "$dir" 22)" \
+    "$label" \
+    "$dir_col" \
     "$model_col" \
     "$ctx" \
-    "$(__fmt_last "$mtime")"
+    "$last"
 }
 
 # 全エージェントのデータ行を出力する
 __emit_rows() {
   local line pane_id session win pane pane_path state agent
-  local state_file key agent_pid agent_tty cwd mtime sep target bg_kind row_state home
-  local -a parts
+  local state_file key agent_pid agent_tty cwd mtime sep target bg_kind row_state home out
+  local -a parts metas st_mtime
+  local -A meta_vals
 
-  # ターン終了イベントを取りこぼしてworkingのまま残った状態を倒す
-  ai-agent-state --reconcile-stuck 2>/dev/null || true
+  # meta.json の列は,行ごとに jq を起こさないよう,全部のAIの分を1回の jq で読んでおく(__meta_columns が使う)
+  # (どれかが壊れていると,jq はそこから先を読まずに止まるため,その時は使わずに行ごとに読ませる)
+  metas=("$state_dir"/*.meta.json(N))
+  if (( ${#metas} )) && out=$(jq -r "[input_filename] + $meta_jq | @tsv" "${metas[@]}" 2>/dev/null); then
+    for line in ${(f)out}; do
+      meta_vals[${${line%%$'\t'*}:t:r:r}]=${line#*$'\t'}
+    done
+  fi
 
   # 下に開いているAIの位置は一覧の隣になるため,入れ替わったペインがいる元の場所を印付きで出す
   home=''
@@ -541,7 +578,8 @@ __emit_rows() {
         pane_path=${parts[5]:-}
         [[ -n $pane_id && -f $state_dir/$pane_id.state ]] || continue
         read -r state agent agent_pid < "$state_dir/$pane_id.state" || continue
-        mtime=$(stat -f %m "$state_dir/$pane_id.state" 2>/dev/null || print $EPOCHSECONDS)
+        zstat -A st_mtime +mtime "$state_dir/$pane_id.state" 2>/dev/null || st_mtime=($EPOCHSECONDS)
+        mtime=${st_mtime[1]}
         if [[ -n $home && $pane_id == "${last_swap[1]:-}" ]]; then
           target="▼ $home"
         else
@@ -555,7 +593,8 @@ __emit_rows() {
   for state_file in "$state_dir"/sid-*.state(N); do
     key=${${state_file:t}%.state}
     IFS=$'\t' read -r state agent agent_pid agent_tty cwd < "$state_file" || continue
-    mtime=$(stat -f %m "$state_file" 2>/dev/null || print $EPOCHSECONDS)
+    zstat -A st_mtime +mtime "$state_file" 2>/dev/null || st_mtime=($EPOCHSECONDS)
+    mtime=${st_mtime[1]}
     bg_kind=$(__bg_kind "$key" "$agent" "${agent_pid:-}" "${agent_tty:-}")
 
     # agent view経由のプロセスはattach等にそのまま使える短縮IDを出す
@@ -585,14 +624,10 @@ __render() {
 
   # 利用枠は一覧に出るエージェントで絞るため,先に古い状態ファイルを掃除する
   __cleanup_stale
-  usage=$(__usage_lines)
+  __usage_lines_shared
+  usage=$REPLY
 
-  # Space・Esc・R・X はキーの説明に足すと幅102桁のペインで見切れるため,いつも出している見出しの方に書く
-  if (( ${selectable:-0} )); then
-    printf 'AI Bridge  %s  (Space:activity R:restart-all X:exit-all Esc:quit ?:keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
-  else
-    printf 'AI Bridge  %s  (Space:activity R:restart-all X:exit-all Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
-  fi
+  __render_title
   # 利用枠の行は見出しから枝分かれさせ(途中の行は ┣,最後の行は ┗ にして線をつなげる),
   # 列の名前との間は,利用枠の行が無い時も1行空ける
   if (( $#usage )); then
@@ -605,6 +640,57 @@ __render() {
   print
   # 選択できる時はデータ行の頭に番号(数字キーで選ぶ)が付くので,見出しも同じだけずらす
   printf '%*s%-7s %-23s %-7s %-14s %-22s %-12s %-9s %s\n' $(( ${selectable:-0} ? 2 : 0 )) '' PID TARGET AGENT STATUS DIR MODEL CONTEXT LAST
+  # ターン終了イベントを取りこぼしてworkingのまま残った状態を倒す
+  __reconcile_shared
+  __render_rows
+}
+
+# ai-bridge をいくつ開いていても同じ結果になる仕事は,この1秒の間にどれかが済ませていれば,その結果を使う
+# (済ませた印と結果は状態ファイルの置き場所に置く)
+# (1つだけの時は組み立ての間隔が1秒より長いので毎回自分で行い,今と変わらない,印や結果を置けない時も毎回自分で行う)
+
+# 取り残しの判定(ai-agent-state)を,この1秒の間にどの ai-bridge もまだ行っていなければ行う
+# (判定の結果は,どの ai-bridge も読む状態ファイルに書かれる)
+__reconcile_shared() {
+  local -a t
+
+  if zstat -A t +mtime "$state_dir/.reconciled" 2>/dev/null && (( t[1] == EPOCHSECONDS )); then
+    return 0
+  fi
+  : >| "$state_dir/.reconciled" 2>/dev/null || true
+  ai-agent-state --reconcile-stuck 2>/dev/null || true
+}
+
+# 利用枠の行を REPLY に入れる(この1秒の間にどれかの ai-bridge が組み立て始めていれば,置いたものを使う)
+# 組み立て始めた印は組み立てる前に置き,組み立て中に来たものには1つ前に置いたものを使わせる
+# (組み立て終わってから印を置くと,同じ時に組み立て始めたものがみな組み立ててしまうため)
+__usage_lines_shared() {
+  local cache started
+  local -a t
+  cache=$state_dir/.usage
+  started=$state_dir/.usage_started
+
+  if [[ -r $cache ]] && zstat -A t +mtime "$started" 2>/dev/null && (( t[1] == EPOCHSECONDS )); then
+    REPLY=$(<"$cache")
+    return 0
+  fi
+  : >| "$started" 2>/dev/null || true
+  REPLY=$(__usage_lines)
+  { print -r -- "$REPLY" >| "$cache.$$" && zf_mv -f "$cache.$$" "$cache" } 2>/dev/null || true
+}
+
+# 一覧の1行目(見出しと時刻)を出力する
+# Space・Esc・R・X はキーの説明に足すと幅102桁のペインで見切れるため,いつも出している見出しの方に書く
+__render_title() {
+  if (( ${selectable:-0} )); then
+    printf 'AI Bridge  %s  (Space:activity R:restart-all X:exit-all Esc:quit ?:keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+  else
+    printf 'AI Bridge  %s  (Space:activity R:restart-all X:exit-all Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+  fi
+}
+
+# データ行を並べて出力する
+__render_rows() {
   # 古い版の印のため,インストール済みの版は行ごとでなく一覧を作るたびに1回だけ調べる
   claude_installed=$(__claude_installed_version)
   # 同じ状態の中では直近に状態が変わったものを上に出す(データ行は優先度・キー・TARGETを先頭に残す)
@@ -1059,7 +1145,7 @@ __restart_agent() {
 }
 
 # 下に開いた・閉じた・完了を待機へ戻した等,手元で一覧の中身を変えた時に呼ぶ
-# 裏の組み立てを待たずにその場で組み立て直させ,裏にも下に開いたAIを伝える
+# 裏の1秒ごとの組み立てを待たずにすぐ組み立て直させ,裏にも下に開いたAIを伝える
 # 変える前に裏で組み立て始めた一覧を取り込んで表示が戻らないよう,世代(gen)を上げて古い一覧を捨てさせる
 __data_changed() {
   (( ++gen ))
@@ -1072,6 +1158,24 @@ __data_changed() {
 # 空白区切りで読むため,必ず値のある項目は,空のことがある下に開いたAIの2つより前に置く
 __write_ctl() {
   print -r -- "$gen $show_ops ${last_swap[1]:-} ${last_swap[2]:-}" >| "$ctl_file"
+}
+
+# 中身を変えた時の一覧を,キーの受け付けを止めずに裏ですぐ組み立てさせる
+# (その場で組み立てると,C-s で下に開いたまま C-n/C-p で動かす時に続けて押したキーが待たされるため)
+# 変わるのはAIの行だけなので,利用枠の行と列の名前は今の一覧のものを使い,見出しとAIの行だけを組み立て直す
+# (状態ファイルの掃除と取り残しの判定は裏の1秒ごとの組み立てに任せ,組み立ての重さを半分以下にする)
+# 組み立てた時の世代を1行目に添えて quick_file に置かせ,描き手は今の世代のものだけを取り込む
+# 続けて呼ぶと前の組み立てと重なるので,書きかけのファイルは世代ごとに分ける
+__render_soon() {
+  # zsh は裏の処理の優先度を下げるため,その場で組み立てていた時と同じ優先度で組み立てさせる
+  setopt local_options no_bg_nice
+  {
+    # 描き手のEXITのtrap(後片付け)を裏で走らせないよう外す(__render_loop と同じ)
+    trap - EXIT INT TERM HUP WINCH
+    { print -r -- $gen; __render_title; print -rl -- "${(@)rendered[2,first_row-1]}"; __render_rows } >| "$quick_file.$gen" 2>/dev/null || true
+    zf_mv -f "$quick_file.$gen" "$quick_file" 2>/dev/null || true
+  } >/dev/null 2>&1 &!
+  quick_gen=$gen
 }
 
 # --- SYSTEM の値を裏で測る(どれも sudo 無しで取れるもの) ---
@@ -1139,19 +1243,40 @@ __sys_usage() { # $1=メモリの総量(GiB,不明なら0) → REPLY=名前=値 
   REPLY="gpu=$gpu"$'\t'"mem=$mem"$'\t'"mem_sub=$mem_sub"$'\t'"disk=$disk"$'\t'"disk_sub=$disk_sub"
 }
 
+# この ai-bridge のペインのウィンドウを,どれかの端末が画面に出しているか(tmux の外や,tmux に聞けない時は出しているとみなす)
+__pane_shown() {
+  [[ -n ${TMUX_PANE:-} ]] || return 0
+  [[ $(tmux display -p -t "$TMUX_PANE" '#{window_active_clients}' 2>/dev/null) != 0 ]]
+}
+
 # 一覧の組み立て(約0.2秒)が1秒10コマの描き直しを止めないよう,裏で1秒ごとに組み立ててファイルに置く
 # 1行目に通し番号と組み立てた時の世代を添え,置き換えは一度に行う(描き手が書きかけを読まないように)
 # 1行目の世代の後ろには SYSTEM の値を載せる(1秒の休みは iostat で CPU を測る1秒に充てる)
+# 画面に出ていない間は,組み立てを10秒に1回に減らし,0.5秒ごとに出たかを確かめて,出たらすぐ組み立てる
+# (取り残しの判定は,どの ai-bridge も画面に出ていない時にも遅れないよう,組み立てない間も続ける)
+# (SYSTEM の値は画面に出ている間だけ測り,出ていない間は,古い値を出さないよう測れていない扱いにする)
 # 描き手が強制終了されても裏に残り続けないよう,描き手がいなくなったら止まる
 __render_loop() {
   local g s a b hw cpu usage
-  integer seq=0 mem_total
+  integer seq=0 mem_total shown built_at=0
 
   trap - EXIT INT TERM HUP WINCH
   __sys_hw
   hw=${reply[1]} mem_total=${reply[2]}
   cpu=$'cpu=-\tload=-'
   while kill -0 $$ 2>/dev/null; do
+    if __pane_shown; then
+      shown=1
+    else
+      shown=0
+      cpu=$'cpu=-\tload=-'
+    fi
+    if (( ! shown && EPOCHSECONDS - built_at < 10 )); then
+      __reconcile_shared
+      zselect -t 50 || true
+      continue
+    fi
+    built_at=$EPOCHSECONDS
     if ! read -r g s a b < "$ctl_file"; then
       g=0 s=0 a='' b=''
     fi
@@ -1160,8 +1285,8 @@ __render_loop() {
     else
       last_swap=()
     fi
-    # GPU・メモリ・ストレージは,作業の見える化を出している間だけ測る
-    if [[ $s == 1 ]]; then
+    # GPU・メモリ・ストレージは,作業の見える化を画面に出している間だけ測る
+    if [[ $s == 1 ]] && (( shown )); then
       __sys_usage $mem_total
       usage=$'\t'$REPLY
     else
@@ -1169,8 +1294,12 @@ __render_loop() {
     fi
     { print -r -- "$(( ++seq )) $g"$'\t'"$cpu"$'\t'"$hw$usage"; __render } >| "$render_file.tmp" 2>/dev/null || true
     zf_mv -f "$render_file.tmp" "$render_file" 2>/dev/null || true
-    __sys_cpu
-    cpu=$REPLY
+    if (( shown )); then
+      __sys_cpu
+      cpu=$REPLY
+    else
+      zselect -t 50 || true
+    fi
   done
 }
 
@@ -1195,8 +1324,10 @@ __split_rendered() {
   selected_line=0
   input_id=''
   done_id=''
-  input_priority=$(__priority_for blocked)
-  done_priority=$(__priority_for done)
+  __priority_for blocked
+  input_priority=$REPLY
+  __priority_for done
+  done_priority=$REPLY
 
   for line in "${rendered[@]}"; do
     if [[ $line == *$'\t'* ]]; then
@@ -2045,10 +2176,13 @@ size_stale=1
 drawn=''
 render_seq=''
 render_pid=''
+quick_gen=''
 # 裏で組み立てた一覧(1行目に SYSTEM の値も載せる)と,手元で変えた中身(世代・作業の見える化を出しているか・下に開いたAI)を受け渡す場所
 work_dir=$(mktemp -d "${TMPDIR:-/tmp}/ai-bridge.XXXXXX")
 render_file=$work_dir/rendered
 ctl_file=$work_dir/ctl
+# 手元で中身を変えた時に,裏ですぐ組み立てさせた一覧を受け取る場所
+quick_file=$work_dir/quick
 __write_ctl
 # ペインを閉じた時は描き直しや停止が失敗し得るが,set -e で後片付けが途中で止まらないよう失敗しても続ける
 # 拡張キーは止めずに終えると,閉じた後のシェルにも Shift+Enter 等が拡張キーの並びのまま届くため止める
@@ -2077,12 +2211,23 @@ __render_loop >/dev/null 2>&1 &
 render_pid=$!
 
 while :; do
+  # 中身を変えた時にすぐ組み立てさせた一覧は,組み立て終えた後も中身を変えていなければ(世代が今と同じなら)取り込む
+  # (裏の1秒ごとの一覧も今の世代で届いていれば,この後でそちらに置き換わる)
+  if [[ -n $quick_gen && $quick_gen == "$gen" && -r $quick_file ]] && read -r new_gen < "$quick_file" && [[ $new_gen == "$gen" ]]; then
+    rendered=("${(@f)$(<"$quick_file")}")
+    rendered[1]=()
+    quick_gen=''
+    __split_rendered
+    __ops_load
+  fi
   # 裏で組み立て終えた一覧のうち,手元で最後に中身を変えた後に組み立てたもの(世代が今と同じもの)だけを取り込む
   # (起動直後は裏がまだ一覧を書いていないので,ファイルがある時だけ読む)
   if [[ -r $render_file ]] && read -r new_seq new_gen new_sys < "$render_file" && [[ $new_seq != "$render_seq" && $new_gen == "$gen" ]]; then
     rendered=("${(@f)$(<"$render_file")}")
     rendered[1]=()
     render_seq=$new_seq
+    # すぐ組み立てさせた一覧は,この後に届いてもこちらより古いことがあり,状態が一瞬戻るので取り込まない
+    quick_gen=''
     # 1行目の世代の後ろに裏が載せた SYSTEM の値(名前=値 のタブ区切り)を写す
     sys=()
     for kv in ${(ps:\t:)new_sys}; do sys[${kv%%=*}]=${kv#*=}; done
@@ -2165,6 +2310,9 @@ while :; do
             if [[ $key == $'\x0e' ]]; then step=1; else step=-1; fi
             selected_id=$(__step_selection $step "$selected_id" "${jump_ids[@]}")
             if (( ${#last_swap} )) && [[ -n $selected_id ]]; then
+              # 下に開くAIを替える(tmuxを10回ほど呼ぶ)より先に,選択の表示を動かして見せる
+              __split_rendered
+              __draw
               __open_below "$selected_id"
             fi
           fi
@@ -2227,8 +2375,9 @@ while :; do
           if (( ${#jump_ids} )); then
             exit_targets=("${jump_ids[@]}")
             exit_working=0
+            __priority_for working
             for id in "${exit_targets[@]}"; do
-              [[ ${agent_prio[$id]:-} != "$(__priority_for working)" ]] || exit_working+=1
+              [[ ${agent_prio[$id]:-} != "$REPLY" ]] || exit_working+=1
             done
             confirm_prompt=$'\e[1;97;41m'"AI Bridge  Exit ${#exit_targets} AI(s) with Ctrl-C ($exit_working working, $(( ${#agent_keys} - ${#exit_targets} )) outside tmux skipped)? y/N"$'\e[0m'
             confirm_action=exit
@@ -2242,9 +2391,9 @@ while :; do
           fi
           ;;
       esac
-      # 下に開いた等で中身が変わった時はその場で組み立て直し,選択の表示も裏を待たずに作り直す
+      # 下に開いた等で中身が変わった時は,裏の1秒ごとの組み立てを待たずにすぐ組み立てさせ,選択の表示はその場で作り直す
       if (( need_render )); then
-        rendered=("${(@f)$(__render)}")
+        __render_soon
         need_render=0
       fi
       __split_rendered

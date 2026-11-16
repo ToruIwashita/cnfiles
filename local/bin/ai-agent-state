@@ -374,19 +374,29 @@ __transcript_turn_status() {
   ' 2>/dev/null || print none
 }
 
-# ターン終了後も裏で続くAIの作業の成果物(セッションのフォルダのsubagents等のjsonl)の最終更新からの経過秒を返す
+# ターン終了後も裏で続くAIの作業の成果物(セッションのフォルダのsubagents等のjsonl)が,$3 秒より長く更新されていないかを返す
 # transcript本体はユーザーとのやり取りで更新され,裏の作業が止まっていても経過が戻るため見ない
 # (セッションのフォルダにjsonlが無い時は,他に判断の材料が無いためtranscript本体で見る)
-__session_last_activity_age() {
-  local transcript_path newest
+# 成果物は千個を超えることがあって探すのが重く,ai-bridge から毎秒呼ばれるため,見つけた最新の更新時刻を
+# <キー>.artifact_mtime に残し,そこから $3 秒経つまでは探し直さない
+# (成果物は更新されて新しくなるだけなので,残した時刻から $3 秒経っていなければ,$3 秒より長く止まってはいない)
+__session_idle_over() {
+  local transcript_path seen_file seen newest
   local -a artifacts
   transcript_path=$1
+  seen_file=$state_dir/$2.artifact_mtime
+
+  if [[ -r $seen_file ]] && read -r seen < "$seen_file" && [[ $seen == <-> ]] && (( EPOCHSECONDS - seen <= $3 )); then
+    return 1
+  fi
 
   artifacts=("${transcript_path%.jsonl}"/**/*.jsonl(N))
   newest=$(ls -t "${(@)artifacts:-$transcript_path}" 2>/dev/null | head -n 1)
-  [[ -n $newest ]] || { print 999999; return 0 }
+  [[ -n $newest ]] || return 0
 
-  print $(( EPOCHSECONDS - $(stat -f %m "$newest" 2>/dev/null || print 0) ))
+  seen=$(stat -f %m "$newest" 2>/dev/null || print 0)
+  print -r -- "$seen" >| "$seen_file" 2>/dev/null || true
+  (( EPOCHSECONDS - seen > $3 ))
 }
 
 # ターン終了イベントを取りこぼしてworking・blockedのまま残った状態をdone/idleへ倒す
@@ -414,7 +424,7 @@ __reconcile_stuck() {
 
     turn_status=$(__transcript_turn_status "$transcript_path")
     if [[ $turn_status == interrupted ]] \
-      || { [[ $state == working && $turn_status == stopped ]] && (( $(__session_last_activity_age "$transcript_path") > 600 )) }; then
+      || { [[ $state == working && $turn_status == stopped ]] && __session_idle_over "$transcript_path" "$key" 600 }; then
       if [[ $key == %* ]]; then
         __write_state "$key" "$(__stop_state_for_pane "$key")" "$agent" "$agent_pid"
         __apply_window_state "$key"
@@ -454,7 +464,7 @@ else
 fi
 
 if [[ $2 == SessionEnd ]]; then
-  rm -f "$state_dir/$key.state" "$state_dir/$key.meta.json" "$state_dir/$key.wait" "$state_dir/$key.activity"
+  rm -f "$state_dir/$key.state" "$state_dir/$key.meta.json" "$state_dir/$key.wait" "$state_dir/$key.activity" "$state_dir/$key.artifact_mtime"
   [[ $key != %* ]] || __apply_window_state "$key"
   exit 0
 fi
