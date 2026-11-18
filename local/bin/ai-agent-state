@@ -5,7 +5,10 @@
 # 使い方:
 #   ai-agent-state <agent> <event>            # claude/codexのhooksから呼ぶ(stdin: hook JSON)
 #   ai-agent-state --focus-reset [window_id]  # tmuxのフックとai-bridgeから呼ぶ(doneをidleへ戻す)
-#   ai-agent-state --reconcile-stuck          # ai-bridgeの描画ループから呼ぶ(取り残されたworking・blockedを倒す)
+#   ai-agent-state --reconcile-stuck          # ai-bridgeの描画ループから呼ぶ(Claudeのblockedを本体の状態に合わせ,取り残されたworking・blockedを倒す)
+#
+# Claudeは確認(許可・質問・MCPの入力要求等)への返事を待つ間,本体が書く ~/.claude/sessions/<pid>.json の status を waiting にする
+# その間はどのイベントでもblockedにする(裏のサブエージェント等のイベントで作業中へ戻さないため)
 #
 # イベントと状態の対応:
 #   UserPromptSubmit / PreToolUse / PostToolUse / PostToolUseFailure -> working
@@ -32,6 +35,25 @@ state_dir=$AI_AGENTS_CONFIG_DIR_PATH/state
 # シェルのコマンド・監視・MCPのタスクはAIが結果を待っているだけなので含めない(sleepで待つ間をworkingにしないため)
 __background_work_running() {
   print -r -- "$1" | jq -e '[.background_tasks[]? | select(.status == "running" and ((.type // "") | IN("shell", "monitor", "MCP task") | not))] | length > 0' >/dev/null 2>&1
+}
+
+# Claude本体が書く自分の状態(~/.claude/sessions/<pid>.json の中身 $1)の status を REPLY に入れる
+# フックと ai-bridge の毎秒の呼び出しで使うため,外部コマンドを起こさず読む(本体はJSONを1行で書く)
+# 自分で開いた /config 等の画面(waitingFor が dialog open)は返事を待つ確認ではないので空にする
+__claude_status() {
+  REPLY=
+  [[ $1 =~ '"status":"([a-z]+)"' ]] || return 0
+  [[ $1 == *'"waitingFor":"dialog open"'* ]] || REPLY=$match[1]
+}
+
+# PID $1 のClaude本体が確認への返事を待っているか
+__claude_waiting() {
+  local session_file
+  session_file=$HOME/.claude/sessions/$1.json
+
+  [[ -r $session_file ]] || return 1
+  __claude_status "$(<"$session_file")"
+  [[ $REPLY == waiting ]]
 }
 
 # 状態ファイルの今の状態(tmux内は空白区切り,tmux外はタブ区切りで,どちらも先頭の欄,ファイルが無ければ空)
@@ -435,6 +457,43 @@ __reconcile_stuck() {
   done
 }
 
+# tmux内のClaudeのblockedを,本体の状態(~/.claude/sessions/<pid>.json の status)に合わせて付け外しする
+#   waiting なのにblockedでない → blocked (フックの来ない確認や,フックの書き込みの前後で取り違えた時)
+#   blocked なのに busy         → working (返事をした後,許可したツールの実行中はフックが来ない)
+#   blocked なのに idle・shell  → done/idle (返事をした後にターンが終わった,Escで閉じた)
+# ペインで動く対話のセッション(kind が interactive)だけを見る(裏で動く bg・daemon 等の種類と取り違えないため)
+# 異常終了で古いファイルが残っても,同じペインでは更新の新しい方を使う(古いファイルは更新されないため)
+__reconcile_claude_wait() {
+  local session_file content pane state_file key state agent agent_pid next
+  local -A claude_status
+
+  for session_file in "$HOME"/.claude/sessions/*.json(Nom); do
+    content=$(<"$session_file")
+    [[ $content == *'"kind":"interactive"'* && $content =~ '"tmux":"[^"]*\.(%[0-9]+)"' ]] || continue
+    pane=$match[1]
+    (( ! ${+claude_status[$pane]} )) || continue
+    __claude_status "$content"
+    claude_status[$pane]=$REPLY
+  done
+
+  for state_file in "$state_dir"/%*.state(N); do
+    key=${${state_file:t}%.state}
+    read -r state agent agent_pid < "$state_file" || continue
+    [[ $agent == claude ]] || continue
+
+    case ${claude_status[$key]:-}:$state in
+      waiting:blocked) continue ;;
+      waiting:*) next=blocked ;;
+      busy:blocked) next=working ;;
+      idle:blocked | shell:blocked) next=$(__stop_state_for_pane "$key") ;;
+      *) continue ;;
+    esac
+
+    __write_state "$key" "$next" "$agent" "$agent_pid"
+    __apply_window_state "$key"
+  done
+}
+
 mkdir -p "$state_dir"
 
 if [[ ${1:-} == --focus-reset ]]; then
@@ -443,6 +502,7 @@ if [[ ${1:-} == --focus-reset ]]; then
 fi
 
 if [[ ${1:-} == --reconcile-stuck ]]; then
+  __reconcile_claude_wait
   __reconcile_stuck
   exit 0
 fi
@@ -473,7 +533,12 @@ if [[ $1 == codex ]]; then
   __write_codex_meta "$key" "$input"
 fi
 
-state=$(__resolve_state "$2" "$input" "$key")
+# Claudeが確認への返事を待つ間はイベントによらずblocked(フックはClaude本体から直接起動されるため,親が本体)
+if [[ $1 == claude ]] && __claude_waiting "$PPID"; then
+  state=blocked
+else
+  state=$(__resolve_state "$2" "$input" "$key")
+fi
 
 # 状態を決めないイベント(未知のもの・作業中でない時の入力待ち通知・compact後のSessionStart)はここで終える
 [[ -n $state ]] || exit 0
