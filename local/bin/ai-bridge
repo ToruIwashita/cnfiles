@@ -35,18 +35,19 @@ agent_keys=()
 typeset -A target_of agent_prio
 # 見出しの時刻と並べると狭いペインで見切れるため,キーの説明は ? を押した時だけ時刻に代えて出す
 # (見出しの AI Bridge と括弧を付けても幅102桁のペインで見切れないよう,区切りは空白1つにし,C-n/C-p は C-n/p と縮める)
-# (Esc:quit と X:exit-all はいつも出している見出しの方に書く)
+# (Esc:quit と r・R・x・X はいつも出している見出しの方に書く)
 key_help='C-n/p:select C-s:open-close C-k:open-below C-;:reply C-l:open-dir Enter:jump C-g:clear'
 show_keys=0
 # 一覧の下の作業の見える化(WORKSPACE・OPS.LOG・SYSTEM)は,起動時は出さず Space を押した時だけ出す
 show_ops=0
-# X(一括終了)と R(一括再起動)を実行する前の確かめ(出している間は見出しを確かめの文に差し替え,y で実行する)
+# X・x(一括・選んだ1つの終了)と R・r(一括・選んだ1つの再起動)を実行する前の確かめ(出している間は見出しを確かめの文に差し替え,y で実行する)
 # confirm_action は確かめている操作で,exit か restart(確かめていない時は空)
 confirm_action=''
 confirm_prompt=''
 exit_targets=()
+exit_note=''
 integer exit_working was_confirming
-# R で再起動するペインIDと,ペインごとにシェルへ送る再開コマンド
+# R・r で再起動するペインIDと,ペインごとにシェルへ送る再開コマンド
 restart_targets=()
 typeset -A restart_command
 
@@ -725,10 +726,11 @@ __usage_lines_shared() {
 }
 
 # 一覧の1行目(見出しと時刻)を出力する
-# Space・Esc・R・X はキーの説明に足すと幅102桁のペインで見切れるため,いつも出している見出しの方に書く
+# Space・Esc・r・R・x・X はキーの説明に足すと幅102桁のペインで見切れるため,いつも出している見出しの方に書く
+# (r・x は選んだ1つにだけ効くので,選べる時だけ書く)
 __render_title() {
   if (( ${selectable:-0} )); then
-    printf 'AI Bridge  %s  (Space:activity R:restart-all X:exit-all Esc:quit ?:keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Bridge  %s  (Space:activity r:restart R:restart-all x:exit X:exit-all Esc:quit ?:other-keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   else
     printf 'AI Bridge  %s  (Space:activity R:restart-all X:exit-all Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   fi
@@ -987,7 +989,7 @@ __undo_swap() {
   [[ ${1:-} == --no-draw ]] || __draw
 }
 
-# tmux内のAIを終了させる(X で一括終了する時に,AIごとに裏で呼ぶ)
+# tmux内のAIを終了させる(X・x で終了する時に,AIごとに裏で呼ぶ)
 # Ctrl-Cは待機中なら1回目で入力欄を空け2回目で終了し,作業中は1回目が中断になるため,ペインがシェルに戻るまで送り続ける
 # 状態ファイルのpidはペインのシェルでAIが終わっても生きているため,終わったかはペインのカレントコマンドで見る(__cleanup_stale と同じ)
 # 中断が長引いてもシェルに戻ったペインへCtrl-Cを打ち込み続けないよう,10秒で諦める
@@ -1057,7 +1059,8 @@ __codex_input_is_empty() {
   return 1
 }
 
-# R で再起動するペインと再開コマンドを restart_targets / restart_command に入れ,確かめの文を confirm_prompt に入れる
+# R(一覧の全部)・r(選んでいる1つ)で再起動するペインと再開コマンドを restart_targets / restart_command に入れ,確かめの文を confirm_prompt に入れる
+# ($1 は all か one,one の時は対象の名前と,再起動できなければその理由を出す)
 # 再起動するのは,待機中か完了で,再開に要る値がそろい,入力欄が空と確かめられたClaude・Codexだけにする
 #   作業中: 中断すると,裏のサブエージェントやバックグラウンドのコマンドは再開されない
 #   判断待ち: 送ったキーがダイアログへの回答になってしまう
@@ -1070,13 +1073,19 @@ __codex_input_is_empty() {
 #       AI_AGENT_SESSION_CODEX_COMMAND は --no-daemon 付きにする(共有の daemon の上ではフックが daemon を起動したペインの環境で動き,別のペインの記録になるため)
 #       開き直した Codex は次の指示を送るまでフックが動かないため,それまで一覧から消える
 __plan_restart() {
-  local id state agent rest values session_id model_id effort project_dir transcript_path agent_command effort_config
-  local -a fields skipped
+  local mode id state agent rest values session_id model_id effort project_dir transcript_path agent_command effort_config
+  local -a fields skipped ids
   integer working=0 waiting=0 input=0 noinfo=0 other=0
 
+  mode=$1
+  if [[ $mode == one ]]; then
+    ids=("$selected_id")
+  else
+    ids=("${jump_ids[@]}")
+  fi
   restart_targets=()
   restart_command=()
-  for id in "${jump_ids[@]}"; do
+  for id in "${ids[@]}"; do
     if ! read -r state agent rest < "$state_dir/$id.state" 2>/dev/null; then
       other+=1
       continue
@@ -1141,12 +1150,20 @@ __plan_restart() {
   (( ! input )) || skipped+=("$input input")
   (( ! noinfo )) || skipped+=("$noinfo no-info")
   (( ! other )) || skipped+=("$other other")
+  if [[ $mode == one ]]; then
+    if (( ${#restart_targets} )); then
+      confirm_prompt=$'\e[1;97;41m'"AI Bridge  Restart ${target_of[$selected_id]:-$selected_id}? y/N"$'\e[0m'
+    else
+      confirm_prompt=$'\e[1;97;41m'"AI Bridge  Cannot restart ${target_of[$selected_id]:-$selected_id} (${skipped[1]#* })"$'\e[0m'
+    fi
+    return 0
+  fi
   (( ${#agent_keys} == ${#jump_ids} )) || skipped+=("$(( ${#agent_keys} - ${#jump_ids} )) outside tmux")
   # 飛ばした理由が多いと幅102桁のペインで見切れるため,問いと y/N を先に出す
   confirm_prompt=$'\e[1;97;41m'"AI Bridge  Restart ${#restart_targets} AI(s)? y/N${skipped:+  (skipped: ${(j:, :)skipped})}"$'\e[0m'
 }
 
-# R で選んだペインを1つ再起動する(y で決めた後,ペインごとに裏で動かす)
+# R・r で選んだペインを1つ再起動する(y で決めた後,ペインごとに裏で動かす)
 # 確かめてから y を押すまでに状態や入力欄が変わっていれば何もせず,終了させてシェルに戻ったと確かめられた時だけ再開コマンドを送る
 # (AIが動いたままのペインに送ると,再開コマンドが指示としてAIに送られてしまう)
 __restart_agent() {
@@ -2286,7 +2303,7 @@ while :; do
   if [[ -t 0 ]]; then
     # 押したキーがエコーされると,カーソルのある画面右下に ^N 等が次の再描画まで残るため -s で抑える
     if read -s -t 0.1 -k 1 key 2>/dev/null; then
-      # 一括終了・一括再起動の確かめを出している間は,y で実行し,それ以外のキーでは取り消すだけにする
+      # 終了・再起動の確かめを出している間は,y で実行し,それ以外のキーでは取り消すだけにする
       # (Esc で始まるもの(単独のEsc・フォーカスの出入り等)は下の Esc の扱いで取り消す)
       if [[ -n $confirm_action && $key != $'\e' ]]; then
         if [[ $key == y ]]; then
@@ -2428,10 +2445,28 @@ while :; do
             confirm_action=exit
           fi
           ;;
+        x)
+          # 選んでいるtmux内のAIを1つ終了させる前に,対象と,作業中ならそのこと(実行中のコマンドごと中断される)を見出しに出して確かめる
+          if (( selectable )) && [[ -n $selected_id ]]; then
+            exit_targets=("$selected_id")
+            exit_note=''
+            __priority_for working
+            [[ ${agent_prio[$selected_id]:-} != "$REPLY" ]] || exit_note=' (working)'
+            confirm_prompt=$'\e[1;97;41m'"AI Bridge  Exit ${target_of[$selected_id]:-$selected_id} with Ctrl-C${exit_note}? y/N"$'\e[0m'
+            confirm_action=exit
+          fi
+          ;;
         R)
           # 一覧に出ているtmux内のAIのうち,再起動してよいと確かめられたものだけを選び,対象と飛ばした数(理由ごと)を見出しに出して確かめる
           if (( ${#jump_ids} )); then
-            __plan_restart
+            __plan_restart all
+            confirm_action=restart
+          fi
+          ;;
+        r)
+          # 選んでいるtmux内のAIを1つ,R と同じく再起動してよいと確かめられた時だけ再起動する(できない時は理由を見出しに出す)
+          if (( selectable )) && [[ -n $selected_id ]]; then
+            __plan_restart one
             confirm_action=restart
           fi
           ;;
