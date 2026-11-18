@@ -461,11 +461,12 @@ __reconcile_stuck() {
 #   waiting なのにblockedでない → blocked (フックの来ない確認や,フックの書き込みの前後で取り違えた時)
 #   blocked なのに busy         → working (返事をした後,許可したツールの実行中はフックが来ない)
 #   blocked なのに idle・shell  → done/idle (返事をした後にターンが終わった,Escで閉じた)
+#   working なのに idle         → done/idle (応答が始まる前にEscで止めると,中断の記録もフックも来ない,__claude_turn_dropped の時だけ)
 # ペインで動く対話のセッション(kind が interactive)だけを見る(裏で動く bg・daemon 等の種類と取り違えないため)
 # 異常終了で古いファイルが残っても,同じペインでは更新の新しい方を使う(古いファイルは更新されないため)
 __reconcile_claude_wait() {
   local session_file content pane state_file key state agent agent_pid next
-  local -A claude_status
+  local -A claude_status status_at
 
   for session_file in "$HOME"/.claude/sessions/*.json(Nom); do
     content=$(<"$session_file")
@@ -474,6 +475,11 @@ __reconcile_claude_wait() {
     (( ! ${+claude_status[$pane]} )) || continue
     __claude_status "$content"
     claude_status[$pane]=$REPLY
+    if [[ $content =~ '"statusUpdatedAt":([0-9]+)' ]]; then
+      status_at[$pane]=$(( match[1] / 1000 ))
+    else
+      status_at[$pane]=0
+    fi
   done
 
   for state_file in "$state_dir"/%*.state(N); do
@@ -486,12 +492,30 @@ __reconcile_claude_wait() {
       waiting:*) next=blocked ;;
       busy:blocked) next=working ;;
       idle:blocked | shell:blocked) next=$(__stop_state_for_pane "$key") ;;
+      idle:working)
+        __claude_turn_dropped "$key" "${status_at[$key]:-0}" "$state_file" || continue
+        next=$(__stop_state_for_pane "$key")
+        ;;
       *) continue ;;
     esac
 
     __write_state "$key" "$next" "$agent" "$agent_pid"
     __apply_window_state "$key"
   done
+}
+
+# idle のClaudeのworkingが,止めたターンの取り残しかを返す($1=キー $2=本体がidleになった時刻(秒) $3=状態ファイル)
+# 状態を最後に書いた後に本体がidleになって2秒経ち,transcriptではターンがStopで終わらずに最後が指示か応答のままの時だけ
+# (指示を送った直後に本体がbusyになる前の取り違えと,Stop後も裏の作業が続いてworkingを保つ時を除くため,
+# 2秒待つのは,idleになった後に書かれる記録を待つため)
+__claude_turn_dropped() {
+  local transcript_path
+  local -a st
+
+  (( $2 > 0 && EPOCHSECONDS - $2 >= 2 )) || return 1
+  zstat -A st +mtime "$3" 2>/dev/null && (( st[1] <= $2 )) || return 1
+  transcript_path=$(jq -r '.transcript_path // empty' "$state_dir/$1.meta.json" 2>/dev/null) || return 1
+  [[ -n $transcript_path && $(__transcript_turn_status "$transcript_path") == active ]]
 }
 
 mkdir -p "$state_dir"
