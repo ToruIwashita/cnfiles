@@ -66,6 +66,25 @@ prefix_rule(
     ],
 )
 
+# pre-push フック(git-protect-push)を飛ばす push を止める
+# 先頭からの一致しか書けないため,--no-verify を後ろに置いた形は上の git push の禁止だけが止める
+prefix_rule(
+    pattern = ["git", "push", "--no-verify"],
+    decision = "forbidden",
+    justification = "Pushing without the pre-push hooks is denied by the shared local safety policy.",
+    match = ["git push --no-verify origin main"],
+    not_match = ["git pull --no-verify"],
+)
+
+# gsh は --no-verify で push するシェル関数のため使わせない
+prefix_rule(
+    pattern = ["gsh"],
+    decision = "forbidden",
+    justification = "gsh pushes without the pre-push hooks and is denied by the shared local safety policy.",
+    match = ["gsh", "gsh -f"],
+    not_match = ["gsh-tags"],
+)
+
 prefix_rule(
     pattern = [["curl", "wget", "nc", "ncat", "socat", "ssh", "scp", "sftp", "rsync", "ftp", "telnet", "dig", "nslookup", "host"]],
     decision = "forbidden",

@@ -23,6 +23,10 @@
 [push]
   default = simple
 
+[hook "protect-push"]
+  event = pre-push
+  command = ~/local/bin/git-protect-push
+
 [diff]
   compactionheuristic = true
 

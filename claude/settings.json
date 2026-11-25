@@ -54,12 +54,14 @@
       "mcp__codex__codex-reply"
     ],
     "deny": [
+      "Bash(gsh:*)",
+      "Bash(git -C:*)",
+      "Bash(git push:*)",
+      "Bash(git push *--no-verify*)",
+      "Bash(gh pr merge:*)",
       "Bash(sudo:*)",
       "Bash(rm:*)",
       "Bash(rmdir:*)",
-      "Bash(gh pr merge:*)",
-      "Bash(git -C:*)",
-      "Bash(git push:*)",
       "Bash(curl:*)",
       "Bash(wget:*)",
       "Bash(nc:*)",

@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+# gitのpre-pushフック(git/gitconfigのhook.protect-pushから全リポジトリで呼ぶ)
+# リモートのデフォルトブランチ(refs/remotes/<リモート>/HEAD)とmain・master・developへのpush(削除を含む)を止める
+# 手元で止めるだけなので,git push --no-verifyでは素通りする(確実に止めるにはリモート側のブランチ保護が要る)
+#
+# 引数: <リモート名> <URL>(URLへ直接pushした時はリモート名の代わりにURLが来て,デフォルトブランチは分からない)
+# 標準入力: <ローカルref> <ローカルsha> <リモートref> <リモートsha> を1行ずつ
+set -eu
+
+local remote default_ref local_ref local_sha remote_ref remote_sha branch
+local -a protected_branches
+integer blocked
+
+remote=$1
+default_ref=$(git symbolic-ref --quiet --short "refs/remotes/$remote/HEAD" 2>/dev/null || true)
+protected_branches=(main master develop ${default_ref:+${default_ref#"$remote"/}})
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [[ $remote_ref == refs/heads/* ]] || continue
+  branch=${remote_ref#refs/heads/}
+  if (( ${protected_branches[(Ie)$branch]} )); then
+    print -r -- "git-protect-push: push to $remote/$branch is blocked (protected: ${(j:, :)${(u)protected_branches}})" 1>&2
+    blocked+=1
+  fi
+done
+
+(( ! blocked ))

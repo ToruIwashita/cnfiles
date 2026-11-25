@@ -499,20 +499,28 @@ else
   touch $MYSQL_SLOW_QUERY_LOG_FILE_PATH
 fi
 
-# switch-tmux-ai-session
-if [[ -L $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session ]]; then
-  _printf "\e[32m$LOCAL_BIN_DIR_PATH/switch-tmux-ai-session symlink already exists\e[0m\n"
-else
-  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session\e[0m\n"
-  ln -is $BASE_DIR_PATH/local/bin/switch-tmux-ai-session $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session
-fi
-
 # copy-tmp-dump-html-to-tmp-html
 if [[ -L $LOCAL_BIN_DIR_PATH/copy-tmp-dump-html-to-tmp-html ]]; then
   _printf "\e[32m$LOCAL_BIN_DIR_PATH/copy-tmp-dump-html-to-tmp-html symlink already exists\e[0m\n"
 else
   _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/copy-tmp-dump-html-to-tmp-html\e[0m\n"
   ln -is $BASE_DIR_PATH/local/bin/copy-tmp-dump-html-to-tmp-html $LOCAL_BIN_DIR_PATH/copy-tmp-dump-html-to-tmp-html
+fi
+
+# git-protect-push
+if [[ -L $LOCAL_BIN_DIR_PATH/git-protect-push ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/git-protect-push symlink already exists\e[0m\n"
+else
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/git-protect-push\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/git-protect-push $LOCAL_BIN_DIR_PATH/git-protect-push
+fi
+
+# switch-tmux-ai-session
+if [[ -L $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/switch-tmux-ai-session symlink already exists\e[0m\n"
+else
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/switch-tmux-ai-session $LOCAL_BIN_DIR_PATH/switch-tmux-ai-session
 fi
 
 # open-tmux-cursor-url

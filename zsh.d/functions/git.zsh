@@ -1054,7 +1054,7 @@ EOF`
       read answer
       case "$answer" in
         [yY])
-          git push --force-with-lease origin $current_branch
+          git push --no-verify --force-with-lease origin $current_branch
           break
           ;;
         [nN])
@@ -1066,7 +1066,7 @@ EOF`
       esac
     done
   else
-    git push origin $current_branch
+    git push --no-verify origin $current_branch
   fi
 }
 
