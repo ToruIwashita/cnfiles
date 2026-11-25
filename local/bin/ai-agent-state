@@ -140,12 +140,14 @@ __write_state() {
 # 形式: 時刻<TAB>種類(U=指示 P=開始 D=完了 F=失敗 W=承認待ち S=終了)<TAB>ツール<TAB>対象<TAB>補足<TAB>作業ディレクトリ
 # 一覧にそのまま出すので,タブ・改行に限らず制御文字は空白にする(エスケープシーケンスで表示が崩れないように)
 # 増え続けないよう,64KBを超えたら新しい200行だけを残す(今のターンの指示がそれより前にあれば,その行も残す)
+# 記録した行の作業ディレクトリを REPLY に入れる(記録しなかった時は空,ペインに今の作業ディレクトリを書くのに使う)
 __record_activity() {
   local activity_file event input kind line tmp_file
-  local -a size
+  local -a size fields
   activity_file=$1
   event=$2
   input=$3
+  REPLY=
 
   case $event in
     UserPromptSubmit) kind=U ;;
@@ -198,6 +200,8 @@ __record_activity() {
     | map(tostring | gsub("[[:cntrl:]]"; " ")) | join("\t")
   ' 2>/dev/null) || return 0
   [[ -n $line ]] || return 0
+  fields=("${(@ps:\t:)line}")
+  REPLY=${fields[-1]}
   # 指示やコマンドが入るので,状態ファイルと同じく本人だけが読めるようにして作る
   umask 077
   print -r -- "$line" >> "$activity_file"
@@ -337,6 +341,24 @@ __apply_window_state() {
 
   tmux set-option -w -t "$target" @ai_state "$(__aggregate_window_state "$target")" 2>/dev/null || return 0
   tmux refresh-client -S >/dev/null 2>&1 || true
+}
+
+# エージェントの今の作業ディレクトリ $2 を,ペイン $1 のオプション @ai_cwd に書く(ステータスラインの @ が使う)
+# Claudeはcdしてもプロセスの作業ディレクトリが変わらず tmux の pane_current_path が追従しないため,フックの cwd を使う
+# フックのたびに tmux を起こさないよう,書いた値を <ペインID>.cwd に残し,変わった時だけ書く
+__apply_pane_cwd() {
+  local pane_id cwd cwd_file last_cwd
+  pane_id=$1
+  cwd=$2
+  cwd_file=$state_dir/$pane_id.cwd
+
+  if [[ -r $cwd_file ]]; then
+    IFS= read -r last_cwd < "$cwd_file" || true
+  fi
+  [[ ${last_cwd:-} != "$cwd" ]] || return 0
+
+  print -r -- "$cwd" >| "$cwd_file" 2>/dev/null || return 0
+  tmux set-option -p -t "$pane_id" @ai_cwd "$cwd" \; refresh-client -S >/dev/null 2>&1 || true
 }
 
 # tmux外エージェントの状態をatomicに書き込む(タブ区切り: state agent pid tty cwd)
@@ -548,8 +570,12 @@ else
 fi
 
 if [[ $2 == SessionEnd ]]; then
-  rm -f "$state_dir/$key.state" "$state_dir/$key.meta.json" "$state_dir/$key.wait" "$state_dir/$key.activity" "$state_dir/$key.artifact_mtime"
-  [[ $key != %* ]] || __apply_window_state "$key"
+  rm -f "$state_dir/$key.state" "$state_dir/$key.meta.json" "$state_dir/$key.wait" "$state_dir/$key.activity" "$state_dir/$key.artifact_mtime" "$state_dir/$key.cwd"
+  if [[ $key == %* ]]; then
+    # エージェントが終わったペインのステータスラインの @ を,シェルの作業ディレクトリに戻す
+    tmux set-option -p -u -t "$key" @ai_cwd >/dev/null 2>&1 || true
+    __apply_window_state "$key"
+  fi
   exit 0
 fi
 
@@ -569,6 +595,8 @@ fi
 __record_wait "$state_dir/$key.wait" "$2" "$state" "$input"
 # 状態が変わらない(作業中にツールが続く)時も残したいので,状態が変わったかを見る前に記録する
 __record_activity "$state_dir/$key.activity" "$2" "$input"
+# 作業ディレクトリは状態と関係なく変わる(cd した Bash の完了等)ので,これも状態が変わったかを見る前に書く
+[[ $key != %* || -z $REPLY ]] || __apply_pane_cwd "$key" "$REPLY"
 
 # 状態が変わらないなら書き込みとtmux反映を省く(PreToolUseの高頻度発火対策)
 [[ $(__current_state "$key") != "$state" ]] || exit 0

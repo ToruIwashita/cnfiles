@@ -466,7 +466,9 @@ __cleanup_stale() {
   for state_file in "$state_dir"/%*.state(N); do
     id=${${state_file:t}%.state}
     if [[ $'\n'$live$'\n' != *$'\n'$id$'\n'* ]]; then
-      rm -f "$state_file" "$state_dir/$id.meta.json" "$state_dir/$id.wait" "$state_dir/$id.activity" "$state_dir/$id.artifact_mtime"
+      rm -f "$state_file" "$state_dir/$id.meta.json" "$state_dir/$id.wait" "$state_dir/$id.activity" "$state_dir/$id.artifact_mtime" "$state_dir/$id.cwd"
+      # シェルに戻ったペインのステータスラインの @ を,シェルの作業ディレクトリに戻す(消えたペインでは失敗するだけ)
+      tmux set-option -p -u -t "$id" @ai_cwd >/dev/null 2>&1 || true
     fi
   done
 

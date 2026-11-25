@@ -6,8 +6,9 @@ set -g status 2
 
 # status-left
 # 先頭のセッション名はstatus-right末尾のエージェント名と同じ配色に揃える
+# @ の後はAIエージェントの今の作業ディレクトリ(ai-agent-stateがペインの@ai_cwdに書く,cdしてもpane_current_pathは変わらないため)で,無ければペインの作業ディレクトリ
 set -g status-left-length 255
-set -g status-left '#[fg=colour234,bg=colour38] #S #{?pane_synchronized,#[bg=colour54],#[bg=colour242]}#{?pane_synchronized,#[fg=colour231],#[fg=colour251]} @#{b:pane_current_path} '
+set -g status-left '#[fg=colour234,bg=colour38] #S #{?pane_synchronized,#[bg=colour54],#[bg=colour242]}#{?pane_synchronized,#[fg=colour231],#[fg=colour251]} @#{?@ai_cwd,#{b:@ai_cwd},#{b:pane_current_path}} '
 
 # status-right
 set -g status-right-length 150
