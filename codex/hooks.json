@@ -22,6 +22,10 @@
             "type": "command",
             "command": "/usr/bin/printf '%s\\n' \"シェルコマンドは原則として zsh -lc '<command>' でログインzsh内から実行し,すでにログインzsh内の場合は二重にラップせず,zsh以外のシェルが明示的に必要な場合はその指定を優先する\"",
             "statusMessage": "Loading zsh shell instructions"
+          },
+          {
+            "type": "command",
+            "command": "ai-push-hook codex UserPromptSubmit"
           }
         ]
       }
@@ -32,6 +36,10 @@
           {
             "type": "command",
             "command": "ai-agent-state codex PreToolUse"
+          },
+          {
+            "type": "command",
+            "command": "ai-push-hook codex PreToolUse"
           }
         ]
       }
@@ -82,6 +90,11 @@
           {
             "type": "command",
             "command": "ai-agent-state codex SessionEnd",
+            "timeout": 3
+          },
+          {
+            "type": "command",
+            "command": "ai-push-hook codex SessionEnd",
             "timeout": 3
           }
         ]

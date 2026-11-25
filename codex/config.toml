@@ -95,6 +95,9 @@ extends = ":workspace"
 ".claude/CLAUDE.md" = "read"
 ".cnfiles/claude/settings.json" = "read"
 ".cnfiles/claude/CLAUDE.md" = "read"
+".cnfiles/local/bin/ai-push" = "read"
+".cnfiles/local/bin/ai-push-hook" = "read"
+".config/ai_agents/ai_push/**" = "deny"
 
 [permissions.default-local.filesystem.":workspace_roots"]
 ".git" = "write"

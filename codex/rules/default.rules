@@ -1,6 +1,17 @@
 # Claudeのsandbox.excludedCommandsを移植。競合時は下記のforbiddenが優先される。
 # 文字列ワイルドカードではなく、コマンド名・サブコマンド単位で一致させる。
 prefix_rule(
+    pattern = [["sudo", "rm", "rmdir"]],
+    decision = "forbidden",
+    justification = "These commands are denied by the shared local safety policy.",
+    match = [
+        "sudo true",
+        "rm file.txt",
+        "rmdir empty-directory",
+    ],
+)
+
+prefix_rule(
     pattern = [["tmux", "bundle", "ps", "top", "gis", "gpr", "gh", "pbcopy"]],
     decision = "allow",
     match = [
@@ -18,29 +29,32 @@ prefix_rule(
 )
 
 prefix_rule(
+    pattern = [["curl", "wget", "nc", "ncat", "socat", "ssh", "scp", "sftp", "rsync", "ftp", "telnet", "dig", "nslookup", "host"]],
+    decision = "forbidden",
+    justification = "Direct network commands are denied by the shared local safety policy.",
+    match = [
+        "curl https://example.com",
+        "ssh example.com",
+        "dig example.com",
+    ],
+)
+
+prefix_rule(
+    pattern = [["security", "env", "printenv"]],
+    decision = "forbidden",
+    justification = "Credential and environment inspection commands are denied by the shared local safety policy.",
+    match = [
+        "security find-generic-password -s example",
+        "env",
+        "printenv PATH",
+    ],
+)
+
+prefix_rule(
     pattern = ["git", ["fetch", "pull", "status", "commit", "rebase"]],
     decision = "allow",
     match = ["git fetch origin", "git pull --ff-only", "git status --short", "git commit -m message", "git rebase --autosquash main"],
     not_match = ["git push origin main", "git fetch-other"],
-)
-
-# e2e-queue の運用用の clone は sandbox から読めない場所に置くため,依頼側の2つだけを sandbox の外で動かす（実行係は人が起動する）
-prefix_rule(
-    pattern = [["e2e-request", "e2e-wait"]],
-    decision = "allow",
-    match = ["e2e-request -s 01_login", "e2e-wait 20261014-101500-12345"],
-    not_match = ["e2e-requester", "e2e-worker"],
-)
-
-prefix_rule(
-    pattern = [["sudo", "rm", "rmdir"]],
-    decision = "forbidden",
-    justification = "These commands are denied by the shared local safety policy.",
-    match = [
-        "sudo true",
-        "rm file.txt",
-        "rmdir empty-directory",
-    ],
 )
 
 prefix_rule(
@@ -85,24 +99,28 @@ prefix_rule(
     not_match = ["gsh-tags"],
 )
 
+# ユーザーが grant-ai-push で push を許可したセッションの push に使う ai-push は,鍵を読んで push できるよう sandbox の外で動かす
+# 許可の有無は実行前フック(ai-push-hook)と ai-push 自身が確かめる
 prefix_rule(
-    pattern = [["curl", "wget", "nc", "ncat", "socat", "ssh", "scp", "sftp", "rsync", "ftp", "telnet", "dig", "nslookup", "host"]],
-    decision = "forbidden",
-    justification = "Direct network commands are denied by the shared local safety policy.",
-    match = [
-        "curl https://example.com",
-        "ssh example.com",
-        "dig example.com",
-    ],
+    pattern = ["ai-push"],
+    decision = "allow",
+    match = ["ai-push"],
+    not_match = ["ai-push-hook codex UserPromptSubmit", "ai-pushx"],
 )
 
+# push の許可はユーザーの入力からしか記録しないため,AI が許可を記録するフック(ai-push-hook)を直接実行するのを止める
 prefix_rule(
-    pattern = [["security", "env", "printenv"]],
+    pattern = ["ai-push-hook"],
     decision = "forbidden",
-    justification = "Credential and environment inspection commands are denied by the shared local safety policy.",
-    match = [
-        "security find-generic-password -s example",
-        "env",
-        "printenv PATH",
-    ],
+    justification = "Push grants are recorded only from user input and cannot be created by the agent.",
+    match = ["ai-push-hook codex UserPromptSubmit"],
+    not_match = ["ai-push"],
+)
+
+# e2e-queue の運用用の clone は sandbox から読めない場所に置くため,依頼側の2つだけを sandbox の外で動かす（実行係は人が起動する）
+prefix_rule(
+    pattern = [["e2e-request", "e2e-wait"]],
+    decision = "allow",
+    match = ["e2e-request -s 01_login", "e2e-wait 20261014-101500-12345"],
+    not_match = ["e2e-requester", "e2e-worker"],
 )

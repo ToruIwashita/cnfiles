@@ -1,0 +1,56 @@
+#!/usr/bin/env zsh
+# 今のブランチを origin の同名ブランチへ通常の push で送る
+# AI には git push を禁止設定で打たせず,ユーザーが push を許可したセッションの push はこのコマンドだけで行わせる
+# 引数を取らないため,force-push・削除・refspec の指定・--no-verify 等はできない
+set -eu
+
+if (( $# > 0 )); then
+  print -ru2 -- "ai-push: 引数は取りません(今のブランチを origin の同名ブランチへ push します)"
+  exit 2
+fi
+
+if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
+  print "$0: AI_AGENTS_CONFIG_DIR_PATH is not set"
+  exit 1
+fi
+
+# 許可の記録(ai-push-hook がユーザーの入力から作る)を,エージェントが渡すセッションの識別子で確かめる
+# 環境変数は AI のコマンドから差し替えられるため,これは実行前フック(ai-push-hook)が動かない設定の時の補助で,本当の歯止めはフックの側
+# 識別子はパスに使うため形式を確かめ,../ 等で許可の記録以外のファイルを指せないようにする
+grants=$AI_AGENTS_CONFIG_DIR_PATH/ai_push/grants
+# サンドボックスの中では許可の記録を読めず許可が無い時と同じ結果になるため,許可のやり直しを求めないよう先に見分ける
+if ! ls -- $grants > /dev/null 2>&1; then
+  print -ru2 -- "ai-push: 許可の記録($grants)を読めないため push しません(サンドボックスの中で動いている等が原因で,許可のやり直しでは解消しません)"
+  exit 1
+fi
+granted=
+for session_id in ${CLAUDE_CODE_SESSION_ID-} ${CODEX_THREAD_ID-}; do
+  if [[ $session_id =~ '^[A-Za-z0-9-]+$' && -f $grants/$session_id ]]; then
+    granted=1
+    break
+  fi
+done
+if [[ -z $granted ]]; then
+  print -ru2 -- "ai-push: このセッションではユーザーが push を許可していません"
+  exit 1
+fi
+
+branch=$(git symbolic-ref --quiet --short HEAD) || {
+  print -ru2 -- "ai-push: ブランチ上にいない(detached HEAD)ため push しません"
+  exit 1
+}
+
+# 主要ブランチへ送らないかの判定は pre-push フックの git-protect-push に任せ,判定を一か所にする
+# git の設定でフックを外されていても止まるよう,push の前に同じ入力の形で直接呼ぶ(呼べない時は判定を飛ばさず止める)
+protect=$HOME/local/bin/git-protect-push
+if [[ ! -x $protect ]]; then
+  print -ru2 -- "ai-push: $protect を実行できないため push しません"
+  exit 1
+fi
+local_sha=$(git rev-parse HEAD)
+remote_sha=$(git rev-parse --verify --quiet "refs/remotes/origin/${branch}" || print 0000000000000000000000000000000000000000)
+print -r -- "refs/heads/${branch} ${local_sha} refs/heads/${branch} ${remote_sha}" | $protect origin "$(git remote get-url origin)" || exit 1
+
+git push --set-upstream origin "refs/heads/${branch}:refs/heads/${branch}" && exit 0
+print -ru2 -- "ai-push: push できませんでした(force-push はしないため,リモートが先に進んでいる等の原因はユーザーに確認してください)"
+exit 1

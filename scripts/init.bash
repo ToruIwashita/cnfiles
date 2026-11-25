@@ -394,6 +394,14 @@ else
   mkdir $CONFIG_DIR_PATH/ai_agents
 fi
 
+# ai_agents ai_push grants dir
+if [[ -d $CONFIG_DIR_PATH/ai_agents/ai_push/grants ]]; then
+  _printf "\e[32m$CONFIG_DIR_PATH/ai_agents/ai_push/grants dir already exists\e[0m\n"
+else
+  _printf "\e[31mmkdir -p $CONFIG_DIR_PATH/ai_agents/ai_push/grants\e[0m\n"
+  mkdir -p $CONFIG_DIR_PATH/ai_agents/ai_push/grants
+fi
+
 # ai_agents current_tmux_ai_agent.txt file
 if [[ -f $CONFIG_DIR_PATH/ai_agents/current_tmux_ai_agent.txt ]]; then
   _printf "\e[32m$CONFIG_DIR_PATH/ai_agents/current_tmux_ai_agent.txt file already exists\e[0m\n"
@@ -553,6 +561,22 @@ if [[ -L $LOCAL_BIN_DIR_PATH/ai-agent-state ]]; then
 else
   _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/ai-agent-state\e[0m\n"
   ln -is $BASE_DIR_PATH/local/bin/ai-agent-state $LOCAL_BIN_DIR_PATH/ai-agent-state
+fi
+
+# ai-push-hook
+if [[ -L $LOCAL_BIN_DIR_PATH/ai-push-hook ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/ai-push-hook symlink already exists\e[0m\n"
+else
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/ai-push-hook\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/ai-push-hook $LOCAL_BIN_DIR_PATH/ai-push-hook
+fi
+
+# ai-push
+if [[ -L $LOCAL_BIN_DIR_PATH/ai-push ]]; then
+  _printf "\e[32m$LOCAL_BIN_DIR_PATH/ai-push symlink already exists\e[0m\n"
+else
+  _printf "\e[31mcreate symlink $LOCAL_BIN_DIR_PATH/ai-push\e[0m\n"
+  ln -is $BASE_DIR_PATH/local/bin/ai-push $LOCAL_BIN_DIR_PATH/ai-push
 fi
 
 # claude-code-statusline

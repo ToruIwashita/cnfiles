@@ -58,6 +58,7 @@
       "Bash(git -C:*)",
       "Bash(git push:*)",
       "Bash(git push *--no-verify*)",
+      "Bash(ai-push-hook:*)",
       "Bash(gh pr merge:*)",
       "Bash(sudo:*)",
       "Bash(rm:*)",
@@ -99,6 +100,7 @@
       "Read(~/**/.aws/**)",
       "Read(~/**/secrets/**)",
       "Read(~/prods/**)",
+      "Read(~/.config/ai_agents/ai_push/**)",
       "Edit(~/**/.env*)",
       "Edit(~/**/env.*)",
       "Edit(~/**/id_rsa)",
@@ -115,6 +117,7 @@
       "Edit(~/**/.aws/**)",
       "Edit(~/**/secrets/**)",
       "Edit(~/prods/**)",
+      "Edit(~/.config/ai_agents/ai_push/**)",
       "mcp__claude_ai_Claude_Docs"
     ],
     "ask": [
@@ -122,7 +125,8 @@
       "Edit(~/**/.claude/settings.local.json)",
       "Edit(~/**/.claude/CLAUDE.md)",
       "Edit(~/.cnfiles/claude/settings.json)",
-      "Edit(~/.cnfiles/claude/CLAUDE.md)"
+      "Edit(~/.cnfiles/claude/CLAUDE.md)",
+      "Edit(~/.cnfiles/local/bin/ai-push*)"
     ],
     "defaultMode": "auto",
     "additionalDirectories": [
@@ -142,6 +146,10 @@
           {
             "type": "command",
             "command": "ai-agent-state claude UserPromptSubmit"
+          },
+          {
+            "type": "command",
+            "command": "ai-push-hook claude UserPromptSubmit"
           }
         ]
       }
@@ -174,6 +182,10 @@
           {
             "type": "command",
             "command": "claude-code-bash-clipboard"
+          },
+          {
+            "type": "command",
+            "command": "ai-push-hook claude PreToolUse"
           }
         ]
       }
@@ -284,6 +296,10 @@
           {
             "type": "command",
             "command": "ai-agent-state claude SessionEnd"
+          },
+          {
+            "type": "command",
+            "command": "ai-push-hook claude SessionEnd"
           }
         ]
       }
@@ -335,7 +351,8 @@
       "git rebase*",
       "pbcopy*",
       "e2e-request *",
-      "e2e-wait *"
+      "e2e-wait *",
+      "ai-push"
     ]
   },
   "tui": "default",

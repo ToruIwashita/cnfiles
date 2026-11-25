@@ -1,0 +1,80 @@
+#!/usr/bin/env zsh
+# AIエージェント(claude/codex 等)のフックから呼び,ユーザーが grant-ai-push を実行したセッションでだけ AI の push(ai-push)を通す
+#   UserPromptSubmit: 入力がスキルの呼び出し(Claude Code は /grant-ai-push・/revoke-ai-push,Codex は $grant-ai-push・$revoke-ai-push で始まる)なら,セッションの識別子の名前で許可を記録する・消す
+#   SessionEnd:       そのセッションの許可を消す
+#   PreToolUse:       コマンドの位置にある ai-push を,許可の無いセッションでは止め,許可のあるセッションでも他のコマンドと繋いだ形は止める
+# 許可はユーザーの入力からしか記録せず,session_id はエージェントが渡すフックの入力から取るため,AI のコマンドからは変えられない
+# AI が意図して回避する(tmux send-keys で入力欄に /grant-ai-push を打つ,サンドボックスの外で動くコマンドで記録を書く等)ことまでは防げない
+# 異常終了で SessionEnd が来なかった許可は残り,同じ識別子で再開したセッションだけが使う(正常終了の後の再開では許可し直しになる)
+# AI_AGENTS_CONFIG_DIR_PATH は許可が関わる時(/grant-ai-push・/revoke-ai-push の入力・ai-push の実行)だけ求め,ほかの入力・コマンドでは何もしない
+# 引数: <agent> <UserPromptSubmit|SessionEnd|PreToolUse>(stdin: フックの入力 JSON,どのエージェントも session_id・prompt・tool_input を同じ名前で渡す)
+set -eu
+
+agent=${1-}
+event=${2-}
+input=$(cat)
+
+deny() {
+  jq -n --arg reason "$1" '{hookSpecificOutput: {hookEventName: "PreToolUse", permissionDecision: "deny", permissionDecisionReason: $reason}}'
+  exit 0
+}
+
+# 識別子はパスに使うため,形式が違うものは許可の無いセッションとして扱う
+session_id=$(print -r -- "$input" | jq -r '.session_id // empty')
+[[ $session_id =~ '^[A-Za-z0-9-]+$' ]] || session_id=
+
+case $event in
+  UserPromptSubmit)
+    [[ -n $session_id ]] || exit 0
+    # スキルの呼び出しの書き方でだけ許可・取り消しする(空白で始まる入力や,もう一方のエージェントの書き方はただの文として送られるため扱わない)
+    case $agent in
+      claude) sigil=/ ;;
+      codex) sigil='\$' ;;
+      *) exit 0 ;;
+    esac
+    action=$(print -r -- "$input" | jq -r --arg re "^${sigil}(grant|revoke)-ai-push(\\s|\$)" '(.prompt // "") | match($re).captures[0].string')
+    [[ -n $action ]] || exit 0
+    if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
+      print "$0: AI_AGENTS_CONFIG_DIR_PATH is not set"
+      exit 1
+    fi
+    grant=$AI_AGENTS_CONFIG_DIR_PATH/ai_push/grants/$session_id
+    # 標準出力はどのエージェントも会話に足すため,各スキルの push の条件と同じ言い回しで許可の状態と push の手段を伝える
+    if [[ $action == grant ]]; then
+      : > $grant
+      print -r -- "ユーザーが grant-ai-push を実行したため,このセッションはセッション内でユーザーが AI の判断による push を許可している状態にあり,push は git push ではなく ai-push（引数なしで今のブランチを origin の同名ブランチへ通常の push で送るコマンド,主要ブランチへは送らない）を他のコマンドと繋がずに単独で実行して行う"
+    else
+      rm -f -- $grant
+      print -r -- "ユーザーが revoke-ai-push を実行したため,このセッションはセッション内でユーザーが AI の判断による push を許可していない状態に戻り,AI の判断では push せず ai-push も実行できない"
+    fi
+    ;;
+  SessionEnd)
+    if [[ -n $session_id && -n ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
+      rm -f -- $AI_AGENTS_CONFIG_DIR_PATH/ai_push/grants/$session_id
+    fi
+    ;;
+  PreToolUse)
+    # コマンドは文字列(Claude Code)か引数の配列(Codex)で渡されるため,文字列にそろえてから見る
+    # sh -c・zsh -lc 等で包んだ中身は先頭とみなし(配列を繋ぐと引用符が消えるため引用符の有無を問わない),
+    # 先頭か繋ぎの直後にあり,env・timeout 等の前置き・変数の代入・パスが付いた ai-push だけを判定する(名前が引数に出るだけの cat・grep 等や,探すだけで実行しない command -v・-V は止めない)
+    # ai-push だけのコマンドは alone,他のコマンドと繋いだ形や前置き・パスが付いた形は joined とする(引用符の中を区別しないため,検索語の |ai-push| 等も joined になる)
+    form=$(print -r -- "$input" | jq -r '
+      (.tool_input.command // .tool_input.cmd // "")
+      | (if type == "array" then join(" ") else tostring end)
+      | gsub("(?:^|(?<=[\\s;&|({]))(?:\\S*/)?(?:ba|z)?sh(?:\\s+-[A-Za-z]+)+\\s+[\\x27\"]?"; ";")
+      | if test("^\\s*;?\\s*ai-push[\\s\\x27\"]*$") then "alone"
+        elif test("(?:^|[;&|({\\n`]|\\$\\()\\s*(?:(?:if|then|else|elif|do|while|until|time|nohup|timeout|nice|stdbuf|env|command(?!\\s+-[A-Za-z]*[vV])|exec|builtin|xargs)(?:\\s+-\\S+|\\s+[0-9]+[smhd]?)*\\s+|[A-Za-z_][A-Za-z0-9_]*=\\S*\\s+)*(?:\\S*/)?ai-push(?=$|[\\s;&|)}\\x27\"`])") then "joined"
+        else empty end
+    ') || exit 0
+    [[ -n $form ]] || exit 0
+    [[ -n ${AI_AGENTS_CONFIG_DIR_PATH:-} ]] || deny "AI_AGENTS_CONFIG_DIR_PATH が未設定のため,push の許可を確かめられず ai-push は実行できません"
+    if [[ -z $session_id || ! -f $AI_AGENTS_CONFIG_DIR_PATH/ai_push/grants/$session_id ]]; then
+      deny "このセッションではユーザーが AI の判断による push を許可していないため ai-push は実行できず,push が必要ならユーザーに依頼してください(ユーザーが grant-ai-push を実行すると許可されます)"
+    fi
+    # allow はコマンド全体に効き,繋いだ他のコマンドまで確認なしで通すため,ai-push だけのコマンドに限る(サンドボックスの外で動かす設定も ai-push だけのコマンドが対象)
+    [[ $form == alone ]] || deny "ai-push は他のコマンドと繋がず,前置きやパスも付けずに ai-push とだけ単独で実行してください"
+    # 許可を返せるのは Claude Code だけで,Codex は deny 以外の判定を受け付けないため何も返さない
+    [[ $agent == claude ]] || exit 0
+    jq -n '{hookSpecificOutput: {hookEventName: "PreToolUse", permissionDecision: "allow", permissionDecisionReason: "ユーザーが grant-ai-push で push を許可したセッション"}}'
+    ;;
+esac
