@@ -139,6 +139,9 @@ bind -T copy-mode-vi C-_ send-keys -X jump-reverse
 bind -T copy-mode-vi '-' if -F '#{selection_present}' { send -X copy-pipe 'xargs -0 open' } { run-shell 'open-tmux-cursor-url #{pane_id}' }
 # 選択範囲のGoogle検索
 bind -T copy-mode-vi Space send -X copy-pipe-and-cancel "xargs -I {} open https://www.google.co.jp/search?q='{}'"
+# 検索の次(n)・前(N)は,prefix + ; と同じく見つけた行を上から2行目に出す(既定は画面の下の方に出る)
+bind -T copy-mode-vi n send -X search-again \; send -X scroll-top \; send -X scroll-up
+bind -T copy-mode-vi N send -X search-reverse \; send -X scroll-top \; send -X scroll-up
 
 ## ペースト
 # 最新バッファペースト
