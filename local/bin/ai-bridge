@@ -36,10 +36,10 @@ agent_keys=()
 typeset -A target_of agent_prio
 # キーの説明は1行にまとめると14インチの画面のウィンドウ(107桁)で見切れるため,3つに分けて ? を押すごとに順に見出しへ出す
 # 時刻はいつもの見出し(__render_title)にだけ出し,ここの説明は時刻に代えて出す(show_keys は出している方の番号,0はいつもの見出し)
-# (区切りは空白1つにし,C-n/C-p は C-n/p と縮める,見出しの幅はいつもの97桁に対して104桁・93桁)
+# (区切りは空白1つにし,C-n/C-p は C-n/p と縮める,見出しの幅はいつもの97桁に対して104桁・103桁)
 key_help=(
   'C-n/p:select C-s:open-close C-k:open-below C-;:reply C-l:open-dir C-y:copy-target C-u:clear'
-  'e:restart E:restart-all x:exit X:exit-all O:save-all R:restore-all G:browse-repo'
+  'e:restart E:restart-all x:exit X:exit-all O:save-all R:restore-all g:browse-repo G:open-pr'
 )
 show_keys=0
 # 一覧の下の作業の見える化(WORKSPACE・OPS.LOG・SYSTEM)は,起動時は出さず a を押した時だけ出す
@@ -825,26 +825,51 @@ __jump() {
 }
 
 # 選んだペインの TARGET(ai-session:4.1 のような場所,下に開いている時に付く ▼ は除く)を,tmux のバッファとクリップボードに写す
+# クリップボードのコマンドは claude-code-bash-clipboard と同じものを,入っているものから順に試して写せた所で止める
+# (Linux では入っているコマンドが Wayland・X11 の環境と合わないと失敗するため,失敗したら次を試す)
+# (xclip・xsel は既定がクリップボードでなく PRIMARY 選択のためクリップボードを指定し,xclip・wl-copy は選択を渡すために裏に残るので出力は捨てる)
 __copy_target() {
-  local target
+  local target name
+  local -a copy
   target=${${target_of[$1]:-}#▼ }
   [[ -n $target ]] || return 0
   tmux set-buffer -- "$target" 2>/dev/null || true
-  print -rn -- "$target" | pbcopy 2>/dev/null || true
+  for name in pbcopy wl-copy xclip xsel; do
+    (( $+commands[$name] )) || continue
+    case $name in
+      pbcopy)  copy=(pbcopy) ;;
+      wl-copy) copy=(wl-copy) ;;
+      xclip)   copy=(xclip -selection clipboard) ;;
+      xsel)    copy=(xsel --clipboard --input) ;;
+    esac
+    print -rn -- "$target" | "${copy[@]}" >/dev/null 2>&1 && break
+  done
   tmux display-message "Copied: ${target//\#/##}" 2>/dev/null || true
 }
 
-# 選んだペインの作業ディレクトリ(DIR)のリポジトリを,zsh の C-s,g (immediate-gh-browse) と同じく git の中の時だけ gh browse で開く
-# 画面を乱さないよう出力は捨て,開き終わるのを待たないよう裏で動かす
-__browse_repo() {
+# 選んだペイン $1 の作業ディレクトリ(DIR)が git の中の時だけ,そこで関数 $2 を裏で動かす(g・G で使う)
+# 画面を乱さず,gh が問い合わせのためにこのai-bridgeへのキー入力を読まないよう入出力は使わず,開き終わるのを待たない
+__run_in_repo() {
   local dir
   dir=$(tmux display -p -t "$1" '#{pane_current_path}' 2>/dev/null || true)
   [[ -n $dir ]] || return 0
   (
     # 描き手のEXITのtrap(後片付け)を裏で走らせないよう外す(__render_loop と同じ)
     trap - EXIT INT TERM HUP WINCH
-    cd -- "$dir" 2>/dev/null && git rev-parse >/dev/null 2>&1 && gh browse >/dev/null 2>&1
-  ) &!
+    cd -- "$dir" && git rev-parse && "$2"
+  ) </dev/null >/dev/null 2>&1 &!
+}
+
+# zsh の C-s,g (immediate-gh-browse) と同じく,リポジトリをブラウザで開く
+__browse_repo() {
+  gh browse
+}
+
+# zsh の C-s,C-g (immediate-gh-browse-pull-request) と同じく,今のブランチのプルリクエストを開き,無ければ作る画面を開く
+__open_pr() {
+  local branch
+  branch=$(git rev-parse --abbrev-ref HEAD) || return 0
+  gh pr view --web "$branch" || gh pr create --web --head "$branch"
 }
 
 # 選んだペインの作業ディレクトリ(DIR)で,このai-bridgeのセッションに新しいウィンドウを開いて移る
@@ -2918,9 +2943,14 @@ while :; do
             __copy_target "$selected_id"
           fi
           ;;
+        g)
+          if (( selectable )) && [[ -n $selected_id ]]; then
+            __run_in_repo "$selected_id" __browse_repo
+          fi
+          ;;
         G)
           if (( selectable )) && [[ -n $selected_id ]]; then
-            __browse_repo "$selected_id"
+            __run_in_repo "$selected_id" __open_pr
           fi
           ;;
         $'\x15') # Ctrl+u
