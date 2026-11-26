@@ -904,11 +904,11 @@ __start_agent_in_repo() {
 }
 
 # ウィンドウのペイン $1 を上の30%に縮めてai-bridgeを動かし,下に作ったペインで $3 のコマンドを $2 のディレクトリで実行する(prefix + a と同じ形)
-# 作ったAIのペインを REPLY に入れる
+# 作ったAIのペインを REPLY に入れる($4 に --keep-top を付けると,上のペインはそのまま使う)
 # 下のペインはこのai-bridgeが下に開く欄と同じ大きさになるため,入れ替えて開いても大きさが変わらず,描き直しで表示が崩れない
 # コマンドは zsh の C-d 等と同じく入力欄に打って実行する(シェルの準備ができる前に打った文字も溜まって実行される,prefix + a の ai-bridge と同じ)
 __make_agent_window() {
-  local top dir command bottom agent
+  local top dir command bottom
   integer height
   top=$1
   dir=$2
@@ -919,17 +919,25 @@ __make_agent_window() {
   bottom=$(tmux split-window -v -t "$top" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 1
   height=$(tmux display -p -t "$top" '#{window_height}' 2>/dev/null || print 0)
   (( ! height )) || tmux resize-pane -t "$top" -y $(__fit_height $height) 2>/dev/null || true
+  # 上のペインで何か動いている時(R で既にあるペインを使う時)は,打ったキーがそれへの操作になるため ai-bridge を起動しない
+  [[ ${4:-} == --keep-top ]] || tmux send-keys -t "$top" 'ai-bridge' Enter 2>/dev/null || true
+  __run_agent_in_pane "$bottom" "$command"
+  REPLY=$bottom
+}
+
+# ペイン $1 で $2 のコマンドを実行する
+__run_agent_in_pane() {
+  local agent
+
   # フックの記録が無い間も一覧に出せるよう,裏の一覧の組み立てに起動したペインとAIの種類を伝える(__emit_rows が読む)
-  if [[ " $command " == *' codex '* ]]; then
+  if [[ " $2 " == *' codex '* ]]; then
     agent=codex
   else
     agent=claude
   fi
-  print -r -- "$bottom $agent" >> "$work_dir/started"
-  tmux send-keys -t "$top" 'ai-bridge' Enter 2>/dev/null || true
-  tmux send-keys -t "$bottom" -l "$command" 2>/dev/null || true
-  tmux send-keys -t "$bottom" Enter 2>/dev/null || true
-  REPLY=$bottom
+  print -r -- "$1 $agent" >> "$work_dir/started"
+  tmux send-keys -t "$1" -l "$2" 2>/dev/null || true
+  tmux send-keys -t "$1" Enter 2>/dev/null || true
 }
 
 # AIを起動する先のセッションに prefix + a と同じ形のウィンドウ(上の30%でai-bridge,下でAI)を作り,下のペインで $1 のコマンドを実行する
@@ -1321,7 +1329,7 @@ __exit_agent() {
 # 10秒で終わらずシェルに戻らなかったAIのペインは,巻き込まないよう残す
 __exit_and_close_agent() {
   local pane_id line id ai_at_top rest bridge bridge_at_top bridge_tty bridge_cmd
-  local -a panes commands
+  local -a panes
 
   # 描き手のEXITのtrap(後片付け)を裏で走らせないよう外す(__render_loop と同じ)
   trap - EXIT INT TERM HUP WINCH
@@ -1345,10 +1353,17 @@ __exit_and_close_agent() {
 
   (( ${#panes} == 2 )) || return 0
   [[ $ai_at_top == 0 && $bridge_at_top == 1 && $bridge_cmd == zsh && $bridge != "${TMUX_PANE:-}" ]] || return 0
-  # macOS の pgrep -t は ttys012 の形の端末名で絞り込めないため ps で見る
-  commands=("${(@f)$(ps -t "${bridge_tty#/dev/}" -o command= 2>/dev/null || true)}")
-  (( ${#${(@M)commands:#*/ai-bridge(| *)}} )) || return 0
+  __tty_runs_ai_bridge "$bridge_tty" || return 0
   tmux kill-pane -t "$bridge" 2>/dev/null || true
+}
+
+# 端末 $1 で ai-bridge が動いているか(ai-bridge はzshのスクリプトで,ペインのカレントコマンドではシェルと見分けられないため)
+# macOS の pgrep -t は ttys012 の形の端末名で絞り込めないため ps で見る
+__tty_runs_ai_bridge() {
+  local -a commands
+
+  commands=("${(@f)$(ps -t "${1#/dev/}" -o command= 2>/dev/null || true)}")
+  (( ${#${(@M)commands:#*/ai-bridge(| *)}} ))
 }
 
 # ペインの画面の入力欄(上下を罫線に挟まれた ❯ の行)が空だと確かめられた時だけ0を返す($2はエージェント種別)
@@ -1655,7 +1670,7 @@ __plan_restore() {
 # $TMUX_AI_SESSION から保存したAIは元のウィンドウ番号に戻し,ほかのセッションから保存したもの(番号はそのセッションでの番号なので使わない)は後で末尾に足す
 # (元の番号の分を先に作り,末尾に足すものに番号を取られないようにする)
 __restore_agents() {
-  local line index top
+  local line index
   local -a fields placed appended
 
   for line in "${restore_lines[@]}"; do
@@ -1670,35 +1685,76 @@ __restore_agents() {
     fields=("${(@ps.\t.)line}")
     index=''
     [[ ${fields[6]:-} != "$TMUX_AI_SESSION" ]] || index=${fields[7]:-}
-    __restore_window "$index" "${fields[5]}" || continue
-    top=$REPLY
     __resume_command "${(@)fields[1,5]}"
-    __make_agent_window "$top" "${fields[5]}" "$REPLY" || true
+    __restore_agent "$index" "${fields[5]}" "$REPLY"
   done
 }
 
-# $TMUX_AI_SESSION のウィンドウ番号 $1 に,ディレクトリ $2 で開いたウィンドウを作り,そのペインを REPLY に入れる
-# 番号が空か,もう使われている時は,一番後ろのウィンドウの次に作る
-# セッションが無ければ作り,最初のウィンドウ(base-index の番号になる)を $1 の番号へ移す
+# $TMUX_AI_SESSION のウィンドウ番号 $1(空ならほかのセッションから保存したもの)に,ディレクトリ $2 でAIを戻して再開のコマンド $3 を実行する
+# tmux-resurrect と同じく,あるウィンドウやペインはそのまま使い,足りないものだけ作る
+#   セッションが無い: 作って,最初のウィンドウ(base-index の番号になる)を元の番号へ移し,上でai-bridge・下でAIの形にする
+#   ウィンドウが無い: 元の番号に上でai-bridge・下でAIのウィンドウを作る
+#   ペインが1つ: その下にAIのペインを作る
+#   上下2つで下がシェルだけ(prefix + a で作った形等): 下のペインでAIを動かす
+#   (上のペインがシェルだけなら ai-bridge を動かして形をそろえ,何か動いていれば打ったキーがそれへの操作になるためそのまま使う)
+# 下のペインで何か動いている等,元の場所に置けない時と,番号が空の時は,一番後ろのウィンドウの次に作る
 # 裏で作るセッションは既定の大きさ(80x24)になり,上下の分け方が後でつなぐ端末と合わないため,このai-bridgeのウィンドウと同じ大きさで作る
 # (-x・-y を付けて作ったセッションは,後から作るウィンドウもその大きさになる)
-__restore_window() {
-  local index dir last
-  local -a size
+__restore_agent() {
+  local index dir command line id at_top tty cmd top top_tty top_cmd bottom bottom_tty bottom_cmd keep last
+  local -a size panes
   index=$1
   dir=$2
+  command=$3
 
   if ! tmux has-session -t "=$TMUX_AI_SESSION" 2>/dev/null; then
     size=(${=$(tmux display -p -t "${TMUX_PANE:-}" '#{window_width} #{window_height}' 2>/dev/null || true)})
-    REPLY=$(tmux new-session -d -s "$TMUX_AI_SESSION" -x "${size[1]:-80}" -y "${size[2]:-24}" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 1
-    [[ -z $index ]] || tmux move-window -s "$REPLY" -t "=${TMUX_AI_SESSION}:$index" 2>/dev/null || true
+    top=$(tmux new-session -d -s "$TMUX_AI_SESSION" -x "${size[1]:-80}" -y "${size[2]:-24}" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 0
+    [[ -z $index ]] || tmux move-window -s "$top" -t "=${TMUX_AI_SESSION}:$index" 2>/dev/null || true
+    __make_agent_window "$top" "$dir" "$command" || true
     return 0
   fi
-  if [[ -n $index ]] && REPLY=$(tmux new-window -d -t "=${TMUX_AI_SESSION}:$index" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null); then
-    return 0
+
+  if [[ -n $index ]]; then
+    panes=("${(@f)$(tmux list-panes -t "=${TMUX_AI_SESSION}:$index" -F '#{pane_id} #{pane_at_top} #{pane_tty} #{pane_current_command}' 2>/dev/null || true)}")
+    if [[ -z ${panes[1]} ]]; then
+      top=$(tmux new-window -d -t "=${TMUX_AI_SESSION}:$index" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 0
+      __make_agent_window "$top" "$dir" "$command" || true
+      return 0
+    fi
+    # 上の段の1つ目を上のペイン,下の段の1つ目を下のペインとする(左右に分かれていれば,どちらかが空のままになる)
+    for line in "${panes[@]}"; do
+      read -r id at_top tty cmd <<< "$line"
+      if [[ $at_top == 1 && -z $top ]]; then
+        top=$id top_tty=$tty top_cmd=$cmd
+      elif [[ $at_top == 0 && -z $bottom ]]; then
+        bottom=$id bottom_tty=$tty bottom_cmd=$cmd
+      fi
+    done
+    if [[ -n $top ]] && __is_idle_shell "$top_tty" "$top_cmd"; then
+      keep=''
+    else
+      keep=--keep-top
+    fi
+    if [[ -n $top ]] && (( ${#panes} == 1 )); then
+      __make_agent_window "$top" "$dir" "$command" $keep || true
+      return 0
+    fi
+    if [[ -n $top && -n $bottom ]] && (( ${#panes} == 2 )) && __is_idle_shell "$bottom_tty" "$bottom_cmd"; then
+      [[ -n $keep ]] || tmux send-keys -t "$top" 'ai-bridge' Enter 2>/dev/null || true
+      __run_agent_in_pane "$bottom" "$command"
+      return 0
+    fi
   fi
+
   last=${${(On)${(f)"$(tmux list-windows -t "=$TMUX_AI_SESSION" -F '#{window_index}' 2>/dev/null || true)"}}[1]:-0}
-  REPLY=$(tmux new-window -d -t "=${TMUX_AI_SESSION}:$(( last + 1 ))" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 1
+  top=$(tmux new-window -d -t "=${TMUX_AI_SESSION}:$(( last + 1 ))" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 0
+  __make_agent_window "$top" "$dir" "$command" || true
+}
+
+# ペインがシェルだけで何も動かしていないか($1=ペインの端末 $2=ペインのカレントコマンド)
+__is_idle_shell() {
+  [[ $2 == (zsh|bash) ]] && ! __tty_runs_ai_bridge "$1"
 }
 
 # 下に開いた・閉じた・完了を待機へ戻した等,手元で一覧の中身を変えた時に呼ぶ
