@@ -452,6 +452,8 @@ __session_idle_over() {
 #            (teammateは長いツール実行中にtranscript・成果物が数分無更新になるため,60秒では完了待ち中の
 #            セッションを誤ってdone/idleへ倒してしまう)
 #            (blockedは対象にしない,裏のサブエージェントが許可を待つ間も成果物は更新が止まるため)
+# Claude本体がbusyの間は倒さない(! で打ったコマンドの間は,終わるまでtranscriptに書かれず直前のターンのStopのままに見えるため)
+# (先に動く __reconcile_claude_wait が作る claude_status を使う)
 __reconcile_stuck() {
   local state_file key state agent agent_pid agent_tty cwd transcript_path turn_status
 
@@ -463,6 +465,7 @@ __reconcile_stuck() {
       IFS=$'\t' read -r state agent agent_pid agent_tty cwd < "$state_file" || continue
     fi
     [[ $state == working || $state == blocked ]] || continue
+    [[ $agent != claude || ${claude_status[$key]:-} != busy ]] || continue
     transcript_path=$(jq -r '.transcript_path // empty' "$state_dir/$key.meta.json" 2>/dev/null) || continue
     [[ -n $transcript_path ]] || continue
 
@@ -484,11 +487,17 @@ __reconcile_stuck() {
 #   blocked なのに busy         → working (返事をした後,許可したツールの実行中はフックが来ない)
 #   blocked なのに idle・shell  → done/idle (返事をした後にターンが終わった,Escで閉じた)
 #   working なのに idle         → done/idle (応答が始まる前にEscで止めると,中断の記録もフックも来ない,__claude_turn_dropped の時だけ)
+#   idle・done なのに busy      → working (! で打ったコマンドとそれに続く応答には,始まりのフックが来ずStopだけが来る,
+#                                 状態を最後に書いた後に本体がbusyになった時だけ,Stop後も本体はそれより前からのbusyのまま数秒後片付けをするため)
 # ペインで動く対話のセッション(kind が interactive)だけを見る(裏で動く bg・daemon 等の種類と取り違えないため)
 # 異常終了で古いファイルが残っても,同じペインでは更新の新しい方を使う(古いファイルは更新されないため)
+# 本体の状態はペインごとに claude_status へ残し,後に動く __reconcile_stuck も使う
 __reconcile_claude_wait() {
   local session_file content pane state_file key state agent agent_pid next
-  local -A claude_status status_at
+  local -a st
+  local -A status_at
+  typeset -gA claude_status
+  claude_status=()
 
   for session_file in "$HOME"/.claude/sessions/*.json(Nom); do
     content=$(<"$session_file")
@@ -517,6 +526,10 @@ __reconcile_claude_wait() {
       idle:working)
         __claude_turn_dropped "$key" "${status_at[$key]:-0}" "$state_file" || continue
         next=$(__stop_state_for_pane "$key")
+        ;;
+      busy:idle | busy:done)
+        zstat -A st +mtime "$state_file" 2>/dev/null && (( ${status_at[$key]:-0} > st[1] )) || continue
+        next=working
         ;;
       *) continue ;;
     esac
