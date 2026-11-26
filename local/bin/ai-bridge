@@ -1227,7 +1227,7 @@ __undo_swap() {
   [[ ${1:-} == --no-draw ]] || __draw
 }
 
-# tmux内のAIを終了させる(X・x で終了する時に,AIごとに裏で呼ぶ)
+# tmux内のAIを終了させる(X・x と R・r で,AIごとに裏で呼ぶ)
 # Ctrl-Cは待機中なら1回目で入力欄を空け2回目で終了し,作業中は1回目が中断になるため,ペインがシェルに戻るまで送り続ける
 # 状態ファイルのpidはペインのシェルでAIが終わっても生きているため,終わったかはペインのカレントコマンドで見る(__cleanup_stale と同じ)
 # 中断が長引いてもシェルに戻ったペインへCtrl-Cを打ち込み続けないよう,10秒で諦める
@@ -1247,6 +1247,43 @@ __exit_agent() {
     tmux send-keys -t "$pane_id" C-c 2>/dev/null || return 0
     zselect -t 30 || true
   done
+}
+
+# X・x で選んだAIを終了させ,シェルに戻ったらペインも閉じる(AIごとに裏で呼ぶ)
+# ウィンドウが上のai-bridgeと下のこのAIの2つだけ(prefix + a・t-ai-session・d・C-d・Space で作る形)なら,上のai-bridgeのペインも閉じる
+# ai-bridge はzshのスクリプトでカレントコマンドではシェルと見分けられないため,ペインの端末で ai-bridge が動いているかで見る
+# (このai-bridge自身のペインは閉じない,閉じるとまだ終了させている途中の裏の処理まで止まるため)
+# 10秒で終わらずシェルに戻らなかったAIのペインは,巻き込まないよう残す
+__exit_and_close_agent() {
+  local pane_id line id ai_at_top rest bridge bridge_at_top bridge_tty bridge_cmd
+  local -a panes commands
+
+  # 描き手のEXITのtrap(後片付け)を裏で走らせないよう外す(__render_loop と同じ)
+  trap - EXIT INT TERM HUP WINCH
+  pane_id=$1
+
+  __exit_agent "$pane_id"
+  case $(tmux display -p -t "$pane_id" '#{pane_current_command}' 2>/dev/null || true) in
+    zsh | bash) ;;
+    *) return 0 ;;
+  esac
+
+  panes=("${(@f)$(tmux list-panes -t "$pane_id" -F '#{pane_id} #{pane_at_top} #{pane_tty} #{pane_current_command}' 2>/dev/null || true)}")
+  for line in "${panes[@]}"; do
+    if [[ $line == "$pane_id "* ]]; then
+      read -r id ai_at_top rest <<< "$line"
+    else
+      read -r bridge bridge_at_top bridge_tty bridge_cmd <<< "$line"
+    fi
+  done
+  tmux kill-pane -t "$pane_id" 2>/dev/null || true
+
+  (( ${#panes} == 2 )) || return 0
+  [[ $ai_at_top == 0 && $bridge_at_top == 1 && $bridge_cmd == zsh && $bridge != "${TMUX_PANE:-}" ]] || return 0
+  # macOS の pgrep -t は ttys012 の形の端末名で絞り込めないため ps で見る
+  commands=("${(@f)$(ps -t "${bridge_tty#/dev/}" -o command= 2>/dev/null || true)}")
+  (( ${#${(@M)commands:#*/ai-bridge(| *)}} )) || return 0
+  tmux kill-pane -t "$bridge" 2>/dev/null || true
 }
 
 # ペインの画面の入力欄(上下を罫線に挟まれた ❯ の行)が空だと確かめられた時だけ0を返す($2はエージェント種別)
@@ -2560,8 +2597,12 @@ while :; do
         if [[ $key == y ]]; then
           case $confirm_action in
             exit)
+              # 入れ替えて下に開いているAI(とその相手)は,閉じると入れ替えた相手が元の場所に残るため,先に元へ戻す
+              if (( ${#last_swap} )) && (( ${exit_targets[(Ie)${last_swap[1]}]} || ${exit_targets[(Ie)${last_swap[2]}]} )); then
+                __undo_swap
+              fi
               for id in "${exit_targets[@]}"; do
-                __exit_agent "$id" &!
+                __exit_and_close_agent "$id" &!
               done
               ;;
             restart)
