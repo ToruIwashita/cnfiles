@@ -34,27 +34,30 @@ split_once=0
 # 一覧の下の作業の見える化で使う,一覧に出ているAIのキー(並び順)・TARGET・優先度
 agent_keys=()
 typeset -A target_of agent_prio
-# 見出しにいつも出すキーと並べると狭いペインで見切れるため,ほかのキーの説明は ? を押した時だけ,見出しの括弧の中を差し替えて出す(時刻はいつも出す)
-# 1行にまとめると121桁になり14インチの画面のペインで見切れたため,2つに分けて ? を押すごとに順に出す(show_keys は出している方の番号,0はいつもの見出し)
-# (区切りは空白1つにし,C-n/C-p は C-n/p と縮める,見出しの幅はいつもの97桁に対して68桁・98桁)
-# (Esc:quit と r・R・x・X はいつも出している見出しの方に書く)
+# キーの説明は1行にまとめると14インチの画面のウィンドウ(107桁)で見切れるため,3つに分けて ? を押すごとに順に見出しへ出す
+# 時刻はいつもの見出し(__render_title)にだけ出し,ここの説明は時刻に代えて出す(show_keys は出している方の番号,0はいつもの見出し)
+# (区切りは空白1つにし,C-n/C-p は C-n/p と縮める,見出しの幅はいつもの97桁に対して101桁・92桁)
 key_help=(
-  'd/C-d:new Space:saved \:edit-saved Enter:jump'
-  'C-n/p:select C-s:open-close C-k:open-below C-;:reply C-l:open-dir C-g:clear'
+  'C-n/p:select C-s:open-close C-k:open-below C-;:reply C-l:open-dir C-g:clear ?:other-keys'
+  'e:restart E:restart-all x:exit X:exit-all O:save-all R:restore-all ?:other-keys'
 )
 show_keys=0
 # 一覧の下の作業の見える化(WORKSPACE・OPS.LOG・SYSTEM)は,起動時は出さず a を押した時だけ出す
 show_ops=0
-# X・x(一括・選んだ1つの終了)と R・r(一括・選んだ1つの再起動)を実行する前の確かめ(出している間は見出しを確かめの文に差し替え,y で実行する)
-# confirm_action は確かめている操作で,exit か restart(確かめていない時は空)
+# X・x(一括・選んだ1つの終了)・E・e(一括・選んだ1つの再起動)・O(保存)・R(復元)を実行する前の確かめ(出している間は見出しを確かめの文に差し替え,y で実行する)
+# confirm_action は確かめている操作で,exit・restart・save・restore のどれか(確かめていない時は空)
 confirm_action=''
 confirm_prompt=''
 exit_targets=()
 exit_note=''
 integer exit_working was_confirming
-# R・r で再起動するペインIDと,ペインごとにシェルへ送る再開コマンド
+# E・e で再起動するペインIDと,ペインごとにシェルへ送る再開コマンド
 restart_targets=()
 typeset -A restart_command
+# O で保存し R で復元するAI(1行に AIの種類・セッションID・モデル・effort・起動したディレクトリ・いたセッション・ウィンドウ番号をタブ区切りで並べる)と,その保存先
+save_lines=()
+restore_lines=()
+resurrect_file=$AI_AGENTS_CONFIG_DIR_PATH/resurrect.tsv
 
 # 一覧の行を作る小さな関数は,行ごとに何度も呼ぶため,サブシェルを起こさないよう結果を REPLY に入れる
 
@@ -520,7 +523,7 @@ __meta_columns() {
     cx_pct=${fields[2]:-0}
     cx_tok=${fields[3]:-0}
     version=${fields[4]:-}
-    # 動いている版(ステータスラインが書いた version)がインストール済みの版と違えば,R で再起動すると新しい版になる印を付ける
+    # 動いている版(ステータスラインが書いた version)がインストール済みの版と違えば,E・e で再起動すると新しい版になる印を付ける
     outdated=0
     if [[ $2 == claude && -n $version && -n ${claude_installed:-} && $version != "$claude_installed" ]]; then
       outdated=1
@@ -755,13 +758,13 @@ __usage_lines_shared() {
 }
 
 # 一覧の1行目(見出しと時刻)を出力する
-# a・Esc・r・R・x・X はキーの説明に足すと幅102桁のペインで見切れるため,いつも出している見出しの方に書く
-# (r・x は選んだ1つにだけ効くので,選べる時だけ書く)
+# 選べる時のキーの説明は3つに分けて ? で切り替え(key_help),ここにはその1つ目を時刻と並べて書く
+# (選べない時は ? と選ぶ操作が使えないため,使える a・E・X・Esc だけを書く)
 __render_title() {
   if (( ${selectable:-0} )); then
-    printf 'AI Bridge  %s  (a:activity r:restart R:restart-all x:exit X:exit-all Esc:quit ?:other-keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    print -r -- "AI Bridge  $(strftime '%H:%M:%S' $EPOCHSECONDS)  "'(a:activity d/C-d:new Space:select-saved \:edit-saved Esc:quit ?:other-keys)'
   else
-    printf 'AI Bridge  %s  (a:activity R:restart-all X:exit-all Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    print -r -- "AI Bridge  $(strftime '%H:%M:%S' $EPOCHSECONDS)  (a:activity E:restart-all X:exit-all Esc:quit)"
   fi
 }
 
@@ -852,22 +855,20 @@ __start_agent_in_repo() {
   __start_agent_window "$1" "$REPLY"
 }
 
-# AIを起動する先のセッションに prefix + a と同じ形のウィンドウ(上の30%でai-bridge,下でAI)を作り,下のペインで $1 のコマンドを実行する
+# ウィンドウのペイン $1 を上の30%に縮めてai-bridgeを動かし,下に作ったペインで $3 のコマンドを $2 のディレクトリで実行する(prefix + a と同じ形)
+# 作ったAIのペインを REPLY に入れる
 # 下のペインはこのai-bridgeが下に開く欄と同じ大きさになるため,入れ替えて開いても大きさが変わらず,描き直しで表示が崩れない
-# ウィンドウは裏に作り(-d),そのセッションを表示している端末の画面も,このペインのフォーカスも動かさない
 # コマンドは zsh の C-d 等と同じく入力欄に打って実行する(シェルの準備ができる前に打った文字も溜まって実行される,prefix + a の ai-bridge と同じ)
-__start_agent_window() {
-  local command dir session top bottom agent
+__make_agent_window() {
+  local top dir command bottom agent
   integer height
-  command=$1
+  top=$1
   dir=$2
-  session=${start_session:-$(tmux display -p -t "${TMUX_PANE:-}" '#{session_name}' 2>/dev/null || true)}
-  [[ -n $session ]] || return 0
+  command=$3
 
-  # -c はtmuxのフォーマットとして展開されるため,パスの # は ## にして文字どおりに渡す
-  top=$(tmux new-window -d -t "=${session}:" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 0
   # prefix + a と同じく下のペインを選んだ状態にする(-d を付けないが,裏のウィンドウなので端末の画面は切り替わらない)
-  bottom=$(tmux split-window -v -t "$top" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 0
+  # (-c はtmuxのフォーマットとして展開されるため,パスの # は ## にして文字どおりに渡す)
+  bottom=$(tmux split-window -v -t "$top" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 1
   height=$(tmux display -p -t "$top" '#{window_height}' 2>/dev/null || print 0)
   (( ! height )) || tmux resize-pane -t "$top" -y $(__fit_height $height) 2>/dev/null || true
   # フックの記録が無い間も一覧に出せるよう,裏の一覧の組み立てに起動したペインとAIの種類を伝える(__emit_rows が読む)
@@ -880,6 +881,22 @@ __start_agent_window() {
   tmux send-keys -t "$top" 'ai-bridge' Enter 2>/dev/null || true
   tmux send-keys -t "$bottom" -l "$command" 2>/dev/null || true
   tmux send-keys -t "$bottom" Enter 2>/dev/null || true
+  REPLY=$bottom
+}
+
+# AIを起動する先のセッションに prefix + a と同じ形のウィンドウ(上の30%でai-bridge,下でAI)を作り,下のペインで $1 のコマンドを実行する
+# ウィンドウは裏に作り(-d),そのセッションを表示している端末の画面も,このペインのフォーカスも動かさない
+__start_agent_window() {
+  local command dir session top bottom
+  command=$1
+  dir=$2
+  session=${start_session:-$(tmux display -p -t "${TMUX_PANE:-}" '#{session_name}' 2>/dev/null || true)}
+  [[ -n $session ]] || return 0
+
+  # -c はtmuxのフォーマットとして展開されるため,パスの # は ## にして文字どおりに渡す
+  top=$(tmux new-window -d -t "=${session}:" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 0
+  __make_agent_window "$top" "$dir" "$command" || return 0
+  bottom=$REPLY
   # 起動したAIは C-s と同じくこのai-bridgeの下に開いて見せる(フォーカスはこのペインのまま)
   # (初めてのディレクトリで出る信頼の確認はセッションが始まる前に出るためフックの記録が無く一覧に出ず,裏のウィンドウのままだと気づけない)
   __open_below "$bottom"
@@ -1227,7 +1244,7 @@ __undo_swap() {
   [[ ${1:-} == --no-draw ]] || __draw
 }
 
-# tmux内のAIを終了させる(X・x と R・r で,AIごとに裏で呼ぶ)
+# tmux内のAIを終了させる(X・x と E・e で,AIごとに裏で呼ぶ)
 # Ctrl-Cは待機中なら1回目で入力欄を空け2回目で終了し,作業中は1回目が中断になるため,ペインがシェルに戻るまで送り続ける
 # 状態ファイルのpidはペインのシェルでAIが終わっても生きているため,終わったかはペインのカレントコマンドで見る(__cleanup_stale と同じ)
 # 中断が長引いてもシェルに戻ったペインへCtrl-Cを打ち込み続けないよう,10秒で諦める
@@ -1334,7 +1351,20 @@ __codex_input_is_empty() {
   return 1
 }
 
-# R(一覧の全部)・r(選んでいる1つ)で再起動するペインと再開コマンドを restart_targets / restart_command に入れ,確かめの文を confirm_prompt に入れる
+# 再開コマンド(起動したディレクトリへの cd 付き)を REPLY に入れる(E・e の再起動と R の復元で使い,組み立て方の訳は __plan_restart の上に書く)
+# $1=AIの種類(claude・codex) $2=セッションID $3=モデル $4=effort(effort に対応しないモデルでは空) $5=起動したディレクトリ
+__resume_command() {
+  local effort_config
+
+  if [[ $1 == codex ]]; then
+    effort_config="model_reasoning_effort=\"$4\""
+    REPLY="cd ${(q)5} && ${AI_AGENT_SESSION_CODEX_COMMAND:-} resume ${(q)2} --model ${(q)3}${4:+ --config ${(q)effort_config}}"
+  else
+    REPLY="cd ${(q)5} && ${AI_AGENT_SESSION_CLAUDE_COMMAND:-} --resume ${(q)2} --model ${(q)3}${4:+ --effort ${(q)4}}"
+  fi
+}
+
+# E(一覧の全部)・e(選んでいる1つ)で再起動するペインと再開コマンドを restart_targets / restart_command に入れ,確かめの文を confirm_prompt に入れる
 # ($1 は all か one,one の時は対象の名前と,再起動できなければその理由を出す)
 # 再起動するのは,待機中か完了で,再開に要る値がそろい,入力欄が空と確かめられたClaude・Codexだけにする
 #   作業中: 中断すると,裏のサブエージェントやバックグラウンドのコマンドは再開されない
@@ -1348,7 +1378,7 @@ __codex_input_is_empty() {
 #       AI_AGENT_SESSION_CODEX_COMMAND は --no-daemon 付きにする(共有の daemon の上ではフックが daemon を起動したペインの環境で動き,別のペインの記録になるため)
 #       開き直した Codex は次の指示を送るまでフックが動かないため,それまで一覧から消える
 __plan_restart() {
-  local mode id state agent rest values session_id model_id effort project_dir transcript_path agent_command effort_config
+  local mode id state agent rest values session_id model_id effort project_dir transcript_path agent_command
   local -a fields skipped ids
   integer working=0 waiting=0 input=0 noinfo=0 other=0
 
@@ -1409,15 +1439,8 @@ __plan_restart() {
       continue
     fi
     restart_targets+=("$id")
-    case $agent in
-      claude)
-        restart_command[$id]="cd ${(q)project_dir} && ${agent_command} --resume ${(q)session_id} --model ${(q)model_id}${effort:+ --effort ${(q)effort}}"
-        ;;
-      codex)
-        effort_config="model_reasoning_effort=\"${effort}\""
-        restart_command[$id]="cd ${(q)project_dir} && ${agent_command} resume ${(q)session_id} --model ${(q)model_id}${effort:+ --config ${(q)effort_config}}"
-        ;;
-    esac
+    __resume_command "$agent" "$session_id" "$model_id" "$effort" "$project_dir"
+    restart_command[$id]=$REPLY
   done
 
   (( ! working )) || skipped+=("$working working")
@@ -1438,7 +1461,7 @@ __plan_restart() {
   confirm_prompt=$'\e[1;97;41m'"AI Bridge  Restart ${#restart_targets} AI(s)? y/N${skipped:+  (skipped: ${(j:, :)skipped})}"$'\e[0m'
 }
 
-# R・r で選んだペインを1つ再起動する(y で決めた後,ペインごとに裏で動かす)
+# E・e で選んだペインを1つ再起動する(y で決めた後,ペインごとに裏で動かす)
 # 確かめてから y を押すまでに状態や入力欄が変わっていれば何もせず,終了させてシェルに戻ったと確かめられた時だけ再開コマンドを送る
 # (AIが動いたままのペインに送ると,再開コマンドが指示としてAIに送られてしまう)
 __restart_agent() {
@@ -1479,6 +1502,155 @@ __restart_agent() {
     fi
     zselect -t 30 || true
   done
+}
+
+# O で保存するAI(一覧に出ているtmux内のAIのうち,再開に要る値がそろったもの)を tmux のウィンドウの順に save_lines に入れ,確かめの文を confirm_prompt に入れる
+# 値は E・e の再起動と同じく meta.json の今の値で,会話記録が無いセッションは再開できないため保存しない
+# 作業中や判断待ちのAIも保存する(保存するだけで,動いているAIには何もしない)
+# R で元の場所に戻せるよう,いたセッションとウィンドウ番号も書く
+# このai-bridgeの下に開いて入れ替えているAI(とその相手)は,入れ替えた相手が今いる場所が元の場所になる
+# (別のai-bridgeで入れ替えたものは元の場所が分からないため,今いる場所を書く)
+__plan_save() {
+  local pane state agent rest values line home sep
+  local -a fields skipped panes
+  local -A location
+  integer noinfo=0
+
+  save_lines=()
+  sep=$'\t'
+  # ペインごとの「セッション<タブ>ウィンドウ番号」と,tmux のウィンドウの順のペインの並び
+  for line in ${(f)"$(tmux list-panes -a -F "#{pane_id}${sep}#{session_name}${sep}#{window_index}" 2>/dev/null || true)"}; do
+    panes+=("${line%%$'\t'*}")
+    location[${line%%$'\t'*}]=${line#*$'\t'}
+  done
+  for pane in "${panes[@]}"; do
+    (( ${jump_ids[(Ie)$pane]} )) || continue
+    if ! read -r state agent rest < "$state_dir/$pane.state" 2>/dev/null; then
+      noinfo+=1
+      continue
+    fi
+    values=$(jq -r '[.session_id // "", .model_id // "", .effort // "", .project_dir // "", .transcript_path // ""] | @tsv' "$state_dir/$pane.meta.json" 2>/dev/null || true)
+    fields=("${(@ps.\t.)values}")
+    if [[ ( $agent != claude && $agent != codex ) || -z ${fields[1]:-} || -z ${fields[2]:-} || -z ${fields[4]:-} || ! -f ${fields[5]:-} ]]; then
+      noinfo+=1
+      continue
+    fi
+    if [[ $pane == "${last_swap[1]:-}" ]]; then
+      home=${last_swap[2]}
+    elif [[ $pane == "${last_swap[2]:-}" ]]; then
+      home=${last_swap[1]}
+    else
+      home=$pane
+    fi
+    save_lines+=("$agent"$'\t'"${fields[1]}"$'\t'"${fields[2]}"$'\t'"${fields[3]:-}"$'\t'"${fields[4]}"$'\t'"${location[$home]:-}")
+  done
+
+  (( ! noinfo )) || skipped+=("$noinfo no-info")
+  (( ${#agent_keys} == ${#jump_ids} )) || skipped+=("$(( ${#agent_keys} - ${#jump_ids} )) outside tmux")
+  if (( ${#save_lines} )); then
+    confirm_prompt=$'\e[1;97;41m'"AI Bridge  Save ${#save_lines} AI(s) to restore with R? y/N${skipped:+  (skipped: ${(j:, :)skipped})}"$'\e[0m'
+  else
+    confirm_prompt=$'\e[1;97;41m'"AI Bridge  Nothing to save${skipped:+  (skipped: ${(j:, :)skipped})}"$'\e[0m'
+  fi
+}
+
+# __plan_save で選んだAIを保存のファイルに書く(前に保存したものは置き換え,書きかけを R で読まないよう一時ファイルに書いてから置き換える)
+__save_agents() {
+  print -rl -- "${save_lines[@]}" >| "$resurrect_file.tmp" 2>/dev/null || return 0
+  zf_mv -f "$resurrect_file.tmp" "$resurrect_file" 2>/dev/null || true
+}
+
+# R で復元するAIを,O で保存したファイルから restore_lines に入れ,確かめの文を confirm_prompt に入れる
+# 今どこかで動いているセッションは二重に動かさないよう,起動したディレクトリが無くなったものは開けないため飛ばす
+__plan_restore() {
+  local line running
+  local -a fields skipped metas
+  integer dup=0 nodir=0
+
+  restore_lines=()
+  if [[ -z ${TMUX_AI_SESSION:-} ]]; then
+    confirm_prompt=$'\e[1;97;41m'"AI Bridge  Cannot restore (TMUX_AI_SESSION is not set)"$'\e[0m'
+    return 0
+  fi
+  if [[ ! -r $resurrect_file ]]; then
+    confirm_prompt=$'\e[1;97;41m'"AI Bridge  Nothing to restore (save with O first)"$'\e[0m'
+    return 0
+  fi
+
+  # 動いているセッションは meta.json のセッションIDで見る(壊れた meta.json があっても読み落とさないよう,jq を通さずに中身から探す)
+  metas=("$state_dir"/*.meta.json(N))
+  (( ! ${#metas} )) || running=$(cat -- "${metas[@]}" 2>/dev/null || true)
+  for line in "${(@f)$(<"$resurrect_file")}"; do
+    [[ -n $line ]] || continue
+    fields=("${(@ps.\t.)line}")
+    if [[ -n ${fields[2]:-} && $running == *"${fields[2]}"* ]]; then
+      dup+=1
+      continue
+    fi
+    if [[ ! -d ${fields[5]:-} ]]; then
+      nodir+=1
+      continue
+    fi
+    restore_lines+=("$line")
+  done
+
+  (( ! dup )) || skipped+=("$dup running")
+  (( ! nodir )) || skipped+=("$nodir no-dir")
+  if (( ${#restore_lines} )); then
+    confirm_prompt=$'\e[1;97;41m'"AI Bridge  Restore ${#restore_lines} AI(s) into $TMUX_AI_SESSION? y/N${skipped:+  (skipped: ${(j:, :)skipped})}"$'\e[0m'
+  else
+    confirm_prompt=$'\e[1;97;41m'"AI Bridge  Nothing to restore${skipped:+  (skipped: ${(j:, :)skipped})}"$'\e[0m'
+  fi
+}
+
+# __plan_restore で選んだAIを,$TMUX_AI_SESSION のセッションに上でai-bridge・下でAIのウィンドウを1つずつ作って再開する(セッションが無ければ作る)
+# $TMUX_AI_SESSION から保存したAIは元のウィンドウ番号に戻し,ほかのセッションから保存したもの(番号はそのセッションでの番号なので使わない)は後で末尾に足す
+# (元の番号の分を先に作り,末尾に足すものに番号を取られないようにする)
+__restore_agents() {
+  local line index top
+  local -a fields placed appended
+
+  for line in "${restore_lines[@]}"; do
+    fields=("${(@ps.\t.)line}")
+    if [[ ${fields[6]:-} == "$TMUX_AI_SESSION" && -n ${fields[7]:-} ]]; then
+      placed+=("$line")
+    else
+      appended+=("$line")
+    fi
+  done
+  for line in "${placed[@]}" "${appended[@]}"; do
+    fields=("${(@ps.\t.)line}")
+    index=''
+    [[ ${fields[6]:-} != "$TMUX_AI_SESSION" ]] || index=${fields[7]:-}
+    __restore_window "$index" "${fields[5]}" || continue
+    top=$REPLY
+    __resume_command "${(@)fields[1,5]}"
+    __make_agent_window "$top" "${fields[5]}" "$REPLY" || true
+  done
+}
+
+# $TMUX_AI_SESSION のウィンドウ番号 $1 に,ディレクトリ $2 で開いたウィンドウを作り,そのペインを REPLY に入れる
+# 番号が空か,もう使われている時は,一番後ろのウィンドウの次に作る
+# セッションが無ければ作り,最初のウィンドウ(base-index の番号になる)を $1 の番号へ移す
+# 裏で作るセッションは既定の大きさ(80x24)になり,上下の分け方が後でつなぐ端末と合わないため,このai-bridgeのウィンドウと同じ大きさで作る
+# (-x・-y を付けて作ったセッションは,後から作るウィンドウもその大きさになる)
+__restore_window() {
+  local index dir last
+  local -a size
+  index=$1
+  dir=$2
+
+  if ! tmux has-session -t "=$TMUX_AI_SESSION" 2>/dev/null; then
+    size=(${=$(tmux display -p -t "${TMUX_PANE:-}" '#{window_width} #{window_height}' 2>/dev/null || true)})
+    REPLY=$(tmux new-session -d -s "$TMUX_AI_SESSION" -x "${size[1]:-80}" -y "${size[2]:-24}" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 1
+    [[ -z $index ]] || tmux move-window -s "$REPLY" -t "=${TMUX_AI_SESSION}:$index" 2>/dev/null || true
+    return 0
+  fi
+  if [[ -n $index ]] && REPLY=$(tmux new-window -d -t "=${TMUX_AI_SESSION}:$index" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null); then
+    return 0
+  fi
+  last=${${(On)${(f)"$(tmux list-windows -t "=$TMUX_AI_SESSION" -F '#{window_index}' 2>/dev/null || true)"}}[1]:-0}
+  REPLY=$(tmux new-window -d -t "=${TMUX_AI_SESSION}:$(( last + 1 ))" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 1
 }
 
 # 下に開いた・閉じた・完了を待機へ戻した等,手元で一覧の中身を変えた時に呼ぶ
@@ -1691,8 +1863,8 @@ __split_rendered() {
       fi
       (( ! selectable )) || line=${(r:2:)num}$line
     elif (( ! ${#lines} && show_keys )); then
-      # ? でキーの説明を出している間は,見出しの時刻の後ろの括弧の中をキーの説明に差し替える
-      line="${line%%  \(*}  (${key_help[show_keys]})"
+      # ? でキーの説明を出している間は,見出しを時刻の無いキーの説明に差し替える
+      line="AI Bridge  (${key_help[show_keys]})"
     fi
     lines+=("$line")
   done
@@ -2610,6 +2782,13 @@ while :; do
                 __restart_agent "$id" "${restart_command[$id]}" &!
               done
               ;;
+            save)
+              # 保存するものが無い時に y を押しても,前に保存したものを空で消さない
+              (( ! ${#save_lines} )) || __save_agents
+              ;;
+            restore)
+              __restore_agents
+              ;;
           esac
         fi
         confirm_action=''
@@ -2712,7 +2891,7 @@ while :; do
           selected_id=''
           ;;
         '?')
-          # 見出しの括弧の中を,いつものキーと2つに分けたキーの説明の順に切り替える
+          # 見出しを,いつものもの(時刻つき)と key_help の2つのキーの説明の順に切り替える
           if (( selectable )); then
             show_keys=$(( (show_keys + 1) % (${#key_help} + 1) ))
           fi
@@ -2772,18 +2951,32 @@ while :; do
             confirm_action=exit
           fi
           ;;
-        R)
+        E)
           # 一覧に出ているtmux内のAIのうち,再起動してよいと確かめられたものだけを選び,対象と飛ばした数(理由ごと)を見出しに出して確かめる
           if (( ${#jump_ids} )); then
             __plan_restart all
             confirm_action=restart
           fi
           ;;
-        r)
-          # 選んでいるtmux内のAIを1つ,R と同じく再起動してよいと確かめられた時だけ再起動する(できない時は理由を見出しに出す)
+        e)
+          # 選んでいるtmux内のAIを1つ,E と同じく再起動してよいと確かめられた時だけ再起動する(できない時は理由を見出しに出す)
           if (( selectable )) && [[ -n $selected_id ]]; then
             __plan_restart one
             confirm_action=restart
+          fi
+          ;;
+        O)
+          # tmux-resurrect の保存のように,一覧に出ているtmux内のAIを R で開き直せるよう保存する前に,数と飛ばした数を見出しに出して確かめる
+          if (( selectable )); then
+            __plan_save
+            confirm_action=save
+          fi
+          ;;
+        R)
+          # O で保存したAIを $TMUX_AI_SESSION のセッション(無ければ作る)に開き直す前に,数と飛ばした数を見出しに出して確かめる
+          if (( selectable )); then
+            __plan_restore
+            confirm_action=restore
           fi
           ;;
       esac
