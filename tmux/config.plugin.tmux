@@ -6,9 +6,11 @@ set -g @tpm-update 'U'
 set -g @tpm-clean 'C'
 
 # resurrect
-set -g @resurrect-save 'C-o'
-set -g @resurrect-restore 'C-r'
+set -g @resurrect-save 'User0'
+set -g @resurrect-restore 'User1'
 set -g @resurrect-dir ~/.cache/tmux/resurrect
+bind C-o confirm-before -p 'save tmux sessions? (y/n)' 'switch-client -T prefix ; send-keys -K User0'
+bind C-r confirm-before -p 'restore tmux sessions? (y/n)' 'switch-client -T prefix ; send-keys -K User1'
 
 # yank
 # YはコピーしてCopy Modeを続けるキーに使うため,デフォルトのYをpへ移す
