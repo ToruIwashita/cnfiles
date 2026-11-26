@@ -843,7 +843,7 @@ __browse_repo() {
   (
     # 描き手のEXITのtrap(後片付け)を裏で走らせないよう外す(__render_loop と同じ)
     trap - EXIT INT TERM HUP WINCH
-    cd -- "$dir" && git rev-parse >/dev/null 2>&1 && gh browse >/dev/null 2>&1
+    cd -- "$dir" 2>/dev/null && git rev-parse >/dev/null 2>&1 && gh browse >/dev/null 2>&1
   ) &!
 }
 
