@@ -164,3 +164,5 @@ bind 'C-;' run-shell 'scroll-tmux-to-last-reply #{pane_id}'
 # session-window-changedはselect/next/previous/last等すべてのカレントwindow変更で発火する
 set-hook -g session-window-changed 'run-shell "ai-agent-state --focus-reset #{window_id}"'
 set-hook -g client-session-changed 'run-shell "ai-agent-state --focus-reset #{window_id}"'
+# 端末にフォーカスが戻った時も,その端末のカレントwindowを見たとみなす(完了は見ている端末で終えた時だけidleにするため)
+set-hook -g client-focus-in 'run-shell "ai-agent-state --focus-reset #{window_id}"'

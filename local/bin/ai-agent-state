@@ -108,14 +108,15 @@ __resolve_state() {
   esac
 }
 
-# ターン終了時の遷移先を返す(完了したpaneをユーザーが見ている(attached+カレントwindow+フォーカス中pane)なら確認済みとしてidle扱い)
+# ターン終了時の遷移先を返す(完了したpaneをユーザーが見ている(フォーカスのある端末のカレントwindowのフォーカス中pane)なら確認済みとしてidle扱い)
 # window粒度だと同一window内の別paneで動くサブエージェントの完了までidle扱いになるためpaneのフォーカスも条件に含める
+# 端末を複数つないでいると,裏の端末に表示されているだけのpaneも見ている扱いになるため,端末のフォーカス(focus-events)も条件に含める
 # tmux外(sid-<session_id>)は見ているかを確かめようが無いのでいつもdone
 __stop_state_for_pane() {
   local key
   key=$1
 
-  if [[ $key == %* && $(tmux display-message -p -t "$key" '#{?#{&&:#{pane_active},#{&&:#{window_active},#{session_attached}}},1,0}' 2>/dev/null) == 1 ]]; then
+  if [[ $key == %* && $'\n'$(tmux list-clients -F '#{?#{m:*focused*,#{client_flags}},#{pane_id},}' 2>/dev/null)$'\n' == *$'\n'$key$'\n'* ]]; then
     print idle
   else
     print done
