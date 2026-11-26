@@ -36,10 +36,10 @@ agent_keys=()
 typeset -A target_of agent_prio
 # キーの説明は1行にまとめると14インチの画面のウィンドウ(107桁)で見切れるため,3つに分けて ? を押すごとに順に見出しへ出す
 # 時刻はいつもの見出し(__render_title)にだけ出し,ここの説明は時刻に代えて出す(show_keys は出している方の番号,0はいつもの見出し)
-# (区切りは空白1つにし,C-n/C-p は C-n/p と縮める,見出しの幅はいつもの97桁に対して101桁・92桁)
+# (区切りは空白1つにし,C-n/C-p は C-n/p と縮める,見出しの幅はいつもの97桁に対して104桁・93桁)
 key_help=(
-  'C-n/p:select C-s:open-close C-k:open-below C-;:reply C-l:open-dir C-g:clear ?:other-keys'
-  'e:restart E:restart-all x:exit X:exit-all O:save-all R:restore-all ?:other-keys'
+  'C-n/p:select C-s:open-close C-k:open-below C-;:reply C-l:open-dir C-y:copy-target C-u:clear'
+  'e:restart E:restart-all x:exit X:exit-all O:save-all R:restore-all G:browse-repo'
 )
 show_keys=0
 # 一覧の下の作業の見える化(WORKSPACE・OPS.LOG・SYSTEM)は,起動時は出さず a を押した時だけ出す
@@ -822,6 +822,29 @@ __jump() {
     -e 'end tell' \
     -e 'end run' \
     "$client_tty" >/dev/null 2>&1 || true
+}
+
+# 選んだペインの TARGET(ai-session:4.1 のような場所,下に開いている時に付く ▼ は除く)を,tmux のバッファとクリップボードに写す
+__copy_target() {
+  local target
+  target=${${target_of[$1]:-}#▼ }
+  [[ -n $target ]] || return 0
+  tmux set-buffer -- "$target" 2>/dev/null || true
+  print -rn -- "$target" | pbcopy 2>/dev/null || true
+  tmux display-message "Copied: ${target//\#/##}" 2>/dev/null || true
+}
+
+# 選んだペインの作業ディレクトリ(DIR)のリポジトリを,zsh の C-s,g (immediate-gh-browse) と同じく git の中の時だけ gh browse で開く
+# 画面を乱さないよう出力は捨て,開き終わるのを待たないよう裏で動かす
+__browse_repo() {
+  local dir
+  dir=$(tmux display -p -t "$1" '#{pane_current_path}' 2>/dev/null || true)
+  [[ -n $dir ]] || return 0
+  (
+    # 描き手のEXITのtrap(後片付け)を裏で走らせないよう外す(__render_loop と同じ)
+    trap - EXIT INT TERM HUP WINCH
+    cd -- "$dir" && git rev-parse >/dev/null 2>&1 && gh browse >/dev/null 2>&1
+  ) &!
 }
 
 # 選んだペインの作業ディレクトリ(DIR)で,このai-bridgeのセッションに新しいウィンドウを開いて移る
@@ -2705,9 +2728,12 @@ ctl_file=$work_dir/ctl
 # 手元で中身を変えた時に,裏ですぐ組み立てさせた一覧を受け取る場所
 quick_file=$work_dir/quick
 __write_ctl
+# C-y は macOS の端末では遅延サスペンド(dsusp)に割り当てられていて,読んだ時点でこのai-bridgeが止まるため,動いている間だけ外す
+stty_saved=$(stty -g 2>/dev/null || true)
+stty dsusp undef 2>/dev/null || true
 # ペインを閉じた時は描き直しや停止が失敗し得るが,set -e で後片付けが途中で止まらないよう失敗しても続ける
 # 拡張キーは止めずに終えると,閉じた後のシェルにも Shift+Enter 等が拡張キーの並びのまま届くため止める
-trap '__undo_swap || true; [[ -z $render_pid ]] || kill $render_pid 2>/dev/null || true; rm -rf -- "$work_dir"; printf "\e[?2026l\e[?1004l\e[>4m\e[?7h\e[?25h\e[?1049l"' EXIT
+trap '__undo_swap || true; [[ -z $render_pid ]] || kill $render_pid 2>/dev/null || true; rm -rf -- "$work_dir"; [[ -z $stty_saved ]] || stty "$stty_saved" 2>/dev/null || true; printf "\e[?2026l\e[?1004l\e[>4m\e[?7h\e[?25h\e[?1049l"' EXIT
 trap 'exit 0' INT TERM HUP
 # ペインの大きさが変わったら,次のコマで高さを聞き直す
 trap 'size_stale=1' WINCH
@@ -2887,7 +2913,17 @@ while :; do
             __open_dir_window "$selected_id"
           fi
           ;;
-        $'\x07') # Ctrl+g
+        $'\x19') # Ctrl+y
+          if (( selectable )) && [[ -n $selected_id ]]; then
+            __copy_target "$selected_id"
+          fi
+          ;;
+        G)
+          if (( selectable )) && [[ -n $selected_id ]]; then
+            __browse_repo "$selected_id"
+          fi
+          ;;
+        $'\x15') # Ctrl+u
           selected_id=''
           ;;
         '?')
