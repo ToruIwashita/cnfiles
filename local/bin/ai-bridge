@@ -34,9 +34,9 @@ split_once=0
 # 一覧の下の作業の見える化で使う,一覧に出ているAIのキー(並び順)・TARGET・優先度
 agent_keys=()
 typeset -A target_of agent_prio
-# 見出しの時刻と並べると狭いペインで見切れるため,キーの説明は ? を押した時だけ時刻に代えて出す
-# 1行にまとめると121桁になり14インチの画面のペインで見切れたため,2つに分けて ? を押すごとに順に出す(show_keys は出している方の番号,0は時刻)
-# (区切りは空白1つにし,C-n/C-p は C-n/p と縮め,見出しの AI Bridge と括弧を付けても,いつもの見出し(97桁)より短い88桁に収める)
+# 見出しにいつも出すキーと並べると狭いペインで見切れるため,ほかのキーの説明は ? を押した時だけ,見出しの括弧の中を差し替えて出す(時刻はいつも出す)
+# 1行にまとめると121桁になり14インチの画面のペインで見切れたため,2つに分けて ? を押すごとに順に出す(show_keys は出している方の番号,0はいつもの見出し)
+# (区切りは空白1つにし,C-n/C-p は C-n/p と縮める,見出しの幅はいつもの97桁に対して68桁・98桁)
 # (Esc:quit と r・R・x・X はいつも出している見出しの方に書く)
 key_help=(
   'd/C-d:new Space:saved \:edit-saved Enter:jump'
@@ -888,52 +888,146 @@ __start_agent_window() {
   launched_id=$bottom
 }
 
-# 保存済みのセッションを zsh の C-s,Space (peco-resume-ai-agent-session) と同じ選び方(peco で選び,Model と Effort を選ぶ)で選ばせ,
-# 決まった再開のコマンド(選んだセッションの場所への cd 付き)を __start_agent_window で起動する
-# ウィジェットには手を入れず,小窓の zsh にだけ読ませる設定(__write_popup_zshrc)で,入力欄の実行を書き出しに差し替える
+# 保存済みのセッションを選ぶ小窓へ渡す設定(env.zsh)の名前
+# 小窓は tmux サーバーの環境変数で動くため,このai-bridgeの値を渡す(d・C-d の AI_AGENT_WITH_OPT 等と同じく,ai-bridgeを起動した時の値を使う)
+saved_session_vars=(
+  AI_AGENT_SESSIONS_FILE_PATH
+  AI_AGENT_SESSION_CLAUDE_COMMAND AI_AGENT_SESSION_CLAUDE_MODELS AI_AGENT_SESSION_CLAUDE_EFFORTS
+  AI_AGENT_SESSION_CODEX_COMMAND AI_AGENT_SESSION_CODEX_MODELS AI_AGENT_SESSION_CODEX_EFFORTS
+  EDITOR
+)
+
+# このファイルの関数 $1 を小窓の zsh で動かし,書き出した結果を REPLY に入れる($1 が使う関数は $2 以降に並べて一緒に渡す)
+__popup_saved_session() {
+  local name
+  local -a envs
+
+  for name in "${saved_session_vars[@]}"; do
+    envs+=("$name=${(P)name-}")
+  done
+  __popup_pick "$work_dir/popup_out" env "${envs[@]}" zsh -c "$(functions "$@"); $1"
+}
+
+# zsh の C-s,Space (peco-resume-ai-agent-session) と同じく,保存済みのセッションを選ばせ,決まった再開のコマンドを __start_agent_window で起動する
 __start_saved_agent() {
-  __write_popup_zshrc
-  __popup_pick "$work_dir/popup_out" env "ZDOTDIR=$work_dir/zdotdir" AI_BRIDGE_POPUP_WIDGET=peco-resume-ai-agent-session "${SHELL:-zsh}" -i
+  __popup_saved_session __pick_saved_session __select_saved_options __popup_error
   [[ -n $REPLY ]] || return 0
   __start_agent_window "$REPLY" "$PWD"
 }
 
 # zsh の C-s,\ (peco-edit-ai-agent-session) と同じく,保存済みのセッションを選ばせ,一覧のファイルのその行をエディタで開く
-# 選ぶ画面と同じ設定(__write_popup_zshrc)でウィジェットが実行しようとしたエディタのコマンドを受け取り,別の小窓で実行する
 __edit_saved_session() {
-  __write_popup_zshrc
-  __popup_pick "$work_dir/popup_out" env "ZDOTDIR=$work_dir/zdotdir" AI_BRIDGE_POPUP_WIDGET=peco-edit-ai-agent-session "${SHELL:-zsh}" -i
-  [[ -n $REPLY ]] || return 0
-  tmux display-popup -E -w 90% -h 80% -d "${PWD//\#/##}" -e "PATH=$PATH" "${SHELL:-zsh}" -c "$REPLY" 2>/dev/null || true
+  __popup_saved_session __edit_saved_session_in_popup
 }
 
-# 小窓の zsh にだけ読ませる設定(ZDOTDIR に置く .zshrc)を作る
-# いつもの ~/.zshrc を読んだ後,最初のプロンプトで AI_BRIDGE_POPUP_WIDGET のウィジェットを呼び,
-# そのウィジェットが入力欄を実行しようとしたら,実行せずに入力欄を AI_BRIDGE_POPUP_OUT のファイルに書いて閉じる(取り消した時も閉じる)
-# ZDOTDIR は ~/.zshrc を読む前に戻し(補完の記録等をいつもの場所に置くため),閉じるための exit が履歴に残らないよう履歴のファイルは外す
-__write_popup_zshrc() {
-  [[ ! -f $work_dir/zdotdir/.zshrc ]] || return 0
-  mkdir -p "$work_dir/zdotdir"
-  cat >| "$work_dir/zdotdir/.zshrc" <<'EOF'
-ZDOTDIR=$HOME
-source $HOME/.zshrc
-unset HISTFILE
+# ここから __edit_saved_session_in_popup までは小窓の中で動かす(__popup_saved_session が小窓の zsh に渡す)
+# zsh のウィジェット(peco-resume-ai-agent-session・peco-edit-ai-agent-session)と zsh.d/lib/ai_agent_session.zsh の同じ処理を写したもので,
+# 記録の読み方・Model と Effort の選び方・再開のコマンドの組み立て方を zsh で変えたら,こちらも合わせる
 
-_ai-bridge-popup-accept-line() {
-  [[ -z $BUFFER || $BUFFER == exit ]] || print -r -- "$BUFFER" >| $AI_BRIDGE_POPUP_OUT
-  BUFFER=exit
-  zle .accept-line
+# 保存済みのセッションを peco で選ばせ,Model と Effort を選ばせて,選んだセッションの場所へ cd して再開するコマンドを AI_BRIDGE_POPUP_OUT に書く
+__pick_saved_session() {
+  local selected agent record session_id session_name session_dir agent_command models efforts model_option effort_option effort_config
+  local -a reply
+
+  selected=$(peco --select-1 "$AI_AGENT_SESSIONS_FILE_PATH" 2>/dev/null)
+  (( $#selected )) || return 0
+
+  agent=${${selected#\[}%%\]*}
+  record=${selected#*| }
+  if [[ $agent == "$selected" || $record == "$selected" || $record != *' - '* || $record != *@* ]]; then
+    __popup_error 'invalid session record'
+    return 1
+  fi
+  session_id=${record%% - *}
+  # セッション名自体に @ が含まれ得るため,ディレクトリ側は最後の @ で切り落とす
+  session_name=${${record#* - }%@*}
+  session_dir=${${record##*@}/#\~/$HOME}
+
+  case $agent in
+    claude)
+      agent_command=$AI_AGENT_SESSION_CLAUDE_COMMAND
+      models=$AI_AGENT_SESSION_CLAUDE_MODELS
+      efforts=$AI_AGENT_SESSION_CLAUDE_EFFORTS
+      ;;
+    codex)
+      agent_command=$AI_AGENT_SESSION_CODEX_COMMAND
+      models=$AI_AGENT_SESSION_CODEX_MODELS
+      efforts=$AI_AGENT_SESSION_CODEX_EFFORTS
+      ;;
+    *)
+      __popup_error "unsupported AI agent: $agent"
+      return 1
+      ;;
+  esac
+  if (( ! $#agent_command || ! $#models || ! $#efforts )); then
+    __popup_error "command, model or effort options are empty: $agent"
+    return 1
+  fi
+
+  __select_saved_options "Session: $session_name" Model "$models" Effort "$efforts" || return 0
+
+  if [[ ${reply[1]} != default ]]; then
+    model_option=" --model ${(q)reply[1]}"
+  fi
+  if [[ $agent == claude ]]; then
+    if [[ ${reply[2]} != default ]]; then
+      effort_option=" --effort ${(q)reply[2]}"
+    fi
+    print -r -- "cd ${(q)session_dir} && $agent_command --resume ${(q)session_id}$model_option$effort_option" >| "$AI_BRIDGE_POPUP_OUT"
+  else
+    effort_config="model_reasoning_effort=\"${reply[2]}\""
+    if [[ ${reply[2]} != default ]]; then
+      effort_option=" --config ${(q)effort_config}"
+    fi
+    print -r -- "cd ${(q)session_dir} && $agent_command resume ${(q)session_id}$model_option$effort_option" >| "$AI_BRIDGE_POPUP_OUT"
+  fi
 }
 
-_ai-bridge-popup-line-init() {
-  zle $AI_BRIDGE_POPUP_WIDGET
-  BUFFER=exit
-  zle .accept-line
+# 見出し $1 の下に「項目名 [候補 / 候補] (C-n/C-p): 選んでいる候補」を出し,C-n・C-p で候補を替えて Enter で決め,次の項目へ進む
+# $2 以降に項目名と候補(カンマ区切り)の組を並べ,決めた候補を reply に入れる(C-c で取り消す)
+__select_saved_options() {
+  local key
+  local -a options chosen
+  integer i
+
+  print -r -- "$1"
+  shift
+  while (( $# )); do
+    options=("${(@s:,:)2}")
+    i=1
+    while :; do
+      print -nr -- $'\r\e[K'"$1 [${(j: / :)options}] (C-n/C-p): ${options[i]}"
+      read -s -k 1 key || return 1
+      case $key in
+        $'\x0e') i=$(( i % ${#options} + 1 )) ;;
+        $'\x10') i=$(( (i + ${#options} - 2) % ${#options} + 1 )) ;;
+        $'\n' | $'\r') break ;;
+        $'\x03') return 1 ;;
+      esac
+    done
+    print
+    chosen+=("${options[i]}")
+    shift 2
+  done
+  reply=("${chosen[@]}")
 }
 
-zle -N accept-line _ai-bridge-popup-accept-line
-zle -N zle-line-init _ai-bridge-popup-line-init
-EOF
+# 選べなかった理由を出し,読めるようキーを押すまで小窓を閉じずに待つ
+__popup_error() {
+  print -r -- "ai-bridge: $1" 1>&2
+  read -s -k 1
+}
+
+# 保存済みのセッションを peco で選ばせ,一覧のファイルのその行をエディタで開く
+__edit_saved_session_in_popup() {
+  local selected
+  local -a lines
+
+  selected=$(peco --select-1 "$AI_AGENT_SESSIONS_FILE_PATH" 2>/dev/null)
+  (( $#selected )) || return 0
+  # セッションIDは一覧の中で重なり得るため,選んだ行そのものと同じ行を探して行番号にする
+  lines=("${(@f)$(<$AI_AGENT_SESSIONS_FILE_PATH)}")
+  ${=EDITOR:-vim} +${lines[(ie)$selected]} "$AI_AGENT_SESSIONS_FILE_PATH"
 }
 
 # ウィンドウを移ってから一覧へ戻った時に呼び,C-lで開いたウィンドウのうちシェル1つに戻っているものを全部閉じる
@@ -1560,8 +1654,8 @@ __split_rendered() {
       fi
       (( ! selectable )) || line=${(r:2:)num}$line
     elif (( ! ${#lines} && show_keys )); then
-      # ? でキーの説明を出している間は,見出しの時刻をキーの説明に差し替える
-      line="AI Bridge  (${key_help[show_keys]})"
+      # ? でキーの説明を出している間は,見出しの時刻の後ろの括弧の中をキーの説明に差し替える
+      line="${line%%  \(*}  (${key_help[show_keys]})"
     fi
     lines+=("$line")
   done
@@ -2577,7 +2671,7 @@ while :; do
           selected_id=''
           ;;
         '?')
-          # 見出しの時刻と2つに分けたキーの説明を順に切り替える
+          # 見出しの括弧の中を,いつものキーと2つに分けたキーの説明の順に切り替える
           if (( selectable )); then
             show_keys=$(( (show_keys + 1) % (${#key_help} + 1) ))
           fi
