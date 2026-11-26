@@ -4,6 +4,7 @@
 # 使い方:
 #   ai-bridge           # 自動更新表示(1秒間隔, Escで終了)
 #   ai-bridge --once    # 1回だけ出力して終了
+#   ai-bridge --session <セッション名>  # d・C-d・Space でAIを起動する先のtmuxセッションを指定する(無ければこのai-bridgeがいるセッション)
 #
 # 表示対象:
 #   tmux内のエージェント: <pane_id>.state (TARGET=セッション:window.pane)
@@ -35,10 +36,11 @@ agent_keys=()
 typeset -A target_of agent_prio
 # 見出しの時刻と並べると狭いペインで見切れるため,キーの説明は ? を押した時だけ時刻に代えて出す
 # (見出しの AI Bridge と括弧を付けても幅102桁のペインで見切れないよう,区切りは空白1つにし,C-n/C-p は C-n/p と縮める)
+# (AIを起動するキー d・C-d・Space を足して121桁になったため,それより狭いペインでは末尾が見切れる)
 # (Esc:quit と r・R・x・X はいつも出している見出しの方に書く)
-key_help='C-n/p:select C-s:open-close C-k:open-below C-;:reply C-l:open-dir Enter:jump C-g:clear'
+key_help='C-n/p:select C-s:open-close C-k:open-below C-;:reply C-l:open-dir Enter:jump C-g:clear d/C-d:new Space:saved'
 show_keys=0
-# 一覧の下の作業の見える化(WORKSPACE・OPS.LOG・SYSTEM)は,起動時は出さず Space を押した時だけ出す
+# 一覧の下の作業の見える化(WORKSPACE・OPS.LOG・SYSTEM)は,起動時は出さず a を押した時だけ出す
 show_ops=0
 # X・x(一括・選んだ1つの終了)と R・r(一括・選んだ1つの再起動)を実行する前の確かめ(出している間は見出しを確かめの文に差し替え,y で実行する)
 # confirm_action は確かめている操作で,exit か restart(確かめていない時は空)
@@ -594,10 +596,10 @@ __format_row() {
 
 # 全エージェントのデータ行を出力する
 __emit_rows() {
-  local line pane_id session win pane pane_path state agent
+  local line pane_id session win pane pane_path pane_cmd pane_title state agent
   local state_file key agent_pid agent_tty cwd mtime sep target bg_kind row_state home out
   local -a parts metas st_mtime
-  local -A meta_vals
+  local -A meta_vals started_agent
 
   # meta.json の列は,行ごとに jq を起こさないよう,全部のAIの分を1回の jq で読んでおく(__meta_columns が使う)
   # (どれかが壊れていると,jq はそこから先を読まずに止まるため,その時は使わずに行ごとに読ませる)
@@ -614,9 +616,16 @@ __emit_rows() {
     home=$(tmux display -p -t "${last_swap[2]}" '#{session_name}:#{window_index}.#{pane_index}' 2>/dev/null || true)
   fi
 
+  # このai-bridgeが d・C-d・Space で起動したペインとAIの種類(__start_agent_window が書く,--once では work_dir を作らない)
+  if [[ -n ${work_dir:-} && -r $work_dir/started ]]; then
+    for line in ${(f)"$(<"$work_dir/started")"}; do
+      started_agent[${line%% *}]=${line#* }
+    done
+  fi
+
   # tmux内(pane単位)
   sep=$'\t'
-  tmux list-panes -a -F "#{pane_id}${sep}#{session_name}${sep}#{window_index}${sep}#{pane_index}${sep}#{pane_current_path}" 2>/dev/null \
+  tmux list-panes -a -F "#{pane_id}${sep}#{session_name}${sep}#{window_index}${sep}#{pane_index}${sep}#{pane_current_path}${sep}#{pane_current_command}${sep}#{pane_title}" 2>/dev/null \
     | while IFS= read -r line; do
         parts=("${(@ps.\t.)line}")
         pane_id=${parts[1]:-}
@@ -624,15 +633,30 @@ __emit_rows() {
         win=${parts[3]:-}
         pane=${parts[4]:-}
         pane_path=${parts[5]:-}
-        [[ -n $pane_id && -f $state_dir/$pane_id.state ]] || continue
-        read -r state agent agent_pid < "$state_dir/$pane_id.state" || continue
-        zstat -A st_mtime +mtime "$state_dir/$pane_id.state" 2>/dev/null || st_mtime=($EPOCHSECONDS)
-        mtime=${st_mtime[1]}
+        pane_cmd=${parts[6]:-}
+        pane_title=${parts[7]:-}
+        [[ -n $pane_id ]] || continue
         if [[ -n $home && $pane_id == "${last_swap[1]:-}" ]]; then
           target="▼ $home"
         else
           target="${session}:${win}.${pane}"
         fi
+        if [[ ! -f $state_dir/$pane_id.state ]]; then
+          # 起動したAIは,初めてのディレクトリで出る信頼の確認がセッションの始まる前に出てフックの記録が無いため,
+          # AIが動いている(シェルに戻っていない)のに記録が無い間は判断待ちとして出す(確認が無くても,記録が書かれるまでの一瞬は判断待ちに見える)
+          # Codexは最初のプロンプトまでフックを出さないため,入力欄を出した後(ペインのタイトルを付ける,確認の画面では付けずホスト名のまま)は入力待ちとして出す
+          if [[ -n ${started_agent[$pane_id]:-} && $pane_cmd != (zsh|bash) ]]; then
+            row_state=blocked
+            if [[ ${started_agent[$pane_id]} == codex && -n $pane_title && $pane_title != "$HOST" ]]; then
+              row_state=idle
+            fi
+            __format_row "$target" "${started_agent[$pane_id]}" '' "$row_state" "${pane_path:t}" "$pane_id" $EPOCHSECONDS
+          fi
+          continue
+        fi
+        read -r state agent agent_pid < "$state_dir/$pane_id.state" || continue
+        zstat -A st_mtime +mtime "$state_dir/$pane_id.state" 2>/dev/null || st_mtime=($EPOCHSECONDS)
+        mtime=${st_mtime[1]}
 
         __format_row "$target" "$agent" "${agent_pid:-}" "$state" "${pane_path:t}" "$pane_id" "$mtime"
       done
@@ -728,13 +752,13 @@ __usage_lines_shared() {
 }
 
 # 一覧の1行目(見出しと時刻)を出力する
-# Space・Esc・r・R・x・X はキーの説明に足すと幅102桁のペインで見切れるため,いつも出している見出しの方に書く
+# a・Esc・r・R・x・X はキーの説明に足すと幅102桁のペインで見切れるため,いつも出している見出しの方に書く
 # (r・x は選んだ1つにだけ効くので,選べる時だけ書く)
 __render_title() {
   if (( ${selectable:-0} )); then
-    printf 'AI Bridge  %s  (Space:activity r:restart R:restart-all x:exit X:exit-all Esc:quit ?:other-keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Bridge  %s  (a:activity r:restart R:restart-all x:exit X:exit-all Esc:quit ?:other-keys)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   else
-    printf 'AI Bridge  %s  (Space:activity R:restart-all X:exit-all Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
+    printf 'AI Bridge  %s  (a:activity R:restart-all X:exit-all Esc:quit)\n' "$(strftime '%H:%M:%S' $EPOCHSECONDS)"
   fi
 }
 
@@ -803,6 +827,101 @@ __open_dir_window() {
   # -c はtmuxのフォーマットとして展開されるため,パスの # は ## にして文字どおりに渡す
   pane=$(tmux new-window -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 0
   dir_panes+=("$pane")
+}
+
+# tmux の小窓で $2 以降のコマンドを動かし,そのコマンドが AI_BRIDGE_POPUP_OUT のファイル($1)に書いたものを REPLY に入れる(取り消した時は空)
+# 小窓は画面の上に重ねて出すだけなので,閉じるとこのペインのフォーカスのままになる(display-popup は小窓が閉じるまで戻らない)
+# 小窓の中のコマンドはtmuxの環境で動くため,peco 等が見つかるようこのai-bridgeの PATH を渡す
+__popup_pick() {
+  local out
+  out=$1
+  shift
+
+  : >| "$out"
+  tmux display-popup -E -w 90% -h 80% -d "${PWD//\#/##}" -e "PATH=$PATH" -e "AI_BRIDGE_POPUP_OUT=$out" "$@" 2>/dev/null || true
+  REPLY=$(<"$out")
+}
+
+# zsh の C-s,_ (peco-cd-ghq-repo) と同じく ghq で管理しているリポジトリを peco で選ばせ,そこで $1 のコマンドのAIを起動する
+__start_agent_in_repo() {
+  __popup_pick "$work_dir/popup_out" "${SHELL:-zsh}" -c 'ghq list -p | peco --select-1 >| "$AI_BRIDGE_POPUP_OUT"'
+  [[ -n $REPLY ]] || return 0
+  __start_agent_window "$1" "$REPLY"
+}
+
+# AIを起動する先のセッションに prefix + a と同じ形のウィンドウ(上の30%でai-bridge,下でAI)を作り,下のペインで $1 のコマンドを実行する
+# 下のペインはこのai-bridgeが下に開く欄と同じ大きさになるため,入れ替えて開いても大きさが変わらず,描き直しで表示が崩れない
+# ウィンドウは裏に作り(-d),そのセッションを表示している端末の画面も,このペインのフォーカスも動かさない
+# コマンドは zsh の C-d 等と同じく入力欄に打って実行する(シェルの準備ができる前に打った文字も溜まって実行される,prefix + a の ai-bridge と同じ)
+__start_agent_window() {
+  local command dir session top bottom agent
+  integer height
+  command=$1
+  dir=$2
+  session=${start_session:-$(tmux display -p -t "${TMUX_PANE:-}" '#{session_name}' 2>/dev/null || true)}
+  [[ -n $session ]] || return 0
+
+  # -c はtmuxのフォーマットとして展開されるため,パスの # は ## にして文字どおりに渡す
+  top=$(tmux new-window -d -t "=${session}:" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 0
+  # prefix + a と同じく下のペインを選んだ状態にする(-d を付けないが,裏のウィンドウなので端末の画面は切り替わらない)
+  bottom=$(tmux split-window -v -t "$top" -c "${dir//\#/##}" -P -F '#{pane_id}' 2>/dev/null) || return 0
+  height=$(tmux display -p -t "$top" '#{window_height}' 2>/dev/null || print 0)
+  (( ! height )) || tmux resize-pane -t "$top" -y $(__fit_height $height) 2>/dev/null || true
+  # フックの記録が無い間も一覧に出せるよう,裏の一覧の組み立てに起動したペインとAIの種類を伝える(__emit_rows が読む)
+  if [[ " $command " == *' codex '* ]]; then
+    agent=codex
+  else
+    agent=claude
+  fi
+  print -r -- "$bottom $agent" >> "$work_dir/started"
+  tmux send-keys -t "$top" 'ai-bridge' Enter 2>/dev/null || true
+  tmux send-keys -t "$bottom" -l "$command" 2>/dev/null || true
+  tmux send-keys -t "$bottom" Enter 2>/dev/null || true
+  # 起動したAIは C-s と同じくこのai-bridgeの下に開いて見せる(フォーカスはこのペインのまま)
+  # (初めてのディレクトリで出る信頼の確認はセッションが始まる前に出るためフックの記録が無く一覧に出ず,裏のウィンドウのままだと気づけない)
+  __open_below "$bottom"
+  # 下に開いたAIを選ぶ(前に選んでいた行が残ると,C-k 等が下のAIではなくその行のAIを開くため)
+  selected_id=$bottom
+  launched_id=$bottom
+}
+
+# 保存済みのセッションを zsh の C-s,Space (peco-resume-ai-agent-session) と同じ選び方(peco で選び,Model と Effort を選ぶ)で選ばせ,
+# 決まった再開のコマンド(選んだセッションの場所への cd 付き)を __start_agent_window で起動する
+# ウィジェットには手を入れず,小窓の zsh にだけ読ませる設定(__write_popup_zshrc)で,入力欄の実行を書き出しに差し替える
+__start_saved_agent() {
+  __write_popup_zshrc
+  __popup_pick "$work_dir/popup_out" env "ZDOTDIR=$work_dir/zdotdir" AI_BRIDGE_POPUP_WIDGET=peco-resume-ai-agent-session "${SHELL:-zsh}" -i
+  [[ -n $REPLY ]] || return 0
+  __start_agent_window "$REPLY" "$PWD"
+}
+
+# 小窓の zsh にだけ読ませる設定(ZDOTDIR に置く .zshrc)を作る
+# いつもの ~/.zshrc を読んだ後,最初のプロンプトで AI_BRIDGE_POPUP_WIDGET のウィジェットを呼び,
+# そのウィジェットが入力欄を実行しようとしたら,実行せずに入力欄を AI_BRIDGE_POPUP_OUT のファイルに書いて閉じる(取り消した時も閉じる)
+# ZDOTDIR は ~/.zshrc を読む前に戻し(補完の記録等をいつもの場所に置くため),閉じるための exit が履歴に残らないよう履歴のファイルは外す
+__write_popup_zshrc() {
+  [[ ! -f $work_dir/zdotdir/.zshrc ]] || return 0
+  mkdir -p "$work_dir/zdotdir"
+  cat >| "$work_dir/zdotdir/.zshrc" <<'EOF'
+ZDOTDIR=$HOME
+source $HOME/.zshrc
+unset HISTFILE
+
+_ai-bridge-popup-accept-line() {
+  [[ -z $BUFFER || $BUFFER == exit ]] || print -r -- "$BUFFER" >| $AI_BRIDGE_POPUP_OUT
+  BUFFER=exit
+  zle .accept-line
+}
+
+_ai-bridge-popup-line-init() {
+  zle $AI_BRIDGE_POPUP_WIDGET
+  BUFFER=exit
+  zle .accept-line
+}
+
+zle -N accept-line _ai-bridge-popup-accept-line
+zle -N zle-line-init _ai-bridge-popup-line-init
+EOF
 }
 
 # ウィンドウを移ってから一覧へ戻った時に呼び,C-lで開いたウィンドウのうちシェル1つに戻っているものを全部閉じる
@@ -1384,6 +1503,7 @@ __render_loop() {
 # 未選択のC-kで開く先として,判断待ち,無ければ完了のうち一番上のペインIDを attention_id に入れる
 # 選択できる時は数字キーで選べるよう,選択できる行の頭に1〜9の番号を付ける
 # 選択中のペインがあれば目立たせ,一覧から消えていれば選択を外す
+# (ただし d・C-d・Space で起動して下に開いているAIは,AIが立ち上がって一覧に出るまでの間も選んだままにする)
 # 状態が変わった行と新しく出た行は閃光で知らせる(最初に一覧を出した時は全て新しいので光らせない)
 __split_rendered() {
   local line priority id target input_id done_id num input_priority done_priority
@@ -1444,9 +1564,10 @@ __split_rendered() {
   split_once=1
 
   if (( ! selected_line )); then
-    selected_id=''
+    [[ -n $selected_id && $selected_id == "$launched_id" && $selected_id == "${last_swap[1]:-}" ]] || selected_id=''
     return 0
   fi
+  launched_id=''
 
   lines[selected_line]=$(__highlight_selected "${lines[selected_line]}")
 }
@@ -2231,6 +2352,16 @@ __step_selection() {
   fi
 }
 
+# d・C-d・Space でAIを起動する先のtmuxセッション(--session で指定,無ければこのai-bridgeがいるセッション)
+start_session=''
+if [[ ${1:-} == --session ]]; then
+  if (( $# < 2 )) || ! tmux has-session -t "=$2" 2>/dev/null; then
+    print -r -- "ai-bridge: --session requires an existing tmux session name" 1>&2
+    exit 1
+  fi
+  start_session=$2
+fi
+
 if [[ ${1:-} == --once ]]; then
   __render | while IFS= read -r line; do print -r -- "${${${line#*$'\t'}#*$'\t'}#*$'\t'}"; done
   exit 0
@@ -2276,6 +2407,7 @@ else
   selectable=0
 fi
 selected_id=''
+launched_id=''
 scroll_top=1
 
 # 最初の一覧は裏の組み立てを待たずにその場で出す
@@ -2438,11 +2570,29 @@ while :; do
             show_keys=$(( ! show_keys ))
           fi
           ;;
-        ' ')
+        a)
           # 作業の見える化(WORKSPACE・OPS.LOG・SYSTEM)を出す・消す
           # 裏が出している間だけ SYSTEM の値を測るよう伝える(一覧の中身は変えないので世代は上げない)
           show_ops=$(( ! show_ops ))
           __write_ctl
+          ;;
+        d)
+          # zsh の C-d と同じく,メインのAI(AI_AGENT_WITH_OPT)を,ghq のリポジトリを選んでそこで起動する(選ぶ画面は小窓に出し,このペインからは動かない)
+          if (( selectable )); then
+            __start_agent_in_repo "${AI_AGENT_WITH_OPT:-claude}"
+          fi
+          ;;
+        $'\x04') # Ctrl+d
+          # zsh の C-s,C-d と同じく,サブのAI(AI_SUB_AGENT_WITH_OPT)を,ghq のリポジトリを選んでそこで起動する
+          if (( selectable )); then
+            __start_agent_in_repo "${AI_SUB_AGENT_WITH_OPT:-codex}"
+          fi
+          ;;
+        ' ')
+          # zsh の C-s,Space と同じく,保存済みのセッションを選んで起動する(選ぶ画面は小窓に出し,このペインからは動かない)
+          if (( selectable )); then
+            __start_saved_agent
+          fi
           ;;
         X)
           # 一覧に出ているtmux内のAIを一括で終了させる前に,対象と作業中と対象外(tmux外で送れない)の数を見出しに出して確かめる
