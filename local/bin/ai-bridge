@@ -914,10 +914,12 @@ __focus_below() {
 # goto-line は copy-mode-line-numbers の設定で数え方が変わるため,画面の一番上の行で cursor-up して1行ずつ上へ送る
 # 右上の位置の表示が冒頭の行に重ならないよう,1行上(返答の前の空行)を画面の一番上にする
 # 遡るのは2000行まで(最後の返答は90%点で1,654文字,画面では80行ほど)で,それより長い返答では何もしない
+# Codex は大きさが変わると画面を消して会話を描き直すため,入れ替えて開いた直後に読むと,印の行が見つからないか前の返答の印を拾う
+# 履歴の行数と量を0.1秒おきに読み,続けて同じになる(描き直しが済む)まで待つ(400行の会話で0.13秒ほどだった,長くても1秒で打ち切る)
 __scroll_to_last_reply() {
-  local pane state agent rest mark
+  local pane state agent rest mark prev cur
   local -a screen cmds
-  integer hsize n i up
+  integer hsize n i up tries
   pane=$1
 
   [[ -f $state_dir/$pane.state ]] || return 0
@@ -928,6 +930,15 @@ __scroll_to_last_reply() {
     codex) mark=• ;;
     *) return 0 ;;
   esac
+
+  if [[ $agent == codex ]]; then
+    for (( tries = 0; tries < 10; tries++ )); do
+      zselect -t 10 || true
+      cur=$(tmux display -p -t "$pane" '#{history_size} #{history_bytes}' 2>/dev/null || true)
+      [[ $cur != "$prev" ]] || break
+      prev=$cur
+    done
+  fi
 
   hsize=$(tmux display -p -t "$pane" '#{history_size}' 2>/dev/null || print 0)
   (( hsize )) || return 0
