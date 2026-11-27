@@ -1339,7 +1339,49 @@ __exit_agent() {
   done
 }
 
-# X・x で選んだAIを終了させ,シェルに戻ったらペインも閉じる(AIごとに裏で呼ぶ)
+# X・x で選んだAIをまとめて終了させ,ペインも閉じる(裏で呼び,AIごとの __exit_and_close_agent を同時に動かして終わるのを待つ)
+# セッションの最後のウィンドウまで閉じるとセッションごと無くなり,それを出していた端末が tmux から抜けてしまうため,
+# 閉じる前にAIのいるセッションへ空のウィンドウを足しておき,終わった時にほかのウィンドウが残っていれば消し,
+# 残っていなければ先頭の番号(base-index)へ移して,起動した直後と同じ空のセッションにする
+# (このai-bridgeのいるセッションと,AIのいないウィンドウがあるセッションは,そのウィンドウが残るので足さない)
+__exit_and_close_agents() {
+  local id session own base
+  local -a targets windows others
+  local -A spare
+
+  # 描き手のEXITのtrap(後片付け)を裏で走らせないよう外す(__render_loop と同じ)
+  trap - EXIT INT TERM HUP WINCH
+  own=$(tmux display -p -t "${TMUX_PANE:-}" '#{session_name}' 2>/dev/null || true)
+  for id in "$@"; do
+    targets+=("$(tmux display -p -t "$id" '#{window_id}' 2>/dev/null || true)")
+  done
+  for id in "$@"; do
+    session=$(tmux display -p -t "$id" '#{session_name}' 2>/dev/null || true)
+    [[ -n $session && $session != "$own" && -z ${spare[$session]:-} ]] || continue
+    windows=(${(f)"$(tmux list-windows -t "=$session" -F '#{window_id}' 2>/dev/null || true)"})
+    # AIのいないウィンドウ(入れ子の ${#${a:|b}} は全部引けて空の時に0にならないため,いったん配列に受けて数える)
+    others=(${windows:|targets})
+    (( ! ${#others} )) || continue
+    spare[$session]=$(tmux new-window -d -t "=${session}:" -P -F '#{window_id}' 2>/dev/null || true)
+  done
+
+  for id in "$@"; do
+    __exit_and_close_agent "$id" &
+  done
+  wait || true
+
+  for session in ${(k)spare}; do
+    [[ -n ${spare[$session]} ]] || continue
+    if [[ $(tmux list-windows -t "=$session" -F '#{window_id}' 2>/dev/null || true) != "${spare[$session]}" ]]; then
+      tmux kill-window -t "${spare[$session]}" 2>/dev/null || true
+    else
+      base=$(tmux display -p -t "${spare[$session]}" '#{base-index}' 2>/dev/null || true)
+      [[ -z $base ]] || tmux move-window -s "${spare[$session]}" -t "=${session}:$base" 2>/dev/null || true
+    fi
+  done
+}
+
+# X・x で選んだAIを1つ終了させ,シェルに戻ったらペインも閉じる(__exit_and_close_agents が裏で呼ぶ)
 # ウィンドウが上のai-bridgeと下のこのAIの2つだけ(prefix + a・t-ai-session・d・C-d・Space で作る形)なら,上のai-bridgeのペインも閉じる
 # ai-bridge はzshのスクリプトでカレントコマンドではシェルと見分けられないため,ペインの端末で ai-bridge が動いているかで見る
 # (このai-bridge自身のペインは閉じない,閉じるとまだ終了させている途中の裏の処理まで止まるため)
@@ -2897,9 +2939,7 @@ while :; do
               if (( ${#last_swap} )) && (( ${exit_targets[(Ie)${last_swap[1]}]} || ${exit_targets[(Ie)${last_swap[2]}]} )); then
                 __undo_swap
               fi
-              for id in "${exit_targets[@]}"; do
-                __exit_and_close_agent "$id" &!
-              done
+              __exit_and_close_agents "${exit_targets[@]}" &!
               ;;
             restart)
               for id in "${restart_targets[@]}"; do
