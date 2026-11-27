@@ -39,7 +39,7 @@ typeset -A target_of agent_prio
 # (区切りは空白1つにし,C-n/C-p は C-n/p と縮める,見出しの幅はいつもの97桁に対して104桁・103桁)
 key_help=(
   'C-n/p:select C-s:open-close C-k:open-below C-;:reply C-l:open-dir C-y:copy-target C-u:clear'
-  'e:restart E:restart-all x:exit X:exit-all O:save-all R:restore-all g:browse-repo G:open-pr'
+  'e:restart E:restart-all x:exit X:exit-all O:save-all R:restore-all g:browse-repo C-g:open-pr'
 )
 show_keys=0
 # 一覧の下の作業の見える化(WORKSPACE・OPS.LOG・SYSTEM)は,起動時は出さず a を押した時だけ出す
@@ -762,7 +762,7 @@ __usage_lines_shared() {
 # (選べない時は ? と選ぶ操作が使えないため,使える a・E・X・Esc だけを書く)
 __render_title() {
   if (( ${selectable:-0} )); then
-    print -r -- "AI Bridge  $(strftime '%H:%M:%S' $EPOCHSECONDS)  "'(a:activity d/C-d:new Space:select-saved \:edit-saved Esc:quit ?:other-keys)'
+    print -r -- "AI Bridge  $(strftime '%H:%M:%S' $EPOCHSECONDS)  "'(a:activity d/C-d:new m:move Space:select-saved \:edit-saved Esc:quit ?:other-keys)'
   else
     print -r -- "AI Bridge  $(strftime '%H:%M:%S' $EPOCHSECONDS)  (a:activity E:restart-all X:exit-all Esc:quit)"
   fi
@@ -847,7 +847,24 @@ __copy_target() {
   tmux display-message "Copied: ${target//\#/##}" 2>/dev/null || true
 }
 
-# 選んだペイン $1 の作業ディレクトリ(DIR)が git の中の時だけ,そこで関数 $2 を裏で動かす(g・G で使う)
+# 選んだペイン $1 の TARGET のウィンドウ(ai-session:2.1 なら ai-session:2)を,tmux の prefix + m と同じく移す先を聞いて動かす
+# 打った番号はそのウィンドウのセッションの中の番号として扱う(この一覧の端末はほかのセッションを出していて,番号だけだとそちらの番号になるため)
+# 下に開いているAIは,TARGET に出している元の場所(入れ替えた相手がいるウィンドウ)を動かす
+# ペインIDの % は聞いた答えを入れる印(%1 等)と紛れるためウィンドウIDで指し,答えを待つ間もこの一覧を止めないよう -b で聞く
+__move_window() {
+  local pane info
+
+  if [[ $1 == "${last_swap[1]:-}" ]]; then
+    pane=${last_swap[2]}
+  else
+    pane=$1
+  fi
+  info=$(tmux display -p -t "$pane" '#{window_id} #{session_name}:#{window_index}' 2>/dev/null || true)
+  [[ -n $info ]] || return 0
+  tmux command-prompt -b -p "(move-window ${${info#* }//\#/##} to)" "move-window -s ${info%% *} -t '${${info#* }%:*}:%%'" 2>/dev/null || true
+}
+
+# 選んだペイン $1 の作業ディレクトリ(DIR)が git の中の時だけ,そこで関数 $2 を裏で動かす(g・C-g で使う)
 # 画面を乱さず,gh が問い合わせのためにこのai-bridgeへのキー入力を読まないよう入出力は使わず,開き終わるのを待たない
 __run_in_repo() {
   local dir
@@ -3004,9 +3021,14 @@ while :; do
             __run_in_repo "$selected_id" __browse_repo
           fi
           ;;
-        G)
+        $'\x07') # Ctrl+g
           if (( selectable )) && [[ -n $selected_id ]]; then
             __run_in_repo "$selected_id" __open_pr
+          fi
+          ;;
+        m)
+          if (( selectable )) && [[ -n $selected_id ]]; then
+            __move_window "$selected_id"
           fi
           ;;
         $'\x15') # Ctrl+u
