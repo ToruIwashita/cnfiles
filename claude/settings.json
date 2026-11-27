@@ -296,10 +296,6 @@
           {
             "type": "command",
             "command": "ai-agent-state claude SessionEnd"
-          },
-          {
-            "type": "command",
-            "command": "ai-push-hook claude SessionEnd"
           }
         ]
       }

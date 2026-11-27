@@ -1,13 +1,12 @@
 #!/usr/bin/env zsh
 # AIエージェント(claude/codex 等)のフックから呼び,ユーザーが grant-ai-push を実行したセッションでだけ AI の push(ai-push)を通す
 #   UserPromptSubmit: 入力がスキルの呼び出し(Claude Code は /grant-ai-push・/revoke-ai-push,Codex は $grant-ai-push・$revoke-ai-push で始まる)なら,セッションの識別子の名前で許可を記録する・消す
-#   SessionEnd:       そのセッションの許可を消す
 #   PreToolUse:       コマンドの位置にある ai-push を,許可の無いセッションでは止め,許可のあるセッションでも他のコマンドと繋いだ形は止める
 # 許可はユーザーの入力からしか記録せず,session_id はエージェントが渡すフックの入力から取るため,AI のコマンドからは変えられない
 # AI が意図して回避する(tmux send-keys で入力欄に /grant-ai-push を打つ,サンドボックスの外で動くコマンドで記録を書く等)ことまでは防げない
-# 異常終了で SessionEnd が来なかった許可は残り,同じ識別子で再開したセッションだけが使う(正常終了の後の再開では許可し直しになる)
+# 許可はセッションを終えても消さず,revoke-ai-push で取り消すまで残す(同じ識別子で再開したセッションは許可したまま使う)
 # AI_AGENTS_CONFIG_DIR_PATH は許可が関わる時(/grant-ai-push・/revoke-ai-push の入力・ai-push の実行)だけ求め,ほかの入力・コマンドでは何もしない
-# 引数: <agent> <UserPromptSubmit|SessionEnd|PreToolUse>(stdin: フックの入力 JSON,どのエージェントも session_id・prompt・tool_input を同じ名前で渡す)
+# 引数: <agent> <UserPromptSubmit|PreToolUse>(stdin: フックの入力 JSON,どのエージェントも session_id・prompt・tool_input を同じ名前で渡す)
 set -eu
 
 agent=${1-}
@@ -46,11 +45,6 @@ case $event in
     else
       rm -f -- $grant
       print -r -- "ユーザーが revoke-ai-push を実行したため,このセッションはセッション内でユーザーが AI の判断による push を許可していない状態に戻り,AI の判断では push せず ai-push も実行できない"
-    fi
-    ;;
-  SessionEnd)
-    if [[ -n $session_id && -n ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
-      rm -f -- $AI_AGENTS_CONFIG_DIR_PATH/ai_push/grants/$session_id
     fi
     ;;
   PreToolUse)

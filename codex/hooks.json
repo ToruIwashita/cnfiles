@@ -91,11 +91,6 @@
             "type": "command",
             "command": "ai-agent-state codex SessionEnd",
             "timeout": 3
-          },
-          {
-            "type": "command",
-            "command": "ai-push-hook codex SessionEnd",
-            "timeout": 3
           }
         ]
       }

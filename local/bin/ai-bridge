@@ -34,16 +34,19 @@ split_once=0
 # 一覧の下の作業の見える化で使う,一覧に出ているAIのキー(並び順)・TARGET・優先度
 agent_keys=()
 typeset -A target_of agent_prio
-# キーの説明は1行にまとめると14インチの画面のウィンドウ(107桁)で見切れるため,3つに分けて ? を押すごとに順に見出しへ出す
+# キーの説明は1行にまとめると14インチの画面のウィンドウ(107桁)で見切れるため,4つに分けて ? を押すごとに順に見出しへ出す
 # 時刻はいつもの見出し(__render_title)にだけ出し,ここの説明は時刻に代えて出す(show_keys は出している方の番号,0はいつもの見出し)
-# (区切りは空白1つにし,C-n/C-p は C-n/p と縮める,見出しの幅はいつもの97桁に対して104桁・103桁)
+# (区切りは空白1つにし,C-n/C-p は C-n/p と縮める,見出しの幅はいつもの104桁に対して104桁・105桁で,i・C-i はどれに足しても107桁を超えるため4つ目に分ける)
 key_help=(
   'C-n/p:select C-s:open-close C-k:open-below C-;:reply C-l:open-dir C-y:copy-target C-u:clear'
   'e:restart E:restart-all x:exit X:exit-all O:save-all R:restore-all g:browse-repo C-g:open-pr'
+  'i:add-info C-i:info'
 )
 show_keys=0
 # 一覧の下の作業の見える化(WORKSPACE・OPS.LOG・SYSTEM)は,起動時は出さず a を押した時だけ出す
 show_ops=0
+# C-i を押している間は,一覧の MODEL から後ろの列の代わりに,i で書いたメモ(INFO)を出す
+info_view=0
 # X・x(一括・選んだ1つの終了)・E・e(一括・選んだ1つの再起動)・O(保存)・R(復元)を実行する前の確かめ(出している間は見出しを確かめの文に差し替え,y で実行する)
 # confirm_action は確かめている操作で,exit・restart・save・restore のどれか(確かめていない時は空)
 confirm_action=''
@@ -58,6 +61,9 @@ typeset -A restart_command
 save_lines=()
 restore_lines=()
 resurrect_file=$AI_AGENTS_CONFIG_DIR_PATH/resurrect.tsv
+# i で書いたメモの置き場(AIのセッションIDごとに1つのファイルに置き,中身が空ならメモ無し)
+# セッションIDごとにするのは,E・e の再起動や R の復元,保存済みのセッションの起動で開き直しても同じセッションIDで再開され,メモが付いてくるため
+info_dir=$AI_AGENTS_CONFIG_DIR_PATH/info
 
 # 一覧の行を作る小さな関数は,行ごとに何度も呼ぶため,サブシェルを起こさないよう結果を REPLY に入れる
 
@@ -499,14 +505,14 @@ __claude_installed_version() {
   fi
 }
 
-# meta.json から表示列に使う値を取る jq の式(モデル名・context の使用率・トークン数・動いている版)
+# meta.json から表示列に使う値を取る jq の式(モデル名・context の使用率・トークン数・動いている版・メモを引くセッションID)
 # モデル名の括弧付き補足("Opus 4.8 (1M context)"等)は列に収まらないため除去する
-meta_jq='[((.model // "-") | split(" (")[0]), (.cx_pct // 0 | floor), (.cx_tok // 0), (.version // "")]'
+meta_jq='[((.model // "-") | split(" (")[0]), (.cx_pct // 0 | floor), (.cx_tok // 0), (.version // ""), (.session_id // "")]'
 
-# メタ情報の表示列を出力する(形式: "<model>\t<context>\t<古い版なら1,それ以外は0>",$2はエージェント種別)
+# メタ情報の表示列を出力する(形式: "<model>\t<context>\t<古い版なら1,それ以外は0>\t<セッションID>",$2はエージェント種別)
 # contextは使用率で色分けし,色指定を幅に数えて列がずれないよう幅をそろえてから色で囲む
 __meta_columns() {
-  local meta_file values model cx_pct cx_tok version outdated color
+  local meta_file values model cx_pct cx_tok version outdated color session_id
   local -a fields
   meta_file=$state_dir/$1.meta.json
 
@@ -523,6 +529,7 @@ __meta_columns() {
     cx_pct=${fields[2]:-0}
     cx_tok=${fields[3]:-0}
     version=${fields[4]:-}
+    session_id=${fields[5]:-}
     # 動いている版(ステータスラインが書いた version)がインストール済みの版と違えば,E・e で再起動すると新しい版になる印を付ける
     outdated=0
     if [[ $2 == claude && -n $version && -n ${claude_installed:-} && $version != "$claude_installed" ]]; then
@@ -531,18 +538,20 @@ __meta_columns() {
     __usage_color "$cx_pct"
     color=$REPLY
     __fmt_tokens "$cx_tok"
-    printf '%s\t\e[%sm%-9s\e[0m\t%s' "$model" "$color" "${cx_pct}% $REPLY" "$outdated"
+    printf '%s\t\e[%sm%-9s\e[0m\t%s\t%s' "$model" "$color" "${cx_pct}% $REPLY" "$outdated" "$session_id"
   else
-    printf -- '-\t%-9s\t0' -
+    printf -- '-\t%-9s\t0\t' -
   fi
 }
 
-# 1行分の表示を整形する(形式: "<priority>\t<mtime>\t<キー>\t<TARGET>\t<整形済み表示行>")
+# 1行分の表示を整形する(形式: "<priority>\t<mtime>\t<キー>\t<TARGET>\t<整形済み表示行>\t<メモ>")
 # キーはtmux内ならペインID,tmux外なら sid-<session_id> で,選べる(ジャンプできる)のはペインIDの行だけ
 # 一覧の下の作業の見える化でAIを同じ名前で示すため,TARGETも添える(並びは状態で入れ替わるので行番号は使えない)
+# C-i の INFO の表示に替えるのは描き手なので,i で書いたメモも添える(タブと改行は区切りと紛れないよう空白にする)
 __format_row() {
   local target agent agent_pid state dir key mtime meta model ctx outdated model_col wait_label target_col open_mark
-  local prio label dir_col last
+  local prio label dir_col last session_id info
+  local -a fields
   target=$1
   agent=$2
   agent_pid=$3
@@ -552,9 +561,18 @@ __format_row() {
   mtime=$7
 
   meta=$(__meta_columns "$key" "$agent")
-  model=${meta%%$'\t'*}
-  ctx=${${meta#*$'\t'}%$'\t'*}
-  outdated=${meta##*$'\t'}
+  fields=("${(@ps.\t.)meta}")
+  model=${fields[1]}
+  ctx=${fields[2]}
+  outdated=${fields[3]}
+  # tmux外のAIは,meta.json にセッションIDが無くてもキーに入っている
+  session_id=${fields[4]:-}
+  [[ -n $session_id || $key != sid-* ]] || session_id=${key#sid-}
+  info=''
+  if [[ -n $session_id && -s $info_dir/$session_id ]]; then
+    info=$(<"$info_dir/$session_id")
+    info=${info//[$'\t\n']/ }
+  fi
 
   # 古い版の印(↑)は,下に開いている印と同じく,幅をそろえた後で色を付ける
   if [[ $outdated == 1 ]]; then
@@ -585,7 +603,7 @@ __format_row() {
   __fmt_last "$mtime"
   last=$REPLY
 
-  printf '%s\t%s\t%s\t%s\t%-7s %s %-7s %s %s %s %s %s\n' \
+  printf '%s\t%s\t%s\t%s\t%-7s %s %-7s %s %s %s %s %s\t%s\n' \
     "$prio" \
     "$mtime" \
     "$key" \
@@ -597,7 +615,8 @@ __format_row() {
     "$dir_col" \
     "$model_col" \
     "$ctx" \
-    "$last"
+    "$last" \
+    "$info"
 }
 
 # 全エージェントのデータ行を出力する
@@ -758,7 +777,7 @@ __usage_lines_shared() {
 }
 
 # 一覧の1行目(見出しと時刻)を出力する
-# 選べる時のキーの説明は3つに分けて ? で切り替え(key_help),ここにはその1つ目を時刻と並べて書く
+# 選べる時のキーの説明は4つに分けて ? で切り替え(key_help),ここにはその1つ目を時刻と並べて書く
 # (選べない時は ? と選ぶ操作が使えないため,使える a・E・X・Esc だけを書く)
 __render_title() {
   if (( ${selectable:-0} )); then
@@ -862,6 +881,33 @@ __move_window() {
   info=$(tmux display -p -t "$pane" '#{window_id} #{session_name}:#{window_index}' 2>/dev/null || true)
   [[ -n $info ]] || return 0
   tmux command-prompt -b -p "(move-window ${${info#* }//\#/##} to)" "move-window -s ${info%% *} -t '${${info#* }%:*}:%%'" 2>/dev/null || true
+}
+
+# 選んだペイン $1 のAIのメモ(INFO)を tmux の入力欄で書かせ,info_dir のそのAIのセッションIDのファイルに置く(今のメモを入れておき,空で確定すると消える)
+# 置いたメモは,どの ai-bridge も1秒ごとの一覧の組み立てで読む
+# 答えを待つ間もこの一覧を止めないよう裏で聞き,-b を付けずに答えるまで待たせて,テンプレートの display-message -l -p で答えを文字どおり受け取る
+# (取り消した時は何も出ないので,空で確定した時と見分けるため答えの前に = を付ける)
+# (入力欄に入れておく今のメモは書式として展開されるため # は ## にし,メモのカンマで区切られないよう -l を付ける)
+__edit_info() {
+  local target session_id memo tmp answer
+
+  target=${target_of[$1]:-$1}
+  session_id=$(jq -r '.session_id // ""' "$state_dir/$1.meta.json" 2>/dev/null || true)
+  if [[ -z $session_id ]]; then
+    tmux display-message "Cannot add info to ${target//\#/##} (no session ID yet)" 2>/dev/null || true
+    return 0
+  fi
+  memo=''
+  [[ ! -s $info_dir/$session_id ]] || memo=$(<"$info_dir/$session_id")
+  (
+    # 描き手のEXITのtrap(後片付け)を裏で走らせないよう外す(__render_loop と同じ)
+    trap - EXIT INT TERM HUP WINCH
+    answer=$(tmux command-prompt -l -I "${memo//\#/##}" -p "(info ${target//\#/##}) " 'display-message -l -p "=%%%"') || exit 0
+    # = で始まる語は zsh がコマンドの場所に置き換える(EQUALS)ため,= は引用符で囲む
+    [[ $answer == '='* ]] || exit 0
+    tmp=$info_dir/.$session_id.$EPOCHREALTIME
+    mkdir -p "$info_dir" && print -rn -- "${answer#=}" >| "$tmp" && zf_mv -f "$tmp" "$info_dir/$session_id"
+  ) </dev/null >/dev/null 2>&1 &!
 }
 
 # 選んだペイン $1 の作業ディレクトリ(DIR)が git の中の時だけ,そこで関数 $2 を裏で動かす(g・C-g で使う)
@@ -1983,8 +2029,9 @@ __render_loop() {
 # 選択中のペインがあれば目立たせ,一覧から消えていれば選択を外す
 # (ただし d・C-d・Space で起動して下に開いているAIは,AIが立ち上がって一覧に出るまでの間も選んだままにする)
 # 状態が変わった行と新しく出た行は閃光で知らせる(最初に一覧を出した時は全て新しいので光らせない)
+# 行の後ろに添えたメモ(__format_row)も外し,C-i で INFO の表示にしている時は,MODEL から後ろの列をメモに替える
 __split_rendered() {
-  local line priority id target input_id done_id num input_priority done_priority
+  local line priority id target input_id done_id num input_priority done_priority info header
   local -A states
 
   lines=()
@@ -2011,6 +2058,12 @@ __split_rendered() {
       line=${line#*$'\t'}
       target=${line%%$'\t'*}
       line=${line#*$'\t'}
+      info=${line#*$'\t'}
+      line=${line%%$'\t'*}
+      if (( info_view )); then
+        __info_row "$line" "$info"
+        line=$REPLY
+      fi
       agent_keys+=("$id")
       target_of[$id]=$target
       agent_prio[$id]=$priority
@@ -2032,6 +2085,11 @@ __split_rendered() {
     lines+=("$line")
   done
   attention_id=${input_id:-$done_id}
+  # INFO の表示では,列の名前(データ行の1つ上の行)も MODEL から後ろを INFO にする
+  if (( info_view && first_row > 1 )); then
+    printf -v header '%*s%-7s %-23s %-7s %-14s %-22s %s' $(( selectable ? 2 : 0 )) '' PID TARGET AGENT STATUS DIR INFO
+    lines[first_row-1]=$header
+  fi
 
   if (( split_once )); then
     for id in ${(k)states}; do
@@ -2048,6 +2106,25 @@ __split_rendered() {
   launched_id=''
 
   lines[selected_line]=$(__highlight_selected "${lines[selected_line]}")
+}
+
+# INFO の表示の行(一覧の行の DIR までの78桁に,MODEL から後ろの列の代わりにメモを続ける)
+# メモはペインの右端の1桁手前まで使い,長いものは … で切り,メモの無い行は暗い - にする
+# (幅は描き手が描く時に聞き直したペインの幅で,選べる時は行の頭の番号の2桁の分を引く)
+__info_row() { # $1=一覧の行 $2=メモ → REPLY
+  local prefix
+  integer width
+
+  __vis_cut "$1" 78
+  prefix=$REPLY
+  width=$(( pane_cols - (selectable ? 2 : 0) - 79 ))
+  (( width >= 8 )) || width=8
+  if [[ -n $2 ]]; then
+    __clip "$2" $width
+    REPLY=$prefix$'\e[38;5;229m'$REPLY$'\e[0m'
+  else
+    REPLY=$prefix$'\e[38;5;240m-\e[0m'
+  fi
 }
 
 # 選択中の行に暗い紺を行末まで敷き,文字の色は残す
@@ -2841,7 +2918,8 @@ if [[ ${1:-} == --session ]]; then
 fi
 
 if [[ ${1:-} == --once ]]; then
-  __render | while IFS= read -r line; do print -r -- "${${${line#*$'\t'}#*$'\t'}#*$'\t'}"; done
+  # データ行は,頭の優先度・キー・TARGETと,後ろに添えたメモを外して出す
+  __render | while IFS= read -r line; do print -r -- "${${${${line#*$'\t'}#*$'\t'}#*$'\t'}%%$'\t'*}"; done
   exit 0
 fi
 
@@ -2873,8 +2951,10 @@ stty_saved=$(stty -g 2>/dev/null || true)
 stty dsusp undef 2>/dev/null || true
 # ペインを閉じた時は描き直しや停止が失敗し得るが,set -e で後片付けが途中で止まらないよう失敗しても続ける
 # 拡張キーは止めずに終えると,閉じた後のシェルにも Shift+Enter 等が拡張キーの並びのまま届くため止める
-trap '__undo_swap || true; [[ -z $render_pid ]] || kill $render_pid 2>/dev/null || true; rm -rf -- "$work_dir"; [[ -z $stty_saved ]] || stty "$stty_saved" 2>/dev/null || true; printf "\e[?2026l\e[?1004l\e[>4m\e[?7h\e[?25h\e[?1049l"' EXIT
-trap 'exit 0' INT TERM HUP
+# シェルから起動したペインを閉じた時(x・X が上のai-bridgeを閉じる時も)は,後片付けの途中にもシグナルが届いて rm が止められ,一時ディレクトリが残るため,
+# 1つ目のシグナルを受けた時と後片付けの初めに INT・TERM・HUP を無視する(無視は後片付けで起こすコマンドにも引き継がれる)
+trap 'trap "" INT TERM HUP; __undo_swap || true; [[ -z $render_pid ]] || kill $render_pid 2>/dev/null || true; rm -rf -- "$work_dir"; [[ -z $stty_saved ]] || stty "$stty_saved" 2>/dev/null || true; printf "\e[?2026l\e[?1004l\e[>4m\e[?7h\e[?25h\e[?1049l"' EXIT
+trap 'trap "" INT TERM HUP; exit 0' INT TERM HUP
 # ペインの大きさが変わったら,次のコマで高さを聞き直す
 trap 'size_stale=1' WINCH
 # C-; は普段 ; として届き見分けられないため,tmux に拡張キーのモード1を頼み \e[27;5;59~ で受け取る
@@ -3071,11 +3151,22 @@ while :; do
             __move_window "$selected_id"
           fi
           ;;
+        i)
+          if (( selectable )) && [[ -n $selected_id ]]; then
+            __edit_info "$selected_id"
+          fi
+          ;;
+        $'\t') # Ctrl+i(端末では Tab と同じものが届く)
+          # MODEL から後ろの列と,i で書いたメモ(INFO)を切り替える(一覧の中身は変えないので,この後の __split_rendered で作り直すだけ)
+          if (( selectable )); then
+            info_view=$(( ! info_view ))
+          fi
+          ;;
         $'\x15') # Ctrl+u
           selected_id=''
           ;;
         '?')
-          # 見出しを,いつものもの(時刻つき)と key_help の2つのキーの説明の順に切り替える
+          # 見出しを,いつものもの(時刻つき)と key_help の3つのキーの説明の順に切り替える
           if (( selectable )); then
             show_keys=$(( (show_keys + 1) % (${#key_help} + 1) ))
           fi
