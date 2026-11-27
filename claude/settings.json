@@ -11,7 +11,6 @@
   "permissions": {
     "allow": [
       "Bash(zsh:*)",
-      "Bash(tmux:*)",
       "Bash(echo:*)",
       "Bash(ls:*)",
       "Bash(find:*)",
@@ -324,6 +323,10 @@
     "filesystem": {
       "allowWrite": [
         "~/.local/share/ai_agents/"
+      ],
+      "denyWrite": [
+        "~/.cnfiles/local/bin/ai-push",
+        "~/.cnfiles/local/bin/ai-push-hook"
       ]
     },
     "credentials": {
