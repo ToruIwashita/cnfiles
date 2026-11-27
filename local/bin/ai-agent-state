@@ -24,8 +24,7 @@ zmodload zsh/datetime
 # 作業ログが大きくなったかを外部コマンドを使わずに調べる
 zmodload -F zsh/stat b:zstat
 
-# 状態の置き場(AI_AGENTS_STATE_DIR_PATH,env.zsh に足す前に起動したシェルのAIでは今までの置き場の AI_AGENTS_CONFIG_DIR_PATH)
-state_root=${AI_AGENTS_STATE_DIR_PATH:-${AI_AGENTS_CONFIG_DIR_PATH:-}}
+state_root=${AI_AGENTS_STATE_DIR_PATH:-}
 if [[ -z $state_root ]]; then
   print "$0: AI_AGENTS_STATE_DIR_PATH is not set"
   exit 1

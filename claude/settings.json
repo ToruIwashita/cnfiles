@@ -99,7 +99,6 @@
       "Read(~/**/.aws/**)",
       "Read(~/**/secrets/**)",
       "Read(~/prods/**)",
-      "Read(~/.config/ai_agents/ai_push/**)",
       "Read(~/.local/state/ai_agents/ai_push/**)",
       "Edit(~/**/.env*)",
       "Edit(~/**/env.*)",
@@ -117,7 +116,6 @@
       "Edit(~/**/.aws/**)",
       "Edit(~/**/secrets/**)",
       "Edit(~/prods/**)",
-      "Edit(~/.config/ai_agents/ai_push/**)",
       "Edit(~/.local/state/ai_agents/ai_push/**)",
       "mcp__claude_ai_Claude_Docs"
     ],

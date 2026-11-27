@@ -97,7 +97,6 @@ extends = ":workspace"
 ".cnfiles/claude/CLAUDE.md" = "read"
 ".cnfiles/local/bin/ai-push" = "read"
 ".cnfiles/local/bin/ai-push-hook" = "read"
-".config/ai_agents/ai_push/**" = "deny"
 ".local/state/ai_agents/ai_push/**" = "deny"
 
 [permissions.default-local.filesystem.":workspace_roots"]

@@ -5,15 +5,14 @@
 # 許可はユーザーの入力からしか記録せず,session_id はエージェントが渡すフックの入力から取るため,AI のコマンドからは変えられない
 # AI が意図して回避する(tmux send-keys で入力欄に /grant-ai-push を打つ,サンドボックスの外で動くコマンドで記録を書く等)ことまでは防げない
 # 許可はセッションを終えても消さず,revoke-ai-push で取り消すまで残す(同じ識別子で再開したセッションは許可したまま使う)
-# 許可の記録の置き場(状態の置き場の AI_AGENTS_STATE_DIR_PATH,env.zsh に足す前に起動したシェルでは今までの置き場の AI_AGENTS_CONFIG_DIR_PATH)は,
-# 許可が関わる時(/grant-ai-push・/revoke-ai-push の入力・ai-push の実行)だけ求め,ほかの入力・コマンドでは何もしない
+# AI_AGENTS_STATE_DIR_PATH は許可が関わる時(/grant-ai-push・/revoke-ai-push の入力・ai-push の実行)だけ求め,ほかの入力・コマンドでは何もしない
 # 引数: <agent> <UserPromptSubmit|PreToolUse>(stdin: フックの入力 JSON,どのエージェントも session_id・prompt・tool_input を同じ名前で渡す)
 set -eu
 
 agent=${1-}
 event=${2-}
 input=$(cat)
-state_root=${AI_AGENTS_STATE_DIR_PATH:-${AI_AGENTS_CONFIG_DIR_PATH:-}}
+state_root=${AI_AGENTS_STATE_DIR_PATH:-}
 
 deny() {
   jq -n --arg reason "$1" '{hookSpecificOutput: {hookEventName: "PreToolUse", permissionDecision: "deny", permissionDecisionReason: $reason}}'
