@@ -140,8 +140,10 @@ bind -T copy-mode-vi '-' if -F '#{selection_present}' { send -X copy-pipe 'xargs
 # 選択範囲のGoogle検索
 bind -T copy-mode-vi Space send -X copy-pipe-and-cancel "xargs -I {} open https://www.google.co.jp/search?q='{}'"
 # 検索の次(n)・前(N)は,prefix + ; と同じく見つけた行を上から2行目に出す(既定は画面の下の方に出る)
-bind -T copy-mode-vi n send -X search-again \; send -X scroll-top \; send -X scroll-up
-bind -T copy-mode-vi N send -X search-reverse \; send -X scroll-top \; send -X scroll-up
+# prefix + ; が覚えさせる返答の印の行の式(scroll-tmux-to-last-reply の ^⏺.*・^•.*)の時は,カーソルを行頭に戻す
+# (右端まで埋まって全角文字で終わる行では,tmux がカーソルを行末に置くため)
+bind -T copy-mode-vi n send -X search-again \; send -X scroll-top \; send -X scroll-up \; if -F '#{||:#{==:#{pane_search_string},^⏺.*},#{==:#{pane_search_string},^•.*}}' 'send -X start-of-line'
+bind -T copy-mode-vi N send -X search-reverse \; send -X scroll-top \; send -X scroll-up \; if -F '#{||:#{==:#{pane_search_string},^⏺.*},#{==:#{pane_search_string},^•.*}}' 'send -X start-of-line'
 
 ## ペースト
 # 最新バッファペースト

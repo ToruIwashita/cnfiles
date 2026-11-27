@@ -53,7 +53,8 @@ fi
 # コピーモードで別の所を見ていても今の画面から数えた位置に合うよう,一度抜けてから入り直す
 # 検索は,vim の / で探した時と同じく N で一つ上の印の行へ,n で一つ下へ移れるよう,tmux に検索の文字と向きを覚えさせるためだけに使い,
 # 止まった位置は一番下へ戻して捨て,検索の色付けは clear-selection で消す(vi では history-bottom 等では消えない)
+# 覚えさせる式は行末まで一致させる(^⏺ や ^⏺. のように行の途中で終わる式では,右端まで埋まって全角文字で終わる印の行を N・n が飛ばすため)
 tmux copy-mode -q -t "$pane" \; copy-mode -t "$pane" \
-  \; send-keys -X -t "$pane" search-forward "^$mark" \; send-keys -X -t "$pane" clear-selection \
+  \; send-keys -X -t "$pane" search-forward "^$mark.*" \; send-keys -X -t "$pane" clear-selection \
   \; send-keys -X -t "$pane" history-bottom \; send-keys -X -t "$pane" top-line \
   "${moves[@]}" \; send-keys -X -t "$pane" start-of-line
