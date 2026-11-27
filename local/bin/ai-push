@@ -13,15 +13,17 @@ elif (( $# > 0 )); then
   exit 2
 fi
 
-if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
-  print "$0: AI_AGENTS_CONFIG_DIR_PATH is not set"
+# 許可の記録の置き場は状態の置き場(AI_AGENTS_STATE_DIR_PATH,env.zsh に足す前に起動したシェルでは今までの置き場の AI_AGENTS_CONFIG_DIR_PATH)
+state_root=${AI_AGENTS_STATE_DIR_PATH:-${AI_AGENTS_CONFIG_DIR_PATH:-}}
+if [[ -z $state_root ]]; then
+  print "$0: AI_AGENTS_STATE_DIR_PATH is not set"
   exit 1
 fi
 
 # 許可の記録(ai-push-hook がユーザーの入力から作る)を,エージェントが渡すセッションの識別子で確かめる
 # 環境変数は AI のコマンドから差し替えられるため,これは実行前フック(ai-push-hook)が動かない設定の時の補助で,本当の歯止めはフックの側
 # 識別子はパスに使うため形式を確かめ,../ 等で許可の記録以外のファイルを指せないようにする
-grants=$AI_AGENTS_CONFIG_DIR_PATH/ai_push/grants
+grants=$state_root/ai_push/grants
 # サンドボックスの中では許可の記録を読めず許可が無い時と同じ結果になるため,許可のやり直しを求めないよう先に見分ける
 if ! ls -- $grants > /dev/null 2>&1; then
   print -ru2 -- "ai-push: 許可の記録($grants)を読めないため push しません(サンドボックスの中で動いている等が原因で,許可のやり直しでは解消しません)"

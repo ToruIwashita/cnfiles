@@ -18,12 +18,23 @@ zmodload -F zsh/files b:zf_mv
 # 作業ログが変わったかを外部コマンドを起動せずに調べる
 zmodload -F zsh/stat b:zstat
 
-if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
-  print "$0: AI_AGENTS_CONFIG_DIR_PATH is not set"
+# 置き場は役割で分ける(新しいファイルもこれに従う)
+#   設定 ~/.config/ai_agents: 人が決めて置くもの(どのAIを使うか等)
+#   データ AI_AGENTS_DATA_DIR_PATH(~/.local/share/ai_agents): 人が書いたもの(C-i のメモ・保存済みのセッションの一覧),AIのサンドボックスの中のコマンドからも書ける
+#   状態 AI_AGENTS_STATE_DIR_PATH(~/.local/state/ai_agents): ai-bridge と hook が書く今の様子(AIごとの状態・O で保存したAI・push の許可),
+#     AIのサンドボックスの中からは書けない(Claude も Codex も hook はサンドボックスの外で動くため,状態の置き場を書ける場所に入れなくてよい)
+#   書けるかはサンドボックスの設定(claude/settings.json の sandbox.filesystem.allowWrite,codex/config.toml の workspace_roots)で決まり,
+#   push の許可のようにAIに書き換えられては困るものはデータに置かない
+#   (AIを ~ 等で起動すると起動したディレクトリごと書ける場所に入るため,push の許可は Read・Edit の deny,Codex の deny でも守る)
+# (env.zsh に足す前に起動したシェルでは,今までの置き場の AI_AGENTS_CONFIG_DIR_PATH を使う)
+state_root=${AI_AGENTS_STATE_DIR_PATH:-${AI_AGENTS_CONFIG_DIR_PATH:-}}
+data_root=${AI_AGENTS_DATA_DIR_PATH:-${AI_AGENTS_CONFIG_DIR_PATH:-}}
+if [[ -z $state_root || -z $data_root ]]; then
+  print "$0: AI_AGENTS_STATE_DIR_PATH and AI_AGENTS_DATA_DIR_PATH must be set"
   exit 1
 fi
 
-state_dir=$AI_AGENTS_CONFIG_DIR_PATH/state
+state_dir=$state_root/state
 
 # 作業中の行を回し,判断待ちの行を脈打たせるコマ(描き直しは1秒10コマ)
 spin=(⣾ ⣽ ⣻ ⢿ ⡿ ⣟ ⣯ ⣷)
@@ -62,10 +73,10 @@ typeset -A restart_command
 # O で保存し R で復元するAI(1行に AIの種類・セッションID・モデル・effort・起動したディレクトリ・いたセッション・ウィンドウ番号をタブ区切りで並べる)と,その保存先
 save_lines=()
 restore_lines=()
-resurrect_file=$AI_AGENTS_CONFIG_DIR_PATH/resurrect.tsv
+resurrect_file=$state_root/resurrect.tsv
 # C-i で書いたメモの置き場(AIのセッションIDごとに1つのファイルに置き,中身が空ならメモ無し)
 # セッションIDごとにするのは,E・e の再起動や R の復元,保存済みのセッションの起動で開き直しても同じセッションIDで再開され,メモが付いてくるため
-info_dir=$AI_AGENTS_CONFIG_DIR_PATH/info
+info_dir=$data_root/info
 
 # 一覧の行を作る小さな関数は,行ごとに何度も呼ぶため,サブシェルを起こさないよう結果を REPLY に入れる
 
@@ -573,7 +584,8 @@ __format_row() {
   info=''
   if [[ -n $session_id && -s $info_dir/$session_id ]]; then
     info=$(<"$info_dir/$session_id")
-    info=${info//[$'\t\n']/ }
+    # メモはサンドボックスの中のAIのコマンドからも書けるため,端末の制御文字(タブ・改行を含む)は空白にしてから出す
+    info=${info//[[:cntrl:]]/ }
   fi
 
   # 古い版の印(↑)は,下に開いている印と同じく,幅をそろえた後で色を付ける

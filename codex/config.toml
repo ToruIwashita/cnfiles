@@ -66,7 +66,7 @@ description = "Default local development permissions with sensitive paths protec
 extends = ":workspace"
 
 [permissions.default-local.workspace_roots]
-"~/.config/ai_agents" = true
+"~/.local/share/ai_agents" = true
 "~/markdown_texts" = true
 "~/works/memolist" = true
 "~/works/git_worktrees" = true
@@ -98,6 +98,7 @@ extends = ":workspace"
 ".cnfiles/local/bin/ai-push" = "read"
 ".cnfiles/local/bin/ai-push-hook" = "read"
 ".config/ai_agents/ai_push/**" = "deny"
+".local/state/ai_agents/ai_push/**" = "deny"
 
 [permissions.default-local.filesystem.":workspace_roots"]
 ".git" = "write"

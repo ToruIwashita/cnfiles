@@ -4,8 +4,10 @@
 
 zmodload zsh/datetime
 
-if [[ -z ${AI_AGENTS_CONFIG_DIR_PATH:-} ]]; then
-  print "$0: AI_AGENTS_CONFIG_DIR_PATH is not set"
+# 状態の置き場(AI_AGENTS_STATE_DIR_PATH,env.zsh に足す前に起動したシェルのAIでは今までの置き場の AI_AGENTS_CONFIG_DIR_PATH)
+state_root=${AI_AGENTS_STATE_DIR_PATH:-${AI_AGENTS_CONFIG_DIR_PATH:-}}
+if [[ -z $state_root ]]; then
+  print "$0: AI_AGENTS_STATE_DIR_PATH is not set"
   exit 1
 fi
 
@@ -21,7 +23,7 @@ else
   meta_key="sid-$(jqr '.session_id // empty')"
 fi
 if [[ $meta_key != sid- ]]; then
-  meta_dir=$AI_AGENTS_CONFIG_DIR_PATH/state
+  meta_dir=$state_root/state
   mkdir -p "$meta_dir" 2>/dev/null
   meta_tmp=$(mktemp "$meta_dir/.meta.XXXXXX" 2>/dev/null) \
     && printf '%s' "$input" | jq -c '{model: .model.display_name, cx_tok: .context_window.total_input_tokens, cx_pct: .context_window.used_percentage, transcript_path: .transcript_path, h5_pct: .rate_limits.five_hour.used_percentage, h5_reset: .rate_limits.five_hour.resets_at, d7_pct: .rate_limits.seven_day.used_percentage, d7_reset: .rate_limits.seven_day.resets_at, session_id: .session_id, model_id: .model.id, effort: .effort.level, project_dir: .workspace.project_dir, version: .version}' > "$meta_tmp" 2>/dev/null \

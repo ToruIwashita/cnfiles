@@ -49,6 +49,12 @@ GIT_DIR_PATH=$BASE_DIR_PATH/git
 
 # config
 CONFIG_DIR_PATH=~/.config
+AI_AGENTS_CONFIG_DIR_PATH=$CONFIG_DIR_PATH/ai_agents
+
+# .local
+DOT_LOCAL_DIR_PATH=~/.local
+AI_AGENTS_STATE_DIR_PATH=$DOT_LOCAL_DIR_PATH/state/ai_agents
+AI_AGENTS_DATA_DIR_PATH=$DOT_LOCAL_DIR_PATH/share/ai_agents
 
 # cache
 CACHE_DIR_PATH=~/.cache
