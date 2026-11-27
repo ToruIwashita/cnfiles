@@ -352,7 +352,8 @@
       "pbcopy*",
       "e2e-request *",
       "e2e-wait *",
-      "ai-push"
+      "ai-push",
+      "ai-push -f"
     ]
   },
   "tui": "default",

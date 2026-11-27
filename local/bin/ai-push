@@ -1,11 +1,15 @@
 #!/usr/bin/env zsh
-# 今のブランチを origin の同名ブランチへ通常の push で送る
+# 今のブランチを origin の同名ブランチへ送る(-f を付けると --force-with-lease で送る)
 # AI には git push を禁止設定で打たせず,ユーザーが push を許可したセッションの push はこのコマンドだけで行わせる
-# 引数を取らないため,force-push・削除・refspec の指定・--no-verify 等はできない
+# 受け付ける引数は -f だけのため,--force・削除・refspec の指定・--no-verify 等はできない
 set -eu
 
-if (( $# > 0 )); then
-  print -ru2 -- "ai-push: 引数は取りません(今のブランチを origin の同名ブランチへ push します)"
+# -f は,手元で把握していないコミットがリモートにあれば送らない --force-with-lease にし,他の人が積んだコミットを消さない
+force=()
+if (( $# == 1 )) && [[ $1 == -f ]]; then
+  force=(--force-with-lease)
+elif (( $# > 0 )); then
+  print -ru2 -- "ai-push: 受け付ける引数は -f だけです(今のブランチを origin の同名ブランチへ push し,-f は --force-with-lease で送ります)"
   exit 2
 fi
 
@@ -51,6 +55,6 @@ local_sha=$(git rev-parse HEAD)
 remote_sha=$(git rev-parse --verify --quiet "refs/remotes/origin/${branch}" || print 0000000000000000000000000000000000000000)
 print -r -- "refs/heads/${branch} ${local_sha} refs/heads/${branch} ${remote_sha}" | $protect origin "$(git remote get-url origin)" || exit 1
 
-git push --set-upstream origin "refs/heads/${branch}:refs/heads/${branch}" && exit 0
-print -ru2 -- "ai-push: push できませんでした(force-push はしないため,リモートが先に進んでいる等の原因はユーザーに確認してください)"
+git push $force --set-upstream origin "refs/heads/${branch}:refs/heads/${branch}" && exit 0
+print -ru2 -- "ai-push: push できませんでした(リモートが先に進んでいる等の原因はユーザーに確認してください,-f でも手元で把握していないコミットがリモートにあれば送りません)"
 exit 1
