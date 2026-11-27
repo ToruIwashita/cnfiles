@@ -3096,11 +3096,14 @@ while :; do
           ;;
         $'\x13') # Ctrl+s
           # 下に開いていれば閉じて元に戻し,閉じていれば選んでいるAIを下に開く
+          # 開いた時は C-k と同じく見たとみなして完了を待機へ戻す(判断待ちは戻さない)
           if (( selectable )); then
             if (( ${#last_swap} )); then
               __undo_swap
             elif [[ -n $selected_id ]]; then
               __open_below "$selected_id"
+              ai-agent-state --focus-reset "$(tmux display -p -t "$TMUX_PANE" '#{window_id}' 2>/dev/null || true)" 2>/dev/null || true
+              __data_changed
             fi
           fi
           ;;
