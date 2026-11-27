@@ -923,16 +923,23 @@ __edit_info() {
 }
 
 # 選んだペイン $1 のAIのメモ(INFO)を消す(C-i で空にして確定した時と同じく,置き場のファイルを空にする)
-# 一覧はメモを出していない時もあり消えたかが見えないため,消した時は tmux のメッセージで知らせる
+# 一覧はメモを出していない時もあり消えたかが見えないため,消した時は tmux の設定を読み直した時(prefix + r)と同じ形の小窓で知らせる
+# (1秒経つか何かキーを押すと閉じ,開いている間も一覧の描き直しを止めないよう裏で開く)
 __remove_info() {
-  local target session_id
+  local target session_id message
 
   target=${target_of[$1]:-$1}
   session_id=$(jq -r '.session_id // ""' "$state_dir/$1.meta.json" 2>/dev/null || true)
   [[ -n $session_id && -s $info_dir/$session_id ]] || return 0
   : >| "$info_dir/$session_id" 2>/dev/null || return 0
-  tmux display-message "Removed info: ${target//\#/##}" 2>/dev/null || true
   __data_changed
+  message="Removed info: $target"
+  (
+    # 描き手のEXITのtrap(後片付け)を裏で走らせないよう外す(__render_loop と同じ)
+    trap - EXIT INT TERM HUP WINCH
+    tmux display-popup -E -b rounded -S 'fg=colour38' -w $(( ${(m)#message} + 4 )) -h 3 \
+      zsh -f -c 'printf "\e[?25l\e[1;38;5;51m %s" "$1"; read -s -t 1 -k 1' zsh "$message"
+  ) </dev/null >/dev/null 2>&1 &!
 }
 
 # 選んだペイン $1 の作業ディレクトリ(DIR)が git の中の時だけ,そこで関数 $2 を裏で動かす(g・C-g で使う)
