@@ -885,13 +885,16 @@ __move_window() {
   tmux command-prompt -b -p "(move-window ${${info#* }//\#/##} to)" "move-window -s ${info%% *} -t '${${info#* }%:*}:%%'" 2>/dev/null || true
 }
 
-# 選んだペイン $1 のAIのメモ(INFO)を tmux の入力欄で書かせ,info_dir のそのAIのセッションIDのファイルに置く(今のメモを入れておき,空で確定すると消える)
+# 選んだペイン $1 のAIのメモ(INFO)を小窓で書かせ,info_dir のそのAIのセッションIDのファイルに置く(今のメモを入れておき,空で確定すると消える)
 # 置いたメモは,どの ai-bridge も1秒ごとの一覧の組み立てで読む
-# 答えを待つ間もこの一覧を止めないよう裏で聞き,-b を付けずに答えるまで待たせて,テンプレートの display-message -l -p で答えを文字どおり受け取る
-# (取り消した時は何も出ないので,空で確定した時と見分けるため答えの前に = を付ける)
-# (入力欄に入れておく今のメモは書式として展開されるため # は ## にし,メモのカンマで区切られないよう -l を付ける)
+# 書く欄は zsh の vared で,キーは zsh の設定(zsh.d/config.zsh)と同じく vi の挿入モードに,行の編集の C-a・C-b・C-e・C-f・C-h・C-u・C-w・C-x を足したもの
+# (Enter で確定,Space・\ の小窓と同じく Esc で取り消せるよう,Esc は vi のコマンドモードにせず取り消しにする)
+# (C-g は Space・\ の小窓と同じく閉じないようにし,zsh の既定の list-expand は1行の欄を崩すため,行を描き直すだけの redisplay にする)
+# (矢印キーも Esc で始まるため,続く文字を待つ時間(KEYTIMEOUT)は 10ms にして,Esc だけの時にすぐ取り消す)
+# (欄の頭の1桁は,枠に文字が付かないよう打てない半角スペース(vared の見出し)にする,小窓の zsh は早く開くよう設定のファイルを読まない)
+# 取り消した時は何も書かないので,空で確定した時と見分けるため答えの前に = を付ける
 __edit_info() {
-  local target session_id memo tmp answer
+  local target session_id tmp editor
 
   target=${target_of[$1]:-$1}
   session_id=$(jq -r '.session_id // ""' "$state_dir/$1.meta.json" 2>/dev/null || true)
@@ -899,17 +902,24 @@ __edit_info() {
     tmux display-message "Cannot add info to ${target//\#/##} (no session ID yet)" 2>/dev/null || true
     return 0
   fi
-  memo=''
-  [[ ! -s $info_dir/$session_id ]] || memo=$(<"$info_dir/$session_id")
-  (
-    # 描き手のEXITのtrap(後片付け)を裏で走らせないよう外す(__render_loop と同じ)
-    trap - EXIT INT TERM HUP WINCH
-    answer=$(tmux command-prompt -l -I "${memo//\#/##}" -p "(info ${target//\#/##}) " 'display-message -l -p "=%%%"') || exit 0
-    # = で始まる語は zsh がコマンドの場所に置き換える(EQUALS)ため,= は引用符で囲む
-    [[ $answer == '='* ]] || exit 0
-    tmp=$info_dir/.$session_id.$EPOCHREALTIME
-    mkdir -p "$info_dir" && print -rn -- "${answer#=}" >| "$tmp" && zf_mv -f "$tmp" "$info_dir/$session_id"
-  ) </dev/null >/dev/null 2>&1 &!
+  editor='
+    memo=""
+    [[ ! -r $AI_BRIDGE_INFO_FILE ]] || memo=$(<"$AI_BRIDGE_INFO_FILE")
+    bindkey -v
+    bindkey -v "^a" beginning-of-line "^b" backward-char "^e" end-of-line "^f" forward-char "^g" redisplay "^h" backward-delete-char \
+      "^u" kill-whole-line "^w" backward-kill-word "^x" kill-word "^[" send-break
+    KEYTIMEOUT=1
+    vared -p " " memo && print -rn -- "=$memo" >| "$AI_BRIDGE_POPUP_OUT"'
+  : >| "$work_dir/popup_out"
+  tmux display-popup -E -w 80% -h 3 -T " info ${target//\#/##} (Enter: save, Esc: cancel) " \
+    -e "AI_BRIDGE_INFO_FILE=$info_dir/$session_id" -e "AI_BRIDGE_POPUP_OUT=$work_dir/popup_out" \
+    zsh -f -c "$editor" 2>/dev/null || true
+  REPLY=$(<"$work_dir/popup_out")
+  # = で始まる語は zsh がコマンドの場所に置き換える(EQUALS)ため,= は引用符で囲む
+  [[ $REPLY == '='* ]] || return 0
+  tmp=$info_dir/.$session_id.$EPOCHREALTIME
+  mkdir -p "$info_dir" && print -rn -- "${REPLY#=}" >| "$tmp" && zf_mv -f "$tmp" "$info_dir/$session_id"
+  __data_changed
 }
 
 # 選んだペイン $1 のAIのメモ(INFO)を消す(C-i で空にして確定した時と同じく,置き場のファイルを空にする)
