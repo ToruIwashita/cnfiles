@@ -20,7 +20,7 @@ zmodload -F zsh/stat b:zstat
 
 # 置き場は役割で分ける(新しいファイルもこれに従う)
 #   設定 ~/.config/ai_agents: 人が決めて置くもの(どのAIを使うか等)
-#   データ AI_AGENTS_DATA_DIR_PATH(~/.local/share/ai_agents): 人が書いたもの(C-i のメモ・保存済みのセッションの一覧),AIのサンドボックスの中のコマンドからも書ける
+#   データ AI_AGENTS_DATA_DIR_PATH(~/.local/share/ai_agents): 人が書いたもの(+ のメモ・保存済みのセッションの一覧),AIのサンドボックスの中のコマンドからも書ける
 #   状態 AI_AGENTS_STATE_DIR_PATH(~/.local/state/ai_agents): ai-bridge と hook が書く今の様子(AIごとの状態・O で保存したAI・push の許可),
 #     AIのサンドボックスの中からは書けない(Claude も Codex も hook はサンドボックスの外で動くため,状態の置き場を書ける場所に入れなくてよい)
 #   書けるかはサンドボックスの設定(claude/settings.json の sandbox.filesystem.allowWrite,codex/config.toml の workspace_roots)で決まり,
@@ -48,16 +48,16 @@ typeset -A target_of agent_prio
 browse_order=()
 # キーの説明は1行にまとめると14インチの画面のウィンドウ(107桁)で見切れるため,4つに分けて ? を押すごとに順に見出しへ出す
 # 時刻はいつもの見出し(__render_title)にだけ出し,ここの説明は時刻に代えて出す(show_keys は出している方の番号,0はいつもの見出し)
-# (区切りは空白1つにし,C-n/C-p は C-n/p と縮める,見出しの幅はいつもの104桁に対して104桁・105桁で,i・C-i・- はどれに足しても107桁を超えるため4つ目に分ける)
+# (区切りは空白1つにし,C-n/C-p は C-n/p と縮める,見出しの幅はいつもの104桁に対して104桁・105桁で,i・+・- はどれに足しても107桁を超えるため4つ目に分ける)
 key_help=(
   'C-n/p:select C-s:open-close C-k:open-below C-;:reply C-l:open-dir C-y:copy-target C-u:clear'
   'e:restart E:restart-all x:exit X:exit-all O:save-all R:restore-all g:browse-repo C-g:open-pr'
-  'i:info C-i:add-info -:remove-info'
+  'i:info +:edit-info -:remove-info'
 )
 show_keys=0
 # 一覧の下の作業の見える化(WORKSPACE・OPS.LOG・SYSTEM)は,起動時は出さず a を押した時だけ出す
 show_ops=0
-# i を押している間は,一覧の MODEL から後ろの列の代わりに,C-i で書いたメモ(INFO)を出す
+# i を押している間は,一覧の MODEL から後ろの列の代わりに,+ で書いたメモ(INFO)を出す
 info_view=0
 # X・x(一括・選んだ1つの終了)・E・e(一括・選んだ1つの再起動)・O(保存)・R(復元)を実行する前の確かめ(出している間は見出しを確かめの文に差し替え,y で実行する)
 # confirm_action は確かめている操作で,exit・restart・save・restore のどれか(確かめていない時は空)
@@ -73,7 +73,7 @@ typeset -A restart_command
 save_lines=()
 restore_lines=()
 resurrect_file=$state_root/resurrect.tsv
-# C-i で書いたメモの置き場(AIのセッションIDごとに1つのファイルに置き,中身が空ならメモ無し)
+# + で書いたメモの置き場(AIのセッションIDごとに1つのファイルに置き,中身が空ならメモ無し)
 # セッションIDごとにするのは,E・e の再起動や R の復元,保存済みのセッションの起動で開き直しても同じセッションIDで再開され,メモが付いてくるため
 info_dir=$data_root/info
 
@@ -559,7 +559,7 @@ __meta_columns() {
 # 1行分の表示を整形する(形式: "<priority>\t<mtime>\t<キー>\t<TARGET>\t<整形済み表示行>\t<メモ>")
 # キーはtmux内ならペインID,tmux外なら sid-<session_id> で,選べる(ジャンプできる)のはペインIDの行だけ
 # 一覧の下の作業の見える化でAIを同じ名前で示すため,TARGETも添える(並びは状態で入れ替わるので行番号は使えない)
-# i の INFO の表示に替えるのは描き手なので,C-i で書いたメモも添える(タブと改行は区切りと紛れないよう空白にする)
+# i の INFO の表示に替えるのは描き手なので,+ で書いたメモも添える(タブと改行は区切りと紛れないよう空白にする)
 __format_row() {
   local target agent agent_pid state dir key mtime meta model ctx outdated model_col wait_label target_col open_mark
   local prio label dir_col last session_id info
@@ -898,7 +898,8 @@ __move_window() {
 
 # 選んだペイン $1 のAIのメモ(INFO)を小窓で書かせ,info_dir のそのAIのセッションIDのファイルに置く(今のメモを入れておき,空で確定すると消える)
 # 置いたメモは,どの ai-bridge も1秒ごとの一覧の組み立てで読む
-# 書く欄は zsh の vared で,キーは zsh の設定(zsh.d/config.zsh)と同じく vi の挿入モードに,行の編集の C-a・C-b・C-e・C-f・C-h・C-u・C-w・C-x を足したもの
+# 書く欄は zsh の vared で,キーは zsh の設定(zsh.d/config.zsh)と同じく vi の挿入モードに,行の編集の C-a・C-b・C-e・C-f・C-h・BS・C-u・C-w・C-x を足したもの
+# (vi の挿入モードの C-h・BS は,挿入モードに入った所(入れておいた今のメモの後ろ)より前を消さず,今のメモを直せないため,前も消せるものにする)
 # (Enter で確定,Space・\ の小窓と同じく Esc で取り消せるよう,Esc は vi のコマンドモードにせず取り消しにする)
 # (C-g は Space・\ の小窓と同じく閉じないようにし,zsh の既定の list-expand は1行の欄を崩すため,行を描き直すだけの redisplay にする)
 # (矢印キーも Esc で始まるため,続く文字を待つ時間(KEYTIMEOUT)は 10ms にして,Esc だけの時にすぐ取り消す)
@@ -910,14 +911,14 @@ __edit_info() {
   target=${target_of[$1]:-$1}
   session_id=$(jq -r '.session_id // ""' "$state_dir/$1.meta.json" 2>/dev/null || true)
   if [[ -z $session_id ]]; then
-    tmux display-message "Cannot add info to ${target//\#/##} (no session ID yet)" 2>/dev/null || true
+    tmux display-message "Cannot edit info for ${target//\#/##} (no session ID yet)" 2>/dev/null || true
     return 0
   fi
   editor='
     memo=""
     [[ ! -r $AI_BRIDGE_INFO_FILE ]] || memo=$(<"$AI_BRIDGE_INFO_FILE")
     bindkey -v
-    bindkey -v "^a" beginning-of-line "^b" backward-char "^e" end-of-line "^f" forward-char "^g" redisplay "^h" backward-delete-char \
+    bindkey -v "^a" beginning-of-line "^b" backward-char "^e" end-of-line "^f" forward-char "^g" redisplay "^h" backward-delete-char "^?" backward-delete-char \
       "^u" kill-whole-line "^w" backward-kill-word "^x" kill-word "^[" send-break
     KEYTIMEOUT=1
     vared -p " " memo && print -rn -- "=$memo" >| "$AI_BRIDGE_POPUP_OUT"'
@@ -933,7 +934,7 @@ __edit_info() {
   __data_changed
 }
 
-# 選んだペイン $1 のAIのメモ(INFO)を消す(C-i で空にして確定した時と同じく,置き場のファイルを空にする)
+# 選んだペイン $1 のAIのメモ(INFO)を消す(+ で空にして確定した時と同じく,置き場のファイルを空にする)
 # 一覧はメモを出していない時もあり消えたかが見えないため,消した時は tmux の設定を読み直した時(prefix + r)と同じ形の小窓で知らせる
 # (1秒経つか何かキーを押すと閉じ,開いている間も一覧の描き直しを止めないよう裏で開く)
 __remove_info() {
@@ -3234,12 +3235,12 @@ while :; do
           fi
           ;;
         i)
-          # MODEL から後ろの列と,C-i で書いたメモ(INFO)を切り替える(一覧の中身は変えないので,この後の __split_rendered で作り直すだけ)
+          # MODEL から後ろの列と,+ で書いたメモ(INFO)を切り替える(一覧の中身は変えないので,この後の __split_rendered で作り直すだけ)
           if (( selectable )); then
             info_view=$(( ! info_view ))
           fi
           ;;
-        $'\t') # Ctrl+i(端末では Tab と同じものが届く)
+        +)
           if (( selectable )) && [[ -n $selected_id ]]; then
             __edit_info "$selected_id"
           fi
